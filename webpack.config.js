@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
     entry: ['whatwg-fetch', './api/main.js'],
     output: {
-        path: __dirname,
+        path: path.join(__dirname, 'dist'),
         filename: 'bundle.js'
     },
     module: {
