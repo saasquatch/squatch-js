@@ -2,50 +2,50 @@ import OpenApi from './OpenApi.js';
 import 'whatwg-fetch';
 
 var config = {
-  tenantAlias: "MY_TENANT_ALIAS",
-  API_KEY: "MY_API_KEY"
+  tenantAlias: "awdodmzok4ue2",
+  API_KEY: "LIVE_k8wTtI1QEJmTcLggK8C34v67rVf6LYlp"
 }
 
 var openAPI = new OpenApi(config);
 
-var data = {
-  id: "003",
-  accountId: "321",
-  referralCode: "ERICMASON",
-  email: "eric@saasquat.ch",
+var user = {
+  id: "005",
+  accountId: "514",
+  referralCode: "MIKEDOYLE",
+  email: "mike@saasquat.ch",
   imageUrl: "https://www.example.com/profile/ab5111251125",
-  firstName: "Eric",
-  lastName: "Mason",
+  firstName: "Mike",
+  lastName: "Doyle",
   locale: "en_US"
 };
 
 
-// openAPI.createUser(data).then(function(json) {
+// openAPI.createUser(user).then(function(json) {
 //   console.log('parsed json', json)
 // }).catch(function(ex) {
 //   console.log('parsing failed', ex)
 // });
 
 
-// openAPI.lookUpUser('123', '001').then(function(json) {
+// openAPI.lookUpUser({"id": user.id, "accountId": user.accountId}).then(function(json) {
 //   console.log('parsed json', json)
 // }).catch(function(ex) {
 //   console.log('parsing failed', ex)
 // });
 
-// openAPI.getUserByReferralCode('ERIKALBERS').then(function(json) {
+// openAPI.getUserByReferralCode({"referralCode":"JORGECONDE"}).then(function(json) {
 //   console.log('parsed json', json)
 // }).catch(function(ex) {
 //   console.log('parsing failed', ex)
 // });
 
-// openAPI.lookUpReferralCode('JORGECONDE').then(function(json) {
+// openAPI.lookUpReferralCode({"referralCode":'JORGECONDE'}).then(function(json) {
 //   console.log('parsed json', json)
 // }).catch(function(ex) {
 //   console.log('parsing failed', ex)
 // });
 
-// openAPI.applyReferralCode('ERIKALBERS', '123', '001').then(function(json) {
+// openAPI.applyReferralCode({"referralCode": "JORGECONDE", "id": user.id, "accountId": user.accountId}).then(function(json) {
 //   console.log('parsed json', json)
 // }).catch(function(ex) {
 //   console.log('parsing failed', ex)

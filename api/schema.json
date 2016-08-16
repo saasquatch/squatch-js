@@ -1,0 +1,40 @@
+{
+  "user": {
+    "type": "object",
+    "properties": {
+      "id": {"type": "string"},
+      "accountId": {"type": "string"},
+      "email": {"type": "string"},
+      "firstName": {"type": "string"},
+      "lastName": {"type": "string"},
+      "imageUrl": {"type": "string"},
+      "referralCode": {"type": "string"},
+      "locale": {"type": "string"}
+    },
+    "required": ["id", "accountId", "email", "firstName"]
+  },
+  "userLookUp": {
+    "type": "object",
+    "properties": {
+      "id": {"type": "string"},
+      "accountId": {"type": "string"}
+    },
+    "required": ["id", "accountId"]
+  },
+  "userReferralCode": {
+    "type": "object",
+    "properties": {
+      "referralCode": {"type": "string"}
+    },
+    "required": ["referralCode"]
+  },
+  "applyReferralCode": {
+    "type": "object",
+    "properties": {
+      "id": {"type": "string"},
+      "accountId": {"type": "string"},
+      "referralCode": {"type": "string"}
+    },
+    "required": ["id", "accountId", "referralCode"]
+  }
+}
