@@ -2,8 +2,8 @@ import OpenApi from './OpenApi.js';
 import 'whatwg-fetch';
 
 var config = {
-  tenantAlias: "awdodmzok4ue2",
-  API_KEY: "LIVE_k8wTtI1QEJmTcLggK8C34v67rVf6LYlp"
+  tenantAlias: "MY_TENANT_ALIAS",
+  API_KEY: "MY_API_KEY"
 }
 
 var openAPI = new OpenApi(config);
