@@ -21,7 +21,6 @@ class OpenApi {
           account_id = encodeURIComponent(params.accountId),
           user_id = encodeURIComponent(params.id);
 
-
       let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
       let url = this.domain + path;
       return this.doPost(url, JSON.stringify(params));
