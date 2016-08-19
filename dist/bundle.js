@@ -497,27 +497,29 @@
 	
 	var _OpenApi2 = _interopRequireDefault(_OpenApi);
 	
-	__webpack_require__(1);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var config = {
-	  tenantAlias: "awdodmzok4ue2",
-	  API_KEY: "LIVE_k8wTtI1QEJmTcLggK8C34v67rVf6LYlp"
-	};
+	window.OpenApi = _OpenApi2.default;
+	// import 'whatwg-fetch';
+	//
+	// var config = {
+	//   tenantAlias: "MY_TENANT_ALIAS",
+	//   API_KEY: "MY_API_KEY"
+	// }
+	//
+	// var openAPI = new OpenApi(config);
+	//
+	// var user = {
+	//   id: "005",
+	//   accountId: "514",
+	//   referralCode: "MIKEDOYLE",
+	//   email: "mike@saasquat.ch",
+	//   imageUrl: "https://www.example.com/profile/ab5111251125",
+	//   firstName: "Mike",
+	//   lastName: "Doyle",
+	//   locale: "en_US"
+	// };
 	
-	var openAPI = new _OpenApi2.default(config);
-	
-	var user = {
-	  id: "005",
-	  accountId: "514",
-	  referralCode: "MIKEDOYLE",
-	  email: "mike@saasquat.ch",
-	  imageUrl: "https://www.example.com/profile/ab5111251125",
-	  firstName: "Mike",
-	  lastName: "Doyle",
-	  locale: "en_US"
-	};
 	
 	// openAPI.createUser(user).then(function(json) {
 	//   console.log('parsed json', json)
@@ -550,11 +552,11 @@
 	//   console.log('parsing failed', ex)
 	// });
 	
-	openAPI.listReferrals().then(function (json) {
-	  console.log('parsed json', json);
-	}).catch(function (ex) {
-	  console.log('parsing failed', ex);
-	});
+	// openAPI.listReferrals().then(function(json) {
+	//   console.log('parsed json', json)
+	// }).catch(function(ex) {
+	//   console.log('parsing failed', ex)
+	// });
 
 /***/ },
 /* 3 */
@@ -568,13 +570,15 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _jsonschema = __webpack_require__(5);
+	var _jsonschema = __webpack_require__(4);
 	
 	var _jsonschema2 = _interopRequireDefault(_jsonschema);
 	
-	var _schema = __webpack_require__(15);
+	var _schema = __webpack_require__(14);
 	
 	var _schema2 = _interopRequireDefault(_schema);
+	
+	__webpack_require__(1);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -586,6 +590,7 @@
 	
 	  //TODO:
 	  // - Authenticate with JWT
+	  // - Add comments
 	
 	  function OpenApi(config) {
 	    _classCallCheck(this, OpenApi);
@@ -711,17 +716,16 @@
 	exports.default = OpenApi;
 
 /***/ },
-/* 4 */,
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var Validator = module.exports.Validator = __webpack_require__(6);
+	var Validator = module.exports.Validator = __webpack_require__(5);
 	
-	module.exports.ValidatorResult = __webpack_require__(14).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(14).ValidationError;
-	module.exports.SchemaError = __webpack_require__(14).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(13).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(13).ValidationError;
+	module.exports.SchemaError = __webpack_require__(13).SchemaError;
 	
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -730,15 +734,15 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var urilib = __webpack_require__(7);
+	var urilib = __webpack_require__(6);
 	
-	var attribute = __webpack_require__(13);
-	var helpers = __webpack_require__(14);
+	var attribute = __webpack_require__(12);
+	var helpers = __webpack_require__(13);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -1056,7 +1060,7 @@
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1080,7 +1084,7 @@
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
-	var punycode = __webpack_require__(8);
+	var punycode = __webpack_require__(7);
 	
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1152,7 +1156,7 @@
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(10);
+	    querystring = __webpack_require__(9);
 	
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1769,7 +1773,7 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -2301,10 +2305,10 @@
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module), (function() { return this; }())))
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -2320,17 +2324,17 @@
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	exports.decode = exports.parse = __webpack_require__(11);
-	exports.encode = exports.stringify = __webpack_require__(12);
+	exports.decode = exports.parse = __webpack_require__(10);
+	exports.encode = exports.stringify = __webpack_require__(11);
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2416,7 +2420,7 @@
 
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2486,12 +2490,12 @@
 
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var helpers = __webpack_require__(14);
+	var helpers = __webpack_require__(13);
 	
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -3277,12 +3281,12 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var uri = __webpack_require__(7);
+	var uri = __webpack_require__(6);
 	
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -3562,7 +3566,7 @@
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports) {
 
 	"use strict";

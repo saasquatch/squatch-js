@@ -1,5 +1,6 @@
 import JSONSchema from 'jsonschema';
 import schema from './schema.json';
+import 'whatwg-fetch';
 
 var validate = JSONSchema.validate;
 
@@ -7,6 +8,7 @@ class OpenApi {
 
     //TODO:
     // - Authenticate with JWT
+    // - Add comments
 
     constructor(config) {
       this.tenantAlias = config.tenantAlias;
