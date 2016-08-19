@@ -110,7 +110,6 @@ describe('Open API', function() {
       if (json.statusCode) {
         assert.equal(json.statuscode, 200, json.message);
       }
-      console.log(json);
       assert.isNumber(json.count, "How many referrals");
       assert.isArray(json.referrals, "List of referrals");
     });
