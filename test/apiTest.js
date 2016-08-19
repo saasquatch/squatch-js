@@ -8,8 +8,8 @@ var OpenAPI = window.OpenApi;
 
 describe('Open API', function() {
   var config = {
-    tenantAlias: "awdodmzok4ue2",
-    API_KEY: "LIVE_k8wTtI1QEJmTcLggK8C34v67rVf6LYlp"
+    tenantAlias: "MY_TENANT_ALIAS",
+    API_KEY: "MY_API_KEY"
   }
 
   var openApi = new OpenApi(config);
