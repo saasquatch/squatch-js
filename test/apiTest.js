@@ -1,8 +1,6 @@
 var assert = chai.assert;
 var expect = chai.expect;
 
-var OpenAPI = window.OpenApi;
-
 // TODO:
 //  - Add JWT authentication
 

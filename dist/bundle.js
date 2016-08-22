@@ -1,41 +1,51 @@
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -54,11 +64,11 @@
 
 	(function(self) {
 	  'use strict';
-	
+
 	  if (self.fetch) {
 	    return
 	  }
-	
+
 	  var support = {
 	    searchParams: 'URLSearchParams' in self,
 	    iterable: 'Symbol' in self && 'iterator' in Symbol,
@@ -73,7 +83,7 @@
 	    formData: 'FormData' in self,
 	    arrayBuffer: 'ArrayBuffer' in self
 	  }
-	
+
 	  function normalizeName(name) {
 	    if (typeof name !== 'string') {
 	      name = String(name)
@@ -83,14 +93,14 @@
 	    }
 	    return name.toLowerCase()
 	  }
-	
+
 	  function normalizeValue(value) {
 	    if (typeof value !== 'string') {
 	      value = String(value)
 	    }
 	    return value
 	  }
-	
+
 	  // Build a destructive iterator for the value list
 	  function iteratorFor(items) {
 	    var iterator = {
@@ -99,31 +109,31 @@
 	        return {done: value === undefined, value: value}
 	      }
 	    }
-	
+
 	    if (support.iterable) {
 	      iterator[Symbol.iterator] = function() {
 	        return iterator
 	      }
 	    }
-	
+
 	    return iterator
 	  }
-	
+
 	  function Headers(headers) {
 	    this.map = {}
-	
+
 	    if (headers instanceof Headers) {
 	      headers.forEach(function(value, name) {
 	        this.append(name, value)
 	      }, this)
-	
+
 	    } else if (headers) {
 	      Object.getOwnPropertyNames(headers).forEach(function(name) {
 	        this.append(name, headers[name])
 	      }, this)
 	    }
 	  }
-	
+
 	  Headers.prototype.append = function(name, value) {
 	    name = normalizeName(name)
 	    value = normalizeValue(value)
@@ -134,28 +144,28 @@
 	    }
 	    list.push(value)
 	  }
-	
+
 	  Headers.prototype['delete'] = function(name) {
 	    delete this.map[normalizeName(name)]
 	  }
-	
+
 	  Headers.prototype.get = function(name) {
 	    var values = this.map[normalizeName(name)]
 	    return values ? values[0] : null
 	  }
-	
+
 	  Headers.prototype.getAll = function(name) {
 	    return this.map[normalizeName(name)] || []
 	  }
-	
+
 	  Headers.prototype.has = function(name) {
 	    return this.map.hasOwnProperty(normalizeName(name))
 	  }
-	
+
 	  Headers.prototype.set = function(name, value) {
 	    this.map[normalizeName(name)] = [normalizeValue(value)]
 	  }
-	
+
 	  Headers.prototype.forEach = function(callback, thisArg) {
 	    Object.getOwnPropertyNames(this.map).forEach(function(name) {
 	      this.map[name].forEach(function(value) {
@@ -163,36 +173,36 @@
 	      }, this)
 	    }, this)
 	  }
-	
+
 	  Headers.prototype.keys = function() {
 	    var items = []
 	    this.forEach(function(value, name) { items.push(name) })
 	    return iteratorFor(items)
 	  }
-	
+
 	  Headers.prototype.values = function() {
 	    var items = []
 	    this.forEach(function(value) { items.push(value) })
 	    return iteratorFor(items)
 	  }
-	
+
 	  Headers.prototype.entries = function() {
 	    var items = []
 	    this.forEach(function(value, name) { items.push([name, value]) })
 	    return iteratorFor(items)
 	  }
-	
+
 	  if (support.iterable) {
 	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
 	  }
-	
+
 	  function consumed(body) {
 	    if (body.bodyUsed) {
 	      return Promise.reject(new TypeError('Already read'))
 	    }
 	    body.bodyUsed = true
 	  }
-	
+
 	  function fileReaderReady(reader) {
 	    return new Promise(function(resolve, reject) {
 	      reader.onload = function() {
@@ -203,22 +213,22 @@
 	      }
 	    })
 	  }
-	
+
 	  function readBlobAsArrayBuffer(blob) {
 	    var reader = new FileReader()
 	    reader.readAsArrayBuffer(blob)
 	    return fileReaderReady(reader)
 	  }
-	
+
 	  function readBlobAsText(blob) {
 	    var reader = new FileReader()
 	    reader.readAsText(blob)
 	    return fileReaderReady(reader)
 	  }
-	
+
 	  function Body() {
 	    this.bodyUsed = false
-	
+
 	    this._initBody = function(body) {
 	      this._bodyInit = body
 	      if (typeof body === 'string') {
@@ -237,7 +247,7 @@
 	      } else {
 	        throw new Error('unsupported BodyInit type')
 	      }
-	
+
 	      if (!this.headers.get('content-type')) {
 	        if (typeof body === 'string') {
 	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
@@ -248,14 +258,14 @@
 	        }
 	      }
 	    }
-	
+
 	    if (support.blob) {
 	      this.blob = function() {
 	        var rejected = consumed(this)
 	        if (rejected) {
 	          return rejected
 	        }
-	
+
 	        if (this._bodyBlob) {
 	          return Promise.resolve(this._bodyBlob)
 	        } else if (this._bodyFormData) {
@@ -264,17 +274,17 @@
 	          return Promise.resolve(new Blob([this._bodyText]))
 	        }
 	      }
-	
+
 	      this.arrayBuffer = function() {
 	        return this.blob().then(readBlobAsArrayBuffer)
 	      }
-	
+
 	      this.text = function() {
 	        var rejected = consumed(this)
 	        if (rejected) {
 	          return rejected
 	        }
-	
+
 	        if (this._bodyBlob) {
 	          return readBlobAsText(this._bodyBlob)
 	        } else if (this._bodyFormData) {
@@ -289,28 +299,28 @@
 	        return rejected ? rejected : Promise.resolve(this._bodyText)
 	      }
 	    }
-	
+
 	    if (support.formData) {
 	      this.formData = function() {
 	        return this.text().then(decode)
 	      }
 	    }
-	
+
 	    this.json = function() {
 	      return this.text().then(JSON.parse)
 	    }
-	
+
 	    return this
 	  }
-	
+
 	  // HTTP methods whose capitalization should be normalized
 	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
-	
+
 	  function normalizeMethod(method) {
 	    var upcased = method.toUpperCase()
 	    return (methods.indexOf(upcased) > -1) ? upcased : method
 	  }
-	
+
 	  function Request(input, options) {
 	    options = options || {}
 	    var body = options.body
@@ -332,7 +342,7 @@
 	    } else {
 	      this.url = input
 	    }
-	
+
 	    this.credentials = options.credentials || this.credentials || 'omit'
 	    if (options.headers || !this.headers) {
 	      this.headers = new Headers(options.headers)
@@ -340,17 +350,17 @@
 	    this.method = normalizeMethod(options.method || this.method || 'GET')
 	    this.mode = options.mode || this.mode || null
 	    this.referrer = null
-	
+
 	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
 	      throw new TypeError('Body not allowed for GET or HEAD requests')
 	    }
 	    this._initBody(body)
 	  }
-	
+
 	  Request.prototype.clone = function() {
 	    return new Request(this)
 	  }
-	
+
 	  function decode(body) {
 	    var form = new FormData()
 	    body.trim().split('&').forEach(function(bytes) {
@@ -363,7 +373,7 @@
 	    })
 	    return form
 	  }
-	
+
 	  function headers(xhr) {
 	    var head = new Headers()
 	    var pairs = (xhr.getAllResponseHeaders() || '').trim().split('\n')
@@ -375,14 +385,14 @@
 	    })
 	    return head
 	  }
-	
+
 	  Body.call(Request.prototype)
-	
+
 	  function Response(bodyInit, options) {
 	    if (!options) {
 	      options = {}
 	    }
-	
+
 	    this.type = 'default'
 	    this.status = options.status
 	    this.ok = this.status >= 200 && this.status < 300
@@ -391,9 +401,9 @@
 	    this.url = options.url || ''
 	    this._initBody(bodyInit)
 	  }
-	
+
 	  Body.call(Response.prototype)
-	
+
 	  Response.prototype.clone = function() {
 	    return new Response(this._bodyInit, {
 	      status: this.status,
@@ -402,27 +412,27 @@
 	      url: this.url
 	    })
 	  }
-	
+
 	  Response.error = function() {
 	    var response = new Response(null, {status: 0, statusText: ''})
 	    response.type = 'error'
 	    return response
 	  }
-	
+
 	  var redirectStatuses = [301, 302, 303, 307, 308]
-	
+
 	  Response.redirect = function(url, status) {
 	    if (redirectStatuses.indexOf(status) === -1) {
 	      throw new RangeError('Invalid status code')
 	    }
-	
+
 	    return new Response(null, {status: status, headers: {location: url}})
 	  }
-	
+
 	  self.Headers = Headers
 	  self.Request = Request
 	  self.Response = Response
-	
+
 	  self.fetch = function(input, init) {
 	    return new Promise(function(resolve, reject) {
 	      var request
@@ -431,22 +441,22 @@
 	      } else {
 	        request = new Request(input, init)
 	      }
-	
+
 	      var xhr = new XMLHttpRequest()
-	
+
 	      function responseURL() {
 	        if ('responseURL' in xhr) {
 	          return xhr.responseURL
 	        }
-	
+
 	        // Avoid security warnings on getResponseHeader when not allowed by CORS
 	        if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
 	          return xhr.getResponseHeader('X-Request-URL')
 	        }
-	
+
 	        return
 	      }
-	
+
 	      xhr.onload = function() {
 	        var options = {
 	          status: xhr.status,
@@ -457,29 +467,29 @@
 	        var body = 'response' in xhr ? xhr.response : xhr.responseText
 	        resolve(new Response(body, options))
 	      }
-	
+
 	      xhr.onerror = function() {
 	        reject(new TypeError('Network request failed'))
 	      }
-	
+
 	      xhr.ontimeout = function() {
 	        reject(new TypeError('Network request failed'))
 	      }
-	
+
 	      xhr.open(request.method, request.url, true)
-	
+
 	      if (request.credentials === 'include') {
 	        xhr.withCredentials = true
 	      }
-	
+
 	      if ('responseType' in xhr && support.blob) {
 	        xhr.responseType = 'blob'
 	      }
-	
+
 	      request.headers.forEach(function(value, name) {
 	        xhr.setRequestHeader(name, value)
 	      })
-	
+
 	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
 	    })
 	  }
@@ -492,13 +502,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var _OpenApi = __webpack_require__(3);
-	
+
 	var _OpenApi2 = _interopRequireDefault(_OpenApi);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	window.OpenApi = _OpenApi2.default;
 	// import 'whatwg-fetch';
 	//
@@ -519,39 +529,39 @@
 	//   lastName: "Doyle",
 	//   locale: "en_US"
 	// };
-	
-	
+
+
 	// openAPI.createUser(user).then(function(json) {
 	//   console.log('parsed json', json)
 	// }).catch(function(ex) {
 	//   console.log('parsing failed', ex)
 	// });
-	
-	
+
+
 	// openAPI.lookUpUser({"id": user.id, "accountId": user.accountId}).then(function(json) {
 	//   console.log('parsed json', json)
 	// }).catch(function(ex) {
 	//   console.log('parsing failed', ex)
 	// });
-	
+
 	// openAPI.getUserByReferralCode({"referralCode":"JORGECONDE"}).then(function(json) {
 	//   console.log('parsed json', json)
 	// }).catch(function(ex) {
 	//   console.log('parsing failed', ex)
 	// });
-	
+
 	// openAPI.lookUpReferralCode({"referralCode":'JORGECONDE'}).then(function(json) {
 	//   console.log('parsed json', json)
 	// }).catch(function(ex) {
 	//   console.log('parsing failed', ex)
 	// });
-	
+
 	// openAPI.applyReferralCode({"referralCode": "JORGECONDE", "id": user.id, "accountId": user.accountId}).then(function(json) {
 	//   console.log('parsed json', json)
 	// }).catch(function(ex) {
 	//   console.log('parsing failed', ex)
 	// });
-	
+
 	// openAPI.listReferrals().then(function(json) {
 	//   console.log('parsed json', json)
 	// }).catch(function(ex) {
@@ -563,52 +573,52 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _jsonschema = __webpack_require__(4);
-	
+
 	var _jsonschema2 = _interopRequireDefault(_jsonschema);
-	
+
 	var _schema = __webpack_require__(14);
-	
+
 	var _schema2 = _interopRequireDefault(_schema);
-	
+
 	__webpack_require__(1);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var validate = _jsonschema2.default.validate;
-	
+
 	var OpenApi = function () {
-	
+
 	  //TODO:
 	  // - Authenticate with JWT
 	  // - Add comments
-	
+
 	  function OpenApi(config) {
 	    _classCallCheck(this, OpenApi);
-	
+
 	    this.tenantAlias = config.tenantAlias;
 	    this.API_KEY = config.API_KEY;
 	    this.domain = "https://app.referralsaasquatch.com";
 	  }
-	
+
 	  _createClass(OpenApi, [{
 	    key: 'createUser',
 	    value: function createUser(params) {
 	      this.validateInput(params, _schema2.default.user);
-	
+
 	      var tenant_alias = encodeURIComponent(this.tenantAlias),
 	          account_id = encodeURIComponent(params.accountId),
 	          user_id = encodeURIComponent(params.id);
-	
+
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
 	      return this.doPost(url, JSON.stringify(params));
@@ -617,11 +627,11 @@
 	    key: 'lookUpUser',
 	    value: function lookUpUser(params) {
 	      this.validateInput(params, _schema2.default.userLookUp);
-	
+
 	      var tenant_alias = encodeURIComponent(this.tenantAlias),
 	          account_id = encodeURIComponent(params.accountId),
 	          user_id = encodeURIComponent(params.id);
-	
+
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
 	      return this.doRequest(url);
@@ -630,10 +640,10 @@
 	    key: 'getUserByReferralCode',
 	    value: function getUserByReferralCode(params) {
 	      this.validateInput(params, _schema2.default.userReferralCode);
-	
+
 	      var tenant_alias = encodeURIComponent(this.tenantAlias),
 	          referral_code = encodeURIComponent(params.referralCode);
-	
+
 	      var path = '/api/v1/' + tenant_alias + '/open/user?referralCode=' + referral_code;
 	      var url = this.domain + path;
 	      return this.doRequest(url);
@@ -642,10 +652,10 @@
 	    key: 'lookUpReferralCode',
 	    value: function lookUpReferralCode(params) {
 	      this.validateInput(params, _schema2.default.userReferralCode);
-	
+
 	      var tenant_alias = encodeURIComponent(this.tenantAlias),
 	          referral_code = encodeURIComponent(params.referralCode);
-	
+
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code;
 	      var url = this.domain + path;
 	      return this.doRequest(url);
@@ -654,12 +664,12 @@
 	    key: 'applyReferralCode',
 	    value: function applyReferralCode(params) {
 	      this.validateInput(params, _schema2.default.applyReferralCode);
-	
+
 	      var tenant_alias = encodeURIComponent(this.tenantAlias),
 	          referral_code = encodeURIComponent(params.referralCode),
 	          account_id = encodeURIComponent(params.accountId),
 	          user_id = encodeURIComponent(params.id);
-	
+
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
 	      return this.doPost(url, JSON.stringify(""));
@@ -668,7 +678,7 @@
 	    key: 'listReferrals',
 	    value: function listReferrals() {
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	
+
 	      var path = '/api/v1/' + tenant_alias + '/open/referrals';
 	      var url = this.domain + path;
 	      return this.doRequest(url);
@@ -709,10 +719,10 @@
 	      });
 	    }
 	  }]);
-	
+
 	  return OpenApi;
 	}();
-	
+
 	exports.default = OpenApi;
 
 /***/ },
@@ -720,13 +730,13 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var Validator = module.exports.Validator = __webpack_require__(5);
-	
+
 	module.exports.ValidatorResult = __webpack_require__(13).ValidatorResult;
 	module.exports.ValidationError = __webpack_require__(13).ValidationError;
 	module.exports.SchemaError = __webpack_require__(13).SchemaError;
-	
+
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
 	  return v.validate(instance, schema, options);
@@ -738,15 +748,15 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var urilib = __webpack_require__(6);
-	
+
 	var attribute = __webpack_require__(12);
 	var helpers = __webpack_require__(13);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
-	
+
 	/**
 	 * Creates a new Validator object
 	 * @name Validator
@@ -758,21 +768,21 @@
 	  this.customFormats = Object.create(Validator.prototype.customFormats);
 	  this.schemas = {};
 	  this.unresolvedRefs = [];
-	
+
 	  // Use Object.create to make this extensible without Validator instances stepping on each other's toes.
 	  this.types = Object.create(types);
 	  this.attributes = Object.create(attribute.validators);
 	};
-	
+
 	// Allow formats to be registered globally.
 	Validator.prototype.customFormats = {};
-	
+
 	// Hint at the presence of a property
 	Validator.prototype.schemas = null;
 	Validator.prototype.types = null;
 	Validator.prototype.attributes = null;
 	Validator.prototype.unresolvedRefs = null;
-	
+
 	/**
 	 * Adds a schema with a certain urn to the Validator instance.
 	 * @param schema
@@ -790,7 +800,7 @@
 	  }
 	  return this.schemas[ourUri];
 	};
-	
+
 	Validator.prototype.addSubSchema = function addSubSchema(baseuri, schema) {
 	  if(!schema || typeof schema!='object') return;
 	  // Mark all referenced schemas so we can tell later which schemas are referred to, but never defined
@@ -831,23 +841,23 @@
 	  this.addSubSchema(ourBase, schema.not);
 	  return this.schemas[ourUri];
 	};
-	
+
 	Validator.prototype.addSubSchemaArray = function addSubSchemaArray(baseuri, schemas) {
 	  if(!(schemas instanceof Array)) return;
 	  for(var i=0; i<schemas.length; i++){
 	    this.addSubSchema(baseuri, schemas[i]);
 	  }
 	};
-	
+
 	Validator.prototype.addSubSchemaObject = function addSubSchemaArray(baseuri, schemas) {
 	  if(!schemas || typeof schemas!='object') return;
 	  for(var p in schemas){
 	    this.addSubSchema(baseuri, schemas[p]);
 	  }
 	};
-	
-	
-	
+
+
+
 	/**
 	 * Sets all the schemas of the Validator instance.
 	 * @param schemas
@@ -855,7 +865,7 @@
 	Validator.prototype.setSchemas = function setSchemas (schemas) {
 	  this.schemas = schemas;
 	};
-	
+
 	/**
 	 * Returns the schema of a certain urn
 	 * @param urn
@@ -863,7 +873,7 @@
 	Validator.prototype.getSchema = function getSchema (urn) {
 	  return this.schemas[urn];
 	};
-	
+
 	/**
 	 * Validates instance against the provided schema
 	 * @param instance
@@ -894,7 +904,7 @@
 	  }
 	  throw new SchemaError('no schema specified', schema);
 	};
-	
+
 	/**
 	 * Validates an instance against the schema (the actual work horse)
 	 * @param instance
@@ -910,7 +920,7 @@
 	  if (!schema) {
 	    throw new Error("schema is undefined");
 	  }
-	
+
 	  /**
 	  * @param Object schema
 	  * @return mixed schema uri or false
@@ -932,7 +942,7 @@
 	    }
 	    return schema;
 	  }
-	
+
 	  if (schema['extends']) {
 	    if (schema['extends'] instanceof Array) {
 	      schema['extends'].forEach(function (s) {
@@ -942,14 +952,14 @@
 	      schema = helpers.deepMerge(schema, resolve(schema['extends'], ctx));
 	    }
 	  }
-	
+
 	  var switchSchema;
 	  if (switchSchema = shouldResolve(schema)) {
 	    var resolved = this.resolve(schema, switchSchema, ctx);
 	    var subctx = new SchemaContext(resolved.subschema, options, ctx.propertyPath, resolved.switchSchema, ctx.schemas);
 	    return this.validateSchema(instance, resolved.subschema, options, subctx);
 	  }
-	
+
 	  var skipAttributes = options && options.skipAttributes || [];
 	  // Validate each schema attribute against the instance
 	  for (var key in schema) {
@@ -967,14 +977,14 @@
 	      }
 	    }
 	  }
-	
+
 	  if (typeof options.rewrite == 'function') {
 	    var value = options.rewrite.call(this, instance, schema, options, ctx);
 	    result.instance = value;
 	  }
 	  return result;
 	};
-	
+
 	/**
 	* @private
 	* @param Object schema
@@ -1002,7 +1012,7 @@
 	  }
 	  return {subschema: subschema, switchSchema: switchSchema};
 	};
-	
+
 	/**
 	 * Tests whether the instance if of a certain type.
 	 * @private
@@ -1024,7 +1034,7 @@
 	  // Undefined or properties not on the list are acceptable, same as not being defined
 	  return true;
 	};
-	
+
 	var types = Validator.prototype.types = {};
 	types.string = function testString (instance) {
 	  return typeof instance == 'string';
@@ -1055,7 +1065,7 @@
 	  // TODO: fix this - see #15
 	  return instance && (typeof instance) === 'object' && !(instance instanceof Array) && !(instance instanceof Date);
 	};
-	
+
 	module.exports = Validator;
 
 
@@ -1083,16 +1093,16 @@
 	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+
 	var punycode = __webpack_require__(7);
-	
+
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
 	exports.resolveObject = urlResolveObject;
 	exports.format = urlFormat;
-	
+
 	exports.Url = Url;
-	
+
 	function Url() {
 	  this.protocol = null;
 	  this.slashes = null;
@@ -1107,21 +1117,21 @@
 	  this.path = null;
 	  this.href = null;
 	}
-	
+
 	// Reference: RFC 3986, RFC 1808, RFC 2396
-	
+
 	// define these here so at least they only have to be
 	// compiled once on the first module load.
 	var protocolPattern = /^([a-z0-9.+-]+:)/i,
 	    portPattern = /:[0-9]*$/,
-	
+
 	    // RFC 2396: characters reserved for delimiting URLs.
 	    // We actually just auto-escape these.
 	    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
-	
+
 	    // RFC 2396: characters not allowed for various reasons.
 	    unwise = ['{', '}', '|', '\\', '^', '`'].concat(delims),
-	
+
 	    // Allowed by RFCs, but cause of XSS attacks.  Always escape these.
 	    autoEscape = ['\''].concat(unwise),
 	    // Characters that are never ever allowed in a hostname.
@@ -1157,26 +1167,26 @@
 	      'file:': true
 	    },
 	    querystring = __webpack_require__(9);
-	
+
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
-	
+
 	  var u = new Url;
 	  u.parse(url, parseQueryString, slashesDenoteHost);
 	  return u;
 	}
-	
+
 	Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
 	  if (!isString(url)) {
 	    throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
 	  }
-	
+
 	  var rest = url;
-	
+
 	  // trim before proceeding.
 	  // This is to support parse stuff like "  http://foo.com  \n"
 	  rest = rest.trim();
-	
+
 	  var proto = protocolPattern.exec(rest);
 	  if (proto) {
 	    proto = proto[0];
@@ -1184,7 +1194,7 @@
 	    this.protocol = lowerProto;
 	    rest = rest.substr(proto.length);
 	  }
-	
+
 	  // figure out if it's got a host
 	  // user@server is *always* interpreted as a hostname, and url
 	  // resolution will treat //foo/bar as host=foo,path=bar because that's
@@ -1196,10 +1206,10 @@
 	      this.slashes = true;
 	    }
 	  }
-	
+
 	  if (!hostlessProtocol[proto] &&
 	      (slashes || (proto && !slashedProtocol[proto]))) {
-	
+
 	    // there's a hostname.
 	    // the first instance of /, ?, ;, or # ends the host.
 	    //
@@ -1211,10 +1221,10 @@
 	    // ex:
 	    // http://a@b@c/ => user:a@b host:c
 	    // http://a@b?@c => user:a host:c path:/?@c
-	
+
 	    // v0.12 TODO(isaacs): This is not quite how Chrome does things.
 	    // Review our test case against browsers more comprehensively.
-	
+
 	    // find the first instance of any hostEndingChars
 	    var hostEnd = -1;
 	    for (var i = 0; i < hostEndingChars.length; i++) {
@@ -1222,7 +1232,7 @@
 	      if (hec !== -1 && (hostEnd === -1 || hec < hostEnd))
 	        hostEnd = hec;
 	    }
-	
+
 	    // at this point, either we have an explicit point where the
 	    // auth portion cannot go past, or the last @ char is the decider.
 	    var auth, atSign;
@@ -1234,7 +1244,7 @@
 	      // http://a@b/c@d => host:b auth:a path:/c@d
 	      atSign = rest.lastIndexOf('@', hostEnd);
 	    }
-	
+
 	    // Now we have a portion which is definitely the auth.
 	    // Pull that off.
 	    if (atSign !== -1) {
@@ -1242,7 +1252,7 @@
 	      rest = rest.slice(atSign + 1);
 	      this.auth = decodeURIComponent(auth);
 	    }
-	
+
 	    // the host is the remaining to the left of the first non-host char
 	    hostEnd = -1;
 	    for (var i = 0; i < nonHostChars.length; i++) {
@@ -1253,22 +1263,22 @@
 	    // if we still have not hit it, then the entire thing is a host.
 	    if (hostEnd === -1)
 	      hostEnd = rest.length;
-	
+
 	    this.host = rest.slice(0, hostEnd);
 	    rest = rest.slice(hostEnd);
-	
+
 	    // pull out port.
 	    this.parseHost();
-	
+
 	    // we've indicated that there is a hostname,
 	    // so even if it's empty, it has to be present.
 	    this.hostname = this.hostname || '';
-	
+
 	    // if hostname begins with [ and ends with ]
 	    // assume that it's an IPv6 address.
 	    var ipv6Hostname = this.hostname[0] === '[' &&
 	        this.hostname[this.hostname.length - 1] === ']';
-	
+
 	    // validate a little.
 	    if (!ipv6Hostname) {
 	      var hostparts = this.hostname.split(/\./);
@@ -1305,14 +1315,14 @@
 	        }
 	      }
 	    }
-	
+
 	    if (this.hostname.length > hostnameMaxLen) {
 	      this.hostname = '';
 	    } else {
 	      // hostnames are always lower case.
 	      this.hostname = this.hostname.toLowerCase();
 	    }
-	
+
 	    if (!ipv6Hostname) {
 	      // IDNA Support: Returns a puny coded representation of "domain".
 	      // It only converts the part of the domain name that
@@ -1327,12 +1337,12 @@
 	      }
 	      this.hostname = newOut.join('.');
 	    }
-	
+
 	    var p = this.port ? ':' + this.port : '';
 	    var h = this.hostname || '';
 	    this.host = h + p;
 	    this.href += this.host;
-	
+
 	    // strip [ and ] from the hostname
 	    // the host field still retains them, though
 	    if (ipv6Hostname) {
@@ -1342,11 +1352,11 @@
 	      }
 	    }
 	  }
-	
+
 	  // now rest is set to the post-host stuff.
 	  // chop off any delim chars.
 	  if (!unsafeProtocol[lowerProto]) {
-	
+
 	    // First, make 100% sure that any "autoEscape" chars get
 	    // escaped, even if encodeURIComponent doesn't think they
 	    // need to be.
@@ -1359,8 +1369,8 @@
 	      rest = rest.split(ae).join(esc);
 	    }
 	  }
-	
-	
+
+
 	  // chop off from the tail first.
 	  var hash = rest.indexOf('#');
 	  if (hash !== -1) {
@@ -1386,19 +1396,19 @@
 	      this.hostname && !this.pathname) {
 	    this.pathname = '/';
 	  }
-	
+
 	  //to support http.request
 	  if (this.pathname || this.search) {
 	    var p = this.pathname || '';
 	    var s = this.search || '';
 	    this.path = p + s;
 	  }
-	
+
 	  // finally, reconstruct the href based on what has been validated.
 	  this.href = this.format();
 	  return this;
 	};
-	
+
 	// format a parsed object into a url string
 	function urlFormat(obj) {
 	  // ensure it's an object, and not a string url.
@@ -1409,7 +1419,7 @@
 	  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
 	  return obj.format();
 	}
-	
+
 	Url.prototype.format = function() {
 	  var auth = this.auth || '';
 	  if (auth) {
@@ -1417,13 +1427,13 @@
 	    auth = auth.replace(/%3A/i, ':');
 	    auth += '@';
 	  }
-	
+
 	  var protocol = this.protocol || '',
 	      pathname = this.pathname || '',
 	      hash = this.hash || '',
 	      host = false,
 	      query = '';
-	
+
 	  if (this.host) {
 	    host = auth + this.host;
 	  } else if (this.hostname) {
@@ -1434,17 +1444,17 @@
 	      host += ':' + this.port;
 	    }
 	  }
-	
+
 	  if (this.query &&
 	      isObject(this.query) &&
 	      Object.keys(this.query).length) {
 	    query = querystring.stringify(this.query);
 	  }
-	
+
 	  var search = this.search || (query && ('?' + query)) || '';
-	
+
 	  if (protocol && protocol.substr(-1) !== ':') protocol += ':';
-	
+
 	  // only the slashedProtocols get the //.  Not mailto:, xmpp:, etc.
 	  // unless they had them to begin with.
 	  if (this.slashes ||
@@ -1454,53 +1464,53 @@
 	  } else if (!host) {
 	    host = '';
 	  }
-	
+
 	  if (hash && hash.charAt(0) !== '#') hash = '#' + hash;
 	  if (search && search.charAt(0) !== '?') search = '?' + search;
-	
+
 	  pathname = pathname.replace(/[?#]/g, function(match) {
 	    return encodeURIComponent(match);
 	  });
 	  search = search.replace('#', '%23');
-	
+
 	  return protocol + host + pathname + search + hash;
 	};
-	
+
 	function urlResolve(source, relative) {
 	  return urlParse(source, false, true).resolve(relative);
 	}
-	
+
 	Url.prototype.resolve = function(relative) {
 	  return this.resolveObject(urlParse(relative, false, true)).format();
 	};
-	
+
 	function urlResolveObject(source, relative) {
 	  if (!source) return relative;
 	  return urlParse(source, false, true).resolveObject(relative);
 	}
-	
+
 	Url.prototype.resolveObject = function(relative) {
 	  if (isString(relative)) {
 	    var rel = new Url();
 	    rel.parse(relative, false, true);
 	    relative = rel;
 	  }
-	
+
 	  var result = new Url();
 	  Object.keys(this).forEach(function(k) {
 	    result[k] = this[k];
 	  }, this);
-	
+
 	  // hash is always overridden, no matter what.
 	  // even href="" will remove it.
 	  result.hash = relative.hash;
-	
+
 	  // if the relative url is empty, then there's nothing left to do here.
 	  if (relative.href === '') {
 	    result.href = result.format();
 	    return result;
 	  }
-	
+
 	  // hrefs like //foo/bar always cut to the protocol.
 	  if (relative.slashes && !relative.protocol) {
 	    // take everything except the protocol from relative
@@ -1508,17 +1518,17 @@
 	      if (k !== 'protocol')
 	        result[k] = relative[k];
 	    });
-	
+
 	    //urlParse appends trailing / to urls like http://www.example.com
 	    if (slashedProtocol[result.protocol] &&
 	        result.hostname && !result.pathname) {
 	      result.path = result.pathname = '/';
 	    }
-	
+
 	    result.href = result.format();
 	    return result;
 	  }
-	
+
 	  if (relative.protocol && relative.protocol !== result.protocol) {
 	    // if it's a known url protocol, then changing
 	    // the protocol does weird things
@@ -1535,7 +1545,7 @@
 	      result.href = result.format();
 	      return result;
 	    }
-	
+
 	    result.protocol = relative.protocol;
 	    if (!relative.host && !hostlessProtocol[relative.protocol]) {
 	      var relPath = (relative.pathname || '').split('/');
@@ -1564,7 +1574,7 @@
 	    result.href = result.format();
 	    return result;
 	  }
-	
+
 	  var isSourceAbs = (result.pathname && result.pathname.charAt(0) === '/'),
 	      isRelAbs = (
 	          relative.host ||
@@ -1576,7 +1586,7 @@
 	      srcPath = result.pathname && result.pathname.split('/') || [],
 	      relPath = relative.pathname && relative.pathname.split('/') || [],
 	      psychotic = result.protocol && !slashedProtocol[result.protocol];
-	
+
 	  // if the url is a non-slashed url, then relative
 	  // links like ../.. should be able
 	  // to crawl up to the hostname, as well.  This is strange.
@@ -1601,7 +1611,7 @@
 	    }
 	    mustEndAbs = mustEndAbs && (relPath[0] === '' || srcPath[0] === '');
 	  }
-	
+
 	  if (isRelAbs) {
 	    // it's absolute.
 	    result.host = (relative.host || relative.host === '') ?
@@ -1646,7 +1656,7 @@
 	    result.href = result.format();
 	    return result;
 	  }
-	
+
 	  if (!srcPath.length) {
 	    // no path at all.  easy.
 	    // we've already handled the other stuff above.
@@ -1660,7 +1670,7 @@
 	    result.href = result.format();
 	    return result;
 	  }
-	
+
 	  // if a url ENDs in . or .., then it must get a trailing slash.
 	  // however, if it ends in anything else non-slashy,
 	  // then it must NOT get a trailing slash.
@@ -1668,7 +1678,7 @@
 	  var hasTrailingSlash = (
 	      (result.host || relative.host) && (last === '.' || last === '..') ||
 	      last === '');
-	
+
 	  // strip single dots, resolve double dots to parent dir
 	  // if the path tries to go above the root, `up` ends up > 0
 	  var up = 0;
@@ -1684,26 +1694,26 @@
 	      up--;
 	    }
 	  }
-	
+
 	  // if the path is allowed to go above the root, restore leading ..s
 	  if (!mustEndAbs && !removeAllDots) {
 	    for (; up--; up) {
 	      srcPath.unshift('..');
 	    }
 	  }
-	
+
 	  if (mustEndAbs && srcPath[0] !== '' &&
 	      (!srcPath[0] || srcPath[0].charAt(0) !== '/')) {
 	    srcPath.unshift('');
 	  }
-	
+
 	  if (hasTrailingSlash && (srcPath.join('/').substr(-1) !== '/')) {
 	    srcPath.push('');
 	  }
-	
+
 	  var isAbsolute = srcPath[0] === '' ||
 	      (srcPath[0] && srcPath[0].charAt(0) === '/');
-	
+
 	  // put the host back
 	  if (psychotic) {
 	    result.hostname = result.host = isAbsolute ? '' :
@@ -1718,20 +1728,20 @@
 	      result.host = result.hostname = authInHost.shift();
 	    }
 	  }
-	
+
 	  mustEndAbs = mustEndAbs || (result.host && srcPath.length);
-	
+
 	  if (mustEndAbs && !isAbsolute) {
 	    srcPath.unshift('');
 	  }
-	
+
 	  if (!srcPath.length) {
 	    result.pathname = null;
 	    result.path = null;
 	  } else {
 	    result.pathname = srcPath.join('/');
 	  }
-	
+
 	  //to support request.http
 	  if (!isNull(result.pathname) || !isNull(result.search)) {
 	    result.path = (result.pathname ? result.pathname : '') +
@@ -1742,7 +1752,7 @@
 	  result.href = result.format();
 	  return result;
 	};
-	
+
 	Url.prototype.parseHost = function() {
 	  var host = this.host;
 	  var port = portPattern.exec(host);
@@ -1755,15 +1765,15 @@
 	  }
 	  if (host) this.hostname = host;
 	};
-	
+
 	function isString(arg) {
 	  return typeof arg === "string";
 	}
-	
+
 	function isObject(arg) {
 	  return typeof arg === 'object' && arg !== null;
 	}
-	
+
 	function isNull(arg) {
 	  return arg === null;
 	}
@@ -1778,7 +1788,7 @@
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
 	;(function(root) {
-	
+
 		/** Detect free variables */
 		var freeExports = typeof exports == 'object' && exports &&
 			!exports.nodeType && exports;
@@ -1792,17 +1802,17 @@
 		) {
 			root = freeGlobal;
 		}
-	
+
 		/**
 		 * The `punycode` object.
 		 * @name punycode
 		 * @type Object
 		 */
 		var punycode,
-	
+
 		/** Highest positive signed 32-bit float value */
 		maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
-	
+
 		/** Bootstring parameters */
 		base = 36,
 		tMin = 1,
@@ -1812,29 +1822,29 @@
 		initialBias = 72,
 		initialN = 128, // 0x80
 		delimiter = '-', // '\x2D'
-	
+
 		/** Regular expressions */
 		regexPunycode = /^xn--/,
 		regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
 		regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
-	
+
 		/** Error messages */
 		errors = {
 			'overflow': 'Overflow: input needs wider integers to process',
 			'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
 			'invalid-input': 'Invalid input'
 		},
-	
+
 		/** Convenience shortcuts */
 		baseMinusTMin = base - tMin,
 		floor = Math.floor,
 		stringFromCharCode = String.fromCharCode,
-	
+
 		/** Temporary variable */
 		key;
-	
+
 		/*--------------------------------------------------------------------------*/
-	
+
 		/**
 		 * A generic error utility function.
 		 * @private
@@ -1844,7 +1854,7 @@
 		function error(type) {
 			throw RangeError(errors[type]);
 		}
-	
+
 		/**
 		 * A generic `Array#map` utility function.
 		 * @private
@@ -1861,7 +1871,7 @@
 			}
 			return result;
 		}
-	
+
 		/**
 		 * A simple `Array#map`-like wrapper to work with domain name strings or email
 		 * addresses.
@@ -1887,7 +1897,7 @@
 			var encoded = map(labels, fn).join('.');
 			return result + encoded;
 		}
-	
+
 		/**
 		 * Creates an array containing the numeric code points of each Unicode
 		 * character in the string. While JavaScript uses UCS-2 internally,
@@ -1926,7 +1936,7 @@
 			}
 			return output;
 		}
-	
+
 		/**
 		 * Creates a string based on an array of numeric code points.
 		 * @see `punycode.ucs2.decode`
@@ -1947,7 +1957,7 @@
 				return output;
 			}).join('');
 		}
-	
+
 		/**
 		 * Converts a basic code point into a digit/integer.
 		 * @see `digitToBasic()`
@@ -1969,7 +1979,7 @@
 			}
 			return base;
 		}
-	
+
 		/**
 		 * Converts a digit/integer into a basic code point.
 		 * @see `basicToDigit()`
@@ -1986,7 +1996,7 @@
 			// 26..35 map to ASCII 0..9
 			return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
 		}
-	
+
 		/**
 		 * Bias adaptation function as per section 3.4 of RFC 3492.
 		 * http://tools.ietf.org/html/rfc3492#section-3.4
@@ -2001,7 +2011,7 @@
 			}
 			return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
 		}
-	
+
 		/**
 		 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
 		 * symbols.
@@ -2027,16 +2037,16 @@
 			    t,
 			    /** Cached calculation results */
 			    baseMinusT;
-	
+
 			// Handle the basic code points: let `basic` be the number of input code
 			// points before the last delimiter, or `0` if there is none, then copy
 			// the first basic code points to the output.
-	
+
 			basic = input.lastIndexOf(delimiter);
 			if (basic < 0) {
 				basic = 0;
 			}
-	
+
 			for (j = 0; j < basic; ++j) {
 				// if it's not a basic code point
 				if (input.charCodeAt(j) >= 0x80) {
@@ -2044,65 +2054,65 @@
 				}
 				output.push(input.charCodeAt(j));
 			}
-	
+
 			// Main decoding loop: start just after the last delimiter if any basic code
 			// points were copied; start at the beginning otherwise.
-	
+
 			for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
-	
+
 				// `index` is the index of the next character to be consumed.
 				// Decode a generalized variable-length integer into `delta`,
 				// which gets added to `i`. The overflow checking is easier
 				// if we increase `i` as we go, then subtract off its starting
 				// value at the end to obtain `delta`.
 				for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
-	
+
 					if (index >= inputLength) {
 						error('invalid-input');
 					}
-	
+
 					digit = basicToDigit(input.charCodeAt(index++));
-	
+
 					if (digit >= base || digit > floor((maxInt - i) / w)) {
 						error('overflow');
 					}
-	
+
 					i += digit * w;
 					t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-	
+
 					if (digit < t) {
 						break;
 					}
-	
+
 					baseMinusT = base - t;
 					if (w > floor(maxInt / baseMinusT)) {
 						error('overflow');
 					}
-	
+
 					w *= baseMinusT;
-	
+
 				}
-	
+
 				out = output.length + 1;
 				bias = adapt(i - oldi, out, oldi == 0);
-	
+
 				// `i` was supposed to wrap around from `out` to `0`,
 				// incrementing `n` each time, so we'll fix that now:
 				if (floor(i / out) > maxInt - n) {
 					error('overflow');
 				}
-	
+
 				n += floor(i / out);
 				i %= out;
-	
+
 				// Insert `n` at position `i` of the output
 				output.splice(i++, 0, n);
-	
+
 			}
-	
+
 			return ucs2encode(output);
 		}
-	
+
 		/**
 		 * Converts a string of Unicode symbols (e.g. a domain name label) to a
 		 * Punycode string of ASCII-only symbols.
@@ -2129,18 +2139,18 @@
 			    handledCPCountPlusOne,
 			    baseMinusT,
 			    qMinusT;
-	
+
 			// Convert the input in UCS-2 to Unicode
 			input = ucs2decode(input);
-	
+
 			// Cache the length
 			inputLength = input.length;
-	
+
 			// Initialize the state
 			n = initialN;
 			delta = 0;
 			bias = initialBias;
-	
+
 			// Handle the basic code points
 			for (j = 0; j < inputLength; ++j) {
 				currentValue = input[j];
@@ -2148,20 +2158,20 @@
 					output.push(stringFromCharCode(currentValue));
 				}
 			}
-	
+
 			handledCPCount = basicLength = output.length;
-	
+
 			// `handledCPCount` is the number of code points that have been handled;
 			// `basicLength` is the number of basic code points.
-	
+
 			// Finish the basic string - if it is not empty - with a delimiter
 			if (basicLength) {
 				output.push(delimiter);
 			}
-	
+
 			// Main encoding loop:
 			while (handledCPCount < inputLength) {
-	
+
 				// All non-basic code points < n have been handled already. Find the next
 				// larger one:
 				for (m = maxInt, j = 0; j < inputLength; ++j) {
@@ -2170,24 +2180,24 @@
 						m = currentValue;
 					}
 				}
-	
+
 				// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
 				// but guard against overflow
 				handledCPCountPlusOne = handledCPCount + 1;
 				if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
 					error('overflow');
 				}
-	
+
 				delta += (m - n) * handledCPCountPlusOne;
 				n = m;
-	
+
 				for (j = 0; j < inputLength; ++j) {
 					currentValue = input[j];
-	
+
 					if (currentValue < n && ++delta > maxInt) {
 						error('overflow');
 					}
-	
+
 					if (currentValue == n) {
 						// Represent delta as a generalized variable-length integer
 						for (q = delta, k = base; /* no condition */; k += base) {
@@ -2202,21 +2212,21 @@
 							);
 							q = floor(qMinusT / baseMinusT);
 						}
-	
+
 						output.push(stringFromCharCode(digitToBasic(q, 0)));
 						bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
 						delta = 0;
 						++handledCPCount;
 					}
 				}
-	
+
 				++delta;
 				++n;
-	
+
 			}
 			return output.join('');
 		}
-	
+
 		/**
 		 * Converts a Punycode string representing a domain name or an email address
 		 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
@@ -2235,7 +2245,7 @@
 					: string;
 			});
 		}
-	
+
 		/**
 		 * Converts a Unicode string representing a domain name or an email address to
 		 * Punycode. Only the non-ASCII parts of the domain name will be converted,
@@ -2254,9 +2264,9 @@
 					: string;
 			});
 		}
-	
+
 		/*--------------------------------------------------------------------------*/
-	
+
 		/** Define the public API */
 		punycode = {
 			/**
@@ -2281,7 +2291,7 @@
 			'toASCII': toASCII,
 			'toUnicode': toUnicode
 		};
-	
+
 		/** Expose `punycode` */
 		// Some AMD build optimizers, like r.js, check for specific condition patterns
 		// like the following:
@@ -2302,9 +2312,9 @@
 		} else { // in Rhino or a web browser
 			root.punycode = punycode;
 		}
-	
+
 	}(this));
-	
+
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module), (function() { return this; }())))
 
 /***/ },
@@ -2328,7 +2338,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	exports.decode = exports.parse = __webpack_require__(10);
 	exports.encode = exports.stringify = __webpack_require__(11);
 
@@ -2357,44 +2367,44 @@
 	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+
 	'use strict';
-	
+
 	// If obj.hasOwnProperty has been overridden, then calling
 	// obj.hasOwnProperty(prop) will break.
 	// See: https://github.com/joyent/node/issues/1707
 	function hasOwnProperty(obj, prop) {
 	  return Object.prototype.hasOwnProperty.call(obj, prop);
 	}
-	
+
 	module.exports = function(qs, sep, eq, options) {
 	  sep = sep || '&';
 	  eq = eq || '=';
 	  var obj = {};
-	
+
 	  if (typeof qs !== 'string' || qs.length === 0) {
 	    return obj;
 	  }
-	
+
 	  var regexp = /\+/g;
 	  qs = qs.split(sep);
-	
+
 	  var maxKeys = 1000;
 	  if (options && typeof options.maxKeys === 'number') {
 	    maxKeys = options.maxKeys;
 	  }
-	
+
 	  var len = qs.length;
 	  // maxKeys <= 0 means that we should not limit keys count
 	  if (maxKeys > 0 && len > maxKeys) {
 	    len = maxKeys;
 	  }
-	
+
 	  for (var i = 0; i < len; ++i) {
 	    var x = qs[i].replace(regexp, '%20'),
 	        idx = x.indexOf(eq),
 	        kstr, vstr, k, v;
-	
+
 	    if (idx >= 0) {
 	      kstr = x.substr(0, idx);
 	      vstr = x.substr(idx + 1);
@@ -2402,10 +2412,10 @@
 	      kstr = x;
 	      vstr = '';
 	    }
-	
+
 	    k = decodeURIComponent(kstr);
 	    v = decodeURIComponent(vstr);
-	
+
 	    if (!hasOwnProperty(obj, k)) {
 	      obj[k] = v;
 	    } else if (Array.isArray(obj[k])) {
@@ -2414,7 +2424,7 @@
 	      obj[k] = [obj[k], v];
 	    }
 	  }
-	
+
 	  return obj;
 	};
 
@@ -2443,32 +2453,32 @@
 	// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
-	
+
 	'use strict';
-	
+
 	var stringifyPrimitive = function(v) {
 	  switch (typeof v) {
 	    case 'string':
 	      return v;
-	
+
 	    case 'boolean':
 	      return v ? 'true' : 'false';
-	
+
 	    case 'number':
 	      return isFinite(v) ? v : '';
-	
+
 	    default:
 	      return '';
 	  }
 	};
-	
+
 	module.exports = function(obj, sep, eq, name) {
 	  sep = sep || '&';
 	  eq = eq || '=';
 	  if (obj === null) {
 	    obj = undefined;
 	  }
-	
+
 	  if (typeof obj === 'object') {
 	    return Object.keys(obj).map(function(k) {
 	      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
@@ -2480,9 +2490,9 @@
 	        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
 	      }
 	    }).join(sep);
-	
+
 	  }
-	
+
 	  if (!name) return '';
 	  return encodeURIComponent(stringifyPrimitive(name)) + eq +
 	         encodeURIComponent(stringifyPrimitive(obj));
@@ -2494,16 +2504,16 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var helpers = __webpack_require__(13);
-	
+
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
 	/** @type SchemaError */
 	var SchemaError = helpers.SchemaError;
-	
+
 	var attribute = {};
-	
+
 	attribute.ignoreProperties = {
 	  // informative properties
 	  'id': true,
@@ -2519,12 +2529,12 @@
 	  '$ref': true,
 	  'extends': true
 	};
-	
+
 	/**
 	 * @name validators
 	 */
 	var validators = attribute.validators = {};
-	
+
 	/**
 	 * Validates whether the instance if of a certain type
 	 * @param instance
@@ -2552,11 +2562,11 @@
 	  }
 	  return result;
 	};
-	
+
 	function testSchema(instance, options, ctx, schema){
 	  return this.validateSchema(instance, schema, options, ctx).valid;
 	}
-	
+
 	/**
 	 * Validates whether the instance matches some of the given schemas
 	 * @param instance
@@ -2586,7 +2596,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance matches every given schema
 	 * @param instance
@@ -2619,7 +2629,7 @@
 	  });
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance matches exactly one of the given schemas
 	 * @param instance
@@ -2650,7 +2660,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates properties
 	 * @param instance
@@ -2671,7 +2681,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Test a specific property within in instance against the additionalProperties schema attribute
 	 * This ignores properties with definitions in the properties schema attribute, but no other attributes.
@@ -2696,7 +2706,7 @@
 	    result.importErrors(res);
 	  }
 	}
-	
+
 	/**
 	 * Validates patternProperties
 	 * @param instance
@@ -2710,7 +2720,7 @@
 	  if(!this.types.object(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var patternProperties = schema.patternProperties || {};
-	
+
 	  for (var property in instance) {
 	    var test = true;
 	    for (var pattern in patternProperties) {
@@ -2727,10 +2737,10 @@
 	      testAdditionalProperty.call(this, instance, schema, options, ctx, property, result);
 	    }
 	  }
-	
+
 	  return result;
 	};
-	
+
 	/**
 	 * Validates additionalProperties
 	 * @param instance
@@ -2752,7 +2762,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value is at least of a certain length, when the instance value is a string.
 	 * @param instance
@@ -2774,7 +2784,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value is at most of a certain length, when the instance value is a string.
 	 * @param instance
@@ -2796,7 +2806,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates items when instance is an array
 	 * @param instance
@@ -2833,7 +2843,7 @@
 	  });
 	  return result;
 	};
-	
+
 	/**
 	 * Validates minimum and exclusiveMinimum when the type of the instance value is a number.
 	 * @param instance
@@ -2860,7 +2870,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates maximum and exclusiveMaximum when the type of the instance value is a number.
 	 * @param instance
@@ -2887,7 +2897,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates divisibleBy when the type of the instance value is a number.
 	 * Of course, this is susceptible to floating point error since it compares the floating points
@@ -2900,11 +2910,11 @@
 	  if (typeof instance !== 'number') {
 	    return null;
 	  }
-	
+
 	  if (schema.divisibleBy == 0) {
 	    throw new SchemaError("divisibleBy cannot be zero");
 	  }
-	
+
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (instance / schema.divisibleBy % 1) {
 	    result.addError({
@@ -2915,7 +2925,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates divisibleBy when the type of the instance value is a number.
 	 * Of course, this is susceptible to floating point error since it compares the floating points
@@ -2928,11 +2938,11 @@
 	  if (typeof instance !== 'number') {
 	    return null;
 	  }
-	
+
 	  if (schema.multipleOf == 0) {
 	    throw new SchemaError("multipleOf cannot be zero");
 	  }
-	
+
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (instance / schema.multipleOf % 1) {
 	    result.addError({
@@ -2943,7 +2953,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value is present.
 	 * @param instance
@@ -2970,7 +2980,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value matches the regular expression, when the instance value is a string.
 	 * @param instance
@@ -2991,7 +3001,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value is of a certain defined format or a custom
 	 * format.
@@ -3024,7 +3034,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value is at least of a certain length, when the instance value is a string.
 	 * @param instance
@@ -3045,7 +3055,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value is at most of a certain length, when the instance value is a string.
 	 * @param instance
@@ -3066,7 +3076,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether instance contains at least a minimum number of items, when the instance is an Array.
 	 * @param instance
@@ -3087,7 +3097,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether instance contains no more than a maximum number of items, when the instance is an Array.
 	 * @param instance
@@ -3108,7 +3118,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates that every item in an instance array is unique, when instance is an array
 	 * @param instance
@@ -3136,7 +3146,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Deep compares arrays for duplicates
 	 * @param v
@@ -3154,7 +3164,7 @@
 	  }
 	  return true;
 	}
-	
+
 	/**
 	 * Validates whether there are no duplicates, when the instance is an Array.
 	 * @param instance
@@ -3173,7 +3183,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validate for the presence of dependency properties, if the instance is an object.
 	 * @param instance
@@ -3223,7 +3233,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance value is one of the enumerated values.
 	 *
@@ -3248,7 +3258,7 @@
 	  }
 	  return result;
 	};
-	
+
 	/**
 	 * Validates whether the instance if of a prohibited type.
 	 * @param instance
@@ -3276,7 +3286,7 @@
 	  });
 	  return result;
 	};
-	
+
 	module.exports = attribute;
 
 
@@ -3285,9 +3295,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var uri = __webpack_require__(6);
-	
+
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
 	    this.property = propertyPath;
@@ -3309,11 +3319,11 @@
 	  this.argument = argument;
 	  this.stack = this.toString();
 	};
-	
+
 	ValidationError.prototype.toString = function toString() {
 	  return this.property + ' ' + this.message;
 	};
-	
+
 	var ValidatorResult = exports.ValidatorResult = function ValidatorResult(instance, schema, options, ctx) {
 	  this.instance = instance;
 	  this.schema = schema;
@@ -3322,7 +3332,7 @@
 	  this.throwError = options && options.throwError;
 	  this.disableFormat = options && options.disableFormat === true;
 	};
-	
+
 	ValidatorResult.prototype.addError = function addError(detail) {
 	  var err;
 	  if (typeof detail == 'string') {
@@ -3333,14 +3343,14 @@
 	    if (!detail.name) throw new Error('Missing validator type');
 	    err = new ValidationError(detail.message, this.instance, this.schema, this.propertyPath, detail.name, detail.argument);
 	  }
-	
+
 	  if (this.throwError) {
 	    throw err;
 	  }
 	  this.errors.push(err);
 	  return err;
 	};
-	
+
 	ValidatorResult.prototype.importErrors = function importErrors(res) {
 	  if (typeof res == 'string' || (res && res.validatorType)) {
 	    this.addError(res);
@@ -3351,15 +3361,15 @@
 	    });
 	  }
 	};
-	
+
 	ValidatorResult.prototype.toString = function toString(res) {
 	  return this.errors.map(function(v,i){ return i+': '+v.toString()+'\n'; }).join('');
 	};
-	
+
 	Object.defineProperty(ValidatorResult.prototype, "valid", { get: function() {
 	  return !this.errors.length;
 	} });
-	
+
 	/**
 	 * Describes a problem with a Schema which prevents validation of an instance
 	 * @name SchemaError
@@ -3375,7 +3385,7 @@
 	  { constructor: {value: SchemaError, enumerable: false}
 	  , name: {value: 'SchemaError', enumerable: false}
 	  });
-	
+
 	var SchemaContext = exports.SchemaContext = function SchemaContext (schema, options, propertyPath, base, schemas) {
 	  this.schema = schema;
 	  this.options = options;
@@ -3383,11 +3393,11 @@
 	  this.base = base;
 	  this.schemas = schemas;
 	};
-	
+
 	SchemaContext.prototype.resolve = function resolve (target) {
 	  return uri.resolve(this.base, target);
 	};
-	
+
 	SchemaContext.prototype.makeChild = function makeChild(schema, propertyName){
 	  var propertyPath = (propertyName===undefined) ? this.propertyPath : this.propertyPath+makeSuffix(propertyName);
 	  var base = uri.resolve(this.base, schema.id||'');
@@ -3397,23 +3407,23 @@
 	  }
 	  return ctx;
 	}
-	
+
 	var FORMAT_REGEXPS = exports.FORMAT_REGEXPS = {
 	  'date-time': /^\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])[tT ](2[0-4]|[01][0-9]):([0-5][0-9]):(60|[0-5][0-9])(\.\d+)?([zZ]|[+-]([0-5][0-9]):(60|[0-5][0-9]))$/,
 	  'date': /^\d{4}-(?:0[0-9]{1}|1[0-2]{1})-(3[01]|0[1-9]|[12][0-9])$/,
 	  'time': /^(2[0-4]|[01][0-9]):([0-5][0-9]):(60|[0-5][0-9])$/,
-	
+
 	  'email': /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/,
 	  'ip-address': /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/,
 	  'ipv6': /^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$/,
 	  'uri': /^[a-zA-Z][a-zA-Z0-9+-.]*:[^\s]*$/,
-	
+
 	  'color': /^(#?([0-9A-Fa-f]{3}){1,2}\b|aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|orange|purple|red|silver|teal|white|yellow|(rgb\(\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*,\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*,\s*\b([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\b\s*\))|(rgb\(\s*(\d?\d%|100%)+\s*,\s*(\d?\d%|100%)+\s*,\s*(\d?\d%|100%)+\s*\)))$/,
-	
+
 	  // hostname regex from: http://stackoverflow.com/a/1420225/5628
 	  'hostname': /^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/,
 	  'host-name': /^(?=.{1,255}$)[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?(?:\.[0-9A-Za-z](?:(?:[0-9A-Za-z]|-){0,61}[0-9A-Za-z])?)*\.?$/,
-	
+
 	  'alpha': /^[a-zA-Z]+$/,
 	  'alphanumeric': /^[a-zA-Z0-9]+$/,
 	  'utc-millisec': function (input) {
@@ -3431,11 +3441,11 @@
 	  'style': /\s*(.+?):\s*([^;]+);?/g,
 	  'phone': /^\+(?:[0-9] ?){6,14}[0-9]$/
 	};
-	
+
 	FORMAT_REGEXPS.regexp = FORMAT_REGEXPS.regex;
 	FORMAT_REGEXPS.pattern = FORMAT_REGEXPS.regex;
 	FORMAT_REGEXPS.ipv4 = FORMAT_REGEXPS['ip-address'];
-	
+
 	exports.isFormat = function isFormat (input, format, validator) {
 	  if (typeof input === 'string' && FORMAT_REGEXPS[format] !== undefined) {
 	    if (FORMAT_REGEXPS[format] instanceof RegExp) {
@@ -3450,7 +3460,7 @@
 	  }
 	  return true;
 	};
-	
+
 	var makeSuffix = exports.makeSuffix = function makeSuffix (key) {
 	  key = key.toString();
 	  // This function could be capable of outputting valid a ECMAScript string, but the
@@ -3464,7 +3474,7 @@
 	  }
 	  return '[' + JSON.stringify(key) + ']';
 	};
-	
+
 	exports.deepCompareStrict = function deepCompareStrict (a, b) {
 	  if (typeof a !== typeof b) {
 	    return false;
@@ -3495,11 +3505,11 @@
 	  }
 	  return a === b;
 	};
-	
+
 	module.exports.deepMerge = function deepMerge (target, src) {
 	  var array = Array.isArray(src);
 	  var dst = array && [] || {};
-	
+
 	  if (array) {
 	    target = target || [];
 	    dst = dst.concat(target);
@@ -3531,10 +3541,10 @@
 	      }
 	    });
 	  }
-	
+
 	  return dst;
 	};
-	
+
 	/**
 	 * Validates instance against the provided schema
 	 * Implements URI+JSON Pointer encoding, e.g. "%7e"="~0"=>"~", "~1"="%2f"=>"/"
@@ -3552,7 +3562,7 @@
 	  }
 	  return o;
 	};
-	
+
 	/**
 	 * Accept an Array of property names and return a JSON Pointer URI fragment
 	 * @param Array a
@@ -3570,7 +3580,7 @@
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	module.exports = {
 		"user": {
 			"type": "object",
@@ -3641,5 +3651,6 @@
 	};
 
 /***/ }
-/******/ ]);
-//# sourceMappingURL=bundle.js.map
+/******/ ])
+});
+;
