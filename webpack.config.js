@@ -4,17 +4,23 @@ var webpack = require('webpack');
 var PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
-    entry: ['whatwg-fetch', './api/main.js'],
+    entry: {
+      OpenApi: ['whatwg-fetch', './api/main.js'],
+      Tracking: './tracking/main.js'
+    },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: PROD ? 'bundle.min.js' : 'bundle.js',
+        // filename: PROD ? 'bundle.min.js' : 'bundle.js',
+        filename: PROD ? "Squatch.[name].min.js" : "Squatch.[name].js",
+        library: ["Squatch", "[name]"],
         libraryTarget: 'umd'
     },
     module: {
         loaders: [
             {
                 loader: 'babel-loader',
-                test: path.join(__dirname, 'api'),
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
                 query: {
                   presets: 'es2015',
                 },

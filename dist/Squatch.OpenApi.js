@@ -3,10 +3,10 @@
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
+	else if(typeof exports === 'object')
+		exports["OpenApi"] = factory();
+	else
+		root["Squatch"] = root["Squatch"] || {}, root["Squatch"]["OpenApi"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -3579,8 +3579,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 14 */
 /***/ function(module, exports) {
 
-	"use strict";
-
 	module.exports = {
 		"user": {
 			"type": "object",
@@ -3610,7 +3608,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					"type": "string"
 				}
 			},
-			"required": ["id", "accountId", "email", "firstName"]
+			"required": [
+				"id",
+				"accountId",
+				"email",
+				"firstName"
+			]
 		},
 		"userLookUp": {
 			"type": "object",
@@ -3622,7 +3625,10 @@ return /******/ (function(modules) { // webpackBootstrap
 					"type": "string"
 				}
 			},
-			"required": ["id", "accountId"]
+			"required": [
+				"id",
+				"accountId"
+			]
 		},
 		"userReferralCode": {
 			"type": "object",
@@ -3631,7 +3637,9 @@ return /******/ (function(modules) { // webpackBootstrap
 					"type": "string"
 				}
 			},
-			"required": ["referralCode"]
+			"required": [
+				"referralCode"
+			]
 		},
 		"applyReferralCode": {
 			"type": "object",
@@ -3646,7 +3654,11 @@ return /******/ (function(modules) { // webpackBootstrap
 					"type": "string"
 				}
 			},
-			"required": ["id", "accountId", "referralCode"]
+			"required": [
+				"id",
+				"accountId",
+				"referralCode"
+			]
 		}
 	};
 
