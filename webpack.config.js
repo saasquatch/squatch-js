@@ -5,14 +5,14 @@ var PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: {
-      OpenApi: ['whatwg-fetch', './api/main.js'],
-      Tracking: './tracking/main.js'
+      OpenApi: ['whatwg-fetch', './api/OpenApi.js'],
+      Tracking: './tracking/Cookie.js'
     },
     output: {
         path: path.join(__dirname, 'dist'),
         // filename: PROD ? 'bundle.min.js' : 'bundle.js',
         filename: PROD ? "Squatch.[name].min.js" : "Squatch.[name].js",
-        library: ["Squatch", "[name]"],
+        library: "[name]",
         libraryTarget: 'umd'
     },
     module: {

@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["OpenApi"] = factory();
 	else
-		root["Squatch"] = root["Squatch"] || {}, root["Squatch"]["OpenApi"] = factory();
+		root["OpenApi"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -503,88 +503,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _OpenApi = __webpack_require__(3);
-
-	var _OpenApi2 = _interopRequireDefault(_OpenApi);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	window.OpenApi = _OpenApi2.default;
-	// import 'whatwg-fetch';
-	//
-	// var config = {
-	//   tenantAlias: "MY_TENANT_ALIAS",
-	//   API_KEY: "MY_API_KEY"
-	// }
-	//
-	// var openAPI = new OpenApi(config);
-	//
-	// var user = {
-	//   id: "005",
-	//   accountId: "514",
-	//   referralCode: "MIKEDOYLE",
-	//   email: "mike@saasquat.ch",
-	//   imageUrl: "https://www.example.com/profile/ab5111251125",
-	//   firstName: "Mike",
-	//   lastName: "Doyle",
-	//   locale: "en_US"
-	// };
-
-
-	// openAPI.createUser(user).then(function(json) {
-	//   console.log('parsed json', json)
-	// }).catch(function(ex) {
-	//   console.log('parsing failed', ex)
-	// });
-
-
-	// openAPI.lookUpUser({"id": user.id, "accountId": user.accountId}).then(function(json) {
-	//   console.log('parsed json', json)
-	// }).catch(function(ex) {
-	//   console.log('parsing failed', ex)
-	// });
-
-	// openAPI.getUserByReferralCode({"referralCode":"JORGECONDE"}).then(function(json) {
-	//   console.log('parsed json', json)
-	// }).catch(function(ex) {
-	//   console.log('parsing failed', ex)
-	// });
-
-	// openAPI.lookUpReferralCode({"referralCode":'JORGECONDE'}).then(function(json) {
-	//   console.log('parsed json', json)
-	// }).catch(function(ex) {
-	//   console.log('parsing failed', ex)
-	// });
-
-	// openAPI.applyReferralCode({"referralCode": "JORGECONDE", "id": user.id, "accountId": user.accountId}).then(function(json) {
-	//   console.log('parsed json', json)
-	// }).catch(function(ex) {
-	//   console.log('parsing failed', ex)
-	// });
-
-	// openAPI.listReferrals().then(function(json) {
-	//   console.log('parsed json', json)
-	// }).catch(function(ex) {
-	//   console.log('parsing failed', ex)
-	// });
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _jsonschema = __webpack_require__(4);
+	var _jsonschema = __webpack_require__(3);
 
 	var _jsonschema2 = _interopRequireDefault(_jsonschema);
 
-	var _schema = __webpack_require__(14);
+	var _schema = __webpack_require__(13);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
@@ -726,16 +655,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = OpenApi;
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Validator = module.exports.Validator = __webpack_require__(5);
+	var Validator = module.exports.Validator = __webpack_require__(4);
 
-	module.exports.ValidatorResult = __webpack_require__(13).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(13).ValidationError;
-	module.exports.SchemaError = __webpack_require__(13).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(12).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(12).ValidationError;
+	module.exports.SchemaError = __webpack_require__(12).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -744,15 +673,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(6);
+	var urilib = __webpack_require__(5);
 
-	var attribute = __webpack_require__(12);
-	var helpers = __webpack_require__(13);
+	var attribute = __webpack_require__(11);
+	var helpers = __webpack_require__(12);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -1070,7 +999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1094,7 +1023,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(7);
+	var punycode = __webpack_require__(6);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1166,7 +1095,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(9);
+	    querystring = __webpack_require__(8);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1783,7 +1712,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -2315,10 +2244,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module), (function() { return this; }())))
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -2334,17 +2263,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(10);
-	exports.encode = exports.stringify = __webpack_require__(11);
+	exports.decode = exports.parse = __webpack_require__(9);
+	exports.encode = exports.stringify = __webpack_require__(10);
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2430,7 +2359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2500,12 +2429,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(13);
+	var helpers = __webpack_require__(12);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -3291,12 +3220,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(6);
+	var uri = __webpack_require__(5);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -3576,7 +3505,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = {

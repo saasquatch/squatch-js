@@ -1,6 +1,4 @@
-import OpenApi from './OpenApi.js';
-window.OpenApi = OpenApi;
-// import 'whatwg-fetch';
+// import OpenApi from './OpenApi.js';
 //
 // var config = {
 //   tenantAlias: "MY_TENANT_ALIAS",
@@ -20,13 +18,11 @@ window.OpenApi = OpenApi;
 //   locale: "en_US"
 // };
 
-
 // openAPI.createUser(user).then(function(json) {
 //   console.log('parsed json', json)
 // }).catch(function(ex) {
 //   console.log('parsing failed', ex)
 // });
-
 
 // openAPI.lookUpUser({"id": user.id, "accountId": user.accountId}).then(function(json) {
 //   console.log('parsed json', json)

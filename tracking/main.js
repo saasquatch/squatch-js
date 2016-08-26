@@ -1,6 +1,5 @@
-import cookie from "./Cookie.js";
-window.cookie = cookie;
-
+// import cookie from "./Cookie.js";
+// window.cookie = cookie;
 
 // set
 // cookie('userId', 'id');

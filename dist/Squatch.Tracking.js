@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["Tracking"] = factory();
 	else
-		root["Squatch"] = root["Squatch"] || {}, root["Squatch"]["Tracking"] = factory();
+		root["Tracking"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -50,38 +50,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _Cookie = __webpack_require__(15);
-
-	var _Cookie2 = _interopRequireDefault(_Cookie);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	window.cookie = _Cookie2.default;
-
-	// set
-	// cookie('userId', 'id');
-	// cookie('drink', 'coffee', { path: '/' })
-
-	// get
-	// cookie();
-	//    { userId: "id", drink: "coffee"}
-	//
-	// cookie('drink');
-	//    "coffee"
-
-	// clear
-	// cookie('drink', null);
-
-/***/ },
-
-/***/ 15:
+/******/ ([
+/* 0 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -158,7 +128,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }
-
-/******/ })
+/******/ ])
 });
 ;

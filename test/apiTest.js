@@ -1,8 +1,11 @@
-var assert = chai.assert;
-var expect = chai.expect;
-
 // TODO:
 //  - Add JWT authentication
+var window = window || "";
+var open = window ? window.OpenApi : require('../dist/Squatch.OpenApi');
+var chai = window ? window.chai : require('../node_modules/chai/chai');
+
+var OpenApi = open.default;
+var assert = chai.assert;
 
 describe('Open API', function() {
   var config = {
