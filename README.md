@@ -1,4 +1,5 @@
 # Squatch JS
+[![CircleCI](https://circleci.com/gh/saasquatch/squatch-js.svg?style=svg)](https://circleci.com/gh/saasquatch/squatch-js)
 
 squatch.js v2
 
