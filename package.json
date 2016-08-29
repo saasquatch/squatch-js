@@ -6,7 +6,7 @@
     "watch": "webpack --watch",
     "build": "webpack",
     "build:production": "NODE_ENV=production webpack",
-    "test": "./node_modules/karma/bin/karma start --log-level debug"
+    "test": "./node_modules/karma/bin/karma start --log-level debug --single-run"
   },
   "devDependencies": {
     "babel-core": "^6.0.20",
