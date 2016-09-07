@@ -54,12 +54,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-	module.exports = __webpack_require__(2);
+	__webpack_require__(2);
+	module.exports = __webpack_require__(3);
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -498,7 +499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -509,15 +510,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _jsonschema = __webpack_require__(3);
+	var _jsonschema = __webpack_require__(4);
 
 	var _jsonschema2 = _interopRequireDefault(_jsonschema);
 
-	var _schema = __webpack_require__(13);
+	var _schema = __webpack_require__(14);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
-	__webpack_require__(1);
+	__webpack_require__(2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -655,16 +656,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = OpenApi;
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Validator = module.exports.Validator = __webpack_require__(4);
+	var Validator = module.exports.Validator = __webpack_require__(5);
 
-	module.exports.ValidatorResult = __webpack_require__(12).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(12).ValidationError;
-	module.exports.SchemaError = __webpack_require__(12).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(13).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(13).ValidationError;
+	module.exports.SchemaError = __webpack_require__(13).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -673,15 +674,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(5);
+	var urilib = __webpack_require__(6);
 
-	var attribute = __webpack_require__(11);
-	var helpers = __webpack_require__(12);
+	var attribute = __webpack_require__(12);
+	var helpers = __webpack_require__(13);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -999,7 +1000,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1023,7 +1024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(6);
+	var punycode = __webpack_require__(7);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1095,7 +1096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(8);
+	    querystring = __webpack_require__(9);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1712,7 +1713,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -2244,10 +2245,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module), (function() { return this; }())))
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -2263,17 +2264,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(9);
-	exports.encode = exports.stringify = __webpack_require__(10);
+	exports.decode = exports.parse = __webpack_require__(10);
+	exports.encode = exports.stringify = __webpack_require__(11);
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2359,7 +2360,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2429,12 +2430,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(12);
+	var helpers = __webpack_require__(13);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -3220,12 +3221,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(5);
+	var uri = __webpack_require__(6);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -3505,7 +3506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = {
