@@ -6,6 +6,7 @@ var PROD = process.env.NODE_ENV === 'production';
 module.exports = {
     entry: {
       OpenApi: ['whatwg-fetch', './src/api/OpenApi.js'],
+      Tracking: ['./src/tracking/Cookie.js'],
       All: ['./src/squatch.js']
     },
     output: {
