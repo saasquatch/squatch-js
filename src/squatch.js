@@ -3,7 +3,6 @@ import cookie from './tracking/Cookie.js';
 
 class Squatch {
   constructor() {
-    this._sqh = window._sqh || [];
     this.loaded = 1;
   }
 
