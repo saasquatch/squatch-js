@@ -55,12 +55,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(16);
 
 
 /***/ },
 
-/***/ 15:
+/***/ 16:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -68,7 +68,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.cookie = cookie;
+	exports.default = cookie;
 	var encode = encodeURIComponent;
 	var decode = decodeURIComponent;
 

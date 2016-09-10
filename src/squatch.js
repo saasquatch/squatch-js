@@ -1,18 +1,9 @@
-import OpenApi from './api/OpenApi.js';
-import cookie from './tracking/Cookie.js';
+import { OpenApi } from './api/OpenApi';
+import cookie from './tracking/Cookie';
 
-class Squatch {
-  constructor() {
-    this.loaded = 1;
-  }
+export { cookie } from './tracking/Cookie';
+export { OpenApi } from './api/OpenApi';
 
-  push() {
-    for ( var i = 0; i < arguments.length; i++) {
-      console.log(arguments[i]);
-    }
-
-    return Array.prototype.push.apply(this, arguments);
-  }
+export function init(config) {
+  console.log(config);
 }
-
-export default Squatch;

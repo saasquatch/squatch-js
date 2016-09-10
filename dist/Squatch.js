@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["All"] = factory();
+		exports["squatch"] = factory();
 	else
-		root["All"] = factory();
+		root["squatch"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -66,44 +66,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.OpenApi = exports.cookie = undefined;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _Cookie = __webpack_require__(15);
+
+	Object.defineProperty(exports, 'cookie', {
+	  enumerable: true,
+	  get: function get() {
+	    return _Cookie.cookie;
+	  }
+	});
 
 	var _OpenApi = __webpack_require__(2);
 
-	var _OpenApi2 = _interopRequireDefault(_OpenApi);
-
-	var _Cookie = __webpack_require__(15);
+	Object.defineProperty(exports, 'OpenApi', {
+	  enumerable: true,
+	  get: function get() {
+	    return _OpenApi.OpenApi;
+	  }
+	});
+	exports.init = init;
 
 	var _Cookie2 = _interopRequireDefault(_Cookie);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var Squatch = function () {
-	  function Squatch() {
-	    _classCallCheck(this, Squatch);
-
-	    this._sqh = window._sqh || [];
-	    this.loaded = 1;
-	  }
-
-	  _createClass(Squatch, [{
-	    key: 'push',
-	    value: function push() {
-	      for (var i = 0; i < arguments.length; i++) {
-	        console.log(arguments[i]);
-	      }
-
-	      return Array.prototype.push.apply(this, arguments);
-	    }
-	  }]);
-
-	  return Squatch;
-	}();
-
-	exports.default = Squatch;
+	function init(config) {
+	  console.log(config);
+	}
 
 /***/ },
 /* 2 */
@@ -114,6 +104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.OpenApi = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -133,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var validate = _jsonschema2.default.validate;
 
-	var OpenApi = function () {
+	var OpenApi = exports.OpenApi = function () {
 
 	  //TODO:
 	  // - Authenticate with JWT
@@ -259,8 +250,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return OpenApi;
 	}();
-
-	exports.default = OpenApi;
 
 /***/ },
 /* 3 */
@@ -3647,7 +3636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = cookie;
+	exports.cookie = cookie;
 	var encode = encodeURIComponent;
 	var decode = decodeURIComponent;
 

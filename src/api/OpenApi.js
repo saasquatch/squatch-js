@@ -4,7 +4,7 @@ import 'whatwg-fetch';
 
 var validate = JSONSchema.validate;
 
-class OpenApi {
+export class OpenApi {
 
     //TODO:
     // - Authenticate with JWT
@@ -116,5 +116,3 @@ class OpenApi {
     }
 
 }
-
-export default OpenApi;

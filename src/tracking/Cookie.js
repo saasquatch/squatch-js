@@ -1,7 +1,7 @@
 let encode = encodeURIComponent;
 let decode = decodeURIComponent;
 
-export default function cookie(name, value, options) {
+export function cookie(name, value, options) {
   if (arguments.length < 2) return get(name);
   set(name, value, options);
 }

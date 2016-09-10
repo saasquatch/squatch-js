@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["OpenApi"] = factory();
+		exports["squatch"] = factory();
 	else
-		root["OpenApi"] = factory();
+		root["squatch"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -68,6 +68,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.OpenApi = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -87,7 +88,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var validate = _jsonschema2.default.validate;
 
-	var OpenApi = function () {
+	var OpenApi = exports.OpenApi = function () {
 
 	  //TODO:
 	  // - Authenticate with JWT
@@ -213,8 +214,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return OpenApi;
 	}();
-
-	exports.default = OpenApi;
 
 /***/ },
 /* 3 */
