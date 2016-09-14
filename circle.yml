@@ -5,7 +5,10 @@ machine:
 dependencies:
   override:
     - npm install
-
+  post:
+    - npm run build:production
 test:
   override:
     - npm test
+  post:
+    - npm run lint:docs

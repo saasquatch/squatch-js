@@ -50,16 +50,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(2);
+	module.exports = __webpack_require__(15);
 
 
 /***/ },
-/* 1 */,
-/* 2 */
+
+/***/ 15:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -67,10 +68,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.cookie = cookie;
+	exports.default = cookie;
 	var encode = encodeURIComponent;
 	var decode = decodeURIComponent;
 
+	/**
+	 * Gets a cookie or sets a cookie depending on what arguments you use.
+	 *
+	 * @param {string} name the name of the cookie
+	 * @param {string} [value] sets the value of the cookie
+	 * @param {Object} [options] options on the value of the cookie
+	 * @param {string} [options.path] the cookie path
+	 * @param {string} [options.domain] the cookie domain
+	 * @param {Date}   [options.expires] the cookie expiry
+	 * @param {boolean} [options.secure=false] if the cookie is secure
+	 *
+	 * @returns {Object} The cookie value
+	 *
+	 * @example <caption>Set a cookie</caption>
+	 * cookie('myCookie', 12, {domain:'google.com'});
+	 *
+	 * @example <caption>Get a cookie</caption>
+	 * var cookieValue = cookie('myCookie');
+	 *
+	 */
 	function cookie(name, value, options) {
 	  if (arguments.length < 2) return get(name);
 	  set(name, value, options);
@@ -136,6 +157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }
-/******/ ])
+
+/******/ })
 });
 ;

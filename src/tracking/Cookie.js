@@ -1,7 +1,27 @@
-let encode = encodeURIComponent;
-let decode = decodeURIComponent;
+const encode = encodeURIComponent;
+const decode = decodeURIComponent;
 
-export function cookie(name, value, options) {
+/**
+ * Gets a cookie or sets a cookie depending on what arguments you use.
+ *
+ * @param {string} name the name of the cookie
+ * @param {string} [value] sets the value of the cookie
+ * @param {Object} [options] options on the value of the cookie
+ * @param {string} [options.path] the cookie path
+ * @param {string} [options.domain] the cookie domain
+ * @param {Date}   [options.expires] the cookie expiry
+ * @param {boolean} [options.secure=false] if the cookie is secure
+ *
+ * @returns {Object} The cookie value
+ *
+ * @example <caption>Set a cookie</caption>
+ * cookie('myCookie', 12, {domain:'google.com'});
+ *
+ * @example <caption>Get a cookie</caption>
+ * var cookieValue = cookie('myCookie');
+ *
+ */
+export default function cookie(name, value, options) {
   if (arguments.length < 2) return get(name);
   set(name, value, options);
 }
