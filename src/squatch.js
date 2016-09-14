@@ -23,9 +23,9 @@ export { default as cookie } from './tracking/Cookie';
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
 export function init(config) {
-    api = new OpenApi({
-        tenantAlias: config.tenantAlias
-    });
+  api = new OpenApi({
+    tenantAlias: config.tenantAlias
+  });
 }
 
 /**
@@ -40,8 +40,8 @@ export var api = null;
 
 
 export function autofill() {
-    let opts = {};
-    return cookie('name', 'value', opts);
+  let opts = {};
+  return cookie('name', 'value', opts);
 }
 
 export function ready(fn) {
@@ -49,7 +49,7 @@ export function ready(fn) {
 }
 
 var loaded = window['squatch'] || null,
-    cached = window['_squatch'] || null;
+  cached = window['_squatch'] || null;
 
 if (loaded && cached) {
   var _ready = cached.ready;

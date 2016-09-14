@@ -40,7 +40,6 @@ export class OpenApi {
    */
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
-    this.API_KEY = config.API_KEY;
     this.domain = "https://app.referralsaasquatch.com";
   }
 
