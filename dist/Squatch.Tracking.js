@@ -50,17 +50,16 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(2);
 
 
 /***/ },
-
-/***/ 15:
+/* 1 */,
+/* 2 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -137,7 +136,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }
-
-/******/ })
+/******/ ])
 });
 ;

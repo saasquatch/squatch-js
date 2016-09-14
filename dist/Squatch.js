@@ -68,7 +68,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.OpenApi = exports.cookie = undefined;
 
-	var _Cookie = __webpack_require__(15);
+	var _Cookie = __webpack_require__(2);
 
 	Object.defineProperty(exports, 'cookie', {
 	  enumerable: true,
@@ -77,7 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _OpenApi = __webpack_require__(2);
+	var _OpenApi = __webpack_require__(3);
 
 	Object.defineProperty(exports, 'OpenApi', {
 	  enumerable: true,
@@ -86,17 +86,126 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	exports.init = init;
+	exports.ready = ready;
+	exports.autofill = autofill;
 
 	var _Cookie2 = _interopRequireDefault(_Cookie);
+
+	var _each = __webpack_require__(20);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function init(config) {
-	  console.log(config);
+	  console.log("Init function called");
+	}
+
+	function ready(fn) {
+	  fn();
+	}
+
+	function autofill() {
+	  console.log("autofill");
+	}
+
+	var loaded = window['squatch'] || null,
+	    cached = window['_squatch'] || null;
+
+	if (loaded && cached) {
+	  var _ready = cached.ready;
+
+	  loaded["init"] = init;
+	  loaded["ready"] = ready;
+	  loaded["autofill"] = autofill;
+
+	  (0, _each.each)(_ready, function (cb, i) {
+	    cb();
+	  });
+
+	  window["_" + 'squatch'] = undefined;
+	  try {
+	    delete window['_' + 'squatch'];
+	  } catch (e) {}
 	}
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.cookie = cookie;
+	var encode = encodeURIComponent;
+	var decode = decodeURIComponent;
+
+	function cookie(name, value, options) {
+	  if (arguments.length < 2) return get(name);
+	  set(name, value, options);
+	}
+
+	function set(name, value) {
+	  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	  var str = encode(name) + '=' + encode(value);
+
+	  if (value == null) options.maxage = -1;
+
+	  if (options.maxage) {
+	    options.expires = new Date(+new Date() + options.maxage);
+	  }
+
+	  if (options.path) str += '; path=' + options.path;
+	  if (options.domain) str += '; domain=' + options.domain;
+	  if (options.expires) str += '; expires=' + options.expires.toUTCString();
+	  if (options.secure) str += '; secure';
+
+	  document.cookie = str;
+	}
+
+	function get(name) {
+	  var cookies = parse(document.cookie);
+	  return name ? cookies[name] : cookies;
+	}
+
+	function parse(cookie) {
+	  var result = {},
+	      pairs = cookie.split(/ *; */);
+
+	  if (pairs.length <= 1) return result;
+
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = pairs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var pair = _step.value;
+
+	      pair = pair.split('=');
+	      result[decode(pair[0])] = decode(pair[1]);
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
+	  return result;
+	}
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -108,15 +217,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _jsonschema = __webpack_require__(3);
+	var _jsonschema = __webpack_require__(4);
 
 	var _jsonschema2 = _interopRequireDefault(_jsonschema);
 
-	var _schema = __webpack_require__(13);
+	var _schema = __webpack_require__(14);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
-	__webpack_require__(14);
+	__webpack_require__(15);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -252,16 +361,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Validator = module.exports.Validator = __webpack_require__(4);
+	var Validator = module.exports.Validator = __webpack_require__(5);
 
-	module.exports.ValidatorResult = __webpack_require__(12).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(12).ValidationError;
-	module.exports.SchemaError = __webpack_require__(12).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(13).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(13).ValidationError;
+	module.exports.SchemaError = __webpack_require__(13).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -270,15 +379,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(5);
+	var urilib = __webpack_require__(6);
 
-	var attribute = __webpack_require__(11);
-	var helpers = __webpack_require__(12);
+	var attribute = __webpack_require__(12);
+	var helpers = __webpack_require__(13);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -596,7 +705,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -620,7 +729,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(6);
+	var punycode = __webpack_require__(7);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -692,7 +801,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(8);
+	    querystring = __webpack_require__(9);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1309,7 +1418,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -1841,10 +1950,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module), (function() { return this; }())))
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -1860,17 +1969,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(9);
-	exports.encode = exports.stringify = __webpack_require__(10);
+	exports.decode = exports.parse = __webpack_require__(10);
+	exports.encode = exports.stringify = __webpack_require__(11);
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1956,7 +2065,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2026,12 +2135,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(12);
+	var helpers = __webpack_require__(13);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -2817,12 +2926,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(5);
+	var uri = __webpack_require__(6);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -3102,7 +3211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -3189,7 +3298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -3628,81 +3737,44 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.cookie = cookie;
-	var encode = encodeURIComponent;
-	var decode = decodeURIComponent;
-
-	function cookie(name, value, options) {
-	  if (arguments.length < 2) return get(name);
-	  set(name, value, options);
-	}
-
-	function set(name, value) {
-	  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	  var str = encode(name) + '=' + encode(value);
-
-	  if (value == null) options.maxage = -1;
-
-	  if (options.maxage) {
-	    options.expires = new Date(+new Date() + options.maxage);
+	exports.each = each;
+	function each(o, cb, s) {
+	  var n;
+	  if (!o) {
+	    return 0;
 	  }
-
-	  if (options.path) str += '; path=' + options.path;
-	  if (options.domain) str += '; domain=' + options.domain;
-	  if (options.expires) str += '; expires=' + options.expires.toUTCString();
-	  if (options.secure) str += '; secure';
-
-	  document.cookie = str;
-	}
-
-	function get(name) {
-	  var cookies = parse(document.cookie);
-	  return name ? cookies[name] : cookies;
-	}
-
-	function parse(cookie) {
-	  var result = {},
-	      pairs = cookie.split(/ *; */);
-
-	  if (pairs.length <= 1) return result;
-
-	  var _iteratorNormalCompletion = true;
-	  var _didIteratorError = false;
-	  var _iteratorError = undefined;
-
-	  try {
-	    for (var _iterator = pairs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	      var pair = _step.value;
-
-	      pair = pair.split('=');
-	      result[decode(pair[0])] = decode(pair[1]);
-	    }
-	  } catch (err) {
-	    _didIteratorError = true;
-	    _iteratorError = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion && _iterator.return) {
-	        _iterator.return();
+	  s = !s ? o : s;
+	  if (o instanceof Array) {
+	    // Indexed arrays, needed for Safari
+	    for (n = 0; n < o.length; n++) {
+	      if (cb.call(s, o[n], n, o) === false) {
+	        return 0;
 	      }
-	    } finally {
-	      if (_didIteratorError) {
-	        throw _iteratorError;
+	    }
+	  } else {
+	    // Hashtables
+	    for (n in o) {
+	      if (o.hasOwnProperty(n)) {
+	        if (cb.call(s, o[n], n, o) === false) {
+	          return 0;
+	        }
 	      }
 	    }
 	  }
-
-	  return result;
-	}
+	  return 1;
+	};
 
 /***/ }
 /******/ ])
