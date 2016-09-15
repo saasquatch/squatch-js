@@ -94,7 +94,7 @@ export function open() {
         return;
     }
     // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:open');
-    modalWrapper.dispatchEvent(new window.Event('squatch:open'));
+    modalWrapper.trigger('squatch:open');
 }
 
 /**
@@ -106,7 +106,7 @@ export function close() {
         return;
     }
     // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:close');
-    modalWrapper.dispatchEvent(new window.Event('squatch:close'));
+    modalWrapper.trigger('squatch:close');
 }
 
 

@@ -97,9 +97,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                                                                                                                                                                                                                  * default if no other mode is selected.
 	                                                                                                                                                                                                                                                  */
 
-	var _awaitScriptLoad = __webpack_require__(2);
+	var _getScriptPath = __webpack_require__(13);
 
-	var _awaitScriptLoad2 = _interopRequireDefault(_awaitScriptLoad);
+	var _getScriptPath2 = _interopRequireDefault(_getScriptPath);
 
 	var _polyfillJquery = __webpack_require__(5);
 
@@ -583,7 +583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (typeof _sqh === 'undefined') {
 	        console.error('_sqh must be defined and initialized to use this widget.\n         To initialize the popup widget call: \n         _sqh.push([\'init\',\n            {tenant_alias: \'$yourTenantAlias\', \n            account_id: \'$viewingCustomerAccountId\',\n            email: \'$viewingCustomerEmail\', \n            user_id : \'$viewingUserId\', \n            first_name: \'$viewingCustomerFirstName\', \n            last_name: \'$viewingCustomerLastName\'\n         ]}]);');
 	    } else {
-	        (0, _awaitScriptLoad2.default)(10, function (srcUrl) {
+	        (0, _getScriptPath2.default)(consts.SQUATCHJS_SCRIPT_NAME_REGEX, function (srcUrl) {
 
 	            if (!srcUrl) {
 	                console.error("Could not find properly formatted squatch.js DOM scripts");
@@ -605,78 +605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = version;
 
 /***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = awaitScriptLoad;
-
-	var _log2 = __webpack_require__(3);
-
-	var _log3 = _interopRequireDefault(_log2);
-
-	var _consts = __webpack_require__(4);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Waits for the DOM script element to load, so we can parse the Source URL and get the CDN/Host URL
-	 * 
-	 * Then in other functions that CDN domain be used to load other scripts
-	 * 
-	 * e.g.
-	 *      SRC Url: https://d2rcp9ak152ke1.cloudfront.net/assets/javascripts/squatch.min.js
-	 *      Returns to callback: https://d2rcp9ak152ke1.cloudfront.net
-	 */
-	function awaitScriptLoad(iteration, callback) {
-
-	    // TODO: LV: Is this just overkill? Seems like this other approach might work: http://stackoverflow.com/questions/2976651/javascript-how-do-i-get-the-url-of-script-being-called
-
-	    var scriptEls = document.getElementsByTagName('script');
-	    var thisScriptEl = scriptEls[scriptEls.length - 1];
-	    var scriptPath = thisScriptEl.src;
-	    var scriptFolder = scriptPath.substr(0, scriptPath.lastIndexOf('/') + 1);
-
-	    callback(scriptFolder);
-	    //  Try to find the src this script was loaded under and if it can't be found
-	    //  iteratively wait and try again for the provided iteration count
-
-	    // const scripts = document.getElementsByTagName('script');
-	    // let len = scripts.length;
-
-	    // let embedSrc = null;
-
-	    // while (len--) {
-	    //     let src = scripts[len].src;
-	    //     if (src && src.match(SQUATCHJS_SCRIPT_NAME_REGEX)) {
-	    //         embedSrc = src;
-	    //         break;
-	    //     }
-	    // }
-
-	    // if (embedSrc || iteration <= 0) {
-	    //     let hostSrc = null;
-	    //     if(embedSrc){
-	    //         // Extract the host part of the Squatch.js url
-	    //         _log(hostSrc);
-	    //         hostSrc = embedSrc.match(new RegExp('https?://[^/]*'))[0];
-	    //     }
-	    //     callback(hostSrc);
-	    // }
-	    // else {
-	    //     _log("squatch js not finished loading try again.");
-
-	    //     setTimeout(function() {
-	    //         awaitScriptLoad(--iteration, callback);
-	    //     }, 50);
-	    // }
-	}
-
-/***/ },
+/* 2 */,
 /* 3 */
 /***/ function(module, exports) {
 
@@ -762,7 +691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -771,6 +700,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = polyfillJquery;
 
+	var _loadScript = __webpack_require__(14);
+
+	var _loadScript2 = _interopRequireDefault(_loadScript);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var JQUERY_VERSIONS = new RegExp('[1]\.[7-9](\.[0-9])?');
+
 	/**
 	 * Load JQuery if it's not already loaded, or if it's version is insufficient for our purposes
 	 * 
@@ -778,37 +715,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Function} callback Async callback that will get either `window.jQuery`, or our own loaded version.
 	 */
 	function polyfillJquery(jQueryUrl, callback) {
+	    var re = arguments.length <= 2 || arguments[2] === undefined ? JQUERY_VERSIONS : arguments[2];
 
-	    /** ****** Called once jQuery has loaded ***** */
-	    var scriptLoadHandler = function scriptLoadHandler() {
-	        // Restore $ and window.jQuery to their previous values and store
-	        // the
-	        // new jQuery in our local jQuery variable
-	        var squatchQuery = window.jQuery.noConflict(true);
-	        // Call our main function
-	        callback(squatchQuery);
-	    };
 
 	    /** ****** Load jQuery if not present ******** */
-	    var re = new RegExp('[1]\.[7-9](\.[0-9])?');
 	    if (window.jQuery === undefined || !re.test(window.jQuery.fn.jquery)) {
-	        var script_tag = document.createElement('script');
-	        script_tag.setAttribute('type', 'text/javascript');
-	        script_tag.setAttribute('src', jQueryUrl);
-	        if (script_tag.readyState) {
-	            script_tag.onreadystatechange = function () {
-	                // For old
-	                // versions of
-	                // IE
-	                if (this.readyState == 'complete' || this.readyState == 'loaded') {
-	                    scriptLoadHandler();
-	                }
-	            };
-	        } else {
-	            script_tag.onload = scriptLoadHandler;
-	        }
-	        // Try to find the head, otherwise default to the documentElement
-	        (document.getElementsByTagName('head')[0] || document.documentElement).appendChild(script_tag);
+	        (0, _loadScript2.default)(jQueryUrl, function () {
+	            // Restore $ and window.jQuery to their previous values and store
+	            // the new jQuery in our local jQuery variable
+	            var newJQuery = window.jQuery.noConflict(true);
+
+	            callback(newJQuery);
+	        });
 	    } else {
 	        // The jQuery version on the window is the one we want to use
 	        callback(window.jQuery);
@@ -1129,7 +1047,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	    }
 	    // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:open');
-	    modalWrapper.dispatchEvent(new window.Event('squatch:open'));
+	    modalWrapper.trigger('squatch:open');
 	}
 
 	/**
@@ -1141,7 +1059,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return;
 	    }
 	    // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:close');
-	    modalWrapper.dispatchEvent(new window.Event('squatch:close'));
+	    modalWrapper.trigger('squatch:close');
 	}
 
 	/**
@@ -1344,6 +1262,106 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	    return rpc;
+	}
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = getScriptPath;
+
+	var _log2 = __webpack_require__(3);
+
+	var _log3 = _interopRequireDefault(_log2);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Waits for the DOM script element to load, so we can parse the Source URL and get the CDN/Host URL
+	 * 
+	 * Then in other functions that CDN domain be used to load other scripts
+	 * 
+	 * e.g.
+	 *      SRC Url: https://d2rcp9ak152ke1.cloudfront.net/assets/javascripts/squatch.min.js
+	 *      Returns to callback: https://d2rcp9ak152ke1.cloudfront.net
+	 */
+	function getScriptPath(scriptRegex, callback) {
+	    var iteration = arguments.length <= 2 || arguments[2] === undefined ? 10 : arguments[2];
+
+
+	    // Seems like overkill? It's not.
+	    // It seems like this other approach might work, but it doesn't when the script is loaded asynchronously: http://stackoverflow.com/questions/2976651/javascript-how-do-i-get-the-url-of-script-being-called
+
+	    //  Try to find the src this script was loaded under and if it can't be found
+	    //  iteratively wait and try again for the provided iteration count
+
+	    var scripts = document.getElementsByTagName('script');
+	    var len = scripts.length;
+
+	    var embedSrc = null;
+
+	    while (len--) {
+	        var src = scripts[len].src;
+	        if (src && src.match(scriptRegex)) {
+	            embedSrc = src;
+	            break;
+	        }
+	    }
+
+	    if (embedSrc || iteration <= 0) {
+	        var hostSrc = null;
+	        if (embedSrc) {
+	            // Extract the host part of the Squatch.js url
+	            (0, _log3.default)(hostSrc);
+	            hostSrc = embedSrc.substr(0, embedSrc.lastIndexOf('/') + 1);
+	            // embedSrc.match(new RegExp('https?://[^/]*'))[0];
+	        }
+	        callback(hostSrc);
+	    } else {
+	        (0, _log3.default)("squatch js not finished loading try again.");
+
+	        setTimeout(function () {
+	            getScriptPath(scriptRegex, callback, --iteration);
+	        }, 50);
+	    }
+	}
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = loadScript;
+	/**
+	 * Loads a Script by appending it to the <head>
+	 */
+	function loadScript(scriptUrl, scriptLoadHandler) {
+	    var script_tag = document.createElement('script');
+	    script_tag.setAttribute('type', 'text/javascript');
+	    script_tag.setAttribute('src', scriptUrl);
+	    if (script_tag.readyState) {
+	        script_tag.onreadystatechange = function () {
+	            // For old
+	            // versions of
+	            // IE
+	            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+	                scriptLoadHandler();
+	            }
+	        };
+	    } else {
+	        script_tag.onload = scriptLoadHandler;
+	    }
+	    // Try to find the head, otherwise default to the documentElement
+	    (document.getElementsByTagName('head')[0] || document.documentElement).appendChild(script_tag);
 	}
 
 /***/ }

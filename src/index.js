@@ -28,7 +28,7 @@
 * default if no other mode is selected.
 */
 
-import awaitScriptLoad from './util/awaitScriptLoad';
+import getScriptPath from './util/getScriptPath';
 import polyfillJquery from './util/polyfillJquery';
 import onScriptFailure from './util/onScriptFailure';
 import _log from './_log';
@@ -525,7 +525,7 @@ function onLoad() {
             last_name: '$viewingCustomerLastName'
          ]}]);`);
     } else {
-        awaitScriptLoad(10, (srcUrl) => {
+        getScriptPath(consts.SQUATCHJS_SCRIPT_NAME_REGEX, (srcUrl) => {
 
             if (!srcUrl) {
                 console.error("Could not find properly formatted squatch.js DOM scripts");
