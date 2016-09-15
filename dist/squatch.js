@@ -101,23 +101,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _awaitScriptLoad2 = _interopRequireDefault(_awaitScriptLoad);
 
-	var _polyfillJquery = __webpack_require__(4);
+	var _polyfillJquery = __webpack_require__(5);
 
 	var _polyfillJquery2 = _interopRequireDefault(_polyfillJquery);
 
-	var _onScriptFailure = __webpack_require__(5);
+	var _onScriptFailure = __webpack_require__(6);
 
 	var _onScriptFailure2 = _interopRequireDefault(_onScriptFailure);
 
-	var _consts = __webpack_require__(3);
+	var _consts = __webpack_require__(4);
 
 	var consts = _interopRequireWildcard(_consts);
 
-	var _rpc = __webpack_require__(8);
+	var _rpc = __webpack_require__(7);
 
 	var rpc = _interopRequireWildcard(_rpc);
 
-	var _popupWidget = __webpack_require__(6);
+	var _popupWidget = __webpack_require__(9);
 
 	var popupWidget = _interopRequireWildcard(_popupWidget);
 
@@ -230,7 +230,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function main($j) {
 	    $j(document).ready(function ($jQuery) {
 	        $ = $jQuery;
-
+	        window.squatchQuery = $jQuery; // NOTE: very important -- the `squatchQuery` is used directly in our modified version of jquery.reveal
 	        // first look for any subscriptions prior to init (these should be added first so there's no potential to miss subscribed events immediately after init)
 	        for (var i = 0; i < window._sqh.length; i++) {
 	            var current = window._sqh[i];
@@ -456,7 +456,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            cache: true
 	        });
 
-	        $.getScript(hostSrc + "/assets/javascripts/easyXDM.min.js", function () {
+	        $.getScript(hostSrc + consts.EASYXDM_PATH, function () {
 	            _log("easyXDM loaded");
 
 	            embeddedToEmbed.create(sqh_config, $, hostSrc, onReady);
@@ -605,7 +605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return;
 	            }
 	            hostSrc = srcUrl;
-	            (0, _polyfillJquery2.default)(srcUrl + '/assets/javascripts/jquery-1.9.0.min.js', function (jq) {
+	            (0, _polyfillJquery2.default)(srcUrl + consts.JQUERY_PATH, function (jq) {
 	                // Entry point to all the magic.
 	                main(jq);
 	            });
@@ -630,11 +630,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.default = awaitScriptLoad;
 
-	var _log2 = __webpack_require__(7);
+	var _log2 = __webpack_require__(3);
 
 	var _log3 = _interopRequireDefault(_log2);
 
-	var _consts = __webpack_require__(3);
+	var _consts = __webpack_require__(4);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -671,7 +671,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var hostSrc = null;
 	        if (embedSrc) {
 	            // Extract the host part of the Squatch.js url
-	            hostSrc.match(new RegExp('https?://[^/]*'))[0];
+	            (0, _log3.default)(hostSrc);
+	            hostSrc = embedSrc.match(new RegExp('https?://[^/]*'))[0];
 	        }
 	        callback(hostSrc);
 	    } else {
@@ -685,6 +686,35 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = _log;
+	/**
+	 * Logging to help with debugging
+	 */
+	var debug = true;
+
+	function _log() {
+	    debug && window.console && console.log.apply(console, arguments);
+	}
+
+	if (!(window.console && console.log)) {
+	    console = {
+	        log: function log() {},
+	        debug: function debug() {},
+	        info: function info() {},
+	        warn: function warn() {},
+	        error: function error() {}
+	    };
+	}
+
+/***/ },
+/* 4 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -728,8 +758,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var SQUATCHJS_SCRIPT_NAME_REGEX = exports.SQUATCHJS_SCRIPT_NAME_REGEX = /squatch(\.min)?\.js(\?.*)*$/;
 
+	// export const JQUERY_PATH = '/assets/javascripts/jquery-1.9.0.min.js';
+	// export const JQUERY_REVEAL_PATH = '/assets/javascripts-min/reveal.js';
+	// export const JQUERY_REVEAL_CSS_PATH = '/assets/css/widget/external/reveal.min.css';
+	// export const EASYXDM_PATH = '/assets/javascripts/easyXDM.min.js';
+
+	var JQUERY_PATH = exports.JQUERY_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/jquery-1.9.0.min.js';
+	var JQUERY_REVEAL_PATH = exports.JQUERY_REVEAL_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/reveal.js';
+	var JQUERY_REVEAL_CSS_PATH = exports.JQUERY_REVEAL_CSS_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/reveal.css';
+	var EASYXDM_PATH = exports.EASYXDM_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/easyXDM.min.js';
+
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -785,7 +825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -809,190 +849,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.create = create;
-	exports.open = open;
-	exports.close = close;
-
-	var _log2 = __webpack_require__(7);
-
-	var _log3 = _interopRequireDefault(_log2);
-
-	var _onScriptFailure = __webpack_require__(5);
-
-	var _onScriptFailure2 = _interopRequireDefault(_onScriptFailure);
-
-	var _rpc = __webpack_require__(8);
-
-	var rpc = _interopRequireWildcard(_rpc);
-
-	var _consts = __webpack_require__(3);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Beware: These variables are stateful
-	 */
-	var modalWrapper = null;
-
-	/**
-	 * Called to load popup widget
-	 * 
-	 */
-	function create(sqh_config, $, hostSrc, callback) {
-
-	    (0, _log3.default)("loading popup widget");
-
-	    /** ***** Load CSS ****** */
-	    var css_link = $("<link>", {
-	        rel: "stylesheet",
-	        type: "text/css",
-	        href: hostSrc + "/assets/css/widget/external/reveal.min.css"
-	    });
-	    css_link.appendTo('head');
-
-	    $.getScript(hostSrc + "/assets/javascripts-min/reveal.js", function () {
-	        (0, _log3.default)("reveal loaded");
-
-	        // setup the popup container for reveal
-	        var framediv = document.createElement('div');
-	        framediv.setAttribute('id', 'squatchModal');
-	        framediv.setAttribute('class', 'reveal-modal');
-
-	        $('<div></div>').attr('id', 'squatchModalWrapper').append(framediv).appendTo('body');
-
-	        modalWrapper = document.getElementById('squatchModalWrapper');
-
-	        var rpcOpts = {
-	            framediv: framediv,
-	            callback: callback,
-	            closeFnc: function closeFnc() {
-	                $('#squatchModalWrapper').trigger('squatch:close');
-	            },
-	            pageType: "modalPopup"
-	        };
-	        var irpc = rpc.setup(sqh_config, rpcOpts);
-
-	        // handle the popup closing (via clicking close or outside
-	        // of the frame)
-	        $('#squatchModalWrapper').on('reveal:close', '#squatchModal', function () {
-	            irpc.closedWidget();
-	        });
-
-	        // reveal the iframe popup
-	        $('body').on('click', '.squatchpop', function (e) {
-	            e.preventDefault();
-	            // prevent race condition of page not being ready yet
-	            $('#squatchModalWrapper').trigger('squatch:open');
-	        });
-
-	        // listen for events to close the modal widget
-	        modalWrapper.on('squatch:close', function (e) {
-	            $('#squatchModal').trigger('reveal:close');
-	        });
-
-	        // listen for events to open the modal widget
-	        modalWrapper.on('squatch:open', function (e) {
-	            irpc.openedWidget(sqh_config.mode, sqh_config.user_id, sqh_config.account_id);
-	            $('#squatchModal').reveal();
-	        });
-
-	        checkForAutoOpen(sqh_config, $);
-	    }).fail(_onScriptFailure2.default);
-	}
-
-	/**
-	 * Open the squatch popup widget if it has been loaded
-	 */
-	function open() {
-	    if (!modalWrapper) {
-	        console.error("The squatch widget must be loaded in popup mode to be opened");
-	        return;
-	    }
-	    // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:open');
-	    modalWrapper.dispatchEvent(new window.Event('squatch:open'));
-	}
-
-	/**
-	 * Close the squatch popup widget if it has been loaded
-	 */
-	function close() {
-	    if (!modalWrapper) {
-	        console.error("The squatch widget must be loaded in popup mode to be closed");
-	        return;
-	    }
-	    // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:close');
-	    modalWrapper.dispatchEvent(new window.Event('squatch:close'));
-	}
-
-	/**
-	 * Check whether the popup should be automatically shown when the paged is
-	 * loaded
-	 * 
-	 */
-	function checkForAutoOpen(sqh_config, $) {
-	    var hasAutoPopped = false;
-	    var autoShowPopupParam = !sqh_config.auto_open_param ? _consts.DEFAULT_AUTO_OPEN : sqh_config.auto_open_param;
-
-	    var query = window.location.search.substring(1);
-	    var vars = query.split("&");
-	    for (var i = 0; i < vars.length; i++) {
-	        if (vars[i] === autoShowPopupParam) {
-	            (function () {
-	                var autoOpenInterval = setInterval(function () {
-	                    $(document).ready(function () {
-	                        open(); // Opens the popup
-	                        hasAutoPopped = true;
-	                    });
-	                    if (hasAutoPopped) {
-	                        clearInterval(autoOpenInterval);
-	                    }
-	                }, 1000);
-	            })();
-	        }
-	    }
-	}
-
-/***/ },
 /* 7 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = _log;
-	/**
-	 * Logging to help with debugging
-	 */
-	var debug = false;
-
-	function _log() {
-	    debug && window.console && console.log.apply(console, arguments);
-	};
-
-	if (!(window.console && console.log)) {
-	    console = {
-	        log: function log() {},
-	        debug: function debug() {},
-	        info: function info() {},
-	        warn: function warn() {},
-	        error: function error() {}
-	    };
-	}
-
-/***/ },
-/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1003,13 +860,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.setup = setup;
 	exports.subscribe = subscribe;
 
-	var _log2 = __webpack_require__(7);
+	var _log2 = __webpack_require__(3);
 
 	var _log3 = _interopRequireDefault(_log2);
 
-	var _consts = __webpack_require__(3);
+	var _consts = __webpack_require__(4);
 
-	var _widgetUrls = __webpack_require__(9);
+	var _widgetUrls = __webpack_require__(8);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1111,7 +968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1122,7 +979,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getTenantHost = getTenantHost;
 	exports.getFrameUrl = getFrameUrl;
 
-	var _consts = __webpack_require__(3);
+	var _consts = __webpack_require__(4);
 
 	/**
 	 * Get the tenant host url
@@ -1171,6 +1028,160 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.create = create;
+	exports.open = open;
+	exports.close = close;
+
+	var _log2 = __webpack_require__(3);
+
+	var _log3 = _interopRequireDefault(_log2);
+
+	var _onScriptFailure = __webpack_require__(6);
+
+	var _onScriptFailure2 = _interopRequireDefault(_onScriptFailure);
+
+	var _rpc = __webpack_require__(7);
+
+	var rpc = _interopRequireWildcard(_rpc);
+
+	var _consts = __webpack_require__(4);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	/**
+	 * Beware: These variables are stateful
+	 */
+	var modalWrapper = null;
+
+	/**
+	 * Called to load popup widget
+	 * 
+	 */
+	function create(sqh_config, $, hostSrc, callback) {
+
+	    (0, _log3.default)("loading popup widget");
+
+	    /** ***** Load CSS ****** */
+	    var css_link = $("<link>", {
+	        rel: "stylesheet",
+	        type: "text/css",
+	        href: hostSrc + _consts.JQUERY_REVEAL_CSS_PATH
+	    });
+	    css_link.appendTo('head');
+
+	    $.getScript(hostSrc + _consts.JQUERY_REVEAL_PATH, function () {
+	        (0, _log3.default)("reveal loaded");
+
+	        // setup the popup container for reveal
+	        var framediv = document.createElement('div');
+	        framediv.setAttribute('id', 'squatchModal');
+	        framediv.setAttribute('class', 'reveal-modal');
+
+	        $('<div></div>').attr('id', 'squatchModalWrapper').append(framediv).appendTo('body');
+
+	        modalWrapper = $('#squatchModalWrapper');
+
+	        var rpcOpts = {
+	            framediv: framediv,
+	            callback: callback,
+	            closeFnc: function closeFnc() {
+	                $('#squatchModalWrapper').trigger('squatch:close');
+	            },
+	            pageType: "modalPopup"
+	        };
+	        var irpc = rpc.setup(sqh_config, rpcOpts);
+
+	        // handle the popup closing (via clicking close or outside
+	        // of the frame)
+	        $('#squatchModalWrapper').on('reveal:close', '#squatchModal', function () {
+	            irpc.closedWidget();
+	        });
+
+	        // reveal the iframe popup
+	        $('body').on('click', '.squatchpop', function (e) {
+	            e.preventDefault();
+	            // prevent race condition of page not being ready yet
+	            $('#squatchModalWrapper').trigger('squatch:open');
+	        });
+
+	        // listen for events to close the modal widget
+	        modalWrapper.on('squatch:close', function (e) {
+	            $('#squatchModal').trigger('reveal:close');
+	        });
+
+	        // listen for events to open the modal widget
+	        modalWrapper.on('squatch:open', function (e) {
+	            irpc.openedWidget(sqh_config.mode, sqh_config.user_id, sqh_config.account_id);
+	            $('#squatchModal').reveal();
+	        });
+
+	        checkForAutoOpen(sqh_config, $);
+	    }).fail(_onScriptFailure2.default);
+	}
+
+	/**
+	 * Open the squatch popup widget if it has been loaded
+	 */
+	function open() {
+	    if (!modalWrapper) {
+	        console.error("The squatch widget must be loaded in popup mode to be opened");
+	        return;
+	    }
+	    // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:open');
+	    modalWrapper.dispatchEvent(new window.Event('squatch:open'));
+	}
+
+	/**
+	 * Close the squatch popup widget if it has been loaded
+	 */
+	function close() {
+	    if (!modalWrapper) {
+	        console.error("The squatch widget must be loaded in popup mode to be closed");
+	        return;
+	    }
+	    // Previously used JQuery to dispatch event: $('#squatchModalWrapper').trigger('squatch:close');
+	    modalWrapper.dispatchEvent(new window.Event('squatch:close'));
+	}
+
+	/**
+	 * Check whether the popup should be automatically shown when the paged is
+	 * loaded
+	 * 
+	 */
+	function checkForAutoOpen(sqh_config, $) {
+	    var hasAutoPopped = false;
+	    var autoShowPopupParam = !sqh_config.auto_open_param ? _consts.DEFAULT_AUTO_OPEN : sqh_config.auto_open_param;
+
+	    var query = window.location.search.substring(1);
+	    var vars = query.split("&");
+	    for (var i = 0; i < vars.length; i++) {
+	        if (vars[i] === autoShowPopupParam) {
+	            (function () {
+	                var autoOpenInterval = setInterval(function () {
+	                    $(document).ready(function () {
+	                        open(); // Opens the popup
+	                        hasAutoPopped = true;
+	                    });
+	                    if (hasAutoPopped) {
+	                        clearInterval(autoOpenInterval);
+	                    }
+	                }, 1000);
+	            })();
+	        }
+	    }
+	}
+
+/***/ },
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1181,11 +1192,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.create = create;
 
-	var _log2 = __webpack_require__(7);
+	var _log2 = __webpack_require__(3);
 
 	var _log3 = _interopRequireDefault(_log2);
 
-	var _widgetUrls = __webpack_require__(9);
+	var _widgetUrls = __webpack_require__(8);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1230,13 +1241,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.create = undefined;
 
-	var _log2 = __webpack_require__(7);
+	var _log2 = __webpack_require__(3);
 
 	var _log3 = _interopRequireDefault(_log2);
 
-	var _consts = __webpack_require__(3);
+	var _consts = __webpack_require__(4);
 
-	var _rpc = __webpack_require__(8);
+	var _rpc = __webpack_require__(7);
 
 	var rpc = _interopRequireWildcard(_rpc);
 
@@ -1292,11 +1303,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.create = create;
 
-	var _log2 = __webpack_require__(7);
+	var _log2 = __webpack_require__(3);
 
 	var _log3 = _interopRequireDefault(_log2);
 
-	var _widgetUrls = __webpack_require__(9);
+	var _widgetUrls = __webpack_require__(8);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

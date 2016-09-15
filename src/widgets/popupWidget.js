@@ -3,7 +3,9 @@ import onScriptFailure from '../util/onScriptFailure';
 import * as rpc from './rpc';
 
 import {
-    DEFAULT_AUTO_OPEN
+    DEFAULT_AUTO_OPEN,
+    JQUERY_REVEAL_PATH,
+    JQUERY_REVEAL_CSS_PATH
 }
 from '../consts';
 
@@ -24,12 +26,12 @@ export function create(sqh_config, $, hostSrc, callback) {
     const css_link = $("<link>", {
         rel: "stylesheet",
         type: "text/css",
-        href: hostSrc + "/assets/css/widget/external/reveal.min.css"
+        href: hostSrc + JQUERY_REVEAL_CSS_PATH
     });
     css_link.appendTo('head');
 
     $.getScript(
-        hostSrc + "/assets/javascripts-min/reveal.js",
+        hostSrc + JQUERY_REVEAL_PATH,
         function() {
             _log("reveal loaded");
 
@@ -40,7 +42,7 @@ export function create(sqh_config, $, hostSrc, callback) {
 
             $('<div></div>').attr('id', 'squatchModalWrapper').append(framediv).appendTo('body');
 
-            modalWrapper = document.getElementById('squatchModalWrapper');
+            modalWrapper = $('#squatchModalWrapper');
 
             const rpcOpts = {
                 framediv,

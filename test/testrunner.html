@@ -9,9 +9,38 @@
     <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/chai/chai.js"></script>
     <script>mocha.setup('bdd')</script>
+    <button class="squatchpop">Open Popup</button>
+    <div id="squatchembed"></div>
+
+    <script type="text/javascript">
+var _sqh = _sqh || [];
+
+var logan = {
+    "tenant_alias": "test_a7fprfjx7tzxh",
+    "account_id": "219065",
+    "user_id": "219065",
+    "email": "logan@saasquat.ch",
+    "first_name": "Logan",
+    "last_name": "Volkers",
+    "payment_provider_id": null,
+    "checksum": "waemYYSi8a/l8B7oCRy9tVVBBiOZDB12uH39lDozxFA="
+};
+
+// logan.mode = "EMBED";
+
+// Push user details for the user who is logged in to your SaaS app
+_sqh.push(['init', logan]);
+
+// Autofill connects referral coupons to your payment form
+_sqh.push(['autofill', '#my_coupon']);
+
+
+    // Include squatch.js
+    // (function(){function l(){var s=document.createElement("script");s.type="text/javascript";s.async=true;s.src=location.protocol+"//d2rcp9ak152ke1.cloudfront.net/assets/javascripts/squatch.min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t)}if(window.attachEvent){window.attachEvent("onload",l)}else{window.addEventListener("load",l,false)}})();
+    </script>
 
     <!-- load code you want to test here -->
-    <script src="../dist/Squatch.OpenApi.js"></script>
+    <script src="../dist/squatch.js"></script>
 
     <!-- load your test files here -->
     <script src="apiTest.js"></script>

@@ -30,7 +30,5 @@
     "node-libs-browser": "^0.5.3",
     "webpack": "^1.13.2"
   },
-  "dependencies": {
-
-  }
+  "dependencies": {}
 }

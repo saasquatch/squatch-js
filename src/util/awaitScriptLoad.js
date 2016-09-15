@@ -34,7 +34,8 @@ export default function awaitScriptLoad(iteration, callback) {
         let hostSrc = null;
         if(embedSrc){
             // Extract the host part of the Squatch.js url
-            hostSrc.match(new RegExp('https?://[^/]*'))[0];
+            _log(hostSrc);
+            hostSrc = embedSrc.match(new RegExp('https?://[^/]*'))[0];
         }
         callback(hostSrc);
     }

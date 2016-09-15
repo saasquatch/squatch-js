@@ -137,7 +137,7 @@ function main($j) {
     $j(document).ready(
         function($jQuery) {
             $ = $jQuery;
-
+            window.squatchQuery = $jQuery; // NOTE: very important -- the `squatchQuery` is used directly in our modified version of jquery.reveal
             // first look for any subscriptions prior to init (these should be added first so there's no potential to miss subscribed events immediately after init)
             for (let i = 0; i < window._sqh.length; i++) {
                 let current = window._sqh[i];
@@ -372,7 +372,7 @@ function init(sqh_config) {
             cache: true
         });
 
-        $.getScript(hostSrc + "/assets/javascripts/easyXDM.min.js",
+        $.getScript(hostSrc + consts.EASYXDM_PATH,
             function() {
                 _log("easyXDM loaded");
 
@@ -542,7 +542,7 @@ function onLoad() {
                 return;
             }
             hostSrc = srcUrl;
-            polyfillJquery(srcUrl + '/assets/javascripts/jquery-1.9.0.min.js', (jq) => {
+            polyfillJquery(srcUrl + consts.JQUERY_PATH, (jq) => {
                 // Entry point to all the magic.
                 main(jq);
             });

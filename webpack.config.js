@@ -5,7 +5,7 @@ var PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: {
-      Squatch: ['./src/index.js']
+      squatch: ['./src/index.js']
     },
     output: {
         path: path.join(__dirname, 'dist'),
