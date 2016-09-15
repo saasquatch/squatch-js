@@ -1,7 +1,6 @@
 
 /**
- * Load JQuery first then begin loading the squatch widget after we've
- * detected the src this script was embedded under
+ * Load JQuery if it's not already loaded, or if it's version is insufficient for our purposes
  * 
  * @param {string} hostSrc The domain including protocol host of jQuery
  * @param {Function} callback Async callback that will get either `window.jQuery`, or our own loaded version.

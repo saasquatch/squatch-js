@@ -109,6 +109,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _onScriptFailure2 = _interopRequireDefault(_onScriptFailure);
 
+	var _log2 = __webpack_require__(3);
+
+	var _log3 = _interopRequireDefault(_log2);
+
 	var _consts = __webpack_require__(4);
 
 	var consts = _interopRequireWildcard(_consts);
@@ -151,25 +155,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var hasAccountId = false;
 	var data = null;
 	var $ = null;
-
-	/**
-	 * Logging to help with debugging
-	 */
-	var debug = false;
-
-	var _log = function _log() {
-	    debug && window.console && console.log.apply(console, arguments);
-	};
-
-	if (!(window.console && console.log)) {
-	    console = {
-	        log: function log() {},
-	        debug: function debug() {},
-	        info: function info() {},
-	        warn: function warn() {},
-	        error: function error() {}
-	    };
-	}
 
 	/**
 	 * Synchronously calls methods from the async API
@@ -224,8 +209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Called when the library is loaded. The library will not be fully ready
 	 * until 'init' is called with appropriate configuration variables
 	 * 
-	 * @param .j -
-	 *            a version of jQuery compatible with the jQuery.reveal plugin
+	 * @param $j - a version of jQuery compatible with the jQuery.reveal plugin
 	 */
 	function main($j) {
 	    $j(document).ready(function ($jQuery) {
@@ -260,38 +244,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * Called when the Squatch library is fully set up.
-	 * 
-	 */
-	function onReady(hasInitError, theData) {
-	    // do no further processing on error
-	    if (typeof hasInitError !== 'undefined' && hasInitError) {
-	        return;
-	    }
-
-	    // The data returned by the RPC
-	    data = theData;
-
-	    // Empties the enqueued methods in _sqh
-	    var next = window._sqh.shift();
-	    while (next) {
-	        execute(next);
-	        next = window._sqh.shift();
-	    }
-
-	    // Overrides _sqh array's push method so that it will directly call
-	    // `execute`
-	    window._sqh.push = function () {
-	        for (var i = 0; i < arguments.length; i++) {
-	            execute(arguments[i]);
-	        }
-	        // TODO: Don't actually push to underlying array otherwise it will
-	        // keep growing infinitely
-	        return Array.prototype.push.apply(this, arguments);
-	    };
-	}
-
-	/**
 	 * Add a js api call to be added to the queue to be executed next
 	 * 
 	 */
@@ -308,7 +260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function init(sqh_config) {
 
 	    if (initCalled) {
-	        _log('Should not call init more than once');
+	        (0, _log3.default)('Should not call init more than once');
 	        return;
 	    }
 	    initCalled = true;
@@ -323,11 +275,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        pushJsApiCall(consts.JS_API_AUTOFILL_CALL, sqh_config.autofill);
 	    }
 
-	    var embeddedToEmbed = void 0;
+	    var widgetToEmbed = void 0;
 
 	    if (typeof sqh_config.account_id === 'undefined') {
 	        // load the code from the cookie code filler
-	        embeddedToEmbed = cookieCodeWidget;
+	        widgetToEmbed = cookieCodeWidget;
 	    } else {
 	        hasAccountId = true;
 
@@ -338,7 +290,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	        if (!sqh_config.last_name) {
-	            _log("No last name set. Defaulting to empty");
+	            (0, _log3.default)("No last name set. Defaulting to empty");
 	            sqh_config.last_name = "";
 	        }
 
@@ -349,7 +301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (typeof sqh_config.payment_provider_id === 'undefined') {
 	            sqh_config.payment_provider_id = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
 	        } else if (sqh_config.payment_provider_id === null) {
-	            _log("Payment provider id provided, but is null. Default to special value");
+	            (0, _log3.default)("Payment provider id provided, but is null. Default to special value");
 	            sqh_config.payment_provider_id = consts.UNREGISTERED_PAYMENTPROVIDER_PARAM;
 	        }
 
@@ -381,42 +333,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (typeof sqh_config.user_image === 'undefined') {
 	            sqh_config.user_image = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
 	        } else if (!sqh_config.user_image) {
-	            _log("No user profile image set. Defaulting to gravatar");
+	            (0, _log3.default)("No user profile image set. Defaulting to gravatar");
 	            sqh_config.user_image = "";
 	        }
 
 	        if (typeof sqh_config.fb_share_image === 'undefined') {
 	            sqh_config.fb_share_image = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
 	        } else if (!sqh_config.fb_share_image) {
-	            _log("No fb share image set. Defaulting to no image");
+	            (0, _log3.default)("No fb share image set. Defaulting to no image");
 	            sqh_config.fb_share_image = "";
 	        }
 
 	        if (typeof sqh_config.account_status === 'undefined') {
 	            sqh_config.account_status = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
 	        } else if (!sqh_config.account_status) {
-	            _log("No account_status set. Defaulting to no account_status");
+	            (0, _log3.default)("No account_status set. Defaulting to no account_status");
 	            sqh_config.account_status = "";
 	        }
 
 	        if (typeof sqh_config.referral_code === 'undefined') {
 	            sqh_config.referral_code = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
 	        } else if (!sqh_config.referral_code) {
-	            _log("No referral_code set. Defaulting to no referral_code");
+	            (0, _log3.default)("No referral_code set. Defaulting to no referral_code");
 	            sqh_config.referral_code = "";
 	        }
 
 	        if (typeof sqh_config.user_referral_code === 'undefined') {
 	            sqh_config.user_referral_code = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
 	        } else if (!sqh_config.user_referral_code) {
-	            _log("No user_referral_code set. Defaulting to no user_referral_code");
+	            (0, _log3.default)("No user_referral_code set. Defaulting to no user_referral_code");
 	            sqh_config.user_referral_code = "";
 	        }
 
 	        if (typeof sqh_config.locale === 'undefined') {
 	            sqh_config.locale = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
 	        } else if (!sqh_config.locale) {
-	            _log("No locale set. Defaulting to no locale");
+	            (0, _log3.default)("No locale set. Defaulting to no locale");
 	            sqh_config.locale = "";
 	        }
 
@@ -424,32 +376,32 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        switch (sqh_config.mode) {
 	            case consts.NO_CONTENT_MODE:
-	                embeddedToEmbed = noContentWidget;
+	                widgetToEmbed = noContentWidget;
 	                break;
 	            case consts.EMBED_MODE:
-	                embeddedToEmbed = embeddedWidget;
+	                widgetToEmbed = embeddedWidget;
 	                break;
 	            case consts.POPUP_MODE:
-	                embeddedToEmbed = popupWidget;
+	                widgetToEmbed = popupWidget;
 	                break;
 	            case consts.DEMO_MODE:
-	                embeddedToEmbed = popupWidget;
+	                widgetToEmbed = popupWidget;
 	                break;
 	            case consts.DEMO_EMBED_MODE:
-	                embeddedToEmbed = embeddedWidget;
+	                widgetToEmbed = embeddedWidget;
 	                break;
 	            default:
 	                console.error('Unsupported mode: \'' + sqh_config.mode + '\'. Please initialize with one of the following modes: \'NOCONTENT\', \'EMBED\', or \'POPUP\'');
 	        }
 	    }
 
-	    if (embeddedToEmbed) {
+	    if (widgetToEmbed) {
 
-	        if (embeddedToEmbed === embeddedWidget && $('#squatchembed').length <= 0) {
+	        if (widgetToEmbed === embeddedWidget && $('#squatchembed').length <= 0) {
 	            // Embedded widget was requested, but not embed div found.
 	            // Falling back to No Content Mode
 	            sqh_config.mode = consts.NO_CONTENT_MODE;
-	            embeddedToEmbed = noContentWidget;
+	            widgetToEmbed = noContentWidget;
 	        }
 
 	        $.ajaxSetup({
@@ -457,11 +409,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 
 	        $.getScript(hostSrc + consts.EASYXDM_PATH, function () {
-	            _log("easyXDM loaded");
+	            (0, _log3.default)("easyXDM loaded");
 
-	            embeddedToEmbed.create(sqh_config, $, hostSrc, onReady);
+	            widgetToEmbed.create(sqh_config, $, hostSrc, onWidgetLoaded);
 	        }).fail(_onScriptFailure2.default);
+	    } else {
+	        (0, _log3.default)('No widget being embedded. Probably because of a lack of configuration.');
 	    }
+	}
+
+	/**
+	 * Called when the Squatch library is fully set up, with appropriate widget/RPC mechanism through EasyXDM fully loaded.
+	 */
+	function onWidgetLoaded(hasInitError, theData) {
+	    // do no further processing on error
+	    if (typeof hasInitError !== 'undefined' && hasInitError) {
+	        return;
+	    }
+
+	    // The data returned by the RPC
+	    data = theData;
+
+	    // Empties the enqueued methods in _sqh
+	    var next = window._sqh.shift();
+	    while (next) {
+	        execute(next);
+	        next = window._sqh.shift();
+	    }
+
+	    // Overrides _sqh array's push method so that it will directly call
+	    // `execute`
+	    window._sqh.push = function () {
+	        for (var i = 0; i < arguments.length; i++) {
+	            execute(arguments[i]);
+	        }
+	        // TODO: Don't actually push to underlying array otherwise it will
+	        // keep growing infinitely
+	        return Array.prototype.push.apply(this, arguments);
+	    };
 	}
 
 	/**
@@ -596,7 +581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function onLoad() {
 	    // TODO: LV: This could probably be done so that we don't rely on `_sqh` being present at page load
 	    if (typeof _sqh === 'undefined') {
-	        console.error("_sqh must be defined and initialized to use this widget.\n" + "To initialize the popup widget call: _sqh.push(['init', {tenant_alias: '$yourTenantAlias', account_id: '$viewingCustomerAccountId', " + "email: '$viewingCustomerEmail', user_id : '$viewingUserId', first_name: '$viewingCustomerFirstName', last_name: '$viewingCustomerLastName'" + "]}]);");
+	        console.error('_sqh must be defined and initialized to use this widget.\n         To initialize the popup widget call: \n         _sqh.push([\'init\',\n            {tenant_alias: \'$yourTenantAlias\', \n            account_id: \'$viewingCustomerAccountId\',\n            email: \'$viewingCustomerEmail\', \n            user_id : \'$viewingUserId\', \n            first_name: \'$viewingCustomerFirstName\', \n            last_name: \'$viewingCustomerLastName\'\n         ]}]);');
 	    } else {
 	        (0, _awaitScriptLoad2.default)(10, function (srcUrl) {
 
@@ -651,37 +636,44 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    // TODO: LV: Is this just overkill? Seems like this other approach might work: http://stackoverflow.com/questions/2976651/javascript-how-do-i-get-the-url-of-script-being-called
 
+	    var scriptEls = document.getElementsByTagName('script');
+	    var thisScriptEl = scriptEls[scriptEls.length - 1];
+	    var scriptPath = thisScriptEl.src;
+	    var scriptFolder = scriptPath.substr(0, scriptPath.lastIndexOf('/') + 1);
+
+	    callback(scriptFolder);
 	    //  Try to find the src this script was loaded under and if it can't be found
 	    //  iteratively wait and try again for the provided iteration count
 
-	    var scripts = document.getElementsByTagName('script');
-	    var len = scripts.length;
+	    // const scripts = document.getElementsByTagName('script');
+	    // let len = scripts.length;
 
-	    var embedSrc = null;
+	    // let embedSrc = null;
 
-	    while (len--) {
-	        var src = scripts[len].src;
-	        if (src && src.match(_consts.SQUATCHJS_SCRIPT_NAME_REGEX)) {
-	            embedSrc = src;
-	            break;
-	        }
-	    }
+	    // while (len--) {
+	    //     let src = scripts[len].src;
+	    //     if (src && src.match(SQUATCHJS_SCRIPT_NAME_REGEX)) {
+	    //         embedSrc = src;
+	    //         break;
+	    //     }
+	    // }
 
-	    if (embedSrc || iteration <= 0) {
-	        var hostSrc = null;
-	        if (embedSrc) {
-	            // Extract the host part of the Squatch.js url
-	            (0, _log3.default)(hostSrc);
-	            hostSrc = embedSrc.match(new RegExp('https?://[^/]*'))[0];
-	        }
-	        callback(hostSrc);
-	    } else {
-	        (0, _log3.default)("squatch js not finished loading try again.");
+	    // if (embedSrc || iteration <= 0) {
+	    //     let hostSrc = null;
+	    //     if(embedSrc){
+	    //         // Extract the host part of the Squatch.js url
+	    //         _log(hostSrc);
+	    //         hostSrc = embedSrc.match(new RegExp('https?://[^/]*'))[0];
+	    //     }
+	    //     callback(hostSrc);
+	    // }
+	    // else {
+	    //     _log("squatch js not finished loading try again.");
 
-	        setTimeout(function () {
-	            awaitScriptLoad(--iteration, callback);
-	        }, 50);
-	    }
+	    //     setTimeout(function() {
+	    //         awaitScriptLoad(--iteration, callback);
+	    //     }, 50);
+	    // }
 	}
 
 /***/ },
@@ -763,10 +755,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	// export const JQUERY_REVEAL_CSS_PATH = '/assets/css/widget/external/reveal.min.css';
 	// export const EASYXDM_PATH = '/assets/javascripts/easyXDM.min.js';
 
-	var JQUERY_PATH = exports.JQUERY_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/jquery-1.9.0.min.js';
-	var JQUERY_REVEAL_PATH = exports.JQUERY_REVEAL_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/reveal.js';
-	var JQUERY_REVEAL_CSS_PATH = exports.JQUERY_REVEAL_CSS_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/reveal.css';
-	var EASYXDM_PATH = exports.EASYXDM_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/easyXDM.min.js';
+	var JQUERY_PATH = exports.JQUERY_PATH = '/external/jquery-1.9.0.min.js';
+	var JQUERY_REVEAL_PATH = exports.JQUERY_REVEAL_PATH = '/external/reveal.js';
+	var JQUERY_REVEAL_CSS_PATH = exports.JQUERY_REVEAL_CSS_PATH = '/external/reveal.css';
+	var EASYXDM_PATH = exports.EASYXDM_PATH = '/external/easyXDM.min.js';
 
 /***/ },
 /* 5 */
@@ -780,8 +772,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = polyfillJquery;
 
 	/**
-	 * Load JQuery first then begin loading the squatch widget after we've
-	 * detected the src this script was embedded under
+	 * Load JQuery if it's not already loaded, or if it's version is insufficient for our purposes
 	 * 
 	 * @param {string} hostSrc The domain including protocol host of jQuery
 	 * @param {Function} callback Async callback that will get either `window.jQuery`, or our own loaded version.

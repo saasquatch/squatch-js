@@ -31,6 +31,7 @@
 import awaitScriptLoad from './util/awaitScriptLoad';
 import polyfillJquery from './util/polyfillJquery';
 import onScriptFailure from './util/onScriptFailure';
+import _log from './_log';
 
 import * as consts from './consts';
 
@@ -55,26 +56,6 @@ let initCalled = false;
 let hasAccountId = false;
 let data = null;
 let $ = null;
-
-/**
- * Logging to help with debugging
- */
-const debug = false;
-
-const _log = function() {
-    debug && window.console && console.log.apply(console, arguments);
-};
-
-if (!(window.console && console.log)) {
-    console = {
-        log() {},
-        debug() {},
-        info() {},
-        warn() {},
-        error() {}
-    };
-}
-
 
 /**
  * Synchronously calls methods from the async API
@@ -130,8 +111,7 @@ function execute(fnToDo) {
  * Called when the library is loaded. The library will not be fully ready
  * until 'init' is called with appropriate configuration variables
  * 
- * @param .j -
- *            a version of jQuery compatible with the jQuery.reveal plugin
+ * @param $j - a version of jQuery compatible with the jQuery.reveal plugin
  */
 function main($j) {
     $j(document).ready(
@@ -168,38 +148,6 @@ function main($j) {
 }
 
 /**
- * Called when the Squatch library is fully set up.
- * 
- */
-function onReady(hasInitError, theData) {
-    // do no further processing on error
-    if (typeof hasInitError !== 'undefined' && hasInitError) {
-        return;
-    }
-    
-    // The data returned by the RPC
-    data = theData;
-    
-    // Empties the enqueued methods in _sqh
-    let next = window._sqh.shift();
-    while (next) {
-        execute(next);
-        next = window._sqh.shift();
-    }
-
-    // Overrides _sqh array's push method so that it will directly call
-    // `execute`
-    window._sqh.push = function() {
-        for (let i = 0; i < arguments.length; i++) {
-            execute(arguments[i]);
-        }
-        // TODO: Don't actually push to underlying array otherwise it will
-        // keep growing infinitely
-        return Array.prototype.push.apply(this, arguments);
-    };
-}
-
-/**
  * Add a js api call to be added to the queue to be executed next
  * 
  */
@@ -231,11 +179,11 @@ function init(sqh_config) {
         pushJsApiCall(consts.JS_API_AUTOFILL_CALL, sqh_config.autofill);
     }
 
-    let embeddedToEmbed;
+    let widgetToEmbed;
 
     if (typeof sqh_config.account_id === 'undefined') {
         // load the code from the cookie code filler
-        embeddedToEmbed = cookieCodeWidget;
+        widgetToEmbed = cookieCodeWidget;
     } else {
         hasAccountId = true;
 
@@ -339,19 +287,19 @@ function init(sqh_config) {
 
         switch (sqh_config.mode) {
             case consts.NO_CONTENT_MODE:
-                embeddedToEmbed = noContentWidget;
+                widgetToEmbed = noContentWidget;
                 break;
             case consts.EMBED_MODE:
-                embeddedToEmbed = embeddedWidget;
+                widgetToEmbed = embeddedWidget;
                 break;
             case consts.POPUP_MODE:
-                embeddedToEmbed = popupWidget;
+                widgetToEmbed = popupWidget;
                 break;
             case consts.DEMO_MODE:
-                embeddedToEmbed = popupWidget;
+                widgetToEmbed = popupWidget;
                 break;
             case consts.DEMO_EMBED_MODE:
-                embeddedToEmbed = embeddedWidget;
+                widgetToEmbed = embeddedWidget;
                 break;
             default:
                 console.error(`Unsupported mode: '${sqh_config.mode}'. Please initialize with one of the following modes: 'NOCONTENT', 'EMBED', or 'POPUP'`);
@@ -359,13 +307,13 @@ function init(sqh_config) {
 
     }
 
-    if (embeddedToEmbed) {
+    if (widgetToEmbed) {
         
-        if(embeddedToEmbed === embeddedWidget && $('#squatchembed').length <= 0){
+        if(widgetToEmbed === embeddedWidget && $('#squatchembed').length <= 0){
             // Embedded widget was requested, but not embed div found.
             // Falling back to No Content Mode
             sqh_config.mode = consts.NO_CONTENT_MODE;
-            embeddedToEmbed = noContentWidget;
+            widgetToEmbed = noContentWidget;
         }
         
         $.ajaxSetup({
@@ -376,12 +324,47 @@ function init(sqh_config) {
             function() {
                 _log("easyXDM loaded");
 
-                embeddedToEmbed.create(sqh_config, $, hostSrc, onReady);
+                widgetToEmbed.create(sqh_config, $, hostSrc, onWidgetLoaded);
 
             }).fail(onScriptFailure);
+    }else{
+        _log('No widget being embedded. Probably because of a lack of configuration.');
     }
 
 }
+
+
+/**
+ * Called when the Squatch library is fully set up, with appropriate widget/RPC mechanism through EasyXDM fully loaded.
+ */
+function onWidgetLoaded(hasInitError, theData) {
+    // do no further processing on error
+    if (typeof hasInitError !== 'undefined' && hasInitError) {
+        return;
+    }
+    
+    // The data returned by the RPC
+    data = theData;
+    
+    // Empties the enqueued methods in _sqh
+    let next = window._sqh.shift();
+    while (next) {
+        execute(next);
+        next = window._sqh.shift();
+    }
+
+    // Overrides _sqh array's push method so that it will directly call
+    // `execute`
+    window._sqh.push = function() {
+        for (let i = 0; i < arguments.length; i++) {
+            execute(arguments[i]);
+        }
+        // TODO: Don't actually push to underlying array otherwise it will
+        // keep growing infinitely
+        return Array.prototype.push.apply(this, arguments);
+    };
+}
+
 
 /**
  * Autofills the current user's in-progress referral code. (i.e. This is
@@ -530,10 +513,17 @@ function getRewardFeatureBalance(featureType, fn) {
 function onLoad() {
     // TODO: LV: This could probably be done so that we don't rely on `_sqh` being present at page load
     if ((typeof _sqh === 'undefined')) {
-        console.error("_sqh must be defined and initialized to use this widget.\n" +
-            "To initialize the popup widget call: _sqh.push(['init', {tenant_alias: '$yourTenantAlias', account_id: '$viewingCustomerAccountId', " +
-            "email: '$viewingCustomerEmail', user_id : '$viewingUserId', first_name: '$viewingCustomerFirstName', last_name: '$viewingCustomerLastName'" +
-            "]}]);");
+        console.error(
+        `_sqh must be defined and initialized to use this widget.
+         To initialize the popup widget call: 
+         _sqh.push(['init',
+            {tenant_alias: '$yourTenantAlias', 
+            account_id: '$viewingCustomerAccountId',
+            email: '$viewingCustomerEmail', 
+            user_id : '$viewingUserId', 
+            first_name: '$viewingCustomerFirstName', 
+            last_name: '$viewingCustomerLastName'
+         ]}]);`);
     } else {
         awaitScriptLoad(10, (srcUrl) => {
 

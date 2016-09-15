@@ -41,7 +41,7 @@ export const SQUATCHJS_SCRIPT_NAME_REGEX = /squatch(\.min)?\.js(\?.*)*$/;
 // export const JQUERY_REVEAL_CSS_PATH = '/assets/css/widget/external/reveal.min.css';
 // export const EASYXDM_PATH = '/assets/javascripts/easyXDM.min.js';
 
-export const JQUERY_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/jquery-1.9.0.min.js';
-export const JQUERY_REVEAL_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/reveal.js';
-export const JQUERY_REVEAL_CSS_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/reveal.css';
-export const EASYXDM_PATH = '/loganvolkers/saasquatch-core-theme/squatch-js/external/easyXDM.min.js';
+export const JQUERY_PATH = '/external/jquery-1.9.0.min.js';
+export const JQUERY_REVEAL_PATH = '/external/reveal.js';
+export const JQUERY_REVEAL_CSS_PATH = '/external/reveal.css';
+export const EASYXDM_PATH = '/external/easyXDM.min.js';

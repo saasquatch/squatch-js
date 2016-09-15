@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mocha Tests</title>
-    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+    <title>Squatch.js V1 EMBED Example</title>
   </head>
   <body>
-    <div id="mocha"></div>
-    <script src="../node_modules/mocha/mocha.js"></script>
-    <script src="../node_modules/chai/chai.js"></script>
-    <script>mocha.setup('bdd')</script>
-    <button class="squatchpop">Open Popup</button>
-    <div id="squatchembed"></div>
+    <a href="embed.html">Embed Demo</a> | <a href="popup.html">Popup Demo</a><br/>
+    <h1>Embedded Squatch.js Example</h1>
+    <!--<button class="squatchpop">Open Popup</button>-->
+    <div id="squatchembed">
+      Squatch.js is loading embedded...
+    </div>
 
     <script type="text/javascript">
 var _sqh = _sqh || [];
@@ -26,7 +25,7 @@ var logan = {
     "checksum": "waemYYSi8a/l8B7oCRy9tVVBBiOZDB12uH39lDozxFA="
 };
 
-// logan.mode = "EMBED";
+logan.mode = "EMBED";
 
 // Push user details for the user who is logged in to your SaaS app
 _sqh.push(['init', logan]);
@@ -41,13 +40,6 @@ _sqh.push(['autofill', function(code){console.log('Got code:'+code);}]);
     </script>
 
     <!-- load code you want to test here -->
-    <script src="../dist/squatch.js"></script>
-
-    <!-- load your test files here -->
-    <script src="apiTest.js"></script>
-
-    <script>
-      mocha.run();
-    </script>
+    <script src="squatch.js"></script>
   </body>
 </html>

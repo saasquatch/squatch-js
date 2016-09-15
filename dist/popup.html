@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mocha Tests</title>
-    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+    <title>Squatch.js V1 POPUP Example</title>
   </head>
   <body>
-    <div id="mocha"></div>
-    <script src="../node_modules/mocha/mocha.js"></script>
-    <script src="../node_modules/chai/chai.js"></script>
-    <script>mocha.setup('bdd')</script>
+    <a href="embed.html">Embed Demo</a> | <a href="popup.html">Popup Demo</a><br/>
+    <h1>Popup Squatch.js Example</h1>
     <button class="squatchpop">Open Popup</button>
     <div id="squatchembed"></div>
 
@@ -41,13 +38,6 @@ _sqh.push(['autofill', function(code){console.log('Got code:'+code);}]);
     </script>
 
     <!-- load code you want to test here -->
-    <script src="../dist/squatch.js"></script>
-
-    <!-- load your test files here -->
-    <script src="apiTest.js"></script>
-
-    <script>
-      mocha.run();
-    </script>
+    <script src="squatch.js"></script>
   </body>
 </html>
