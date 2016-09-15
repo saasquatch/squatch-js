@@ -6,7 +6,7 @@
     "watch": "webpack --watch",
     "build": "webpack",
     "build:production": "NODE_ENV=production webpack",
-    "test": "./node_modules/karma/bin/karma start --log-level debug --single-run",
+    "test": "mocha && karma start --log-level debug --single-run",
     "build:docs": "npm run build:docs:markdown && npm run build:docs:json && npm run build:docs:html",
     "build:docs:markdown": "documentation build src/squatch.js -f md > docs/docs.md",
     "build:docs:json": "documentation build src/squatch.js -f json > docs/docs.json",
@@ -31,9 +31,6 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
-    "es6-promise": "^3.2.1",
-    "json-loader": "^0.5.4",
-    "jsonschema": "^1.1.0",
-    "whatwg-fetch": "^1.0.0"
+
   }
 }
