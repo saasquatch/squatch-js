@@ -8,9 +8,15 @@
 * 
 * Example: To initialize the library
 * 
-* _sqh = _sqh || []; _sqh.push(['init', { tenant_alias: 'example', account_id:
-* 'cust_123example', // A stripe or recurly ID user_id: '54321', email:
-* 'bob@example.com', first_name: 'Bob', last_name: 'Testerson', mode : 'POPUP'
+* _sqh = _sqh || [];
+* _sqh.push(['init', { 
+*   tenant_alias: 'example',
+*   account_id: 'abc_def',
+*   user_id: '54321',
+*   email: 'bob@example.com',
+*   first_name: 'Bob',
+*   last_name: 'Testerson',
+*   mode: 'POPUP'
 * }]);
 * 
 * For non-authenticated apps you will only be able to use the cookie loader and
@@ -18,11 +24,17 @@
 * 
 * For authenticated apps:
 * 
-* Accepts 3 Integer Modes for authenticated apps: NOCONTENT - No content mode :
+* Accepts 3 Integer Modes for authenticated apps: 
+* 
+* NOCONTENT - No content mode :
 * This mode simply performs a lightweight data push to look for and synchronize
 * referral status changes. It also returns the referral code if the current
-* user has been referred. EMBED - Embed mode : This mode allows you to embed
-* the widget on your page and also supports code loading. POPUP - Popup mode :
+* user has been referred. 
+* 
+* EMBED - Embed mode : This mode allows you to embed
+* the widget on your page and also supports code loading. 
+* 
+* POPUP - Popup mode :
 * This mode allows you to load a popup window that will be triggered when your
 * customers click on a button of your choosing. This mode is selected by
 * default if no other mode is selected.
@@ -155,6 +167,17 @@ function pushJsApiCall(callName, callValue) {
     window._sqh.push([callName, callValue]);
 }
 
+
+function formatEmptyParam(sqhConfig, propName, debugMsg){
+    if (typeof sqhConfig[propName] === 'undefined') {
+        sqhConfig[propName] = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
+    }
+    else if (!sqhConfig[propName]) {
+        _log(debugMsg);
+        sqhConfig[propName] = "";
+    }            
+}
+
 /**
  * Initializes the Squatch.Js library with configuration variables
  * 
@@ -235,53 +258,13 @@ function init(sqh_config) {
             console.error("Checksum or JWT not set properly for signed widget request.");
         }
 
-        if (typeof sqh_config.user_image === 'undefined') {
-            sqh_config.user_image = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
-        }
-        else if (!sqh_config.user_image) {
-            _log("No user profile image set. Defaulting to gravatar");
-            sqh_config.user_image = "";
-        }
-
-        if (typeof sqh_config.fb_share_image === 'undefined') {
-            sqh_config.fb_share_image = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
-        }
-        else if (!sqh_config.fb_share_image) {
-            _log("No fb share image set. Defaulting to no image");
-            sqh_config.fb_share_image = "";
-        }
-
-        if (typeof sqh_config.account_status === 'undefined') {
-            sqh_config.account_status = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
-        }
-        else if (!sqh_config.account_status) {
-            _log("No account_status set. Defaulting to no account_status");
-            sqh_config.account_status = "";
-        }
-
-        if (typeof sqh_config.referral_code === 'undefined') {
-            sqh_config.referral_code = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
-        }
-        else if (!sqh_config.referral_code) {
-            _log("No referral_code set. Defaulting to no referral_code");
-            sqh_config.referral_code = "";
-        }
-
-        if (typeof sqh_config.user_referral_code === 'undefined') {
-            sqh_config.user_referral_code = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
-        }
-        else if (!sqh_config.user_referral_code) {
-            _log("No user_referral_code set. Defaulting to no user_referral_code");
-            sqh_config.user_referral_code = "";
-        }
-
-        if (typeof sqh_config.locale === 'undefined') {
-            sqh_config.locale = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
-        }
-        else if (!sqh_config.locale) {
-            _log("No locale set. Defaulting to no locale");
-            sqh_config.locale = "";
-        }
+        
+        formatEmptyParam(sqh_config, 'user_image', "No user profile image set. Defaulting to gravatar");
+        formatEmptyParam(sqh_config, 'fb_share_image', "No fb share image set. Defaulting to no image");
+        formatEmptyParam(sqh_config, 'account_status', "No account_status set. Defaulting to no account_status");
+        formatEmptyParam(sqh_config, 'referral_code', "No referral_code set. Defaulting to no referral_code");
+        formatEmptyParam(sqh_config, 'user_referral_code', "No user_referral_code set. Defaulting to no user_referral_code");
+        formatEmptyParam(sqh_config, 'locale', "No locale set. Defaulting to no locale");
 
         sqh_config.mode = (sqh_config.mode || sqh_config.mode === 0) ? sqh_config.mode : DEFAULT_MODE;
 
@@ -543,6 +526,4 @@ function onLoad() {
 
 // Kicks off everything
 onLoad();
-const version = "v1.0.0";
-
-export default version;
+export const version = "v1.0.0";
