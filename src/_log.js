@@ -1,8 +1,13 @@
-/**
+/*
  * Logging to help with debugging
  */
-const debug = true;
+export let debug = false;
 
+/**
+ * Logs to console when debug is enabled.
+ * 
+ * @private
+ */
 export default function _log() {
     debug && window.console && console.log.apply(console, arguments);
 }

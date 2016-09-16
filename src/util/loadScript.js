@@ -1,5 +1,7 @@
 /**
  * Loads a Script by appending it to the <head>
+ * 
+ * @private
  */
 export default function loadScript(scriptUrl, scriptLoadHandler){
     const script_tag = document.createElement('script');

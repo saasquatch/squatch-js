@@ -4,7 +4,7 @@ import * as rpc from './rpc';
 
 /**
  * Called to load embed widget
- * 
+ * @private
  */
 export function create(sqh_config, $, hostSrc, callback) {
 

@@ -8,6 +8,8 @@ import _log from '../_log';
  * e.g.
  *      SRC Url: https://d2rcp9ak152ke1.cloudfront.net/assets/javascripts/squatch.min.js
  *      Returns to callback: https://d2rcp9ak152ke1.cloudfront.net
+ * 
+ * @private
  */
 export default function getScriptPath(scriptRegex, callback, iteration = 10) {
 

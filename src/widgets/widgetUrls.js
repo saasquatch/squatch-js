@@ -4,6 +4,7 @@ import {IGNORE_OPTIONAL_WIDGET_PARAM, UNREGISTERED_PAYMENTPROVIDER_PARAM} from '
 /**
  * Get the tenant host url
  * 
+ * @private
  */
 export function getTenantHost(sqh_config) {
     const domain = (typeof sqh_config.host === 'undefined') ? 'app.referralsaasquatch.com' : sqh_config.host;
@@ -16,7 +17,9 @@ export function getTenantHost(sqh_config) {
  * 
  * @param {Object} sqh_config an object containing the details for the user to set up
  * @param {string} pageType the page type
+ * @return {string} a full URL for the widget
  * 
+ * @private
  */
 export function getFrameUrl(sqh_config, pageType) {
     let paymentProviderId;

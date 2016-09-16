@@ -1,5 +1,4 @@
 import _log from '../_log';
-import onScriptFailure from '../util/onScriptFailure';
 import * as rpc from './rpc';
 
 import reveal from '../reveal/reveal';
@@ -11,14 +10,14 @@ import {
 }
 from '../consts';
 
-/**
+/*
  * Beware: These variables are stateful
  */
 let modalWrapper = null;
 
 /**
  * Called to load popup widget
- * 
+ * @private
  */
 export function create(sqh_config, $, hostSrc, callback) {
 
@@ -80,6 +79,7 @@ export function create(sqh_config, $, hostSrc, callback) {
 
 /**
  * Open the squatch popup widget if it has been loaded
+ * @private
  */
 export function open() {
     if (!modalWrapper) {
@@ -92,6 +92,7 @@ export function open() {
 
 /**
  * Close the squatch popup widget if it has been loaded
+ * @private
  */
 export function close() {
     if (!modalWrapper) {
@@ -106,7 +107,7 @@ export function close() {
 /**
  * Check whether the popup should be automatically shown when the paged is
  * loaded
- * 
+ * @private
  */
 function checkForAutoOpen(sqh_config, $) {
     let hasAutoPopped = false;

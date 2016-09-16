@@ -1,4 +1,4 @@
-/**
+/*
  * 
  * JS API Calls
  * 
@@ -24,7 +24,7 @@ export const DEMO_MODE = 'DEMO';
 export const DEMO_EMBED_MODE = 'DEMO_EMBED';
 
 
-/**
+/*
  * 
  * Parameters
  * 

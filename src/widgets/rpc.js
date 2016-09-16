@@ -3,7 +3,7 @@ import {EMBED_MODE, DEMO_EMBED_MODE} from '../consts';
 
 import {getFrameUrl} from './widgetUrls';
 
-/**
+/*
  * Warning: `subscriptions` is stateful. It will accumulate event listeners.
  * 
  * TODO: Look at using native DOM event listener pattern instead of this object thing.
@@ -14,6 +14,7 @@ const subscriptions = {};
  * Setup the iframe/RPC. The ready function will be called when frame is
  * loaded, close function when the close button is pressed, and the pageType
  * will mark the page as a class (ie to differentiate embed/popup views)
+ * @private
  */
 export function setup(sqh_config, opts) {
     
@@ -91,10 +92,15 @@ export function setup(sqh_config, opts) {
 /**
  * Subscribes the provided callback (fn) to widget events of the type 'eventName'
  * 
+ * @param {string} eventName the name of the event to subscribe to
+ * @param {Function} callback function to call when the event happens
+ * 
+ * @private
+ * 
  */
-export function subscribe(eventName, fn) {
+export function subscribe(eventName, callback) {
     if (!subscriptions[eventName]) {
         subscriptions[eventName] = [];
     }
-    subscriptions[eventName].push(fn); // push the provided callback to be called when the widget publishes 'eventName'
+    subscriptions[eventName].push(callback); // push the provided callback to be called when the widget publishes 'eventName'
 }

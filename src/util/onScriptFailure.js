@@ -1,6 +1,8 @@
 /**
  * Called when one of our required dependencies fails to load (such as
  * jQuery, easyXDM, ...)
+ * 
+ * @private
  */
 export default function onScriptFailure() {
     if (arguments[0].readyState == 0) {

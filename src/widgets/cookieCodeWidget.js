@@ -4,6 +4,7 @@ import {getTenantHost} from './widgetUrls';
 /**
  * Called to load widget that grabs fillable code from cookie
  * 
+ * @private
  */
 export function create(sqh_config, $, hostSrc, callback)  {
 

@@ -1,4 +1,5 @@
 /**
+ * 
 * Squatch.js
 * 
 * This library is accessed using an asynchronous syntax, so none of the methods
@@ -8,6 +9,7 @@
 * 
 * Example: To initialize the library
 * 
+* ```
 * _sqh = _sqh || [];
 * _sqh.push(['init', { 
 *   tenant_alias: 'example',
@@ -18,6 +20,7 @@
 *   last_name: 'Testerson',
 *   mode: 'POPUP'
 * }]);
+* ```
 * 
 * For non-authenticated apps you will only be able to use the cookie loader and
 * should only pass in your tenant_alias.
@@ -26,18 +29,20 @@
 * 
 * Accepts 3 Integer Modes for authenticated apps: 
 * 
-* NOCONTENT - No content mode :
-* This mode simply performs a lightweight data push to look for and synchronize
-* referral status changes. It also returns the referral code if the current
-* user has been referred. 
+*  - `NOCONTENT` - No content mode :
+*     This mode simply performs a lightweight data push to look for and synchronize
+*     referral status changes. It also returns the referral code if the current
+*     user has been referred. 
 * 
-* EMBED - Embed mode : This mode allows you to embed
-* the widget on your page and also supports code loading. 
+*  - `EMBED` - Embed mode : This mode allows you to embed the widget on your page and also supports code loading. 
 * 
-* POPUP - Popup mode :
-* This mode allows you to load a popup window that will be triggered when your
-* customers click on a button of your choosing. This mode is selected by
-* default if no other mode is selected.
+*  - `POPUP` - Popup mode :
+*     This mode allows you to load a popup window that will be triggered when your
+*     customers click on a button of your choosing. This mode is selected by
+*     default if no other mode is selected.
+*
+* @module squatch
+*
 */
 
 import getScriptPath from './util/getScriptPath';
@@ -60,20 +65,32 @@ const DEFAULT_MODE = consts.POPUP_MODE;
 // set via loadJQueryAndBegin (identifies the host we're loading under)
 let hostSrc = null;
 
-/**
- * State variables
- */
+// State variables
 let initCalled = false;
 
 let hasAccountId = false;
 let data = null;
 let $ = null;
 
+
+// These are all of our public methods, declared in the Queue/async form
+const methods = {
+    [consts.JS_API_INIT_CALL]: (fnToDo)=> init(fnToDo[1]),
+    [consts.JS_API_AUTOFILL_CALL]: (fnToDo)=> autofill(fnToDo[1]),
+    [consts.JS_API_GET_REWARD_BALANCES_CALL]: (fnToDo)=> getRewardBalance(fnToDo[1], fnToDo[2]),
+    [consts.JS_API_GET_FEATURE_REWARD_BALANCES_CALL]: (fnToDo)=> getRewardFeatureBalance(fnToDo[1], fnToDo[2]),
+    [consts.JS_API_GET_REWARD_CALL]: (fnToDo)=> getReward(fnToDo[1]),
+
+    [consts.JS_API_OPEN_CALL]: (fnToDo)=> popupWidget.open(),
+    [consts.JS_API_CLOSE_CALL]: (fnToDo)=> popupWidget.close(),
+    [consts.JS_API_SUBSCRIBE_CALL]: (fnToDo)=> rpc.subscribe(fnToDo[1], fnToDo[2])
+};
+
 /**
  * Synchronously calls methods from the async API
  * 
- * @param fnToDo -
- *            an associative array such as ['init', sqhConfig]
+ * @private
+ * @param {Array|string} fnToDo - an associative array such as ['init', sqhConfig], or a string such as 'open'
  */
 function execute(fnToDo) {
     let method;
@@ -84,45 +101,22 @@ function execute(fnToDo) {
         method = fnToDo;
     }
 
-    /*
-     * These are all of our public methods
-     */
-    switch (method) {
-        case consts.JS_API_INIT_CALL:
-            init(fnToDo[1]);
-            break;
-        case consts.JS_API_AUTOFILL_CALL:
-            autofill(fnToDo[1]);
-            break;
-        case consts.JS_API_GET_REWARD_BALANCES_CALL:
-            getRewardBalance(fnToDo[1], fnToDo[2]);
-            break;
-        case consts.JS_API_GET_FEATURE_REWARD_BALANCES_CALL:
-            getRewardFeatureBalance(fnToDo[1], fnToDo[2]);
-            break;
-        case consts.JS_API_GET_REWARD_CALL:
-            getReward(fnToDo[1]);
-            break;
-        case consts.JS_API_OPEN_CALL:
-            popupWidget.open();
-            break;
-        case consts.JS_API_CLOSE_CALL:
-            popupWidget.close();
-            break;
-        case consts.JS_API_SUBSCRIBE_CALL:
-            rpc.subscribe(fnToDo[1], fnToDo[2]);
-            break;
-        default:
-            console.error("Unknown method call `" + method +
-                "`. Valid options are [init,autofill,getReward,getRewardBalance]");
-            break;
+    let fn = methods[method];
+    if(!fn){
+        console.error(`Unknown method call "${method}"". Valid options are [init,autofill,getReward,getRewardBalance,open,close,subscribe]`);
+        return;
     }
+    
+    // Executes the function using the anonymous syntax.
+    fn(fnToDo);
+
 }
 
 /**
  * Called when the library is loaded. The library will not be fully ready
  * until 'init' is called with appropriate configuration variables
  * 
+ * @private
  * @param $j - a version of jQuery compatible with the jQuery.reveal plugin
  */
 function main($j) {
@@ -159,15 +153,12 @@ function main($j) {
         });
 }
 
-/**
- * Add a js api call to be added to the queue to be executed next
- * 
- */
+// Add a js api call to be added to the queue to be executed next
 function pushJsApiCall(callName, callValue) {
     window._sqh.push([callName, callValue]);
 }
 
-
+// Handles empty params by using our special ignore syntax
 function formatEmptyParam(sqhConfig, propName, debugMsg){
     if (typeof sqhConfig[propName] === 'undefined') {
         sqhConfig[propName] = consts.IGNORE_OPTIONAL_WIDGET_PARAM;
@@ -181,8 +172,8 @@ function formatEmptyParam(sqhConfig, propName, debugMsg){
 /**
  * Initializes the Squatch.Js library with configuration variables
  * 
- * @param sqh_config -
- *            a config object
+ * @private
+ * @param {Object} sqh_config - a config object
  */
 function init(sqh_config) {
 
@@ -319,6 +310,11 @@ function init(sqh_config) {
 
 /**
  * Called when the Squatch library is fully set up, with appropriate widget/RPC mechanism through EasyXDM fully loaded.
+ * 
+ * @private
+ * @param {boolean} hasInitError - true when an error occurred doing loading
+ * @param {Object} theData - data returned from the widget during load
+ * @returns {void}
  */
 function onWidgetLoaded(hasInitError, theData) {
     // do no further processing on error
@@ -350,9 +346,11 @@ function onWidgetLoaded(hasInitError, theData) {
 
 
 /**
- * Autofills the current user's in-progress referral code. (i.e. This is
- * their friend's code)
+ * Autofills the current user's in-progress referral code. (i.e. This is their friend's code)
  * 
+ * @private
+ * @params {string|Function} args - A CSS selector of a input element to autofill or a callback function
+ * @return {void}
  */
 function autofill(args) {
     if (typeof args == 'string') {
@@ -373,13 +371,15 @@ function autofill(args) {
 
 /**
  * Gets the reward value for current user's account
- * 
+ * @private
+ * @params {Function} callback - called with the reward values
+ * @returns {void}
  */
-function getReward(fn) {
+function getReward(callback) {
     // deprecated legacy for ghost or anyone else who started implementing this
-    if (typeof fn == 'function') {
+    if (typeof callback == 'function') {
         if (hasAccountId) {
-            fn(getLegacyAggregateRewardLookup());
+            callback(getLegacyAggregateRewardLookup());
         }
         else {
             console.error('Unsupported reward lookup widget push, you need to push with an account Id to use this feature');
@@ -390,6 +390,12 @@ function getReward(fn) {
     }
 }
 
+/**
+ * Gets the reward value for current user's account
+ * @private
+ * @params {Function} callback - called with the reward values
+ * @returns {Object} rewards - the rewards
+ */
 function getLegacyAggregateRewardLookup() {
     let discountReward = {};
     if (data.rewardBalance) {
@@ -424,6 +430,13 @@ function getLegacyAggregateRewardLookup() {
     }
 }
 
+/**
+ * Looks up a reward balance by type
+ * 
+ * @private
+ * @param {string} type - the type of reward
+ * @return {Array} the reward balances
+ */
 function getRewardBalanceForType(type) {
     const rewards = [];
     if (data.rewardBalance) {
@@ -441,13 +454,16 @@ function getRewardBalanceForType(type) {
 
 /**
  * Gets the reward list for current user's account (optionally filter by type)
- * 
+ * @private
+ * @param {string|Function} type - the type of reward, or a callback
+ * @param {Function} callback - a callback, or null if looking up all reward balances
+ * @returns {void}
  */
-function getRewardBalance(type, fn) {
+function getRewardBalance(type, callback) {
     if (hasAccountId) {
         if (typeof type == 'string') {
-            if (typeof fn == 'function') {
-                fn(getRewardBalanceForType(type));
+            if (typeof callback == 'function') {
+                callback(getRewardBalanceForType(type));
             }
             else {
                 console.error('Unsupported widget reward type lookup push, invalid params.');
@@ -469,7 +485,7 @@ function getRewardBalance(type, fn) {
 
 /**
  * Gets the feature rewards filtered by featureType
- * 
+ * @private
  */
 function getRewardFeatureBalance(featureType, fn) {
     if (hasAccountId) {
@@ -526,4 +542,11 @@ function onLoad() {
 
 // Kicks off everything
 onLoad();
+
+/**
+ * The libary version. Used to differentiate between Squatch.js V1 and V2
+ * 
+ * @example
+ * console.log('You are using Squatch.js version:', squatch.version);
+ */
 export const version = "v1.0.0";

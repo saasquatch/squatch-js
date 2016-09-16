@@ -3,6 +3,7 @@ import {getFrameUrl} from './widgetUrls';
 
 /**
  * Creates a No Content widget
+ * @private
  */
 export function create(sqh_config, $, hostSrc, callback)  {
 
