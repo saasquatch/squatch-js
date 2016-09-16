@@ -19,12 +19,18 @@ export function setup(sqh_config, opts) {
     
     let {framediv, callback, closeFnc, pageType} = opts; // destructuring: it's awesome, google it ;)
     
-    const frameUrl = getFrameUrl(sqh_config, pageType);
+    const remote = getFrameUrl(sqh_config, pageType);
     let resizeEmbedToContent = true;
-    
+
+    function resizeIframe(width, height){
+        let iframe = framediv.getElementsByTagName('iframe')[0];
+        iframe.style.height = height + "px";
+        iframe.style.width = ((sqh_config.mode == EMBED_MODE || sqh_config.mode == DEMO_EMBED_MODE) && !resizeEmbedToContent) ? '100%' : width + "px";
+    }
+
     // handle incoming messages from the iframe popup
     const rpc = new window.easyXDM.Rpc({
-        remote: frameUrl,
+        remote,
         container: framediv,
         props: {
             allowtransparency: "true",
@@ -39,10 +45,7 @@ export function setup(sqh_config, opts) {
                 _log("got init message");
                 // true if embed mode should resize to the content of the frame - otherwise have the iframe expand to the entire area of its wrapper
                 resizeEmbedToContent = resizeEmbedToContentIn;
-
-                framediv.getElementsByTagName('iframe')[0].style.height = height + "px";
-                framediv.getElementsByTagName('iframe')[0].style.width = ((sqh_config.mode == EMBED_MODE || sqh_config.mode == DEMO_EMBED_MODE) && !resizeEmbedToContent) ? '100%' : width + "px";
-
+                resizeIframe(width, height);
                 // Caches our stateful data for faster use later
                 let data = {
                     code: codeIn,
@@ -52,9 +55,7 @@ export function setup(sqh_config, opts) {
             },
             resize(height, width) {
                 _log("got resize message");
-                framediv.getElementsByTagName('iframe')[0].style.height = height + "px";
-                framediv.getElementsByTagName('iframe')[0].style.width = ((sqh_config.mode == EMBED_MODE || sqh_config.mode == DEMO_EMBED_MODE) && !resizeEmbedToContent) ? '100%' : width + "px";
-                
+                resizeIframe(width, height);
                 window.dispatchEvent(new window.Event('resize.modal')); // Triggers modal resize. Previously used JQuery -- $(window).trigger('resize.modal');
             },
             publish(eventName, payload) {
@@ -73,8 +74,7 @@ export function setup(sqh_config, opts) {
             error(errorMessage, height, width) {
                 console.error(errorMessage);
                 resizeEmbedToContent = false;
-                framediv.getElementsByTagName('iframe')[0].style.height = (sqh_config.mode == EMBED_MODE || sqh_config.mode == DEMO_EMBED_MODE) ? '100%' : height + "px";
-                framediv.getElementsByTagName('iframe')[0].style.width = (sqh_config.mode == EMBED_MODE || sqh_config.mode == DEMO_EMBED_MODE) ? '100%' : width + "px";
+                resizeIframe(width, height);
                 callback(true);
             }
         },

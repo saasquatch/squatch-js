@@ -2,6 +2,8 @@ import _log from '../_log';
 import onScriptFailure from '../util/onScriptFailure';
 import * as rpc from './rpc';
 
+import reveal from '../reveal/reveal';
+
 import {
     DEFAULT_AUTO_OPEN,
     JQUERY_REVEAL_PATH,
@@ -22,67 +24,58 @@ export function create(sqh_config, $, hostSrc, callback) {
 
     _log("loading popup widget");
 
-    /** ***** Load CSS ****** */
-    const css_link = $("<link>", {
-        rel: "stylesheet",
-        type: "text/css",
-        href: hostSrc + JQUERY_REVEAL_CSS_PATH
-    });
-    css_link.appendTo('head');
+    // Load JQuery.reveal
+    reveal($);
 
-    $.getScript(
-        hostSrc + JQUERY_REVEAL_PATH,
+    _log("reveal loaded");
+
+    // setup the popup container for reveal
+    const framediv = document.createElement('div');
+    framediv.setAttribute('id', 'squatchModal');
+    framediv.setAttribute('class', 'reveal-modal');
+
+    $('<div></div>').attr('id', 'squatchModalWrapper').append(framediv).appendTo('body');
+
+    modalWrapper = $('#squatchModalWrapper');
+
+    const rpcOpts = {
+        framediv,
+        callback,
+        closeFnc: function() {
+            $('#squatchModalWrapper').trigger('squatch:close');
+        },
+        pageType: "modalPopup"
+    };
+    const irpc = rpc.setup(sqh_config, rpcOpts);
+
+    // handle the popup closing (via clicking close or outside
+    // of the frame)
+    $('#squatchModalWrapper').on('reveal:close',
+        '#squatchModal',
         function() {
-            _log("reveal loaded");
+            irpc.closedWidget();
+        });
 
-            // setup the popup container for reveal
-            const framediv = document.createElement('div');
-            framediv.setAttribute('id', 'squatchModal');
-            framediv.setAttribute('class', 'reveal-modal');
+    // reveal the iframe popup
+    $('body').on('click', '.squatchpop', function(e) {
+        e.preventDefault();
+        // prevent race condition of page not being ready yet
+        $('#squatchModalWrapper').trigger('squatch:open');
+    });
 
-            $('<div></div>').attr('id', 'squatchModalWrapper').append(framediv).appendTo('body');
+    // listen for events to close the modal widget
+    modalWrapper.on('squatch:close', (e) => {
+        $('#squatchModal').trigger('reveal:close');
+    });
 
-            modalWrapper = $('#squatchModalWrapper');
+    // listen for events to open the modal widget
+    modalWrapper.on('squatch:open', (e) => {
+        irpc.openedWidget(sqh_config.mode, sqh_config.user_id, sqh_config.account_id);
+        $('#squatchModal').reveal();
+    });
 
-            const rpcOpts = {
-                framediv,
-                callback,
-                closeFnc: function() {
-                    $('#squatchModalWrapper').trigger('squatch:close');
-                },
-                pageType: "modalPopup"
-            };
-            const irpc = rpc.setup(sqh_config, rpcOpts);
+    checkForAutoOpen(sqh_config, $);
 
-            // handle the popup closing (via clicking close or outside
-            // of the frame)
-            $('#squatchModalWrapper').on('reveal:close',
-                '#squatchModal',
-                function() {
-                    irpc.closedWidget();
-                });
-
-            // reveal the iframe popup
-            $('body').on('click', '.squatchpop', function(e) {
-                e.preventDefault();
-                // prevent race condition of page not being ready yet
-                $('#squatchModalWrapper').trigger('squatch:open');
-            });
-
-            // listen for events to close the modal widget
-            modalWrapper.on('squatch:close', (e) => {
-                $('#squatchModal').trigger('reveal:close');
-            });
-
-            // listen for events to open the modal widget
-            modalWrapper.on('squatch:open', (e) => {
-                irpc.openedWidget(sqh_config.mode, sqh_config.user_id, sqh_config.account_id);
-                $('#squatchModal').reveal();
-            });
-
-            checkForAutoOpen(sqh_config, $);
-
-        }).fail(onScriptFailure);
 }
 
 /**

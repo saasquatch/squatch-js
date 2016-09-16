@@ -129,7 +129,7 @@ function main($j) {
     $j(document).ready(
         function($jQuery) {
             $ = $jQuery;
-            window.squatchQuery = $jQuery; // NOTE: very important -- the `squatchQuery` is used directly in our modified version of jquery.reveal
+
             // first look for any subscriptions prior to init (these should be added first so there's no potential to miss subscribed events immediately after init)
             for (let i = 0; i < window._sqh.length; i++) {
                 let current = window._sqh[i];
