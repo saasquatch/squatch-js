@@ -8,6 +8,7 @@ import { OpenApi } from './api/OpenApi';
 import cookie from './tracking/Cookie';
 import { each } from './utils/each';
 import { domready } from './utils/domready';
+import elementResizeDetectorMaker from 'element-resize-detector';
 
 export { OpenApi } from './api/OpenApi';
 export { default as cookie } from './tracking/Cookie';
@@ -39,9 +40,11 @@ export function init(config) {
     let embed = document.getElementById('squatchembed');
     let frame = document.createElement('iframe');
 
+    let erd = elementResizeDetectorMaker({ strategy: "scroll" });
+
     frame.width = '100%';
     frame.id = 'widget';
-    frame.frameborder = '0';
+    frame.style = 'border: 0;';
     document.getElementById('squatchembed').appendChild(frame);
     frame.contentWindow.document.open();
     frame.contentWindow.document.write(user);
@@ -49,6 +52,12 @@ export function init(config) {
 
     domready(frame.contentWindow.document, function() {
       frame.height = frame.contentWindow.document.body.scrollHeight + 'px';
+
+      // Adjust frame height when size of body changes
+      erd.listenTo(frame.contentWindow.document.body, function(element) {
+        let height = element.offsetHeight;
+        frame.height = height;
+      })
     })
 
   }).catch(function(ex) {
