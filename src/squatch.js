@@ -7,6 +7,7 @@
 import { OpenApi } from './api/OpenApi';
 import cookie from './tracking/Cookie';
 import { each } from './utils/each';
+import { domready } from './utils/domready';
 
 export { OpenApi } from './api/OpenApi';
 export { default as cookie } from './tracking/Cookie';
@@ -26,6 +27,34 @@ export function init(config) {
   api = new OpenApi({
     tenantAlias: config.tenantAlias
   });
+
+  // TODO:
+  // 1. Check if config.user was provided
+  // 2. If it is, Upsert user. Else, check store to see if user info is available
+  // 3. If no user info is available, create new cookie user
+
+  api.createCookieUser().then(function(response) {
+    let user = response;
+
+    let embed = document.getElementById('squatchembed');
+    let frame = document.createElement('iframe');
+
+    frame.width = '100%';
+    frame.id = 'widget';
+    frame.frameborder = '0';
+    document.getElementById('squatchembed').appendChild(frame);
+    frame.contentWindow.document.open();
+    frame.contentWindow.document.write(user);
+    frame.contentWindow.document.close();
+
+    domready(frame.contentWindow.document, function() {
+      frame.height = frame.contentWindow.document.body.scrollHeight + 'px';
+    })
+
+  }).catch(function(ex) {
+    console.log(ex);
+  });
+
 }
 
 /**
@@ -36,7 +65,7 @@ export function init(config) {
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
  */
-export var api = null;
+export let api = null;
 
 
 export function autofill() {
@@ -48,22 +77,27 @@ export function ready(fn) {
   fn();
 }
 
-var loaded = window['squatch'] || null,
-  cached = window['_squatch'] || null;
 
-if (loaded && cached) {
-  var _ready = cached.ready;
+if (window) onLoad();
 
-  loaded["init"] = init;
-  loaded["ready"] = ready;
-  loaded["autofill"] = autofill;
+function onLoad() {
+  var loaded = window['squatch'] || null,
+    cached = window['_squatch'] || null;
 
-  each(_ready, function(cb, i){
-    cb();
-  });
+  if (loaded && cached) {
+    var _ready = cached.ready;
 
-  window["_" + 'squatch'] = undefined;
-  try {
-    delete window['_' + 'squatch']
-  } catch(e) {}
+    loaded["init"] = init;
+    loaded["ready"] = ready;
+    loaded["autofill"] = autofill;
+
+    each(_ready, function(cb, i){
+      cb();
+    });
+
+    window["_" + 'squatch'] = undefined;
+    try {
+      delete window['_' + 'squatch']
+    } catch(e) {}
+  }
 }

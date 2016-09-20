@@ -40,7 +40,7 @@ export class OpenApi {
    */
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
-    this.domain = "https://app.referralsaasquatch.com";
+    this.domain = "https://staging.referralsaasquatch.com";
   }
 
   /**
@@ -64,6 +64,14 @@ export class OpenApi {
     let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
     let url = this.domain + path;
     return this._doPost(url, JSON.stringify(params));
+  }
+
+  createCookieUser() {
+    let tenant_alias = encodeURIComponent(this.tenantAlias);
+
+    let path = `/api/v1/${tenant_alias}/open/user/cookie_user`;
+    let url = this.domain + path;
+    return this._doPost(url, JSON.stringify({}));
   }
 
   /**
@@ -176,7 +184,6 @@ export class OpenApi {
     return fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': 'Basic ' + btoa(":" + this.API_KEY),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
@@ -189,16 +196,18 @@ export class OpenApi {
    * @private
    */
   _doPost(url, data) {
+    // TODO:
+    // - support for sending 'text/html' or 'application/json' in Accept header
     return fetch(url, {
       method: 'POST',
       headers: {
-        'Authorization': 'Basic ' + btoa(":" + this.API_KEY),
-        'Accept': 'application/json',
+        'Accept': 'text/html',
         'Content-Type': 'application/json'
       },
       body: data
     }).then(function(response) {
-      return response.json();
+      // this could be text or json!!
+      return response.text();
     });
   }
 

@@ -93,6 +93,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _each = __webpack_require__(16);
 
+	var _domready = __webpack_require__(17);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	/**
@@ -109,6 +111,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	function init(config) {
 	  exports.api = api = new _OpenApi.OpenApi({
 	    tenantAlias: config.tenantAlias
+	  });
+
+	  // TODO:
+	  // 1. Check if config.user was provided
+	  // 2. If it is, Upsert user. Else, check store to see if user info is available
+	  // 3. If no user info is available, create new cookie user
+
+	  api.createCookieUser().then(function (response) {
+	    var user = response;
+
+	    var embed = document.getElementById('squatchembed');
+	    var frame = document.createElement('iframe');
+
+	    frame.width = '100%';
+	    frame.id = 'widget';
+	    frame.frameborder = '0';
+	    document.getElementById('squatchembed').appendChild(frame);
+	    frame.contentWindow.document.open();
+	    frame.contentWindow.document.write(user);
+	    frame.contentWindow.document.close();
+
+	    (0, _domready.domready)(frame.contentWindow.document, function () {
+	      frame.height = frame.contentWindow.document.body.scrollHeight + 'px';
+	    });
+	  }).catch(function (ex) {
+	    console.log(ex);
 	  });
 	}
 
@@ -131,24 +159,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	  fn();
 	}
 
-	var loaded = window['squatch'] || null,
-	    cached = window['_squatch'] || null;
+	if (window) onLoad();
 
-	if (loaded && cached) {
-	  var _ready = cached.ready;
+	function onLoad() {
+	  var loaded = window['squatch'] || null,
+	      cached = window['_squatch'] || null;
 
-	  loaded["init"] = init;
-	  loaded["ready"] = ready;
-	  loaded["autofill"] = autofill;
+	  if (loaded && cached) {
+	    var _ready = cached.ready;
 
-	  (0, _each.each)(_ready, function (cb, i) {
-	    cb();
-	  });
+	    loaded["init"] = init;
+	    loaded["ready"] = ready;
+	    loaded["autofill"] = autofill;
 
-	  window["_" + 'squatch'] = undefined;
-	  try {
-	    delete window['_' + 'squatch'];
-	  } catch (e) {}
+	    (0, _each.each)(_ready, function (cb, i) {
+	      cb();
+	    });
+
+	    window["_" + 'squatch'] = undefined;
+	    try {
+	      delete window['_' + 'squatch'];
+	    } catch (e) {}
+	  }
 	}
 
 /***/ },
@@ -216,8 +248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _classCallCheck(this, OpenApi);
 
 	    this.tenantAlias = config.tenantAlias;
-	    this.API_KEY = config.API_KEY;
-	    this.domain = "https://app.referralsaasquatch.com";
+	    this.domain = "https://staging.referralsaasquatch.com";
 	  }
 
 	  /**
@@ -245,6 +276,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
 	      return this._doPost(url, JSON.stringify(params));
+	    }
+	  }, {
+	    key: 'createCookieUser',
+	    value: function createCookieUser() {
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
+	      var url = this.domain + path;
+	      return this._doPost(url, JSON.stringify({}));
 	    }
 
 	    /**
@@ -378,7 +418,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'GET',
 	        headers: {
-	          'Authorization': 'Basic ' + btoa(":" + this.API_KEY),
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
 	        }
@@ -394,16 +433,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_doPost',
 	    value: function _doPost(url, data) {
+	      // TODO:
+	      // - support for sending 'text/html' or 'application/json' in Accept header
 	      return fetch(url, {
 	        method: 'POST',
 	        headers: {
-	          'Authorization': 'Basic ' + btoa(":" + this.API_KEY),
-	          'Accept': 'application/json',
+	          'Accept': 'text/html',
 	          'Content-Type': 'application/json'
 	        },
 	        body: data
 	      }).then(function (response) {
-	        return response.json();
+	        // this could be text or json!!
+	        return response.text();
 	      });
 	    }
 	  }]);
@@ -3919,6 +3960,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  return 1;
 	};
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.domready = domready;
+	/*!
+	  * domready (c) Dustin Diaz 2014 - License MIT
+	  *
+	  */
+	function domready(targetDoc, fn) {
+	  var fns = [],
+	      _listener = void 0,
+	      doc = targetDoc,
+	      hack = doc.documentElement.doScroll,
+	      domContentLoaded = 'DOMContentLoaded',
+	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+
+	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
+	    doc.removeEventListener(domContentLoaded, _listener);
+	    loaded = 1;
+	    while (_listener = fns.shift()) {
+	      _listener();
+	    }
+	  });
+
+	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
+	}
 
 /***/ }
 /******/ ])

@@ -124,8 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _classCallCheck(this, OpenApi);
 
 	    this.tenantAlias = config.tenantAlias;
-	    this.API_KEY = config.API_KEY;
-	    this.domain = "https://app.referralsaasquatch.com";
+	    this.domain = "https://staging.referralsaasquatch.com";
 	  }
 
 	  /**
@@ -153,6 +152,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
 	      return this._doPost(url, JSON.stringify(params));
+	    }
+	  }, {
+	    key: 'createCookieUser',
+	    value: function createCookieUser() {
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
+	      var url = this.domain + path;
+	      return this._doPost(url, JSON.stringify({}));
 	    }
 
 	    /**
@@ -286,7 +294,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'GET',
 	        headers: {
-	          'Authorization': 'Basic ' + btoa(":" + this.API_KEY),
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
 	        }
@@ -302,16 +309,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_doPost',
 	    value: function _doPost(url, data) {
+	      // TODO:
+	      // - support for sending 'text/html' or 'application/json' in Accept header
 	      return fetch(url, {
 	        method: 'POST',
 	        headers: {
-	          'Authorization': 'Basic ' + btoa(":" + this.API_KEY),
-	          'Accept': 'application/json',
+	          'Accept': 'text/html',
 	          'Content-Type': 'application/json'
 	        },
 	        body: data
 	      }).then(function (response) {
-	        return response.json();
+	        // this could be text or json!!
+	        return response.text();
 	      });
 	    }
 	  }]);
