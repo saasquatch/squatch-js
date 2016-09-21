@@ -145,9 +145,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function createUser(params) {
 	      this._validateInput(params, _schema2.default.user);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          account_id = encodeURIComponent(params.accountId),
-	          user_id = encodeURIComponent(params.id);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
@@ -184,9 +184,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function lookUpUser(params) {
 	      this._validateInput(params, _schema2.default.userLookUp);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          account_id = encodeURIComponent(params.accountId),
-	          user_id = encodeURIComponent(params.id);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
@@ -206,8 +206,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getUserByReferralCode(params) {
 	      this._validateInput(params, _schema2.default.userReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          referral_code = encodeURIComponent(params.referralCode);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/user?referralCode=' + referral_code;
 	      var url = this.domain + path;
@@ -227,8 +227,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function lookUpReferralCode(params) {
 	      this._validateInput(params, _schema2.default.userReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          referral_code = encodeURIComponent(params.referralCode);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code;
 	      var url = this.domain + path;
@@ -250,10 +250,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function applyReferralCode(params) {
 	      this._validateInput(params, _schema2.default.applyReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          referral_code = encodeURIComponent(params.referralCode),
-	          account_id = encodeURIComponent(params.accountId),
-	          user_id = encodeURIComponent(params.id);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;

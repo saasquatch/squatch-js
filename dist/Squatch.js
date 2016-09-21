@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.api = exports.cookie = exports.OpenApi = undefined;
+	exports.api = exports.OpenApi = undefined;
 
 	var _OpenApi = __webpack_require__(2);
 
@@ -76,24 +76,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _OpenApi.OpenApi;
 	  }
 	});
-
-	var _Cookie = __webpack_require__(15);
-
-	Object.defineProperty(exports, 'cookie', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_Cookie).default;
-	  }
-	});
 	exports.init = init;
 	exports.autofill = autofill;
 	exports.ready = ready;
 
 	var _Widget = __webpack_require__(16);
 
+	var _Cookie = __webpack_require__(15);
+
 	var _Cookie2 = _interopRequireDefault(_Cookie);
 
 	var _each = __webpack_require__(31);
+
+	var _domready = __webpack_require__(17);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -163,18 +158,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	if (window) onLoad();
 
 	function onLoad() {
-	  var loaded = window['squatch'] || null,
-	      cached = window['_squatch'] || null;
+	  var loaded = window['squatch'] || null;
+	  var cached = window['_squatch'] || null;
 
 	  if (loaded && cached) {
 	    var _ready = cached.ready;
 
-	    loaded["init"] = init;
-	    loaded["ready"] = ready;
-	    loaded["autofill"] = autofill;
-
 	    (0, _each.each)(_ready, function (cb, i) {
-	      cb();
+	      return (0, _domready.domready)(document, function () {
+	        cb();
+	      });
 	    });
 
 	    window["_" + 'squatch'] = undefined;
@@ -270,9 +263,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function createUser(params) {
 	      this._validateInput(params, _schema2.default.user);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          account_id = encodeURIComponent(params.accountId),
-	          user_id = encodeURIComponent(params.id);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
@@ -309,9 +302,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function lookUpUser(params) {
 	      this._validateInput(params, _schema2.default.userLookUp);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          account_id = encodeURIComponent(params.accountId),
-	          user_id = encodeURIComponent(params.id);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
@@ -331,8 +324,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getUserByReferralCode(params) {
 	      this._validateInput(params, _schema2.default.userReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          referral_code = encodeURIComponent(params.referralCode);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/user?referralCode=' + referral_code;
 	      var url = this.domain + path;
@@ -352,8 +345,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function lookUpReferralCode(params) {
 	      this._validateInput(params, _schema2.default.userReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          referral_code = encodeURIComponent(params.referralCode);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code;
 	      var url = this.domain + path;
@@ -375,10 +368,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function applyReferralCode(params) {
 	      this._validateInput(params, _schema2.default.applyReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias),
-	          referral_code = encodeURIComponent(params.referralCode),
-	          account_id = encodeURIComponent(params.accountId),
-	          user_id = encodeURIComponent(params.id);
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
@@ -3943,9 +3936,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _domready = __webpack_require__(30);
+	var _domready = __webpack_require__(17);
 
-	var _elementResizeDetector = __webpack_require__(17);
+	var _elementResizeDetector = __webpack_require__(18);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
 
@@ -3994,23 +3987,56 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 17 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.domready = domready;
+	/*!
+	  * domready (c) Dustin Diaz 2014 - License MIT
+	  *
+	  */
+	function domready(targetDoc, fn) {
+	  var fns = [],
+	      _listener = void 0,
+	      doc = targetDoc,
+	      hack = doc.documentElement.doScroll,
+	      domContentLoaded = 'DOMContentLoaded',
+	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+
+	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
+	    doc.removeEventListener(domContentLoaded, _listener);
+	    loaded = 1;
+	    while (_listener = fns.shift()) {
+	      _listener();
+	    }
+	  });
+
+	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
+	}
+
+/***/ },
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(18).forEach;
-	var elementUtilsMaker       = __webpack_require__(19);
-	var listenerHandlerMaker    = __webpack_require__(20);
-	var idGeneratorMaker        = __webpack_require__(21);
-	var idHandlerMaker          = __webpack_require__(22);
-	var reporterMaker           = __webpack_require__(23);
-	var browserDetector         = __webpack_require__(24);
-	var batchProcessorMaker     = __webpack_require__(25);
-	var stateHandler            = __webpack_require__(27);
+	var forEach                 = __webpack_require__(19).forEach;
+	var elementUtilsMaker       = __webpack_require__(20);
+	var listenerHandlerMaker    = __webpack_require__(21);
+	var idGeneratorMaker        = __webpack_require__(22);
+	var idHandlerMaker          = __webpack_require__(23);
+	var reporterMaker           = __webpack_require__(24);
+	var browserDetector         = __webpack_require__(25);
+	var batchProcessorMaker     = __webpack_require__(26);
+	var stateHandler            = __webpack_require__(28);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(28);
-	var scrollStrategyMaker     = __webpack_require__(29);
+	var objectStrategyMaker     = __webpack_require__(29);
+	var scrollStrategyMaker     = __webpack_require__(30);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -4318,7 +4344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4343,7 +4369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4401,7 +4427,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4467,7 +4493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4491,7 +4517,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4544,7 +4570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4592,7 +4618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4637,12 +4663,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(26);
+	var utils = __webpack_require__(27);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -4781,7 +4807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4802,7 +4828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4830,7 +4856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4840,7 +4866,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(24);
+	var browserDetector = __webpack_require__(25);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5049,7 +5075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5059,7 +5085,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(18).forEach;
+	var forEach = __webpack_require__(19).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5668,39 +5694,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 
-
-/***/ },
-/* 30 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.domready = domready;
-	/*!
-	  * domready (c) Dustin Diaz 2014 - License MIT
-	  *
-	  */
-	function domready(targetDoc, fn) {
-	  var fns = [],
-	      _listener = void 0,
-	      doc = targetDoc,
-	      hack = doc.documentElement.doScroll,
-	      domContentLoaded = 'DOMContentLoaded',
-	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
-
-	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
-	    doc.removeEventListener(domContentLoaded, _listener);
-	    loaded = 1;
-	    while (_listener = fns.shift()) {
-	      _listener();
-	    }
-	  });
-
-	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
-	}
 
 /***/ },
 /* 31 */

@@ -8,9 +8,9 @@ import { OpenApi } from './api/OpenApi';
 import { Widget } from './widgets/Widget';
 import cookie from './tracking/Cookie';
 import { each } from './utils/each';
+import { domready } from './utils/domready';
 
 export { OpenApi } from './api/OpenApi';
-export { default as cookie } from './tracking/Cookie';
 
 /**
  * Initializes a static `squatch` global. This sets up:
@@ -80,19 +80,13 @@ function loadWidget(element, content, mode) {
 if (window) onLoad();
 
 function onLoad() {
-  var loaded = window['squatch'] || null,
-    cached = window['_squatch'] || null;
+  let loaded = window['squatch'] || null;
+  let cached = window['_squatch'] || null;
 
   if (loaded && cached) {
-    var _ready = cached.ready;
+    const _ready = cached.ready;
 
-    loaded["init"] = init;
-    loaded["ready"] = ready;
-    loaded["autofill"] = autofill;
-
-    each(_ready, function(cb, i){
-      cb();
-    });
+    each(_ready, (cb, i) => domready(document, function(){ cb(); }) );
 
     window["_" + 'squatch'] = undefined;
     try {

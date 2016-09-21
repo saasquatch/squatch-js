@@ -57,9 +57,9 @@ export class OpenApi {
   createUser(params) {
     this._validateInput(params, schema.user);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias),
-      account_id = encodeURIComponent(params.accountId),
-      user_id = encodeURIComponent(params.id);
+    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    let account_id = encodeURIComponent(params.accountId);
+    let user_id = encodeURIComponent(params.id);
 
     let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
     let url = this.domain + path;
@@ -90,9 +90,9 @@ export class OpenApi {
   lookUpUser(params) {
     this._validateInput(params, schema.userLookUp);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias),
-      account_id = encodeURIComponent(params.accountId),
-      user_id = encodeURIComponent(params.id);
+    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    let account_id = encodeURIComponent(params.accountId);
+    let user_id = encodeURIComponent(params.id);
 
     let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
     let url = this.domain + path;
@@ -109,8 +109,8 @@ export class OpenApi {
   getUserByReferralCode(params) {
     this._validateInput(params, schema.userReferralCode);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias),
-      referral_code = encodeURIComponent(params.referralCode);
+    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    let referral_code = encodeURIComponent(params.referralCode);
 
     let path = `/api/v1/${tenant_alias}/open/user?referralCode=${referral_code}`;
     let url = this.domain + path;
@@ -127,8 +127,8 @@ export class OpenApi {
   lookUpReferralCode(params) {
     this._validateInput(params, schema.userReferralCode);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias),
-      referral_code = encodeURIComponent(params.referralCode);
+    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    let referral_code = encodeURIComponent(params.referralCode);
 
     let path = `/api/v1/${tenant_alias}/open/code/${referral_code}`;
     let url = this.domain + path;
@@ -147,10 +147,10 @@ export class OpenApi {
   applyReferralCode(params) {
     this._validateInput(params, schema.applyReferralCode);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias),
-      referral_code = encodeURIComponent(params.referralCode),
-      account_id = encodeURIComponent(params.accountId),
-      user_id = encodeURIComponent(params.id);
+    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    let referral_code = encodeURIComponent(params.referralCode);
+    let account_id = encodeURIComponent(params.accountId);
+    let user_id = encodeURIComponent(params.id);
 
     let path = `/api/v1/${tenant_alias}/open/code/${referral_code}/account/${account_id}/user/${user_id}`;
     let url = this.domain + path;
