@@ -7,8 +7,7 @@
 import { OpenApi } from './api/OpenApi';
 import { Widget } from './widgets/Widget';
 import cookie from './tracking/Cookie';
-import { each } from './utils/each';
-import { domready } from './utils/domready';
+import { asyncLoad } from './async';
 
 export { OpenApi } from './api/OpenApi';
 
@@ -77,20 +76,4 @@ function loadWidget(element, content, mode) {
   }
 }
 
-if (window) onLoad();
-
-function onLoad() {
-  let loaded = window['squatch'] || null;
-  let cached = window['_squatch'] || null;
-
-  if (loaded && cached) {
-    const _ready = cached.ready;
-
-    each(_ready, (cb, i) => domready(document, function(){ cb(); }) );
-
-    window["_" + 'squatch'] = undefined;
-    try {
-      delete window['_' + 'squatch']
-    } catch(e) {}
-  }
-}
+if (window) asyncLoad();

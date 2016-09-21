@@ -86,9 +86,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Cookie2 = _interopRequireDefault(_Cookie);
 
-	var _each = __webpack_require__(31);
-
-	var _domready = __webpack_require__(17);
+	var _async = __webpack_require__(32);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -155,27 +153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}
 
-	if (window) onLoad();
-
-	function onLoad() {
-	  var loaded = window['squatch'] || null;
-	  var cached = window['_squatch'] || null;
-
-	  if (loaded && cached) {
-	    var _ready = cached.ready;
-
-	    (0, _each.each)(_ready, function (cb, i) {
-	      return (0, _domready.domready)(document, function () {
-	        cb();
-	      });
-	    });
-
-	    window["_" + 'squatch'] = undefined;
-	    try {
-	      delete window['_' + 'squatch'];
-	    } catch (e) {}
-	  }
-	}
+	if (window) (0, _async.asyncLoad)();
 
 /***/ },
 /* 2 */
@@ -5730,6 +5708,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  return 1;
 	};
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.asyncLoad = asyncLoad;
+
+	var _domready = __webpack_require__(17);
+
+	var _each = __webpack_require__(31);
+
+	function asyncLoad() {
+	  var loaded = window['squatch'] || null;
+	  var cached = window['_squatch'] || null;
+
+	  if (loaded && cached) {
+	    var _ready = cached.ready;
+
+	    (0, _each.each)(_ready, function (cb, i) {
+	      return (0, _domready.domready)(document, function () {
+	        cb();
+	      });
+	    });
+
+	    window["_" + 'squatch'] = undefined;
+	    try {
+	      delete window['_' + 'squatch'];
+	    } catch (e) {}
+	  }
+	}
 
 /***/ }
 /******/ ])
