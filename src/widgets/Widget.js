@@ -58,11 +58,14 @@ export class Widget {
       erd.listenTo(frame.contentWindow.document.body, function(element) {
         let height = element.offsetHeight;
         frame.height = height;
-        if (window.innerHeight < frame.height) {
-          popupdiv.style.paddingTop = "5px";
-        } else {
-          popupdiv.style.paddingTop = ((window.innerHeight - frame.height)/2) + "px";
+        if (mode === 'POPUP') {
+          if (window.innerHeight < frame.height) {
+            popupdiv.style.paddingTop = "5px";
+          } else {
+            popupdiv.style.paddingTop = ((window.innerHeight - frame.height)/2) + "px";
+          }
         }
+
       });
     });
   }
