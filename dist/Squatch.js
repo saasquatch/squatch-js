@@ -80,13 +80,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.autofill = autofill;
 	exports.ready = ready;
 
-	var _Widget = __webpack_require__(16);
+	var _Widget = __webpack_require__(15);
 
-	var _Cookie = __webpack_require__(15);
+	var _Cookie = __webpack_require__(30);
 
 	var _Cookie2 = _interopRequireDefault(_Cookie);
 
-	var _async = __webpack_require__(32);
+	var _async = __webpack_require__(31);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3806,103 +3806,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 15 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = cookie;
-	var encode = encodeURIComponent;
-	var decode = decodeURIComponent;
-
-	/**
-	 * Gets a cookie or sets a cookie depending on what arguments you use.
-	 *
-	 * @param {string} name the name of the cookie
-	 * @param {string} [value] sets the value of the cookie
-	 * @param {Object} [options] options on the value of the cookie
-	 * @param {string} [options.path] the cookie path
-	 * @param {string} [options.domain] the cookie domain
-	 * @param {Date}   [options.expires] the cookie expiry
-	 * @param {boolean} [options.secure=false] if the cookie is secure
-	 *
-	 * @returns {Object} The cookie value
-	 *
-	 * @example <caption>Set a cookie</caption>
-	 * cookie('myCookie', 12, {domain:'google.com'});
-	 *
-	 * @example <caption>Get a cookie</caption>
-	 * var cookieValue = cookie('myCookie');
-	 *
-	 */
-	function cookie(name, value, options) {
-	  if (arguments.length < 2) return get(name);
-	  set(name, value, options);
-	}
-
-	function set(name, value) {
-	  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	  var str = encode(name) + '=' + encode(value);
-
-	  if (value == null) options.maxage = -1;
-
-	  if (options.maxage) {
-	    options.expires = new Date(+new Date() + options.maxage);
-	  }
-
-	  if (options.path) str += '; path=' + options.path;
-	  if (options.domain) str += '; domain=' + options.domain;
-	  if (options.expires) str += '; expires=' + options.expires.toUTCString();
-	  if (options.secure) str += '; secure';
-
-	  document.cookie = str;
-	}
-
-	function get(name) {
-	  var cookies = parse(document.cookie);
-	  return name ? cookies[name] : cookies;
-	}
-
-	function parse(cookie) {
-	  var result = {},
-	      pairs = cookie.split(/ *; */);
-
-	  if (pairs.length <= 1) return result;
-
-	  var _iteratorNormalCompletion = true;
-	  var _didIteratorError = false;
-	  var _iteratorError = undefined;
-
-	  try {
-	    for (var _iterator = pairs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	      var pair = _step.value;
-
-	      pair = pair.split('=');
-	      result[decode(pair[0])] = decode(pair[1]);
-	    }
-	  } catch (err) {
-	    _didIteratorError = true;
-	    _iteratorError = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion && _iterator.return) {
-	        _iterator.return();
-	      }
-	    } finally {
-	      if (_didIteratorError) {
-	        throw _iteratorError;
-	      }
-	    }
-	  }
-
-	  return result;
-	}
-
-/***/ },
-/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3914,9 +3817,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _domready = __webpack_require__(17);
+	var _domready = __webpack_require__(16);
 
-	var _elementResizeDetector = __webpack_require__(18);
+	var _elementResizeDetector = __webpack_require__(17);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
 
@@ -3964,7 +3867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -3997,24 +3900,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(19).forEach;
-	var elementUtilsMaker       = __webpack_require__(20);
-	var listenerHandlerMaker    = __webpack_require__(21);
-	var idGeneratorMaker        = __webpack_require__(22);
-	var idHandlerMaker          = __webpack_require__(23);
-	var reporterMaker           = __webpack_require__(24);
-	var browserDetector         = __webpack_require__(25);
-	var batchProcessorMaker     = __webpack_require__(26);
-	var stateHandler            = __webpack_require__(28);
+	var forEach                 = __webpack_require__(18).forEach;
+	var elementUtilsMaker       = __webpack_require__(19);
+	var listenerHandlerMaker    = __webpack_require__(20);
+	var idGeneratorMaker        = __webpack_require__(21);
+	var idHandlerMaker          = __webpack_require__(22);
+	var reporterMaker           = __webpack_require__(23);
+	var browserDetector         = __webpack_require__(24);
+	var batchProcessorMaker     = __webpack_require__(25);
+	var stateHandler            = __webpack_require__(27);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(29);
-	var scrollStrategyMaker     = __webpack_require__(30);
+	var objectStrategyMaker     = __webpack_require__(28);
+	var scrollStrategyMaker     = __webpack_require__(29);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -4322,7 +4225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4347,7 +4250,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4405,7 +4308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4471,7 +4374,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4495,7 +4398,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4548,7 +4451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4596,7 +4499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4641,12 +4544,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(27);
+	var utils = __webpack_require__(26);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -4785,7 +4688,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4806,7 +4709,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4834,7 +4737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4844,7 +4747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(25);
+	var browserDetector = __webpack_require__(24);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5053,7 +4956,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5063,7 +4966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(19).forEach;
+	var forEach = __webpack_require__(18).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5674,7 +5577,137 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = cookie;
+	var encode = encodeURIComponent;
+	var decode = decodeURIComponent;
+
+	/**
+	 * Gets a cookie or sets a cookie depending on what arguments you use.
+	 *
+	 * @param {string} name the name of the cookie
+	 * @param {string} [value] sets the value of the cookie
+	 * @param {Object} [options] options on the value of the cookie
+	 * @param {string} [options.path] the cookie path
+	 * @param {string} [options.domain] the cookie domain
+	 * @param {Date}   [options.expires] the cookie expiry
+	 * @param {boolean} [options.secure=false] if the cookie is secure
+	 *
+	 * @returns {Object} The cookie value
+	 *
+	 * @example <caption>Set a cookie</caption>
+	 * cookie('myCookie', 12, {domain:'google.com'});
+	 *
+	 * @example <caption>Get a cookie</caption>
+	 * var cookieValue = cookie('myCookie');
+	 *
+	 */
+	function cookie(name, value, options) {
+	  if (arguments.length < 2) return get(name);
+	  set(name, value, options);
+	}
+
+	function set(name, value) {
+	  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	  var str = encode(name) + '=' + encode(value);
+
+	  if (value == null) options.maxage = -1;
+
+	  if (options.maxage) {
+	    options.expires = new Date(+new Date() + options.maxage);
+	  }
+
+	  if (options.path) str += '; path=' + options.path;
+	  if (options.domain) str += '; domain=' + options.domain;
+	  if (options.expires) str += '; expires=' + options.expires.toUTCString();
+	  if (options.secure) str += '; secure';
+
+	  document.cookie = str;
+	}
+
+	function get(name) {
+	  var cookies = parse(document.cookie);
+	  return name ? cookies[name] : cookies;
+	}
+
+	function parse(cookie) {
+	  var result = {},
+	      pairs = cookie.split(/ *; */);
+
+	  if (pairs.length <= 1) return result;
+
+	  var _iteratorNormalCompletion = true;
+	  var _didIteratorError = false;
+	  var _iteratorError = undefined;
+
+	  try {
+	    for (var _iterator = pairs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	      var pair = _step.value;
+
+	      pair = pair.split('=');
+	      result[decode(pair[0])] = decode(pair[1]);
+	    }
+	  } catch (err) {
+	    _didIteratorError = true;
+	    _iteratorError = err;
+	  } finally {
+	    try {
+	      if (!_iteratorNormalCompletion && _iterator.return) {
+	        _iterator.return();
+	      }
+	    } finally {
+	      if (_didIteratorError) {
+	        throw _iteratorError;
+	      }
+	    }
+	  }
+
+	  return result;
+	}
+
+/***/ },
 /* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.asyncLoad = asyncLoad;
+
+	var _each = __webpack_require__(32);
+
+	function asyncLoad() {
+	  var loaded = window['squatch'] || null;
+	  var cached = window['_squatch'] || null;
+
+	  if (loaded && cached) {
+	    var _ready = cached.ready;
+
+	    (0, _each.each)(_ready, function (cb, i) {
+	      return setTimeout(function () {
+	        cb();
+	      }, 0);
+	    });
+
+	    window["_" + 'squatch'] = undefined;
+	    try {
+	      delete window['_' + 'squatch'];
+	    } catch (e) {}
+	  }
+	}
+
+/***/ },
+/* 32 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5708,41 +5741,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  return 1;
 	};
-
-/***/ },
-/* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.asyncLoad = asyncLoad;
-
-	var _domready = __webpack_require__(17);
-
-	var _each = __webpack_require__(31);
-
-	function asyncLoad() {
-	  var loaded = window['squatch'] || null;
-	  var cached = window['_squatch'] || null;
-
-	  if (loaded && cached) {
-	    var _ready = cached.ready;
-
-	    (0, _each.each)(_ready, function (cb, i) {
-	      return (0, _domready.domready)(document, function () {
-	        cb();
-	      });
-	    });
-
-	    window["_" + 'squatch'] = undefined;
-	    try {
-	      delete window['_' + 'squatch'];
-	    } catch (e) {}
-	  }
-	}
 
 /***/ }
 /******/ ])

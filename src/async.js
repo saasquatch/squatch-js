@@ -1,4 +1,3 @@
-import { domready } from './utils/domready';
 import { each } from './utils/each';
 
 export function asyncLoad() {
@@ -8,7 +7,7 @@ export function asyncLoad() {
   if (loaded && cached) {
     const _ready = cached.ready;
 
-    each(_ready, (cb, i) => domready(document, function(){ cb(); }) );
+    each(_ready, (cb, i) => setTimeout(function() { cb(); }, 0) );
 
     window["_" + 'squatch'] = undefined;
     try {
