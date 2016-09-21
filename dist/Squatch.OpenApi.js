@@ -156,11 +156,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'createCookieUser',
 	    value: function createCookieUser() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? 'text/html' : arguments[0];
+
+	      var responseType = params;
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}));
+	      return this._doPost(url, JSON.stringify({}), responseType);
 	    }
 
 	    /**
@@ -308,19 +311,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: '_doPost',
-	    value: function _doPost(url, data) {
-	      // TODO:
-	      // - support for sending 'text/html' or 'application/json' in Accept header
+	    value: function _doPost(url, data, responseType) {
 	      return fetch(url, {
 	        method: 'POST',
 	        headers: {
-	          'Accept': 'text/html',
+	          'Accept': responseType,
 	          'Content-Type': 'application/json'
 	        },
 	        body: data
 	      }).then(function (response) {
-	        // this could be text or json!!
-	        return response.text();
+	        if (responseType === 'text/html') {
+	          return response.text();
+	        } else {
+	          return response.json();
+	        }
 	      });
 	    }
 	  }]);

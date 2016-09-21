@@ -5,10 +5,9 @@
  * @module squatch
  */
 import { OpenApi } from './api/OpenApi';
+import { Widget } from './widgets/Widget';
 import cookie from './tracking/Cookie';
 import { each } from './utils/each';
-import { domready } from './utils/domready';
-import elementResizeDetectorMaker from 'element-resize-detector';
 
 export { OpenApi } from './api/OpenApi';
 export { default as cookie } from './tracking/Cookie';
@@ -19,14 +18,14 @@ export { default as cookie } from './tracking/Cookie';
  *  - `api` a static instance of the {@link OpenApi}
  *
  * @param {Object} config Configuration details
- * @param {string} config.tenantAlias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
+ * @param {string} config.tenant_alias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
  * @returns {void}
  * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * squatch.init({tenant_alias:'test_basbtabstq51v'});
  */
 export function init(config) {
   api = new OpenApi({
-    tenantAlias: config.tenantAlias
+    tenantAlias: config.tenant_alias
   });
 
   // TODO:
@@ -34,32 +33,12 @@ export function init(config) {
   // 2. If it is, Upsert user. Else, check store to see if user info is available
   // 3. If no user info is available, create new cookie user
 
-  api.createCookieUser().then(function(response) {
-    let user = response;
-
-    let embed = document.getElementById('squatchembed');
-    let frame = document.createElement('iframe');
-
-    let erd = elementResizeDetectorMaker({ strategy: "scroll" });
-
-    frame.width = '100%';
-    frame.id = 'widget';
-    frame.style = 'border: 0;';
-    document.getElementById('squatchembed').appendChild(frame);
-    frame.contentWindow.document.open();
-    frame.contentWindow.document.write(user);
-    frame.contentWindow.document.close();
-
-    domready(frame.contentWindow.document, function() {
-      frame.height = frame.contentWindow.document.body.scrollHeight + 'px';
-
-      // Adjust frame height when size of body changes
-      erd.listenTo(frame.contentWindow.document.body, function(element) {
-        let height = element.offsetHeight;
-        frame.height = height;
-      })
-    })
-
+  api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function(response) {
+    if (config.mode) {
+      loadWidget(config.element, response, config.mode);
+    } else {
+      // save user info in Store
+    }
   }).catch(function(ex) {
     console.log(ex);
   });
@@ -71,7 +50,7 @@ export function init(config) {
  *
  * @type {OpenApi}
  * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * squatch.init({tenant_alias:'test_basbtabstq51v'});
  * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
  */
 export let api = null;
@@ -86,6 +65,17 @@ export function ready(fn) {
   fn();
 }
 
+function loadWidget(element, content, mode) {
+  let widget;
+  let ctx = document.getElementById(element);
+
+  if (mode === 'EMBED') {
+    widget = new Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
+    widget.load();
+  } else if (mode === 'POPUP') {
+    // TODO: Do stuff for popup mode
+  }
+}
 
 if (window) onLoad();
 

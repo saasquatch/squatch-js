@@ -1,4 +1,4 @@
-import {validate} from 'jsonschema';
+import { validate } from 'jsonschema';
 import schema from './schema.json';
 import 'whatwg-fetch';
 
@@ -66,12 +66,13 @@ export class OpenApi {
     return this._doPost(url, JSON.stringify(params));
   }
 
-  createCookieUser() {
+  createCookieUser(params = 'text/html') {
+    let responseType = params;
     let tenant_alias = encodeURIComponent(this.tenantAlias);
 
     let path = `/api/v1/${tenant_alias}/open/user/cookie_user`;
     let url = this.domain + path;
-    return this._doPost(url, JSON.stringify({}));
+    return this._doPost(url, JSON.stringify({}), responseType);
   }
 
   /**
@@ -195,19 +196,20 @@ export class OpenApi {
   /**
    * @private
    */
-  _doPost(url, data) {
-    // TODO:
-    // - support for sending 'text/html' or 'application/json' in Accept header
+  _doPost(url, data, responseType) {
     return fetch(url, {
       method: 'POST',
       headers: {
-        'Accept': 'text/html',
+        'Accept': responseType,
         'Content-Type': 'application/json'
       },
       body: data
     }).then(function(response) {
-      // this could be text or json!!
-      return response.text();
+      if (responseType === 'text/html') {
+        return response.text();
+      } else {
+        return response.json();
+      }
     });
   }
 

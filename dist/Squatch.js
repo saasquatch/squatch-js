@@ -89,15 +89,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.autofill = autofill;
 	exports.ready = ready;
 
+	var _Widget = __webpack_require__(16);
+
 	var _Cookie2 = _interopRequireDefault(_Cookie);
 
-	var _each = __webpack_require__(16);
-
-	var _domready = __webpack_require__(17);
-
-	var _elementResizeDetector = __webpack_require__(18);
-
-	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
+	var _each = __webpack_require__(31);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -107,14 +103,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  - `api` a static instance of the {@link OpenApi}
 	 *
 	 * @param {Object} config Configuration details
-	 * @param {string} config.tenantAlias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
+	 * @param {string} config.tenant_alias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
 	 * @returns {void}
 	 * @example
-	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
+	 * squatch.init({tenant_alias:'test_basbtabstq51v'});
 	 */
 	function init(config) {
 	  exports.api = api = new _OpenApi.OpenApi({
-	    tenantAlias: config.tenantAlias
+	    tenantAlias: config.tenant_alias
 	  });
 
 	  // TODO:
@@ -122,31 +118,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // 2. If it is, Upsert user. Else, check store to see if user info is available
 	  // 3. If no user info is available, create new cookie user
 
-	  api.createCookieUser().then(function (response) {
-	    var user = response;
-
-	    var embed = document.getElementById('squatchembed');
-	    var frame = document.createElement('iframe');
-
-	    var erd = (0, _elementResizeDetector2.default)({ strategy: "scroll" });
-
-	    frame.width = '100%';
-	    frame.id = 'widget';
-	    frame.style = 'border: 0;';
-	    document.getElementById('squatchembed').appendChild(frame);
-	    frame.contentWindow.document.open();
-	    frame.contentWindow.document.write(user);
-	    frame.contentWindow.document.close();
-
-	    (0, _domready.domready)(frame.contentWindow.document, function () {
-	      frame.height = frame.contentWindow.document.body.scrollHeight + 'px';
-
-	      // Adjust frame height when size of body changes
-	      erd.listenTo(frame.contentWindow.document.body, function (element) {
-	        var height = element.offsetHeight;
-	        frame.height = height;
-	      });
-	    });
+	  api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function (response) {
+	    if (config.mode) {
+	      loadWidget(config.element, response, config.mode);
+	    } else {
+	      // save user info in Store
+	    }
 	  }).catch(function (ex) {
 	    console.log(ex);
 	  });
@@ -157,7 +134,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @type {OpenApi}
 	 * @example
-	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
+	 * squatch.init({tenant_alias:'test_basbtabstq51v'});
 	 * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
 	 */
 	var api = exports.api = null;
@@ -169,6 +146,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function ready(fn) {
 	  fn();
+	}
+
+	function loadWidget(element, content, mode) {
+	  var widget = void 0;
+	  var ctx = document.getElementById(element);
+
+	  if (mode === 'EMBED') {
+	    widget = new _Widget.Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
+	    widget.load();
+	  } else if (mode === 'POPUP') {
+	    // TODO: Do stuff for popup mode
+	  }
 	}
 
 	if (window) onLoad();
@@ -292,11 +281,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'createCookieUser',
 	    value: function createCookieUser() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? 'text/html' : arguments[0];
+
+	      var responseType = params;
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
 
 	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}));
+	      return this._doPost(url, JSON.stringify({}), responseType);
 	    }
 
 	    /**
@@ -444,19 +436,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: '_doPost',
-	    value: function _doPost(url, data) {
-	      // TODO:
-	      // - support for sending 'text/html' or 'application/json' in Accept header
+	    value: function _doPost(url, data, responseType) {
 	      return fetch(url, {
 	        method: 'POST',
 	        headers: {
-	          'Accept': 'text/html',
+	          'Accept': responseType,
 	          'Content-Type': 'application/json'
 	        },
 	        body: data
 	      }).then(function (response) {
-	        // this could be text or json!!
-	        return response.text();
+	        if (responseType === 'text/html') {
+	          return response.text();
+	        } else {
+	          return response.json();
+	        }
 	      });
 	    }
 	  }]);
@@ -3939,92 +3932,85 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 16 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.each = each;
-	function each(o, cb, s) {
-	  var n;
-	  if (!o) {
-	    return 0;
-	  }
-	  s = !s ? o : s;
-	  if (o instanceof Array) {
-	    // Indexed arrays, needed for Safari
-	    for (n = 0; n < o.length; n++) {
-	      if (cb.call(s, o[n], n, o) === false) {
-	        return 0;
-	      }
-	    }
-	  } else {
-	    // Hashtables
-	    for (n in o) {
-	      if (o.hasOwnProperty(n)) {
-	        if (cb.call(s, o[n], n, o) === false) {
-	          return 0;
-	        }
-	      }
-	    }
-	  }
-	  return 1;
-	};
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.domready = domready;
-	/*!
-	  * domready (c) Dustin Diaz 2014 - License MIT
-	  *
-	  */
-	function domready(targetDoc, fn) {
-	  var fns = [],
-	      _listener = void 0,
-	      doc = targetDoc,
-	      hack = doc.documentElement.doScroll,
-	      domContentLoaded = 'DOMContentLoaded',
-	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+	exports.Widget = undefined;
 
-	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
-	    doc.removeEventListener(domContentLoaded, _listener);
-	    loaded = 1;
-	    while (_listener = fns.shift()) {
-	      _listener();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _domready = __webpack_require__(30);
+
+	var _elementResizeDetector = __webpack_require__(17);
+
+	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Widget = exports.Widget = function () {
+	  function Widget(element, content, mode) {
+	    _classCallCheck(this, Widget);
+
+	    this.element = element;
+	    this.content = content;
+	    this.mode = mode;
+	    this.frame = document.createElement('iframe');
+	    this.frame.width = '100%';
+	    this.frame.id = 'widget';
+	    this.frame.style = 'border: 0;';
+	  }
+
+	  _createClass(Widget, [{
+	    key: 'load',
+	    value: function load() {
+	      var frame = this.frame;
+	      var erd = (0, _elementResizeDetector2.default)({ strategy: "scroll" });
+
+	      this.element.appendChild(frame);
+	      frame.contentWindow.document.open();
+	      frame.contentWindow.document.write(this.content);
+	      frame.contentWindow.document.close();
+
+	      (0, _domready.domready)(frame.contentWindow.document, function () {
+	        frame.height = frame.contentWindow.document.body.scrollHeight + 'px';
+
+	        // Adjust frame height when size of body changes
+	        erd.listenTo(frame.contentWindow.document.body, function (element) {
+	          var height = element.offsetHeight;
+	          frame.height = height;
+	        });
+	      });
 	    }
-	  });
+	  }]);
 
-	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
-	}
+	  return Widget;
+	}();
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(19).forEach;
-	var elementUtilsMaker       = __webpack_require__(20);
-	var listenerHandlerMaker    = __webpack_require__(21);
-	var idGeneratorMaker        = __webpack_require__(22);
-	var idHandlerMaker          = __webpack_require__(23);
-	var reporterMaker           = __webpack_require__(24);
-	var browserDetector         = __webpack_require__(25);
-	var batchProcessorMaker     = __webpack_require__(26);
-	var stateHandler            = __webpack_require__(28);
+	var forEach                 = __webpack_require__(18).forEach;
+	var elementUtilsMaker       = __webpack_require__(19);
+	var listenerHandlerMaker    = __webpack_require__(20);
+	var idGeneratorMaker        = __webpack_require__(21);
+	var idHandlerMaker          = __webpack_require__(22);
+	var reporterMaker           = __webpack_require__(23);
+	var browserDetector         = __webpack_require__(24);
+	var batchProcessorMaker     = __webpack_require__(25);
+	var stateHandler            = __webpack_require__(27);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(29);
-	var scrollStrategyMaker     = __webpack_require__(30);
+	var objectStrategyMaker     = __webpack_require__(28);
+	var scrollStrategyMaker     = __webpack_require__(29);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -4332,7 +4318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4357,7 +4343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4415,7 +4401,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4481,7 +4467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4505,7 +4491,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4558,7 +4544,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4606,7 +4592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4651,12 +4637,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(27);
+	var utils = __webpack_require__(26);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -4795,7 +4781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4816,7 +4802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4844,7 +4830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4854,7 +4840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(25);
+	var browserDetector = __webpack_require__(24);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5063,7 +5049,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5073,7 +5059,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(19).forEach;
+	var forEach = __webpack_require__(18).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5682,6 +5668,75 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.domready = domready;
+	/*!
+	  * domready (c) Dustin Diaz 2014 - License MIT
+	  *
+	  */
+	function domready(targetDoc, fn) {
+	  var fns = [],
+	      _listener = void 0,
+	      doc = targetDoc,
+	      hack = doc.documentElement.doScroll,
+	      domContentLoaded = 'DOMContentLoaded',
+	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+
+	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
+	    doc.removeEventListener(domContentLoaded, _listener);
+	    loaded = 1;
+	    while (_listener = fns.shift()) {
+	      _listener();
+	    }
+	  });
+
+	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
+	}
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.each = each;
+	function each(o, cb, s) {
+	  var n;
+	  if (!o) {
+	    return 0;
+	  }
+	  s = !s ? o : s;
+	  if (o instanceof Array) {
+	    // Indexed arrays, needed for Safari
+	    for (n = 0; n < o.length; n++) {
+	      if (cb.call(s, o[n], n, o) === false) {
+	        return 0;
+	      }
+	    }
+	  } else {
+	    // Hashtables
+	    for (n in o) {
+	      if (o.hasOwnProperty(n)) {
+	        if (cb.call(s, o[n], n, o) === false) {
+	          return 0;
+	        }
+	      }
+	    }
+	  }
+	  return 1;
+	};
 
 /***/ }
 /******/ ])
