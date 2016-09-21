@@ -145,12 +145,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var widget = void 0;
 	  var ctx = document.getElementById(element);
 
-	  if (mode === 'EMBED') {
-	    widget = new _Widget.Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
-	    widget.load();
-	  } else if (mode === 'POPUP') {
-	    // TODO: Do stuff for popup mode
-	  }
+	  widget = new _Widget.Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
+	  widget.load();
 	}
 
 	if (window) (0, _async.asyncLoad)();
@@ -3837,27 +3833,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.frame = document.createElement('iframe');
 	    this.frame.width = '100%';
 	    this.frame.id = 'widget';
-	    this.frame.style = 'border: 0;';
+	    this.frame.style = 'border: 0; background-color: none;';
 	  }
 
 	  _createClass(Widget, [{
 	    key: 'load',
 	    value: function load() {
 	      var frame = this.frame;
-	      var erd = (0, _elementResizeDetector2.default)({ strategy: "scroll" });
+	      var mode = this.mode;
+	      var erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' });
+	      var popupdiv = document.createElement('div');
+	      var popupcontent = document.createElement('div');
+	      var squatchpop = document.getElementById('squatchpop');
 
-	      this.element.appendChild(frame);
+	      if (this.mode === 'EMBED') {
+	        this.element.appendChild(frame);
+	      } else if (this.mode === 'POPUP') {
+
+	        frame.style = 'border: 0; background-color: white;';
+
+	        popupdiv.setAttribute('id', 'squatchModal');
+	        popupdiv.style = "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);";
+	        popupcontent.style = "margin: auto; width: 80%; max-width: 500px;";
+	        popupdiv.appendChild(popupcontent);
+	        document.body.appendChild(popupdiv);
+	        this.element = popupcontent;
+	        this.element.appendChild(frame);
+
+	        squatchpop.onclick = function () {
+	          popupdiv.style.display = 'table';
+	        };
+
+	        //TODO: This needs to change, possibly overwriting stuff from clients
+	        document.onclick = function (event) {
+	          if (event.target == popupdiv) {
+	            popupdiv.style.display = 'none';
+	          }
+	        };
+	      }
+
 	      frame.contentWindow.document.open();
 	      frame.contentWindow.document.write(this.content);
 	      frame.contentWindow.document.close();
 
 	      (0, _domready.domready)(frame.contentWindow.document, function () {
-	        frame.height = frame.contentWindow.document.body.scrollHeight + 'px';
+	        frame.height = frame.contentWindow.document.body.scrollHeight;
 
 	        // Adjust frame height when size of body changes
 	        erd.listenTo(frame.contentWindow.document.body, function (element) {
 	          var height = element.offsetHeight;
 	          frame.height = height;
+	          if (window.innerHeight < frame.height) {
+	            popupdiv.style.paddingTop = "5px";
+	          } else {
+	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
+	          }
 	        });
 	      });
 	    }

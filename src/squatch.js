@@ -68,12 +68,8 @@ function loadWidget(element, content, mode) {
   let widget;
   let ctx = document.getElementById(element);
 
-  if (mode === 'EMBED') {
-    widget = new Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
-    widget.load();
-  } else if (mode === 'POPUP') {
-    // TODO: Do stuff for popup mode
-  }
+  widget = new Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
+  widget.load();
 }
 
 if (window) asyncLoad();

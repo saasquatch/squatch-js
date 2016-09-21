@@ -39,8 +39,7 @@
     //  email: 'bob@example.com',
     //  first_name: 'Bob',
     //  last_name: 'Testerson',
-    //  element: 'squatchembed' -> NEW PARAMTER ??
-      mode: 'EMBED' // Use this if you want to display the widget
+      mode: 'POPUP' // Use this if you want to display the widget
     });
     squatch.api.lookUpReferralCode({referralCode: "JORGECONDE"}).then(function(json) {console.log(json)});
   });
@@ -48,5 +47,6 @@
   </script>
 
   <div id="squatchembed"></div>
+  <button id="squatchpop">Open Modal</button>
 </body>
 </html>
