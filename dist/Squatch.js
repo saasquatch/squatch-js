@@ -77,7 +77,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	exports.init = init;
-	exports.autofill = autofill;
 	exports.ready = ready;
 
 	var _Widget = __webpack_require__(15);
@@ -132,21 +131,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var api = exports.api = null;
 
-	function autofill() {
-	  var opts = {};
-	  return (0, _Cookie2.default)('name', 'value', opts);
-	}
-
 	function ready(fn) {
 	  fn();
 	}
 
 	function loadWidget(element, content, mode) {
-	  var widget = void 0;
-	  var ctx = document.getElementById(element);
+	  var embed = void 0;
+	  var popup = void 0;
 
-	  widget = new _Widget.Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
-	  widget.load();
+	  if (mode === 'EMBED') {
+	    embed = new _Widget.EmbedWidget(content).load();
+	  } else if (mode === 'POPUP') {
+	    popup = new _Widget.PopupWidget(content).load();
+	  }
 	}
 
 	if (window) (0, _async.asyncLoad)();
@@ -3809,7 +3806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Widget = undefined;
+	exports.EmbedWidget = exports.PopupWidget = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3821,82 +3818,162 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var Widget = exports.Widget = function () {
-	  function Widget(element, content, mode) {
+	var Widget = function () {
+	  function Widget(content) {
 	    _classCallCheck(this, Widget);
 
-	    this.element = element;
 	    this.content = content;
-	    this.mode = mode;
 	    this.frame = document.createElement('iframe');
 	    this.frame.width = '100%';
-	    this.frame.id = 'widget';
 	    this.frame.style = 'border: 0; background-color: none;';
+	    this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' });
+	    // this.api = new WidgetApi(/*params*/)
 	  }
 
 	  _createClass(Widget, [{
 	    key: 'load',
+	    value: function load() {}
+	  }]);
+
+	  return Widget;
+	}();
+
+	// TODO: Add close button
+
+
+	var PopupWidget = exports.PopupWidget = function (_Widget) {
+	  _inherits(PopupWidget, _Widget);
+
+	  function PopupWidget(content) {
+	    var triggerId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchpop' : arguments[1];
+
+	    _classCallCheck(this, PopupWidget);
+
+	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, content));
+
+	    var me = _this;
+	    // me.frame.id = 'someId';
+	    me.frame.style.backgroundColor = '#fff';
+	    me.triggerElement = document.getElementById(triggerId);
+
+	    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
+
+	    me.popupdiv = document.createElement('div');
+	    me.popupdiv.id = 'squatchModal';
+	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; overflow-y: hidden; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
+	    me.popupcontent = document.createElement('div');
+	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px;";
+
+	    me.triggerElement.onclick = function () {
+	      me.open();
+	    };
+
+	    // TODO: we're probably overwriting client's code ??
+	    document.onclick = document.onclick = function (event) {
+	      me.close(event);
+	    };
+	    return _this;
+	  }
+
+	  _createClass(PopupWidget, [{
+	    key: 'load',
 	    value: function load() {
-	      var frame = this.frame;
-	      var mode = this.mode;
-	      var erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' });
-	      var popupdiv = document.createElement('div');
-	      var popupcontent = document.createElement('div');
-	      var squatchpop = document.getElementById('squatchpop');
+	      var me = this;
 
-	      if (this.mode === 'EMBED') {
-	        this.element.appendChild(frame);
-	      } else if (this.mode === 'POPUP') {
+	      me.popupdiv.appendChild(me.popupcontent);
+	      document.body.appendChild(me.popupdiv);
+	      me.popupcontent.appendChild(me.frame);
 
-	        frame.style = 'border: 0; background-color: white;';
+	      var frameDoc = me.frame.contentWindow.document;
+	      frameDoc.open();
+	      frameDoc.write(me.content);
+	      frameDoc.close();
 
-	        popupdiv.setAttribute('id', 'squatchModal');
-	        popupdiv.style = "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);";
-	        popupcontent.style = "margin: auto; width: 80%; max-width: 500px;";
-	        popupdiv.appendChild(popupcontent);
-	        document.body.appendChild(popupdiv);
-	        this.element = popupcontent;
-	        this.element.appendChild(frame);
-
-	        squatchpop.onclick = function () {
-	          popupdiv.style.display = 'table';
-	        };
-
-	        //TODO: This needs to change, possibly overwriting stuff from clients
-	        document.onclick = function (event) {
-	          if (event.target == popupdiv) {
-	            popupdiv.style.display = 'none';
-	          }
-	        };
-	      }
-
-	      frame.contentWindow.document.open();
-	      frame.contentWindow.document.write(this.content);
-	      frame.contentWindow.document.close();
-
-	      (0, _domready.domready)(frame.contentWindow.document, function () {
-	        frame.height = frame.contentWindow.document.body.scrollHeight;
+	      (0, _domready.domready)(frameDoc, function () {
+	        me.frame.height = frameDoc.body.scrollHeight;
 
 	        // Adjust frame height when size of body changes
-	        erd.listenTo(frame.contentWindow.document.body, function (element) {
+	        me.erd.listenTo(frameDoc.body, function (element) {
 	          var height = element.offsetHeight;
-	          frame.height = height;
-	          if (mode === 'POPUP') {
-	            if (window.innerHeight < frame.height) {
-	              popupdiv.style.paddingTop = "5px";
-	            } else {
-	              popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
-	            }
+	          me.frame.height = height;
+
+	          if (window.innerHeight < me.frame.height) {
+	            me.popupdiv.style.paddingTop = "5px";
+	          } else {
+	            me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + "px";
 	          }
+	        });
+	      });
+	    }
+	  }, {
+	    key: 'open',
+	    value: function open() {
+	      var popupdiv = this.popupdiv;
+	      popupdiv.style.display = 'table';
+	    }
+	  }, {
+	    key: 'close',
+	    value: function close(e) {
+	      var popupdiv = this.popupdiv;
+
+	      if (e.target == popupdiv) {
+	        popupdiv.style.display = 'none';
+	      }
+	    }
+	  }]);
+
+	  return PopupWidget;
+	}(Widget);
+
+	var EmbedWidget = exports.EmbedWidget = function (_Widget2) {
+	  _inherits(EmbedWidget, _Widget2);
+
+	  function EmbedWidget(content) {
+	    var elementId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchembed' : arguments[1];
+
+	    _classCallCheck(this, EmbedWidget);
+
+	    // this.frame.id = 'someId';
+	    var _this2 = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, content));
+
+	    _this2.element = document.getElementById(elementId);
+
+	    if (!_this2.element) throw new Error("elementId \'" + elementId + "\' not found.");
+	    return _this2;
+	  }
+
+	  _createClass(EmbedWidget, [{
+	    key: 'load',
+	    value: function load() {
+	      var me = this;
+
+	      me.element.appendChild(me.frame);
+
+	      var frameDoc = me.frame.contentWindow.document;
+	      frameDoc.open();
+	      frameDoc.write(me.content);
+	      frameDoc.close();
+
+	      (0, _domready.domready)(frameDoc, function () {
+	        me.frame.height = frameDoc.body.scrollHeight;
+
+	        // Adjust frame height when size of body changes
+	        me.erd.listenTo(frameDoc.body, function (element) {
+	          var height = element.offsetHeight;
+	          me.frame.height = height;
 	        });
 	      });
 	    }
 	  }]);
 
-	  return Widget;
-	}();
+	  return EmbedWidget;
+	}(Widget);
 
 /***/ },
 /* 16 */

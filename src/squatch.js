@@ -5,7 +5,7 @@
  * @module squatch
  */
 import { OpenApi } from './api/OpenApi';
-import { Widget } from './widgets/Widget';
+import { EmbedWidget, PopupWidget } from './widgets/Widget';
 import cookie from './tracking/Cookie';
 import { asyncLoad } from './async';
 
@@ -54,22 +54,19 @@ export function init(config) {
  */
 export let api = null;
 
-
-export function autofill() {
-  let opts = {};
-  return cookie('name', 'value', opts);
-}
-
 export function ready(fn) {
   fn();
 }
 
 function loadWidget(element, content, mode) {
-  let widget;
-  let ctx = document.getElementById(element);
+  let embed;
+  let popup;
 
-  widget = new Widget(ctx ? ctx : document.getElementById("squatchembed"), content, mode);
-  widget.load();
+  if (mode === 'EMBED') {
+    embed = new EmbedWidget(content).load();
+  } else if (mode === 'POPUP') {
+    popup = new PopupWidget(content).load();
+  }
 }
 
 if (window) asyncLoad();
