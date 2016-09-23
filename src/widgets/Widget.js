@@ -27,7 +27,7 @@ export class PopupWidget extends Widget {
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';
-    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; overflow-y: hidden; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
+    me.popupdiv.style = 'display: table; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
     me.popupcontent = document.createElement('div');
     me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px;";
 
@@ -55,8 +55,17 @@ export class PopupWidget extends Widget {
       // Adjust frame height when size of body changes
       me.erd.listenTo(frameDoc.body, function(element) {
         let height = element.offsetHeight;
-        me.frame.height = height;
 
+        // When element is hidden, some browsers record the offsetHeight
+        // as being 0. 
+        if (height > 0) me.frame.height = height;
+
+        // Check if element was totally scrolled and hide it
+        if(frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
+          me.popupdiv.style.display = 'none';
+        };
+
+        // Give the popup window some space to show that it's actually a popup
         if (window.innerHeight < me.frame.height) {
           me.popupdiv.style.paddingTop = "5px";
         } else {
@@ -70,6 +79,7 @@ export class PopupWidget extends Widget {
   open() {
     let popupdiv = this.popupdiv;
     popupdiv.style.display = 'table';
+    popupdiv.style.top = "0";
   }
 
   close(e) {
