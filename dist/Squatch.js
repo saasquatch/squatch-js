@@ -3903,12 +3903,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var height = element.offsetHeight;
 
 	          // When element is hidden, some browsers record the offsetHeight
-	          // as being 0. 
+	          // as being 0.
 	          if (height > 0) me.frame.height = height;
 
 	          // Check if element was totally scrolled and hide it
 	          if (frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
 	            me.popupdiv.style.display = 'none';
+	            frameDoc.body.style.overflowY = 'hidden';
 	          };
 
 	          // Give the popup window some space to show that it's actually a popup
