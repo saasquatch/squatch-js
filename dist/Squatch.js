@@ -3832,7 +3832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.frame = document.createElement('iframe');
 	    this.frame.width = '100%';
 	    this.frame.style = 'border: 0; background-color: none;';
-	    this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' });
+	    this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll', debug: 'true' });
 	    // this.api = new WidgetApi(/*params*/)
 	  }
 
@@ -3868,7 +3868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.popupdiv.id = 'squatchModal';
 	    me.popupdiv.style = 'display: table; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
 	    me.popupcontent = document.createElement('div');
-	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px;";
+	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position:";
 
 	    me.triggerElement.onclick = function () {
 	      me.open();
@@ -3898,43 +3898,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	      (0, _domready.domready)(frameDoc, function () {
 	        me.frame.height = frameDoc.body.scrollHeight;
 
-	        // Adjust frame height when size of body changes
-	        me.erd.listenTo(frameDoc.body, function (element) {
-	          var height = element.offsetHeight;
+	        // Check if element was totally scrolled and hide it
+	        if (frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
+	          me.popupdiv.style.display = 'none';
+	          frameDoc.body.style.overflowY = 'hidden';
+	        };
 
-	          // When element is hidden, some browsers record the offsetHeight
-	          // as being 0.
-	          if (height > 0) me.frame.height = height;
-
-	          // Check if element was totally scrolled and hide it
-	          if (frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
-	            me.popupdiv.style.display = 'none';
-	            frameDoc.body.style.overflowY = 'hidden';
-	          };
-
-	          // Give the popup window some space to show that it's actually a popup
-	          if (window.innerHeight < me.frame.height) {
-	            me.popupdiv.style.paddingTop = "5px";
-	          } else {
-	            me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + "px";
-	          }
-	        });
+	        if (window.innerHeight > me.frame.height) {
+	          me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + "px";
+	        } else {
+	          me.popupdiv.style.paddingTop = "5px";
+	        }
 	      });
 	    }
 	  }, {
 	    key: 'open',
 	    value: function open() {
 	      var popupdiv = this.popupdiv;
+	      var frame = this.frame;
+	      var frameDoc = frame.contentWindow.document;
+	      var erd = this.erd;
+
 	      popupdiv.style.display = 'table';
 	      popupdiv.style.top = "0";
+
+	      // Adjust frame height when size of body changes
+	      erd.listenTo(frameDoc.body, function (element) {
+	        var height = element.offsetHeight;
+
+	        if (height > 0) frame.height = height;
+
+	        if (window.innerHeight > frame.height) {
+	          popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
+	        } else {
+	          popupdiv.style.paddingTop = "5px";
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'close',
 	    value: function close(e) {
 	      var popupdiv = this.popupdiv;
+	      var frameDoc = this.frame.contentWindow.document;
+	      var erd = this.erd;
 
 	      if (e.target == popupdiv) {
 	        popupdiv.style.display = 'none';
+	        erd.uninstall(frameDoc.body);
 	      }
 	    }
 	  }]);

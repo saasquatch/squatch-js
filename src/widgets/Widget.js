@@ -7,7 +7,7 @@ class Widget {
     this.frame = document.createElement('iframe');
     this.frame.width = '100%';
     this.frame.style = 'border: 0; background-color: none;';
-    this.erd = elementResizeDetectorMaker({ strategy: 'scroll' });
+    this.erd = elementResizeDetectorMaker({ strategy: 'scroll', debug: 'true' });
     // this.api = new WidgetApi(/*params*/)
   }
 
@@ -29,7 +29,7 @@ export class PopupWidget extends Widget {
     me.popupdiv.id = 'squatchModal';
     me.popupdiv.style = 'display: table; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
     me.popupcontent = document.createElement('div');
-    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px;";
+    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position:";
 
     me.triggerElement.onclick = function() { me.open(); };
 
@@ -52,42 +52,51 @@ export class PopupWidget extends Widget {
     domready(frameDoc, function() {
       me.frame.height = frameDoc.body.scrollHeight;
 
-      // Adjust frame height when size of body changes
-      me.erd.listenTo(frameDoc.body, function(element) {
-        let height = element.offsetHeight;
+      // Check if element was totally scrolled and hide it
+      if(frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
+        me.popupdiv.style.display = 'none';
+        frameDoc.body.style.overflowY = 'hidden';
+      };
 
-        // When element is hidden, some browsers record the offsetHeight
-        // as being 0.
-        if (height > 0) me.frame.height = height;
-
-        // Check if element was totally scrolled and hide it
-        if(frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
-          me.popupdiv.style.display = 'none';
-          frameDoc.body.style.overflowY = 'hidden';
-        };
-
-        // Give the popup window some space to show that it's actually a popup
-        if (window.innerHeight < me.frame.height) {
-          me.popupdiv.style.paddingTop = "5px";
-        } else {
-          me.popupdiv.style.paddingTop = ((window.innerHeight - me.frame.height)/2) + "px";
-        }
-
-      });
+      if (window.innerHeight > me.frame.height) {
+        me.popupdiv.style.paddingTop = ((window.innerHeight - me.frame.height)/2) + "px";
+      } else {
+        me.popupdiv.style.paddingTop = "5px";
+      }
     });
   }
 
   open() {
     let popupdiv = this.popupdiv;
+    let frame = this.frame;
+    let frameDoc = frame.contentWindow.document;
+    let erd = this.erd;
+
     popupdiv.style.display = 'table';
     popupdiv.style.top = "0";
+
+    // Adjust frame height when size of body changes
+    erd.listenTo(frameDoc.body, function(element) {
+      let height = element.offsetHeight;
+
+      if (height > 0) frame.height = height;
+
+      if (window.innerHeight > frame.height) {
+        popupdiv.style.paddingTop = ((window.innerHeight - frame.height)/2) + "px";
+      } else {
+        popupdiv.style.paddingTop = "5px";
+      }
+    });
   }
 
   close(e) {
     let popupdiv = this.popupdiv;
+    let frameDoc = this.frame.contentWindow.document;
+    let erd = this.erd;
 
     if (e.target == popupdiv) {
       popupdiv.style.display = 'none';
+      erd.uninstall(frameDoc.body);
     }
   }
 }
