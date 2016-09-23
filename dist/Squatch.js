@@ -3896,19 +3896,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      frameDoc.close();
 
 	      (0, _domready.domready)(frameDoc, function () {
-	        me.frame.height = frameDoc.body.scrollHeight;
+	        // me.frame.height = frameDoc.body.scrollHeight;
+	        frameDoc.body.style.overflowY = 'hidden';
+	        me.popupdiv.style.display = 'none';
+
+	        // if (window.innerHeight > me.frame.height) {
+	        //   me.popupdiv.style.paddingTop = ((window.innerHeight - me.frame.height)/2) + "px";
+	        // } else {
+	        //   me.popupdiv.style.paddingTop = "5px";
+	        // }
 
 	        // Check if element was totally scrolled and hide it
-	        if (frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
-	          me.popupdiv.style.display = 'none';
-	          frameDoc.body.style.overflowY = 'hidden';
-	        };
-
-	        if (window.innerHeight > me.frame.height) {
-	          me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + "px";
-	        } else {
-	          me.popupdiv.style.paddingTop = "5px";
-	        }
+	        // if(frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
+	        //   me.popupdiv.style.display = 'none';
+	        //   // frameDoc.body.style.overflowY = 'hidden';
+	        // };
 	      });
 	    }
 	  }, {
