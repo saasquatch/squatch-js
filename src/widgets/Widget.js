@@ -27,7 +27,7 @@ export class PopupWidget extends Widget {
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';
-    me.popupdiv.style = 'display: table; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
+    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
     me.popupcontent = document.createElement('div');
     me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position:";
 
@@ -48,24 +48,6 @@ export class PopupWidget extends Widget {
     frameDoc.open();
     frameDoc.write(me.content);
     frameDoc.close();
-
-    domready(frameDoc, function() {
-      // me.frame.height = frameDoc.body.scrollHeight;
-      frameDoc.body.style.overflowY = 'hidden';
-      me.popupdiv.style.display = 'none';
-
-      // if (window.innerHeight > me.frame.height) {
-      //   me.popupdiv.style.paddingTop = ((window.innerHeight - me.frame.height)/2) + "px";
-      // } else {
-      //   me.popupdiv.style.paddingTop = "5px";
-      // }
-
-      // Check if element was totally scrolled and hide it
-      // if(frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
-      //   me.popupdiv.style.display = 'none';
-      //   // frameDoc.body.style.overflowY = 'hidden';
-      // };
-    });
   }
 
   open() {
@@ -74,21 +56,26 @@ export class PopupWidget extends Widget {
     let frameDoc = frame.contentWindow.document;
     let erd = this.erd;
 
-    popupdiv.style.display = 'table';
-    popupdiv.style.top = "0";
+    console.log("OPEN");
 
     // Adjust frame height when size of body changes
-    erd.listenTo(frameDoc.body, function(element) {
-      let height = element.offsetHeight;
+    domready(frameDoc, function() {
+      frameDoc.body.style.overflowY = 'hidden';
+      popupdiv.style.display = 'table';
+      popupdiv.style.top = "0";
 
-      if (height > 0) frame.height = height;
+      erd.listenTo(frameDoc.body, function(element) {
+        let height = element.offsetHeight;
 
-      if (window.innerHeight > frame.height) {
-        popupdiv.style.paddingTop = ((window.innerHeight - frame.height)/2) + "px";
-      } else {
-        popupdiv.style.paddingTop = "5px";
-      }
-    });
+        if (height > 0) frame.height = height;
+
+        if (window.innerHeight > frame.height) {
+          popupdiv.style.paddingTop = ((window.innerHeight - frame.height)/2) + "px";
+        } else {
+          popupdiv.style.paddingTop = "5px";
+        }
+      });
+    })
   }
 
   close(e) {

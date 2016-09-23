@@ -3866,7 +3866,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
-	    me.popupdiv.style = 'display: table; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
+	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
 	    me.popupcontent = document.createElement('div');
 	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position:";
 
@@ -3894,24 +3894,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      frameDoc.open();
 	      frameDoc.write(me.content);
 	      frameDoc.close();
-
-	      (0, _domready.domready)(frameDoc, function () {
-	        // me.frame.height = frameDoc.body.scrollHeight;
-	        frameDoc.body.style.overflowY = 'hidden';
-	        me.popupdiv.style.display = 'none';
-
-	        // if (window.innerHeight > me.frame.height) {
-	        //   me.popupdiv.style.paddingTop = ((window.innerHeight - me.frame.height)/2) + "px";
-	        // } else {
-	        //   me.popupdiv.style.paddingTop = "5px";
-	        // }
-
-	        // Check if element was totally scrolled and hide it
-	        // if(frameDoc.body.scrollHeight - frameDoc.body.scrollTop === frameDoc.body.clientHeight) {
-	        //   me.popupdiv.style.display = 'none';
-	        //   // frameDoc.body.style.overflowY = 'hidden';
-	        // };
-	      });
 	    }
 	  }, {
 	    key: 'open',
@@ -3921,20 +3903,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var frameDoc = frame.contentWindow.document;
 	      var erd = this.erd;
 
-	      popupdiv.style.display = 'table';
-	      popupdiv.style.top = "0";
+	      console.log("OPEN");
 
 	      // Adjust frame height when size of body changes
-	      erd.listenTo(frameDoc.body, function (element) {
-	        var height = element.offsetHeight;
+	      (0, _domready.domready)(frameDoc, function () {
+	        frameDoc.body.style.overflowY = 'hidden';
+	        popupdiv.style.display = 'table';
+	        popupdiv.style.top = "0";
 
-	        if (height > 0) frame.height = height;
+	        erd.listenTo(frameDoc.body, function (element) {
+	          var height = element.offsetHeight;
 
-	        if (window.innerHeight > frame.height) {
-	          popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
-	        } else {
-	          popupdiv.style.paddingTop = "5px";
-	        }
+	          if (height > 0) frame.height = height;
+
+	          if (window.innerHeight > frame.height) {
+	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
+	          } else {
+	            popupdiv.style.paddingTop = "5px";
+	          }
+	        });
 	      });
 	    }
 	  }, {
