@@ -7,7 +7,7 @@ class Widget {
     this.frame = document.createElement('iframe');
     this.frame.width = '100%';
     this.frame.style = 'border: 0; background-color: none;';
-    this.erd = elementResizeDetectorMaker({ strategy: 'scroll', debug: 'true' });
+    this.erd = elementResizeDetectorMaker({ strategy: 'scroll'});
     // this.api = new WidgetApi(/*params*/)
   }
 
@@ -32,9 +32,7 @@ export class PopupWidget extends Widget {
     me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position:";
 
     me.triggerElement.onclick = function() { me.open(); };
-
-    // TODO: we're probably overwriting client's code ??
-    document.onclick = document.onclick = function(event) { me.close(event); }
+    me.popupdiv.onclick = function(event) { me.close(event); };
   }
 
   load() {
@@ -56,13 +54,11 @@ export class PopupWidget extends Widget {
     let frameDoc = frame.contentWindow.document;
     let erd = this.erd;
 
-    console.log("OPEN");
-
     // Adjust frame height when size of body changes
     domready(frameDoc, function() {
       frameDoc.body.style.overflowY = 'hidden';
       popupdiv.style.display = 'table';
-      popupdiv.style.top = "0";
+      popupdiv.style.top = '0';
 
       erd.listenTo(frameDoc.body, function(element) {
         let height = element.offsetHeight;
@@ -80,12 +76,11 @@ export class PopupWidget extends Widget {
 
   close(e) {
     let popupdiv = this.popupdiv;
-    let frameDoc = this.frame.contentWindow.document;
-    let erd = this.erd;
 
-    if (e.target == popupdiv) {
+    if (e.target == this.popupdiv) {
+      let frameDoc = this.frame.contentWindow.document;
       popupdiv.style.display = 'none';
-      erd.uninstall(frameDoc.body);
+      this.erd.uninstall(frameDoc.body);
     }
   }
 }

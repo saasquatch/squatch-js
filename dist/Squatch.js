@@ -3832,7 +3832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.frame = document.createElement('iframe');
 	    this.frame.width = '100%';
 	    this.frame.style = 'border: 0; background-color: none;';
-	    this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll', debug: 'true' });
+	    this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' });
 	    // this.api = new WidgetApi(/*params*/)
 	  }
 
@@ -3873,9 +3873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.triggerElement.onclick = function () {
 	      me.open();
 	    };
-
-	    // TODO: we're probably overwriting client's code ??
-	    document.onclick = document.onclick = function (event) {
+	    me.popupdiv.onclick = function (event) {
 	      me.close(event);
 	    };
 	    return _this;
@@ -3903,13 +3901,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var frameDoc = frame.contentWindow.document;
 	      var erd = this.erd;
 
-	      console.log("OPEN");
-
 	      // Adjust frame height when size of body changes
 	      (0, _domready.domready)(frameDoc, function () {
 	        frameDoc.body.style.overflowY = 'hidden';
 	        popupdiv.style.display = 'table';
-	        popupdiv.style.top = "0";
+	        popupdiv.style.top = '0';
 
 	        erd.listenTo(frameDoc.body, function (element) {
 	          var height = element.offsetHeight;
@@ -3928,12 +3924,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'close',
 	    value: function close(e) {
 	      var popupdiv = this.popupdiv;
-	      var frameDoc = this.frame.contentWindow.document;
-	      var erd = this.erd;
 
-	      if (e.target == popupdiv) {
+	      if (e.target == this.popupdiv) {
+	        var frameDoc = this.frame.contentWindow.document;
 	        popupdiv.style.display = 'none';
-	        erd.uninstall(frameDoc.body);
+	        this.erd.uninstall(frameDoc.body);
 	      }
 	    }
 	  }]);
