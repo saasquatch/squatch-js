@@ -14,7 +14,6 @@ class Widget {
   load() {}
 }
 
-// TODO: Add close button
 export class PopupWidget extends Widget {
   constructor(content, triggerId = 'squatchpop') {
     super(content);
@@ -28,11 +27,18 @@ export class PopupWidget extends Widget {
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';
     me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
+
+    me.closebtn = document.createElement('span');
+    me.closebtn.style = 'position: absolute; right: 5px; top: 5px; font-size: 11px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; color: #4486E1; cursor: pointer;';
+    me.closebtn.innerHTML = 'Close';
+
     me.popupcontent = document.createElement('div');
-    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position:";
+    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position: relative;";
+    me.popupcontent.appendChild(me.closebtn);
 
     me.triggerElement.onclick = function() { me.open(); };
-    me.popupdiv.onclick = function(event) { me.close(event); };
+    me.popupdiv.onclick = function(event) { me._clickedOutside(event); };
+    me.closebtn.onclick = function() { me.close(); };
   }
 
   load() {
@@ -74,13 +80,20 @@ export class PopupWidget extends Widget {
     })
   }
 
-  close(e) {
+  close() {
+    let popupdiv = this.popupdiv;
+    let frameDoc = this.frame.contentWindow.document;
+    let erd = this.erd;
+
+    popupdiv.style.display = 'none';
+    erd.uninstall(frameDoc.body);
+  }
+
+  _clickedOutside(e) {
     let popupdiv = this.popupdiv;
 
     if (e.target == this.popupdiv) {
-      let frameDoc = this.frame.contentWindow.document;
-      popupdiv.style.display = 'none';
-      this.erd.uninstall(frameDoc.body);
+      this.close()
     }
   }
 }

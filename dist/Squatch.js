@@ -3844,9 +3844,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return Widget;
 	}();
 
-	// TODO: Add close button
-
-
 	var PopupWidget = exports.PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
 
@@ -3867,14 +3864,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
 	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
+
+	    me.closebtn = document.createElement('span');
+	    me.closebtn.style = 'position: absolute; right: 5px; top: 5px; font-size: 11px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; color: #4486E1; cursor: pointer;';
+	    me.closebtn.innerHTML = 'Close';
+
 	    me.popupcontent = document.createElement('div');
-	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position:";
+	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position: relative;";
+	    me.popupcontent.appendChild(me.closebtn);
 
 	    me.triggerElement.onclick = function () {
 	      me.open();
 	    };
 	    me.popupdiv.onclick = function (event) {
-	      me.close(event);
+	      me._clickedOutside(event);
+	    };
+	    me.closebtn.onclick = function () {
+	      me.close();
 	    };
 	    return _this;
 	  }
@@ -3922,13 +3928,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'close',
-	    value: function close(e) {
+	    value: function close() {
+	      var popupdiv = this.popupdiv;
+	      var frameDoc = this.frame.contentWindow.document;
+	      var erd = this.erd;
+
+	      popupdiv.style.display = 'none';
+	      erd.uninstall(frameDoc.body);
+	    }
+	  }, {
+	    key: '_clickedOutside',
+	    value: function _clickedOutside(e) {
 	      var popupdiv = this.popupdiv;
 
 	      if (e.target == this.popupdiv) {
-	        var frameDoc = this.frame.contentWindow.document;
-	        popupdiv.style.display = 'none';
-	        this.erd.uninstall(frameDoc.body);
+	        this.close();
 	      }
 	    }
 	  }]);
