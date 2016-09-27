@@ -63,7 +63,20 @@ export class OpenApi {
 
     let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
     let url = this.domain + path;
-    return this._doPost(url, JSON.stringify(params));
+    return this._doPost(url, JSON.stringify(params), 'application/json');
+  }
+
+  upsertUser(params) {
+    console.log(params);
+    this._validateInput(params, schema.user);
+
+    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    let account_id = encodeURIComponent(params.accountId);
+    let user_id = encodeURIComponent(params.id);
+
+    let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
+    let url = this.domain + path;
+    return this._doPut(url, JSON.stringify(params), 'application/json');
   }
 
   createCookieUser(params = 'text/html') {
@@ -154,7 +167,7 @@ export class OpenApi {
 
     let path = `/api/v1/${tenant_alias}/open/code/${referral_code}/account/${account_id}/user/${user_id}`;
     let url = this.domain + path;
-    return this._doPost(url, JSON.stringify(""));
+    return this._doPost(url, JSON.stringify(""), 'application/json');
   }
 
   /**
@@ -212,5 +225,26 @@ export class OpenApi {
       }
     });
   }
+
+  /**
+   * @private
+   */
+   _doPut(url, data, responseType) {
+     return fetch(url, {
+       method: 'PUT',
+       headers: {
+         'Accept': responseType,
+         'Content-Type': 'application/json',
+        //  'X-SaaSquatch-User-Token': 'jwt-token'
+       },
+       body: data
+     }).then(function(response) {
+       if (responseType === 'text/html') {
+         return response.text();
+       } else {
+         return response.json();
+       }
+     });
+   }
 
 }

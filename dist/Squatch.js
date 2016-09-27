@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.api = exports.OpenApi = undefined;
+	exports.api = exports.cookie = exports.OpenApi = undefined;
 
 	var _OpenApi = __webpack_require__(2);
 
@@ -76,12 +76,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _OpenApi.OpenApi;
 	  }
 	});
+
+	var _Cookie = __webpack_require__(30);
+
+	Object.defineProperty(exports, 'cookie', {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_Cookie).default;
+	  }
+	});
 	exports.init = init;
 	exports.ready = ready;
 
 	var _Widget = __webpack_require__(15);
-
-	var _Cookie = __webpack_require__(30);
 
 	var _Cookie2 = _interopRequireDefault(_Cookie);
 
@@ -105,20 +112,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    tenantAlias: config.tenant_alias
 	  });
 
-	  // TODO:
-	  // 1. Check if config.user was provided
-	  // 2. If it is, Upsert user. Else, check store to see if user info is available
-	  // 3. If no user info is available, create new cookie user
+	  // api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function(response) {
+	  //   console.log(response);
+	  //   if (config.mode) {
+	  //     loadWidget(config.element, response, config.mode);
+	  //   } else {
+	  //     // save user info in Store
+	  //   }
+	  // }).catch(function(ex) {
+	  //   console.log(ex);
+	  // });
 
-	  api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function (response) {
-	    if (config.mode) {
-	      loadWidget(config.element, response, config.mode);
-	    } else {
-	      // save user info in Store
-	    }
-	  }).catch(function (ex) {
-	    console.log(ex);
-	  });
+
+	  // api.upsertUser(config.user).then(function(response) {
+	  //   console.log(response);
+	  //   cookie('sqh_user', JSON.stringify(response));
+	  //   var resp = cookie('sqh_user');
+	  //   console.log(JSON.parse(resp));
+	  // }).catch(function(ex) {
+	  //   console.log(ex);
+	  // });
 	}
 
 	/**
@@ -240,7 +253,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(params));
+	      return this._doPost(url, JSON.stringify(params), 'application/json');
+	    }
+	  }, {
+	    key: 'upsertUser',
+	    value: function upsertUser(params) {
+	      console.log(params);
+	      this._validateInput(params, _schema2.default.user);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var url = this.domain + path;
+	      return this._doPut(url, JSON.stringify(params), 'application/json');
 	    }
 	  }, {
 	    key: 'createCookieUser',
@@ -346,7 +373,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(""));
+	      return this._doPost(url, JSON.stringify(""), 'application/json');
 	    }
 
 	    /**
@@ -403,6 +430,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _doPost(url, data, responseType) {
 	      return fetch(url, {
 	        method: 'POST',
+	        headers: {
+	          'Accept': responseType,
+	          'Content-Type': 'application/json'
+	        },
+	        body: data
+	      }).then(function (response) {
+	        if (responseType === 'text/html') {
+	          return response.text();
+	        } else {
+	          return response.json();
+	        }
+	      });
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doPut',
+	    value: function _doPut(url, data, responseType) {
+	      return fetch(url, {
+	        method: 'PUT',
 	        headers: {
 	          'Accept': responseType,
 	          'Content-Type': 'application/json'
@@ -3306,9 +3356,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			},
 			"required": [
 				"id",
-				"accountId",
-				"email",
-				"firstName"
+				"accountId"
 			]
 		},
 		"userLookUp": {

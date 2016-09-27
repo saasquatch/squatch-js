@@ -11,7 +11,7 @@
       "referralCode": {"type": "string"},
       "locale": {"type": "string"}
     },
-    "required": ["id", "accountId", "email", "firstName"]
+    "required": ["id", "accountId"]
   },
   "userLookUp": {
     "type": "object",

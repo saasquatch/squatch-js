@@ -151,7 +151,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(params));
+	      return this._doPost(url, JSON.stringify(params), 'application/json');
+	    }
+	  }, {
+	    key: 'upsertUser',
+	    value: function upsertUser(params) {
+	      console.log(params);
+	      this._validateInput(params, _schema2.default.user);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var url = this.domain + path;
+	      return this._doPut(url, JSON.stringify(params), 'application/json');
 	    }
 	  }, {
 	    key: 'createCookieUser',
@@ -257,7 +271,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(""));
+	      return this._doPost(url, JSON.stringify(""), 'application/json');
 	    }
 
 	    /**
@@ -314,6 +328,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _doPost(url, data, responseType) {
 	      return fetch(url, {
 	        method: 'POST',
+	        headers: {
+	          'Accept': responseType,
+	          'Content-Type': 'application/json'
+	        },
+	        body: data
+	      }).then(function (response) {
+	        if (responseType === 'text/html') {
+	          return response.text();
+	        } else {
+	          return response.json();
+	        }
+	      });
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doPut',
+	    value: function _doPut(url, data, responseType) {
+	      return fetch(url, {
+	        method: 'PUT',
 	        headers: {
 	          'Accept': responseType,
 	          'Content-Type': 'application/json'
@@ -3217,9 +3254,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			},
 			"required": [
 				"id",
-				"accountId",
-				"email",
-				"firstName"
+				"accountId"
 			]
 		},
 		"userLookUp": {

@@ -32,14 +32,16 @@
   <script>
 
   squatch.ready(function(){
-    squatch.init({tenant_alias: "aywfi8vgiwnis",
-    //  account_id: 'abc',
-    //  payment_provider_id: 'cus_1234',
-    //  user_id: '5678',
-    //  email: 'bob@example.com',
-    //  first_name: 'Bob',
-    //  last_name: 'Testerson',
-      mode: 'POPUP' // Use this if you want to display the widget
+    squatch.init({
+      tenant_alias: "aywfi8vgiwnis",
+      user: {
+        accountId: 'abc',
+        id: '5678',
+        email: 'jorge@referralsaasquatch.com',
+        firstName: 'Jorge',
+        lastName: 'Conde'
+      }
+
     });
     squatch.api.lookUpReferralCode({referralCode: "JORGECONDE"}).then(function(json) {console.log(json)});
   });
