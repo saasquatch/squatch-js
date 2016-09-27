@@ -1,16 +1,13 @@
-// TODO:
-//  - Add JWT authentication
 var window = window || "";
 var open = window ? window.OpenApi : require('../dist/Squatch.OpenApi');
 var chai = window ? window.chai : require('../node_modules/chai/chai');
 
-var OpenApi = open.default;
+var OpenApi = open.OpenApi;
 var assert = chai.assert;
 
 describe('Open API', function() {
   var config = {
-    tenantAlias: "MY_TENANT_ALIAS",
-    API_KEY: "MY_API_KEY"
+    tenantAlias: "MY_TENANT_ALIAS"
   }
 
   var openApi = new OpenApi(config);
@@ -20,6 +17,9 @@ describe('Open API', function() {
     assert.equal(openApi.API_KEY, config.API_KEY);
   });
 
+  /*
+  ** TODO: Wait for Open API to accept no authorization header
+  **
   it('should create a user', function() {
     var params = {
       id: "006",
@@ -115,4 +115,5 @@ describe('Open API', function() {
       assert.isArray(json.referrals, "List of referrals");
     });
   });
+  */
 });
