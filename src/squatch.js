@@ -8,6 +8,7 @@ import { OpenApi } from './api/OpenApi';
 import { EmbedWidget, PopupWidget } from './widgets/Widget';
 import cookie from './tracking/Cookie';
 import { asyncLoad } from './async';
+import store from 'store';
 
 export { OpenApi } from './api/OpenApi';
 export {default as cookie} from './tracking/Cookie';
@@ -28,23 +29,21 @@ export function init(config) {
     tenantAlias: config.tenant_alias
   });
 
-  // api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function(response) {
-  //   console.log(response);
-  //   if (config.mode) {
-  //     loadWidget(config.element, response, config.mode);
-  //   } else {
-  //     // save user info in Store
-  //   }
-  // }).catch(function(ex) {
-  //   console.log(ex);
-  // });
+  api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function(response) {
+    console.log(response);
+    if (config.mode) {
+      loadWidget(config.element, response, config.mode);
+    } else {
+      // save user info in Store
+    }
+  }).catch(function(ex) {
+    console.log(ex);
+  });
 
 
   // api.upsertUser(config.user).then(function(response) {
   //   console.log(response);
-  //   cookie('sqh_user', JSON.stringify(response));
-  //   var resp = cookie('sqh_user');
-  //   console.log(JSON.parse(resp));
+  //   store.set('sqh_user', response);
   // }).catch(function(ex) {
   //   console.log(ex);
   // });
