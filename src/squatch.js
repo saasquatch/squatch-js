@@ -6,12 +6,14 @@
  */
 import { OpenApi } from './api/OpenApi';
 import { EmbedWidget, PopupWidget } from './widgets/Widget';
-import cookie from './tracking/Cookie';
 import { asyncLoad } from './async';
 import store from 'store';
+import debug from 'debug';
+
+debug.disable('squatch-js*');
+let _log = debug('squatch-js');
 
 export { OpenApi } from './api/OpenApi';
-export {default as cookie} from './tracking/Cookie';
 
 /**
  * Initializes a static `squatch` global. This sets up:
@@ -25,19 +27,24 @@ export {default as cookie} from './tracking/Cookie';
  * squatch.init({tenant_alias:'test_basbtabstq51v'});
  */
 export function init(config) {
+  if (config.tenant_alias.startsWith('ayw' /*'test'*/)) {
+    debug.enable('squatch-js*');
+  }
+
+  _log('initializing ...');
   api = new OpenApi({
     tenantAlias: config.tenant_alias
   });
 
-  api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function(response) {
-    console.log(response);
+  api.createCookieUser('text/html').then(function(response) {
+    _log('cookie user created');
     if (config.mode) {
       loadWidget(config.element, response, config.mode);
     } else {
-      // save user info in Store
+      _log('cookie user:' + JSON.stringify(response));
     }
   }).catch(function(ex) {
-    console.log(ex);
+    _log(new Error('createCookieUser() ' + ex));
   });
 
 

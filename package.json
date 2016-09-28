@@ -31,6 +31,7 @@
     "webpack": "^1.13.2"
   },
   "dependencies": {
+    "debug": "^2.2.0",
     "element-resize-detector": "^1.1.8",
     "es6-promise": "^3.2.1",
     "json-loader": "^0.5.4",

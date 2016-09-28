@@ -1,8 +1,12 @@
 import { domready } from '../utils/domready';
 import elementResizeDetectorMaker from 'element-resize-detector';
+import debug from 'debug';
+
+let _log = debug('squatch-js:widget');
 
 class Widget {
   constructor(content) {
+    _log('widget initializing ...');
     this.content = content;
     this.frame = document.createElement('iframe');
     this.frame.width = '100%';

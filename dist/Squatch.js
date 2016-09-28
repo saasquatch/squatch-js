@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.api = exports.cookie = exports.OpenApi = undefined;
+	exports.api = exports.OpenApi = undefined;
 
 	var _OpenApi = __webpack_require__(2);
 
@@ -76,21 +76,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _OpenApi.OpenApi;
 	  }
 	});
-
-	var _Cookie = __webpack_require__(30);
-
-	Object.defineProperty(exports, 'cookie', {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_Cookie).default;
-	  }
-	});
 	exports.init = init;
 	exports.ready = ready;
 
-	var _Widget = __webpack_require__(15);
-
-	var _Cookie2 = _interopRequireDefault(_Cookie);
+	var _Widget = __webpack_require__(16);
 
 	var _async = __webpack_require__(31);
 
@@ -98,7 +87,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _store2 = _interopRequireDefault(_store);
 
+	var _debug = __webpack_require__(34);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_debug2.default.disable('squatch-js*'); /**
+	                                         * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app.
+	                                         * It can show referral widgets on any website, track users, generate unique referral short links and referral codes, and more.
+	                                         *
+	                                         * @module squatch
+	                                         */
+
+	var _log = (0, _debug2.default)('squatch-js');
 
 	/**
 	 * Initializes a static `squatch` global. This sets up:
@@ -112,19 +114,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * squatch.init({tenant_alias:'test_basbtabstq51v'});
 	 */
 	function init(config) {
+	  if (config.tenant_alias.startsWith('ayw' /*'test'*/)) {
+	    _debug2.default.enable('squatch-js*');
+	  }
+
+	  _log('initializing ...');
 	  exports.api = api = new _OpenApi.OpenApi({
 	    tenantAlias: config.tenant_alias
 	  });
 
-	  api.createCookieUser(config.mode ? 'text/html' : 'application/json').then(function (response) {
-	    console.log(response);
+	  api.createCookieUser('text/html').then(function (response) {
+	    _log('cookie user created');
 	    if (config.mode) {
 	      loadWidget(config.element, response, config.mode);
 	    } else {
-	      // save user info in Store
+	      _log('cookie user:' + JSON.stringify(response));
 	    }
 	  }).catch(function (ex) {
-	    console.log(ex);
+	    _log(new Error('createCookieUser() ' + ex));
 	  });
 
 	  // api.upsertUser(config.user).then(function(response) {
@@ -3849,7 +3856,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3861,11 +3869,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _domready = __webpack_require__(16);
+	var _domready = __webpack_require__(17);
 
-	var _elementResizeDetector = __webpack_require__(17);
+	var _elementResizeDetector = __webpack_require__(18);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
+
+	var _debug = __webpack_require__(34);
+
+	var _debug2 = _interopRequireDefault(_debug);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3875,10 +3887,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	var _log = (0, _debug2.default)('squatch-js:widget');
+
 	var Widget = function () {
 	  function Widget(content) {
 	    _classCallCheck(this, Widget);
 
+	    _log('widget initializing ...');
 	    this.content = content;
 	    this.frame = document.createElement('iframe');
 	    this.frame.width = '100%';
@@ -4046,7 +4061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(Widget);
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4079,24 +4094,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(18).forEach;
-	var elementUtilsMaker       = __webpack_require__(19);
-	var listenerHandlerMaker    = __webpack_require__(20);
-	var idGeneratorMaker        = __webpack_require__(21);
-	var idHandlerMaker          = __webpack_require__(22);
-	var reporterMaker           = __webpack_require__(23);
-	var browserDetector         = __webpack_require__(24);
-	var batchProcessorMaker     = __webpack_require__(25);
-	var stateHandler            = __webpack_require__(27);
+	var forEach                 = __webpack_require__(19).forEach;
+	var elementUtilsMaker       = __webpack_require__(20);
+	var listenerHandlerMaker    = __webpack_require__(21);
+	var idGeneratorMaker        = __webpack_require__(22);
+	var idHandlerMaker          = __webpack_require__(23);
+	var reporterMaker           = __webpack_require__(24);
+	var browserDetector         = __webpack_require__(25);
+	var batchProcessorMaker     = __webpack_require__(26);
+	var stateHandler            = __webpack_require__(28);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(28);
-	var scrollStrategyMaker     = __webpack_require__(29);
+	var objectStrategyMaker     = __webpack_require__(29);
+	var scrollStrategyMaker     = __webpack_require__(30);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -4216,7 +4231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        throw new Error("Invalid strategy name: " + desiredStrategy);
 	    }
 
-	    //Calls can be made to listenTo with elements that are still are being installed.
+	    //Calls can be made to listenTo with elements that are still being installed.
 	    //Also, same elements can occur in the elements list in the listenTo function.
 	    //With this map, the ready callbacks can be synchronized between the calls
 	    //so that the ready callback can always be called when an element is ready - even if
@@ -4322,10 +4337,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        // Since the element size might have changed since the call to "listenTo", we need to check for this change,
 	                        // so that a resize event may be emitted.
 	                        // Having the startSize object is optional (since it does not make sense in some cases such as unrendered elements), so check for its existance before.
-	                        if (stateHandler.getState(element).startSize) {
+	                        // Also, check the state existance before since the element may have been uninstalled in the installation process.
+	                        var state = stateHandler.getState(element);
+	                        if (state && state.startSize) {
 	                            var width = element.offsetWidth;
 	                            var height = element.offsetHeight;
-	                            if (stateHandler.getState(element).startSize.width !== width || stateHandler.getState(element).startSize.height !== height) {
+	                            if (state.startSize.width !== width || state.startSize.height !== height) {
 	                                onResizeCallback(element);
 	                            }
 	                        }
@@ -4404,7 +4421,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4429,7 +4446,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4487,7 +4504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4553,7 +4570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4577,7 +4594,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4630,7 +4647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4678,7 +4695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4723,12 +4740,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(26);
+	var utils = __webpack_require__(27);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -4867,7 +4884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4888,7 +4905,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4916,7 +4933,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -4926,7 +4943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(24);
+	var browserDetector = __webpack_require__(25);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5135,7 +5152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5145,7 +5162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(18).forEach;
+	var forEach = __webpack_require__(19).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5411,9 +5428,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                addAnimationClass(container);
 	                element.appendChild(container);
 
-	                addEvent(container, "animationstart", function onAnimationStart () {
+	                var onAnimationStart = function () {
 	                    getState(element).onRendered && getState(element).onRendered();
-	                });
+	                };
+
+	                addEvent(container, "animationstart", onAnimationStart);
+
+	                // Store the event handler here so that they may be removed when uninstall is called.
+	                // See uninstall function for an explanation why it is needed.
+	                getState(element).onAnimationStart = onAnimationStart;
 	            }
 
 	            return container;
@@ -5528,7 +5551,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            addEvent(shrink, "scroll", onShrinkScroll);
 
 	            // Store the event handlers here so that they may be removed when uninstall is called.
-	            // Se uninstall function for an explanation why it is needed.
+	            // See uninstall function for an explanation why it is needed.
 	            getState(element).onExpandScroll = onExpandScroll;
 	            getState(element).onShrinkScroll = onShrinkScroll;
 	        }
@@ -5733,18 +5756,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return;
 	        }
 
-	        if (state.busy) {
-	            // Uninstall has been called while the element is being prepared.
-	            // Right between the sync code and async batch.
-	            // So no elements have been injected, and no event handlers have been registered.
-	            return;
-	        }
+	        // Uninstall may have been called in the following scenarios:
+	        // (1) Right between the sync code and async batch (here state.busy = true, but nothing have been registered or injected).
+	        // (2) In the ready callback of the last level of the batch by another element (here, state.busy = true, but all the stuff has been injected).
+	        // (3) After the installation process (here, state.busy = false and all the stuff has been injected).
+	        // So to be on the safe side, let's check for each thing before removing.
 
 	        // We need to remove the event listeners, because otherwise the event might fire on an uninstall element which results in an error when trying to get the state of the element.
-	        removeEvent(getExpandElement(element), "scroll", state.onExpandScroll);
-	        removeEvent(getShrinkElement(element), "scroll", state.onShrinkScroll);
+	        state.onExpandScroll && removeEvent(getExpandElement(element), "scroll", state.onExpandScroll);
+	        state.onShrinkScroll && removeEvent(getShrinkElement(element), "scroll", state.onShrinkScroll);
+	        state.onAnimationStart && removeEvent(state.container, "animationstart", state.onAnimationStart);
 
-	        element.removeChild(state.container);
+	        state.container && element.removeChild(state.container);
 	    }
 
 	    return {
@@ -5754,103 +5777,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	};
 
-
-/***/ },
-/* 30 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = cookie;
-	var encode = encodeURIComponent;
-	var decode = decodeURIComponent;
-
-	/**
-	 * Gets a cookie or sets a cookie depending on what arguments you use.
-	 *
-	 * @param {string} name the name of the cookie
-	 * @param {string} [value] sets the value of the cookie
-	 * @param {Object} [options] options on the value of the cookie
-	 * @param {string} [options.path] the cookie path
-	 * @param {string} [options.domain] the cookie domain
-	 * @param {Date}   [options.expires] the cookie expiry
-	 * @param {boolean} [options.secure=false] if the cookie is secure
-	 *
-	 * @returns {Object} The cookie value
-	 *
-	 * @example <caption>Set a cookie</caption>
-	 * cookie('myCookie', 12, {domain:'google.com'});
-	 *
-	 * @example <caption>Get a cookie</caption>
-	 * var cookieValue = cookie('myCookie');
-	 *
-	 */
-	function cookie(name, value, options) {
-	  if (arguments.length < 2) return get(name);
-	  set(name, value, options);
-	}
-
-	function set(name, value) {
-	  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	  var str = encode(name) + '=' + encode(value);
-
-	  if (value == null) options.maxage = -1;
-
-	  if (options.maxage) {
-	    options.expires = new Date(+new Date() + options.maxage);
-	  }
-
-	  if (options.path) str += '; path=' + options.path;
-	  if (options.domain) str += '; domain=' + options.domain;
-	  if (options.expires) str += '; expires=' + options.expires.toUTCString();
-	  if (options.secure) str += '; secure';
-
-	  document.cookie = str;
-	}
-
-	function get(name) {
-	  var cookies = parse(document.cookie);
-	  return name ? cookies[name] : cookies;
-	}
-
-	function parse(cookie) {
-	  var result = {},
-	      pairs = cookie.split(/ *; */);
-
-	  if (pairs.length <= 1) return result;
-
-	  var _iteratorNormalCompletion = true;
-	  var _didIteratorError = false;
-	  var _iteratorError = undefined;
-
-	  try {
-	    for (var _iterator = pairs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	      var pair = _step.value;
-
-	      pair = pair.split('=');
-	      result[decode(pair[0])] = decode(pair[1]);
-	    }
-	  } catch (err) {
-	    _didIteratorError = true;
-	    _iteratorError = err;
-	  } finally {
-	    try {
-	      if (!_iteratorNormalCompletion && _iterator.return) {
-	        _iterator.return();
-	      }
-	    } finally {
-	      if (_didIteratorError) {
-	        throw _iteratorError;
-	      }
-	    }
-	  }
-
-	  return result;
-	}
 
 /***/ },
 /* 31 */
@@ -6118,6 +6044,514 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * This is the web browser implementation of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = __webpack_require__(35);
+	exports.log = log;
+	exports.formatArgs = formatArgs;
+	exports.save = save;
+	exports.load = load;
+	exports.useColors = useColors;
+	exports.storage = 'undefined' != typeof chrome
+	               && 'undefined' != typeof chrome.storage
+	                  ? chrome.storage.local
+	                  : localstorage();
+
+	/**
+	 * Colors.
+	 */
+
+	exports.colors = [
+	  'lightseagreen',
+	  'forestgreen',
+	  'goldenrod',
+	  'dodgerblue',
+	  'darkorchid',
+	  'crimson'
+	];
+
+	/**
+	 * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+	 * and the Firebug extension (any Firefox version) are known
+	 * to support "%c" CSS customizations.
+	 *
+	 * TODO: add a `localStorage` variable to explicitly enable/disable colors
+	 */
+
+	function useColors() {
+	  // is webkit? http://stackoverflow.com/a/16459606/376773
+	  return ('WebkitAppearance' in document.documentElement.style) ||
+	    // is firebug? http://stackoverflow.com/a/398120/376773
+	    (window.console && (console.firebug || (console.exception && console.table))) ||
+	    // is firefox >= v31?
+	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+	    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
+	}
+
+	/**
+	 * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+	 */
+
+	exports.formatters.j = function(v) {
+	  return JSON.stringify(v);
+	};
+
+
+	/**
+	 * Colorize log arguments if enabled.
+	 *
+	 * @api public
+	 */
+
+	function formatArgs() {
+	  var args = arguments;
+	  var useColors = this.useColors;
+
+	  args[0] = (useColors ? '%c' : '')
+	    + this.namespace
+	    + (useColors ? ' %c' : ' ')
+	    + args[0]
+	    + (useColors ? '%c ' : ' ')
+	    + '+' + exports.humanize(this.diff);
+
+	  if (!useColors) return args;
+
+	  var c = 'color: ' + this.color;
+	  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
+
+	  // the final "%c" is somewhat tricky, because there could be other
+	  // arguments passed either before or after the %c, so we need to
+	  // figure out the correct index to insert the CSS into
+	  var index = 0;
+	  var lastC = 0;
+	  args[0].replace(/%[a-z%]/g, function(match) {
+	    if ('%%' === match) return;
+	    index++;
+	    if ('%c' === match) {
+	      // we only are interested in the *last* %c
+	      // (the user may have provided their own)
+	      lastC = index;
+	    }
+	  });
+
+	  args.splice(lastC, 0, c);
+	  return args;
+	}
+
+	/**
+	 * Invokes `console.log()` when available.
+	 * No-op when `console.log` is not a "function".
+	 *
+	 * @api public
+	 */
+
+	function log() {
+	  // this hackery is required for IE8/9, where
+	  // the `console.log` function doesn't have 'apply'
+	  return 'object' === typeof console
+	    && console.log
+	    && Function.prototype.apply.call(console.log, console, arguments);
+	}
+
+	/**
+	 * Save `namespaces`.
+	 *
+	 * @param {String} namespaces
+	 * @api private
+	 */
+
+	function save(namespaces) {
+	  try {
+	    if (null == namespaces) {
+	      exports.storage.removeItem('debug');
+	    } else {
+	      exports.storage.debug = namespaces;
+	    }
+	  } catch(e) {}
+	}
+
+	/**
+	 * Load `namespaces`.
+	 *
+	 * @return {String} returns the previously persisted debug modes
+	 * @api private
+	 */
+
+	function load() {
+	  var r;
+	  try {
+	    r = exports.storage.debug;
+	  } catch(e) {}
+	  return r;
+	}
+
+	/**
+	 * Enable namespaces listed in `localStorage.debug` initially.
+	 */
+
+	exports.enable(load());
+
+	/**
+	 * Localstorage attempts to return the localstorage.
+	 *
+	 * This is necessary because safari throws
+	 * when a user disables cookies/localstorage
+	 * and you attempt to access it.
+	 *
+	 * @return {LocalStorage}
+	 * @api private
+	 */
+
+	function localstorage(){
+	  try {
+	    return window.localStorage;
+	  } catch (e) {}
+	}
+
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * This is the common logic for both the Node.js and web browser
+	 * implementations of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = debug;
+	exports.coerce = coerce;
+	exports.disable = disable;
+	exports.enable = enable;
+	exports.enabled = enabled;
+	exports.humanize = __webpack_require__(36);
+
+	/**
+	 * The currently active debug mode names, and names to skip.
+	 */
+
+	exports.names = [];
+	exports.skips = [];
+
+	/**
+	 * Map of special "%n" handling functions, for the debug "format" argument.
+	 *
+	 * Valid key names are a single, lowercased letter, i.e. "n".
+	 */
+
+	exports.formatters = {};
+
+	/**
+	 * Previously assigned color.
+	 */
+
+	var prevColor = 0;
+
+	/**
+	 * Previous log timestamp.
+	 */
+
+	var prevTime;
+
+	/**
+	 * Select a color.
+	 *
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function selectColor() {
+	  return exports.colors[prevColor++ % exports.colors.length];
+	}
+
+	/**
+	 * Create a debugger with the given `namespace`.
+	 *
+	 * @param {String} namespace
+	 * @return {Function}
+	 * @api public
+	 */
+
+	function debug(namespace) {
+
+	  // define the `disabled` version
+	  function disabled() {
+	  }
+	  disabled.enabled = false;
+
+	  // define the `enabled` version
+	  function enabled() {
+
+	    var self = enabled;
+
+	    // set `diff` timestamp
+	    var curr = +new Date();
+	    var ms = curr - (prevTime || curr);
+	    self.diff = ms;
+	    self.prev = prevTime;
+	    self.curr = curr;
+	    prevTime = curr;
+
+	    // add the `color` if not set
+	    if (null == self.useColors) self.useColors = exports.useColors();
+	    if (null == self.color && self.useColors) self.color = selectColor();
+
+	    var args = Array.prototype.slice.call(arguments);
+
+	    args[0] = exports.coerce(args[0]);
+
+	    if ('string' !== typeof args[0]) {
+	      // anything else let's inspect with %o
+	      args = ['%o'].concat(args);
+	    }
+
+	    // apply any `formatters` transformations
+	    var index = 0;
+	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
+	      // if we encounter an escaped % then don't increase the array index
+	      if (match === '%%') return match;
+	      index++;
+	      var formatter = exports.formatters[format];
+	      if ('function' === typeof formatter) {
+	        var val = args[index];
+	        match = formatter.call(self, val);
+
+	        // now we need to remove `args[index]` since it's inlined in the `format`
+	        args.splice(index, 1);
+	        index--;
+	      }
+	      return match;
+	    });
+
+	    if ('function' === typeof exports.formatArgs) {
+	      args = exports.formatArgs.apply(self, args);
+	    }
+	    var logFn = enabled.log || exports.log || console.log.bind(console);
+	    logFn.apply(self, args);
+	  }
+	  enabled.enabled = true;
+
+	  var fn = exports.enabled(namespace) ? enabled : disabled;
+
+	  fn.namespace = namespace;
+
+	  return fn;
+	}
+
+	/**
+	 * Enables a debug mode by namespaces. This can include modes
+	 * separated by a colon and wildcards.
+	 *
+	 * @param {String} namespaces
+	 * @api public
+	 */
+
+	function enable(namespaces) {
+	  exports.save(namespaces);
+
+	  var split = (namespaces || '').split(/[\s,]+/);
+	  var len = split.length;
+
+	  for (var i = 0; i < len; i++) {
+	    if (!split[i]) continue; // ignore empty strings
+	    namespaces = split[i].replace(/\*/g, '.*?');
+	    if (namespaces[0] === '-') {
+	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+	    } else {
+	      exports.names.push(new RegExp('^' + namespaces + '$'));
+	    }
+	  }
+	}
+
+	/**
+	 * Disable debug output.
+	 *
+	 * @api public
+	 */
+
+	function disable() {
+	  exports.enable('');
+	}
+
+	/**
+	 * Returns true if the given mode name is enabled, false otherwise.
+	 *
+	 * @param {String} name
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	function enabled(name) {
+	  var i, len;
+	  for (i = 0, len = exports.skips.length; i < len; i++) {
+	    if (exports.skips[i].test(name)) {
+	      return false;
+	    }
+	  }
+	  for (i = 0, len = exports.names.length; i < len; i++) {
+	    if (exports.names[i].test(name)) {
+	      return true;
+	    }
+	  }
+	  return false;
+	}
+
+	/**
+	 * Coerce `val`.
+	 *
+	 * @param {Mixed} val
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	function coerce(val) {
+	  if (val instanceof Error) return val.stack || val.message;
+	  return val;
+	}
+
+
+/***/ },
+/* 36 */
+/***/ function(module, exports) {
+
+	/**
+	 * Helpers.
+	 */
+
+	var s = 1000;
+	var m = s * 60;
+	var h = m * 60;
+	var d = h * 24;
+	var y = d * 365.25;
+
+	/**
+	 * Parse or format the given `val`.
+	 *
+	 * Options:
+	 *
+	 *  - `long` verbose formatting [false]
+	 *
+	 * @param {String|Number} val
+	 * @param {Object} options
+	 * @return {String|Number}
+	 * @api public
+	 */
+
+	module.exports = function(val, options){
+	  options = options || {};
+	  if ('string' == typeof val) return parse(val);
+	  return options.long
+	    ? long(val)
+	    : short(val);
+	};
+
+	/**
+	 * Parse the given `str` and return milliseconds.
+	 *
+	 * @param {String} str
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function parse(str) {
+	  str = '' + str;
+	  if (str.length > 10000) return;
+	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
+	  if (!match) return;
+	  var n = parseFloat(match[1]);
+	  var type = (match[2] || 'ms').toLowerCase();
+	  switch (type) {
+	    case 'years':
+	    case 'year':
+	    case 'yrs':
+	    case 'yr':
+	    case 'y':
+	      return n * y;
+	    case 'days':
+	    case 'day':
+	    case 'd':
+	      return n * d;
+	    case 'hours':
+	    case 'hour':
+	    case 'hrs':
+	    case 'hr':
+	    case 'h':
+	      return n * h;
+	    case 'minutes':
+	    case 'minute':
+	    case 'mins':
+	    case 'min':
+	    case 'm':
+	      return n * m;
+	    case 'seconds':
+	    case 'second':
+	    case 'secs':
+	    case 'sec':
+	    case 's':
+	      return n * s;
+	    case 'milliseconds':
+	    case 'millisecond':
+	    case 'msecs':
+	    case 'msec':
+	    case 'ms':
+	      return n;
+	  }
+	}
+
+	/**
+	 * Short format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function short(ms) {
+	  if (ms >= d) return Math.round(ms / d) + 'd';
+	  if (ms >= h) return Math.round(ms / h) + 'h';
+	  if (ms >= m) return Math.round(ms / m) + 'm';
+	  if (ms >= s) return Math.round(ms / s) + 's';
+	  return ms + 'ms';
+	}
+
+	/**
+	 * Long format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function long(ms) {
+	  return plural(ms, d, 'day')
+	    || plural(ms, h, 'hour')
+	    || plural(ms, m, 'minute')
+	    || plural(ms, s, 'second')
+	    || ms + ' ms';
+	}
+
+	/**
+	 * Pluralization helper.
+	 */
+
+	function plural(ms, n, name) {
+	  if (ms < n) return;
+	  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
+	  return Math.ceil(ms / n) + ' ' + name + 's';
+	}
+
 
 /***/ }
 /******/ ])
