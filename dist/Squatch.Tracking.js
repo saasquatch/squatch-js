@@ -55,12 +55,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(15);
+	module.exports = __webpack_require__(36);
 
 
 /***/ },
 
-/***/ 15:
+/***/ 36:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function set(name, value) {
-	  var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+	  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
 	  var str = encode(name) + '=' + encode(value);
 

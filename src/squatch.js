@@ -9,11 +9,13 @@ import { EmbedWidget, PopupWidget } from './widgets/Widget';
 import { asyncLoad } from './async';
 import store from 'store';
 import debug from 'debug';
+import EventBus from 'eventbusjs';
 
 debug.disable('squatch-js*');
 let _log = debug('squatch-js');
 
 export { OpenApi } from './api/OpenApi';
+export let eventBus = EventBus;
 
 /**
  * Initializes a static `squatch` global. This sets up:
@@ -77,9 +79,9 @@ function loadWidget(element, content, mode) {
   let popup;
 
   if (mode === 'EMBED') {
-    embed = new EmbedWidget(content).load();
+    embed = new EmbedWidget(content, eventBus).load();
   } else if (mode === 'POPUP') {
-    popup = new PopupWidget(content).load();
+    popup = new PopupWidget(content, eventBus).load();
   }
 }
 

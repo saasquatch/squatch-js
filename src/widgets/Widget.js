@@ -5,8 +5,9 @@ import debug from 'debug';
 let _log = debug('squatch-js:widget');
 
 class Widget {
-  constructor(content) {
+  constructor(content, eventBus) {
     _log('widget initializing ...');
+    this.eventBus = eventBus;
     this.content = content;
     this.frame = document.createElement('iframe');
     this.frame.width = '100%';
@@ -19,8 +20,8 @@ class Widget {
 }
 
 export class PopupWidget extends Widget {
-  constructor(content, triggerId = 'squatchpop') {
-    super(content);
+  constructor(content, eventBus, triggerId = 'squatchpop') {
+    super(content, eventBus);
     let me = this;
     // me.frame.id = 'someId';
     me.frame.style.backgroundColor = '#fff';
@@ -64,6 +65,7 @@ export class PopupWidget extends Widget {
     let frameWindow = frame.contentWindow;
     let frameDoc = frameWindow.document;
     let erd = this.erd;
+    let eventBus = this.eventBus;
 
     // Adjust frame height when size of body changes
     domready(frameDoc, function() {
@@ -113,9 +115,11 @@ export class PopupWidget extends Widget {
 
         // track facebook button clicks here
       }
-      // TODO: attachEvent IE support
-      fbShare.addEventListener('click', fbClicked, false);
-      fbShare.addEventListener('touchstart', fbClicked, false);
+
+      eventBus.addEventListener('fb_btn_clicked', fbClicked /* , scope where callback is defined*/);
+      eventBus.addEventListener('tw_btn_clicked', function() { _log("tw btn clicked"); });
+      eventBus.addEventListener('email_btn_clicked', function() { _log("email btn clicked") });
+
     })
   }
 
@@ -138,8 +142,8 @@ export class PopupWidget extends Widget {
 }
 
 export class EmbedWidget extends Widget {
-  constructor(content, elementId = 'squatchembed') {
-    super(content);
+  constructor(content, eventBus, elementId = 'squatchembed') {
+    super(content, eventBus);
     // this.frame.id = 'someId';
     this.element = document.getElementById(elementId);
 

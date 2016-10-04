@@ -235,7 +235,7 @@ export class OpenApi {
        headers: {
          'Accept': responseType,
          'Content-Type': 'application/json',
-        //  'X-SaaSquatch-User-Token': 'token'
+         'X-SaaSquatch-User-Token': 'JWT token'
        },
        credentials: 'cors',
        body: data
