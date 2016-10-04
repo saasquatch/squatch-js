@@ -353,8 +353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        method: 'PUT',
 	        headers: {
 	          'Accept': responseType,
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjY291bnRJZCI6ImFiYyIsImlkIjoiNTY3OCIsImVtYWlsIjoiam9yZ2VAcmVmZXJyYWwuY29tIiwiZmlyc3ROYW1lIjoiSm9yZ2UiLCJsYXN0TmFtZSI6IkNvbmRlIn19.ykHYlj-5akvJlZYtGPb7Fv6CXIkza7IWRjoRNpjMyq0'
+	          'Content-Type': 'application/json'
 	        },
 	        credentials: 'cors',
 	        body: data

@@ -114,7 +114,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * squatch.init({tenant_alias:'test_basbtabstq51v'});
 	 */
 	function init(config) {
-	  if (config.tenant_alias.startsWith('ayw' /*'test'*/)) {
+	  if (config.tenant_alias.startsWith('test')) {
 	    _debug2.default.enable('squatch-js*');
 	  }
 
@@ -128,17 +128,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (config.mode) {
 	      loadWidget(config.element, response, config.mode);
 	    } else {
-	      _log('cookie user:' + JSON.stringify(response));
+	      _log('cookie user:');
+	      _log(response);
 	    }
 	  }).catch(function (ex) {
 	    _log(new Error('createCookieUser() ' + ex));
 	  });
 
 	  // api.upsertUser(config.user).then(function(response) {
-	  //   console.log(response);
-	  //   store.set('sqh_user', response);
+	  //   _log('upsert user:')
+	  //   _log(response);
+	  //   // store.set('sqh_user', response);
 	  // }).catch(function(ex) {
-	  //   console.log(ex);
+	  //   _log(new Error('upsertUser()' + ex));
 	  // });
 	}
 
@@ -463,8 +465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        method: 'PUT',
 	        headers: {
 	          'Accept': responseType,
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFjY291bnRJZCI6ImFiYyIsImlkIjoiNTY3OCIsImVtYWlsIjoiam9yZ2VAcmVmZXJyYWwuY29tIiwiZmlyc3ROYW1lIjoiSm9yZ2UiLCJsYXN0TmFtZSI6IkNvbmRlIn19.ykHYlj-5akvJlZYtGPb7Fv6CXIkza7IWRjoRNpjMyq0'
+	          'Content-Type': 'application/json'
 	        },
 	        credentials: 'cors',
 	        body: data
@@ -3970,7 +3971,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function open() {
 	      var popupdiv = this.popupdiv;
 	      var frame = this.frame;
-	      var frameDoc = frame.contentWindow.document;
+	      var frameWindow = frame.contentWindow;
+	      var frameDoc = frameWindow.document;
 	      var erd = this.erd;
 
 	      // Adjust frame height when size of body changes
@@ -3990,6 +3992,40 @@ return /******/ (function(modules) { // webpackBootstrap
 	            popupdiv.style.paddingTop = "5px";
 	          }
 	        });
+
+	        var head = frameDoc.head;
+	        var scripts = head.getElementsByTagName('script');
+	        var widgetJs = scripts[scripts.length - 1];
+	        head.removeChild(widgetJs);
+	        var fbShare = frameDoc.getElementsByClassName('fbShare')[0];
+	        fbShare.href = 'https://referralsaasquatch.com';
+
+	        var fbClicked = function fbClicked(e) {
+	          _log('widget event: Facebook share button ' + e.type);
+	          if (e.type == 'click') {
+	            e.preventDefault();
+
+	            var width = 620;
+	            var height = 400;
+	            var shareImage = frameWindow.squatch.user.facebook.shareImage;
+	            var fbUser = frameWindow.squatch.user.facebook.appId;
+	            var fbUserLink = frameWindow.squatch.user.facebook.link;
+	            var title = frameWindow.squatch.user.facebook.title;
+	            var description = frameWindow.squatch.user.facebook.summary;
+	            var pictureString = shareImage == "" || shareImage === null ? "" : "&picture=" + shareImage;
+	            var redirectUrl = frameWindow.squatch.user.facebook.redirectUrl;
+
+	            var url = 'https://www.facebook.com/dialog/feed?app_id=' + fbUser + '&link=' + fbUserLink + '&name=' + title + '&description=' + description + pictureString + '&redirect_uri=' + redirectUrl + '&display=popup';
+
+	            var opts = 'status=0,width=' + width + ',height=' + height;
+	            // window.open(url, 'fb', opts);
+	          }
+
+	          // track facebook button clicks here
+	        };
+	        // TODO: attachEvent IE support
+	        fbShare.addEventListener('click', fbClicked, false);
+	        fbShare.addEventListener('touchstart', fbClicked, false);
 	      });
 	    }
 	  }, {

@@ -61,7 +61,8 @@ export class PopupWidget extends Widget {
   open() {
     let popupdiv = this.popupdiv;
     let frame = this.frame;
-    let frameDoc = frame.contentWindow.document;
+    let frameWindow = frame.contentWindow;
+    let frameDoc = frameWindow.document;
     let erd = this.erd;
 
     // Adjust frame height when size of body changes
@@ -81,6 +82,40 @@ export class PopupWidget extends Widget {
           popupdiv.style.paddingTop = "5px";
         }
       });
+
+      let head = frameDoc.head;
+      let scripts = head.getElementsByTagName('script');
+      let widgetJs = scripts[scripts.length - 1];
+      head.removeChild(widgetJs);
+      let fbShare = frameDoc.getElementsByClassName('fbShare')[0];
+      fbShare.href = 'https://referralsaasquatch.com';
+
+      let fbClicked = function(e) {
+        _log('widget event: Facebook share button ' + e.type);
+        if (e.type == 'click') {
+          e.preventDefault();
+
+          let width = 620;
+          let height = 400;
+          let shareImage = frameWindow.squatch.user.facebook.shareImage;
+          let fbUser = frameWindow.squatch.user.facebook.appId;
+          let fbUserLink = frameWindow.squatch.user.facebook.link;
+          let title = frameWindow.squatch.user.facebook.title;
+          let description = frameWindow.squatch.user.facebook.summary;
+          let pictureString = (shareImage == "" || shareImage === null) ? "" : "&picture="+ shareImage;
+          let redirectUrl = frameWindow.squatch.user.facebook.redirectUrl;
+
+          let url = `https://www.facebook.com/dialog/feed?app_id=${fbUser}&link=${fbUserLink}&name=${title}&description=${description}${pictureString}&redirect_uri=${redirectUrl}&display=popup`;
+
+          let opts = `status=0,width=${width},height=${height}`;
+          // window.open(url, 'fb', opts);
+        }
+
+        // track facebook button clicks here
+      }
+      // TODO: attachEvent IE support
+      fbShare.addEventListener('click', fbClicked, false);
+      fbShare.addEventListener('touchstart', fbClicked, false);
     })
   }
 

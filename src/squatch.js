@@ -27,7 +27,7 @@ export { OpenApi } from './api/OpenApi';
  * squatch.init({tenant_alias:'test_basbtabstq51v'});
  */
 export function init(config) {
-  if (config.tenant_alias.startsWith('ayw' /*'test'*/)) {
+  if (config.tenant_alias.startsWith('test')) {
     debug.enable('squatch-js*');
   }
 
@@ -41,7 +41,8 @@ export function init(config) {
     if (config.mode) {
       loadWidget(config.element, response, config.mode);
     } else {
-      _log('cookie user:' + JSON.stringify(response));
+      _log('cookie user:');
+      _log(response);
     }
   }).catch(function(ex) {
     _log(new Error('createCookieUser() ' + ex));
@@ -49,10 +50,11 @@ export function init(config) {
 
 
   // api.upsertUser(config.user).then(function(response) {
-  //   console.log(response);
-  //   store.set('sqh_user', response);
+  //   _log('upsert user:')
+  //   _log(response);
+  //   // store.set('sqh_user', response);
   // }).catch(function(ex) {
-  //   console.log(ex);
+  //   _log(new Error('upsertUser()' + ex));
   // });
 }
 
