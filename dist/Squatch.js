@@ -77,7 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _WidgetApi = __webpack_require__(15);
+	var _WidgetApi = __webpack_require__(38);
 
 	Object.defineProperty(exports, 'WidgetApi', {
 	  enumerable: true,
@@ -88,15 +88,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.init = init;
 	exports.ready = ready;
 
-	var _Widget = __webpack_require__(16);
+	var _Widget = __webpack_require__(15);
 
-	var _async = __webpack_require__(34);
+	var _async = __webpack_require__(33);
 
-	var _store = __webpack_require__(36);
+	var _store = __webpack_require__(35);
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _debug = __webpack_require__(31);
+	var _debug = __webpack_require__(30);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
@@ -296,7 +296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'createCookieUser',
 	    value: function createCookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? 'text/html' : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text/html';
 
 	      var responseType = params;
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
@@ -3953,237 +3953,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.WidgetApi = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _jsonschema = __webpack_require__(3);
-
-	var _schema = __webpack_require__(13);
-
-	var _schema2 = _interopRequireDefault(_schema);
-
-	__webpack_require__(14);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
-	 *
-	 */
-	var WidgetApi = exports.WidgetApi = function () {
-	  //TODO: JWT auth
-	  /**
-	   * Initialize a new {@link WidgetApi} instance.
-	   *
-	   * @param {Object} config Config details
-	   * @param {string} config.tenantAlias The tenant to access
-	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   */
-	  function WidgetApi(config) {
-	    _classCallCheck(this, WidgetApi);
-
-	    this.tenantAlias = config.tenantAlias;
-	    this.domain = "https://staging.referralsaasquatch.com";
-	  }
-
-	  /**
-	   * Description here.
-	   *
-	   * @param {Object} params
-	   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
-	   * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-	   */
-
-
-	  _createClass(WidgetApi, [{
-	    key: 'cookieUser',
-	    value: function cookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: "", engagementMedium: "" } : arguments[0];
-
-	      this._validateInput(params, _schema2.default.cookieUser);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
-	      var optional_params = widget_type + engagement_medium;
-
-	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
-	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(params));
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-	     * @return {Promise} string if true, with the widget template.
-	     */
-
-	  }, {
-	    key: 'upsert',
-	    value: function upsert() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: "", engagementMedium: "" } : arguments[0];
-
-	      this._validateInput(params, _schema2.default.upsertUser);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.user.accountId);
-	      var user_id = encodeURIComponent(params.user.id);
-	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
-	      var optional_params = widget_type + engagement_medium;
-
-	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/upsert' + optional_params;
-	      var url = this.domain + path;
-	      return this._doPut(url, JSON.stringify(params));
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-	     * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-	     */
-
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: "", engagementMedium: "" } : arguments[0];
-
-	      this._validateInput(params, _schema2.default.upsertUser);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
-	      var optional_params = widget_type + engagement_medium;
-
-	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/render' + optional_params;
-	      var url = this.domain + path;
-	      return this.doRequest(url);
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_validateInput',
-	    value: function _validateInput(params, schema) {
-	      var valid = (0, _jsonschema.validate)(params, schema);
-	      if (!valid.valid) throw valid.errors;
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doRequest',
-	    value: function _doRequest(url) {
-	      return fetch(url, {
-	        method: 'GET',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        return response.json();
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data) {
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
-	        body: data,
-	        credentials: 'cors'
-	      }).then(function (response) {
-	        return response.json();
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPut',
-	    value: function _doPut(url, data) {
-	      return fetch(url, {
-	        method: 'PUT',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
-	        credentials: 'cors',
-	        body: data
-	      }).then(function (response) {
-	        return response.json();
-	      });
-	    }
-	  }]);
-
-	  return WidgetApi;
-	}();
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	exports.EmbedWidget = exports.PopupWidget = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _domready = __webpack_require__(17);
+	var _domready = __webpack_require__(16);
 
-	var _elementResizeDetector = __webpack_require__(18);
+	var _elementResizeDetector = __webpack_require__(17);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
 
-	var _debug = __webpack_require__(31);
+	var _debug = __webpack_require__(30);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
@@ -4210,51 +3990,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 *      load() {
 	 *        // custom loading of widget
-	*       }
+	 *       }
 	 *    }
 	 *
 	 */
 
-	var Widget = function () {
-	  /**
-	   * Initialize a new {@link Widget} instance.
-	   *
-	   * Creates an <iframe></iframe> in which the html content of the widget gets
-	   * embedded.
-	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
-	   * for listening to the height of the widget content and make the iframe responsive.
-	   * The EventBus listens for events that get triggered in the widget.
-	   *
-	   * @param {string} content The html of the widget
-	   * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
-	   *
-	   */
-	  function Widget(content, eventBus) {
-	    _classCallCheck(this, Widget);
+	var Widget =
+	/**
+	 * Initialize a new {@link Widget} instance.
+	 *
+	 * Creates an <iframe></iframe> in which the html content of the widget gets
+	 * embedded.
+	 * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
+	 * for listening to the height of the widget content and make the iframe responsive.
+	 * The EventBus listens for events that get triggered in the widget.
+	 *
+	 * @param {string} content The html of the widget
+	 * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
+	 *
+	 */
+	function Widget(content, eventBus) {
+	  _classCallCheck(this, Widget);
 
-	    _log('widget initializing ...');
-	    this.eventBus = eventBus;
-	    this.content = content;
-	    this.frame = document.createElement('iframe');
-	    this.frame.width = '100%';
-	    this.frame.style = 'border: 0; background-color: none;';
-	    this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
-	    // this.api = new WidgetApi(/*params*/)
-	  }
+	  _log('widget initializing ...');
+	  this.eventBus = eventBus;
+	  this.content = content;
+	  this.frame = document.createElement('iframe');
+	  this.frame.width = '100%';
+	  this.frame.style = 'border: 0; background-color: none;';
+	  this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
+	  // this.api = new AnalyticsApi(/*params*/)
 
-	  _createClass(Widget, [{
-	    key: 'load',
-	    value: function load() {}
-	  }]);
-
-	  return Widget;
-	}();
+	  this.eventBus.addEventListener('fb_btn_clicked', function () {
+	    _log("fb btn clicked");
+	  });
+	  this.eventBus.addEventListener('tw_btn_clicked', function () {
+	    _log("tw btn clicked");
+	  });
+	  this.eventBus.addEventListener('email_btn_clicked', function () {
+	    _log("email btn clicked");
+	  });
+	};
 
 	var PopupWidget = exports.PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
 
 	  function PopupWidget(content, eventBus) {
-	    var triggerId = arguments.length <= 2 || arguments[2] === undefined ? 'squatchpop' : arguments[2];
+	    var triggerId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'squatchpop';
 
 	    _classCallCheck(this, PopupWidget);
 
@@ -4314,7 +4096,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var frameWindow = frame.contentWindow;
 	      var frameDoc = frameWindow.document;
 	      var erd = this.erd;
-	      var eventBus = this.eventBus;
 
 	      // Adjust frame height when size of body changes
 	      (0, _domready.domready)(frameDoc, function () {
@@ -4332,41 +4113,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	          } else {
 	            popupdiv.style.paddingTop = "5px";
 	          }
-	        });
-
-	        var fbShare = frameDoc.getElementsByClassName('fbShare')[0];
-	        fbShare.href = 'https://referralsaasquatch.com';
-
-	        var fbClicked = function fbClicked(e) {
-	          _log('widget event: Facebook share button ' + e.type);
-	          if (e.type == 'click') {
-	            e.preventDefault();
-
-	            var width = 620;
-	            var height = 400;
-	            var shareImage = frameWindow.squatch.user.facebook.shareImage;
-	            var fbUser = frameWindow.squatch.user.facebook.appId;
-	            var fbUserLink = frameWindow.squatch.user.facebook.link;
-	            var title = frameWindow.squatch.user.facebook.title;
-	            var description = frameWindow.squatch.user.facebook.summary;
-	            var pictureString = shareImage == "" || shareImage === null ? "" : "&picture=" + shareImage;
-	            var redirectUrl = frameWindow.squatch.user.facebook.redirectUrl;
-
-	            var url = 'https://www.facebook.com/dialog/feed?app_id=' + fbUser + '&link=' + fbUserLink + '&name=' + title + '&description=' + description + pictureString + '&redirect_uri=' + redirectUrl + '&display=popup';
-
-	            var opts = 'status=0,width=' + width + ',height=' + height;
-	            // window.open(url, 'fb', opts);
-	          }
-
-	          // track facebook button clicks here
-	        };
-
-	        eventBus.addEventListener('fb_btn_clicked', fbClicked /* , scope where callback is defined*/);
-	        eventBus.addEventListener('tw_btn_clicked', function () {
-	          _log("tw btn clicked");
-	        });
-	        eventBus.addEventListener('email_btn_clicked', function () {
-	          _log("email btn clicked");
 	        });
 
 	        _log('Popup opened');
@@ -4402,7 +4148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _inherits(EmbedWidget, _Widget2);
 
 	  function EmbedWidget(content, eventBus) {
-	    var elementId = arguments.length <= 2 || arguments[2] === undefined ? 'squatchembed' : arguments[2];
+	    var elementId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'squatchembed';
 
 	    _classCallCheck(this, EmbedWidget);
 
@@ -4443,7 +4189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(Widget);
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -4476,24 +4222,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(19).forEach;
-	var elementUtilsMaker       = __webpack_require__(20);
-	var listenerHandlerMaker    = __webpack_require__(21);
-	var idGeneratorMaker        = __webpack_require__(22);
-	var idHandlerMaker          = __webpack_require__(23);
-	var reporterMaker           = __webpack_require__(24);
-	var browserDetector         = __webpack_require__(25);
-	var batchProcessorMaker     = __webpack_require__(26);
-	var stateHandler            = __webpack_require__(28);
+	var forEach                 = __webpack_require__(18).forEach;
+	var elementUtilsMaker       = __webpack_require__(19);
+	var listenerHandlerMaker    = __webpack_require__(20);
+	var idGeneratorMaker        = __webpack_require__(21);
+	var idHandlerMaker          = __webpack_require__(22);
+	var reporterMaker           = __webpack_require__(23);
+	var browserDetector         = __webpack_require__(24);
+	var batchProcessorMaker     = __webpack_require__(25);
+	var stateHandler            = __webpack_require__(27);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(29);
-	var scrollStrategyMaker     = __webpack_require__(30);
+	var objectStrategyMaker     = __webpack_require__(28);
+	var scrollStrategyMaker     = __webpack_require__(29);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -4803,7 +4549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4828,7 +4574,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4886,7 +4632,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4952,7 +4698,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4976,7 +4722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5029,7 +4775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5077,7 +4823,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5122,12 +4868,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(27);
+	var utils = __webpack_require__(26);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -5266,7 +5012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5287,7 +5033,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5315,7 +5061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5325,7 +5071,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(25);
+	var browserDetector = __webpack_require__(24);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5534,7 +5280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5544,7 +5290,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(19).forEach;
+	var forEach = __webpack_require__(18).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -6161,7 +5907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -6171,7 +5917,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = __webpack_require__(32);
+	exports = module.exports = __webpack_require__(31);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -6335,7 +6081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -6351,7 +6097,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(33);
+	exports.humanize = __webpack_require__(32);
 
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -6538,7 +6284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports) {
 
 	/**
@@ -6669,7 +6415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6679,7 +6425,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.asyncLoad = asyncLoad;
 
-	var _each = __webpack_require__(35);
+	var _each = __webpack_require__(34);
 
 	function asyncLoad() {
 	  var loaded = window['squatch'] || null;
@@ -6702,7 +6448,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -6738,7 +6484,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {"use strict"
@@ -6936,10 +6682,231 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
+/* 36 */,
 /* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(root,factory){if(true)module.exports=factory();else if(typeof define==="function"&&define.amd)define("EventBus",[],factory);else if(typeof exports==="object")exports["EventBus"]=factory();else root["EventBus"]=factory()})(this,function(){var EventBusClass={};EventBusClass=function(){this.listeners={}};EventBusClass.prototype={addEventListener:function(type,callback,scope){var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>3?args.splice(3,args.length-1):[];if(typeof this.listeners[type]!="undefined"){this.listeners[type].push({scope:scope,callback:callback,args:args})}else{this.listeners[type]=[{scope:scope,callback:callback,args:args}]}},removeEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;var newArray=[];for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener.scope==scope&&listener.callback==callback){}else{newArray.push(listener)}}this.listeners[type]=newArray}},hasEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;if(callback===undefined&&scope===undefined){return numOfCallbacks>0}for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if((scope?listener.scope==scope:true)&&listener.callback==callback){return true}}}return false},dispatch:function(type,target){var numOfListeners=0;var event={type:type,target:target};var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>2?args.splice(2,args.length-1):[];args=[event].concat(args);if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener&&listener.callback){var concatArgs=args.concat(listener.args);listener.callback.apply(listener.scope,concatArgs);numOfListeners+=1}}}},getEvents:function(){var str="";for(var type in this.listeners){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];str+=listener.scope&&listener.scope.className?listener.scope.className:"anonymous";str+=" listen for '"+type+"'\n"}}return str}};var EventBus=new EventBusClass;return EventBus});
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.WidgetApi = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _jsonschema = __webpack_require__(3);
+
+	var _schema = __webpack_require__(13);
+
+	var _schema2 = _interopRequireDefault(_schema);
+
+	__webpack_require__(14);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 *
+	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
+	 *
+	 */
+	var WidgetApi = exports.WidgetApi = function () {
+	  //TODO: JWT auth
+	  /**
+	   * Initialize a new {@link WidgetApi} instance.
+	   *
+	   * @param {Object} config Config details
+	   * @param {string} config.tenantAlias The tenant to access
+	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
+	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var WidgetApi = require('squatch-js').WidgetApi;
+	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {WidgetApi} from 'squatch-js';
+	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   */
+	  function WidgetApi(config) {
+	    _classCallCheck(this, WidgetApi);
+
+	    this.tenantAlias = config.tenantAlias;
+	    this.domain = "https://staging.referralsaasquatch.com";
+	  }
+
+	  /**
+	   * Description here.
+	   *
+	   * @param {Object} params
+	   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+	   * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	   */
+
+
+	  _createClass(WidgetApi, [{
+	    key: 'cookieUser',
+	    value: function cookieUser() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
+
+	      this._validateInput(params, _schema2.default.cookieUser);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var optional_params = widget_type + engagement_medium;
+
+	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
+	      var url = this.domain + path;
+	      return this._doPost(url, JSON.stringify(params));
+	    }
+
+	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+	     * @return {Promise} string if true, with the widget template.
+	     */
+
+	  }, {
+	    key: 'upsert',
+	    value: function upsert() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
+
+	      this._validateInput(params, _schema2.default.upsertUser);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.user.accountId);
+	      var user_id = encodeURIComponent(params.user.id);
+	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var optional_params = widget_type + engagement_medium;
+
+	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/upsert' + optional_params;
+	      var url = this.domain + path;
+	      return this._doPut(url, JSON.stringify(params));
+	    }
+
+	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+	     * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
+
+	      this._validateInput(params, _schema2.default.upsertUser);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
+	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var optional_params = widget_type + engagement_medium;
+
+	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/render' + optional_params;
+	      var url = this.domain + path;
+	      return this.doRequest(url);
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_validateInput',
+	    value: function _validateInput(params, schema) {
+	      var valid = (0, _jsonschema.validate)(params, schema);
+	      if (!valid.valid) throw valid.errors;
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doRequest',
+	    value: function _doRequest(url) {
+	      return fetch(url, {
+	        method: 'GET',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        }
+	      }).then(function (response) {
+	        return response.json();
+	      });
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doPost',
+	    value: function _doPost(url, data) {
+	      return fetch(url, {
+	        method: 'POST',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: data,
+	        credentials: 'cors'
+	      }).then(function (response) {
+	        return response.json();
+	      });
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doPut',
+	    value: function _doPut(url, data) {
+	      return fetch(url, {
+	        method: 'PUT',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        credentials: 'cors',
+	        body: data
+	      }).then(function (response) {
+	        return response.json();
+	      });
+	    }
+	  }]);
+
+	  return WidgetApi;
+	}();
 
 /***/ }
 /******/ ])

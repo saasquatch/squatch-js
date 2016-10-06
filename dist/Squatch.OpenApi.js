@@ -170,7 +170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'createCookieUser',
 	    value: function createCookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? 'text/html' : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text/html';
 
 	      var responseType = params;
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);

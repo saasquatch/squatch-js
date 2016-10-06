@@ -17,7 +17,7 @@ let _log = debug('squatch-js:widget');
  *
  *      load() {
  *        // custom loading of widget
-*       }
+ *       }
  *    }
  *
  */
@@ -43,10 +43,12 @@ class Widget {
     this.frame.width = '100%';
     this.frame.style = 'border: 0; background-color: none;';
     this.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
-    // this.api = new WidgetApi(/*params*/)
-  }
+    // this.api = new AnalyticsApi(/*params*/)
 
-  load() {}
+    this.eventBus.addEventListener('fb_btn_clicked', function() { _log("fb btn clicked"); });
+    this.eventBus.addEventListener('tw_btn_clicked', function() { _log("tw btn clicked"); });
+    this.eventBus.addEventListener('email_btn_clicked', function() { _log("email btn clicked") });
+  }
 }
 
 export class PopupWidget extends Widget {
@@ -96,7 +98,6 @@ export class PopupWidget extends Widget {
     let frameWindow = frame.contentWindow;
     let frameDoc = frameWindow.document;
     let erd = this.erd;
-    let eventBus = this.eventBus;
 
     // Adjust frame height when size of body changes
     domready(frameDoc, function() {
@@ -115,37 +116,6 @@ export class PopupWidget extends Widget {
           popupdiv.style.paddingTop = "5px";
         }
       });
-
-      let fbShare = frameDoc.getElementsByClassName('fbShare')[0];
-      fbShare.href = 'https://referralsaasquatch.com';
-
-      let fbClicked = function(e) {
-        _log('widget event: Facebook share button ' + e.type);
-        if (e.type == 'click') {
-          e.preventDefault();
-
-          let width = 620;
-          let height = 400;
-          let shareImage = frameWindow.squatch.user.facebook.shareImage;
-          let fbUser = frameWindow.squatch.user.facebook.appId;
-          let fbUserLink = frameWindow.squatch.user.facebook.link;
-          let title = frameWindow.squatch.user.facebook.title;
-          let description = frameWindow.squatch.user.facebook.summary;
-          let pictureString = (shareImage == "" || shareImage === null) ? "" : "&picture="+ shareImage;
-          let redirectUrl = frameWindow.squatch.user.facebook.redirectUrl;
-
-          let url = `https://www.facebook.com/dialog/feed?app_id=${fbUser}&link=${fbUserLink}&name=${title}&description=${description}${pictureString}&redirect_uri=${redirectUrl}&display=popup`;
-
-          let opts = `status=0,width=${width},height=${height}`;
-          // window.open(url, 'fb', opts);
-        }
-
-        // track facebook button clicks here
-      }
-
-      eventBus.addEventListener('fb_btn_clicked', fbClicked /* , scope where callback is defined*/);
-      eventBus.addEventListener('tw_btn_clicked', function() { _log("tw btn clicked"); });
-      eventBus.addEventListener('email_btn_clicked', function() { _log("email btn clicked") });
 
       _log('Popup opened');
     })
