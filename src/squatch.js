@@ -5,6 +5,7 @@
  * @module squatch
  */
 import { OpenApi } from './api/OpenApi';
+import { WidgetApi } from './api/WidgetApi'
 import { EmbedWidget, PopupWidget } from './widgets/Widget';
 import { asyncLoad } from './async';
 import store from 'store';
@@ -15,12 +16,13 @@ debug.disable('squatch-js*');
 let _log = debug('squatch-js');
 
 export { OpenApi } from './api/OpenApi';
+export { WidgetApi } from './api/WidgetApi';
 export let eventBus = EventBus;
 
 /**
  * Initializes a static `squatch` global. This sets up:
  *
- *  - `api` a static instance of the {@link OpenApi}
+ *  - `api` a static instance of the {@link WidgetApi}
  *
  * @param {Object} config Configuration details
  * @param {string} config.tenant_alias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
@@ -34,24 +36,23 @@ export function init(config) {
   }
 
   _log('initializing ...');
-  api = new OpenApi({
+  api = new WidgetApi({
     tenantAlias: config.tenant_alias
   });
 
-  api.createCookieUser('text/html').then(function(response) {
-    _log('cookie user created');
-    if (config.mode) {
-      loadWidget(config.element, response, config.mode);
-    } else {
-      _log('cookie user:');
-      _log(response);
-    }
+
+  _log("Widget API instance");
+  _log(api);
+
+  api.cookieUser().then(function(response) {
+    _log('cookie_user');
+    _log(response);
+    loadWidget(response.template, 'POPUP');
   }).catch(function(ex) {
-    _log(new Error('createCookieUser() ' + ex));
+    _log(new Error('cookieUser() ' + ex));
   });
 
-
-  // api.upsertUser(config.user).then(function(response) {
+  // api.upsert(config).then(function(response) {
   //   _log('upsert user:')
   //   _log(response);
   //   // store.set('sqh_user', response);
@@ -61,9 +62,9 @@ export function init(config) {
 }
 
 /**
- * Static instance of the {@link OpenApi}. Make sure you call {@link #init init} first
+ * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
  *
- * @type {OpenApi}
+ * @type {WidgetApi}
  * @example
  * squatch.init({tenant_alias:'test_basbtabstq51v'});
  * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
@@ -74,7 +75,7 @@ export function ready(fn) {
   fn();
 }
 
-function loadWidget(element, content, mode) {
+function loadWidget(content, mode) {
   let embed;
   let popup;
 

@@ -170,7 +170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'createCookieUser',
 	    value: function createCookieUser() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text/html';
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? 'text/html' : arguments[0];
 
 	      var responseType = params;
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
@@ -3302,6 +3302,79 @@ return /******/ (function(modules) { // webpackBootstrap
 				"id",
 				"accountId",
 				"referralCode"
+			]
+		},
+		"cookieUser": {
+			"type": "object",
+			"properties": {
+				"widgetType": {
+					"type": "string",
+					"default": ""
+				},
+				"engagementMedium": {
+					"type": "string",
+					"default": ""
+				}
+			}
+		},
+		"upsertUser": {
+			"type": "object",
+			"properties": {
+				"user": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"accountId": {
+							"type": "string"
+						},
+						"email": {
+							"type": "string"
+						},
+						"firstName": {
+							"type": "string"
+						},
+						"lastName": {
+							"type": "string"
+						},
+						"imageUrl": {
+							"type": "string"
+						},
+						"referredBy": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"isConverted": {
+									"type": "boolean"
+								}
+							}
+						},
+						"locale": {
+							"type": "string"
+						},
+						"paymentProviderId": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"id",
+						"accountId"
+					]
+				},
+				"widgetType": {
+					"type": "string",
+					"default": ""
+				},
+				"engagementMedium": {
+					"type": "string",
+					"default": ""
+				}
+			},
+			"required": [
+				"user"
 			]
 		}
 	};

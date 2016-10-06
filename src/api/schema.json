@@ -36,5 +36,41 @@
       "referralCode": {"type": "string"}
     },
     "required": ["id", "accountId", "referralCode"]
+  },
+  "cookieUser": {
+    "type": "object",
+    "properties": {
+      "widgetType": {"type": "string", "default": ""},
+      "engagementMedium": {"type": "string", "default": ""}
+    }
+  },
+  "upsertUser": {
+    "type": "object",
+    "properties": {
+      "user":{
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "accountId": {"type": "string"},
+          "email": {"type": "string"},
+          "firstName": {"type": "string"},
+          "lastName": {"type": "string"},
+          "imageUrl": {"type": "string"},
+          "referredBy": {
+            "type": "object",
+            "properties": {
+              "code": {"type": "string"},
+              "isConverted": {"type": "boolean"}
+            }
+          },
+          "locale": {"type": "string"},
+          "paymentProviderId": {"type": "string"}
+        },
+        "required": ["id", "accountId"]
+      },
+      "widgetType": {"type": "string", "default": ""},
+      "engagementMedium": {"type": "string", "default": ""}
+    },
+    "required": ["user"]
   }
 }

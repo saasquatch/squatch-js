@@ -4,7 +4,37 @@ import debug from 'debug';
 
 let _log = debug('squatch-js:widget');
 
+/**
+ *
+ * The Widget class is the base class for the different widget types available
+ *
+ * Creating widget type:
+ *    class CustomWidget extends Widget {
+ *      constructor(content,eventBus,stuff) {
+ *        super(content,eventBus);
+ *        // do stuff
+ *      }
+ *
+ *      load() {
+ *        // custom loading of widget
+*       }
+ *    }
+ *
+ */
 class Widget {
+  /**
+   * Initialize a new {@link Widget} instance.
+   *
+   * Creates an <iframe></iframe> in which the html content of the widget gets
+   * embedded.
+   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
+   * for listening to the height of the widget content and make the iframe responsive.
+   * The EventBus listens for events that get triggered in the widget.
+   *
+   * @param {string} content The html of the widget
+   * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
+   *
+   */
   constructor(content, eventBus) {
     _log('widget initializing ...');
     this.eventBus = eventBus;
@@ -12,7 +42,7 @@ class Widget {
     this.frame = document.createElement('iframe');
     this.frame.width = '100%';
     this.frame.style = 'border: 0; background-color: none;';
-    this.erd = elementResizeDetectorMaker({ strategy: 'scroll'});
+    this.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
     // this.api = new WidgetApi(/*params*/)
   }
 
@@ -57,6 +87,7 @@ export class PopupWidget extends Widget {
     frameDoc.open();
     frameDoc.write(me.content);
     frameDoc.close();
+    _log('Popup template loaded into iframe');
   }
 
   open() {
@@ -73,7 +104,7 @@ export class PopupWidget extends Widget {
       popupdiv.style.display = 'table';
       popupdiv.style.top = '0';
 
-      erd.listenTo(frameDoc.body, function(element) {
+      erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function(element) {
         let height = element.offsetHeight;
 
         if (height > 0) frame.height = height;
@@ -85,10 +116,6 @@ export class PopupWidget extends Widget {
         }
       });
 
-      let head = frameDoc.head;
-      let scripts = head.getElementsByTagName('script');
-      let widgetJs = scripts[scripts.length - 1];
-      head.removeChild(widgetJs);
       let fbShare = frameDoc.getElementsByClassName('fbShare')[0];
       fbShare.href = 'https://referralsaasquatch.com';
 
@@ -120,6 +147,7 @@ export class PopupWidget extends Widget {
       eventBus.addEventListener('tw_btn_clicked', function() { _log("tw btn clicked"); });
       eventBus.addEventListener('email_btn_clicked', function() { _log("email btn clicked") });
 
+      _log('Popup opened');
     })
   }
 
@@ -130,6 +158,8 @@ export class PopupWidget extends Widget {
 
     popupdiv.style.display = 'none';
     erd.uninstall(frameDoc.body);
+
+    _log('Popup closed');
   }
 
   _clickedOutside(e) {
@@ -164,7 +194,7 @@ export class EmbedWidget extends Widget {
       me.frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
-      me.erd.listenTo(frameDoc.body, function(element) {
+      me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function(element) {
         let height = element.offsetHeight;
         me.frame.height = height;
       });
