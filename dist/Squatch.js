@@ -4254,14 +4254,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
 	  // this.api = new AnalyticsApi(/*params*/)
 
-	  this.eventBus.addEventListener('fb_btn_clicked', function () {
+	  this.eventBus.addEventListener('fb_btn_clicked', function (e) {
 	    _log("fb btn clicked");
 	  });
-	  this.eventBus.addEventListener('tw_btn_clicked', function () {
+	  this.eventBus.addEventListener('tw_btn_clicked', function (e) {
 	    _log("tw btn clicked");
 	  });
-	  this.eventBus.addEventListener('email_btn_clicked', function () {
+	  this.eventBus.addEventListener('email_btn_clicked', function (e) {
 	    _log("email btn clicked");
+	  });
+	  this.eventBus.addEventListener('copy_btn_clicked', function (e) {
+	    _log("copy btn clicked");
 	  });
 	};
 

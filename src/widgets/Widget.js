@@ -45,9 +45,10 @@ class Widget {
     this.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
     // this.api = new AnalyticsApi(/*params*/)
 
-    this.eventBus.addEventListener('fb_btn_clicked', function() { _log("fb btn clicked"); });
-    this.eventBus.addEventListener('tw_btn_clicked', function() { _log("tw btn clicked"); });
-    this.eventBus.addEventListener('email_btn_clicked', function() { _log("email btn clicked") });
+    this.eventBus.addEventListener('fb_btn_clicked', function(e) { _log("fb btn clicked"); });
+    this.eventBus.addEventListener('tw_btn_clicked', function(e) { _log("tw btn clicked"); });
+    this.eventBus.addEventListener('email_btn_clicked', function(e) { _log("email btn clicked") });
+    this.eventBus.addEventListener('copy_btn_clicked', function(e) { _log("copy btn clicked"); });
   }
 }
 

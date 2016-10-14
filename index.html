@@ -33,7 +33,7 @@
 
   squatch.ready(function(){
     squatch.init({
-      tenant_alias: "test_aspli64xauzne",
+      tenant_alias: "test_acy9ap6sesuid",
       user: {
         accountId: 'abc',
         id: '123',
@@ -41,29 +41,29 @@
         firstName: 'Erik',
         lastName: 'Aalbers'
       },
-      mode: 'POPUP',
+      engagementMedium: 'EMBED'
       // jwt: 'token'
 
     });
     // squatch.api.lookUpReferralCode({referralCode: "JORGECONDE"}).then(function(json) {console.log(json)});
-    squatch.api.render({
-      tenant_alias: "test_aspli64xauzne",
-      user: {
-        accountId: 'abc',
-        id: '123',
-        email: 'erik@saasqt.ch',
-        firstName: 'Erik',
-        lastName: 'Aalbers'
-      },
-      mode: 'POPUP',
-      // jwt: 'token'
-
-    }).then(function(response) {
-      console.log('render');
-      console.log(response);
-    }).catch(function(ex) {
-      console.log(new Error('render() ' + ex));
-    });
+    // squatch.api.render({
+    //   tenant_alias: "test_aspli64xauzne",
+    //   user: {
+    //     accountId: 'abc',
+    //     id: '123',
+    //     email: 'erik@saasqt.ch',
+    //     firstName: 'Erik',
+    //     lastName: 'Aalbers'
+    //   },
+    //   mode: 'POPUP',
+    //   // jwt: 'token'
+    //
+    // }).then(function(response) {
+    //   console.log('render');
+    //   console.log(response);
+    // }).catch(function(ex) {
+    //   console.log(new Error('render() ' + ex));
+    // });
   });
 
   </script>
