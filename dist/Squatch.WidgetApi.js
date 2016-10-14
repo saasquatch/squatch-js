@@ -3538,7 +3538,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 */
 	var WidgetApi = exports.WidgetApi = function () {
-	  //TODO: JWT auth
 	  /**
 	   * Initialize a new {@link WidgetApi} instance.
 	   *
@@ -3578,7 +3577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(WidgetApi, [{
 	    key: 'cookieUser',
 	    value: function cookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: "", engagementMedium: "" } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
 
 	      this._validateInput(params, _schema2.default.cookieUser);
 
@@ -3589,7 +3588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(params));
+	      return this._doPost(url, JSON.stringify({}));
 	    }
 
 	    /**
@@ -3607,7 +3606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'upsert',
 	    value: function upsert() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: "", engagementMedium: "" } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "", jwt: "" };
 
 	      this._validateInput(params, _schema2.default.upsertUser);
 
@@ -3620,7 +3619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/upsert' + optional_params;
 	      var url = this.domain + path;
-	      return this._doPut(url, JSON.stringify(params));
+	      return this._doPut(url, JSON.stringify(params.user), params.jwt);
 	    }
 
 	    /**
@@ -3632,26 +3631,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} params.user.accountId
 	     * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
 	     * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-	     * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	     * @return {Promise} template html if true.
 	     */
 
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: "", engagementMedium: "" } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
 
 	      this._validateInput(params, _schema2.default.upsertUser);
 
+	      console.log(params);
+
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
+	      var account_id = encodeURIComponent(params.user.accountId);
+	      var user_id = encodeURIComponent(params.user.id);
 	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
 	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
 	      var optional_params = widget_type + engagement_medium;
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/render' + optional_params;
 	      var url = this.domain + path;
-	      return this.doRequest(url);
+	      return this._doRequest(url);
 	    }
 
 	    /**
@@ -3677,9 +3678,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        headers: {
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
-	        }
+	        },
+	        credentials: 'include'
 	      }).then(function (response) {
-	        return response.json();
+	        return response.text();
 	      });
 	    }
 
@@ -3697,7 +3699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          'Content-Type': 'application/json'
 	        },
 	        body: data,
-	        credentials: 'cors'
+	        credentials: 'include'
 	      }).then(function (response) {
 	        return response.json();
 	      });
@@ -3709,14 +3711,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: '_doPut',
-	    value: function _doPut(url, data) {
+	    value: function _doPut(url, data, jwt) {
+	      var _headers = {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'PUT',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
-	        credentials: 'cors',
+	        headers: _headers,
+	        credentials: 'include',
 	        body: data
 	      }).then(function (response) {
 	        return response.json();

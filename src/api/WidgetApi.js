@@ -8,7 +8,6 @@ import 'whatwg-fetch';
  *
  */
 export class WidgetApi {
-  //TODO: JWT auth
   /**
    * Initialize a new {@link WidgetApi} instance.
    *
@@ -51,7 +50,7 @@ export class WidgetApi {
 
     let path = `/api/v1/${tenant_alias}/widget/user/cookie_user${optional_params}`;
     let url = this.domain + path;
-    return this._doPost(url, JSON.stringify(params));
+    return this._doPost(url, JSON.stringify({}));
   }
 
   /**
@@ -65,7 +64,7 @@ export class WidgetApi {
    * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
    * @return {Promise} string if true, with the widget template.
    */
-  upsert(params = { widgetType: "", engagementMedium: ""}) {
+  upsert(params = { widgetType: "", engagementMedium: "", jwt: ""}) {
     this._validateInput(params, schema.upsertUser);
 
     let tenant_alias = encodeURIComponent(this.tenantAlias);
@@ -77,7 +76,7 @@ export class WidgetApi {
 
     let path = `/api/v1/${tenant_alias}/widget/account/${account_id}/user/${user_id}/upsert${optional_params}`;
     let url = this.domain + path;
-    return this._doPut(url, JSON.stringify(params));
+    return this._doPut(url, JSON.stringify(params.user), params.jwt);
   }
 
   /**
@@ -89,21 +88,23 @@ export class WidgetApi {
    * @param {string} params.user.accountId
    * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
    * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+   * @return {Promise} template html if true.
    */
   render(params = { widgetType: "", engagementMedium: ""}) {
     this._validateInput(params, schema.upsertUser);
 
+    console.log(params);
+
     let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let account_id = encodeURIComponent(params.accountId);
-    let user_id = encodeURIComponent(params.id);
+    let account_id = encodeURIComponent(params.user.accountId);
+    let user_id = encodeURIComponent(params.user.id);
     let widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
     let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
     let optional_params = widget_type + engagement_medium;
 
     let path = `/api/v1/${tenant_alias}/widget/account/${account_id}/user/${user_id}/render${optional_params}`;
     let url = this.domain + path;
-    return this.doRequest(url);
+    return this._doRequest(url);
   }
 
   /**
@@ -123,9 +124,10 @@ export class WidgetApi {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     }).then(function(response) {
-      return response.json();
+      return response.text();
     });
   }
 
@@ -140,7 +142,7 @@ export class WidgetApi {
         'Content-Type': 'application/json'
       },
       body: data,
-      credentials: 'cors'
+      credentials: 'include'
     }).then(function(response) {
       return response.json();
     });
@@ -149,14 +151,18 @@ export class WidgetApi {
   /**
    * @private
    */
-   _doPut(url, data) {
+   _doPut(url, data, jwt) {
+     let _headers = {
+       'Accept': 'application/json',
+       'Content-Type': 'application/json'
+     }
+
+     if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
      return fetch(url, {
        method: 'PUT',
-       headers: {
-         'Accept': 'application/json',
-         'Content-Type': 'application/json'
-       },
-       credentials: 'cors',
+       headers: _headers,
+       credentials: 'include',
        body: data
      }).then(function(response) {
        return response.json();

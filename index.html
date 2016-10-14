@@ -41,10 +41,29 @@
         firstName: 'Erik',
         lastName: 'Aalbers'
       },
-      mode: 'POPUP'
+      mode: 'POPUP',
+      // jwt: 'token'
 
     });
     // squatch.api.lookUpReferralCode({referralCode: "JORGECONDE"}).then(function(json) {console.log(json)});
+    squatch.api.render({
+      tenant_alias: "test_aspli64xauzne",
+      user: {
+        accountId: 'abc',
+        id: '123',
+        email: 'erik@saasqt.ch',
+        firstName: 'Erik',
+        lastName: 'Aalbers'
+      },
+      mode: 'POPUP',
+      // jwt: 'token'
+
+    }).then(function(response) {
+      console.log('render');
+      console.log(response);
+    }).catch(function(ex) {
+      console.log(new Error('render() ' + ex));
+    });
   });
 
   </script>

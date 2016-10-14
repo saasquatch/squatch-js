@@ -44,13 +44,13 @@ export function init(config) {
   _log("Widget API instance");
   _log(api);
 
-  api.cookieUser().then(function(response) {
-    _log('cookie_user');
-    _log(response);
-    loadWidget(response.template, 'POPUP');
-  }).catch(function(ex) {
-    _log(new Error('cookieUser() ' + ex));
-  });
+  // api.cookieUser({widgetType: 'REFERRER_WIDGET', engagementMedium: "EMBED"}).then(function(response) {
+  //   _log('cookie_user');
+  //   _log(response);
+  //   loadWidget(response.template, 'POPUP');
+  // }).catch(function(ex) {
+  //   _log(new Error('cookieUser() ' + ex));
+  // });
 
   // api.upsert(config).then(function(response) {
   //   _log('upsert user:')
@@ -58,6 +58,13 @@ export function init(config) {
   //   // store.set('sqh_user', response);
   // }).catch(function(ex) {
   //   _log(new Error('upsertUser()' + ex));
+  // });
+
+  // api.render(config).then(function(response) {
+  //   _log('render');
+  //   loadWidget(response, 'POPUP');
+  // }).catch(function(ex) {
+  //   _log(new Error('render() ' + ex));
   // });
 }
 
