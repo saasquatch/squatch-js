@@ -57,26 +57,27 @@ export class PopupWidget extends Widget {
     super(content, eventBus);
     let me = this;
     // me.frame.id = 'someId';
-    me.frame.style.backgroundColor = '#fff';
+    // me.frame.style.backgroundColor = '#fff';
     me.triggerElement = document.getElementById(triggerId);
 
     if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';
-    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4);';
+    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
 
-    me.closebtn = document.createElement('span');
-    me.closebtn.style = 'position: absolute; right: 5px; top: 5px; font-size: 11px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; color: #4486E1; cursor: pointer;';
-    me.closebtn.innerHTML = 'Close';
+    // me.closebtn = document.createElement('span');
+    // me.closebtn.style = 'position: absolute; right: 5px; top: 5px; font-size: 11px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; color: #4486E1; cursor: pointer;';
+    // me.closebtn.innerHTML = 'Close';
 
     me.popupcontent = document.createElement('div');
     me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position: relative;";
-    me.popupcontent.appendChild(me.closebtn);
+    // me.popupcontent.appendChild(me.closebtn);
 
     me.triggerElement.onclick = function() { me.open(); };
     me.popupdiv.onclick = function(event) { me._clickedOutside(event); };
-    me.closebtn.onclick = function() { me.close(); };
+    // me.closebtn.onclick = function() { me.close(); };
+    me.eventBus.addEventListener('close_popup', function(e) { me.close(); });
   }
 
   load() {
@@ -171,4 +172,12 @@ export class EmbedWidget extends Widget {
       });
     });
   }
+}
+
+export class CtaWidget extends Widget {
+  constructor(content, eventBus) {
+    super(content, eventBus);
+  }
+
+  load() {}
 }

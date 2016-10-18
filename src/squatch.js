@@ -44,7 +44,7 @@ export function init(config) {
   _log("Widget API instance");
   _log(api);
 
-  // api.cookieUser({widgetType: 'REFERRER_WIDGET', engagementMedium: "EMBED"}).then(function(response) {
+  // api.cookieUser().then(function(response) {
   //   _log('cookie_user');
   //   _log(response);
   //   loadWidget(response.template, 'POPUP');
@@ -60,12 +60,12 @@ export function init(config) {
   //   _log(new Error('upsertUser()' + ex));
   // });
 
-  // api.render(config).then(function(response) {
-  //   _log('render');
-  //   loadWidget(response, 'POPUP');
-  // }).catch(function(ex) {
-  //   _log(new Error('render() ' + ex));
-  // });
+  api.render(config).then(function(response) {
+    _log('render');
+    loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
+  }).catch(function(ex) {
+    _log(new Error('render() ' + ex));
+  });
 }
 
 /**
