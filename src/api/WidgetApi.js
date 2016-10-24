@@ -90,7 +90,7 @@ export class WidgetApi {
    * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
    * @return {Promise} template html if true.
    */
-  render(params = { widgetType: "", engagementMedium: ""}) {
+  render(params = { widgetType: "", engagementMedium: "", jwt: ""}) {
     this._validateInput(params, schema.upsertUser);
 
     console.log(params);
@@ -104,7 +104,7 @@ export class WidgetApi {
 
     let path = `/api/v1/${tenant_alias}/widget/account/${account_id}/user/${user_id}/render${optional_params}`;
     let url = this.domain + path;
-    return this._doRequest(url);
+    return this._doRequest(url, params.jwt);
   }
 
   /**
@@ -118,13 +118,17 @@ export class WidgetApi {
   /**
    * @private
    */
-  _doRequest(url) {
+  _doRequest(url, jwt) {
+    let _headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+
+    if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
     return fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: _headers,
       credentials: 'include'
     }).then(function(response) {
       return response.text();
@@ -134,13 +138,17 @@ export class WidgetApi {
   /**
    * @private
    */
-  _doPost(url, data) {
+  _doPost(url, data, jwt) {
+    let _headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+
+    if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
     return fetch(url, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: _headers,
       body: data,
       credentials: 'include'
     }).then(function(response) {

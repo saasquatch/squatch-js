@@ -56,8 +56,7 @@ export class PopupWidget extends Widget {
   constructor(content, eventBus, triggerId = 'squatchpop') {
     super(content, eventBus);
     let me = this;
-    // me.frame.id = 'someId';
-    // me.frame.style.backgroundColor = '#fff';
+
     me.triggerElement = document.getElementById(triggerId);
 
     if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
@@ -76,7 +75,7 @@ export class PopupWidget extends Widget {
 
     me.triggerElement.onclick = function() { me.open(); };
     me.popupdiv.onclick = function(event) { me._clickedOutside(event); };
-    // me.closebtn.onclick = function() { me.close(); };
+    me.eventBus.addEventListener('open_popup', function(e) { me.open(); });
     me.eventBus.addEventListener('close_popup', function(e) { me.close(); });
   }
 
@@ -174,10 +173,50 @@ export class EmbedWidget extends Widget {
   }
 }
 
-export class CtaWidget extends Widget {
+export class CtaWidget extends PopupWidget {
   constructor(content, eventBus) {
-    super(content, eventBus);
+    let ctaElement = document.createElement('div');
+    ctaElement.id = 'cta';
+    document.body.appendChild(ctaElement);
+
+    super(content, eventBus, 'cta');
+
+    let me = this;
+    me.ctaFrame = document.createElement('iframe');
+    me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; bottom: 0; display: none;';
+    me.eventBus.addEventListener('cta_btn_clicked', function(e) {
+      _log("cta btn clicked");
+      me.open();
+    });
+    document.body.appendChild(this.ctaFrame);
   }
 
-  load() {}
+  load() {
+    super.load();
+
+    let widgetFrameDoc = this.frame.contentWindow.document;
+    let ctaFrame = this.ctaFrame;
+    let ctaFrameDoc = this.ctaFrame.contentWindow.document;
+
+    // Wait for widget doc to be ready to grab the cta HTML
+    domready(widgetFrameDoc, function() {
+      let ctaElement = widgetFrameDoc.getElementById('cta');
+      ctaElement.parentNode.removeChild(ctaElement);
+
+      ctaFrameDoc.open();
+      ctaFrameDoc.write(ctaElement.innerHTML);
+      ctaFrameDoc.close();
+
+      // Figure out size of CTA as well
+      domready(ctaFrameDoc, function() {
+        ctaFrame.height = ctaFrameDoc.body.offsetHeight;
+        _log('height', ctaFrameDoc.body.scrollHeight);
+
+        ctaFrame.style.display = 'block';
+
+        _log('CTA template loaded into iframe');
+      });
+
+    });
+  }
 }

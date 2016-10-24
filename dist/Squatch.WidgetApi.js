@@ -3637,7 +3637,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "", jwt: "" };
 
 	      this._validateInput(params, _schema2.default.upsertUser);
 
@@ -3652,7 +3652,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/render' + optional_params;
 	      var url = this.domain + path;
-	      return this._doRequest(url);
+	      return this._doRequest(url, params.jwt);
 	    }
 
 	    /**
@@ -3672,13 +3672,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: '_doRequest',
-	    value: function _doRequest(url) {
+	    value: function _doRequest(url, jwt) {
+	      var _headers = {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'GET',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
+	        headers: _headers,
 	        credentials: 'include'
 	      }).then(function (response) {
 	        return response.text();
@@ -3691,13 +3695,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: '_doPost',
-	    value: function _doPost(url, data) {
+	    value: function _doPost(url, data, jwt) {
+	      var _headers = {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'POST',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
+	        headers: _headers,
 	        body: data,
 	        credentials: 'include'
 	      }).then(function (response) {

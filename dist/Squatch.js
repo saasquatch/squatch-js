@@ -159,7 +159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  api.render(config).then(function (response) {
 	    _log('render');
-	    loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
+	    loadWidget(response, config.engagementMedium ? 'CTA' : 'POPUP');
 	  }).catch(function (ex) {
 	    _log(new Error('render() ' + ex));
 	  });
@@ -182,11 +182,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	function loadWidget(content, mode) {
 	  var embed = void 0;
 	  var popup = void 0;
+	  var cta = void 0;
 
 	  if (mode === 'EMBED') {
 	    embed = new _Widget.EmbedWidget(content, eventBus).load();
 	  } else if (mode === 'POPUP') {
 	    popup = new _Widget.PopupWidget(content, eventBus).load();
+	  } else if (mode === 'CTA') {
+	    cta = new _Widget.CtaWidget(content, eventBus).load();
 	  }
 	}
 
@@ -4081,7 +4084,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "", jwt: "" };
 
 	      this._validateInput(params, _schema2.default.upsertUser);
 
@@ -4096,7 +4099,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/render' + optional_params;
 	      var url = this.domain + path;
-	      return this._doRequest(url);
+	      return this._doRequest(url, params.jwt);
 	    }
 
 	    /**
@@ -4116,13 +4119,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: '_doRequest',
-	    value: function _doRequest(url) {
+	    value: function _doRequest(url, jwt) {
+	      var _headers = {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'GET',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
+	        headers: _headers,
 	        credentials: 'include'
 	      }).then(function (response) {
 	        return response.text();
@@ -4135,13 +4142,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: '_doPost',
-	    value: function _doPost(url, data) {
+	    value: function _doPost(url, data, jwt) {
+	      var _headers = {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'POST',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
+	        headers: _headers,
 	        body: data,
 	        credentials: 'include'
 	      }).then(function (response) {
@@ -4187,6 +4198,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.CtaWidget = exports.EmbedWidget = exports.PopupWidget = undefined;
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -4279,8 +4292,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, content, eventBus));
 
 	    var me = _this;
-	    // me.frame.id = 'someId';
-	    // me.frame.style.backgroundColor = '#fff';
+
 	    me.triggerElement = document.getElementById(triggerId);
 
 	    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
@@ -4303,7 +4315,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.popupdiv.onclick = function (event) {
 	      me._clickedOutside(event);
 	    };
-	    // me.closebtn.onclick = function() { me.close(); };
+	    me.eventBus.addEventListener('open_popup', function (e) {
+	      me.open();
+	    });
 	    me.eventBus.addEventListener('close_popup', function (e) {
 	      me.close();
 	    });
@@ -4425,22 +4439,62 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return EmbedWidget;
 	}(Widget);
 
-	var CtaWidget = exports.CtaWidget = function (_Widget3) {
-	  _inherits(CtaWidget, _Widget3);
+	var CtaWidget = exports.CtaWidget = function (_PopupWidget) {
+	  _inherits(CtaWidget, _PopupWidget);
 
 	  function CtaWidget(content, eventBus) {
 	    _classCallCheck(this, CtaWidget);
 
-	    return _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, content, eventBus));
+	    var ctaElement = document.createElement('div');
+	    ctaElement.id = 'cta';
+	    document.body.appendChild(ctaElement);
+
+	    var _this3 = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, content, eventBus, 'cta'));
+
+	    var me = _this3;
+	    me.ctaFrame = document.createElement('iframe');
+	    me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; bottom: 0; display: none;';
+	    me.eventBus.addEventListener('cta_btn_clicked', function (e) {
+	      _log("cta btn clicked");
+	      me.open();
+	    });
+	    document.body.appendChild(_this3.ctaFrame);
+	    return _this3;
 	  }
 
 	  _createClass(CtaWidget, [{
 	    key: 'load',
-	    value: function load() {}
+	    value: function load() {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'load', this).call(this);
+
+	      var widgetFrameDoc = this.frame.contentWindow.document;
+	      var ctaFrame = this.ctaFrame;
+	      var ctaFrameDoc = this.ctaFrame.contentWindow.document;
+
+	      // Wait for widget doc to be ready to grab the cta HTML
+	      (0, _domready.domready)(widgetFrameDoc, function () {
+	        var ctaElement = widgetFrameDoc.getElementById('cta');
+	        ctaElement.parentNode.removeChild(ctaElement);
+
+	        ctaFrameDoc.open();
+	        ctaFrameDoc.write(ctaElement.innerHTML);
+	        ctaFrameDoc.close();
+
+	        // Figure out size of CTA as well
+	        (0, _domready.domready)(ctaFrameDoc, function () {
+	          ctaFrame.height = ctaFrameDoc.body.offsetHeight;
+	          _log('height', ctaFrameDoc.body.scrollHeight);
+
+	          ctaFrame.style.display = 'block';
+
+	          _log('CTA template loaded into iframe');
+	        });
+	      });
+	    }
 	  }]);
 
 	  return CtaWidget;
-	}(Widget);
+	}(PopupWidget);
 
 /***/ },
 /* 17 */

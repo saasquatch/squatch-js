@@ -6,7 +6,7 @@
  */
 import { OpenApi } from './api/OpenApi';
 import { WidgetApi } from './api/WidgetApi'
-import { EmbedWidget, PopupWidget } from './widgets/Widget';
+import { EmbedWidget, PopupWidget, CtaWidget } from './widgets/Widget';
 import { asyncLoad } from './async';
 import store from 'store';
 import debug from 'debug';
@@ -62,7 +62,7 @@ export function init(config) {
 
   api.render(config).then(function(response) {
     _log('render');
-    loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
+    loadWidget(response, config.engagementMedium ? 'CTA' : 'POPUP');
   }).catch(function(ex) {
     _log(new Error('render() ' + ex));
   });
@@ -85,11 +85,14 @@ export function ready(fn) {
 function loadWidget(content, mode) {
   let embed;
   let popup;
+  let cta;
 
   if (mode === 'EMBED') {
     embed = new EmbedWidget(content, eventBus).load();
   } else if (mode === 'POPUP') {
     popup = new PopupWidget(content, eventBus).load();
+  } else if (mode === 'CTA') {
+    cta = new CtaWidget(content, eventBus).load();
   }
 }
 
