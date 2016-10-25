@@ -1,5 +1,5 @@
 import { domready } from '../utils/domready';
-import { AnalyticsApi } from '../api/Analyticsapi';
+import { AnalyticsApi } from '../api/AnalyticsApi';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import debug from 'debug';
 

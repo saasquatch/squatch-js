@@ -176,5 +176,4 @@ export class WidgetApi {
        return response.json();
      });
    }
-
 }

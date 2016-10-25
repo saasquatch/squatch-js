@@ -4205,7 +4205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _domready = __webpack_require__(17);
 
-	var _Analyticsapi = __webpack_require__(18);
+	var _AnalyticsApi = __webpack_require__(39);
 
 	var _elementResizeDetector = __webpack_require__(19);
 
@@ -4267,7 +4267,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.frame.width = '100%';
 	  this.frame.style = 'border: 0; background-color: none;';
 	  this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
-	  this.api = new _Analyticsapi.AnalyticsApi();
+	  this.api = new _AnalyticsApi.AnalyticsApi();
 	  _log(this.api);
 
 	  this.eventBus.addEventListener('fb_btn_clicked', function (e, param1, param2) {
@@ -4559,111 +4559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.AnalyticsApi = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // POST	/a/:tenantAlias/widgets/analytics/loaded
-	// pushAnalyticsLoadEvent(
-	//            tenantAlias: String,
-	//            externalAccountId: String,
-	//            externalUserId: String,
-	//            engagementMedium: String)
-	//
-	// POST	/a/:tenantAlias/widgets/analytics/shared
-	// pushAnalyticsShareClickedEvent(
-	//            tenantAlias: String,
-	//            externalAccountId: String,
-	//            externalUserId: String,
-	//            engagementMedium: String,
-	//            shareMedium: String)
-
-	__webpack_require__(14);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
-	 * the SaaSquatch REST API. Used to record Widget events.
-	 *
-	 */
-	var AnalyticsApi = exports.AnalyticsApi = function () {
-	  /**
-	   * Initialize a new {@link WidgetApi} instance.
-	   *
-	   * @param {Object} config Config details
-	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   */
-	  function AnalyticsApi(config) {
-	    _classCallCheck(this, AnalyticsApi);
-
-	    this.domain = "https://staging.referralsaasquatch.com";
-	  }
-
-	  _createClass(AnalyticsApi, [{
-	    key: 'pushAnalyticsLoadEvent',
-	    value: function pushAnalyticsLoadEvent(params) {
-	      var tenant_alias = encodeURIComponent(params.tenantAlias);
-
-	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded';
-	      var url = this.domain + path;
-	      return this._doPost(url, params);
-	    }
-	  }, {
-	    key: 'pushAnalyticsShareClickedEvent',
-	    value: function pushAnalyticsShareClickedEvent(params) {
-	      var tenant_alias = encodeURIComponent(params.tenantAlias);
-
-	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded';
-	      var url = this.domain + path;
-	      return this._doPost(url, params);
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data) {
-
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
-	        body: data,
-	        credentials: 'include'
-	      }).then(function (response) {
-	        return response.json();
-	      });
-	    }
-	  }]);
-
-	  return AnalyticsApi;
-	}();
-
-/***/ },
+/* 18 */,
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -7128,6 +7024,111 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	(function(root,factory){if(true)module.exports=factory();else if(typeof define==="function"&&define.amd)define("EventBus",[],factory);else if(typeof exports==="object")exports["EventBus"]=factory();else root["EventBus"]=factory()})(this,function(){var EventBusClass={};EventBusClass=function(){this.listeners={}};EventBusClass.prototype={addEventListener:function(type,callback,scope){var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>3?args.splice(3,args.length-1):[];if(typeof this.listeners[type]!="undefined"){this.listeners[type].push({scope:scope,callback:callback,args:args})}else{this.listeners[type]=[{scope:scope,callback:callback,args:args}]}},removeEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;var newArray=[];for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener.scope==scope&&listener.callback==callback){}else{newArray.push(listener)}}this.listeners[type]=newArray}},hasEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;if(callback===undefined&&scope===undefined){return numOfCallbacks>0}for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if((scope?listener.scope==scope:true)&&listener.callback==callback){return true}}}return false},dispatch:function(type,target){var numOfListeners=0;var event={type:type,target:target};var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>2?args.splice(2,args.length-1):[];args=[event].concat(args);if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener&&listener.callback){var concatArgs=args.concat(listener.args);listener.callback.apply(listener.scope,concatArgs);numOfListeners+=1}}}},getEvents:function(){var str="";for(var type in this.listeners){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];str+=listener.scope&&listener.scope.className?listener.scope.className:"anonymous";str+=" listen for '"+type+"'\n"}}return str}};var EventBus=new EventBusClass;return EventBus});
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.AnalyticsApi = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // POST	/a/:tenantAlias/widgets/analytics/loaded
+	// pushAnalyticsLoadEvent(
+	//            tenantAlias: String,
+	//            externalAccountId: String,
+	//            externalUserId: String,
+	//            engagementMedium: String)
+	//
+	// POST	/a/:tenantAlias/widgets/analytics/shared
+	// pushAnalyticsShareClickedEvent(
+	//            tenantAlias: String,
+	//            externalAccountId: String,
+	//            externalUserId: String,
+	//            engagementMedium: String,
+	//            shareMedium: String)
+
+	__webpack_require__(14);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 *
+	 * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
+	 * the SaaSquatch REST API. Used to record Widget events.
+	 *
+	 */
+	var AnalyticsApi = exports.AnalyticsApi = function () {
+	  /**
+	   * Initialize a new {@link WidgetApi} instance.
+	   *
+	   * @param {Object} config Config details
+	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
+	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var WidgetApi = require('squatch-js').WidgetApi;
+	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {WidgetApi} from 'squatch-js';
+	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   */
+	  function AnalyticsApi(config) {
+	    _classCallCheck(this, AnalyticsApi);
+
+	    this.domain = "https://staging.referralsaasquatch.com";
+	  }
+
+	  _createClass(AnalyticsApi, [{
+	    key: 'pushAnalyticsLoadEvent',
+	    value: function pushAnalyticsLoadEvent(params) {
+	      var tenant_alias = encodeURIComponent(params.tenantAlias);
+
+	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded';
+	      var url = this.domain + path;
+	      return this._doPost(url, params);
+	    }
+	  }, {
+	    key: 'pushAnalyticsShareClickedEvent',
+	    value: function pushAnalyticsShareClickedEvent(params) {
+	      var tenant_alias = encodeURIComponent(params.tenantAlias);
+
+	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded';
+	      var url = this.domain + path;
+	      return this._doPost(url, params);
+	    }
+
+	    /**
+	    * @private
+	    */
+
+	  }, {
+	    key: '_doPost',
+	    value: function _doPost(url, data) {
+
+	      return fetch(url, {
+	        method: 'POST',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: data,
+	        credentials: 'include'
+	      }).then(function (response) {
+	        return response.json();
+	      });
+	    }
+	  }]);
+
+	  return AnalyticsApi;
+	}();
 
 /***/ }
 /******/ ])
