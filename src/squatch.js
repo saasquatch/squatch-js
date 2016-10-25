@@ -62,7 +62,7 @@ export function init(config) {
 
   api.render(config).then(function(response) {
     _log('render');
-    loadWidget(response, config.engagementMedium ? 'CTA' : 'POPUP');
+    loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
   }).catch(function(ex) {
     _log(new Error('render() ' + ex));
   });

@@ -1,4 +1,5 @@
 import { domready } from '../utils/domready';
+import { AnalyticsApi } from '../api/Analyticsapi';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import debug from 'debug';
 
@@ -43,9 +44,14 @@ class Widget {
     this.frame.width = '100%';
     this.frame.style = 'border: 0; background-color: none;';
     this.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
-    // this.api = new AnalyticsApi(/*params*/)
+    this.api = new AnalyticsApi();
+    _log(this.api);
 
-    this.eventBus.addEventListener('fb_btn_clicked', function(e) { _log("fb btn clicked"); });
+    this.eventBus.addEventListener('fb_btn_clicked', function(e, param1, param2) {
+      _log("fb btn clicked");
+      _log("param1", param1);
+      _log("param2", param2);
+    });
     this.eventBus.addEventListener('tw_btn_clicked', function(e) { _log("tw btn clicked"); });
     this.eventBus.addEventListener('email_btn_clicked', function(e) { _log("email btn clicked") });
     this.eventBus.addEventListener('copy_btn_clicked', function(e) { _log("copy btn clicked"); });
@@ -65,13 +71,8 @@ export class PopupWidget extends Widget {
     me.popupdiv.id = 'squatchModal';
     me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
 
-    // me.closebtn = document.createElement('span');
-    // me.closebtn.style = 'position: absolute; right: 5px; top: 5px; font-size: 11px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; color: #4486E1; cursor: pointer;';
-    // me.closebtn.innerHTML = 'Close';
-
     me.popupcontent = document.createElement('div');
     me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position: relative;";
-    // me.popupcontent.appendChild(me.closebtn);
 
     me.triggerElement.onclick = function() { me.open(); };
     me.popupdiv.onclick = function(event) { me._clickedOutside(event); };
@@ -99,9 +100,16 @@ export class PopupWidget extends Widget {
     let frameWindow = frame.contentWindow;
     let frameDoc = frameWindow.document;
     let erd = this.erd;
+    let api = this.api;
 
     // Adjust frame height when size of body changes
     domready(frameDoc, function() {
+      let ctaElement = frameDoc.getElementById('cta');
+
+      if (ctaElement) {
+        ctaElement.parentNode.removeChild(ctaElement);
+      }
+
       frameDoc.body.style.overflowY = 'hidden';
       popupdiv.style.display = 'table';
       popupdiv.style.top = '0';
@@ -116,7 +124,23 @@ export class PopupWidget extends Widget {
         } else {
           popupdiv.style.paddingTop = "5px";
         }
+
+        element.style.width = "100%";
+        element.style.height = "100%";
       });
+
+      let _sqh = frameWindow.squatch.analytics.attributes;
+
+      api.pushAnalyticsLoadEvent({
+        tenantAlias: _sqh.tenant,
+        externalAccountId: _sqh.accountId,
+        externalUserId: _sqh.userId,
+        engagementMedium: 'POPUP'
+      }).then(function(json) {
+        _log(json)
+      }).catch(function(ex) {
+        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+      });;
 
       _log('Popup opened');
     })
@@ -162,6 +186,12 @@ export class EmbedWidget extends Widget {
     frameDoc.close();
 
     domready(frameDoc, function() {
+      let ctaElement = frameDoc.getElementById('cta');
+
+      if (ctaElement) {
+        ctaElement.parentNode.removeChild(ctaElement);
+      }
+
       me.frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
