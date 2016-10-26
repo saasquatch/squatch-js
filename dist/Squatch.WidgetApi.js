@@ -3547,15 +3547,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
 	   *
 	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Browserify/Webpack example</caption>
 	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Babel+Browserify/Webpack example</caption>
 	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   */
 	  function WidgetApi(config) {
 	    _classCallCheck(this, WidgetApi);
@@ -3577,7 +3577,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(WidgetApi, [{
 	    key: 'cookieUser',
 	    value: function cookieUser() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "", jwt: "" };
 
 	      this._validateInput(params, _schema2.default.cookieUser);
 
@@ -3588,7 +3588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}));
+	      return this._doPut(url, JSON.stringify({}), params.jwt);
 	    }
 
 	    /**
@@ -3641,8 +3641,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this._validateInput(params, _schema2.default.upsertUser);
 
-	      console.log(params);
-
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
 	      var account_id = encodeURIComponent(params.user.accountId);
 	      var user_id = encodeURIComponent(params.user.id);
@@ -3683,33 +3681,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'GET',
 	        headers: _headers,
-	        credentials: 'include'
+	        credentials: 'include',
+	        mode: 'cors'
 	      }).then(function (response) {
 	        return response.text();
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data, jwt) {
-	      var _headers = {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
-	      };
-
-	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: _headers,
-	        body: data,
-	        credentials: 'include'
-	      }).then(function (response) {
-	        return response.json();
 	      });
 	    }
 

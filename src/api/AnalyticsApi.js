@@ -1,18 +1,3 @@
-// POST	/a/:tenantAlias/widgets/analytics/loaded
-// pushAnalyticsLoadEvent(
-//            tenantAlias: String,
-//            externalAccountId: String,
-//            externalUserId: String,
-//            engagementMedium: String)
-//
-// POST	/a/:tenantAlias/widgets/analytics/shared
-// pushAnalyticsShareClickedEvent(
-//            tenantAlias: String,
-//            externalAccountId: String,
-//            externalUserId: String,
-//            engagementMedium: String,
-//            shareMedium: String)
-
 import 'whatwg-fetch';
 
 /**
@@ -23,22 +8,11 @@ import 'whatwg-fetch';
  */
 export class AnalyticsApi {
  /**
-  * Initialize a new {@link WidgetApi} instance.
+  * Initialize a new {@link AnalyticsApi} instance.
   *
   * @param {Object} config Config details
   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-  *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
   *
-  * @example <caption>Browser example</caption>
-  * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
-  *
-  * @example <caption>Browserify/Webpack example</caption>
-  * var WidgetApi = require('squatch-js').WidgetApi;
-  * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
-  *
-  * @example <caption>Babel+Browserify/Webpack example</caption>
-  * import {WidgetApi} from 'squatch-js';
-  * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
   */
   constructor(config) {
     this.domain = "https://staging.referralsaasquatch.com";
@@ -46,16 +20,23 @@ export class AnalyticsApi {
 
   pushAnalyticsLoadEvent(params) {
     let tenant_alias = encodeURIComponent(params.tenantAlias);
+    let account_id = encodeURIComponent(params.externalAccountId);
+    let user_id = encodeURIComponent(params.externalUserId);
+    let engagement_medium = encodeURIComponent(params.engagementMedium);
 
-    let path = `/a/${tenant_alias}/widgets/analytics/loaded`;
+    let path = `/a/${tenant_alias}/widgets/analytics/loaded?externalAccountId=${account_id}&externalUserId=${user_id}&engagementMedium=${engagement_medium}`;
     let url = this.domain + path;
-    return this._doPost(url, params);
+    return this._doPost(url, JSON.stringify({}));
   }
 
   pushAnalyticsShareClickedEvent(params) {
     let tenant_alias = encodeURIComponent(params.tenantAlias);
+    let account_id = encodeURIComponent(params.externalAccountId);
+    let user_id = encodeURIComponent(params.externalUserId);
+    let engagement_medium = encodeURIComponent(params.engagementMedium);
+    let share_medium = encodeURIComponent(params.shareMedium);
 
-    let path = `/a/${tenant_alias}/widgets/analytics/loaded`;
+    let path = `/a/${tenant_alias}/widgets/analytics/loaded?externalAccountId=${account_id}&externalUserId=${user_id}&engagementMedium=${engagement_medium}&shareMedium=${share_medium}`;
     let url = this.domain + path;
     return this._doPost(url, params);
   }
@@ -65,16 +46,15 @@ export class AnalyticsApi {
   */
   _doPost(url, data) {
 
-   return fetch(url, {
+    return fetch(url, {
      method: 'POST',
      headers: {
        'Accept': 'application/json',
        'Content-Type': 'application/json'
      },
-     body: data,
-     credentials: 'include'
-   }).then(function(response) {
-     return response.json();
-   });
+     body: data
+    }).then(function(response) {
+     return response.text();
+    });
   }
 }

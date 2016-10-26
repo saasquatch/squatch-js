@@ -44,13 +44,15 @@ export function init(config) {
   _log("Widget API instance");
   _log(api);
 
-  // api.cookieUser().then(function(response) {
-  //   _log('cookie_user');
-  //   _log(response);
-  //   loadWidget(response.template, 'POPUP');
-  // }).catch(function(ex) {
-  //   _log(new Error('cookieUser() ' + ex));
-  // });
+  api.cookieUser(config).then(function(response) {
+    _log('cookie_user');
+    _log(response.jsOptions);
+
+
+    loadWidget(response.template, 'POPUP');
+  }).catch(function(ex) {
+    _log(new Error('cookieUser() ' + ex));
+  });
 
   // api.upsert(config).then(function(response) {
   //   _log('upsert user:')
@@ -60,12 +62,13 @@ export function init(config) {
   //   _log(new Error('upsertUser()' + ex));
   // });
 
-  api.render(config).then(function(response) {
-    _log('render');
-    loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
-  }).catch(function(ex) {
-    _log(new Error('render() ' + ex));
-  });
+  // api.render(config).then(function(response) {
+  //   _log('render');
+  //   _log(response);
+  //   loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
+  // }).catch(function(ex) {
+  //   _log(new Error('render() ' + ex));
+  // });
 }
 
 /**

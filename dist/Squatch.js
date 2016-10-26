@@ -141,13 +141,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _log("Widget API instance");
 	  _log(api);
 
-	  // api.cookieUser().then(function(response) {
-	  //   _log('cookie_user');
-	  //   _log(response);
-	  //   loadWidget(response.template, 'POPUP');
-	  // }).catch(function(ex) {
-	  //   _log(new Error('cookieUser() ' + ex));
-	  // });
+	  api.cookieUser(config).then(function (response) {
+	    _log('cookie_user');
+	    _log(response.jsOptions);
+
+	    loadWidget(response.template, 'POPUP');
+	  }).catch(function (ex) {
+	    _log(new Error('cookieUser() ' + ex));
+	  });
 
 	  // api.upsert(config).then(function(response) {
 	  //   _log('upsert user:')
@@ -157,12 +158,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  //   _log(new Error('upsertUser()' + ex));
 	  // });
 
-	  api.render(config).then(function (response) {
-	    _log('render');
-	    loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
-	  }).catch(function (ex) {
-	    _log(new Error('render() ' + ex));
-	  });
+	  // api.render(config).then(function(response) {
+	  //   _log('render');
+	  //   _log(response);
+	  //   loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
+	  // }).catch(function(ex) {
+	  //   _log(new Error('render() ' + ex));
+	  // });
 	}
 
 	/**
@@ -246,15 +248,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
 	   *
 	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125');
+	   * var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Browserify/Webpack example</caption>
 	   * var OpenApi = require('squatch-js').OpenApi;
-	   * var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');
+	   * var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Babel+Browserify/Webpack example</caption>
 	   * import {OpenApi} from 'squatch-js';
-	   * let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');
+	   * let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
 	   */
 	  function OpenApi(config) {
 	    _classCallCheck(this, OpenApi);
@@ -3994,15 +3996,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
 	   *
 	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Browserify/Webpack example</caption>
 	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Babel+Browserify/Webpack example</caption>
 	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   */
 	  function WidgetApi(config) {
 	    _classCallCheck(this, WidgetApi);
@@ -4024,7 +4026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(WidgetApi, [{
 	    key: 'cookieUser',
 	    value: function cookieUser() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "" };
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: "", engagementMedium: "", jwt: "" };
 
 	      this._validateInput(params, _schema2.default.cookieUser);
 
@@ -4035,7 +4037,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}));
+	      return this._doPut(url, JSON.stringify({}), params.jwt);
 	    }
 
 	    /**
@@ -4088,8 +4090,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this._validateInput(params, _schema2.default.upsertUser);
 
-	      console.log(params);
-
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
 	      var account_id = encodeURIComponent(params.user.accountId);
 	      var user_id = encodeURIComponent(params.user.id);
@@ -4130,33 +4130,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'GET',
 	        headers: _headers,
-	        credentials: 'include'
+	        credentials: 'include',
+	        mode: 'cors'
 	      }).then(function (response) {
 	        return response.text();
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data, jwt) {
-	      var _headers = {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
-	      };
-
-	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: _headers,
-	        body: data,
-	        credentials: 'include'
-	      }).then(function (response) {
-	        return response.json();
 	      });
 	    }
 
@@ -4243,48 +4220,85 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 */
 
-	var Widget =
-	/**
-	 * Initialize a new {@link Widget} instance.
-	 *
-	 * Creates an <iframe></iframe> in which the html content of the widget gets
-	 * embedded.
-	 * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
-	 * for listening to the height of the widget content and make the iframe responsive.
-	 * The EventBus listens for events that get triggered in the widget.
-	 *
-	 * @param {string} content The html of the widget
-	 * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
-	 *
-	 */
-	function Widget(content, eventBus) {
-	  _classCallCheck(this, Widget);
+	var Widget = function () {
+	  /**
+	   * Initialize a new {@link Widget} instance.
+	   *
+	   * Creates an <iframe></iframe> in which the html content of the widget gets
+	   * embedded.
+	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
+	   * for listening to the height of the widget content and make the iframe responsive.
+	   * The EventBus listens for events that get triggered in the widget.
+	   *
+	   * @param {string} content The html of the widget
+	   * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
+	   *
+	   */
+	  function Widget(content, eventBus) {
+	    _classCallCheck(this, Widget);
 
-	  _log('widget initializing ...');
-	  this.eventBus = eventBus;
-	  this.content = content;
-	  this.frame = document.createElement('iframe');
-	  this.frame.width = '100%';
-	  this.frame.style = 'border: 0; background-color: none;';
-	  this.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
-	  this.api = new _AnalyticsApi.AnalyticsApi();
-	  _log(this.api);
+	    _log('widget initializing ...');
+	    var me = this;
+	    me.eventBus = eventBus;
+	    me.content = content;
+	    me.frame = document.createElement('iframe');
+	    me.frame.width = '100%';
+	    me.frame.style = 'border: 0; background-color: none;';
+	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
+	    me.api = new _AnalyticsApi.AnalyticsApi();
 
-	  this.eventBus.addEventListener('fb_btn_clicked', function (e, param1, param2) {
-	    _log("fb btn clicked");
-	    _log("param1", param1);
-	    _log("param2", param2);
-	  });
-	  this.eventBus.addEventListener('tw_btn_clicked', function (e) {
-	    _log("tw btn clicked");
-	  });
-	  this.eventBus.addEventListener('email_btn_clicked', function (e) {
-	    _log("email btn clicked");
-	  });
-	  this.eventBus.addEventListener('copy_btn_clicked', function (e) {
-	    _log("copy btn clicked");
-	  });
-	};
+	    me.eventBus.addEventListener('fb_btn_clicked', function (e, param1, param2) {
+	      _log("fb btn clicked");
+	      _log("param1", param1);
+	      _log("param2", param2);
+	      me._shareEvent(param1, param2);
+	    });
+	    me.eventBus.addEventListener('tw_btn_clicked', function (e) {
+	      _log("tw btn clicked");
+	    });
+	    me.eventBus.addEventListener('email_btn_clicked', function (e) {
+	      _log("email btn clicked");
+	    });
+	    me.eventBus.addEventListener('copy_btn_clicked', function (e) {
+	      _log("copy btn clicked");
+	    });
+	  }
+
+	  _createClass(Widget, [{
+	    key: '_loadEvent',
+	    value: function _loadEvent(sqh) {
+
+	      this.api.pushAnalyticsLoadEvent({
+	        tenantAlias: sqh.analytics.attributes.tenant,
+	        externalAccountId: sqh.analytics.attributes.accountId,
+	        externalUserId: sqh.analytics.attributes.userId,
+	        engagementMedium: sqh.mode.widgetMode
+	      }).then(function (response) {
+	        _log(sqh.mode.widgetMode + " loaded event recorded");
+	      }).catch(function (ex) {
+	        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+	      });
+	    }
+	  }, {
+	    key: '_shareEvent',
+	    value: function _shareEvent(sqh, medium) {
+
+	      this.api.pushAnalyticsShareClickedEvent({
+	        tenantAlias: sqh.analytics.attributes.tenant,
+	        externalAccountId: sqh.analytics.attributes.accountId,
+	        externalUserId: sqh.analytics.attributes.userId,
+	        engagementMedium: sqh.mode.widgetMode,
+	        shareMedium: medium
+	      }).then(function (response) {
+	        _log(sqh.mode.widgetMode + " share " + medium + " event recorded");
+	      }).catch(function (ex) {
+	        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+	      });
+	    }
+	  }]);
+
+	  return Widget;
+	}();
 
 	var PopupWidget = exports.PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
@@ -4342,10 +4356,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'open',
 	    value: function open() {
-	      var popupdiv = this.popupdiv;
-	      var frame = this.frame;
+	      var me = this;
+	      var popupdiv = me.popupdiv;
+	      var frame = me.frame;
 	      var frameWindow = frame.contentWindow;
 	      var frameDoc = frameWindow.document;
+	      var _sqh = frameWindow.squatch;
 	      var erd = this.erd;
 	      var api = this.api;
 
@@ -4376,19 +4392,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          element.style.height = "100%";
 	        });
 
-	        var _sqh = frameWindow.squatch.analytics.attributes;
-
-	        api.pushAnalyticsLoadEvent({
-	          tenantAlias: _sqh.tenant,
-	          externalAccountId: _sqh.accountId,
-	          externalUserId: _sqh.userId,
-	          engagementMedium: 'POPUP'
-	        }).then(function (json) {
-	          _log(json);
-	        }).catch(function (ex) {
-	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
-	        });;
-
+	        me._loadEvent(_sqh);
 	        _log('Popup opened');
 	      });
 	    }
@@ -4439,6 +4443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'load',
 	    value: function load() {
 	      var me = this;
+	      var _sqh = frame.contentWindow.squatch;
 
 	      me.element.appendChild(me.frame);
 
@@ -4461,6 +4466,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var height = element.offsetHeight;
 	          me.frame.height = height;
 	        });
+
+	        _loadEvent(_sqh);
+	        _log("Embed loaded");
 	      });
 	    }
 	  }]);
@@ -7036,20 +7044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.AnalyticsApi = undefined;
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // POST	/a/:tenantAlias/widgets/analytics/loaded
-	// pushAnalyticsLoadEvent(
-	//            tenantAlias: String,
-	//            externalAccountId: String,
-	//            externalUserId: String,
-	//            engagementMedium: String)
-	//
-	// POST	/a/:tenantAlias/widgets/analytics/shared
-	// pushAnalyticsShareClickedEvent(
-	//            tenantAlias: String,
-	//            externalAccountId: String,
-	//            externalUserId: String,
-	//            engagementMedium: String,
-	//            shareMedium: String)
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	__webpack_require__(14);
 
@@ -7063,22 +7058,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var AnalyticsApi = exports.AnalyticsApi = function () {
 	  /**
-	   * Initialize a new {@link WidgetApi} instance.
+	   * Initialize a new {@link AnalyticsApi} instance.
 	   *
 	   * @param {Object} config Config details
 	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
 	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
 	   */
 	  function AnalyticsApi(config) {
 	    _classCallCheck(this, AnalyticsApi);
@@ -7090,17 +7074,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'pushAnalyticsLoadEvent',
 	    value: function pushAnalyticsLoadEvent(params) {
 	      var tenant_alias = encodeURIComponent(params.tenantAlias);
+	      var account_id = encodeURIComponent(params.externalAccountId);
+	      var user_id = encodeURIComponent(params.externalUserId);
+	      var engagement_medium = encodeURIComponent(params.engagementMedium);
 
-	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded';
+	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded?externalAccountId=' + account_id + '&externalUserId=' + user_id + '&engagementMedium=' + engagement_medium;
 	      var url = this.domain + path;
-	      return this._doPost(url, params);
+	      return this._doPost(url, JSON.stringify({}));
 	    }
 	  }, {
 	    key: 'pushAnalyticsShareClickedEvent',
 	    value: function pushAnalyticsShareClickedEvent(params) {
 	      var tenant_alias = encodeURIComponent(params.tenantAlias);
+	      var account_id = encodeURIComponent(params.externalAccountId);
+	      var user_id = encodeURIComponent(params.externalUserId);
+	      var engagement_medium = encodeURIComponent(params.engagementMedium);
+	      var share_medium = encodeURIComponent(params.shareMedium);
 
-	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded';
+	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded?externalAccountId=' + account_id + '&externalUserId=' + user_id + '&engagementMedium=' + engagement_medium + '&shareMedium=' + share_medium;
 	      var url = this.domain + path;
 	      return this._doPost(url, params);
 	    }
@@ -7119,10 +7110,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
 	        },
-	        body: data,
-	        credentials: 'include'
+	        body: data
 	      }).then(function (response) {
-	        return response.json();
+	        return response.text();
 	      });
 	    }
 	  }]);

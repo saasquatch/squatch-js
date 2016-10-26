@@ -38,23 +38,55 @@ class Widget {
    */
   constructor(content, eventBus) {
     _log('widget initializing ...');
-    this.eventBus = eventBus;
-    this.content = content;
-    this.frame = document.createElement('iframe');
-    this.frame.width = '100%';
-    this.frame.style = 'border: 0; background-color: none;';
-    this.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
-    this.api = new AnalyticsApi();
-    _log(this.api);
+    let me = this;
+    me.eventBus = eventBus;
+    me.content = content;
+    me.frame = document.createElement('iframe');
+    me.frame.width = '100%';
+    me.frame.style = 'border: 0; background-color: none;';
+    me.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
+    me.api = new AnalyticsApi();
 
-    this.eventBus.addEventListener('fb_btn_clicked', function(e, param1, param2) {
+    me.eventBus.addEventListener('fb_btn_clicked', function(e, param1, param2) {
       _log("fb btn clicked");
       _log("param1", param1);
       _log("param2", param2);
+      me._shareEvent(param1,param2);
     });
-    this.eventBus.addEventListener('tw_btn_clicked', function(e) { _log("tw btn clicked"); });
-    this.eventBus.addEventListener('email_btn_clicked', function(e) { _log("email btn clicked") });
-    this.eventBus.addEventListener('copy_btn_clicked', function(e) { _log("copy btn clicked"); });
+    me.eventBus.addEventListener('tw_btn_clicked', function(e) {
+      _log("tw btn clicked");
+    });
+    me.eventBus.addEventListener('email_btn_clicked', function(e) { _log("email btn clicked") });
+    me.eventBus.addEventListener('copy_btn_clicked', function(e) { _log("copy btn clicked"); });
+  }
+
+  _loadEvent(sqh) {
+
+    this.api.pushAnalyticsLoadEvent({
+      tenantAlias: sqh.analytics.attributes.tenant,
+      externalAccountId: sqh.analytics.attributes.accountId,
+      externalUserId: sqh.analytics.attributes.userId,
+      engagementMedium: sqh.mode.widgetMode
+    }).then(function(response) {
+      _log(sqh.mode.widgetMode + " loaded event recorded");
+    }).catch(function(ex) {
+      _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+    });
+  }
+
+  _shareEvent(sqh, medium) {
+
+    this.api.pushAnalyticsShareClickedEvent({
+      tenantAlias: sqh.analytics.attributes.tenant,
+      externalAccountId: sqh.analytics.attributes.accountId,
+      externalUserId: sqh.analytics.attributes.userId,
+      engagementMedium: sqh.mode.widgetMode,
+      shareMedium: medium
+    }).then(function(response) {
+      _log(sqh.mode.widgetMode + " share " + medium + " event recorded");
+    }).catch(function(ex) {
+      _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+    });
   }
 }
 
@@ -95,10 +127,12 @@ export class PopupWidget extends Widget {
   }
 
   open() {
-    let popupdiv = this.popupdiv;
-    let frame = this.frame;
+    let me = this;
+    let popupdiv = me.popupdiv;
+    let frame = me.frame;
     let frameWindow = frame.contentWindow;
     let frameDoc = frameWindow.document;
+    let _sqh = frameWindow.squatch;
     let erd = this.erd;
     let api = this.api;
 
@@ -129,19 +163,7 @@ export class PopupWidget extends Widget {
         element.style.height = "100%";
       });
 
-      let _sqh = frameWindow.squatch.analytics.attributes;
-
-      api.pushAnalyticsLoadEvent({
-        tenantAlias: _sqh.tenant,
-        externalAccountId: _sqh.accountId,
-        externalUserId: _sqh.userId,
-        engagementMedium: 'POPUP'
-      }).then(function(json) {
-        _log(json)
-      }).catch(function(ex) {
-        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
-      });;
-
+      me._loadEvent(_sqh);
       _log('Popup opened');
     })
   }
@@ -176,7 +198,8 @@ export class EmbedWidget extends Widget {
   }
 
   load() {
-    let me = this;
+    let me = this
+    let _sqh = frame.contentWindow.squatch;
 
     me.element.appendChild(me.frame);
 
@@ -199,6 +222,9 @@ export class EmbedWidget extends Widget {
         let height = element.offsetHeight;
         me.frame.height = height;
       });
+
+      _loadEvent(_sqh);
+      _log("Embed loaded");
     });
   }
 }

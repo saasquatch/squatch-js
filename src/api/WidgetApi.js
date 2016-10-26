@@ -17,15 +17,15 @@ export class WidgetApi {
    *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
    *
    * @example <caption>Browser example</caption>
-   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125');
+   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Browserify/Webpack example</caption>
    * var WidgetApi = require('squatch-js').WidgetApi;
-   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Babel+Browserify/Webpack example</caption>
    * import {WidgetApi} from 'squatch-js';
-   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125');
+   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
@@ -40,7 +40,7 @@ export class WidgetApi {
    * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
    * @return {Promise} json object if true, with the widget template, jsOptions and user details.
    */
-  cookieUser(params = { widgetType: "", engagementMedium: "" }) {
+  cookieUser(params = { widgetType: "", engagementMedium: "", jwt: "" }) {
     this._validateInput(params, schema.cookieUser);
 
     let tenant_alias = encodeURIComponent(this.tenantAlias);
@@ -50,7 +50,7 @@ export class WidgetApi {
 
     let path = `/api/v1/${tenant_alias}/widget/user/cookie_user${optional_params}`;
     let url = this.domain + path;
-    return this._doPost(url, JSON.stringify({}));
+    return this._doPut(url, JSON.stringify({}), params.jwt);
   }
 
   /**
@@ -93,8 +93,6 @@ export class WidgetApi {
   render(params = { widgetType: "", engagementMedium: "", jwt: ""}) {
     this._validateInput(params, schema.upsertUser);
 
-    console.log(params);
-
     let tenant_alias = encodeURIComponent(this.tenantAlias);
     let account_id = encodeURIComponent(params.user.accountId);
     let user_id = encodeURIComponent(params.user.id);
@@ -129,30 +127,10 @@ export class WidgetApi {
     return fetch(url, {
       method: 'GET',
       headers: _headers,
-      credentials: 'include'
+      credentials: 'include',
+      mode: 'cors'
     }).then(function(response) {
       return response.text();
-    });
-  }
-
-  /**
-   * @private
-   */
-  _doPost(url, data, jwt) {
-    let _headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-
-    if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
-
-    return fetch(url, {
-      method: 'POST',
-      headers: _headers,
-      body: data,
-      credentials: 'include'
-    }).then(function(response) {
-      return response.json();
     });
   }
 

@@ -28,15 +28,15 @@ export class OpenApi {
    *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
    *
    * @example <caption>Browser example</caption>
-   * var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125');
+   * var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Browserify/Webpack example</caption>
    * var OpenApi = require('squatch-js').OpenApi;
-   * var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');
+   * var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Babel+Browserify/Webpack example</caption>
    * import {OpenApi} from 'squatch-js';
-   * let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');
+   * let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
