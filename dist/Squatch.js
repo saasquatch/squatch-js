@@ -144,8 +144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  api.cookieUser(config).then(function (response) {
 	    _log('cookie_user');
 	    _log(response.jsOptions);
-
-	    loadWidget(response.template, 'POPUP');
+	    loadWidget(response.template, config.engagementMedium);
 	  }).catch(function (ex) {
 	    _log(new Error('cookieUser() ' + ex));
 	  });
@@ -187,11 +186,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var cta = void 0;
 
 	  if (mode === 'EMBED') {
-	    embed = new _Widget.EmbedWidget(content, eventBus).load();
+	    embed = new _Widget.EmbedWidget(content, eventBus, api).load();
 	  } else if (mode === 'POPUP') {
-	    popup = new _Widget.PopupWidget(content, eventBus).load();
+	    popup = new _Widget.PopupWidget(content, eventBus, api).load();
 	  } else if (mode === 'CTA') {
-	    cta = new _Widget.CtaWidget(content, eventBus).load();
+	    cta = new _Widget.CtaWidget(content, eventBus, api).load();
 	  }
 	}
 
@@ -4184,6 +4183,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _AnalyticsApi = __webpack_require__(39);
 
+	var _WidgetApi = __webpack_require__(15);
+
 	var _elementResizeDetector = __webpack_require__(19);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
@@ -4234,7 +4235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
 	   *
 	   */
-	  function Widget(content, eventBus) {
+	  function Widget(content, eventBus, api) {
 	    _classCallCheck(this, Widget);
 
 	    _log('widget initializing ...');
@@ -4245,7 +4246,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.frame.width = '100%';
 	    me.frame.style = 'border: 0; background-color: none;';
 	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
-	    me.api = new _AnalyticsApi.AnalyticsApi();
+	    me.analyticsApi = new _AnalyticsApi.AnalyticsApi();
+	    me.widgetApi = api;
 
 	    me.eventBus.addEventListener('fb_btn_clicked', function (e, param1, param2) {
 	      _log("fb btn clicked");
@@ -4268,7 +4270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_loadEvent',
 	    value: function _loadEvent(sqh) {
 
-	      this.api.pushAnalyticsLoadEvent({
+	      this.analyticsApi.pushAnalyticsLoadEvent({
 	        tenantAlias: sqh.analytics.attributes.tenant,
 	        externalAccountId: sqh.analytics.attributes.accountId,
 	        externalUserId: sqh.analytics.attributes.userId,
@@ -4283,7 +4285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_shareEvent',
 	    value: function _shareEvent(sqh, medium) {
 
-	      this.api.pushAnalyticsShareClickedEvent({
+	      this.analyticsApi.pushAnalyticsShareClickedEvent({
 	        tenantAlias: sqh.analytics.attributes.tenant,
 	        externalAccountId: sqh.analytics.attributes.accountId,
 	        externalUserId: sqh.analytics.attributes.userId,
@@ -4303,12 +4305,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var PopupWidget = exports.PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
 
-	  function PopupWidget(content, eventBus) {
-	    var triggerId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'squatchpop';
+	  function PopupWidget(content, eventBus, api) {
+	    var triggerId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'squatchpop';
 
 	    _classCallCheck(this, PopupWidget);
 
-	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, content, eventBus));
+	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, content, eventBus, api));
 
 	    var me = _this;
 
@@ -4354,6 +4356,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _log('Popup template loaded into iframe');
 	    }
 	  }, {
+	    key: 'reload',
+	    value: function reload() {
+	      var me = this;
+
+	      me.widgetApi.cookieUser({
+	        engagementMedium: 'POPUP',
+	        widgetType: "REFERRER_WIDGET"
+	      }).then(function (response) {
+	        _log(response);
+	      }).catch(function (ex) {
+	        _log(ex);
+	      });
+	    }
+	  }, {
 	    key: 'open',
 	    value: function open() {
 	      var me = this;
@@ -4361,12 +4377,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var frame = me.frame;
 	      var frameWindow = frame.contentWindow;
 	      var frameDoc = frameWindow.document;
-	      var _sqh = frameWindow.squatch;
 	      var erd = this.erd;
-	      var api = this.api;
+	      var analyticsApi = this.analyticsApi;
 
 	      // Adjust frame height when size of body changes
 	      (0, _domready.domready)(frameDoc, function () {
+	        var _sqh = frameWindow.squatch;
 	        var ctaElement = frameDoc.getElementById('cta');
 
 	        if (ctaElement) {
@@ -4425,13 +4441,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EmbedWidget = exports.EmbedWidget = function (_Widget2) {
 	  _inherits(EmbedWidget, _Widget2);
 
-	  function EmbedWidget(content, eventBus) {
-	    var elementId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'squatchembed';
+	  function EmbedWidget(content, eventBus, api) {
+	    var elementId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'squatchembed';
 
 	    _classCallCheck(this, EmbedWidget);
 
 	    // this.frame.id = 'someId';
-	    var _this2 = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, content, eventBus));
+	    var _this2 = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, content, eventBus, api));
 
 	    _this2.element = document.getElementById(elementId);
 
@@ -4443,7 +4459,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'load',
 	    value: function load() {
 	      var me = this;
-	      var _sqh = frame.contentWindow.squatch;
 
 	      me.element.appendChild(me.frame);
 
@@ -4453,6 +4468,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      frameDoc.close();
 
 	      (0, _domready.domready)(frameDoc, function () {
+	        var _sqh = me.frame.contentWindow.squatch;
 	        var ctaElement = frameDoc.getElementById('cta');
 
 	        if (ctaElement) {
@@ -4467,7 +4483,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          me.frame.height = height;
 	        });
 
-	        _loadEvent(_sqh);
+	        me._loadEvent(_sqh);
 	        _log("Embed loaded");
 	      });
 	    }
@@ -4479,14 +4495,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CtaWidget = exports.CtaWidget = function (_PopupWidget) {
 	  _inherits(CtaWidget, _PopupWidget);
 
-	  function CtaWidget(content, eventBus) {
+	  function CtaWidget(content, eventBus, api) {
 	    _classCallCheck(this, CtaWidget);
 
 	    var ctaElement = document.createElement('div');
 	    ctaElement.id = 'cta';
 	    document.body.appendChild(ctaElement);
 
-	    var _this3 = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, content, eventBus, 'cta'));
+	    var _this3 = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, content, eventBus, api, 'cta'));
 
 	    var me = _this3;
 	    me.ctaFrame = document.createElement('iframe');

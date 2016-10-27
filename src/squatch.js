@@ -47,9 +47,7 @@ export function init(config) {
   api.cookieUser(config).then(function(response) {
     _log('cookie_user');
     _log(response.jsOptions);
-
-
-    loadWidget(response.template, 'POPUP');
+    loadWidget(response.template, config.engagementMedium);
   }).catch(function(ex) {
     _log(new Error('cookieUser() ' + ex));
   });
@@ -91,11 +89,11 @@ function loadWidget(content, mode) {
   let cta;
 
   if (mode === 'EMBED') {
-    embed = new EmbedWidget(content, eventBus).load();
+    embed = new EmbedWidget(content, eventBus, api).load();
   } else if (mode === 'POPUP') {
-    popup = new PopupWidget(content, eventBus).load();
+    popup = new PopupWidget(content, eventBus, api).load();
   } else if (mode === 'CTA') {
-    cta = new CtaWidget(content, eventBus).load();
+    cta = new CtaWidget(content, eventBus, api).load();
   }
 }
 

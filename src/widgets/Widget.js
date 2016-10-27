@@ -1,5 +1,6 @@
 import { domready } from '../utils/domready';
 import { AnalyticsApi } from '../api/AnalyticsApi';
+import { WidgetApi } from '../api/WidgetApi';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import debug from 'debug';
 
@@ -36,7 +37,7 @@ class Widget {
    * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
    *
    */
-  constructor(content, eventBus) {
+  constructor(content, eventBus, api) {
     _log('widget initializing ...');
     let me = this;
     me.eventBus = eventBus;
@@ -45,7 +46,8 @@ class Widget {
     me.frame.width = '100%';
     me.frame.style = 'border: 0; background-color: none;';
     me.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
-    me.api = new AnalyticsApi();
+    me.analyticsApi = new AnalyticsApi();
+    me.widgetApi = api;
 
     me.eventBus.addEventListener('fb_btn_clicked', function(e, param1, param2) {
       _log("fb btn clicked");
@@ -62,7 +64,7 @@ class Widget {
 
   _loadEvent(sqh) {
 
-    this.api.pushAnalyticsLoadEvent({
+    this.analyticsApi.pushAnalyticsLoadEvent({
       tenantAlias: sqh.analytics.attributes.tenant,
       externalAccountId: sqh.analytics.attributes.accountId,
       externalUserId: sqh.analytics.attributes.userId,
@@ -76,7 +78,7 @@ class Widget {
 
   _shareEvent(sqh, medium) {
 
-    this.api.pushAnalyticsShareClickedEvent({
+    this.analyticsApi.pushAnalyticsShareClickedEvent({
       tenantAlias: sqh.analytics.attributes.tenant,
       externalAccountId: sqh.analytics.attributes.accountId,
       externalUserId: sqh.analytics.attributes.userId,
@@ -91,8 +93,8 @@ class Widget {
 }
 
 export class PopupWidget extends Widget {
-  constructor(content, eventBus, triggerId = 'squatchpop') {
-    super(content, eventBus);
+  constructor(content, eventBus, api, triggerId = 'squatchpop') {
+    super(content, eventBus, api);
     let me = this;
 
     me.triggerElement = document.getElementById(triggerId);
@@ -126,18 +128,32 @@ export class PopupWidget extends Widget {
     _log('Popup template loaded into iframe');
   }
 
+  reload() {
+    let me = this;
+
+    me.widgetApi.cookieUser({
+      engagementMedium: 'POPUP',
+      widgetType: "REFERRER_WIDGET"
+    }).then(function(response) {
+      _log(response);
+    }).catch(function(ex) {
+      _log(ex);
+    });
+
+  }
+
   open() {
     let me = this;
     let popupdiv = me.popupdiv;
     let frame = me.frame;
     let frameWindow = frame.contentWindow;
     let frameDoc = frameWindow.document;
-    let _sqh = frameWindow.squatch;
     let erd = this.erd;
-    let api = this.api;
+    let analyticsApi = this.analyticsApi;
 
     // Adjust frame height when size of body changes
     domready(frameDoc, function() {
+      let _sqh = frameWindow.squatch;
       let ctaElement = frameDoc.getElementById('cta');
 
       if (ctaElement) {
@@ -189,8 +205,8 @@ export class PopupWidget extends Widget {
 }
 
 export class EmbedWidget extends Widget {
-  constructor(content, eventBus, elementId = 'squatchembed') {
-    super(content, eventBus);
+  constructor(content, eventBus, api, elementId = 'squatchembed') {
+    super(content, eventBus, api);
     // this.frame.id = 'someId';
     this.element = document.getElementById(elementId);
 
@@ -199,7 +215,6 @@ export class EmbedWidget extends Widget {
 
   load() {
     let me = this
-    let _sqh = frame.contentWindow.squatch;
 
     me.element.appendChild(me.frame);
 
@@ -209,6 +224,7 @@ export class EmbedWidget extends Widget {
     frameDoc.close();
 
     domready(frameDoc, function() {
+      let _sqh = me.frame.contentWindow.squatch;
       let ctaElement = frameDoc.getElementById('cta');
 
       if (ctaElement) {
@@ -223,19 +239,19 @@ export class EmbedWidget extends Widget {
         me.frame.height = height;
       });
 
-      _loadEvent(_sqh);
+      me._loadEvent(_sqh);
       _log("Embed loaded");
     });
   }
 }
 
 export class CtaWidget extends PopupWidget {
-  constructor(content, eventBus) {
+  constructor(content, eventBus, api) {
     let ctaElement = document.createElement('div');
     ctaElement.id = 'cta';
     document.body.appendChild(ctaElement);
 
-    super(content, eventBus, 'cta');
+    super(content, eventBus, api, 'cta');
 
     let me = this;
     me.ctaFrame = document.createElement('iframe');
