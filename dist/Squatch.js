@@ -88,7 +88,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.init = init;
 	exports.ready = ready;
 
-	var _Widget = __webpack_require__(16);
+	var _EmbedWidget = __webpack_require__(41);
+
+	var _PopupWidget = __webpack_require__(42);
+
+	var _CtaWidget = __webpack_require__(40);
 
 	var _async = __webpack_require__(35);
 
@@ -143,8 +147,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  api.cookieUser(config).then(function (response) {
 	    _log('cookie_user');
-	    _log(response.jsOptions);
-	    loadWidget(response.template, config.engagementMedium);
+	    _log(response.jsOptions.cta);
+	    _log('buttonPosition', response.jsOptions.cta.content.buttonPosition);
+	    _log('buttonSide', response.jsOptions.cta.content.buttonSide);
+	    config.engagementMedium = 'CTA';
+	    loadWidget(response, config);
 	  }).catch(function (ex) {
 	    _log(new Error('cookieUser() ' + ex));
 	  });
@@ -180,17 +187,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	  fn();
 	}
 
-	function loadWidget(content, mode) {
+	function loadWidget(response, config) {
 	  var embed = void 0;
 	  var popup = void 0;
 	  var cta = void 0;
 
-	  if (mode === 'EMBED') {
-	    embed = new _Widget.EmbedWidget(content, eventBus, api).load();
-	  } else if (mode === 'POPUP') {
-	    popup = new _Widget.PopupWidget(content, eventBus, api).load();
-	  } else if (mode === 'CTA') {
-	    cta = new _Widget.CtaWidget(content, eventBus, api).load();
+	  var params = {
+	    content: response.template,
+	    type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
+	    eventBus: eventBus,
+	    api: api
+	  };
+
+	  if (config.engagementMedium === 'EMBED') {
+	    embed = new _EmbedWidget.EmbedWidget(params).load();
+	  } else if (config.engagementMedium === 'POPUP') {
+	    popup = new _PopupWidget.PopupWidget(params).load();
+	  } else if (config.engagementMedium === 'CTA') {
+	    var side = response.jsOptions.cta.content.buttonSide;
+	    var position = response.jsOptions.cta.content.buttonPosition;
+
+	    cta = new _CtaWidget.CtaWidget(params, { side: side, position: position }).load();
 	  }
 	}
 
@@ -4156,6 +4173,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        credentials: 'include',
 	        body: data
 	      }).then(function (response) {
+	        if (!response.ok) {
+	          throw Error(response.statusText);
+	          return;
+	        }
+
 	        return response.json();
 	      });
 	    }
@@ -4173,9 +4195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.CtaWidget = exports.EmbedWidget = exports.PopupWidget = undefined;
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	exports.Widget = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -4195,10 +4215,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	var _log = (0, _debug2.default)('squatch-js:widget');
@@ -4209,19 +4225,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * Creating widget type:
 	 *    class CustomWidget extends Widget {
-	 *      constructor(content,eventBus,stuff) {
-	 *        super(content,eventBus);
+	 *      constructor(params,stuff) {
+	 *        super(params);
 	 *        // do stuff
 	 *      }
 	 *
 	 *      load() {
 	 *        // custom loading of widget
-	 *       }
+	 *      }
 	 *    }
 	 *
 	 */
 
-	var Widget = function () {
+	var Widget = exports.Widget = function () {
 	  /**
 	   * Initialize a new {@link Widget} instance.
 	   *
@@ -4235,25 +4251,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
 	   *
 	   */
-	  function Widget(content, eventBus, api) {
+	  function Widget(params) {
 	    _classCallCheck(this, Widget);
 
 	    _log('widget initializing ...');
 	    var me = this;
-	    me.eventBus = eventBus;
-	    me.content = content;
+	    me.eventBus = params.eventBus;
+	    me.content = params.content;
+	    me.type = params.type;
+	    me.widgetApi = params.api;
+	    me.analyticsApi = new _AnalyticsApi.AnalyticsApi();
 	    me.frame = document.createElement('iframe');
 	    me.frame.width = '100%';
 	    me.frame.style = 'border: 0; background-color: none;';
 	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
-	    me.analyticsApi = new _AnalyticsApi.AnalyticsApi();
-	    me.widgetApi = api;
 
 	    me.eventBus.addEventListener('fb_btn_clicked', function (e, param1, param2) {
 	      _log("fb btn clicked");
 	      _log("param1", param1);
 	      _log("param2", param2);
-	      me._shareEvent(param1, param2);
+	      // me._shareEvent(param1,param2);
 	    });
 	    me.eventBus.addEventListener('tw_btn_clicked', function (e) {
 	      _log("tw btn clicked");
@@ -4264,9 +4281,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.eventBus.addEventListener('copy_btn_clicked', function (e) {
 	      _log("copy btn clicked");
 	    });
+	    me.eventBus.addEventListener('email_submitted', function (e, params, jwt) {
+	      _log("email_submitted");
+	      me.reload(params, jwt);
+	    });
 	  }
 
 	  _createClass(Widget, [{
+	    key: 'reload',
+	    value: function reload(params, jwt) {
+	      _log("Reload after email - " + params + " is submitted");
+	    }
+	  }, {
 	    key: '_loadEvent',
 	    value: function _loadEvent(sqh) {
 
@@ -4301,253 +4327,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return Widget;
 	}();
-
-	var PopupWidget = exports.PopupWidget = function (_Widget) {
-	  _inherits(PopupWidget, _Widget);
-
-	  function PopupWidget(content, eventBus, api) {
-	    var triggerId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'squatchpop';
-
-	    _classCallCheck(this, PopupWidget);
-
-	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, content, eventBus, api));
-
-	    var me = _this;
-
-	    me.triggerElement = document.getElementById(triggerId);
-
-	    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
-
-	    me.popupdiv = document.createElement('div');
-	    me.popupdiv.id = 'squatchModal';
-	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
-
-	    me.popupcontent = document.createElement('div');
-	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position: relative;";
-
-	    me.triggerElement.onclick = function () {
-	      me.open();
-	    };
-	    me.popupdiv.onclick = function (event) {
-	      me._clickedOutside(event);
-	    };
-	    me.eventBus.addEventListener('open_popup', function (e) {
-	      me.open();
-	    });
-	    me.eventBus.addEventListener('close_popup', function (e) {
-	      me.close();
-	    });
-	    return _this;
-	  }
-
-	  _createClass(PopupWidget, [{
-	    key: 'load',
-	    value: function load() {
-	      var me = this;
-
-	      me.popupdiv.appendChild(me.popupcontent);
-	      document.body.appendChild(me.popupdiv);
-	      me.popupcontent.appendChild(me.frame);
-
-	      var frameDoc = me.frame.contentWindow.document;
-	      frameDoc.open();
-	      frameDoc.write(me.content);
-	      frameDoc.close();
-	      _log('Popup template loaded into iframe');
-	    }
-	  }, {
-	    key: 'reload',
-	    value: function reload() {
-	      var me = this;
-
-	      me.widgetApi.cookieUser({
-	        engagementMedium: 'POPUP',
-	        widgetType: "REFERRER_WIDGET"
-	      }).then(function (response) {
-	        _log(response);
-	      }).catch(function (ex) {
-	        _log(ex);
-	      });
-	    }
-	  }, {
-	    key: 'open',
-	    value: function open() {
-	      var me = this;
-	      var popupdiv = me.popupdiv;
-	      var frame = me.frame;
-	      var frameWindow = frame.contentWindow;
-	      var frameDoc = frameWindow.document;
-	      var erd = this.erd;
-	      var analyticsApi = this.analyticsApi;
-
-	      // Adjust frame height when size of body changes
-	      (0, _domready.domready)(frameDoc, function () {
-	        var _sqh = frameWindow.squatch;
-	        var ctaElement = frameDoc.getElementById('cta');
-
-	        if (ctaElement) {
-	          ctaElement.parentNode.removeChild(ctaElement);
-	        }
-
-	        frameDoc.body.style.overflowY = 'hidden';
-	        popupdiv.style.display = 'table';
-	        popupdiv.style.top = '0';
-
-	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	          var height = element.offsetHeight;
-
-	          if (height > 0) frame.height = height;
-
-	          if (window.innerHeight > frame.height) {
-	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
-	          } else {
-	            popupdiv.style.paddingTop = "5px";
-	          }
-
-	          element.style.width = "100%";
-	          element.style.height = "100%";
-	        });
-
-	        me._loadEvent(_sqh);
-	        _log('Popup opened');
-	      });
-	    }
-	  }, {
-	    key: 'close',
-	    value: function close() {
-	      var popupdiv = this.popupdiv;
-	      var frameDoc = this.frame.contentWindow.document;
-	      var erd = this.erd;
-
-	      popupdiv.style.display = 'none';
-	      erd.uninstall(frameDoc.body);
-
-	      _log('Popup closed');
-	    }
-	  }, {
-	    key: '_clickedOutside',
-	    value: function _clickedOutside(e) {
-	      var popupdiv = this.popupdiv;
-
-	      if (e.target == this.popupdiv) {
-	        this.close();
-	      }
-	    }
-	  }]);
-
-	  return PopupWidget;
-	}(Widget);
-
-	var EmbedWidget = exports.EmbedWidget = function (_Widget2) {
-	  _inherits(EmbedWidget, _Widget2);
-
-	  function EmbedWidget(content, eventBus, api) {
-	    var elementId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'squatchembed';
-
-	    _classCallCheck(this, EmbedWidget);
-
-	    // this.frame.id = 'someId';
-	    var _this2 = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, content, eventBus, api));
-
-	    _this2.element = document.getElementById(elementId);
-
-	    if (!_this2.element) throw new Error("elementId \'" + elementId + "\' not found.");
-	    return _this2;
-	  }
-
-	  _createClass(EmbedWidget, [{
-	    key: 'load',
-	    value: function load() {
-	      var me = this;
-
-	      me.element.appendChild(me.frame);
-
-	      var frameDoc = me.frame.contentWindow.document;
-	      frameDoc.open();
-	      frameDoc.write(me.content);
-	      frameDoc.close();
-
-	      (0, _domready.domready)(frameDoc, function () {
-	        var _sqh = me.frame.contentWindow.squatch;
-	        var ctaElement = frameDoc.getElementById('cta');
-
-	        if (ctaElement) {
-	          ctaElement.parentNode.removeChild(ctaElement);
-	        }
-
-	        me.frame.height = frameDoc.body.scrollHeight;
-
-	        // Adjust frame height when size of body changes
-	        me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	          var height = element.offsetHeight;
-	          me.frame.height = height;
-	        });
-
-	        me._loadEvent(_sqh);
-	        _log("Embed loaded");
-	      });
-	    }
-	  }]);
-
-	  return EmbedWidget;
-	}(Widget);
-
-	var CtaWidget = exports.CtaWidget = function (_PopupWidget) {
-	  _inherits(CtaWidget, _PopupWidget);
-
-	  function CtaWidget(content, eventBus, api) {
-	    _classCallCheck(this, CtaWidget);
-
-	    var ctaElement = document.createElement('div');
-	    ctaElement.id = 'cta';
-	    document.body.appendChild(ctaElement);
-
-	    var _this3 = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, content, eventBus, api, 'cta'));
-
-	    var me = _this3;
-	    me.ctaFrame = document.createElement('iframe');
-	    me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; bottom: 0; display: none;';
-	    me.eventBus.addEventListener('cta_btn_clicked', function (e) {
-	      _log("cta btn clicked");
-	      me.open();
-	    });
-	    document.body.appendChild(_this3.ctaFrame);
-	    return _this3;
-	  }
-
-	  _createClass(CtaWidget, [{
-	    key: 'load',
-	    value: function load() {
-	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'load', this).call(this);
-
-	      var widgetFrameDoc = this.frame.contentWindow.document;
-	      var ctaFrame = this.ctaFrame;
-	      var ctaFrameDoc = this.ctaFrame.contentWindow.document;
-
-	      // Wait for widget doc to be ready to grab the cta HTML
-	      (0, _domready.domready)(widgetFrameDoc, function () {
-	        var ctaElement = widgetFrameDoc.getElementById('cta');
-	        ctaElement.parentNode.removeChild(ctaElement);
-
-	        ctaFrameDoc.open();
-	        ctaFrameDoc.write(ctaElement.innerHTML);
-	        ctaFrameDoc.close();
-
-	        // Figure out size of CTA as well
-	        (0, _domready.domready)(ctaFrameDoc, function () {
-	          ctaFrame.height = ctaFrameDoc.body.offsetHeight;
-	          _log('height', ctaFrameDoc.body.scrollHeight);
-
-	          ctaFrame.style.display = 'block';
-
-	          _log('CTA template loaded into iframe');
-	        });
-	      });
-	    }
-	  }]);
-
-	  return CtaWidget;
-	}(PopupWidget);
 
 /***/ },
 /* 17 */
@@ -7135,6 +6914,434 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  return AnalyticsApi;
 	}();
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.CtaWidget = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _PopupWidget2 = __webpack_require__(42);
+
+	var _domready = __webpack_require__(17);
+
+	var _debug = __webpack_require__(32);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _log = (0, _debug2.default)('squatch-js:CTAwidget');
+
+	var CtaWidget = exports.CtaWidget = function (_PopupWidget) {
+	  _inherits(CtaWidget, _PopupWidget);
+
+	  function CtaWidget(params, opts) {
+	    _classCallCheck(this, CtaWidget);
+
+	    var ctaElement = document.createElement('div');
+	    ctaElement.id = 'cta';
+	    document.body.appendChild(ctaElement);
+
+	    var _this = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, params, 'cta'));
+
+	    var me = _this;
+
+	    if (opts.position === 'middle') {
+	      me.position = 'top: ' + window.innerHeight / 2 + 'px;';
+	      me.side = opts.side + ': -10px;';
+	      _log(me.position);
+	    } else {
+	      me.position = opts.position + ': -10px;';
+	      me.side = opts.side + ': 5px;';
+	    }
+	    me.positionClass = opts.position;
+
+	    me.ctaFrame = document.createElement('iframe');
+	    me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; display: none;' + me.side + me.position;
+	    _log(me.ctaFrame.style);
+
+	    me.eventBus.addEventListener('cta_btn_clicked', function (e) {
+	      _log("cta btn clicked");
+	      me.open();
+	    });
+	    document.body.appendChild(_this.ctaFrame);
+	    return _this;
+	  }
+
+	  _createClass(CtaWidget, [{
+	    key: 'load',
+	    value: function load() {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'load', this).call(this);
+
+	      var widgetFrameDoc = this.frame.contentWindow.document;
+	      var ctaFrame = this.ctaFrame;
+	      var ctaFrameDoc = this.ctaFrame.contentWindow.document;
+	      var positionClass = ' ' + this.positionClass;
+	      var erd = this.erd;
+
+	      // Wait for widget doc to be ready to grab the cta HTML
+	      (0, _domready.domready)(widgetFrameDoc, function () {
+	        var ctaElement = widgetFrameDoc.getElementById('cta');
+
+	        if (ctaElement) {
+	          ctaElement.parentNode.removeChild(ctaElement);
+
+	          ctaFrameDoc.open();
+	          ctaFrameDoc.write(ctaElement.innerHTML);
+	          ctaFrameDoc.close();
+
+	          // Figure out size of CTA as well
+	          (0, _domready.domready)(ctaFrameDoc, function () {
+	            ctaFrame.height = ctaFrameDoc.body.offsetHeight;
+	            ctaFrame.width = ctaFrameDoc.body.scrollWidth;
+
+	            ctaFrame.style.display = 'block';
+
+	            var ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
+	            ctaContainer.className += positionClass;
+
+	            erd.listenTo(ctaContainer, function (element) {
+	              var height = element.offsetHeight;
+	              var width = element.offsetWidth;
+	              ctaFrame.height = height;
+	              ctaFrame.width = width;
+	            });
+
+	            _log('CTA template loaded into iframe');
+	          });
+	        } else {
+	          _log(new Error('CTA element not found in theme'));
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'reload',
+	    value: function reload(params, jwt) {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'reload', this).call(this, params, jwt);
+	    }
+	  }]);
+
+	  return CtaWidget;
+	}(_PopupWidget2.PopupWidget);
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.EmbedWidget = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _Widget2 = __webpack_require__(16);
+
+	var _domready = __webpack_require__(17);
+
+	var _debug = __webpack_require__(32);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _log = (0, _debug2.default)('squatch-js:EMBEDwidget');
+
+	var EmbedWidget = exports.EmbedWidget = function (_Widget) {
+	  _inherits(EmbedWidget, _Widget);
+
+	  function EmbedWidget(params) {
+	    var elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchembed';
+
+	    _classCallCheck(this, EmbedWidget);
+
+	    var _this = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, params));
+
+	    _this.element = document.getElementById(elementId);
+
+	    if (!_this.element) throw new Error("elementId \'" + elementId + "\' not found.");
+	    return _this;
+	  }
+
+	  _createClass(EmbedWidget, [{
+	    key: 'load',
+	    value: function load() {
+	      var me = this;
+
+	      if (!me.element.firstChild) me.element.appendChild(me.frame);
+
+	      var frameDoc = me.frame.contentWindow.document;
+	      frameDoc.open();
+	      frameDoc.write(me.content);
+	      frameDoc.close();
+
+	      (0, _domready.domready)(frameDoc, function () {
+	        var _sqh = me.frame.contentWindow.squatch;
+	        var ctaElement = frameDoc.getElementById('cta');
+
+	        if (ctaElement) {
+	          ctaElement.parentNode.removeChild(ctaElement);
+	        }
+
+	        me.frame.height = frameDoc.body.scrollHeight;
+
+	        // Adjust frame height when size of body changes
+	        me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	          var height = element.offsetHeight;
+	          me.frame.height = height;
+	        });
+
+	        me._loadEvent(_sqh);
+	        _log("loaded");
+	      });
+	    }
+	  }, {
+	    key: 'reload',
+	    value: function reload(params, jwt) {
+	      _get(EmbedWidget.prototype.__proto__ || Object.getPrototypeOf(EmbedWidget.prototype), 'reload', this).call(this, params, jwt);
+
+	      var me = this;
+
+	      me.widgetApi.cookieUser({
+	        engagementMedium: 'EMBED',
+	        widgetType: me.type,
+	        jwt: jwt
+	      }).then(function (response) {
+
+	        if (response.template) me.load();
+	      }).catch(function (ex) {
+	        _log('Failed to reload ' + ex);
+	      });
+	    }
+	  }]);
+
+	  return EmbedWidget;
+	}(_Widget2.Widget);
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.PopupWidget = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _Widget2 = __webpack_require__(16);
+
+	var _domready = __webpack_require__(17);
+
+	var _debug = __webpack_require__(32);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _log = (0, _debug2.default)('squatch-js:POPUPwidget');
+
+	var PopupWidget = exports.PopupWidget = function (_Widget) {
+	  _inherits(PopupWidget, _Widget);
+
+	  function PopupWidget(params) {
+	    var triggerId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchpop';
+
+	    _classCallCheck(this, PopupWidget);
+
+	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, params));
+
+	    var me = _this;
+
+	    me.triggerElement = document.getElementById(triggerId);
+
+	    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
+
+	    me.popupdiv = document.createElement('div');
+	    me.popupdiv.id = 'squatchModal';
+	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
+
+	    me.popupcontent = document.createElement('div');
+	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position: relative;";
+
+	    me.triggerElement.onclick = function () {
+	      me.open();
+	    };
+	    me.popupdiv.onclick = function (event) {
+	      me._clickedOutside(event);
+	    };
+	    me.eventBus.addEventListener('open_popup', function (e) {
+	      me.open();
+	    });
+	    me.eventBus.addEventListener('close_popup', function (e) {
+	      me.close();
+	    });
+	    return _this;
+	  }
+
+	  _createClass(PopupWidget, [{
+	    key: 'load',
+	    value: function load() {
+	      var me = this;
+
+	      me.popupdiv.appendChild(me.popupcontent);
+	      document.body.appendChild(me.popupdiv);
+	      me.popupcontent.appendChild(me.frame);
+
+	      var frameDoc = me.frame.contentWindow.document;
+	      frameDoc.open();
+	      frameDoc.write(me.content);
+	      frameDoc.close();
+	      _log('Popup template loaded into iframe');
+	    }
+	  }, {
+	    key: 'reload',
+	    value: function reload(params, jwt) {
+	      _get(PopupWidget.prototype.__proto__ || Object.getPrototypeOf(PopupWidget.prototype), 'reload', this).call(this, params, jwt);
+	      var me = this;
+
+	      me.widgetApi.cookieUser({
+	        engagementMedium: 'POPUP',
+	        widgetType: me.type,
+	        jwt: "token"
+	      }).then(function (response) {
+	        if (response.template) {
+	          (function () {
+	            var frameDoc = me.frame.contentWindow.document;
+	            frameDoc.open();
+	            frameDoc.write(me.content);
+	            frameDoc.close();
+
+	            (0, _domready.domready)(frameDoc, function () {
+	              var ctaElement = frameDoc.getElementById('cta');
+
+	              if (ctaElement) ctaElement.parentNode.removeChild(ctaElement);
+
+	              me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	                var height = element.offsetHeight;
+
+	                if (height > 0) me.frame.height = height;
+
+	                if (window.innerHeight > me.frame.height) {
+	                  me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + "px";
+	                } else {
+	                  me.popupdiv.style.paddingTop = "5px";
+	                }
+
+	                element.style.width = "100%";
+	                element.style.height = "100%";
+	              });
+
+	              _log("Popup reloaded");
+	            });
+	          })();
+	        }
+	      }).catch(function (ex) {
+	        _log('Failed to reload' + ex);
+	      });
+	    }
+	  }, {
+	    key: 'open',
+	    value: function open() {
+	      var me = this;
+	      var popupdiv = me.popupdiv;
+	      var frame = me.frame;
+	      var frameWindow = frame.contentWindow;
+	      var frameDoc = frameWindow.document;
+	      var erd = this.erd;
+	      var analyticsApi = this.analyticsApi;
+
+	      // Adjust frame height when size of body changes
+	      (0, _domready.domready)(frameDoc, function () {
+	        var _sqh = frameWindow.squatch;
+	        var ctaElement = frameDoc.getElementById('cta');
+
+	        if (ctaElement) ctaElement.parentNode.removeChild(ctaElement);
+
+	        frameDoc.body.style.overflowY = 'hidden';
+	        popupdiv.style.display = 'table';
+	        popupdiv.style.top = '0';
+
+	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	          var height = element.offsetHeight;
+
+	          if (height > 0) frame.height = height;
+
+	          if (window.innerHeight > frame.height) {
+	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
+	          } else {
+	            popupdiv.style.paddingTop = "5px";
+	          }
+
+	          element.style.width = "100%";
+	          element.style.height = "100%";
+	        });
+
+	        me._loadEvent(_sqh);
+	        _log('Popup opened');
+	      });
+	    }
+	  }, {
+	    key: 'close',
+	    value: function close() {
+	      var popupdiv = this.popupdiv;
+	      var frameDoc = this.frame.contentWindow.document;
+	      var erd = this.erd;
+
+	      popupdiv.style.display = 'none';
+	      erd.uninstall(frameDoc.body);
+
+	      _log('Popup closed');
+	    }
+	  }, {
+	    key: '_clickedOutside',
+	    value: function _clickedOutside(e) {
+	      var popupdiv = this.popupdiv;
+
+	      if (e.target == this.popupdiv) {
+	        this.close();
+	      }
+	    }
+	  }]);
+
+	  return PopupWidget;
+	}(_Widget2.Widget);
 
 /***/ }
 /******/ ])

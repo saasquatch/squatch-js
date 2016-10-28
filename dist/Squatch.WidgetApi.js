@@ -3708,6 +3708,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        credentials: 'include',
 	        body: data
 	      }).then(function (response) {
+	        if (!response.ok) {
+	          throw Error(response.statusText);
+	          return;
+	        }
+
 	        return response.json();
 	      });
 	    }

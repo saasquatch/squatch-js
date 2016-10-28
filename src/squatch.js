@@ -6,7 +6,9 @@
  */
 import { OpenApi } from './api/OpenApi';
 import { WidgetApi } from './api/WidgetApi'
-import { EmbedWidget, PopupWidget, CtaWidget } from './widgets/Widget';
+import { EmbedWidget } from './widgets/EmbedWidget';
+import { PopupWidget } from './widgets/PopupWidget';
+import { CtaWidget } from './widgets/CtaWidget';
 import { asyncLoad } from './async';
 import store from 'store';
 import debug from 'debug';
@@ -46,8 +48,11 @@ export function init(config) {
 
   api.cookieUser(config).then(function(response) {
     _log('cookie_user');
-    _log(response.jsOptions);
-    loadWidget(response.template, config.engagementMedium);
+    _log(response.jsOptions.cta);
+    _log('buttonPosition', response.jsOptions.cta.content.buttonPosition);
+    _log('buttonSide', response.jsOptions.cta.content.buttonSide);
+    config.engagementMedium = 'CTA';
+    loadWidget(response, config);
   }).catch(function(ex) {
     _log(new Error('cookieUser() ' + ex));
   });
@@ -83,17 +88,27 @@ export function ready(fn) {
   fn();
 }
 
-function loadWidget(content, mode) {
+function loadWidget(response, config) {
   let embed;
   let popup;
   let cta;
 
-  if (mode === 'EMBED') {
-    embed = new EmbedWidget(content, eventBus, api).load();
-  } else if (mode === 'POPUP') {
-    popup = new PopupWidget(content, eventBus, api).load();
-  } else if (mode === 'CTA') {
-    cta = new CtaWidget(content, eventBus, api).load();
+  let params = {
+    content: response.template,
+    type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
+    eventBus: eventBus,
+    api: api,
+  };
+
+  if (config.engagementMedium === 'EMBED') {
+    embed = new EmbedWidget(params).load();
+  } else if (config.engagementMedium === 'POPUP') {
+    popup = new PopupWidget(params).load();
+  } else if (config.engagementMedium === 'CTA') {
+    let side = response.jsOptions.cta.content.buttonSide;
+    let position = response.jsOptions.cta.content.buttonPosition;
+
+    cta = new CtaWidget(params, {side: side, position: position}).load();
   }
 }
 
