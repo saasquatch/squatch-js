@@ -14,19 +14,23 @@ export class CtaWidget extends PopupWidget {
 
     let me = this;
 
+    if (!opts.side && !opts.position) {
+      opts.position = "bottom";
+      opts.side = "right";
+    }
+
     if (opts.position === 'middle') {
-      me.position = 'top: ' + (window.innerHeight / 2) + 'px;';
-      me.side = opts.side + ': -10px;'
-      _log(me.position);
+      me.position = 'top: 45%;';
+      me.side = (opts.side === 'center') ? 'right: 45%;' : opts.side + ': -10px;';
     } else {
       me.position = opts.position + ': -10px;'
-      me.side = opts.side + ': 5px;';
+      me.side = (opts.side === 'center') ? 'right: 45%;' : opts.side + ': 5px;';
     }
+
     me.positionClass = opts.position;
 
     me.ctaFrame = document.createElement('iframe');
     me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; display: none;' + me.side + me.position;
-    _log(me.ctaFrame.style);
 
     me.eventBus.addEventListener('cta_btn_clicked', function(e) {
       _log("cta btn clicked");

@@ -51,12 +51,17 @@ export class EmbedWidget extends Widget {
     let me = this;
 
     me.widgetApi.cookieUser({
+      user: {
+        email: params
+      },
       engagementMedium: 'EMBED',
       widgetType: me.type,
       jwt: jwt
     }).then(function(response) {
-
-      if (response.template) me.load();
+      if (response.template) {
+        me.content = response.template
+        me.load();
+      };
 
     }).catch(function(ex) {
       _log('Failed to reload ' + ex);

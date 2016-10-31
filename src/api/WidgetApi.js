@@ -50,7 +50,8 @@ export class WidgetApi {
 
     let path = `/api/v1/${tenant_alias}/widget/user/cookie_user${optional_params}`;
     let url = this.domain + path;
-    return this._doPut(url, JSON.stringify({}), params.jwt);
+
+    return this._doPut(url, params.user ? JSON.stringify(params.user) : JSON.stringify({}), params.jwt);
   }
 
   /**
@@ -130,6 +131,11 @@ export class WidgetApi {
       credentials: 'include',
       mode: 'cors'
     }).then(function(response) {
+      if (!response.ok) {
+        throw Error(response.statusText);
+        return;
+      }
+
       return response.text();
     });
   }
@@ -149,6 +155,7 @@ export class WidgetApi {
        method: 'PUT',
        headers: _headers,
        credentials: 'include',
+       mode: 'cors',
        body: data
      }).then(function(response) {
        if (!response.ok) {

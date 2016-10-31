@@ -3588,7 +3588,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
 	      var url = this.domain + path;
-	      return this._doPut(url, JSON.stringify({}), params.jwt);
+
+	      return this._doPut(url, params.user ? JSON.stringify(params.user) : JSON.stringify({}), params.jwt);
 	    }
 
 	    /**
@@ -3684,6 +3685,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        credentials: 'include',
 	        mode: 'cors'
 	      }).then(function (response) {
+	        if (!response.ok) {
+	          throw Error(response.statusText);
+	          return;
+	        }
+
 	        return response.text();
 	      });
 	    }
@@ -3706,6 +3712,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        method: 'PUT',
 	        headers: _headers,
 	        credentials: 'include',
+	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
 	        if (!response.ok) {

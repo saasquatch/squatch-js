@@ -42,19 +42,15 @@ export function init(config) {
     tenantAlias: config.tenant_alias
   });
 
-
   _log("Widget API instance");
   _log(api);
 
   api.cookieUser(config).then(function(response) {
     _log('cookie_user');
     _log(response.jsOptions.cta);
-    _log('buttonPosition', response.jsOptions.cta.content.buttonPosition);
-    _log('buttonSide', response.jsOptions.cta.content.buttonSide);
-    config.engagementMedium = 'CTA';
     loadWidget(response, config);
   }).catch(function(ex) {
-    _log(new Error('cookieUser() ' + ex));
+    _log('cookieUser() ' + ex);
   });
 
   // api.upsert(config).then(function(response) {

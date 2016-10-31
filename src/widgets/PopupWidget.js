@@ -45,11 +45,15 @@ export class PopupWidget extends Widget {
     let me = this;
 
     me.widgetApi.cookieUser({
+      user: {
+        email: params
+      },
       engagementMedium: 'POPUP',
       widgetType: me.type,
-      jwt: "token"
+      jwt: jwt
     }).then(function(response) {
       if (response.template) {
+        me.content = response.template;
         let frameDoc = me.frame.contentWindow.document;
         frameDoc.open();
         frameDoc.write(me.content);
