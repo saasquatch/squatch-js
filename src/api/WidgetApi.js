@@ -132,8 +132,7 @@ export class WidgetApi {
       mode: 'cors'
     }).then(function(response) {
       if (!response.ok) {
-        throw Error(response.statusText);
-        return;
+        return response.json();
       }
 
       return response.text();
@@ -142,6 +141,7 @@ export class WidgetApi {
 
   /**
    * @private
+   *
    */
    _doPut(url, data, jwt) {
      let _headers = {
@@ -155,14 +155,8 @@ export class WidgetApi {
        method: 'PUT',
        headers: _headers,
        credentials: 'include',
-       mode: 'cors',
        body: data
      }).then(function(response) {
-       if (!response.ok) {
-         throw Error(response.statusText);
-         return;
-       }
-
        return response.json();
      });
    }

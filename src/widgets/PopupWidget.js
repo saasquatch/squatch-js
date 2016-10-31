@@ -110,8 +110,10 @@ export class PopupWidget extends Widget {
       popupdiv.style.display = 'table';
       popupdiv.style.top = '0';
 
+      frame.height = frameDoc.body.scrollHeight;
+
       erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function(element) {
-        let height = element.offsetHeight;
+        let height = element.scrollHeight;
 
         if (height > 0) frame.height = height;
 
@@ -147,5 +149,11 @@ export class PopupWidget extends Widget {
     if (e.target == this.popupdiv) {
       this.close()
     }
+  }
+
+  _error(rs, mode = 'modal', style = '') {
+    let _style = 'body { margin: 0; } .modal { box-shadow: none; border: 0; }'
+
+    return super._error(rs, mode, _style);
   }
 }

@@ -47,10 +47,10 @@ export function init(config) {
 
   api.cookieUser(config).then(function(response) {
     _log('cookie_user');
-    _log(response.jsOptions.cta);
     loadWidget(response, config);
   }).catch(function(ex) {
     _log('cookieUser() ' + ex);
+
   });
 
   // api.upsert(config).then(function(response) {
@@ -88,13 +88,25 @@ function loadWidget(response, config) {
   let embed;
   let popup;
   let cta;
+  let params;
 
-  let params = {
-    content: response.template,
-    type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
-    eventBus: eventBus,
-    api: api,
-  };
+  if (response.apiErrorCode) {
+    _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') ' + response.message));
+    params = {
+      content: "error",
+      rsCode: response.rsCode,
+      type: config.widgetType ? config.widgetType : "",
+      eventBus: eventBus,
+      api: api
+    };
+  } else {
+    params = {
+      content: response.template,
+      type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
+      eventBus: eventBus,
+      api: api,
+    };
+  }
 
   if (config.engagementMedium === 'EMBED') {
     embed = new EmbedWidget(params).load();
@@ -105,6 +117,9 @@ function loadWidget(response, config) {
     let position = response.jsOptions.cta.content.buttonPosition;
 
     cta = new CtaWidget(params, {side: side, position: position}).load();
+  } else {
+    // POPUP is default
+    popup = new PopupWidget(params).load();
   }
 }
 

@@ -24,7 +24,7 @@ export class CtaWidget extends PopupWidget {
       me.side = (opts.side === 'center') ? 'right: 45%;' : opts.side + ': -10px;';
     } else {
       me.position = opts.position + ': -10px;'
-      me.side = (opts.side === 'center') ? 'right: 45%;' : opts.side + ': 5px;';
+      me.side = (opts.side === 'center') ? 'right: 45%;' : opts.side + ': 20px;';
     }
 
     me.positionClass = opts.position;

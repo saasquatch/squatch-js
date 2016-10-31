@@ -67,4 +67,8 @@ export class EmbedWidget extends Widget {
       _log('Failed to reload ' + ex);
     });
   }
+
+  _error(rs, mode = 'embed', style = '') {
+    return super._error(rs, mode, style);
+  }
 }

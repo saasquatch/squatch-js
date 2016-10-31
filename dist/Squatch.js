@@ -147,7 +147,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  api.cookieUser(config).then(function (response) {
 	    _log('cookie_user');
-	    _log(response.jsOptions.cta);
 	    loadWidget(response, config);
 	  }).catch(function (ex) {
 	    _log('cookieUser() ' + ex);
@@ -188,13 +187,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var embed = void 0;
 	  var popup = void 0;
 	  var cta = void 0;
+	  var params = void 0;
 
-	  var params = {
-	    content: response.template,
-	    type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
-	    eventBus: eventBus,
-	    api: api
-	  };
+	  if (response.apiErrorCode) {
+	    _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') ' + response.message));
+	    params = {
+	      content: "error",
+	      rsCode: response.rsCode,
+	      type: config.widgetType ? config.widgetType : "",
+	      eventBus: eventBus,
+	      api: api
+	    };
+	  } else {
+	    params = {
+	      content: response.template,
+	      type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
+	      eventBus: eventBus,
+	      api: api
+	    };
+	  }
 
 	  if (config.engagementMedium === 'EMBED') {
 	    embed = new _EmbedWidget.EmbedWidget(params).load();
@@ -205,6 +216,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var position = response.jsOptions.cta.content.buttonPosition;
 
 	    cta = new _CtaWidget.CtaWidget(params, { side: side, position: position }).load();
+	  } else {
+	    // POPUP is default
+	    popup = new _PopupWidget.PopupWidget(params).load();
 	  }
 	}
 
@@ -4148,8 +4162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        mode: 'cors'
 	      }).then(function (response) {
 	        if (!response.ok) {
-	          throw Error(response.statusText);
-	          return;
+	          return response.json();
 	        }
 
 	        return response.text();
@@ -4158,6 +4171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     *
 	     */
 
 	  }, {
@@ -4174,14 +4188,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        method: 'PUT',
 	        headers: _headers,
 	        credentials: 'include',
-	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
-	        if (!response.ok) {
-	          throw Error(response.statusText);
-	          return;
-	        }
-
 	        return response.json();
 	      });
 	    }
@@ -4294,6 +4302,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _log('Failed to reload ' + ex);
 	      });
 	    }
+	  }, {
+	    key: '_error',
+	    value: function _error(rs) {
+	      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'embed';
+	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
+	      return _get(EmbedWidget.prototype.__proto__ || Object.getPrototypeOf(EmbedWidget.prototype), '_error', this).call(this, rs, mode, style);
+	    }
 	  }]);
 
 	  return EmbedWidget;
@@ -4370,7 +4386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _log('widget initializing ...');
 	    var me = this;
 	    me.eventBus = params.eventBus;
-	    me.content = params.content;
+	    me.content = params.content === 'error' ? me._error(params.rsCode) : params.content;
 	    me.type = params.type;
 	    me.widgetApi = params.api;
 	    me.analyticsApi = new _AnalyticsApi.AnalyticsApi();
@@ -4409,32 +4425,45 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: '_loadEvent',
 	    value: function _loadEvent(sqh) {
 
-	      this.analyticsApi.pushAnalyticsLoadEvent({
-	        tenantAlias: sqh.analytics.attributes.tenant,
-	        externalAccountId: sqh.analytics.attributes.accountId,
-	        externalUserId: sqh.analytics.attributes.userId,
-	        engagementMedium: sqh.mode.widgetMode
-	      }).then(function (response) {
-	        _log(sqh.mode.widgetMode + " loaded event recorded");
-	      }).catch(function (ex) {
-	        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
-	      });
+	      if (sqh) {
+	        this.analyticsApi.pushAnalyticsLoadEvent({
+	          tenantAlias: sqh.analytics.attributes.tenant,
+	          externalAccountId: sqh.analytics.attributes.accountId,
+	          externalUserId: sqh.analytics.attributes.userId,
+	          engagementMedium: sqh.mode.widgetMode
+	        }).then(function (response) {
+	          _log(sqh.mode.widgetMode + " loaded event recorded");
+	        }).catch(function (ex) {
+	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+	        });
+	      }
 	    }
 	  }, {
 	    key: '_shareEvent',
 	    value: function _shareEvent(sqh, medium) {
 
-	      this.analyticsApi.pushAnalyticsShareClickedEvent({
-	        tenantAlias: sqh.analytics.attributes.tenant,
-	        externalAccountId: sqh.analytics.attributes.accountId,
-	        externalUserId: sqh.analytics.attributes.userId,
-	        engagementMedium: sqh.mode.widgetMode,
-	        shareMedium: medium
-	      }).then(function (response) {
-	        _log(sqh.mode.widgetMode + " share " + medium + " event recorded");
-	      }).catch(function (ex) {
-	        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
-	      });
+	      if (sqh) {
+	        this.analyticsApi.pushAnalyticsShareClickedEvent({
+	          tenantAlias: sqh.analytics.attributes.tenant,
+	          externalAccountId: sqh.analytics.attributes.accountId,
+	          externalUserId: sqh.analytics.attributes.userId,
+	          engagementMedium: sqh.mode.widgetMode,
+	          shareMedium: medium
+	        }).then(function (response) {
+	          _log(sqh.mode.widgetMode + " share " + medium + " event recorded");
+	        }).catch(function (ex) {
+	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+	        });
+	      }
+	    }
+	  }, {
+	    key: '_error',
+	    value: function _error(rs) {
+	      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'modal';
+	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
+
+	      return '<!DOCTYPE html>\n    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->\n    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->\n    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->\n    <head>\n    \t<link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">\n      <style>\n        ' + style + '\n      </style>\n    </head>\n    <body>\n\n      <div class="squatch-container ' + mode + '">\n        <div class="errorheader">\n          <button type="button" class="close" onclick="window.parent.squatch.eventBus.dispatch(\'close_popup\');">&times;</button>\n          <p class="errortitle">Error</p>\n        </div>\n        <div class="errorbody">\n          <div class="sadface"><img src="https://d35vcmgdka52pk.cloudfront.net/assets/images/face.png"></div>\n          <h4>Our referral program is temporarily unavailable.</h4><br>\n          <p>Please reload the page or check back later.</p>\n          <p>If the persists please contact our support team.</p>\n          <br>\n          <br>\n          <div class="right-align errtxt">\n            Error Code: ' + rs + '\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>';
 	    }
 	  }]);
 
@@ -6912,8 +6941,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        popupdiv.style.display = 'table';
 	        popupdiv.style.top = '0';
 
+	        frame.height = frameDoc.body.scrollHeight;
+
 	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	          var height = element.offsetHeight;
+	          var height = element.scrollHeight;
 
 	          if (height > 0) frame.height = height;
 
@@ -6951,6 +6982,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (e.target == this.popupdiv) {
 	        this.close();
 	      }
+	    }
+	  }, {
+	    key: '_error',
+	    value: function _error(rs) {
+	      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'modal';
+	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+
+	      var _style = 'body { margin: 0; } .modal { box-shadow: none; border: 0; }';
+
+	      return _get(PopupWidget.prototype.__proto__ || Object.getPrototypeOf(PopupWidget.prototype), '_error', this).call(this, rs, mode, _style);
 	    }
 	  }]);
 
@@ -7014,7 +7055,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      me.side = opts.side === 'center' ? 'right: 45%;' : opts.side + ': -10px;';
 	    } else {
 	      me.position = opts.position + ': -10px;';
-	      me.side = opts.side === 'center' ? 'right: 45%;' : opts.side + ': 5px;';
+	      me.side = opts.side === 'center' ? 'right: 45%;' : opts.side + ': 20px;';
 	    }
 
 	    me.positionClass = opts.position;

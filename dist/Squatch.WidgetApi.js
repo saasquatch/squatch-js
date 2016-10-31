@@ -3686,8 +3686,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        mode: 'cors'
 	      }).then(function (response) {
 	        if (!response.ok) {
-	          throw Error(response.statusText);
-	          return;
+	          return response.json();
 	        }
 
 	        return response.text();
@@ -3696,6 +3695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     *
 	     */
 
 	  }, {
@@ -3712,14 +3712,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        method: 'PUT',
 	        headers: _headers,
 	        credentials: 'include',
-	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
-	        if (!response.ok) {
-	          throw Error(response.statusText);
-	          return;
-	        }
-
 	        return response.json();
 	      });
 	    }
