@@ -46,11 +46,10 @@ export function init(config) {
   _log(api);
 
   api.cookieUser(config).then(function(response) {
-    _log('cookie_user');
+    _log('jsOptions', response.jsOptions);
     loadWidget(response, config);
   }).catch(function(ex) {
-    _log('cookieUser() ' + ex);
-
+    throw new Error('cookieUser() ' + ex);
   });
 
   // api.upsert(config).then(function(response) {

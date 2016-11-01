@@ -3560,6 +3560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function WidgetApi(config) {
 	    _classCallCheck(this, WidgetApi);
 
+	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
 	    this.tenantAlias = config.tenantAlias;
 	    this.domain = "https://staging.referralsaasquatch.com";
 	  }
@@ -3568,8 +3569,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * Description here.
 	   *
 	   * @param {Object} params
-	   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+	   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)
 	   * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
 	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
 	   */
 
@@ -3601,6 +3603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} params.user.accountId
 	     * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
 	     * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
 	     * @return {Promise} string if true, with the widget template.
 	     */
 
@@ -3632,6 +3635,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} params.user.accountId
 	     * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
 	     * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
 	     * @return {Promise} template html if true.
 	     */
 

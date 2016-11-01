@@ -28,6 +28,7 @@ export class WidgetApi {
    * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(config) {
+    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
     this.tenantAlias = config.tenantAlias;
     this.domain = "https://staging.referralsaasquatch.com";
   }
@@ -36,8 +37,9 @@ export class WidgetApi {
    * Description here.
    *
    * @param {Object} params
-   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)
    * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+   * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
    * @return {Promise} json object if true, with the widget template, jsOptions and user details.
    */
   cookieUser(params = { widgetType: "", engagementMedium: "", jwt: "" }) {
@@ -63,6 +65,7 @@ export class WidgetApi {
    * @param {string} params.user.accountId
    * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
    * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+   * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
    * @return {Promise} string if true, with the widget template.
    */
   upsert(params = { widgetType: "", engagementMedium: "", jwt: ""}) {
@@ -89,6 +92,7 @@ export class WidgetApi {
    * @param {string} params.user.accountId
    * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
    * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
+   * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
    * @return {Promise} template html if true.
    */
   render(params = { widgetType: "", engagementMedium: "", jwt: ""}) {
