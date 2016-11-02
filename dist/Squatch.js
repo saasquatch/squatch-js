@@ -87,6 +87,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.init = init;
 	exports.ready = ready;
+	exports.load = load;
 
 	var _EmbedWidget = __webpack_require__(16);
 
@@ -151,22 +152,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }).catch(function (ex) {
 	    throw new Error('cookieUser() ' + ex);
 	  });
-
-	  // api.upsert(config).then(function(response) {
-	  //   _log('upsert user:')
-	  //   _log(response);
-	  //   // store.set('sqh_user', response);
-	  // }).catch(function(ex) {
-	  //   _log(new Error('upsertUser()' + ex));
-	  // });
-
-	  // api.render(config).then(function(response) {
-	  //   _log('render');
-	  //   _log(response);
-	  //   loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
-	  // }).catch(function(ex) {
-	  //   _log(new Error('render() ' + ex));
-	  // });
 	}
 
 	/**
@@ -178,16 +163,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
 	 */
 	var api = exports.api = null;
+	var widget = null;
 
 	function ready(fn) {
 	  fn();
 	}
 
+	function load() {}
+
+	// Refactor this function to make it simple
 	function loadWidget(response, config) {
-	  var embed = void 0;
-	  var popup = void 0;
-	  var cta = void 0;
 	  var params = void 0;
+	  var displayOnLoad = false;
+	  var displayCTA = false;
 
 	  if (response.apiErrorCode) {
 	    _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') ' + response.message));
@@ -205,21 +193,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	      eventBus: eventBus,
 	      api: api
 	    };
+
+	    response.jsOptions.widgetRuleUrls.forEach(function (rule) {
+	      if (matchesUrl(rule.url)) {
+	        displayOnLoad = true;
+	        displayCTA = rule.showAsCTA;
+	      }
+	    });
+
+	    response.jsOptions.conversionUrls.forEach(function (rule) {
+	      console.log(rule);
+	      if (matchesUrl(rule)) {
+	        displayOnLoad = true;
+	      }
+	    });
 	  }
 
-	  if (config.engagementMedium === 'EMBED') {
-	    embed = new _EmbedWidget.EmbedWidget(params).load();
-	  } else if (config.engagementMedium === 'POPUP') {
-	    popup = new _PopupWidget.PopupWidget(params).load();
-	  } else if (config.engagementMedium === 'CTA') {
+	  if (!displayCTA && config.engagementMedium === 'EMBED') {
+	    widget = new _EmbedWidget.EmbedWidget(params).load();
+	  } else if (!displayCTA && config.engagementMedium === 'POPUP') {
+	    widget = new _PopupWidget.PopupWidget(params);
+	    widget.load();
+	    if (displayOnLoad) widget.open();
+	  } else if (displayCTA) {
 	    var side = response.jsOptions.cta.content.buttonSide;
 	    var position = response.jsOptions.cta.content.buttonPosition;
 
-	    cta = new _CtaWidget.CtaWidget(params, { side: side, position: position }).load();
+	    widget = new _CtaWidget.CtaWidget(params, { side: side, position: position }).load();
 	  } else {
 	    // POPUP is default
-	    popup = new _PopupWidget.PopupWidget(params).load();
+	    widget = new _PopupWidget.PopupWidget(params);
+	    widget.load();
+	    if (displayOnLoad) widget.open();
 	  }
+	}
+
+	function matchesUrl(rule) {
+	  return window.location.href.match(new RegExp(rule));
 	}
 
 	if (window) (0, _async.asyncLoad)();
@@ -4183,7 +4193,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _doPut(url, data, jwt) {
 	      var _headers = {
 	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
+	        'Content-Type': 'application/json',
+	        'X-SaaSquatch-Referrer': window ? window.location.href : ""
 	      };
 
 	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
@@ -4399,21 +4410,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.frame.style = 'border: 0; background-color: none;';
 	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
 
-	    me.eventBus.addEventListener('fb_btn_clicked', function (e, param1, param2) {
+	    me.eventBus.addEventListener('fb_btn_clicked', function (e, _sqh) {
 	      _log("fb btn clicked");
-	      _log("param1", param1);
-	      _log("param2", param2);
-	      // me._shareEvent(param1,param2);
+	      me._shareEvent(_sqh, 'FACEBOOK');
 	    });
-	    me.eventBus.addEventListener('tw_btn_clicked', function (e) {
+
+	    me.eventBus.addEventListener('tw_btn_clicked', function (e, _sqh) {
 	      _log("tw btn clicked");
+	      me._shareEvent(_sqh, 'TWITTER');
 	    });
-	    me.eventBus.addEventListener('email_btn_clicked', function (e) {
+
+	    me.eventBus.addEventListener('email_btn_clicked', function (e, _sqh) {
 	      _log("email btn clicked");
+	      me._shareEvent(_sqh, 'EMAIL');
 	    });
-	    me.eventBus.addEventListener('copy_btn_clicked', function (e) {
+
+	    me.eventBus.addEventListener('copy_btn_clicked', function (e, _sqh) {
 	      _log("copy btn clicked");
+	      me._shareEvent(_sqh, 'DIRECT');
 	    });
+
 	    me.eventBus.addEventListener('email_submitted', function (e, params, jwt) {
 	      _log("email_submitted");
 	      me.reload(params, jwt);
@@ -4567,7 +4583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded?externalAccountId=' + account_id + '&externalUserId=' + user_id + '&engagementMedium=' + engagement_medium + '&shareMedium=' + share_medium;
 	      var url = this.domain + path;
-	      return this._doPost(url, params);
+	      return this._doPost(url, JSON.stringify({}));
 	    }
 
 	    /**

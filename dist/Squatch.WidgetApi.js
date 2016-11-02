@@ -3707,7 +3707,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _doPut(url, data, jwt) {
 	      var _headers = {
 	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
+	        'Content-Type': 'application/json',
+	        'X-SaaSquatch-Referrer': window ? window.location.href : ""
 	      };
 
 	      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;

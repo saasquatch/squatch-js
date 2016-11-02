@@ -38,7 +38,7 @@ export class AnalyticsApi {
 
     let path = `/a/${tenant_alias}/widgets/analytics/loaded?externalAccountId=${account_id}&externalUserId=${user_id}&engagementMedium=${engagement_medium}&shareMedium=${share_medium}`;
     let url = this.domain + path;
-    return this._doPost(url, params);
+    return this._doPost(url, JSON.stringify({}));
   }
 
   /**

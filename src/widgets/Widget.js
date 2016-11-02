@@ -52,17 +52,26 @@ export class Widget {
     me.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
 
 
-    me.eventBus.addEventListener('fb_btn_clicked', function(e, param1, param2) {
+    me.eventBus.addEventListener('fb_btn_clicked', function(e, _sqh) {
       _log("fb btn clicked");
-      _log("param1", param1);
-      _log("param2", param2);
-      // me._shareEvent(param1,param2);
+      me._shareEvent(_sqh, 'FACEBOOK');
     });
-    me.eventBus.addEventListener('tw_btn_clicked', function(e) {
+
+    me.eventBus.addEventListener('tw_btn_clicked', function(e, _sqh) {
       _log("tw btn clicked");
+      me._shareEvent(_sqh, 'TWITTER');
     });
-    me.eventBus.addEventListener('email_btn_clicked', function(e) { _log("email btn clicked") });
-    me.eventBus.addEventListener('copy_btn_clicked', function(e) { _log("copy btn clicked"); });
+
+    me.eventBus.addEventListener('email_btn_clicked', function(e, _sqh) {
+      _log("email btn clicked");
+      me._shareEvent(_sqh, 'EMAIL');
+    });
+
+    me.eventBus.addEventListener('copy_btn_clicked', function(e, _sqh) {
+      _log("copy btn clicked");
+      me._shareEvent(_sqh, 'DIRECT');
+    });
+
     me.eventBus.addEventListener('email_submitted', function(e, params, jwt) {
       _log("email_submitted");
       me.reload(params, jwt);

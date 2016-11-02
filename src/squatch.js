@@ -51,22 +51,6 @@ export function init(config) {
   }).catch(function(ex) {
     throw new Error('cookieUser() ' + ex);
   });
-
-  // api.upsert(config).then(function(response) {
-  //   _log('upsert user:')
-  //   _log(response);
-  //   // store.set('sqh_user', response);
-  // }).catch(function(ex) {
-  //   _log(new Error('upsertUser()' + ex));
-  // });
-
-  // api.render(config).then(function(response) {
-  //   _log('render');
-  //   _log(response);
-  //   loadWidget(response, config.engagementMedium ? config.engagementMedium : 'POPUP');
-  // }).catch(function(ex) {
-  //   _log(new Error('render() ' + ex));
-  // });
 }
 
 /**
@@ -78,16 +62,21 @@ export function init(config) {
  * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
  */
 export let api = null;
+let widget = null;
 
 export function ready(fn) {
   fn();
 }
 
+export function load() {
+
+}
+
+// Refactor this function to make it simple
 function loadWidget(response, config) {
-  let embed;
-  let popup;
-  let cta;
   let params;
+  let displayOnLoad = false;
+  let displayCTA = false;
 
   if (response.apiErrorCode) {
     _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') ' + response.message));
@@ -105,21 +94,47 @@ function loadWidget(response, config) {
       eventBus: eventBus,
       api: api,
     };
+
+    response.jsOptions.widgetRuleUrls.forEach(rule => {
+      if (matchesUrl(rule.url)) {
+        displayOnLoad = true;
+        displayCTA = rule.showAsCTA;
+      }
+    });
+
+    response.jsOptions.conversionUrls.forEach(rule => {
+      console.log(rule);
+      if (matchesUrl(rule)) {
+        displayOnLoad = true;
+      }
+    });
   }
 
-  if (config.engagementMedium === 'EMBED') {
-    embed = new EmbedWidget(params).load();
-  } else if (config.engagementMedium === 'POPUP') {
-    popup = new PopupWidget(params).load();
-  } else if (config.engagementMedium === 'CTA') {
+  if (!displayCTA && config.engagementMedium === 'EMBED') {
+    widget = new EmbedWidget(params).load();
+
+  } else if (!displayCTA && config.engagementMedium === 'POPUP') {
+    widget = new PopupWidget(params);
+    widget.load();
+    if (displayOnLoad) widget.open();
+
+  } else if (displayCTA) {
     let side = response.jsOptions.cta.content.buttonSide;
     let position = response.jsOptions.cta.content.buttonPosition;
 
-    cta = new CtaWidget(params, {side: side, position: position}).load();
+    widget = new CtaWidget(params, {side: side, position: position}).load();
+
   } else {
     // POPUP is default
-    popup = new PopupWidget(params).load();
+    widget = new PopupWidget(params);
+    widget.load();
+    if (displayOnLoad) widget.open();
   }
+
+}
+
+function matchesUrl(rule) {
+  return window.location.href.match(new RegExp(rule));
 }
 
 if (window) asyncLoad();

@@ -150,7 +150,8 @@ export class WidgetApi {
    _doPut(url, data, jwt) {
      let _headers = {
        'Accept': 'application/json',
-       'Content-Type': 'application/json'
+       'Content-Type': 'application/json',
+       'X-SaaSquatch-Referrer': window ? window.location.href : ""
      }
 
      if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
