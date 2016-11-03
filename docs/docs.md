@@ -2,77 +2,47 @@
 
 # squatch
 
-Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app. 
+Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app.
 It can show referral widgets on any website, track users, generate unique referral short links and referral codes, and more.
 
 # init
 
 Initializes a static `squatch` global. This sets up:
 
--   `api` a static instance of the [OpenApi](#openapi)
+-   `api` a static instance of the [WidgetApi](#widgetapi)
 
 **Parameters**
 
 -   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Configuration details
-    -   `config.tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant alias connects to your account. Note: There are both _live_ and _test_ tenant aliases.
+    -   `config.tenant_alias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant alias connects to your account. Note: There are both _live_ and _test_ tenant aliases.
 
 **Examples**
 
 ```javascript
-squatch.init({tenantAlias:'test_basbtabstq51v'});
+squatch.init({tenant_alias:'test_basbtabstq51v'});
 ```
 
 Returns **void** 
 
 # api
 
-Static instance of the [OpenApi](#openapi). Make sure you call [init](#init) first
+Static instance of the [WidgetApi](#widgetapi). Make sure you call [init](#init) first
 
 **Examples**
 
 ```javascript
-squatch.init({tenantAlias:'test_basbtabstq51v'});
+squatch.init({tenant_alias:'test_basbtabstq51v'});
 squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
 ```
-
-# cookie
-
-Gets a cookie or sets a cookie depending on what arguments you use.
-
-**Parameters**
-
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the name of the cookie
--   `value` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** sets the value of the cookie
--   `options` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)]** options on the value of the cookie
-    -   `options.path` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** the cookie path
-    -   `options.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** the cookie domain
-    -   `options.expires` **\[[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)]** the cookie expiry
-    -   `options.secure` **\[[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)]** if the cookie is secure (optional, default `false`)
-
-**Examples**
-
-_Set a cookie_
-
-```javascript
-cookie('myCookie', 12, {domain:'google.com'});
-```
-
-_Get a cookie_
-
-```javascript
-var cookieValue = cookie('myCookie');
-```
-
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The cookie value
 
 # OpenApi
 
 The OpenApi class is a wrapper around the Open Endpoints of the SaaSquatch REST API.
 
-The Open Endpoints in the SaaSquatch REST API are endpoints designed to work 
-in client applications like the Mobile SDK and Javascript SDK. 
-Authentication relies on a User JWT and some API endpoints are unauthenticated. 
-Even though the Open Endpoints are designed for client applications, they can 
+The Open Endpoints in the SaaSquatch REST API are endpoints designed to work
+in client applications like the Mobile SDK and Javascript SDK.
+Authentication relies on a User JWT and some API endpoints are unauthenticated.
+Even though the Open Endpoints are designed for client applications, they can
 still be used in server-to-server cases using API Key authentication.
 
 ## constructor
@@ -83,7 +53,7 @@ Initialize a new [OpenApi](#openapi) instance.
 
 -   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
     -   `config.tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant to access
-    -   `config.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** The server domain. 
+    -   `config.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** The server domain.
            Useful if you want to use a proxy like [RequestBin](https://requestb.in/) or [Runscope](https://runscope.com/). (optional, default `'https://app.referralsaasquatch.com'`)
 
 **Examples**
@@ -91,21 +61,21 @@ Initialize a new [OpenApi](#openapi) instance.
 _Browser example_
 
 ```javascript
-var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125');
+var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});
 ```
 
 _Browserify/Webpack example_
 
 ```javascript
 var OpenApi = require('squatch-js').OpenApi;
-var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');
+var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
 ```
 
 _Babel+Browserify/Webpack example_
 
 ```javascript
 import {OpenApi} from 'squatch-js';
-let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');
+let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
 ```
 
 ## createUser
@@ -179,3 +149,132 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 Lists referrals
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** Stuff
+
+# WidgetApi
+
+The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
+
+## constructor
+
+Initialize a new [WidgetApi](#widgetapi) instance.
+
+**Parameters**
+
+-   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
+    -   `config.tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant to access
+    -   `config.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** The server domain.
+           Useful if you want to use a proxy like [RequestBin](https://requestb.in/) or [Runscope](https://runscope.com/). (optional, default `'https://app.referralsaasquatch.com'`)
+
+**Examples**
+
+_Browser example_
+
+```javascript
+var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+```
+
+_Browserify/Webpack example_
+
+```javascript
+var WidgetApi = require('squatch-js').WidgetApi;
+var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+```
+
+_Babel+Browserify/Webpack example_
+
+```javascript
+import {WidgetApi} from 'squatch-js';
+let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+```
+
+## cookieUser
+
+Description here.
+
+**Parameters**
+
+-   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: "", engagementMedium: "", jwt: "" })** 
+    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)
+    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the mode of the widget being loaded (POPUP/MOBILE)
+    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** json object if true, with the widget template, jsOptions and user details.
+
+## upsert
+
+Description here.
+
+**Parameters**
+
+-   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: "", engagementMedium: "", jwt: ""})** 
+    -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
+        -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+        -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the mode of the widget being loaded (POPUP/MOBILE)
+    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** string if true, with the widget template.
+
+## render
+
+Description here.
+
+**Parameters**
+
+-   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: "", engagementMedium: "", jwt: ""})** 
+    -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
+        -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+        -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the mode of the widget being loaded (POPUP/MOBILE)
+    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** template html if true.
+
+# Widget
+
+The Widget class is the base class for the different widget types available
+
+Creating widget type:
+   class CustomWidget extends Widget {
+     constructor(params,stuff) {
+       super(params);
+       // do stuff
+     }
+
+     load() {
+       // custom loading of widget
+     }
+
+   }
+
+## constructor
+
+Initialize a new [Widget](#widget) instance.
+
+Creates an <iframe></iframe> in which the html content of the widget gets
+embedded.
+Uses element-resize-detector (<https://github.com/wnr/element-resize-detector>)
+for listening to the height of the widget content and make the iframe responsive.
+The EventBus listens for events that get triggered in the widget.
+
+**Parameters**
+
+-   `content` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The html of the widget
+-   `eventBus` **EventBus** (<https://github.com/krasimir/EventBus.git>)
+-   `params`  
+
+# AnalyticsApi
+
+The AnalyticsApi class is a wrapper around the Analytics Endpoints of
+the SaaSquatch REST API. Used to record Widget events.
+
+## constructor
+
+Initialize a new [AnalyticsApi](#analyticsapi) instance.
+
+**Parameters**
+
+-   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
+    -   `config.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** The server domain. (optional, default `'https://app.referralsaasquatch.com'`)

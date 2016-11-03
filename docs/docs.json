@@ -8,7 +8,7 @@
           "children": [
             {
               "type": "text",
-              "value": "Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app. \nIt can show referral widgets on any website, track users, generate unique referral short links and referral codes, and more.",
+              "value": "Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app.\nIt can show referral widgets on any website, track users, generate unique referral short links and referral codes, and more.",
               "position": {
                 "start": {
                   "line": 1,
@@ -18,7 +18,7 @@
                 "end": {
                   "line": 2,
                   "column": 125,
-                  "offset": 260
+                  "offset": 259
                 },
                 "indent": [
                   1
@@ -35,7 +35,7 @@
             "end": {
               "line": 2,
               "column": 125,
-              "offset": 260
+              "offset": 259
             },
             "indent": [
               1
@@ -52,7 +52,7 @@
         "end": {
           "line": 2,
           "column": 125,
-          "offset": 260
+          "offset": 259
         }
       }
     },
@@ -83,7 +83,7 @@
         },
         "end": {
           "line": 7,
-          "column": 41
+          "column": 40
         }
       },
       "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
@@ -225,13 +225,13 @@
                     },
                     {
                       "type": "link",
-                      "url": "OpenApi",
+                      "url": "WidgetApi",
                       "title": null,
                       "jsdoc": true,
                       "children": [
                         {
                           "type": "text",
-                          "value": "OpenApi"
+                          "value": "WidgetApi"
                         }
                       ],
                       "position": {
@@ -242,8 +242,8 @@
                         },
                         "end": {
                           "line": 3,
-                          "column": 50,
-                          "offset": 103
+                          "column": 52,
+                          "offset": 105
                         },
                         "indent": []
                       }
@@ -257,8 +257,8 @@
                     },
                     "end": {
                       "line": 3,
-                      "column": 50,
-                      "offset": 103
+                      "column": 52,
+                      "offset": 105
                     },
                     "indent": []
                   }
@@ -272,8 +272,8 @@
                 },
                 "end": {
                   "line": 3,
-                  "column": 50,
-                  "offset": 103
+                  "column": 52,
+                  "offset": 105
                 },
                 "indent": []
               }
@@ -287,8 +287,8 @@
             },
             "end": {
               "line": 3,
-              "column": 50,
-              "offset": 103
+              "column": 52,
+              "offset": 105
             },
             "indent": []
           }
@@ -302,8 +302,8 @@
         },
         "end": {
           "line": 3,
-          "column": 50,
-          "offset": 103
+          "column": 52,
+          "offset": 105
         }
       }
     },
@@ -326,7 +326,7 @@
           "type": "NameExpression",
           "name": "string"
         },
-        "name": "config.tenantAlias"
+        "name": "config.tenant_alias"
       },
       {
         "title": "returns",
@@ -339,28 +339,28 @@
       },
       {
         "title": "example",
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});",
+        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});",
         "lineNumber": 8
       }
     ],
     "loc": {
       "start": {
-        "line": 13,
+        "line": 24,
         "column": 0
       },
       "end": {
-        "line": 23,
+        "line": 34,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 24,
+          "line": 35,
           "column": 0
         },
         "end": {
-          "line": 28,
+          "line": 54,
           "column": 1
         }
       },
@@ -428,7 +428,7 @@
         },
         "properties": [
           {
-            "name": "config.tenantAlias",
+            "name": "config.tenant_alias",
             "lineNumber": 6,
             "description": {
               "type": "root",
@@ -620,7 +620,7 @@
     ],
     "examples": [
       {
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});"
+        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});"
       }
     ],
     "name": "init",
@@ -663,13 +663,13 @@
             },
             {
               "type": "link",
-              "url": "OpenApi",
+              "url": "WidgetApi",
               "title": null,
               "jsdoc": true,
               "children": [
                 {
                   "type": "text",
-                  "value": "OpenApi"
+                  "value": "WidgetApi"
                 }
               ],
               "position": {
@@ -680,8 +680,8 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 39,
-                  "offset": 38
+                  "column": 41,
+                  "offset": 40
                 },
                 "indent": []
               }
@@ -692,13 +692,13 @@
               "position": {
                 "start": {
                   "line": 1,
-                  "column": 39,
-                  "offset": 38
+                  "column": 41,
+                  "offset": 40
                 },
                 "end": {
                   "line": 1,
-                  "column": 60,
-                  "offset": 59
+                  "column": 62,
+                  "offset": 61
                 },
                 "indent": []
               }
@@ -717,13 +717,13 @@
               "position": {
                 "start": {
                   "line": 1,
-                  "column": 60,
-                  "offset": 59
+                  "column": 62,
+                  "offset": 61
                 },
                 "end": {
                   "line": 1,
-                  "column": 78,
-                  "offset": 77
+                  "column": 80,
+                  "offset": 79
                 },
                 "indent": []
               }
@@ -734,13 +734,13 @@
               "position": {
                 "start": {
                   "line": 1,
-                  "column": 78,
-                  "offset": 77
+                  "column": 80,
+                  "offset": 79
                 },
                 "end": {
                   "line": 1,
-                  "column": 84,
-                  "offset": 83
+                  "column": 86,
+                  "offset": 85
                 },
                 "indent": []
               }
@@ -754,8 +754,8 @@
             },
             "end": {
               "line": 1,
-              "column": 84,
-              "offset": 83
+              "column": 86,
+              "offset": 85
             },
             "indent": []
           }
@@ -769,8 +769,8 @@
         },
         "end": {
           "line": 1,
-          "column": 84,
-          "offset": 83
+          "column": 86,
+          "offset": 85
         }
       }
     },
@@ -781,33 +781,33 @@
         "lineNumber": 3,
         "type": {
           "type": "NameExpression",
-          "name": "OpenApi"
+          "name": "WidgetApi"
         }
       },
       {
         "title": "example",
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});",
+        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});",
         "lineNumber": 4
       }
     ],
     "loc": {
       "start": {
-        "line": 30,
+        "line": 56,
         "column": 0
       },
       "end": {
-        "line": 37,
+        "line": 63,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 38,
+          "line": 64,
           "column": 0
         },
         "end": {
-          "line": 38,
+          "line": 64,
           "column": 22
         }
       },
@@ -815,7 +815,7 @@
     },
     "examples": [
       {
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});"
+        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});"
       }
     ],
     "name": "api",
@@ -829,823 +829,6 @@
       }
     ],
     "namespace": "api"
-  },
-  {
-    "description": {
-      "type": "root",
-      "children": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "Gets a cookie or sets a cookie depending on what arguments you use.",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 68,
-                  "offset": 67
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 68,
-              "offset": 67
-            },
-            "indent": []
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 68,
-          "offset": 67
-        }
-      }
-    },
-    "tags": [
-      {
-        "title": "param",
-        "description": "the name of the cookie",
-        "lineNumber": 3,
-        "type": {
-          "type": "NameExpression",
-          "name": "string"
-        },
-        "name": "name"
-      },
-      {
-        "title": "param",
-        "description": "sets the value of the cookie",
-        "lineNumber": 4,
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "string"
-          }
-        },
-        "name": "value"
-      },
-      {
-        "title": "param",
-        "description": "options on the value of the cookie",
-        "lineNumber": 5,
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "Object"
-          }
-        },
-        "name": "options"
-      },
-      {
-        "title": "param",
-        "description": "the cookie path",
-        "lineNumber": 6,
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "string"
-          }
-        },
-        "name": "options.path"
-      },
-      {
-        "title": "param",
-        "description": "the cookie domain",
-        "lineNumber": 7,
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "string"
-          }
-        },
-        "name": "options.domain"
-      },
-      {
-        "title": "param",
-        "description": "the cookie expiry",
-        "lineNumber": 8,
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "Date"
-          }
-        },
-        "name": "options.expires"
-      },
-      {
-        "title": "param",
-        "description": "if the cookie is secure",
-        "lineNumber": 9,
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "boolean"
-          }
-        },
-        "name": "options.secure",
-        "default": "false"
-      },
-      {
-        "title": "returns",
-        "description": "The cookie value",
-        "lineNumber": 11,
-        "type": {
-          "type": "NameExpression",
-          "name": "Object"
-        }
-      },
-      {
-        "title": "example",
-        "description": "cookie('myCookie', 12, {domain:'google.com'});",
-        "lineNumber": 13,
-        "caption": "Set a cookie"
-      },
-      {
-        "title": "example",
-        "description": "var cookieValue = cookie('myCookie');",
-        "lineNumber": 16,
-        "caption": "Get a cookie"
-      }
-    ],
-    "loc": {
-      "start": {
-        "line": 4,
-        "column": 0
-      },
-      "end": {
-        "line": 23,
-        "column": 3
-      }
-    },
-    "context": {
-      "loc": {
-        "start": {
-          "line": 24,
-          "column": 0
-        },
-        "end": {
-          "line": 27,
-          "column": 1
-        }
-      },
-      "file": "/home/ubuntu/workspace/squatch-js/src/tracking/Cookie.js"
-    },
-    "params": [
-      {
-        "name": "name",
-        "lineNumber": 3,
-        "description": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "the name of the cookie",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 23,
-                      "offset": 22
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 23,
-                  "offset": 22
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 23,
-              "offset": 22
-            }
-          }
-        },
-        "type": {
-          "type": "NameExpression",
-          "name": "string"
-        }
-      },
-      {
-        "name": "value",
-        "lineNumber": 4,
-        "description": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "sets the value of the cookie",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 29,
-                      "offset": 28
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 29,
-                  "offset": 28
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 29,
-              "offset": 28
-            }
-          }
-        },
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "string"
-          }
-        }
-      },
-      {
-        "name": "options",
-        "lineNumber": 5,
-        "description": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "options on the value of the cookie",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 35,
-                      "offset": 34
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 35,
-                  "offset": 34
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 35,
-              "offset": 34
-            }
-          }
-        },
-        "type": {
-          "type": "OptionalType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "Object"
-          }
-        },
-        "properties": [
-          {
-            "name": "options.path",
-            "lineNumber": 6,
-            "description": {
-              "type": "root",
-              "children": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "type": "text",
-                      "value": "the cookie path",
-                      "position": {
-                        "start": {
-                          "line": 1,
-                          "column": 1,
-                          "offset": 0
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 16,
-                          "offset": 15
-                        },
-                        "indent": []
-                      }
-                    }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 16,
-                      "offset": 15
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 16,
-                  "offset": 15
-                }
-              }
-            },
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            }
-          },
-          {
-            "name": "options.domain",
-            "lineNumber": 7,
-            "description": {
-              "type": "root",
-              "children": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "type": "text",
-                      "value": "the cookie domain",
-                      "position": {
-                        "start": {
-                          "line": 1,
-                          "column": 1,
-                          "offset": 0
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 18,
-                          "offset": 17
-                        },
-                        "indent": []
-                      }
-                    }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 18,
-                      "offset": 17
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 18,
-                  "offset": 17
-                }
-              }
-            },
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "string"
-              }
-            }
-          },
-          {
-            "name": "options.expires",
-            "lineNumber": 8,
-            "description": {
-              "type": "root",
-              "children": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "type": "text",
-                      "value": "the cookie expiry",
-                      "position": {
-                        "start": {
-                          "line": 1,
-                          "column": 1,
-                          "offset": 0
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 18,
-                          "offset": 17
-                        },
-                        "indent": []
-                      }
-                    }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 18,
-                      "offset": 17
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 18,
-                  "offset": 17
-                }
-              }
-            },
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "Date"
-              }
-            }
-          },
-          {
-            "name": "options.secure",
-            "lineNumber": 9,
-            "description": {
-              "type": "root",
-              "children": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "type": "text",
-                      "value": "if the cookie is secure",
-                      "position": {
-                        "start": {
-                          "line": 1,
-                          "column": 1,
-                          "offset": 0
-                        },
-                        "end": {
-                          "line": 1,
-                          "column": 24,
-                          "offset": 23
-                        },
-                        "indent": []
-                      }
-                    }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 24,
-                      "offset": 23
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 24,
-                  "offset": 23
-                }
-              }
-            },
-            "type": {
-              "type": "OptionalType",
-              "expression": {
-                "type": "NameExpression",
-                "name": "boolean"
-              }
-            },
-            "default": "false"
-          }
-        ]
-      }
-    ],
-    "returns": [
-      {
-        "description": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "The cookie value",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 17,
-                      "offset": 16
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 17,
-                  "offset": 16
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 17,
-              "offset": 16
-            }
-          }
-        },
-        "type": {
-          "type": "NameExpression",
-          "name": "Object"
-        }
-      }
-    ],
-    "examples": [
-      {
-        "description": "cookie('myCookie', 12, {domain:'google.com'});",
-        "caption": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "Set a cookie",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 13,
-                      "offset": 12
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 13,
-                  "offset": 12
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 13,
-              "offset": 12
-            }
-          }
-        }
-      },
-      {
-        "description": "var cookieValue = cookie('myCookie');",
-        "caption": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "Get a cookie",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 13,
-                      "offset": 12
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 13,
-                  "offset": 12
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 13,
-              "offset": 12
-            }
-          }
-        }
-      }
-    ],
-    "name": "cookie",
-    "kind": "function",
-    "members": {
-      "instance": [],
-      "static": []
-    },
-    "path": [
-      {
-        "name": "cookie",
-        "kind": "function"
-      }
-    ],
-    "namespace": "cookie"
   },
   {
     "description": {
@@ -1691,7 +874,7 @@
           "children": [
             {
               "type": "text",
-              "value": "The Open Endpoints in the SaaSquatch REST API are endpoints designed to work \nin client applications like the Mobile SDK and Javascript SDK. \nAuthentication relies on a User JWT and some API endpoints are unauthenticated. \nEven though the Open Endpoints are designed for client applications, they can \nstill be used in server-to-server cases using API Key authentication.",
+              "value": "The Open Endpoints in the SaaSquatch REST API are endpoints designed to work\nin client applications like the Mobile SDK and Javascript SDK.\nAuthentication relies on a User JWT and some API endpoints are unauthenticated.\nEven though the Open Endpoints are designed for client applications, they can\nstill be used in server-to-server cases using API Key authentication.",
               "position": {
                 "start": {
                   "line": 3,
@@ -1701,7 +884,7 @@
                 "end": {
                   "line": 7,
                   "column": 70,
-                  "offset": 457
+                  "offset": 453
                 },
                 "indent": [
                   1,
@@ -1721,7 +904,7 @@
             "end": {
               "line": 7,
               "column": 70,
-              "offset": 457
+              "offset": 453
             },
             "indent": [
               1,
@@ -1741,29 +924,29 @@
         "end": {
           "line": 7,
           "column": 70,
-          "offset": 457
+          "offset": 453
         }
       }
     },
     "tags": [],
     "loc": {
       "start": {
-        "line": 6,
+        "line": 5,
         "column": 0
       },
       "end": {
-        "line": 16,
+        "line": 15,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 17,
+          "line": 16,
           "column": 0
         },
         "end": {
-          "line": 207,
+          "line": 251,
           "column": 1
         }
       },
@@ -1891,7 +1074,7 @@
             },
             {
               "title": "param",
-              "description": "The server domain. \n   Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.",
+              "description": "The server domain.\n   Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.",
               "lineNumber": 5,
               "type": {
                 "type": "OptionalType",
@@ -1905,41 +1088,41 @@
             },
             {
               "title": "example",
-              "description": "var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125');",
+              "description": "var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});",
               "lineNumber": 8,
               "caption": "Browser example"
             },
             {
               "title": "example",
-              "description": "var OpenApi = require('squatch-js').OpenApi;\nvar squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');",
+              "description": "var OpenApi = require('squatch-js').OpenApi;\nvar squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
               "lineNumber": 11,
               "caption": "Browserify/Webpack example"
             },
             {
               "title": "example",
-              "description": "import {OpenApi} from 'squatch-js';\nlet squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');",
+              "description": "import {OpenApi} from 'squatch-js';\nlet squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
               "lineNumber": 15,
               "caption": "Babel+Browserify/Webpack example"
             }
           ],
           "loc": {
             "start": {
-              "line": 23,
+              "line": 22,
               "column": 2
             },
             "end": {
-              "line": 41,
+              "line": 40,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 42,
+                "line": 41,
                 "column": 2
               },
               "end": {
-                "line": 46,
+                "line": 44,
                 "column": 3
               }
             },
@@ -2077,7 +1260,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "The server domain. \n   Useful if you want to use a proxy like ",
+                            "value": "The server domain.\n   Useful if you want to use a proxy like ",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2087,7 +1270,7 @@
                               "end": {
                                 "line": 2,
                                 "column": 43,
-                                "offset": 62
+                                "offset": 61
                               },
                               "indent": [
                                 1
@@ -2109,12 +1292,12 @@
                               "start": {
                                 "line": 2,
                                 "column": 43,
-                                "offset": 62
+                                "offset": 61
                               },
                               "end": {
                                 "line": 2,
                                 "column": 82,
-                                "offset": 101
+                                "offset": 100
                               },
                               "indent": []
                             }
@@ -2126,12 +1309,12 @@
                               "start": {
                                 "line": 2,
                                 "column": 82,
-                                "offset": 101
+                                "offset": 100
                               },
                               "end": {
                                 "line": 2,
                                 "column": 86,
-                                "offset": 105
+                                "offset": 104
                               },
                               "indent": []
                             }
@@ -2151,12 +1334,12 @@
                               "start": {
                                 "line": 2,
                                 "column": 86,
-                                "offset": 105
+                                "offset": 104
                               },
                               "end": {
                                 "line": 2,
                                 "column": 124,
-                                "offset": 143
+                                "offset": 142
                               },
                               "indent": []
                             }
@@ -2168,12 +1351,12 @@
                               "start": {
                                 "line": 2,
                                 "column": 124,
-                                "offset": 143
+                                "offset": 142
                               },
                               "end": {
                                 "line": 2,
                                 "column": 125,
-                                "offset": 144
+                                "offset": 143
                               },
                               "indent": []
                             }
@@ -2188,7 +1371,7 @@
                           "end": {
                             "line": 2,
                             "column": 125,
-                            "offset": 144
+                            "offset": 143
                           },
                           "indent": [
                             1
@@ -2205,7 +1388,7 @@
                       "end": {
                         "line": 2,
                         "column": 125,
-                        "offset": 144
+                        "offset": 143
                       }
                     }
                   },
@@ -2223,7 +1406,7 @@
           ],
           "examples": [
             {
-              "description": "var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125');",
+              "description": "var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});",
               "caption": {
                 "type": "root",
                 "children": [
@@ -2278,7 +1461,7 @@
               }
             },
             {
-              "description": "var OpenApi = require('squatch-js').OpenApi;\nvar squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');",
+              "description": "var OpenApi = require('squatch-js').OpenApi;\nvar squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
               "caption": {
                 "type": "root",
                 "children": [
@@ -2333,7 +1516,7 @@
               }
             },
             {
-              "description": "import {OpenApi} from 'squatch-js';\nlet squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125');",
+              "description": "import {OpenApi} from 'squatch-js';\nlet squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
               "caption": {
                 "type": "root",
                 "children": [
@@ -2561,22 +1744,22 @@
           ],
           "loc": {
             "start": {
-              "line": 48,
+              "line": 46,
               "column": 2
             },
             "end": {
-              "line": 58,
+              "line": 56,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 59,
+                "line": 57,
                 "column": 2
               },
               "end": {
-                "line": 69,
+                "line": 67,
                 "column": 3
               }
             },
@@ -3039,22 +2222,22 @@
           ],
           "loc": {
             "start": {
-              "line": 71,
+              "line": 91,
               "column": 2
             },
             "end": {
-              "line": 82,
+              "line": 102,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 83,
+                "line": 103,
                 "column": 2
               },
               "end": {
-                "line": 93,
+                "line": 113,
                 "column": 3
               }
             },
@@ -3420,22 +2603,22 @@
           ],
           "loc": {
             "start": {
-              "line": 95,
+              "line": 115,
               "column": 2
             },
             "end": {
-              "line": 101,
+              "line": 121,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 102,
+                "line": 122,
                 "column": 2
               },
               "end": {
-                "line": 111,
+                "line": 131,
                 "column": 3
               }
             },
@@ -3732,22 +2915,22 @@
           ],
           "loc": {
             "start": {
-              "line": 113,
+              "line": 133,
               "column": 2
             },
             "end": {
-              "line": 119,
+              "line": 139,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 120,
+                "line": 140,
                 "column": 2
               },
               "end": {
-                "line": 129,
+                "line": 149,
                 "column": 3
               }
             },
@@ -4064,22 +3247,22 @@
           ],
           "loc": {
             "start": {
-              "line": 131,
+              "line": 151,
               "column": 2
             },
             "end": {
-              "line": 139,
+              "line": 159,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 140,
+                "line": 160,
                 "column": 2
               },
               "end": {
-                "line": 151,
+                "line": 171,
                 "column": 3
               }
             },
@@ -4476,22 +3659,22 @@
           ],
           "loc": {
             "start": {
-              "line": 153,
+              "line": 173,
               "column": 2
             },
             "end": {
-              "line": 157,
+              "line": 177,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 158,
+                "line": 178,
                 "column": 2
               },
               "end": {
-                "line": 164,
+                "line": 184,
                 "column": 3
               }
             },
@@ -4589,5 +3772,3241 @@
       }
     ],
     "namespace": "OpenApi"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 89,
+                  "offset": 88
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 89,
+              "offset": 88
+            },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 89,
+          "offset": 88
+        }
+      }
+    },
+    "tags": [],
+    "loc": {
+      "start": {
+        "line": 5,
+        "column": 0
+      },
+      "end": {
+        "line": 9,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 10,
+          "column": 0
+        },
+        "end": {
+          "line": 168,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+    },
+    "name": "WidgetApi",
+    "kind": "class",
+    "members": {
+      "instance": [
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Initialize a new ",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "WidgetApi",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "WidgetApi"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 35,
+                        "offset": 34
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " instance.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 35,
+                        "offset": 34
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 45,
+                        "offset": 44
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 45,
+                    "offset": 44
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 45,
+                "offset": 44
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": "Config details",
+              "lineNumber": 3,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "config"
+            },
+            {
+              "title": "param",
+              "description": "The tenant to access",
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "config.tenantAlias"
+            },
+            {
+              "title": "param",
+              "description": "The server domain.\n   Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.",
+              "lineNumber": 5,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "config.domain",
+              "default": "'https://app.referralsaasquatch.com'"
+            },
+            {
+              "title": "example",
+              "description": "var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "lineNumber": 8,
+              "caption": "Browser example"
+            },
+            {
+              "title": "example",
+              "description": "var WidgetApi = require('squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "lineNumber": 11,
+              "caption": "Browserify/Webpack example"
+            },
+            {
+              "title": "example",
+              "description": "import {WidgetApi} from 'squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "lineNumber": 15,
+              "caption": "Babel+Browserify/Webpack example"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 11,
+              "column": 2
+            },
+            "end": {
+              "line": 29,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 30,
+                "column": 2
+              },
+              "end": {
+                "line": 34,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+          },
+          "params": [
+            {
+              "name": "config",
+              "lineNumber": 3,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Config details",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 15,
+                            "offset": 14
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15,
+                        "offset": 14
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15,
+                    "offset": 14
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "name": "config.tenantAlias",
+                  "lineNumber": 4,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The tenant to access",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 21,
+                                "offset": 20
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 21,
+                            "offset": 20
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 21,
+                        "offset": 20
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "config.domain",
+                  "lineNumber": 5,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The server domain.\n   Useful if you want to use a proxy like ",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 43,
+                                "offset": 61
+                              },
+                              "indent": [
+                                1
+                              ]
+                            }
+                          },
+                          {
+                            "type": "link",
+                            "url": "https://requestb.in/",
+                            "title": null,
+                            "jsdoc": true,
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "RequestBin"
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 2,
+                                "column": 43,
+                                "offset": 61
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 82,
+                                "offset": 100
+                              },
+                              "indent": []
+                            }
+                          },
+                          {
+                            "type": "text",
+                            "value": " or ",
+                            "position": {
+                              "start": {
+                                "line": 2,
+                                "column": 82,
+                                "offset": 100
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 86,
+                                "offset": 104
+                              },
+                              "indent": []
+                            }
+                          },
+                          {
+                            "type": "link",
+                            "url": "https://runscope.com/",
+                            "title": null,
+                            "jsdoc": true,
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "Runscope"
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 2,
+                                "column": 86,
+                                "offset": 104
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 124,
+                                "offset": 142
+                              },
+                              "indent": []
+                            }
+                          },
+                          {
+                            "type": "text",
+                            "value": ".",
+                            "position": {
+                              "start": {
+                                "line": 2,
+                                "column": 124,
+                                "offset": 142
+                              },
+                              "end": {
+                                "line": 2,
+                                "column": 125,
+                                "offset": 143
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 2,
+                            "column": 125,
+                            "offset": 143
+                          },
+                          "indent": [
+                            1
+                          ]
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 125,
+                        "offset": 143
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  },
+                  "default": "'https://app.referralsaasquatch.com'"
+                }
+              ]
+            }
+          ],
+          "examples": [
+            {
+              "description": "var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "caption": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Browser example",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 16,
+                            "offset": 15
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 16,
+                        "offset": 15
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 16,
+                    "offset": 15
+                  }
+                }
+              }
+            },
+            {
+              "description": "var WidgetApi = require('squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "caption": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Browserify/Webpack example",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 27,
+                            "offset": 26
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 27,
+                        "offset": 26
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 27,
+                    "offset": 26
+                  }
+                }
+              }
+            },
+            {
+              "description": "import {WidgetApi} from 'squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "caption": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Babel+Browserify/Webpack example",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 33,
+                            "offset": 32
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 33,
+                        "offset": 32
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 33,
+                    "offset": 32
+                  }
+                }
+              }
+            }
+          ],
+          "name": "constructor",
+          "kind": "function",
+          "memberof": "WidgetApi",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "WidgetApi",
+              "kind": "class"
+            },
+            {
+              "name": "constructor",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "WidgetApi#constructor"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Description here.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 18,
+                    "offset": 17
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 18,
+                "offset": 17
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 3,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params"
+            },
+            {
+              "title": "param",
+              "description": "the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)",
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.widgetType"
+            },
+            {
+              "title": "param",
+              "description": "the mode of the widget being loaded (POPUP/MOBILE)",
+              "lineNumber": 5,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.engagementMedium"
+            },
+            {
+              "title": "param",
+              "description": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.jwt"
+            },
+            {
+              "title": "return",
+              "description": "json object if true, with the widget template, jsOptions and user details.",
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 36,
+              "column": 2
+            },
+            "end": {
+              "line": 44,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 45,
+                "column": 2
+              },
+              "end": {
+                "line": 57,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+          },
+          "params": [
+            {
+              "name": "params",
+              "lineNumber": 3,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                "default": "{ widgetType: \"\", engagementMedium: \"\", jwt: \"\" }"
+              },
+              "properties": [
+                {
+                  "name": "params.widgetType",
+                  "lineNumber": 4,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 72,
+                                "offset": 71
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 72,
+                            "offset": 71
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 72,
+                        "offset": 71
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "params.engagementMedium",
+                  "lineNumber": 5,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the mode of the widget being loaded (POPUP/MOBILE)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 51,
+                                "offset": 50
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 51,
+                            "offset": 50
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 51,
+                        "offset": 50
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "params.jwt",
+                  "lineNumber": 6,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 77,
+                                "offset": 76
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 77,
+                            "offset": 76
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 77,
+                        "offset": 76
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                }
+              ]
+            }
+          ],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "json object if true, with the widget template, jsOptions and user details.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 75,
+                            "offset": 74
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 75,
+                        "offset": 74
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 75,
+                    "offset": 74
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "name": "cookieUser",
+          "kind": "function",
+          "memberof": "WidgetApi",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "WidgetApi",
+              "kind": "class"
+            },
+            {
+              "name": "cookieUser",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "WidgetApi#cookieUser"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Description here.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 18,
+                    "offset": 17
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 18,
+                "offset": 17
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 3,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params"
+            },
+            {
+              "title": "param",
+              "description": "the user details",
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params.user"
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 5,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.user.id"
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.user.accountId"
+            },
+            {
+              "title": "param",
+              "description": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.widgetType"
+            },
+            {
+              "title": "param",
+              "description": "the mode of the widget being loaded (POPUP/MOBILE)",
+              "lineNumber": 8,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.engagementMedium"
+            },
+            {
+              "title": "param",
+              "description": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+              "lineNumber": 9,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.jwt"
+            },
+            {
+              "title": "return",
+              "description": "string if true, with the widget template.",
+              "lineNumber": 10,
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 59,
+              "column": 2
+            },
+            "end": {
+              "line": 70,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 71,
+                "column": 2
+              },
+              "end": {
+                "line": 84,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+          },
+          "params": [
+            {
+              "name": "params",
+              "lineNumber": 3,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                "default": "{ widgetType: \"\", engagementMedium: \"\", jwt: \"\"}"
+              },
+              "properties": [
+                {
+                  "name": "params.user",
+                  "lineNumber": 4,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the user details",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 17,
+                                "offset": 16
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17,
+                            "offset": 16
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17,
+                        "offset": 16
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Object"
+                  },
+                  "properties": [
+                    {
+                      "name": "params.user.id",
+                      "lineNumber": 5,
+                      "type": {
+                        "type": "NameExpression",
+                        "name": "string"
+                      }
+                    },
+                    {
+                      "name": "params.user.accountId",
+                      "lineNumber": 6,
+                      "type": {
+                        "type": "NameExpression",
+                        "name": "string"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "params.widgetType",
+                  "lineNumber": 7,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 71,
+                                "offset": 70
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 71,
+                            "offset": 70
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 71,
+                        "offset": 70
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "params.engagementMedium",
+                  "lineNumber": 8,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the mode of the widget being loaded (POPUP/MOBILE)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 51,
+                                "offset": 50
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 51,
+                            "offset": 50
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 51,
+                        "offset": 50
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "params.jwt",
+                  "lineNumber": 9,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 77,
+                                "offset": 76
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 77,
+                            "offset": 76
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 77,
+                        "offset": 76
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                }
+              ]
+            }
+          ],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "string if true, with the widget template.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 42,
+                            "offset": 41
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 42,
+                        "offset": 41
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 42,
+                    "offset": 41
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "name": "upsert",
+          "kind": "function",
+          "memberof": "WidgetApi",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "WidgetApi",
+              "kind": "class"
+            },
+            {
+              "name": "upsert",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "WidgetApi#upsert"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Description here.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 18,
+                    "offset": 17
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 18,
+                "offset": 17
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 3,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params"
+            },
+            {
+              "title": "param",
+              "description": "the user details",
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params.user"
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 5,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.user.id"
+            },
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 6,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.user.accountId"
+            },
+            {
+              "title": "param",
+              "description": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+              "lineNumber": 7,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.widgetType"
+            },
+            {
+              "title": "param",
+              "description": "the mode of the widget being loaded (POPUP/MOBILE)",
+              "lineNumber": 8,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.engagementMedium"
+            },
+            {
+              "title": "param",
+              "description": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+              "lineNumber": 9,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "params.jwt"
+            },
+            {
+              "title": "return",
+              "description": "template html if true.",
+              "lineNumber": 10,
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 86,
+              "column": 2
+            },
+            "end": {
+              "line": 97,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 98,
+                "column": 2
+              },
+              "end": {
+                "line": 111,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+          },
+          "params": [
+            {
+              "name": "params",
+              "lineNumber": 3,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Object"
+                },
+                "default": "{ widgetType: \"\", engagementMedium: \"\", jwt: \"\"}"
+              },
+              "properties": [
+                {
+                  "name": "params.user",
+                  "lineNumber": 4,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the user details",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 17,
+                                "offset": 16
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17,
+                            "offset": 16
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17,
+                        "offset": 16
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Object"
+                  },
+                  "properties": [
+                    {
+                      "name": "params.user.id",
+                      "lineNumber": 5,
+                      "type": {
+                        "type": "NameExpression",
+                        "name": "string"
+                      }
+                    },
+                    {
+                      "name": "params.user.accountId",
+                      "lineNumber": 6,
+                      "type": {
+                        "type": "NameExpression",
+                        "name": "string"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "name": "params.widgetType",
+                  "lineNumber": 7,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 71,
+                                "offset": 70
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 71,
+                            "offset": 70
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 71,
+                        "offset": 70
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "params.engagementMedium",
+                  "lineNumber": 8,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the mode of the widget being loaded (POPUP/MOBILE)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 51,
+                                "offset": 50
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 51,
+                            "offset": 50
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 51,
+                        "offset": 50
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                },
+                {
+                  "name": "params.jwt",
+                  "lineNumber": 9,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 77,
+                                "offset": 76
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 77,
+                            "offset": 76
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 77,
+                        "offset": 76
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                }
+              ]
+            }
+          ],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "template html if true.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 23,
+                            "offset": 22
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 23,
+                        "offset": 22
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23,
+                    "offset": 22
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "name": "render",
+          "kind": "function",
+          "memberof": "WidgetApi",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "WidgetApi",
+              "kind": "class"
+            },
+            {
+              "name": "render",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "WidgetApi#render"
+        }
+      ],
+      "static": [],
+      "events": []
+    },
+    "path": [
+      {
+        "name": "WidgetApi",
+        "kind": "class"
+      }
+    ],
+    "namespace": "WidgetApi"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "The Widget class is the base class for the different widget types available",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 76,
+                  "offset": 75
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 76,
+              "offset": 75
+            },
+            "indent": []
+          }
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Creating widget type:\n   class CustomWidget extends Widget {\n     constructor(params,stuff) {\n       super(params);\n       // do stuff\n     }",
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 1,
+                  "offset": 77
+                },
+                "end": {
+                  "line": 8,
+                  "column": 7,
+                  "offset": 218
+                },
+                "indent": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 77
+            },
+            "end": {
+              "line": 8,
+              "column": 7,
+              "offset": 218
+            },
+            "indent": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "type": "code",
+          "lang": null,
+          "value": " load() {\n   // custom loading of widget\n }",
+          "position": {
+            "start": {
+              "line": 10,
+              "column": 1,
+              "offset": 220
+            },
+            "end": {
+              "line": 12,
+              "column": 7,
+              "offset": 275
+            },
+            "indent": [
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "   }",
+              "position": {
+                "start": {
+                  "line": 13,
+                  "column": 1,
+                  "offset": 276
+                },
+                "end": {
+                  "line": 13,
+                  "column": 5,
+                  "offset": 280
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 13,
+              "column": 1,
+              "offset": 276
+            },
+            "end": {
+              "line": 13,
+              "column": 5,
+              "offset": 280
+            },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 13,
+          "column": 5,
+          "offset": 280
+        }
+      }
+    },
+    "tags": [],
+    "loc": {
+      "start": {
+        "line": 10,
+        "column": 0
+      },
+      "end": {
+        "line": 26,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 27,
+          "column": 0
+        },
+        "end": {
+          "line": 152,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widget.js"
+    },
+    "name": "Widget",
+    "kind": "class",
+    "members": {
+      "instance": [
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Initialize a new ",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "Widget",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Widget"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 32,
+                        "offset": 31
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " instance.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 32,
+                        "offset": 31
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 42,
+                        "offset": 41
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 42,
+                    "offset": 41
+                  },
+                  "indent": []
+                }
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Creates an ",
+                    "position": {
+                      "start": {
+                        "line": 3,
+                        "column": 1,
+                        "offset": 43
+                      },
+                      "end": {
+                        "line": 3,
+                        "column": 12,
+                        "offset": 54
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "html",
+                    "value": "<iframe>",
+                    "position": {
+                      "start": {
+                        "line": 3,
+                        "column": 12,
+                        "offset": 54
+                      },
+                      "end": {
+                        "line": 3,
+                        "column": 20,
+                        "offset": 62
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "html",
+                    "value": "</iframe>",
+                    "position": {
+                      "start": {
+                        "line": 3,
+                        "column": 20,
+                        "offset": 62
+                      },
+                      "end": {
+                        "line": 3,
+                        "column": 29,
+                        "offset": 71
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " in which the html content of the widget gets\nembedded.\nUses element-resize-detector (",
+                    "position": {
+                      "start": {
+                        "line": 3,
+                        "column": 29,
+                        "offset": 71
+                      },
+                      "end": {
+                        "line": 5,
+                        "column": 31,
+                        "offset": 157
+                      },
+                      "indent": [
+                        1,
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "title": null,
+                    "url": "https://github.com/wnr/element-resize-detector",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "https://github.com/wnr/element-resize-detector",
+                        "position": {
+                          "start": {
+                            "line": 5,
+                            "column": 31,
+                            "offset": 157
+                          },
+                          "end": {
+                            "line": 5,
+                            "column": 77,
+                            "offset": 203
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 5,
+                        "column": 31,
+                        "offset": 157
+                      },
+                      "end": {
+                        "line": 5,
+                        "column": 77,
+                        "offset": 203
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": ")\nfor listening to the height of the widget content and make the iframe responsive.\nThe EventBus listens for events that get triggered in the widget.",
+                    "position": {
+                      "start": {
+                        "line": 5,
+                        "column": 77,
+                        "offset": 203
+                      },
+                      "end": {
+                        "line": 7,
+                        "column": 66,
+                        "offset": 352
+                      },
+                      "indent": [
+                        1,
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 3,
+                    "column": 1,
+                    "offset": 43
+                  },
+                  "end": {
+                    "line": 7,
+                    "column": 66,
+                    "offset": 352
+                  },
+                  "indent": [
+                    1,
+                    1,
+                    1,
+                    1
+                  ]
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 7,
+                "column": 66,
+                "offset": 352
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": "The html of the widget",
+              "lineNumber": 9,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "content"
+            },
+            {
+              "title": "param",
+              "description": "(https://github.com/krasimir/EventBus.git)",
+              "lineNumber": 10,
+              "type": {
+                "type": "NameExpression",
+                "name": "EventBus"
+              },
+              "name": "eventBus"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 28,
+              "column": 2
+            },
+            "end": {
+              "line": 40,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 41,
+                "column": 2
+              },
+              "end": {
+                "line": 79,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widget.js"
+          },
+          "params": [
+            {
+              "name": "content",
+              "lineNumber": 9,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "The html of the widget",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 23,
+                            "offset": 22
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 23,
+                        "offset": 22
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23,
+                    "offset": 22
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            },
+            {
+              "name": "eventBus",
+              "lineNumber": 10,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "(",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 2,
+                            "offset": 1
+                          },
+                          "indent": []
+                        }
+                      },
+                      {
+                        "type": "link",
+                        "title": null,
+                        "url": "https://github.com/krasimir/EventBus.git",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "https://github.com/krasimir/EventBus.git",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 2,
+                                "offset": 1
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 42,
+                                "offset": 41
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 2,
+                            "offset": 1
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 42,
+                            "offset": 41
+                          },
+                          "indent": []
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "value": ")",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 42,
+                            "offset": 41
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 43,
+                            "offset": 42
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 43,
+                        "offset": 42
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 43,
+                    "offset": 42
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "EventBus"
+              }
+            },
+            {
+              "title": "param",
+              "name": "params",
+              "lineNumber": 41
+            }
+          ],
+          "name": "constructor",
+          "kind": "function",
+          "memberof": "Widget",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "Widget",
+              "kind": "class"
+            },
+            {
+              "name": "constructor",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "Widget#constructor"
+        }
+      ],
+      "static": [],
+      "events": []
+    },
+    "path": [
+      {
+        "name": "Widget",
+        "kind": "class"
+      }
+    ],
+    "namespace": "Widget"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "The AnalyticsApi class is a wrapper around the Analytics Endpoints of\nthe SaaSquatch REST API. Used to record Widget events.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 2,
+                  "column": 55,
+                  "offset": 124
+                },
+                "indent": [
+                  1
+                ]
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 2,
+              "column": 55,
+              "offset": 124
+            },
+            "indent": [
+              1
+            ]
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 55,
+          "offset": 124
+        }
+      }
+    },
+    "tags": [],
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 0
+      },
+      "end": {
+        "line": 8,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 9,
+          "column": 0
+        },
+        "end": {
+          "line": 60,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/api/AnalyticsApi.js"
+    },
+    "name": "AnalyticsApi",
+    "kind": "class",
+    "members": {
+      "instance": [
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Initialize a new ",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "AnalyticsApi",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "AnalyticsApi"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 38,
+                        "offset": 37
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " instance.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 38,
+                        "offset": 37
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 48,
+                        "offset": 47
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 48,
+                    "offset": 47
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 48,
+                "offset": 47
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": "Config details",
+              "lineNumber": 3,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "config"
+            },
+            {
+              "title": "param",
+              "description": "The server domain.",
+              "lineNumber": 4,
+              "type": {
+                "type": "OptionalType",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "string"
+                }
+              },
+              "name": "config.domain",
+              "default": "'https://app.referralsaasquatch.com'"
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 10,
+              "column": 1
+            },
+            "end": {
+              "line": 16,
+              "column": 4
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 17,
+                "column": 2
+              },
+              "end": {
+                "line": 19,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/AnalyticsApi.js"
+          },
+          "params": [
+            {
+              "name": "config",
+              "lineNumber": 3,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Config details",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 15,
+                            "offset": 14
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15,
+                        "offset": 14
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15,
+                    "offset": 14
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "name": "config.domain",
+                  "lineNumber": 4,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "The server domain.",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 19,
+                                "offset": 18
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 19,
+                            "offset": 18
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 19,
+                        "offset": 18
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "OptionalType",
+                    "expression": {
+                      "type": "NameExpression",
+                      "name": "string"
+                    }
+                  },
+                  "default": "'https://app.referralsaasquatch.com'"
+                }
+              ]
+            }
+          ],
+          "name": "constructor",
+          "kind": "function",
+          "memberof": "AnalyticsApi",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "AnalyticsApi",
+              "kind": "class"
+            },
+            {
+              "name": "constructor",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "AnalyticsApi#constructor"
+        }
+      ],
+      "static": [],
+      "events": []
+    },
+    "path": [
+      {
+        "name": "AnalyticsApi",
+        "kind": "class"
+      }
+    ],
+    "namespace": "AnalyticsApi"
   }
 ]
