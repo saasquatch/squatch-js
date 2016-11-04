@@ -70,6 +70,7 @@ Register users and load a widget
       },
       engagementMedium: 'DEFAULT_IS_POPUP',        // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',         // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
+      jwt: 'TOKEN'                       // String (required by default, talk to support if you'd like to disable Security)
     }).then(function(response) {
 
       /* What is the API returning?
@@ -105,8 +106,7 @@ The render function lets you display the widget if you already have the `user.id
         accountId: 'USER_ACCOUNT_ID'     // String (required)
       },
       engagementMedium: 'MEDIUM',        // String (optional: POPUP, EMBED)
-      widgetType: 'WIDGET_TYPE',         // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-      jwt: 'TOKEN'
+      widgetType: 'WIDGET_TYPE'         // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
     }).then(function(response) {
 
       /* What is the API returning?
