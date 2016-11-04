@@ -118,7 +118,7 @@ The render function lets you display the widget if you already have the `user.id
       // Render widget
       squatch.load(response, { engagementMedium: 'MEDIUM', widgetType: 'TYPE'})
     }).catch(function(err) {
-      console.log(err)l
+      console.log(err);
     });
   });
 </script>
