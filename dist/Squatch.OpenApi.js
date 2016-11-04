@@ -3628,7 +3628,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'upsertUser',
 	    value: function upsertUser(params) {
-	      console.log(params);
 	      this._validateInput(params, _schema2.default.user);
 
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);

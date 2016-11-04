@@ -139,30 +139,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  - `eventBus` an instance for managing events https://github.com/krasimir/EventBus
 	 *
 	 * @param {Object} config Configuration details
-	 * @param {string} config.tenant_alias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
+	 * @param {string} config.tenantAlias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
 	 * @returns {void}
 	 * @example
-	 * squatch.init({tenant_alias:'test_basbtabstq51v'});
+	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 */
 	function init(config) {
-	  if (config.tenant_alias.startsWith('test')) {
+	  if (config.tenantAlias.startsWith('test') || config.debug) {
 	    _debug2.default.enable('squatch-js*');
 	  }
 
 	  _log('initializing ...');
-	  exports.api = api = new _WidgetApi.WidgetApi({
-	    tenantAlias: config.tenant_alias
-	  });
+	  exports.api = api = new _WidgetApi.WidgetApi({ tenantAlias: config.tenantAlias });
 
 	  _log("Widget API instance", api);
+	  if (!config.engagementMedium) config.engagementMedium = 'POPUP';
 
-	  api.cookieUser(config).then(function (response) {
-	    _log('jsOptions', response.jsOptions);
-	    _log(response);
-	    load(response, config);
-	  }).catch(function (ex) {
-	    throw new Error(ex);
-	  });
+	  if (config.user && config.user.id && config.user.accountId) {
+	    api.upsert(config).then(function (response) {
+	      _log('response', response);
+	      load(response, config);
+	    }).catch(function (ex) {
+	      throw new Error(ex);
+	    });
+	  } else {
+	    api.cookieUser(config).then(function (response) {
+	      _log('response', response);
+	      load(response, config);
+	    }).catch(function (ex) {
+	      throw new Error(ex);
+	    });
+	  }
 	}
 
 	/**
@@ -170,7 +177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @type {WidgetApi}
 	 * @example
-	 * squatch.init({tenant_alias:'test_basbtabstq51v'});
+	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
 	 */
 	var api = exports.api = null;
@@ -195,7 +202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      eventBus: eventBus,
 	      api: api
 	    };
-	  } else {
+	  } else if (response.jsOptions) {
 	    params = {
 	      content: response.template,
 	      type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
@@ -217,7 +224,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        console.log("This is a conversion URL", rule);
 	      }
 	    });
+	  } else {
+	    params = {
+	      content: response,
+	      type: config.widgetType ? config.widgetType : '',
+	      eventBus: eventBus,
+	      api: api
+	    };
 	  }
+
+	  _log('params for widget', params);
 
 	  if (!displayCTA && config.engagementMedium === 'EMBED') {
 	    widget = new _EmbedWidget.EmbedWidget(params).load();

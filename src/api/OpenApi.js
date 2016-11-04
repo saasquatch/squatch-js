@@ -67,7 +67,6 @@ export class OpenApi {
   }
 
   upsertUser(params) {
-    console.log(params);
     this._validateInput(params, schema.user);
 
     let tenant_alias = encodeURIComponent(this.tenantAlias);

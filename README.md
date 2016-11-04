@@ -24,30 +24,28 @@ Or load the library synchronously from our CDN:
 
 
 ## Getting Started
-The `init` function lets you show your audience different types of referral widgets, automatically attribute referrals, track conversions and more, all from one place. Unregistered users are also able to interact with your referral program, and later they can be registered.
+The `init` function lets you configure your global squatch instance. It lets you identify users, show them different types of referral widgets, automatically attribute referrals, track conversions and more all from one place.
 
-When `widgetType` is passed in the configuration of the `init` function, a widget will be displayed. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is loaded.
+Unregistered users are also able to interact with your referral program, and later they can be registered. When `widgetType` is passed in the configuration of the `cookieUser` function, a widget will be displayed. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is loaded.
 
 ```html
 <script type="text/javascript">
   squatch.ready(function() {
 
-    var config = {
+    // Always call init
+    squatch.init({
       tenantAlias: "YOUR_TENANT_ALIAS",     // String (required)
-
       engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
       jwt: 'TOKEN'                          // String (required by default, talk to support if you'd like to disable Security)
-    }
-
-    squatch.init(config);
+    });
 
   });
 </script>
 ```
 
 ## Create/Upsert User
-Register users and load a widget
+Include `user.id` and `user.accountId` in your configuration to register users.
 
 ```html
 <script type="text/javascript">
@@ -55,71 +53,20 @@ Register users and load a widget
 
     // Always call init
     squatch.init({
-      tenantAlias: "YOUR_TENANT_ALIAS"   // String (required)
-      jwt: 'TOKEN'                       // String (required by default, talk to support if you'd like to disable Security)
-    });
-
-    squatch.api.upsert({
-      user: {                            // Object (required)
-        id: 'USER_ID',                   // String (required)
-        accountId: 'USER_ACCOUNT_ID',    // String (required)
-        email: 'USER_EMAIL',             // String (optional)
-        firstName: 'USER_FIRST_NAME',    // String (optional)
-        lastName: 'USER_LAST_NAME',      // String (optional)
+      tenantAlias: "YOUR_TENANT_ALIAS"      // String (required)
+      user: {                               // Object (required)
+        id: 'USER_ID',                      // String (required)
+        accountId: 'USER_ACCOUNT_ID',       // String (required)
+        email: 'USER_EMAIL',                // String (optional)
+        firstName: 'USER_FIRST_NAME',       // String (optional)
+        lastName: 'USER_LAST_NAME',         // String (optional)
         ...
       },
-      engagementMedium: 'DEFAULT_IS_POPUP',        // String (optional: POPUP, EMBED)
-      widgetType: 'WIDGET_TYPE',         // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-      jwt: 'TOKEN'                       // String (required by default, talk to support if you'd like to disable Security)
-    }).then(function(response) {
-
-      /* What is the API returning?
-       * {
-       *    "template": "<html>Widget HTML Content</html>",
-       *    "jsOptions": { Settings from our portal }
-       *    "user": { The user object }
-       * }
-       */
-
-      // Load widget
-      squatch.load(response, { engagementMedium: 'MEDIUM', widgetType: 'TYPE'})
-
-    }).catch(function(err) {
-      console.log(err)
+      engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
+      widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
+      jwt: 'TOKEN'                          // String (required by default, talk to support if you'd like to disable Security)
     });
-  });
-</script>
-```
 
-## Render Widget
-The render function lets you display the widget if you already have the `user.id` and `user.accountId`.
-
-```html
-<script type="text/javascript">
-  squatch.ready(function(){
-
-    squatch.init({ tenantAlias: "YOUR_TENANT_ALIAS" }); // Always call init
-
-    squatch.api.render({
-      user: {                            // Object (required)
-        id: 'USER_ID',                   // String (required)
-        accountId: 'USER_ACCOUNT_ID'     // String (required)
-      },
-      engagementMedium: 'MEDIUM',        // String (optional: POPUP, EMBED)
-      widgetType: 'WIDGET_TYPE'         // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-    }).then(function(response) {
-
-      /* What is the API returning?
-       * {
-       *    "template": "<html>Widget HTML Content</html>"
-       * }
-       */
-
-      // Render widget
-      squatch.load(response, { engagementMedium: 'MEDIUM', widgetType: 'TYPE'})
-    }).catch(function(err) {
-      console.log(err);
-    });
   });
 </script>
 ```
