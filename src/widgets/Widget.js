@@ -11,7 +11,7 @@ let _log = debug('squatch-js:widget');
  *
  * The Widget class is the base class for the different widget types available
  *
- * Creating widget type:
+ * @example <caption>Custom Widget example</caption>
  *    class CustomWidget extends Widget {
  *      constructor(params,stuff) {
  *        super(params);
@@ -50,7 +50,6 @@ export class Widget {
     me.frame.width = '100%';
     me.frame.style = 'border: 0; background-color: none;';
     me.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
-
 
     me.eventBus.addEventListener('fb_btn_clicked', function(e, _sqh) {
       _log("fb btn clicked");

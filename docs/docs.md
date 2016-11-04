@@ -10,6 +10,7 @@ It can show referral widgets on any website, track users, generate unique referr
 Initializes a static `squatch` global. This sets up:
 
 -   `api` a static instance of the [WidgetApi](#widgetapi)
+-   `eventBus` an instance for managing events <https://github.com/krasimir/EventBus>
 
 **Parameters**
 
@@ -34,121 +35,6 @@ Static instance of the [WidgetApi](#widgetapi). Make sure you call [init](#init)
 squatch.init({tenant_alias:'test_basbtabstq51v'});
 squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
 ```
-
-# OpenApi
-
-The OpenApi class is a wrapper around the Open Endpoints of the SaaSquatch REST API.
-
-The Open Endpoints in the SaaSquatch REST API are endpoints designed to work
-in client applications like the Mobile SDK and Javascript SDK.
-Authentication relies on a User JWT and some API endpoints are unauthenticated.
-Even though the Open Endpoints are designed for client applications, they can
-still be used in server-to-server cases using API Key authentication.
-
-## constructor
-
-Initialize a new [OpenApi](#openapi) instance.
-
-**Parameters**
-
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
-    -   `config.tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant to access
-    -   `config.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** The server domain.
-           Useful if you want to use a proxy like [RequestBin](https://requestb.in/) or [Runscope](https://runscope.com/). (optional, default `'https://app.referralsaasquatch.com'`)
-
-**Examples**
-
-_Browser example_
-
-```javascript
-var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});
-```
-
-_Browserify/Webpack example_
-
-```javascript
-var OpenApi = require('squatch-js').OpenApi;
-var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
-```
-
-_Babel+Browserify/Webpack example_
-
-```javascript
-import {OpenApi} from 'squatch-js';
-let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
-```
-
-## createUser
-
-This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.
-This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
-
-[List Referrals](https://docs.referralsaasquatch.com/api/methods/#open_list_referrals)
-
-**Parameters**
-
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The User/Account
-    -   `params.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the ID of user to be created
-    -   `params.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the ID of account to be created
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;User>** details of the user create
-
-## lookUpUser
-
-Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.
-
-This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
-
-[Open API Spec](https://docs.referralsaasquatch.com/api/methods/#open_get_user)
-
-**Parameters**
-
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The User/Account
-    -   `params.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the ID of user to look up
-    -   `params.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the ID of account to look up
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;User>** User details
-
-## getUserByReferralCode
-
-Looks up a user by their Referral Code
-
-**Parameters**
-
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** stuff
-    -   `params.referralCode` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the code used to look up a user
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** User details
-
-## lookUpReferralCode
-
-Looks up a referral code
-
-**Parameters**
-
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** stuff
-    -   `params.referralCode` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the code used to look up a code
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** User details
-
-## applyReferralCode
-
-Applies a referral code
-
-**Parameters**
-
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** stuff
-    -   `params.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the ID of the User that is referred
-    -   `params.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the Account ID of the User that is referred
-    -   `params.referralCode` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the code to apply
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** Stuff
-
-## listReferrals
-
-Lists referrals
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** Stuff
 
 # WidgetApi
 
@@ -236,8 +122,12 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 The Widget class is the base class for the different widget types available
 
-Creating widget type:
-   class CustomWidget extends Widget {
+**Examples**
+
+_Custom Widget example_
+
+```javascript
+class CustomWidget extends Widget {
      constructor(params,stuff) {
        super(params);
        // do stuff
@@ -246,8 +136,8 @@ Creating widget type:
      load() {
        // custom loading of widget
      }
-
    }
+```
 
 ## constructor
 

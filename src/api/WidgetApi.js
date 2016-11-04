@@ -47,7 +47,7 @@ export class WidgetApi {
 
     let tenant_alias = encodeURIComponent(this.tenantAlias);
     let widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
     let optional_params = widget_type + engagement_medium;
 
     let path = `/api/v1/${tenant_alias}/widget/user/cookie_user${optional_params}`;
@@ -75,11 +75,15 @@ export class WidgetApi {
     let account_id = encodeURIComponent(params.user.accountId);
     let user_id = encodeURIComponent(params.user.id);
     let widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
     let optional_params = widget_type + engagement_medium;
 
     let path = `/api/v1/${tenant_alias}/widget/account/${account_id}/user/${user_id}/upsert${optional_params}`;
     let url = this.domain + path;
+
+    params.user.accountId = undefined;
+    params.user.id = undefined;
+
     return this._doPut(url, JSON.stringify(params.user), params.jwt);
   }
 
@@ -102,7 +106,7 @@ export class WidgetApi {
     let account_id = encodeURIComponent(params.user.accountId);
     let user_id = encodeURIComponent(params.user.id);
     let widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';
     let optional_params = widget_type + engagement_medium;
 
     let path = `/api/v1/${tenant_alias}/widget/account/${account_id}/user/${user_id}/render${optional_params}`;
@@ -148,6 +152,7 @@ export class WidgetApi {
    *
    */
    _doPut(url, data, jwt) {
+
      let _headers = {
        'Accept': 'application/json',
        'Content-Type': 'application/json',
@@ -160,6 +165,7 @@ export class WidgetApi {
        method: 'PUT',
        headers: _headers,
        credentials: 'include',
+       mode: 'cors',
        body: data
      }).then(function(response) {
        return response.json();

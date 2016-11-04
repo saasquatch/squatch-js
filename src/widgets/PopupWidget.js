@@ -11,7 +11,7 @@ export class PopupWidget extends Widget {
 
     me.triggerElement = document.getElementById(triggerId);
 
-    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
+    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found. Add a div tag with id='squatchpop'.");
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';

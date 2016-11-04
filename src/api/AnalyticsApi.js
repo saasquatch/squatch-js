@@ -18,6 +18,7 @@ export class AnalyticsApi {
     this.domain = "https://staging.referralsaasquatch.com";
   }
 
+
   pushAnalyticsLoadEvent(params) {
     let tenant_alias = encodeURIComponent(params.tenantAlias);
     let account_id = encodeURIComponent(params.externalAccountId);

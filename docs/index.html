@@ -55,69 +55,6 @@
               
                 
                 <li><a
-                  href='#openapi'
-                  class=" toggle-sibling">
-                  OpenApi
-                  <span class='icon'>▸</span>
-                </a>
-                
-                <div class='toggle-target display-none'>
-                  
-                  
-                    <ul class='list-reset py1-ul pl1'>
-                      <li class='h5'><span>Instance members</span></li>
-                      
-                      <li><a
-                        href='#OpenApi#constructor'
-                        class='regular pre-open'>
-                        #constructor
-                      </a></li>
-                      
-                      <li><a
-                        href='#OpenApi#createUser'
-                        class='regular pre-open'>
-                        #createUser
-                      </a></li>
-                      
-                      <li><a
-                        href='#OpenApi#lookUpUser'
-                        class='regular pre-open'>
-                        #lookUpUser
-                      </a></li>
-                      
-                      <li><a
-                        href='#OpenApi#getUserByReferralCode'
-                        class='regular pre-open'>
-                        #getUserByReferralCode
-                      </a></li>
-                      
-                      <li><a
-                        href='#OpenApi#lookUpReferralCode'
-                        class='regular pre-open'>
-                        #lookUpReferralCode
-                      </a></li>
-                      
-                      <li><a
-                        href='#OpenApi#applyReferralCode'
-                        class='regular pre-open'>
-                        #applyReferralCode
-                      </a></li>
-                      
-                      <li><a
-                        href='#OpenApi#listReferrals'
-                        class='regular pre-open'>
-                        #listReferrals
-                      </a></li>
-                      
-                    </ul>
-                  
-                  
-                </div>
-                
-                </li>
-              
-                
-                <li><a
                   href='#widgetapi'
                   class=" toggle-sibling">
                   WidgetApi
@@ -284,6 +221,7 @@ It can show referral widgets on any website, track users, generate unique referr
   <p>Initializes a static <code>squatch</code> global. This sets up:</p>
 <ul>
 <li><code>api</code> a static instance of the <a href="#widgetapi">WidgetApi</a></li>
+<li><code>eventBus</code> an instance for managing events <a href="https://github.com/krasimir/EventBus">https://github.com/krasimir/EventBus</a></li>
 </ul>
 
 
@@ -346,6 +284,7 @@ It can show referral widgets on any website, track users, generate unique referr
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code>void</code>:
         
+
       
     
   
@@ -356,7 +295,7 @@ It can show referral widgets on any website, track users, generate unique referr
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>squatch.init({tenant_alias:<span class="hljs-string">'test_basbtabstq51v'</span>});</pre>
+      <pre class='p1 overflow-auto round fill-light'>squatch.init({<span class="hljs-attr">tenant_alias</span>:<span class="hljs-string">'test_basbtabstq51v'</span>});</pre>
     
   
 
@@ -406,709 +345,12 @@ It can show referral widgets on any website, track users, generate unique referr
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>squatch.init({tenant_alias:<span class="hljs-string">'test_basbtabstq51v'</span>});
-squatch.api.createUser({id:<span class="hljs-string">'123'</span>, accountId:<span class="hljs-string">'abc'</span>, firstName:<span class="hljs-string">'Tom'</span>});</pre>
+      <pre class='p1 overflow-auto round fill-light'>squatch.init({<span class="hljs-attr">tenant_alias</span>:<span class="hljs-string">'test_basbtabstq51v'</span>});
+squatch.api.createUser({<span class="hljs-attr">id</span>:<span class="hljs-string">'123'</span>, <span class="hljs-attr">accountId</span>:<span class="hljs-string">'abc'</span>, <span class="hljs-attr">firstName</span>:<span class="hljs-string">'Tom'</span>});</pre>
     
   
 
   
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    <h3 class='fl m0' id='openapi'>
-      OpenApi
-    </h3>
-    
-  </div>
-  
-
-  <p>The OpenApi class is a wrapper around the Open Endpoints of the SaaSquatch REST API.</p>
-<p>The Open Endpoints in the SaaSquatch REST API are endpoints designed to work
-in client applications like the Mobile SDK and Javascript SDK.
-Authentication relies on a User JWT and some API endpoints are unauthenticated.
-Even though the Open Endpoints are designed for client applications, they can
-still be used in server-to-server cases using API Key authentication.</p>
-
-
-  <div class='pre p1 fill-light mt0'>new OpenApi()</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='OpenApi#constructor'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>constructor(config)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Initialize a new <a href="#openapi">OpenApi</a> instance.</p>
-
-
-  <div class='pre p1 fill-light mt0'>constructor(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>config</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> Config details
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>config.tenantAlias</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>The tenant to access
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>config.domain</span> <code class='quiet'>[<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>]</code>
-                  
-                    (default <code>&#39;https://app.referralsaasquatch.com&#39;</code>)
-                  </td>
-                  <td class='break-word'><span>The server domain.
-Useful if you want to use a proxy like 
-<a href="https://requestb.in/">RequestBin</a>
- or 
-<a href="https://runscope.com/">Runscope</a>
-.
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      <p><p>Browser example</p>
-</p>
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> squatch.OpenApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
-    
-      <p><p>Browserify/Webpack example</p>
-</p>
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> OpenApi = <span class="hljs-built_in">require</span>(<span class="hljs-string">'squatch-js'</span>).OpenApi;
-<span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> OpenApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
-    
-      <p><p>Babel+Browserify/Webpack example</p>
-</p>
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> {OpenApi} <span class="hljs-keyword">from</span> <span class="hljs-string">'squatch-js'</span>;
-<span class="hljs-keyword">let</span> squatchApi = <span class="hljs-keyword">new</span> OpenApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='OpenApi#createUser'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>createUser(params)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.
-This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.</p>
-<p><a href="https://docs.referralsaasquatch.com/api/methods/#open_list_referrals">List Referrals</a></p>
-
-
-  <div class='pre p1 fill-light mt0'>createUser(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;User&gt;</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> The User/Account
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.id</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the ID of user to be created
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.accountId</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the ID of account to be created
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;User&gt;</code>:
-        details of the user create
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='OpenApi#lookUpUser'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>lookUpUser(params)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.</p>
-<p>This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.</p>
-<p><a href="https://docs.referralsaasquatch.com/api/methods/#open_get_user">Open API Spec</a></p>
-
-
-  <div class='pre p1 fill-light mt0'>lookUpUser(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;User&gt;</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> The User/Account
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.id</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the ID of user to look up
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.accountId</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the ID of account to look up
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;User&gt;</code>:
-        User details
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='OpenApi#getUserByReferralCode'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>getUserByReferralCode(params)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Looks up a user by their Referral Code</p>
-
-
-  <div class='pre p1 fill-light mt0'>getUserByReferralCode(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> stuff
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.referralCode</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the code used to look up a user
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
-        User details
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='OpenApi#lookUpReferralCode'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>lookUpReferralCode(params)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Looks up a referral code</p>
-
-
-  <div class='pre p1 fill-light mt0'>lookUpReferralCode(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> stuff
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.referralCode</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the code used to look up a code
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
-        User details
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='OpenApi#applyReferralCode'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>applyReferralCode(params)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Applies a referral code</p>
-
-
-  <div class='pre p1 fill-light mt0'>applyReferralCode(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> stuff
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.id</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the ID of the User that is referred
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.accountId</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the Account ID of the User that is referred
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.referralCode</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
-                  </td>
-                  <td class='break-word'><span>the code to apply
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
-        Stuff
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='OpenApi#listReferrals'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>listReferrals()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Lists referrals</p>
-
-
-  <div class='pre p1 fill-light mt0'>listReferrals(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
-        Stuff
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-</div>
 
   
 
@@ -1246,17 +488,17 @@ Useful if you want to use a proxy like
     
       <p><p>Browser example</p>
 </p>
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> squatch.WidgetApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> squatch.WidgetApi({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
       <p><p>Browserify/Webpack example</p>
 </p>
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> WidgetApi = <span class="hljs-built_in">require</span>(<span class="hljs-string">'squatch-js'</span>).WidgetApi;
-<span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+<span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
       <p><p>Babel+Browserify/Webpack example</p>
 </p>
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> {WidgetApi} <span class="hljs-keyword">from</span> <span class="hljs-string">'squatch-js'</span>;
-<span class="hljs-keyword">let</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+<span class="hljs-keyword">let</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
   
 
@@ -1285,7 +527,7 @@ Useful if you want to use a proxy like
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>cookieUser(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &quot;&quot;, engagementMedium: &quot;&quot;, jwt: &quot;&quot; })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>cookieUser(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: "" })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -1301,7 +543,7 @@ Useful if you want to use a proxy like
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &quot;&quot;, engagementMedium: &quot;&quot;, jwt: &quot;&quot; }))</code> 
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: "" }))</code> 
           </div>
           
           <table class='mt1 mb2 fixed-table h5 col-12'>
@@ -1387,7 +629,7 @@ Useful if you want to use a proxy like
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>upsert(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &quot;&quot;, engagementMedium: &quot;&quot;, jwt: &quot;&quot;})): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>upsert(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""})): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -1403,7 +645,7 @@ Useful if you want to use a proxy like
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &quot;&quot;, engagementMedium: &quot;&quot;, jwt: &quot;&quot;}))</code> 
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""}))</code> 
           </div>
           
           <table class='mt1 mb2 fixed-table h5 col-12'>
@@ -1496,7 +738,7 @@ Useful if you want to use a proxy like
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>render(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &quot;&quot;, engagementMedium: &quot;&quot;, jwt: &quot;&quot;})): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>render(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""})): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -1512,7 +754,7 @@ Useful if you want to use a proxy like
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &quot;&quot;, engagementMedium: &quot;&quot;, jwt: &quot;&quot;}))</code> 
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""}))</code> 
           </div>
           
           <table class='mt1 mb2 fixed-table h5 col-12'>
@@ -1612,17 +854,6 @@ Useful if you want to use a proxy like
   
 
   <p>The Widget class is the base class for the different widget types available</p>
-<p>Creating widget type:
-class CustomWidget extends Widget {
-constructor(params,stuff) {
-super(params);
-// do stuff
-}</p>
-<pre><code> load() {
-   // custom loading of widget
- }
-</code></pre>
-<p>}</p>
 
 
   <div class='pre p1 fill-light mt0'>new Widget()</div>
@@ -1643,6 +874,22 @@ super(params);
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      <p><p>Custom Widget example</p>
+</p>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomWidget</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Widget</span> </span>{
+     <span class="hljs-keyword">constructor</span>(params,stuff) {
+       <span class="hljs-keyword">super</span>(params);
+       <span class="hljs-comment">// do stuff</span>
+     }
+
+     load() {
+       <span class="hljs-comment">// custom loading of widget</span>
+     }
+   }</pre>
+    
   
 
   

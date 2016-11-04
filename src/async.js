@@ -1,5 +1,3 @@
-import { each } from './utils/each';
-
 export function asyncLoad() {
   let loaded = window['squatch'] || null;
   let cached = window['_squatch'] || null;
@@ -7,7 +5,7 @@ export function asyncLoad() {
   if (loaded && cached) {
     const _ready = cached.ready;
 
-    each(_ready, (cb, i) => setTimeout(function() { cb(); }, 0) );
+    _ready.forEach((cb, i) => setTimeout(function() { cb(); }, 0) );
 
     window["_" + 'squatch'] = undefined;
     try {

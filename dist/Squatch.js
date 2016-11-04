@@ -66,16 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.api = exports.eventBus = exports.WidgetApi = exports.OpenApi = undefined;
-
-	var _OpenApi = __webpack_require__(2);
-
-	Object.defineProperty(exports, 'OpenApi', {
-	  enumerable: true,
-	  get: function get() {
-	    return _OpenApi.OpenApi;
-	  }
-	});
+	exports.api = exports.eventBus = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
 
 	var _WidgetApi = __webpack_require__(15);
 
@@ -85,21 +76,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _WidgetApi.WidgetApi;
 	  }
 	});
+
+	var _EmbedWidget = __webpack_require__(16);
+
+	Object.defineProperty(exports, 'EmbedWidget', {
+	  enumerable: true,
+	  get: function get() {
+	    return _EmbedWidget.EmbedWidget;
+	  }
+	});
+
+	var _PopupWidget = __webpack_require__(36);
+
+	Object.defineProperty(exports, 'PopupWidget', {
+	  enumerable: true,
+	  get: function get() {
+	    return _PopupWidget.PopupWidget;
+	  }
+	});
+
+	var _CtaWidget = __webpack_require__(37);
+
+	Object.defineProperty(exports, 'CtaWidget', {
+	  enumerable: true,
+	  get: function get() {
+	    return _CtaWidget.CtaWidget;
+	  }
+	});
 	exports.init = init;
 	exports.ready = ready;
 	exports.load = load;
 
-	var _EmbedWidget = __webpack_require__(16);
-
-	var _PopupWidget = __webpack_require__(36);
-
-	var _CtaWidget = __webpack_require__(37);
-
 	var _async = __webpack_require__(38);
-
-	var _store = __webpack_require__(40);
-
-	var _store2 = _interopRequireDefault(_store);
 
 	var _debug = __webpack_require__(33);
 
@@ -117,15 +125,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                         *
 	                                         * @module squatch
 	                                         */
+	// import { OpenApi } from './api/OpenApi';
 
 	var _log = (0, _debug2.default)('squatch-js');
 
+	// export { OpenApi } from './api/OpenApi';
 	var eventBus = exports.eventBus = _eventbusjs2.default;
 
 	/**
 	 * Initializes a static `squatch` global. This sets up:
 	 *
 	 *  - `api` a static instance of the {@link WidgetApi}
+	 *  - `eventBus` an instance for managing events https://github.com/krasimir/EventBus
 	 *
 	 * @param {Object} config Configuration details
 	 * @param {string} config.tenant_alias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
@@ -143,14 +154,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    tenantAlias: config.tenant_alias
 	  });
 
-	  _log("Widget API instance");
-	  _log(api);
+	  _log("Widget API instance", api);
 
 	  api.cookieUser(config).then(function (response) {
 	    _log('jsOptions', response.jsOptions);
-	    loadWidget(response, config);
+	    _log(response);
+	    load(response, config);
 	  }).catch(function (ex) {
-	    throw new Error('cookieUser() ' + ex);
+	    throw new Error(ex);
 	  });
 	}
 
@@ -163,16 +174,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
 	 */
 	var api = exports.api = null;
-	var widget = null;
 
 	function ready(fn) {
 	  fn();
 	}
 
-	function load() {}
-
 	// Refactor this function to make it simple
-	function loadWidget(response, config) {
+	function load(response, config) {
+	  var widget = void 0;
 	  var params = void 0;
 	  var displayOnLoad = false;
 	  var displayCTA = false;
@@ -194,17 +203,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      api: api
 	    };
 
-	    response.jsOptions.widgetRuleUrls.forEach(function (rule) {
+	    response.jsOptions.widgetUrlMappings.forEach(function (rule) {
 	      if (matchesUrl(rule.url)) {
 	        displayOnLoad = true;
 	        displayCTA = rule.showAsCTA;
+	        console.log("Display " + rule.widgetType + " on " + rule.url);
 	      }
 	    });
 
 	    response.jsOptions.conversionUrls.forEach(function (rule) {
-	      console.log(rule);
 	      if (matchesUrl(rule)) {
 	        displayOnLoad = true;
+	        console.log("This is a conversion URL", rule);
 	      }
 	    });
 	  }
@@ -220,11 +230,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var position = response.jsOptions.cta.content.buttonPosition;
 
 	    widget = new _CtaWidget.CtaWidget(params, { side: side, position: position }).load();
-	  } else {
-	    // POPUP is default
+	  } else if (displayOnLoad) {
 	    widget = new _PopupWidget.PopupWidget(params);
 	    widget.load();
-	    if (displayOnLoad) widget.open();
+	    widget.open();
 	  }
 	}
 
@@ -235,318 +244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	if (window) (0, _async.asyncLoad)();
 
 /***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.OpenApi = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _jsonschema = __webpack_require__(3);
-
-	var _schema = __webpack_require__(13);
-
-	var _schema2 = _interopRequireDefault(_schema);
-
-	__webpack_require__(14);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The OpenApi class is a wrapper around the Open Endpoints of the SaaSquatch REST API.
-	 *
-	 * The Open Endpoints in the SaaSquatch REST API are endpoints designed to work
-	 * in client applications like the Mobile SDK and Javascript SDK.
-	 * Authentication relies on a User JWT and some API endpoints are unauthenticated.
-	 * Even though the Open Endpoints are designed for client applications, they can
-	 * still be used in server-to-server cases using API Key authentication.
-	 *
-	 */
-	var OpenApi = exports.OpenApi = function () {
-
-	  //TODO:
-	  // - Authenticate with JWT
-	  // - Add comments
-
-	  /**
-	   * Initialize a new {@link OpenApi} instance.
-	   *
-	   * @param {Object} config Config details
-	   * @param {string} config.tenantAlias The tenant to access
-	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var OpenApi = require('squatch-js').OpenApi;
-	   * var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {OpenApi} from 'squatch-js';
-	   * let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
-	   */
-	  function OpenApi(config) {
-	    _classCallCheck(this, OpenApi);
-
-	    this.tenantAlias = config.tenantAlias;
-	    this.domain = "https://staging.referralsaasquatch.com";
-	  }
-
-	  /**
-	   * This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.
-	   * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
-	   *
-	   * {@link https://docs.referralsaasquatch.com/api/methods/#open_list_referrals List Referrals}
-	   *
-	   * @param {Object} params The User/Account
-	   * @param {string} params.id the ID of user to be created
-	   * @param {string} params.accountId the ID of account to be created
-	   * @return {Promise<User>} details of the user create
-	   */
-
-
-	  _createClass(OpenApi, [{
-	    key: 'createUser',
-	    value: function createUser(params) {
-	      this._validateInput(params, _schema2.default.user);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(params), 'application/json');
-	    }
-	  }, {
-	    key: 'upsertUser',
-	    value: function upsertUser(params) {
-	      console.log(params);
-	      this._validateInput(params, _schema2.default.user);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doPut(url, JSON.stringify(params), 'application/json');
-	    }
-	  }, {
-	    key: 'createCookieUser',
-	    value: function createCookieUser() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text/html';
-
-	      var responseType = params;
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
-	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}), responseType);
-	    }
-
-	    /**
-	     * Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.
-	     *
-	     * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
-	     *
-	     * {@link https://docs.referralsaasquatch.com/api/methods/#open_get_user Open API Spec}
-	     *
-	     * @param {Object} params The User/Account
-	     * @param {string} params.id the ID of user to look up
-	     * @param {string} params.accountId the ID of account to look up
-	     * @return {Promise<User>} User details
-	     */
-
-	  }, {
-	    key: 'lookUpUser',
-	    value: function lookUpUser(params) {
-	      this._validateInput(params, _schema2.default.userLookUp);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * Looks up a user by their Referral Code
-	     *
-	     * @param {Object} params stuff
-	     * @param {string} params.referralCode the code used to look up a user
-	     * @return {Promise} User details
-	     */
-
-	  }, {
-	    key: 'getUserByReferralCode',
-	    value: function getUserByReferralCode(params) {
-	      this._validateInput(params, _schema2.default.userReferralCode);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/user?referralCode=' + referral_code;
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * Looks up a referral code
-	     *
-	     * @param {Object} params stuff
-	     * @param {string} params.referralCode the code used to look up a code
-	     * @return {Promise} User details
-	     */
-
-	  }, {
-	    key: 'lookUpReferralCode',
-	    value: function lookUpReferralCode(params) {
-	      this._validateInput(params, _schema2.default.userReferralCode);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code;
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * Applies a referral code
-	     *
-	     * @param {Object} params stuff
-	     * @param {string} params.id the ID of the User that is referred
-	     * @param {string} params.accountId the Account ID of the User that is referred
-	     * @param {string} params.referralCode the code to apply
-	     * @return {Promise} Stuff
-	     */
-
-	  }, {
-	    key: 'applyReferralCode',
-	    value: function applyReferralCode(params) {
-	      this._validateInput(params, _schema2.default.applyReferralCode);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(""), 'application/json');
-	    }
-
-	    /**
-	     * Lists referrals
-	     *
-	     * @return {Promise} Stuff
-	     */
-
-	  }, {
-	    key: 'listReferrals',
-	    value: function listReferrals() {
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/referrals';
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_validateInput',
-	    value: function _validateInput(params, schema) {
-	      var valid = (0, _jsonschema.validate)(params, schema);
-	      if (!valid.valid) throw valid.errors;
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doRequest',
-	    value: function _doRequest(url) {
-	      return fetch(url, {
-	        method: 'GET',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        return response.json();
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data, responseType) {
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: {
-	          'Accept': responseType,
-	          'Content-Type': 'application/json'
-	        },
-	        body: data
-	      }).then(function (response) {
-	        if (responseType === 'text/html') {
-	          return response.text();
-	        } else {
-	          return response.json();
-	        }
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPut',
-	    value: function _doPut(url, data, responseType) {
-	      return fetch(url, {
-	        method: 'PUT',
-	        headers: {
-	          'Accept': responseType,
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': 'JWT token'
-	        },
-	        credentials: 'cors',
-	        body: data
-	      }).then(function (response) {
-	        if (responseType === 'text/html') {
-	          return response.text();
-	        } else {
-	          return response.json();
-	        }
-	      });
-	    }
-	  }]);
-
-	  return OpenApi;
-	}();
-
-/***/ },
+/* 2 */,
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4071,7 +3769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
 	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
 	      var optional_params = widget_type + engagement_medium;
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
@@ -4104,11 +3802,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var account_id = encodeURIComponent(params.user.accountId);
 	      var user_id = encodeURIComponent(params.user.id);
 	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
 	      var optional_params = widget_type + engagement_medium;
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/upsert' + optional_params;
 	      var url = this.domain + path;
+
+	      params.user.accountId = undefined;
+	      params.user.id = undefined;
+
 	      return this._doPut(url, JSON.stringify(params.user), params.jwt);
 	    }
 
@@ -4136,7 +3838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var account_id = encodeURIComponent(params.user.accountId);
 	      var user_id = encodeURIComponent(params.user.id);
 	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';
 	      var optional_params = widget_type + engagement_medium;
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/render' + optional_params;
@@ -4191,6 +3893,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_doPut',
 	    value: function _doPut(url, data, jwt) {
+
 	      var _headers = {
 	        'Accept': 'application/json',
 	        'Content-Type': 'application/json',
@@ -4203,6 +3906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        method: 'PUT',
 	        headers: _headers,
 	        credentials: 'include',
+	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
 	        return response.json();
@@ -4267,7 +3971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function load() {
 	      var me = this;
 
-	      if (!me.element.firstChild) me.element.appendChild(me.frame);
+	      if (!me.element.firstChild || me.element.firstChild.nodeName === '#text') me.element.appendChild(me.frame);
 
 	      var frameDoc = me.frame.contentWindow.document;
 	      frameDoc.open();
@@ -4367,7 +4071,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * The Widget class is the base class for the different widget types available
 	 *
-	 * Creating widget type:
+	 * @example <caption>Custom Widget example</caption>
 	 *    class CustomWidget extends Widget {
 	 *      constructor(params,stuff) {
 	 *        super(params);
@@ -6850,7 +6554,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.triggerElement = document.getElementById(triggerId);
 
-	    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found.");
+	    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found. Add a div tag with id='squatchpop'.");
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
@@ -7149,7 +6853,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
@@ -7157,9 +6861,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.asyncLoad = asyncLoad;
-
-	var _each = __webpack_require__(39);
-
 	function asyncLoad() {
 	  var loaded = window['squatch'] || null;
 	  var cached = window['_squatch'] || null;
@@ -7167,7 +6868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (loaded && cached) {
 	    var _ready = cached.ready;
 
-	    (0, _each.each)(_ready, function (cb, i) {
+	    _ready.forEach(function (cb, i) {
 	      return setTimeout(function () {
 	        cb();
 	      }, 0);
@@ -7181,240 +6882,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 39 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.each = each;
-	function each(o, cb, s) {
-	  var n;
-	  if (!o) {
-	    return 0;
-	  }
-	  s = !s ? o : s;
-	  if (o instanceof Array) {
-	    // Indexed arrays, needed for Safari
-	    for (n = 0; n < o.length; n++) {
-	      if (cb.call(s, o[n], n, o) === false) {
-	        return 0;
-	      }
-	    }
-	  } else {
-	    // Hashtables
-	    for (n in o) {
-	      if (o.hasOwnProperty(n)) {
-	        if (cb.call(s, o[n], n, o) === false) {
-	          return 0;
-	        }
-	      }
-	    }
-	  }
-	  return 1;
-	};
-
-/***/ },
-/* 40 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {"use strict"
-	// Module export pattern from
-	// https://github.com/umdjs/umd/blob/master/returnExports.js
-	;(function (root, factory) {
-	    if (true) {
-	        // AMD. Register as an anonymous module.
-	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	    } else if (typeof exports === 'object') {
-	        // Node. Does not work with strict CommonJS, but
-	        // only CommonJS-like environments that support module.exports,
-	        // like Node.
-	        module.exports = factory();
-	    } else {
-	        // Browser globals (root is window)
-	        root.store = factory();
-	  }
-	}(this, function () {
-		
-		// Store.js
-		var store = {},
-			win = (typeof window != 'undefined' ? window : global),
-			doc = win.document,
-			localStorageName = 'localStorage',
-			scriptTag = 'script',
-			storage
-
-		store.disabled = false
-		store.version = '1.3.20'
-		store.set = function(key, value) {}
-		store.get = function(key, defaultVal) {}
-		store.has = function(key) { return store.get(key) !== undefined }
-		store.remove = function(key) {}
-		store.clear = function() {}
-		store.transact = function(key, defaultVal, transactionFn) {
-			if (transactionFn == null) {
-				transactionFn = defaultVal
-				defaultVal = null
-			}
-			if (defaultVal == null) {
-				defaultVal = {}
-			}
-			var val = store.get(key, defaultVal)
-			transactionFn(val)
-			store.set(key, val)
-		}
-		store.getAll = function() {}
-		store.forEach = function() {}
-
-		store.serialize = function(value) {
-			return JSON.stringify(value)
-		}
-		store.deserialize = function(value) {
-			if (typeof value != 'string') { return undefined }
-			try { return JSON.parse(value) }
-			catch(e) { return value || undefined }
-		}
-
-		// Functions to encapsulate questionable FireFox 3.6.13 behavior
-		// when about.config::dom.storage.enabled === false
-		// See https://github.com/marcuswestin/store.js/issues#issue/13
-		function isLocalStorageNameSupported() {
-			try { return (localStorageName in win && win[localStorageName]) }
-			catch(err) { return false }
-		}
-
-		if (isLocalStorageNameSupported()) {
-			storage = win[localStorageName]
-			store.set = function(key, val) {
-				if (val === undefined) { return store.remove(key) }
-				storage.setItem(key, store.serialize(val))
-				return val
-			}
-			store.get = function(key, defaultVal) {
-				var val = store.deserialize(storage.getItem(key))
-				return (val === undefined ? defaultVal : val)
-			}
-			store.remove = function(key) { storage.removeItem(key) }
-			store.clear = function() { storage.clear() }
-			store.getAll = function() {
-				var ret = {}
-				store.forEach(function(key, val) {
-					ret[key] = val
-				})
-				return ret
-			}
-			store.forEach = function(callback) {
-				for (var i=0; i<storage.length; i++) {
-					var key = storage.key(i)
-					callback(key, store.get(key))
-				}
-			}
-		} else if (doc && doc.documentElement.addBehavior) {
-			var storageOwner,
-				storageContainer
-			// Since #userData storage applies only to specific paths, we need to
-			// somehow link our data to a specific path.  We choose /favicon.ico
-			// as a pretty safe option, since all browsers already make a request to
-			// this URL anyway and being a 404 will not hurt us here.  We wrap an
-			// iframe pointing to the favicon in an ActiveXObject(htmlfile) object
-			// (see: http://msdn.microsoft.com/en-us/library/aa752574(v=VS.85).aspx)
-			// since the iframe access rules appear to allow direct access and
-			// manipulation of the document element, even for a 404 page.  This
-			// document can be used instead of the current document (which would
-			// have been limited to the current path) to perform #userData storage.
-			try {
-				storageContainer = new ActiveXObject('htmlfile')
-				storageContainer.open()
-				storageContainer.write('<'+scriptTag+'>document.w=window</'+scriptTag+'><iframe src="/favicon.ico"></iframe>')
-				storageContainer.close()
-				storageOwner = storageContainer.w.frames[0].document
-				storage = storageOwner.createElement('div')
-			} catch(e) {
-				// somehow ActiveXObject instantiation failed (perhaps some special
-				// security settings or otherwse), fall back to per-path storage
-				storage = doc.createElement('div')
-				storageOwner = doc.body
-			}
-			var withIEStorage = function(storeFunction) {
-				return function() {
-					var args = Array.prototype.slice.call(arguments, 0)
-					args.unshift(storage)
-					// See http://msdn.microsoft.com/en-us/library/ms531081(v=VS.85).aspx
-					// and http://msdn.microsoft.com/en-us/library/ms531424(v=VS.85).aspx
-					storageOwner.appendChild(storage)
-					storage.addBehavior('#default#userData')
-					storage.load(localStorageName)
-					var result = storeFunction.apply(store, args)
-					storageOwner.removeChild(storage)
-					return result
-				}
-			}
-
-			// In IE7, keys cannot start with a digit or contain certain chars.
-			// See https://github.com/marcuswestin/store.js/issues/40
-			// See https://github.com/marcuswestin/store.js/issues/83
-			var forbiddenCharsRegex = new RegExp("[!\"#$%&'()*+,/\\\\:;<=>?@[\\]^`{|}~]", "g")
-			var ieKeyFix = function(key) {
-				return key.replace(/^d/, '___$&').replace(forbiddenCharsRegex, '___')
-			}
-			store.set = withIEStorage(function(storage, key, val) {
-				key = ieKeyFix(key)
-				if (val === undefined) { return store.remove(key) }
-				storage.setAttribute(key, store.serialize(val))
-				storage.save(localStorageName)
-				return val
-			})
-			store.get = withIEStorage(function(storage, key, defaultVal) {
-				key = ieKeyFix(key)
-				var val = store.deserialize(storage.getAttribute(key))
-				return (val === undefined ? defaultVal : val)
-			})
-			store.remove = withIEStorage(function(storage, key) {
-				key = ieKeyFix(key)
-				storage.removeAttribute(key)
-				storage.save(localStorageName)
-			})
-			store.clear = withIEStorage(function(storage) {
-				var attributes = storage.XMLDocument.documentElement.attributes
-				storage.load(localStorageName)
-				for (var i=attributes.length-1; i>=0; i--) {
-					storage.removeAttribute(attributes[i].name)
-				}
-				storage.save(localStorageName)
-			})
-			store.getAll = function(storage) {
-				var ret = {}
-				store.forEach(function(key, val) {
-					ret[key] = val
-				})
-				return ret
-			}
-			store.forEach = withIEStorage(function(storage, callback) {
-				var attributes = storage.XMLDocument.documentElement.attributes
-				for (var i=0, attr; attr=attributes[i]; ++i) {
-					callback(attr.name, store.deserialize(storage.getAttribute(attr.name)))
-				}
-			})
-		}
-
-		try {
-			var testKey = '__storejs__'
-			store.set(testKey, testKey)
-			if (store.get(testKey) != testKey) { store.disabled = true }
-			store.remove(testKey)
-		} catch(e) {
-			store.disabled = true
-		}
-		store.enabled = !store.disabled
-		
-		return store
-	}));
-
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
+/* 39 */,
+/* 40 */,
 /* 41 */
 /***/ function(module, exports, __webpack_require__) {
 

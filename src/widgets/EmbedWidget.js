@@ -16,7 +16,7 @@ export class EmbedWidget extends Widget {
   load() {
     let me = this
 
-    if (!me.element.firstChild)
+    if (!me.element.firstChild || me.element.firstChild.nodeName === '#text')
       me.element.appendChild(me.frame);
 
     let frameDoc = me.frame.contentWindow.document;

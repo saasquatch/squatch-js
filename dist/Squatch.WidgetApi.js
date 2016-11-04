@@ -3585,7 +3585,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var tenant_alias = encodeURIComponent(this.tenantAlias);
 	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
 	      var optional_params = widget_type + engagement_medium;
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/user/cookie_user' + optional_params;
@@ -3618,11 +3618,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var account_id = encodeURIComponent(params.user.accountId);
 	      var user_id = encodeURIComponent(params.user.id);
 	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
 	      var optional_params = widget_type + engagement_medium;
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/upsert' + optional_params;
 	      var url = this.domain + path;
+
+	      params.user.accountId = undefined;
+	      params.user.id = undefined;
+
 	      return this._doPut(url, JSON.stringify(params.user), params.jwt);
 	    }
 
@@ -3650,7 +3654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var account_id = encodeURIComponent(params.user.accountId);
 	      var user_id = encodeURIComponent(params.user.id);
 	      var widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : '';
+	      var engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';
 	      var optional_params = widget_type + engagement_medium;
 
 	      var path = '/api/v1/' + tenant_alias + '/widget/account/' + account_id + '/user/' + user_id + '/render' + optional_params;
@@ -3705,6 +3709,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_doPut',
 	    value: function _doPut(url, data, jwt) {
+
 	      var _headers = {
 	        'Accept': 'application/json',
 	        'Content-Type': 'application/json',
@@ -3717,6 +3722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        method: 'PUT',
 	        headers: _headers,
 	        credentials: 'include',
+	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
 	        return response.json();

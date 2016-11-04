@@ -4,27 +4,30 @@
  *
  * @module squatch
  */
-import { OpenApi } from './api/OpenApi';
+// import { OpenApi } from './api/OpenApi';
 import { WidgetApi } from './api/WidgetApi'
 import { EmbedWidget } from './widgets/EmbedWidget';
 import { PopupWidget } from './widgets/PopupWidget';
 import { CtaWidget } from './widgets/CtaWidget';
 import { asyncLoad } from './async';
-import store from 'store';
 import debug from 'debug';
 import EventBus from 'eventbusjs';
 
 debug.disable('squatch-js*');
 let _log = debug('squatch-js');
 
-export { OpenApi } from './api/OpenApi';
+// export { OpenApi } from './api/OpenApi';
 export { WidgetApi } from './api/WidgetApi';
+export { EmbedWidget } from './widgets/EmbedWidget';
+export { PopupWidget } from './widgets/PopupWidget';
+export { CtaWidget } from './widgets/CtaWidget';
 export let eventBus = EventBus;
 
 /**
  * Initializes a static `squatch` global. This sets up:
  *
  *  - `api` a static instance of the {@link WidgetApi}
+ *  - `eventBus` an instance for managing events https://github.com/krasimir/EventBus
  *
  * @param {Object} config Configuration details
  * @param {string} config.tenant_alias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
@@ -42,14 +45,14 @@ export function init(config) {
     tenantAlias: config.tenant_alias
   });
 
-  _log("Widget API instance");
-  _log(api);
+  _log("Widget API instance", api);
 
   api.cookieUser(config).then(function(response) {
     _log('jsOptions', response.jsOptions);
-    loadWidget(response, config);
+    _log(response);
+    load(response, config);
   }).catch(function(ex) {
-    throw new Error('cookieUser() ' + ex);
+    throw new Error(ex);
   });
 }
 
@@ -62,18 +65,14 @@ export function init(config) {
  * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
  */
 export let api = null;
-let widget = null;
 
 export function ready(fn) {
   fn();
 }
 
-export function load() {
-
-}
-
 // Refactor this function to make it simple
-function loadWidget(response, config) {
+export function load(response, config) {
+  let widget;
   let params;
   let displayOnLoad = false;
   let displayCTA = false;
@@ -95,17 +94,18 @@ function loadWidget(response, config) {
       api: api,
     };
 
-    response.jsOptions.widgetRuleUrls.forEach(rule => {
+    response.jsOptions.widgetUrlMappings.forEach(rule => {
       if (matchesUrl(rule.url)) {
         displayOnLoad = true;
         displayCTA = rule.showAsCTA;
+        console.log("Display " + rule.widgetType + " on " + rule.url);
       }
     });
 
     response.jsOptions.conversionUrls.forEach(rule => {
-      console.log(rule);
       if (matchesUrl(rule)) {
         displayOnLoad = true;
+        console.log("This is a conversion URL", rule);
       }
     });
   }
@@ -124,13 +124,11 @@ function loadWidget(response, config) {
 
     widget = new CtaWidget(params, {side: side, position: position}).load();
 
-  } else {
-    // POPUP is default
+  } else if (displayOnLoad) {
     widget = new PopupWidget(params);
     widget.load();
-    if (displayOnLoad) widget.open();
+    widget.open();
   }
-
 }
 
 function matchesUrl(rule) {

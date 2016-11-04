@@ -78,15 +78,15 @@
     "context": {
       "loc": {
         "start": {
-          "line": 7,
+          "line": 8,
           "column": 0
         },
         "end": {
-          "line": 7,
-          "column": 40
+          "line": 8,
+          "column": 43
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "kind": "module",
     "name": "squatch",
@@ -277,6 +277,115 @@
                 },
                 "indent": []
               }
+            },
+            {
+              "type": "listItem",
+              "loose": false,
+              "checked": null,
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "inlineCode",
+                      "value": "eventBus",
+                      "position": {
+                        "start": {
+                          "line": 4,
+                          "column": 4,
+                          "offset": 109
+                        },
+                        "end": {
+                          "line": 4,
+                          "column": 14,
+                          "offset": 119
+                        },
+                        "indent": []
+                      }
+                    },
+                    {
+                      "type": "text",
+                      "value": " an instance for managing events ",
+                      "position": {
+                        "start": {
+                          "line": 4,
+                          "column": 14,
+                          "offset": 119
+                        },
+                        "end": {
+                          "line": 4,
+                          "column": 47,
+                          "offset": 152
+                        },
+                        "indent": []
+                      }
+                    },
+                    {
+                      "type": "link",
+                      "title": null,
+                      "url": "https://github.com/krasimir/EventBus",
+                      "children": [
+                        {
+                          "type": "text",
+                          "value": "https://github.com/krasimir/EventBus",
+                          "position": {
+                            "start": {
+                              "line": 4,
+                              "column": 47,
+                              "offset": 152
+                            },
+                            "end": {
+                              "line": 4,
+                              "column": 83,
+                              "offset": 188
+                            },
+                            "indent": []
+                          }
+                        }
+                      ],
+                      "position": {
+                        "start": {
+                          "line": 4,
+                          "column": 47,
+                          "offset": 152
+                        },
+                        "end": {
+                          "line": 4,
+                          "column": 83,
+                          "offset": 188
+                        },
+                        "indent": []
+                      }
+                    }
+                  ],
+                  "position": {
+                    "start": {
+                      "line": 4,
+                      "column": 4,
+                      "offset": 109
+                    },
+                    "end": {
+                      "line": 4,
+                      "column": 83,
+                      "offset": 188
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 4,
+                  "column": 1,
+                  "offset": 106
+                },
+                "end": {
+                  "line": 4,
+                  "column": 83,
+                  "offset": 188
+                },
+                "indent": []
+              }
             }
           ],
           "position": {
@@ -286,11 +395,13 @@
               "offset": 54
             },
             "end": {
-              "line": 3,
-              "column": 52,
-              "offset": 105
+              "line": 4,
+              "column": 83,
+              "offset": 188
             },
-            "indent": []
+            "indent": [
+              1
+            ]
           }
         }
       ],
@@ -301,9 +412,9 @@
           "offset": 0
         },
         "end": {
-          "line": 3,
-          "column": 52,
-          "offset": 105
+          "line": 4,
+          "column": 83,
+          "offset": 188
         }
       }
     },
@@ -311,7 +422,7 @@
       {
         "title": "param",
         "description": "Configuration details",
-        "lineNumber": 5,
+        "lineNumber": 6,
         "type": {
           "type": "NameExpression",
           "name": "Object"
@@ -321,7 +432,7 @@
       {
         "title": "param",
         "description": "The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.",
-        "lineNumber": 6,
+        "lineNumber": 7,
         "type": {
           "type": "NameExpression",
           "name": "string"
@@ -331,7 +442,7 @@
       {
         "title": "returns",
         "description": null,
-        "lineNumber": 7,
+        "lineNumber": 8,
         "type": {
           "type": "NameExpression",
           "name": "void"
@@ -340,36 +451,36 @@
       {
         "title": "example",
         "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});",
-        "lineNumber": 8
+        "lineNumber": 9
       }
     ],
     "loc": {
       "start": {
-        "line": 24,
+        "line": 26,
         "column": 0
       },
       "end": {
-        "line": 34,
+        "line": 37,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 35,
+          "line": 38,
           "column": 0
         },
         "end": {
-          "line": 54,
+          "line": 57,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "params": [
       {
         "name": "config",
-        "lineNumber": 5,
+        "lineNumber": 6,
         "description": {
           "type": "root",
           "children": [
@@ -429,7 +540,7 @@
         "properties": [
           {
             "name": "config.tenant_alias",
-            "lineNumber": 6,
+            "lineNumber": 7,
             "description": {
               "type": "root",
               "children": [
@@ -792,26 +903,26 @@
     ],
     "loc": {
       "start": {
-        "line": 56,
+        "line": 59,
         "column": 0
       },
       "end": {
-        "line": 63,
+        "line": 66,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 64,
+          "line": 67,
           "column": 0
         },
         "end": {
-          "line": 64,
+          "line": 67,
           "column": 22
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "examples": [
       {
@@ -829,2949 +940,6 @@
       }
     ],
     "namespace": "api"
-  },
-  {
-    "description": {
-      "type": "root",
-      "children": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "The OpenApi class is a wrapper around the Open Endpoints of the SaaSquatch REST API.",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 85,
-                  "offset": 84
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 85,
-              "offset": 84
-            },
-            "indent": []
-          }
-        },
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "The Open Endpoints in the SaaSquatch REST API are endpoints designed to work\nin client applications like the Mobile SDK and Javascript SDK.\nAuthentication relies on a User JWT and some API endpoints are unauthenticated.\nEven though the Open Endpoints are designed for client applications, they can\nstill be used in server-to-server cases using API Key authentication.",
-              "position": {
-                "start": {
-                  "line": 3,
-                  "column": 1,
-                  "offset": 86
-                },
-                "end": {
-                  "line": 7,
-                  "column": 70,
-                  "offset": 453
-                },
-                "indent": [
-                  1,
-                  1,
-                  1,
-                  1
-                ]
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 3,
-              "column": 1,
-              "offset": 86
-            },
-            "end": {
-              "line": 7,
-              "column": 70,
-              "offset": 453
-            },
-            "indent": [
-              1,
-              1,
-              1,
-              1
-            ]
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 7,
-          "column": 70,
-          "offset": 453
-        }
-      }
-    },
-    "tags": [],
-    "loc": {
-      "start": {
-        "line": 5,
-        "column": 0
-      },
-      "end": {
-        "line": 15,
-        "column": 3
-      }
-    },
-    "context": {
-      "loc": {
-        "start": {
-          "line": 16,
-          "column": 0
-        },
-        "end": {
-          "line": 251,
-          "column": 1
-        }
-      },
-      "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-    },
-    "name": "OpenApi",
-    "kind": "class",
-    "members": {
-      "instance": [
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Initialize a new ",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 18,
-                        "offset": 17
-                      },
-                      "indent": []
-                    }
-                  },
-                  {
-                    "type": "link",
-                    "url": "OpenApi",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "OpenApi"
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 18,
-                        "offset": 17
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 33,
-                        "offset": 32
-                      },
-                      "indent": []
-                    }
-                  },
-                  {
-                    "type": "text",
-                    "value": " instance.",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 33,
-                        "offset": 32
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 43,
-                        "offset": 42
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 43,
-                    "offset": 42
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 43,
-                "offset": 42
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "param",
-              "description": "Config details",
-              "lineNumber": 3,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "config"
-            },
-            {
-              "title": "param",
-              "description": "The tenant to access",
-              "lineNumber": 4,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "config.tenantAlias"
-            },
-            {
-              "title": "param",
-              "description": "The server domain.\n   Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.",
-              "lineNumber": 5,
-              "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "string"
-                }
-              },
-              "name": "config.domain",
-              "default": "'https://app.referralsaasquatch.com'"
-            },
-            {
-              "title": "example",
-              "description": "var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});",
-              "lineNumber": 8,
-              "caption": "Browser example"
-            },
-            {
-              "title": "example",
-              "description": "var OpenApi = require('squatch-js').OpenApi;\nvar squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
-              "lineNumber": 11,
-              "caption": "Browserify/Webpack example"
-            },
-            {
-              "title": "example",
-              "description": "import {OpenApi} from 'squatch-js';\nlet squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
-              "lineNumber": 15,
-              "caption": "Babel+Browserify/Webpack example"
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 22,
-              "column": 2
-            },
-            "end": {
-              "line": 40,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 41,
-                "column": 2
-              },
-              "end": {
-                "line": 44,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-          },
-          "params": [
-            {
-              "name": "config",
-              "lineNumber": 3,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Config details",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 15,
-                            "offset": 14
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 15,
-                        "offset": 14
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 15,
-                    "offset": 14
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "name": "config.tenantAlias",
-                  "lineNumber": 4,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The tenant to access",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 21,
-                                "offset": 20
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 21,
-                            "offset": 20
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 21,
-                        "offset": 20
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "name": "config.domain",
-                  "lineNumber": 5,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "The server domain.\n   Useful if you want to use a proxy like ",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 2,
-                                "column": 43,
-                                "offset": 61
-                              },
-                              "indent": [
-                                1
-                              ]
-                            }
-                          },
-                          {
-                            "type": "link",
-                            "url": "https://requestb.in/",
-                            "title": null,
-                            "jsdoc": true,
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "RequestBin"
-                              }
-                            ],
-                            "position": {
-                              "start": {
-                                "line": 2,
-                                "column": 43,
-                                "offset": 61
-                              },
-                              "end": {
-                                "line": 2,
-                                "column": 82,
-                                "offset": 100
-                              },
-                              "indent": []
-                            }
-                          },
-                          {
-                            "type": "text",
-                            "value": " or ",
-                            "position": {
-                              "start": {
-                                "line": 2,
-                                "column": 82,
-                                "offset": 100
-                              },
-                              "end": {
-                                "line": 2,
-                                "column": 86,
-                                "offset": 104
-                              },
-                              "indent": []
-                            }
-                          },
-                          {
-                            "type": "link",
-                            "url": "https://runscope.com/",
-                            "title": null,
-                            "jsdoc": true,
-                            "children": [
-                              {
-                                "type": "text",
-                                "value": "Runscope"
-                              }
-                            ],
-                            "position": {
-                              "start": {
-                                "line": 2,
-                                "column": 86,
-                                "offset": 104
-                              },
-                              "end": {
-                                "line": 2,
-                                "column": 124,
-                                "offset": 142
-                              },
-                              "indent": []
-                            }
-                          },
-                          {
-                            "type": "text",
-                            "value": ".",
-                            "position": {
-                              "start": {
-                                "line": 2,
-                                "column": 124,
-                                "offset": 142
-                              },
-                              "end": {
-                                "line": 2,
-                                "column": 125,
-                                "offset": 143
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 2,
-                            "column": 125,
-                            "offset": 143
-                          },
-                          "indent": [
-                            1
-                          ]
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 2,
-                        "column": 125,
-                        "offset": 143
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "OptionalType",
-                    "expression": {
-                      "type": "NameExpression",
-                      "name": "string"
-                    }
-                  },
-                  "default": "'https://app.referralsaasquatch.com'"
-                }
-              ]
-            }
-          ],
-          "examples": [
-            {
-              "description": "var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});",
-              "caption": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Browser example",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 16,
-                            "offset": 15
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 16,
-                        "offset": 15
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 16,
-                    "offset": 15
-                  }
-                }
-              }
-            },
-            {
-              "description": "var OpenApi = require('squatch-js').OpenApi;\nvar squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
-              "caption": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Browserify/Webpack example",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 27,
-                            "offset": 26
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 27,
-                        "offset": 26
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 27,
-                    "offset": 26
-                  }
-                }
-              }
-            },
-            {
-              "description": "import {OpenApi} from 'squatch-js';\nlet squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});",
-              "caption": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Babel+Browserify/Webpack example",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 33,
-                            "offset": 32
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 33,
-                        "offset": 32
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 33,
-                    "offset": 32
-                  }
-                }
-              }
-            }
-          ],
-          "name": "constructor",
-          "kind": "function",
-          "memberof": "OpenApi",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "OpenApi",
-              "kind": "class"
-            },
-            {
-              "name": "constructor",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "OpenApi#constructor"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.\nThis is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 2,
-                        "column": 96,
-                        "offset": 232
-                      },
-                      "indent": [
-                        1
-                      ]
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 2,
-                    "column": 96,
-                    "offset": 232
-                  },
-                  "indent": [
-                    1
-                  ]
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "link",
-                    "url": "https://docs.referralsaasquatch.com/api/methods/#open_list_referrals",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "List Referrals"
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 4,
-                        "column": 1,
-                        "offset": 234
-                      },
-                      "end": {
-                        "line": 4,
-                        "column": 92,
-                        "offset": 325
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 4,
-                    "column": 1,
-                    "offset": 234
-                  },
-                  "end": {
-                    "line": 4,
-                    "column": 92,
-                    "offset": 325
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 4,
-                "column": 92,
-                "offset": 325
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "param",
-              "description": "The User/Account",
-              "lineNumber": 6,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "the ID of user to be created",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.id"
-            },
-            {
-              "title": "param",
-              "description": "the ID of account to be created",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.accountId"
-            },
-            {
-              "title": "return",
-              "description": "details of the user create",
-              "lineNumber": 9,
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Promise"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "User"
-                  }
-                ]
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 46,
-              "column": 2
-            },
-            "end": {
-              "line": 56,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 57,
-                "column": 2
-              },
-              "end": {
-                "line": 67,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-          },
-          "params": [
-            {
-              "name": "params",
-              "lineNumber": 6,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The User/Account",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 17,
-                            "offset": 16
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 17,
-                        "offset": 16
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 17,
-                    "offset": 16
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "name": "params.id",
-                  "lineNumber": 7,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the ID of user to be created",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 29,
-                                "offset": 28
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 29,
-                            "offset": 28
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 29,
-                        "offset": 28
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "name": "params.accountId",
-                  "lineNumber": 8,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the ID of account to be created",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 32,
-                                "offset": 31
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 32,
-                            "offset": 31
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 32,
-                        "offset": 31
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "details of the user create",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 27,
-                            "offset": 26
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 27,
-                        "offset": 26
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 27,
-                    "offset": 26
-                  }
-                }
-              },
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Promise"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "User"
-                  }
-                ]
-              }
-            }
-          ],
-          "name": "createUser",
-          "kind": "function",
-          "memberof": "OpenApi",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "OpenApi",
-              "kind": "class"
-            },
-            {
-              "name": "createUser",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "OpenApi#createUser"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 148,
-                        "offset": 147
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 148,
-                    "offset": 147
-                  },
-                  "indent": []
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.",
-                    "position": {
-                      "start": {
-                        "line": 3,
-                        "column": 1,
-                        "offset": 149
-                      },
-                      "end": {
-                        "line": 3,
-                        "column": 96,
-                        "offset": 244
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 3,
-                    "column": 1,
-                    "offset": 149
-                  },
-                  "end": {
-                    "line": 3,
-                    "column": 96,
-                    "offset": 244
-                  },
-                  "indent": []
-                }
-              },
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "link",
-                    "url": "https://docs.referralsaasquatch.com/api/methods/#open_get_user",
-                    "title": null,
-                    "jsdoc": true,
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Open API Spec"
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 5,
-                        "column": 1,
-                        "offset": 246
-                      },
-                      "end": {
-                        "line": 5,
-                        "column": 85,
-                        "offset": 330
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 5,
-                    "column": 1,
-                    "offset": 246
-                  },
-                  "end": {
-                    "line": 5,
-                    "column": 85,
-                    "offset": 330
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 5,
-                "column": 85,
-                "offset": 330
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "param",
-              "description": "The User/Account",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "the ID of user to look up",
-              "lineNumber": 8,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.id"
-            },
-            {
-              "title": "param",
-              "description": "the ID of account to look up",
-              "lineNumber": 9,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.accountId"
-            },
-            {
-              "title": "return",
-              "description": "User details",
-              "lineNumber": 10,
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Promise"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "User"
-                  }
-                ]
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 91,
-              "column": 2
-            },
-            "end": {
-              "line": 102,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 103,
-                "column": 2
-              },
-              "end": {
-                "line": 113,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-          },
-          "params": [
-            {
-              "name": "params",
-              "lineNumber": 7,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "The User/Account",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 17,
-                            "offset": 16
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 17,
-                        "offset": 16
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 17,
-                    "offset": 16
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "name": "params.id",
-                  "lineNumber": 8,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the ID of user to look up",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 26,
-                                "offset": 25
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 26,
-                            "offset": 25
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 26,
-                        "offset": 25
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "name": "params.accountId",
-                  "lineNumber": 9,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the ID of account to look up",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 29,
-                                "offset": 28
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 29,
-                            "offset": 28
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 29,
-                        "offset": 28
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "User details",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 13,
-                            "offset": 12
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 13,
-                        "offset": 12
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 13,
-                    "offset": 12
-                  }
-                }
-              },
-              "type": {
-                "type": "TypeApplication",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Promise"
-                },
-                "applications": [
-                  {
-                    "type": "NameExpression",
-                    "name": "User"
-                  }
-                ]
-              }
-            }
-          ],
-          "name": "lookUpUser",
-          "kind": "function",
-          "memberof": "OpenApi",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "OpenApi",
-              "kind": "class"
-            },
-            {
-              "name": "lookUpUser",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "OpenApi#lookUpUser"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Looks up a user by their Referral Code",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 39,
-                        "offset": 38
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 39,
-                    "offset": 38
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 39,
-                "offset": 38
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "param",
-              "description": "stuff",
-              "lineNumber": 3,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "the code used to look up a user",
-              "lineNumber": 4,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.referralCode"
-            },
-            {
-              "title": "return",
-              "description": "User details",
-              "lineNumber": 5,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 115,
-              "column": 2
-            },
-            "end": {
-              "line": 121,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 122,
-                "column": 2
-              },
-              "end": {
-                "line": 131,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-          },
-          "params": [
-            {
-              "name": "params",
-              "lineNumber": 3,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "stuff",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 6,
-                            "offset": 5
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 6,
-                        "offset": 5
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6,
-                    "offset": 5
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "name": "params.referralCode",
-                  "lineNumber": 4,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the code used to look up a user",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 32,
-                                "offset": 31
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 32,
-                            "offset": 31
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 32,
-                        "offset": 31
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "User details",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 13,
-                            "offset": 12
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 13,
-                        "offset": 12
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 13,
-                    "offset": 12
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "name": "getUserByReferralCode",
-          "kind": "function",
-          "memberof": "OpenApi",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "OpenApi",
-              "kind": "class"
-            },
-            {
-              "name": "getUserByReferralCode",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "OpenApi#getUserByReferralCode"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Looks up a referral code",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 25,
-                        "offset": 24
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 25,
-                    "offset": 24
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 25,
-                "offset": 24
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "param",
-              "description": "stuff",
-              "lineNumber": 3,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "the code used to look up a code",
-              "lineNumber": 4,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.referralCode"
-            },
-            {
-              "title": "return",
-              "description": "User details",
-              "lineNumber": 5,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 133,
-              "column": 2
-            },
-            "end": {
-              "line": 139,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 140,
-                "column": 2
-              },
-              "end": {
-                "line": 149,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-          },
-          "params": [
-            {
-              "name": "params",
-              "lineNumber": 3,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "stuff",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 6,
-                            "offset": 5
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 6,
-                        "offset": 5
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6,
-                    "offset": 5
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "name": "params.referralCode",
-                  "lineNumber": 4,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the code used to look up a code",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 32,
-                                "offset": 31
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 32,
-                            "offset": 31
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 32,
-                        "offset": 31
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "User details",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 13,
-                            "offset": 12
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 13,
-                        "offset": 12
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 13,
-                    "offset": 12
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "name": "lookUpReferralCode",
-          "kind": "function",
-          "memberof": "OpenApi",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "OpenApi",
-              "kind": "class"
-            },
-            {
-              "name": "lookUpReferralCode",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "OpenApi#lookUpReferralCode"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Applies a referral code",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 24,
-                        "offset": 23
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 24,
-                    "offset": 23
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 24,
-                "offset": 23
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "param",
-              "description": "stuff",
-              "lineNumber": 3,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "the ID of the User that is referred",
-              "lineNumber": 4,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.id"
-            },
-            {
-              "title": "param",
-              "description": "the Account ID of the User that is referred",
-              "lineNumber": 5,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.accountId"
-            },
-            {
-              "title": "param",
-              "description": "the code to apply",
-              "lineNumber": 6,
-              "type": {
-                "type": "NameExpression",
-                "name": "string"
-              },
-              "name": "params.referralCode"
-            },
-            {
-              "title": "return",
-              "description": "Stuff",
-              "lineNumber": 7,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 151,
-              "column": 2
-            },
-            "end": {
-              "line": 159,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 160,
-                "column": 2
-              },
-              "end": {
-                "line": 171,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-          },
-          "params": [
-            {
-              "name": "params",
-              "lineNumber": 3,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "stuff",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 6,
-                            "offset": 5
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 6,
-                        "offset": 5
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6,
-                    "offset": 5
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "name": "params.id",
-                  "lineNumber": 4,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the ID of the User that is referred",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 36,
-                                "offset": 35
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 36,
-                            "offset": 35
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 36,
-                        "offset": 35
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "name": "params.accountId",
-                  "lineNumber": 5,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the Account ID of the User that is referred",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 44,
-                                "offset": 43
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 44,
-                            "offset": 43
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 44,
-                        "offset": 43
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                },
-                {
-                  "name": "params.referralCode",
-                  "lineNumber": 6,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the code to apply",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 18,
-                                "offset": 17
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 18,
-                            "offset": 17
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 18,
-                        "offset": 17
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "string"
-                  }
-                }
-              ]
-            }
-          ],
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Stuff",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 6,
-                            "offset": 5
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 6,
-                        "offset": 5
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6,
-                    "offset": 5
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "name": "applyReferralCode",
-          "kind": "function",
-          "memberof": "OpenApi",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "OpenApi",
-              "kind": "class"
-            },
-            {
-              "name": "applyReferralCode",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "OpenApi#applyReferralCode"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Lists referrals",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 16,
-                        "offset": 15
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 16,
-                    "offset": 15
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 16,
-                "offset": 15
-              }
-            }
-          },
-          "tags": [
-            {
-              "title": "return",
-              "description": "Stuff",
-              "lineNumber": 3,
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "loc": {
-            "start": {
-              "line": 173,
-              "column": 2
-            },
-            "end": {
-              "line": 177,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 178,
-                "column": 2
-              },
-              "end": {
-                "line": 184,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/OpenApi.js"
-          },
-          "returns": [
-            {
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Stuff",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 6,
-                            "offset": 5
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 6,
-                        "offset": 5
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 6,
-                    "offset": 5
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "Promise"
-              }
-            }
-          ],
-          "name": "listReferrals",
-          "kind": "function",
-          "memberof": "OpenApi",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "OpenApi",
-              "kind": "class"
-            },
-            {
-              "name": "listReferrals",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "OpenApi#listReferrals"
-        }
-      ],
-      "static": [],
-      "events": []
-    },
-    "path": [
-      {
-        "name": "OpenApi",
-        "kind": "class"
-      }
-    ],
-    "namespace": "OpenApi"
   },
   {
     "description": {
@@ -3844,11 +1012,11 @@
           "column": 0
         },
         "end": {
-          "line": 168,
+          "line": 174,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+      "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
     },
     "name": "WidgetApi",
     "kind": "class",
@@ -4024,7 +1192,7 @@
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -4615,7 +1783,7 @@
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -5045,11 +2213,11 @@
                 "column": 2
               },
               "end": {
-                "line": 84,
+                "line": 88,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -5542,26 +2710,26 @@
           ],
           "loc": {
             "start": {
-              "line": 86,
+              "line": 90,
               "column": 2
             },
             "end": {
-              "line": 97,
+              "line": 101,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 98,
+                "line": 102,
                 "column": 2
               },
               "end": {
-                "line": 111,
+                "line": 115,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -5968,109 +3136,6 @@
             },
             "indent": []
           }
-        },
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "Creating widget type:\n   class CustomWidget extends Widget {\n     constructor(params,stuff) {\n       super(params);\n       // do stuff\n     }",
-              "position": {
-                "start": {
-                  "line": 3,
-                  "column": 1,
-                  "offset": 77
-                },
-                "end": {
-                  "line": 8,
-                  "column": 7,
-                  "offset": 218
-                },
-                "indent": [
-                  1,
-                  1,
-                  1,
-                  1,
-                  1
-                ]
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 3,
-              "column": 1,
-              "offset": 77
-            },
-            "end": {
-              "line": 8,
-              "column": 7,
-              "offset": 218
-            },
-            "indent": [
-              1,
-              1,
-              1,
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "type": "code",
-          "lang": null,
-          "value": " load() {\n   // custom loading of widget\n }",
-          "position": {
-            "start": {
-              "line": 10,
-              "column": 1,
-              "offset": 220
-            },
-            "end": {
-              "line": 12,
-              "column": 7,
-              "offset": 275
-            },
-            "indent": [
-              1,
-              1
-            ]
-          }
-        },
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "   }",
-              "position": {
-                "start": {
-                  "line": 13,
-                  "column": 1,
-                  "offset": 276
-                },
-                "end": {
-                  "line": 13,
-                  "column": 5,
-                  "offset": 280
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 13,
-              "column": 1,
-              "offset": 276
-            },
-            "end": {
-              "line": 13,
-              "column": 5,
-              "offset": 280
-            },
-            "indent": []
-          }
         }
       ],
       "position": {
@@ -6080,13 +3145,20 @@
           "offset": 0
         },
         "end": {
-          "line": 13,
-          "column": 5,
-          "offset": 280
+          "line": 1,
+          "column": 76,
+          "offset": 75
         }
       }
     },
-    "tags": [],
+    "tags": [
+      {
+        "title": "example",
+        "description": "class CustomWidget extends Widget {\n     constructor(params,stuff) {\n       super(params);\n       // do stuff\n     }\n\n     load() {\n       // custom loading of widget\n     }\n   }",
+        "lineNumber": 4,
+        "caption": "Custom Widget example"
+      }
+    ],
     "loc": {
       "start": {
         "line": 10,
@@ -6104,12 +3176,69 @@
           "column": 0
         },
         "end": {
-          "line": 152,
+          "line": 151,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widget.js"
+      "file": "/Users/jorgeconde/squatch-js/src/widgets/Widget.js"
     },
+    "examples": [
+      {
+        "description": "class CustomWidget extends Widget {\n     constructor(params,stuff) {\n       super(params);\n       // do stuff\n     }\n\n     load() {\n       // custom loading of widget\n     }\n   }",
+        "caption": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Custom Widget example",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 22,
+                      "offset": 21
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 22,
+                  "offset": 21
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 22,
+              "offset": 21
+            }
+          }
+        }
+      }
+    ],
     "name": "Widget",
     "kind": "class",
     "members": {
@@ -6399,11 +3528,11 @@
                 "column": 2
               },
               "end": {
-                "line": 79,
+                "line": 78,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widget.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widget.js"
           },
           "params": [
             {
@@ -6694,11 +3823,11 @@
           "column": 0
         },
         "end": {
-          "line": 60,
+          "line": 61,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/api/AnalyticsApi.js"
+      "file": "/Users/jorgeconde/squatch-js/src/api/AnalyticsApi.js"
     },
     "name": "AnalyticsApi",
     "kind": "class",
@@ -6846,7 +3975,7 @@
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/AnalyticsApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/AnalyticsApi.js"
           },
           "params": [
             {
