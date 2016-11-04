@@ -55,323 +55,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(14);
-	module.exports = __webpack_require__(2);
+	module.exports = __webpack_require__(39);
 
 
 /***/ },
 /* 1 */,
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.OpenApi = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _jsonschema = __webpack_require__(3);
-
-	var _schema = __webpack_require__(13);
-
-	var _schema2 = _interopRequireDefault(_schema);
-
-	__webpack_require__(14);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The OpenApi class is a wrapper around the Open Endpoints of the SaaSquatch REST API.
-	 *
-	 * The Open Endpoints in the SaaSquatch REST API are endpoints designed to work
-	 * in client applications like the Mobile SDK and Javascript SDK.
-	 * Authentication relies on a User JWT and some API endpoints are unauthenticated.
-	 * Even though the Open Endpoints are designed for client applications, they can
-	 * still be used in server-to-server cases using API Key authentication.
-	 *
-	 */
-	var OpenApi = exports.OpenApi = function () {
-
-	  //TODO:
-	  // - Authenticate with JWT
-	  // - Add comments
-
-	  /**
-	   * Initialize a new {@link OpenApi} instance.
-	   *
-	   * @param {Object} config Config details
-	   * @param {string} config.tenantAlias The tenant to access
-	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var OpenApi = require('squatch-js').OpenApi;
-	   * var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {OpenApi} from 'squatch-js';
-	   * let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
-	   */
-	  function OpenApi(config) {
-	    _classCallCheck(this, OpenApi);
-
-	    this.tenantAlias = config.tenantAlias;
-	    this.domain = "https://staging.referralsaasquatch.com";
-	  }
-
-	  /**
-	   * This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.
-	   * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
-	   *
-	   * {@link https://docs.referralsaasquatch.com/api/methods/#open_list_referrals List Referrals}
-	   *
-	   * @param {Object} params The User/Account
-	   * @param {string} params.id the ID of user to be created
-	   * @param {string} params.accountId the ID of account to be created
-	   * @return {Promise<User>} details of the user create
-	   */
-
-
-	  _createClass(OpenApi, [{
-	    key: 'createUser',
-	    value: function createUser(params) {
-	      this._validateInput(params, _schema2.default.user);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(params), 'application/json');
-	    }
-	  }, {
-	    key: 'upsertUser',
-	    value: function upsertUser(params) {
-	      console.log(params);
-	      this._validateInput(params, _schema2.default.user);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doPut(url, JSON.stringify(params), 'application/json');
-	    }
-	  }, {
-	    key: 'createCookieUser',
-	    value: function createCookieUser() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text/html';
-
-	      var responseType = params;
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
-	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}), responseType);
-	    }
-
-	    /**
-	     * Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.
-	     *
-	     * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
-	     *
-	     * {@link https://docs.referralsaasquatch.com/api/methods/#open_get_user Open API Spec}
-	     *
-	     * @param {Object} params The User/Account
-	     * @param {string} params.id the ID of user to look up
-	     * @param {string} params.accountId the ID of account to look up
-	     * @return {Promise<User>} User details
-	     */
-
-	  }, {
-	    key: 'lookUpUser',
-	    value: function lookUpUser(params) {
-	      this._validateInput(params, _schema2.default.userLookUp);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * Looks up a user by their Referral Code
-	     *
-	     * @param {Object} params stuff
-	     * @param {string} params.referralCode the code used to look up a user
-	     * @return {Promise} User details
-	     */
-
-	  }, {
-	    key: 'getUserByReferralCode',
-	    value: function getUserByReferralCode(params) {
-	      this._validateInput(params, _schema2.default.userReferralCode);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/user?referralCode=' + referral_code;
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * Looks up a referral code
-	     *
-	     * @param {Object} params stuff
-	     * @param {string} params.referralCode the code used to look up a code
-	     * @return {Promise} User details
-	     */
-
-	  }, {
-	    key: 'lookUpReferralCode',
-	    value: function lookUpReferralCode(params) {
-	      this._validateInput(params, _schema2.default.userReferralCode);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code;
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * Applies a referral code
-	     *
-	     * @param {Object} params stuff
-	     * @param {string} params.id the ID of the User that is referred
-	     * @param {string} params.accountId the Account ID of the User that is referred
-	     * @param {string} params.referralCode the code to apply
-	     * @return {Promise} Stuff
-	     */
-
-	  }, {
-	    key: 'applyReferralCode',
-	    value: function applyReferralCode(params) {
-	      this._validateInput(params, _schema2.default.applyReferralCode);
-
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
-	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(""), 'application/json');
-	    }
-
-	    /**
-	     * Lists referrals
-	     *
-	     * @return {Promise} Stuff
-	     */
-
-	  }, {
-	    key: 'listReferrals',
-	    value: function listReferrals() {
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-
-	      var path = '/api/v1/' + tenant_alias + '/open/referrals';
-	      var url = this.domain + path;
-	      return this._doRequest(url);
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_validateInput',
-	    value: function _validateInput(params, schema) {
-	      var valid = (0, _jsonschema.validate)(params, schema);
-	      if (!valid.valid) throw valid.errors;
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doRequest',
-	    value: function _doRequest(url) {
-	      return fetch(url, {
-	        method: 'GET',
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        return response.json();
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data, responseType) {
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: {
-	          'Accept': responseType,
-	          'Content-Type': 'application/json'
-	        },
-	        body: data
-	      }).then(function (response) {
-	        if (responseType === 'text/html') {
-	          return response.text();
-	        } else {
-	          return response.json();
-	        }
-	      });
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: '_doPut',
-	    value: function _doPut(url, data, responseType) {
-	      return fetch(url, {
-	        method: 'PUT',
-	        headers: {
-	          'Accept': responseType,
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': 'JWT token'
-	        },
-	        credentials: 'cors',
-	        body: data
-	      }).then(function (response) {
-	        if (responseType === 'text/html') {
-	          return response.text();
-	        } else {
-	          return response.json();
-	        }
-	      });
-	    }
-	  }]);
-
-	  return OpenApi;
-	}();
-
-/***/ },
+/* 2 */,
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3817,6 +3506,342 @@ return /******/ (function(modules) { // webpackBootstrap
 	  self.fetch.polyfill = true
 	})(typeof self !== 'undefined' ? self : this);
 
+
+/***/ },
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.OpenApi = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _jsonschema = __webpack_require__(3);
+
+	var _schema = __webpack_require__(13);
+
+	var _schema2 = _interopRequireDefault(_schema);
+
+	__webpack_require__(14);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 *
+	 * The OpenApi class is a wrapper around the Open Endpoints of the SaaSquatch REST API.
+	 *
+	 * The Open Endpoints in the SaaSquatch REST API are endpoints designed to work
+	 * in client applications like the Mobile SDK and Javascript SDK.
+	 * Authentication relies on a User JWT and some API endpoints are unauthenticated.
+	 * Even though the Open Endpoints are designed for client applications, they can
+	 * still be used in server-to-server cases using API Key authentication.
+	 *
+	 */
+	var OpenApi = exports.OpenApi = function () {
+
+	  //TODO:
+	  // - Authenticate with JWT
+	  // - Add comments
+
+	  /**
+	   * Initialize a new {@link OpenApi} instance.
+	   *
+	   * @param {Object} config Config details
+	   * @param {string} config.tenantAlias The tenant to access
+	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
+	   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var squatchApi = new squatch.OpenApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var OpenApi = require('squatch-js').OpenApi;
+	   * var squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {OpenApi} from 'squatch-js';
+	   * let squatchApi = new OpenApi({tenantAlias:'test_12b5bo1b25125'});
+	   */
+	  function OpenApi(config) {
+	    _classCallCheck(this, OpenApi);
+
+	    this.tenantAlias = config.tenantAlias;
+	    this.domain = "https://staging.referralsaasquatch.com";
+	  }
+
+	  /**
+	   * This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.
+	   * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
+	   *
+	   * {@link https://docs.referralsaasquatch.com/api/methods/#open_list_referrals List Referrals}
+	   *
+	   * @param {Object} params The User/Account
+	   * @param {string} params.id the ID of user to be created
+	   * @param {string} params.accountId the ID of account to be created
+	   * @return {Promise<User>} details of the user create
+	   */
+
+
+	  _createClass(OpenApi, [{
+	    key: 'createUser',
+	    value: function createUser(params) {
+	      this._validateInput(params, _schema2.default.user);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var url = this.domain + path;
+	      return this._doPost(url, JSON.stringify(params), 'application/json');
+	    }
+	  }, {
+	    key: 'upsertUser',
+	    value: function upsertUser(params) {
+	      console.log(params);
+	      this._validateInput(params, _schema2.default.user);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var url = this.domain + path;
+	      return this._doPut(url, JSON.stringify(params), 'application/json');
+	    }
+	  }, {
+	    key: 'createCookieUser',
+	    value: function createCookieUser() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text/html';
+
+	      var responseType = params;
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
+	      var url = this.domain + path;
+	      return this._doPost(url, JSON.stringify({}), responseType);
+	    }
+
+	    /**
+	     * Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.
+	     *
+	     * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
+	     *
+	     * {@link https://docs.referralsaasquatch.com/api/methods/#open_get_user Open API Spec}
+	     *
+	     * @param {Object} params The User/Account
+	     * @param {string} params.id the ID of user to look up
+	     * @param {string} params.accountId the ID of account to look up
+	     * @return {Promise<User>} User details
+	     */
+
+	  }, {
+	    key: 'lookUpUser',
+	    value: function lookUpUser(params) {
+	      this._validateInput(params, _schema2.default.userLookUp);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var url = this.domain + path;
+	      return this._doRequest(url);
+	    }
+
+	    /**
+	     * Looks up a user by their Referral Code
+	     *
+	     * @param {Object} params stuff
+	     * @param {string} params.referralCode the code used to look up a user
+	     * @return {Promise} User details
+	     */
+
+	  }, {
+	    key: 'getUserByReferralCode',
+	    value: function getUserByReferralCode(params) {
+	      this._validateInput(params, _schema2.default.userReferralCode);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/user?referralCode=' + referral_code;
+	      var url = this.domain + path;
+	      return this._doRequest(url);
+	    }
+
+	    /**
+	     * Looks up a referral code
+	     *
+	     * @param {Object} params stuff
+	     * @param {string} params.referralCode the code used to look up a code
+	     * @return {Promise} User details
+	     */
+
+	  }, {
+	    key: 'lookUpReferralCode',
+	    value: function lookUpReferralCode(params) {
+	      this._validateInput(params, _schema2.default.userReferralCode);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code;
+	      var url = this.domain + path;
+	      return this._doRequest(url);
+	    }
+
+	    /**
+	     * Applies a referral code
+	     *
+	     * @param {Object} params stuff
+	     * @param {string} params.id the ID of the User that is referred
+	     * @param {string} params.accountId the Account ID of the User that is referred
+	     * @param {string} params.referralCode the code to apply
+	     * @return {Promise} Stuff
+	     */
+
+	  }, {
+	    key: 'applyReferralCode',
+	    value: function applyReferralCode(params) {
+	      this._validateInput(params, _schema2.default.applyReferralCode);
+
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var referral_code = encodeURIComponent(params.referralCode);
+	      var account_id = encodeURIComponent(params.accountId);
+	      var user_id = encodeURIComponent(params.id);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
+	      var url = this.domain + path;
+	      return this._doPost(url, JSON.stringify(""), 'application/json');
+	    }
+
+	    /**
+	     * Lists referrals
+	     *
+	     * @return {Promise} Stuff
+	     */
+
+	  }, {
+	    key: 'listReferrals',
+	    value: function listReferrals() {
+	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+
+	      var path = '/api/v1/' + tenant_alias + '/open/referrals';
+	      var url = this.domain + path;
+	      return this._doRequest(url);
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_validateInput',
+	    value: function _validateInput(params, schema) {
+	      var valid = (0, _jsonschema.validate)(params, schema);
+	      if (!valid.valid) throw valid.errors;
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doRequest',
+	    value: function _doRequest(url) {
+	      return fetch(url, {
+	        method: 'GET',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        }
+	      }).then(function (response) {
+	        return response.json();
+	      });
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doPost',
+	    value: function _doPost(url, data, responseType) {
+	      return fetch(url, {
+	        method: 'POST',
+	        headers: {
+	          'Accept': responseType,
+	          'Content-Type': 'application/json'
+	        },
+	        body: data
+	      }).then(function (response) {
+	        if (responseType === 'text/html') {
+	          return response.text();
+	        } else {
+	          return response.json();
+	        }
+	      });
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: '_doPut',
+	    value: function _doPut(url, data, responseType) {
+	      return fetch(url, {
+	        method: 'PUT',
+	        headers: {
+	          'Accept': responseType,
+	          'Content-Type': 'application/json',
+	          'X-SaaSquatch-User-Token': 'JWT token'
+	        },
+	        credentials: 'cors',
+	        body: data
+	      }).then(function (response) {
+	        if (responseType === 'text/html') {
+	          return response.text();
+	        } else {
+	          return response.json();
+	        }
+	      });
+	    }
+	  }]);
+
+	  return OpenApi;
+	}();
 
 /***/ }
 /******/ ])
