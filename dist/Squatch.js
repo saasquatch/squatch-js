@@ -153,7 +153,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  exports.api = api = new _WidgetApi.WidgetApi({ tenantAlias: config.tenantAlias });
 
 	  _log("Widget API instance", api);
-	  if (!config.engagementMedium) config.engagementMedium = 'POPUP';
+	  if (!config.engagementMedium) {
+	    config.engagementMedium = 'POPUP';
+	  } else if (config.engagementMedium === 'NO_CONTENT') {
+	    config.engagementMedium = undefined;
+	  }
 
 	  if (config.user && config.user.id && config.user.accountId) {
 	    api.upsert(config).then(function (response) {
@@ -219,7 +223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 
 	    response.jsOptions.conversionUrls.forEach(function (rule) {
-	      if (matchesUrl(rule)) {
+	      if (response.user.referredBy && matchesUrl(rule)) {
 	        displayOnLoad = true;
 	        console.log("This is a conversion URL", rule);
 	      }
@@ -4251,7 +4255,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.AnalyticsApi = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -4265,7 +4268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * the SaaSquatch REST API. Used to record Widget events.
 	 *
 	 */
-	var AnalyticsApi = exports.AnalyticsApi = function () {
+	var AnalyticsApi = function () {
 	  /**
 	   * Initialize a new {@link AnalyticsApi} instance.
 	   *
@@ -4273,61 +4276,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
 	   *
 	   */
-	  function AnalyticsApi(config) {
+	  function AnalyticsApi() {
 	    _classCallCheck(this, AnalyticsApi);
 
-	    this.domain = "https://staging.referralsaasquatch.com";
+	    this.domain = 'https://staging.referralsaasquatch.com';
 	  }
 
 	  _createClass(AnalyticsApi, [{
 	    key: 'pushAnalyticsLoadEvent',
 	    value: function pushAnalyticsLoadEvent(params) {
-	      var tenant_alias = encodeURIComponent(params.tenantAlias);
-	      var account_id = encodeURIComponent(params.externalAccountId);
-	      var user_id = encodeURIComponent(params.externalUserId);
-	      var engagement_medium = encodeURIComponent(params.engagementMedium);
+	      var tenantAlias = encodeURIComponent(params.tenantAlias);
+	      var accountId = encodeURIComponent(params.externalAccountId);
+	      var userId = encodeURIComponent(params.externalUserId);
+	      var engagementMedium = encodeURIComponent(params.engagementMedium);
 
-	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded?externalAccountId=' + account_id + '&externalUserId=' + user_id + '&engagementMedium=' + engagement_medium;
+	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}));
+
+	      return this.doPost(url, JSON.stringify({}));
 	    }
 	  }, {
 	    key: 'pushAnalyticsShareClickedEvent',
 	    value: function pushAnalyticsShareClickedEvent(params) {
-	      var tenant_alias = encodeURIComponent(params.tenantAlias);
-	      var account_id = encodeURIComponent(params.externalAccountId);
-	      var user_id = encodeURIComponent(params.externalUserId);
-	      var engagement_medium = encodeURIComponent(params.engagementMedium);
-	      var share_medium = encodeURIComponent(params.shareMedium);
+	      var tenantAlias = encodeURIComponent(params.tenantAlias);
+	      var accountId = encodeURIComponent(params.externalAccountId);
+	      var userId = encodeURIComponent(params.externalUserId);
+	      var engagementMedium = encodeURIComponent(params.engagementMedium);
+	      var shareMedium = encodeURIComponent(params.shareMedium);
 
-	      var path = '/a/' + tenant_alias + '/widgets/analytics/loaded?externalAccountId=' + account_id + '&externalUserId=' + user_id + '&engagementMedium=' + engagement_medium + '&shareMedium=' + share_medium;
+	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium + '&shareMedium=' + shareMedium;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}));
+
+	      return this.doPost(url, JSON.stringify({}));
 	    }
 
 	    /**
 	    * @private
+	    *
+	    * @param {String} url The requested url
+	    * @param {String} data Stringified json object
+	    *
+	    * @returns {Promise} fetch promise
 	    */
 
-	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data) {
-
+	  }], [{
+	    key: 'doPost',
+	    value: function doPost(url, data) {
 	      return fetch(url, {
 	        method: 'POST',
 	        headers: {
-	          'Accept': 'application/json',
+	          Accept: 'application/json',
 	          'Content-Type': 'application/json'
 	        },
 	        body: data
 	      }).then(function (response) {
-	        return response.text();
+	        response.text();
 	      });
 	    }
 	  }]);
 
 	  return AnalyticsApi;
 	}();
+
+	exports.default = AnalyticsApi;
 
 /***/ },
 /* 19 */

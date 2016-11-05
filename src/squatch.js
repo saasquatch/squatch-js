@@ -44,7 +44,11 @@ export function init(config) {
   api = new WidgetApi({ tenantAlias: config.tenantAlias });
 
   _log("Widget API instance", api);
-  if (!config.engagementMedium) config.engagementMedium = 'POPUP';
+  if (!config.engagementMedium) {
+    config.engagementMedium = 'POPUP';
+  } else if (config.engagementMedium === 'NO_CONTENT'){
+    config.engagementMedium = undefined;
+  }
 
   if (config.user && config.user.id && config.user.accountId) {
     api.upsert(config).then(function(response) {
@@ -110,7 +114,7 @@ export function load(response, config) {
     });
 
     response.jsOptions.conversionUrls.forEach(rule => {
-      if (matchesUrl(rule)) {
+      if (response.user.referredBy && matchesUrl(rule)) {
         displayOnLoad = true;
         console.log("This is a conversion URL", rule);
       }
