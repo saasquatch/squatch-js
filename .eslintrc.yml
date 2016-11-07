@@ -12,9 +12,7 @@ rules:
   linebreak-style:
     - error
     - unix
-  # quotes:
-  #   - error
-  #   - double
+  no-underscore-dangle: off
   semi:
     - warn
     - always

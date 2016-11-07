@@ -28,7 +28,7 @@ export default class AnalyticsApi {
     const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}`;
     const url = this.domain + path;
 
-    return this.doPost(url, JSON.stringify({}));
+    return AnalyticsApi.doPost(url, JSON.stringify({}));
   }
 
   pushAnalyticsShareClickedEvent(params) {
@@ -41,7 +41,7 @@ export default class AnalyticsApi {
     const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}&shareMedium=${shareMedium}`;
     const url = this.domain + path;
 
-    return this.doPost(url, JSON.stringify({}));
+    return AnalyticsApi.doPost(url, JSON.stringify({}));
   }
 
   /**
@@ -60,6 +60,6 @@ export default class AnalyticsApi {
         'Content-Type': 'application/json',
       },
       body: data,
-    }).then((response) => { response.text(); });
+    }).then(response => response.text());
   }
 }

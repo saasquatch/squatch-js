@@ -1,6 +1,7 @@
+import 'whatwg-fetch';
 import { validate } from 'jsonschema';
 import schema from './schema.json';
-import 'whatwg-fetch';
+
 
 /**
  *
@@ -13,11 +14,10 @@ import 'whatwg-fetch';
  * still be used in server-to-server cases using API Key authentication.
  *
  */
-export class OpenApi {
+export default class OpenApi {
 
-  //TODO:
+  // TODO:
   // - Authenticate with JWT
-  // - Add comments
 
   /**
    * Initialize a new {@link OpenApi} instance.
@@ -40,12 +40,15 @@ export class OpenApi {
    */
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
-    this.domain = "https://staging.referralsaasquatch.com";
+    this.domain = 'https://staging.referralsaasquatch.com';
   }
 
   /**
-   * This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.
-   * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
+   * This method creates a user and an account in one call. Because this call
+   * creates a user, it requires either a write token or an API key.
+   *
+   * This is an Open Endpoint and disabled by default. Contact support
+   * to enable the open endpoints.
    *
    * {@link https://docs.referralsaasquatch.com/api/methods/#open_list_referrals List Referrals}
    *
@@ -55,42 +58,44 @@ export class OpenApi {
    * @return {Promise<User>} details of the user create
    */
   createUser(params) {
-    this._validateInput(params, schema.user);
+    OpenApi.validateInput(params, schema.user);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let account_id = encodeURIComponent(params.accountId);
-    let user_id = encodeURIComponent(params.id);
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const accountId = encodeURIComponent(params.accountId);
+    const userId = encodeURIComponent(params.id);
 
-    let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
-    let url = this.domain + path;
-    return this._doPost(url, JSON.stringify(params), 'application/json');
+    const path = `/api/v1/${tenantAlias}/open/account/${accountId}/user/${userId}`;
+    const url = this.domain + path;
+    return OpenApi.doPost(url, JSON.stringify(params), 'application/json');
   }
 
   upsertUser(params) {
-    this._validateInput(params, schema.user);
+    OpenApi.validateInput(params, schema.user);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let account_id = encodeURIComponent(params.accountId);
-    let user_id = encodeURIComponent(params.id);
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const accountId = encodeURIComponent(params.accountId);
+    const userId = encodeURIComponent(params.id);
 
-    let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
-    let url = this.domain + path;
-    return this._doPut(url, JSON.stringify(params), 'application/json');
+    const path = `/api/v1/${tenantAlias}/open/account/${accountId}/user/${userId}`;
+    const url = this.domain + path;
+    return OpenApi.doPut(url, JSON.stringify(params), 'application/json');
   }
 
   createCookieUser(params = 'text/html') {
-    let responseType = params;
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    const responseType = params;
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
 
-    let path = `/api/v1/${tenant_alias}/open/user/cookie_user`;
-    let url = this.domain + path;
-    return this._doPost(url, JSON.stringify({}), responseType);
+    const path = `/api/v1/${tenantAlias}/open/user/cookie_user`;
+    const url = this.domain + path;
+    return OpenApi.doPost(url, JSON.stringify({}), responseType);
   }
 
   /**
-   * Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.
+   * Looks up a user based upon their id and returns their personal information
+   * including sharelinks. This endpoint requires a read token or an API key.
    *
-   * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
+   * This is an Open Endpoint and disabled by default. Contact support
+   * to enable the open endpoints.
    *
    * {@link https://docs.referralsaasquatch.com/api/methods/#open_get_user Open API Spec}
    *
@@ -100,15 +105,15 @@ export class OpenApi {
    * @return {Promise<User>} User details
    */
   lookUpUser(params) {
-    this._validateInput(params, schema.userLookUp);
+    OpenApi.validateInput(params, schema.userLookUp);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let account_id = encodeURIComponent(params.accountId);
-    let user_id = encodeURIComponent(params.id);
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const accountId = encodeURIComponent(params.accountId);
+    const userId = encodeURIComponent(params.id);
 
-    let path = `/api/v1/${tenant_alias}/open/account/${account_id}/user/${user_id}`;
-    let url = this.domain + path;
-    return this._doRequest(url);
+    const path = `/api/v1/${tenantAlias}/open/account/${accountId}/user/${userId}`;
+    const url = this.domain + path;
+    return OpenApi.doRequest(url);
   }
 
   /**
@@ -119,14 +124,15 @@ export class OpenApi {
    * @return {Promise} User details
    */
   getUserByReferralCode(params) {
-    this._validateInput(params, schema.userReferralCode);
+    OpenApi.validateInput(params, schema.userReferralCode);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let referral_code = encodeURIComponent(params.referralCode);
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const referralCode = encodeURIComponent(params.referralCode);
 
-    let path = `/api/v1/${tenant_alias}/open/user?referralCode=${referral_code}`;
-    let url = this.domain + path;
-    return this._doRequest(url);
+    const path = `/api/v1/${tenantAlias}/open/user?referralCode=${referralCode}`;
+    const url = this.domain + path;
+
+    return OpenApi.doRequest(url);
   }
 
   /**
@@ -137,14 +143,14 @@ export class OpenApi {
    * @return {Promise} User details
    */
   lookUpReferralCode(params) {
-    this._validateInput(params, schema.userReferralCode);
+    OpenApi.validateInput(params, schema.userReferralCode);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let referral_code = encodeURIComponent(params.referralCode);
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const referralCode = encodeURIComponent(params.referralCode);
 
-    let path = `/api/v1/${tenant_alias}/open/code/${referral_code}`;
-    let url = this.domain + path;
-    return this._doRequest(url);
+    const path = `/api/v1/${tenantAlias}/open/code/${referralCode}`;
+    const url = this.domain + path;
+    return OpenApi.doRequest(url);
   }
 
   /**
@@ -157,16 +163,16 @@ export class OpenApi {
    * @return {Promise} Stuff
    */
   applyReferralCode(params) {
-    this._validateInput(params, schema.applyReferralCode);
+    OpenApi.validateInput(params, schema.applyReferralCode);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let referral_code = encodeURIComponent(params.referralCode);
-    let account_id = encodeURIComponent(params.accountId);
-    let user_id = encodeURIComponent(params.id);
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const referralCode = encodeURIComponent(params.referralCode);
+    const accountId = encodeURIComponent(params.accountId);
+    const userId = encodeURIComponent(params.id);
 
-    let path = `/api/v1/${tenant_alias}/open/code/${referral_code}/account/${account_id}/user/${user_id}`;
-    let url = this.domain + path;
-    return this._doPost(url, JSON.stringify(""), 'application/json');
+    const path = `/api/v1/${tenantAlias}/open/code/${referralCode}/account/${accountId}/user/${userId}`;
+    const url = this.domain + path;
+    return OpenApi.doPost(url, JSON.stringify({}), 'application/json');
   }
 
   /**
@@ -175,32 +181,60 @@ export class OpenApi {
    * @return {Promise} Stuff
    */
   listReferrals() {
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
 
-    let path = `/api/v1/${tenant_alias}/open/referrals`;
-    let url = this.domain + path;
-    return this._doRequest(url);
+    const path = `/api/v1/${tenantAlias}/open/referrals`;
+    const url = this.domain + path;
+    return OpenApi.doRequest(url);
   }
 
   /**
    * @private
+   *
+   * @param {Object} params json object
+   * @param {Object} jsonSchema the schema that validates a json object
+   * @returns {void}
    */
-  _validateInput(params, schema) {
-    let valid = validate(params, schema);
+  static validateInput(params, jsonSchema) {
+    const valid = validate(params, jsonSchema);
     if (!valid.valid) throw valid.errors;
   }
 
   /**
    * @private
+   *
+   * @param {String} url The requested url
+   * @returns {Promise} response
    */
-  _doRequest(url) {
+  static doRequest(url) {
     return fetch(url, {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }).then(response => response.json());
+  }
+
+  /**
+   * @private
+   *
+   * @param {String} url
+   * @param {String} data stringified JSON object
+   */
+  static doPost(url, data, responseType) {
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: responseType,
+        'Content-Type': 'application/json',
+      },
+      body: data,
+    }).then((response) => {
+      if (responseType === 'text/html') {
+        return response.text();
       }
-    }).then(function(response) {
+
       return response.json();
     });
   }
@@ -208,43 +242,23 @@ export class OpenApi {
   /**
    * @private
    */
-  _doPost(url, data, responseType) {
+  static doPut(url, data, responseType) {
     return fetch(url, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
-        'Accept': responseType,
-        'Content-Type': 'application/json'
+        Accept: responseType,
+        'Content-Type': 'application/json',
+        'X-SaaSquatch-User-Token': 'JWT token',
       },
-      body: data
-    }).then(function(response) {
-      if (responseType === 'text/html') {
-        return response.text();
-      } else {
+      credentials: 'cors',
+      body: data,
+      }).then((response) => {
+        if (responseType === 'text/html') {
+         return response.text();
+        }
+
         return response.json();
-      }
     });
   }
-
-  /**
-   * @private
-   */
-   _doPut(url, data, responseType) {
-     return fetch(url, {
-       method: 'PUT',
-       headers: {
-         'Accept': responseType,
-         'Content-Type': 'application/json',
-         'X-SaaSquatch-User-Token': 'JWT token'
-       },
-       credentials: 'cors',
-       body: data
-     }).then(function(response) {
-       if (responseType === 'text/html') {
-         return response.text();
-       } else {
-         return response.json();
-       }
-     });
-   }
 
 }

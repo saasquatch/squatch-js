@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(14);
+	__webpack_require__(3);
 	module.exports = __webpack_require__(39);
 
 
@@ -62,20 +62,441 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */,
 /* 2 */,
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
+	(function(self) {
+	  'use strict';
 
-	var Validator = module.exports.Validator = __webpack_require__(4);
+	  if (self.fetch) {
+	    return
+	  }
 
-	module.exports.ValidatorResult = __webpack_require__(12).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(12).ValidationError;
-	module.exports.SchemaError = __webpack_require__(12).SchemaError;
+	  var support = {
+	    searchParams: 'URLSearchParams' in self,
+	    iterable: 'Symbol' in self && 'iterator' in Symbol,
+	    blob: 'FileReader' in self && 'Blob' in self && (function() {
+	      try {
+	        new Blob()
+	        return true
+	      } catch(e) {
+	        return false
+	      }
+	    })(),
+	    formData: 'FormData' in self,
+	    arrayBuffer: 'ArrayBuffer' in self
+	  }
 
-	module.exports.validate = function (instance, schema, options) {
-	  var v = new Validator();
-	  return v.validate(instance, schema, options);
-	};
+	  function normalizeName(name) {
+	    if (typeof name !== 'string') {
+	      name = String(name)
+	    }
+	    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+	      throw new TypeError('Invalid character in header field name')
+	    }
+	    return name.toLowerCase()
+	  }
+
+	  function normalizeValue(value) {
+	    if (typeof value !== 'string') {
+	      value = String(value)
+	    }
+	    return value
+	  }
+
+	  // Build a destructive iterator for the value list
+	  function iteratorFor(items) {
+	    var iterator = {
+	      next: function() {
+	        var value = items.shift()
+	        return {done: value === undefined, value: value}
+	      }
+	    }
+
+	    if (support.iterable) {
+	      iterator[Symbol.iterator] = function() {
+	        return iterator
+	      }
+	    }
+
+	    return iterator
+	  }
+
+	  function Headers(headers) {
+	    this.map = {}
+
+	    if (headers instanceof Headers) {
+	      headers.forEach(function(value, name) {
+	        this.append(name, value)
+	      }, this)
+
+	    } else if (headers) {
+	      Object.getOwnPropertyNames(headers).forEach(function(name) {
+	        this.append(name, headers[name])
+	      }, this)
+	    }
+	  }
+
+	  Headers.prototype.append = function(name, value) {
+	    name = normalizeName(name)
+	    value = normalizeValue(value)
+	    var list = this.map[name]
+	    if (!list) {
+	      list = []
+	      this.map[name] = list
+	    }
+	    list.push(value)
+	  }
+
+	  Headers.prototype['delete'] = function(name) {
+	    delete this.map[normalizeName(name)]
+	  }
+
+	  Headers.prototype.get = function(name) {
+	    var values = this.map[normalizeName(name)]
+	    return values ? values[0] : null
+	  }
+
+	  Headers.prototype.getAll = function(name) {
+	    return this.map[normalizeName(name)] || []
+	  }
+
+	  Headers.prototype.has = function(name) {
+	    return this.map.hasOwnProperty(normalizeName(name))
+	  }
+
+	  Headers.prototype.set = function(name, value) {
+	    this.map[normalizeName(name)] = [normalizeValue(value)]
+	  }
+
+	  Headers.prototype.forEach = function(callback, thisArg) {
+	    Object.getOwnPropertyNames(this.map).forEach(function(name) {
+	      this.map[name].forEach(function(value) {
+	        callback.call(thisArg, value, name, this)
+	      }, this)
+	    }, this)
+	  }
+
+	  Headers.prototype.keys = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push(name) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.values = function() {
+	    var items = []
+	    this.forEach(function(value) { items.push(value) })
+	    return iteratorFor(items)
+	  }
+
+	  Headers.prototype.entries = function() {
+	    var items = []
+	    this.forEach(function(value, name) { items.push([name, value]) })
+	    return iteratorFor(items)
+	  }
+
+	  if (support.iterable) {
+	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
+	  }
+
+	  function consumed(body) {
+	    if (body.bodyUsed) {
+	      return Promise.reject(new TypeError('Already read'))
+	    }
+	    body.bodyUsed = true
+	  }
+
+	  function fileReaderReady(reader) {
+	    return new Promise(function(resolve, reject) {
+	      reader.onload = function() {
+	        resolve(reader.result)
+	      }
+	      reader.onerror = function() {
+	        reject(reader.error)
+	      }
+	    })
+	  }
+
+	  function readBlobAsArrayBuffer(blob) {
+	    var reader = new FileReader()
+	    reader.readAsArrayBuffer(blob)
+	    return fileReaderReady(reader)
+	  }
+
+	  function readBlobAsText(blob) {
+	    var reader = new FileReader()
+	    reader.readAsText(blob)
+	    return fileReaderReady(reader)
+	  }
+
+	  function Body() {
+	    this.bodyUsed = false
+
+	    this._initBody = function(body) {
+	      this._bodyInit = body
+	      if (typeof body === 'string') {
+	        this._bodyText = body
+	      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+	        this._bodyBlob = body
+	      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+	        this._bodyFormData = body
+	      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	        this._bodyText = body.toString()
+	      } else if (!body) {
+	        this._bodyText = ''
+	      } else if (support.arrayBuffer && ArrayBuffer.prototype.isPrototypeOf(body)) {
+	        // Only support ArrayBuffers for POST method.
+	        // Receiving ArrayBuffers happens via Blobs, instead.
+	      } else {
+	        throw new Error('unsupported BodyInit type')
+	      }
+
+	      if (!this.headers.get('content-type')) {
+	        if (typeof body === 'string') {
+	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
+	        } else if (this._bodyBlob && this._bodyBlob.type) {
+	          this.headers.set('content-type', this._bodyBlob.type)
+	        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+	          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
+	        }
+	      }
+	    }
+
+	    if (support.blob) {
+	      this.blob = function() {
+	        var rejected = consumed(this)
+	        if (rejected) {
+	          return rejected
+	        }
+
+	        if (this._bodyBlob) {
+	          return Promise.resolve(this._bodyBlob)
+	        } else if (this._bodyFormData) {
+	          throw new Error('could not read FormData body as blob')
+	        } else {
+	          return Promise.resolve(new Blob([this._bodyText]))
+	        }
+	      }
+
+	      this.arrayBuffer = function() {
+	        return this.blob().then(readBlobAsArrayBuffer)
+	      }
+
+	      this.text = function() {
+	        var rejected = consumed(this)
+	        if (rejected) {
+	          return rejected
+	        }
+
+	        if (this._bodyBlob) {
+	          return readBlobAsText(this._bodyBlob)
+	        } else if (this._bodyFormData) {
+	          throw new Error('could not read FormData body as text')
+	        } else {
+	          return Promise.resolve(this._bodyText)
+	        }
+	      }
+	    } else {
+	      this.text = function() {
+	        var rejected = consumed(this)
+	        return rejected ? rejected : Promise.resolve(this._bodyText)
+	      }
+	    }
+
+	    if (support.formData) {
+	      this.formData = function() {
+	        return this.text().then(decode)
+	      }
+	    }
+
+	    this.json = function() {
+	      return this.text().then(JSON.parse)
+	    }
+
+	    return this
+	  }
+
+	  // HTTP methods whose capitalization should be normalized
+	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
+
+	  function normalizeMethod(method) {
+	    var upcased = method.toUpperCase()
+	    return (methods.indexOf(upcased) > -1) ? upcased : method
+	  }
+
+	  function Request(input, options) {
+	    options = options || {}
+	    var body = options.body
+	    if (Request.prototype.isPrototypeOf(input)) {
+	      if (input.bodyUsed) {
+	        throw new TypeError('Already read')
+	      }
+	      this.url = input.url
+	      this.credentials = input.credentials
+	      if (!options.headers) {
+	        this.headers = new Headers(input.headers)
+	      }
+	      this.method = input.method
+	      this.mode = input.mode
+	      if (!body) {
+	        body = input._bodyInit
+	        input.bodyUsed = true
+	      }
+	    } else {
+	      this.url = input
+	    }
+
+	    this.credentials = options.credentials || this.credentials || 'omit'
+	    if (options.headers || !this.headers) {
+	      this.headers = new Headers(options.headers)
+	    }
+	    this.method = normalizeMethod(options.method || this.method || 'GET')
+	    this.mode = options.mode || this.mode || null
+	    this.referrer = null
+
+	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+	      throw new TypeError('Body not allowed for GET or HEAD requests')
+	    }
+	    this._initBody(body)
+	  }
+
+	  Request.prototype.clone = function() {
+	    return new Request(this)
+	  }
+
+	  function decode(body) {
+	    var form = new FormData()
+	    body.trim().split('&').forEach(function(bytes) {
+	      if (bytes) {
+	        var split = bytes.split('=')
+	        var name = split.shift().replace(/\+/g, ' ')
+	        var value = split.join('=').replace(/\+/g, ' ')
+	        form.append(decodeURIComponent(name), decodeURIComponent(value))
+	      }
+	    })
+	    return form
+	  }
+
+	  function headers(xhr) {
+	    var head = new Headers()
+	    var pairs = (xhr.getAllResponseHeaders() || '').trim().split('\n')
+	    pairs.forEach(function(header) {
+	      var split = header.trim().split(':')
+	      var key = split.shift().trim()
+	      var value = split.join(':').trim()
+	      head.append(key, value)
+	    })
+	    return head
+	  }
+
+	  Body.call(Request.prototype)
+
+	  function Response(bodyInit, options) {
+	    if (!options) {
+	      options = {}
+	    }
+
+	    this.type = 'default'
+	    this.status = options.status
+	    this.ok = this.status >= 200 && this.status < 300
+	    this.statusText = options.statusText
+	    this.headers = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
+	    this.url = options.url || ''
+	    this._initBody(bodyInit)
+	  }
+
+	  Body.call(Response.prototype)
+
+	  Response.prototype.clone = function() {
+	    return new Response(this._bodyInit, {
+	      status: this.status,
+	      statusText: this.statusText,
+	      headers: new Headers(this.headers),
+	      url: this.url
+	    })
+	  }
+
+	  Response.error = function() {
+	    var response = new Response(null, {status: 0, statusText: ''})
+	    response.type = 'error'
+	    return response
+	  }
+
+	  var redirectStatuses = [301, 302, 303, 307, 308]
+
+	  Response.redirect = function(url, status) {
+	    if (redirectStatuses.indexOf(status) === -1) {
+	      throw new RangeError('Invalid status code')
+	    }
+
+	    return new Response(null, {status: status, headers: {location: url}})
+	  }
+
+	  self.Headers = Headers
+	  self.Request = Request
+	  self.Response = Response
+
+	  self.fetch = function(input, init) {
+	    return new Promise(function(resolve, reject) {
+	      var request
+	      if (Request.prototype.isPrototypeOf(input) && !init) {
+	        request = input
+	      } else {
+	        request = new Request(input, init)
+	      }
+
+	      var xhr = new XMLHttpRequest()
+
+	      function responseURL() {
+	        if ('responseURL' in xhr) {
+	          return xhr.responseURL
+	        }
+
+	        // Avoid security warnings on getResponseHeader when not allowed by CORS
+	        if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
+	          return xhr.getResponseHeader('X-Request-URL')
+	        }
+
+	        return
+	      }
+
+	      xhr.onload = function() {
+	        var options = {
+	          status: xhr.status,
+	          statusText: xhr.statusText,
+	          headers: headers(xhr),
+	          url: responseURL()
+	        }
+	        var body = 'response' in xhr ? xhr.response : xhr.responseText
+	        resolve(new Response(body, options))
+	      }
+
+	      xhr.onerror = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.ontimeout = function() {
+	        reject(new TypeError('Network request failed'))
+	      }
+
+	      xhr.open(request.method, request.url, true)
+
+	      if (request.credentials === 'include') {
+	        xhr.withCredentials = true
+	      }
+
+	      if ('responseType' in xhr && support.blob) {
+	        xhr.responseType = 'blob'
+	      }
+
+	      request.headers.forEach(function(value, name) {
+	        xhr.setRequestHeader(name, value)
+	      })
+
+	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
+	    })
+	  }
+	  self.fetch.polyfill = true
+	})(typeof self !== 'undefined' ? self : this);
 
 
 /***/ },
@@ -84,10 +505,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var urilib = __webpack_require__(5);
+	var Validator = module.exports.Validator = __webpack_require__(5);
 
-	var attribute = __webpack_require__(11);
-	var helpers = __webpack_require__(12);
+	module.exports.ValidatorResult = __webpack_require__(13).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(13).ValidationError;
+	module.exports.SchemaError = __webpack_require__(13).SchemaError;
+
+	module.exports.validate = function (instance, schema, options) {
+	  var v = new Validator();
+	  return v.validate(instance, schema, options);
+	};
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var urilib = __webpack_require__(6);
+
+	var attribute = __webpack_require__(12);
+	var helpers = __webpack_require__(13);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -405,7 +844,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -429,7 +868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(6);
+	var punycode = __webpack_require__(7);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -501,7 +940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(8);
+	    querystring = __webpack_require__(9);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1118,7 +1557,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -1650,10 +2089,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)(module), (function() { return this; }())))
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -1669,17 +2108,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(9);
-	exports.encode = exports.stringify = __webpack_require__(10);
+	exports.decode = exports.parse = __webpack_require__(10);
+	exports.encode = exports.stringify = __webpack_require__(11);
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1765,7 +2204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1835,12 +2274,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(12);
+	var helpers = __webpack_require__(13);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -2626,12 +3065,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(5);
+	var uri = __webpack_require__(6);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -2911,7 +3350,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -3069,445 +3508,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	(function(self) {
-	  'use strict';
-
-	  if (self.fetch) {
-	    return
-	  }
-
-	  var support = {
-	    searchParams: 'URLSearchParams' in self,
-	    iterable: 'Symbol' in self && 'iterator' in Symbol,
-	    blob: 'FileReader' in self && 'Blob' in self && (function() {
-	      try {
-	        new Blob()
-	        return true
-	      } catch(e) {
-	        return false
-	      }
-	    })(),
-	    formData: 'FormData' in self,
-	    arrayBuffer: 'ArrayBuffer' in self
-	  }
-
-	  function normalizeName(name) {
-	    if (typeof name !== 'string') {
-	      name = String(name)
-	    }
-	    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
-	      throw new TypeError('Invalid character in header field name')
-	    }
-	    return name.toLowerCase()
-	  }
-
-	  function normalizeValue(value) {
-	    if (typeof value !== 'string') {
-	      value = String(value)
-	    }
-	    return value
-	  }
-
-	  // Build a destructive iterator for the value list
-	  function iteratorFor(items) {
-	    var iterator = {
-	      next: function() {
-	        var value = items.shift()
-	        return {done: value === undefined, value: value}
-	      }
-	    }
-
-	    if (support.iterable) {
-	      iterator[Symbol.iterator] = function() {
-	        return iterator
-	      }
-	    }
-
-	    return iterator
-	  }
-
-	  function Headers(headers) {
-	    this.map = {}
-
-	    if (headers instanceof Headers) {
-	      headers.forEach(function(value, name) {
-	        this.append(name, value)
-	      }, this)
-
-	    } else if (headers) {
-	      Object.getOwnPropertyNames(headers).forEach(function(name) {
-	        this.append(name, headers[name])
-	      }, this)
-	    }
-	  }
-
-	  Headers.prototype.append = function(name, value) {
-	    name = normalizeName(name)
-	    value = normalizeValue(value)
-	    var list = this.map[name]
-	    if (!list) {
-	      list = []
-	      this.map[name] = list
-	    }
-	    list.push(value)
-	  }
-
-	  Headers.prototype['delete'] = function(name) {
-	    delete this.map[normalizeName(name)]
-	  }
-
-	  Headers.prototype.get = function(name) {
-	    var values = this.map[normalizeName(name)]
-	    return values ? values[0] : null
-	  }
-
-	  Headers.prototype.getAll = function(name) {
-	    return this.map[normalizeName(name)] || []
-	  }
-
-	  Headers.prototype.has = function(name) {
-	    return this.map.hasOwnProperty(normalizeName(name))
-	  }
-
-	  Headers.prototype.set = function(name, value) {
-	    this.map[normalizeName(name)] = [normalizeValue(value)]
-	  }
-
-	  Headers.prototype.forEach = function(callback, thisArg) {
-	    Object.getOwnPropertyNames(this.map).forEach(function(name) {
-	      this.map[name].forEach(function(value) {
-	        callback.call(thisArg, value, name, this)
-	      }, this)
-	    }, this)
-	  }
-
-	  Headers.prototype.keys = function() {
-	    var items = []
-	    this.forEach(function(value, name) { items.push(name) })
-	    return iteratorFor(items)
-	  }
-
-	  Headers.prototype.values = function() {
-	    var items = []
-	    this.forEach(function(value) { items.push(value) })
-	    return iteratorFor(items)
-	  }
-
-	  Headers.prototype.entries = function() {
-	    var items = []
-	    this.forEach(function(value, name) { items.push([name, value]) })
-	    return iteratorFor(items)
-	  }
-
-	  if (support.iterable) {
-	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
-	  }
-
-	  function consumed(body) {
-	    if (body.bodyUsed) {
-	      return Promise.reject(new TypeError('Already read'))
-	    }
-	    body.bodyUsed = true
-	  }
-
-	  function fileReaderReady(reader) {
-	    return new Promise(function(resolve, reject) {
-	      reader.onload = function() {
-	        resolve(reader.result)
-	      }
-	      reader.onerror = function() {
-	        reject(reader.error)
-	      }
-	    })
-	  }
-
-	  function readBlobAsArrayBuffer(blob) {
-	    var reader = new FileReader()
-	    reader.readAsArrayBuffer(blob)
-	    return fileReaderReady(reader)
-	  }
-
-	  function readBlobAsText(blob) {
-	    var reader = new FileReader()
-	    reader.readAsText(blob)
-	    return fileReaderReady(reader)
-	  }
-
-	  function Body() {
-	    this.bodyUsed = false
-
-	    this._initBody = function(body) {
-	      this._bodyInit = body
-	      if (typeof body === 'string') {
-	        this._bodyText = body
-	      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
-	        this._bodyBlob = body
-	      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
-	        this._bodyFormData = body
-	      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-	        this._bodyText = body.toString()
-	      } else if (!body) {
-	        this._bodyText = ''
-	      } else if (support.arrayBuffer && ArrayBuffer.prototype.isPrototypeOf(body)) {
-	        // Only support ArrayBuffers for POST method.
-	        // Receiving ArrayBuffers happens via Blobs, instead.
-	      } else {
-	        throw new Error('unsupported BodyInit type')
-	      }
-
-	      if (!this.headers.get('content-type')) {
-	        if (typeof body === 'string') {
-	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
-	        } else if (this._bodyBlob && this._bodyBlob.type) {
-	          this.headers.set('content-type', this._bodyBlob.type)
-	        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-	          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
-	        }
-	      }
-	    }
-
-	    if (support.blob) {
-	      this.blob = function() {
-	        var rejected = consumed(this)
-	        if (rejected) {
-	          return rejected
-	        }
-
-	        if (this._bodyBlob) {
-	          return Promise.resolve(this._bodyBlob)
-	        } else if (this._bodyFormData) {
-	          throw new Error('could not read FormData body as blob')
-	        } else {
-	          return Promise.resolve(new Blob([this._bodyText]))
-	        }
-	      }
-
-	      this.arrayBuffer = function() {
-	        return this.blob().then(readBlobAsArrayBuffer)
-	      }
-
-	      this.text = function() {
-	        var rejected = consumed(this)
-	        if (rejected) {
-	          return rejected
-	        }
-
-	        if (this._bodyBlob) {
-	          return readBlobAsText(this._bodyBlob)
-	        } else if (this._bodyFormData) {
-	          throw new Error('could not read FormData body as text')
-	        } else {
-	          return Promise.resolve(this._bodyText)
-	        }
-	      }
-	    } else {
-	      this.text = function() {
-	        var rejected = consumed(this)
-	        return rejected ? rejected : Promise.resolve(this._bodyText)
-	      }
-	    }
-
-	    if (support.formData) {
-	      this.formData = function() {
-	        return this.text().then(decode)
-	      }
-	    }
-
-	    this.json = function() {
-	      return this.text().then(JSON.parse)
-	    }
-
-	    return this
-	  }
-
-	  // HTTP methods whose capitalization should be normalized
-	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
-
-	  function normalizeMethod(method) {
-	    var upcased = method.toUpperCase()
-	    return (methods.indexOf(upcased) > -1) ? upcased : method
-	  }
-
-	  function Request(input, options) {
-	    options = options || {}
-	    var body = options.body
-	    if (Request.prototype.isPrototypeOf(input)) {
-	      if (input.bodyUsed) {
-	        throw new TypeError('Already read')
-	      }
-	      this.url = input.url
-	      this.credentials = input.credentials
-	      if (!options.headers) {
-	        this.headers = new Headers(input.headers)
-	      }
-	      this.method = input.method
-	      this.mode = input.mode
-	      if (!body) {
-	        body = input._bodyInit
-	        input.bodyUsed = true
-	      }
-	    } else {
-	      this.url = input
-	    }
-
-	    this.credentials = options.credentials || this.credentials || 'omit'
-	    if (options.headers || !this.headers) {
-	      this.headers = new Headers(options.headers)
-	    }
-	    this.method = normalizeMethod(options.method || this.method || 'GET')
-	    this.mode = options.mode || this.mode || null
-	    this.referrer = null
-
-	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
-	      throw new TypeError('Body not allowed for GET or HEAD requests')
-	    }
-	    this._initBody(body)
-	  }
-
-	  Request.prototype.clone = function() {
-	    return new Request(this)
-	  }
-
-	  function decode(body) {
-	    var form = new FormData()
-	    body.trim().split('&').forEach(function(bytes) {
-	      if (bytes) {
-	        var split = bytes.split('=')
-	        var name = split.shift().replace(/\+/g, ' ')
-	        var value = split.join('=').replace(/\+/g, ' ')
-	        form.append(decodeURIComponent(name), decodeURIComponent(value))
-	      }
-	    })
-	    return form
-	  }
-
-	  function headers(xhr) {
-	    var head = new Headers()
-	    var pairs = (xhr.getAllResponseHeaders() || '').trim().split('\n')
-	    pairs.forEach(function(header) {
-	      var split = header.trim().split(':')
-	      var key = split.shift().trim()
-	      var value = split.join(':').trim()
-	      head.append(key, value)
-	    })
-	    return head
-	  }
-
-	  Body.call(Request.prototype)
-
-	  function Response(bodyInit, options) {
-	    if (!options) {
-	      options = {}
-	    }
-
-	    this.type = 'default'
-	    this.status = options.status
-	    this.ok = this.status >= 200 && this.status < 300
-	    this.statusText = options.statusText
-	    this.headers = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
-	    this.url = options.url || ''
-	    this._initBody(bodyInit)
-	  }
-
-	  Body.call(Response.prototype)
-
-	  Response.prototype.clone = function() {
-	    return new Response(this._bodyInit, {
-	      status: this.status,
-	      statusText: this.statusText,
-	      headers: new Headers(this.headers),
-	      url: this.url
-	    })
-	  }
-
-	  Response.error = function() {
-	    var response = new Response(null, {status: 0, statusText: ''})
-	    response.type = 'error'
-	    return response
-	  }
-
-	  var redirectStatuses = [301, 302, 303, 307, 308]
-
-	  Response.redirect = function(url, status) {
-	    if (redirectStatuses.indexOf(status) === -1) {
-	      throw new RangeError('Invalid status code')
-	    }
-
-	    return new Response(null, {status: status, headers: {location: url}})
-	  }
-
-	  self.Headers = Headers
-	  self.Request = Request
-	  self.Response = Response
-
-	  self.fetch = function(input, init) {
-	    return new Promise(function(resolve, reject) {
-	      var request
-	      if (Request.prototype.isPrototypeOf(input) && !init) {
-	        request = input
-	      } else {
-	        request = new Request(input, init)
-	      }
-
-	      var xhr = new XMLHttpRequest()
-
-	      function responseURL() {
-	        if ('responseURL' in xhr) {
-	          return xhr.responseURL
-	        }
-
-	        // Avoid security warnings on getResponseHeader when not allowed by CORS
-	        if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
-	          return xhr.getResponseHeader('X-Request-URL')
-	        }
-
-	        return
-	      }
-
-	      xhr.onload = function() {
-	        var options = {
-	          status: xhr.status,
-	          statusText: xhr.statusText,
-	          headers: headers(xhr),
-	          url: responseURL()
-	        }
-	        var body = 'response' in xhr ? xhr.response : xhr.responseText
-	        resolve(new Response(body, options))
-	      }
-
-	      xhr.onerror = function() {
-	        reject(new TypeError('Network request failed'))
-	      }
-
-	      xhr.ontimeout = function() {
-	        reject(new TypeError('Network request failed'))
-	      }
-
-	      xhr.open(request.method, request.url, true)
-
-	      if (request.credentials === 'include') {
-	        xhr.withCredentials = true
-	      }
-
-	      if ('responseType' in xhr && support.blob) {
-	        xhr.responseType = 'blob'
-	      }
-
-	      request.headers.forEach(function(value, name) {
-	        xhr.setRequestHeader(name, value)
-	      })
-
-	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
-	    })
-	  }
-	  self.fetch.polyfill = true
-	})(typeof self !== 'undefined' ? self : this);
-
-
-/***/ },
 /* 15 */,
 /* 16 */,
 /* 17 */,
@@ -3540,17 +3540,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.OpenApi = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _jsonschema = __webpack_require__(3);
+	__webpack_require__(3);
 
-	var _schema = __webpack_require__(13);
+	var _jsonschema = __webpack_require__(4);
+
+	var _schema = __webpack_require__(14);
 
 	var _schema2 = _interopRequireDefault(_schema);
-
-	__webpack_require__(14);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3567,11 +3566,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * still be used in server-to-server cases using API Key authentication.
 	 *
 	 */
-	var OpenApi = exports.OpenApi = function () {
+	var OpenApi = function () {
 
-	  //TODO:
+	  // TODO:
 	  // - Authenticate with JWT
-	  // - Add comments
 
 	  /**
 	   * Initialize a new {@link OpenApi} instance.
@@ -3596,12 +3594,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _classCallCheck(this, OpenApi);
 
 	    this.tenantAlias = config.tenantAlias;
-	    this.domain = "https://staging.referralsaasquatch.com";
+	    this.domain = 'https://staging.referralsaasquatch.com';
 	  }
 
 	  /**
-	   * This method creates a user and an account in one call. Because this call creates a user, it requires either a write token or an API key.
-	   * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
+	   * This method creates a user and an account in one call. Because this call
+	   * creates a user, it requires either a write token or an API key.
+	   *
+	   * This is an Open Endpoint and disabled by default. Contact support
+	   * to enable the open endpoints.
 	   *
 	   * {@link https://docs.referralsaasquatch.com/api/methods/#open_list_referrals List Referrals}
 	   *
@@ -3615,28 +3616,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(OpenApi, [{
 	    key: 'createUser',
 	    value: function createUser(params) {
-	      this._validateInput(params, _schema2.default.user);
+	      OpenApi.validateInput(params, _schema2.default.user);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.accountId);
+	      var userId = encodeURIComponent(params.id);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var path = '/api/v1/' + tenantAlias + '/open/account/' + accountId + '/user/' + userId;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(params), 'application/json');
+	      return OpenApi.doPost(url, JSON.stringify(params), 'application/json');
 	    }
 	  }, {
 	    key: 'upsertUser',
 	    value: function upsertUser(params) {
-	      this._validateInput(params, _schema2.default.user);
+	      OpenApi.validateInput(params, _schema2.default.user);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.accountId);
+	      var userId = encodeURIComponent(params.id);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var path = '/api/v1/' + tenantAlias + '/open/account/' + accountId + '/user/' + userId;
 	      var url = this.domain + path;
-	      return this._doPut(url, JSON.stringify(params), 'application/json');
+	      return OpenApi.doPut(url, JSON.stringify(params), 'application/json');
 	    }
 	  }, {
 	    key: 'createCookieUser',
@@ -3644,17 +3645,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'text/html';
 
 	      var responseType = params;
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/user/cookie_user';
+	      var path = '/api/v1/' + tenantAlias + '/open/user/cookie_user';
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify({}), responseType);
+	      return OpenApi.doPost(url, JSON.stringify({}), responseType);
 	    }
 
 	    /**
-	     * Looks up a user based upon their id and returns their personal information including sharelinks. This endpoint requires a read token or an API key.
+	     * Looks up a user based upon their id and returns their personal information
+	     * including sharelinks. This endpoint requires a read token or an API key.
 	     *
-	     * This is an Open Endpoint and disabled by default. Contact support to enable the open endpoints.
+	     * This is an Open Endpoint and disabled by default. Contact support
+	     * to enable the open endpoints.
 	     *
 	     * {@link https://docs.referralsaasquatch.com/api/methods/#open_get_user Open API Spec}
 	     *
@@ -3667,15 +3670,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'lookUpUser',
 	    value: function lookUpUser(params) {
-	      this._validateInput(params, _schema2.default.userLookUp);
+	      OpenApi.validateInput(params, _schema2.default.userLookUp);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.accountId);
+	      var userId = encodeURIComponent(params.id);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/account/' + account_id + '/user/' + user_id;
+	      var path = '/api/v1/' + tenantAlias + '/open/account/' + accountId + '/user/' + userId;
 	      var url = this.domain + path;
-	      return this._doRequest(url);
+	      return OpenApi.doRequest(url);
 	    }
 
 	    /**
@@ -3689,14 +3692,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getUserByReferralCode',
 	    value: function getUserByReferralCode(params) {
-	      this._validateInput(params, _schema2.default.userReferralCode);
+	      OpenApi.validateInput(params, _schema2.default.userReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var referralCode = encodeURIComponent(params.referralCode);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/user?referralCode=' + referral_code;
+	      var path = '/api/v1/' + tenantAlias + '/open/user?referralCode=' + referralCode;
 	      var url = this.domain + path;
-	      return this._doRequest(url);
+
+	      return OpenApi.doRequest(url);
 	    }
 
 	    /**
@@ -3710,14 +3714,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'lookUpReferralCode',
 	    value: function lookUpReferralCode(params) {
-	      this._validateInput(params, _schema2.default.userReferralCode);
+	      OpenApi.validateInput(params, _schema2.default.userReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var referralCode = encodeURIComponent(params.referralCode);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code;
+	      var path = '/api/v1/' + tenantAlias + '/open/code/' + referralCode;
 	      var url = this.domain + path;
-	      return this._doRequest(url);
+	      return OpenApi.doRequest(url);
 	    }
 
 	    /**
@@ -3733,16 +3737,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'applyReferralCode',
 	    value: function applyReferralCode(params) {
-	      this._validateInput(params, _schema2.default.applyReferralCode);
+	      OpenApi.validateInput(params, _schema2.default.applyReferralCode);
 
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
-	      var referral_code = encodeURIComponent(params.referralCode);
-	      var account_id = encodeURIComponent(params.accountId);
-	      var user_id = encodeURIComponent(params.id);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var referralCode = encodeURIComponent(params.referralCode);
+	      var accountId = encodeURIComponent(params.accountId);
+	      var userId = encodeURIComponent(params.id);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/code/' + referral_code + '/account/' + account_id + '/user/' + user_id;
+	      var path = '/api/v1/' + tenantAlias + '/open/code/' + referralCode + '/account/' + accountId + '/user/' + userId;
 	      var url = this.domain + path;
-	      return this._doPost(url, JSON.stringify(""), 'application/json');
+	      return OpenApi.doPost(url, JSON.stringify({}), 'application/json');
 	    }
 
 	    /**
@@ -3754,35 +3758,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'listReferrals',
 	    value: function listReferrals() {
-	      var tenant_alias = encodeURIComponent(this.tenantAlias);
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
 
-	      var path = '/api/v1/' + tenant_alias + '/open/referrals';
+	      var path = '/api/v1/' + tenantAlias + '/open/referrals';
 	      var url = this.domain + path;
-	      return this._doRequest(url);
+	      return OpenApi.doRequest(url);
 	    }
 
 	    /**
 	     * @private
+	     *
+	     * @param {Object} params json object
+	     * @param {Object} jsonSchema the schema that validates a json object
+	     * @returns {void}
 	     */
 
-	  }, {
-	    key: '_validateInput',
-	    value: function _validateInput(params, schema) {
-	      var valid = (0, _jsonschema.validate)(params, schema);
+	  }], [{
+	    key: 'validateInput',
+	    value: function validateInput(params, jsonSchema) {
+	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
 	      if (!valid.valid) throw valid.errors;
 	    }
 
 	    /**
 	     * @private
+	     *
+	     * @param {String} url The requested url
+	     * @returns {Promise} response
 	     */
 
 	  }, {
-	    key: '_doRequest',
-	    value: function _doRequest(url) {
+	    key: 'doRequest',
+	    value: function doRequest(url) {
 	      return fetch(url, {
 	        method: 'GET',
 	        headers: {
-	          'Accept': 'application/json',
+	          Accept: 'application/json',
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
@@ -3792,24 +3803,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     *
+	     * @param {String} url
+	     * @param {String} data stringified JSON object
 	     */
 
 	  }, {
-	    key: '_doPost',
-	    value: function _doPost(url, data, responseType) {
+	    key: 'doPost',
+	    value: function doPost(url, data, responseType) {
 	      return fetch(url, {
 	        method: 'POST',
 	        headers: {
-	          'Accept': responseType,
+	          Accept: responseType,
 	          'Content-Type': 'application/json'
 	        },
 	        body: data
 	      }).then(function (response) {
 	        if (responseType === 'text/html') {
 	          return response.text();
-	        } else {
-	          return response.json();
 	        }
+
+	        return response.json();
 	      });
 	    }
 
@@ -3818,12 +3832,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 
 	  }, {
-	    key: '_doPut',
-	    value: function _doPut(url, data, responseType) {
+	    key: 'doPut',
+	    value: function doPut(url, data, responseType) {
 	      return fetch(url, {
 	        method: 'PUT',
 	        headers: {
-	          'Accept': responseType,
+	          Accept: responseType,
 	          'Content-Type': 'application/json',
 	          'X-SaaSquatch-User-Token': 'JWT token'
 	        },
@@ -3832,15 +3846,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }).then(function (response) {
 	        if (responseType === 'text/html') {
 	          return response.text();
-	        } else {
-	          return response.json();
 	        }
+
+	        return response.json();
 	      });
 	    }
 	  }]);
 
 	  return OpenApi;
 	}();
+
+	exports.default = OpenApi;
 
 /***/ }
 /******/ ])

@@ -1,13 +1,13 @@
+import 'whatwg-fetch';
 import { validate } from 'jsonschema';
 import schema from './schema.json';
-import 'whatwg-fetch';
 
 /**
  *
  * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
  *
  */
-export class WidgetApi {
+export default class WidgetApi {
   /**
    * Initialize a new {@link WidgetApi} instance.
    *
@@ -30,30 +30,32 @@ export class WidgetApi {
   constructor(config) {
     if (!config.tenantAlias) throw new Error('tenantAlias not provided');
     this.tenantAlias = config.tenantAlias;
-    this.domain = "https://staging.referralsaasquatch.com";
+    this.domain = 'https://staging.referralsaasquatch.com';
   }
 
   /**
    * Description here.
    *
    * @param {Object} params
-   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)
-   * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-   * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
+   * @param {string} params.engagementMedium (POPUP/MOBILE)
+   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
+   *                            validate the data (can be disabled)
+   *
    * @return {Promise} json object if true, with the widget template, jsOptions and user details.
    */
-  cookieUser(params = { widgetType: "", engagementMedium: "", jwt: "" }) {
-    this._validateInput(params, schema.cookieUser);
+  cookieUser(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
+    WidgetApi.validateInput(params, schema.cookieUser);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
-    let optional_params = widget_type + engagement_medium;
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const widgetType = params.widgetType ? `?widgetType=${encodeURIComponent(params.widgetType)}` : '';
+    const engagementMedium = params.engagementMedium ? `${widgetType ? '&' : '?'}engagementMedium=${encodeURIComponent(params.engagementMedium)}` : `${widgetType ? '&' : '?'}engagementMedium=POPUP`;
+    const optionalParams = widgetType + engagementMedium;
 
-    let path = `/api/v1/${tenant_alias}/widget/user/cookie_user${optional_params}`;
-    let url = this.domain + path;
+    const path = `/api/v1/${tenantAlias}/widget/user/cookie_user${optionalParams}`;
+    const url = this.domain + path;
 
-    return this._doPut(url, params.user ? JSON.stringify(params.user) : JSON.stringify({}), params.jwt);
+    return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
   }
 
   /**
@@ -63,28 +65,31 @@ export class WidgetApi {
    * @param {Object} params.user the user details
    * @param {string} params.user.id
    * @param {string} params.user.accountId
-   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
-   * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-   * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+   * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+   * @param {string} params.engagementMedium (POPUP/MOBILE)
+   * @param {string} params.jwt the JSON Web Token (JWT) that is used
+   *                            to validate the data (can be disabled)
+   *
    * @return {Promise} string if true, with the widget template.
    */
-  upsert(params = { widgetType: "", engagementMedium: "", jwt: ""}) {
-    this._validateInput(params, schema.upsertUser);
+  upsert(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
+    WidgetApi.validateInput(params, schema.upsertUser);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let account_id = encodeURIComponent(params.user.accountId);
-    let user_id = encodeURIComponent(params.user.id);
-    let widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';;
-    let optional_params = widget_type + engagement_medium;
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const accountId = encodeURIComponent(params.user.accountId);
+    const userId = encodeURIComponent(params.user.id);
+    const widgetType = params.widgetType ? `?widgetType=${encodeURIComponent(params.widgetType)}` : '';
+    const engagementMedium = params.engagementMedium ? `${widgetType ? '&' : '?'}engagementMedium=${encodeURIComponent(params.engagementMedium)}` : `${widgetType ? '&' : '?'}engagementMedium=POPUP`;
+    const optionalParams = widgetType + engagementMedium;
 
-    let path = `/api/v1/${tenant_alias}/widget/account/${account_id}/user/${user_id}/upsert${optional_params}`;
-    let url = this.domain + path;
+    const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
+    const url = this.domain + path;
 
-    params.user.accountId = undefined;
-    params.user.id = undefined;
+    const user = params.user;
+    delete user.accountId;
+    delete user.id;
 
-    return this._doPut(url, JSON.stringify(params.user), params.jwt);
+    return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
   }
 
   /**
@@ -94,51 +99,49 @@ export class WidgetApi {
    * @param {Object} params.user the user details
    * @param {string} params.user.id
    * @param {string} params.user.accountId
-   * @param {string} params.widgetType the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
-   * @param {string} params.engagementMedium the mode of the widget being loaded (POPUP/MOBILE)
-   * @param {string} params.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+   * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+   * @param {string} params.engagementMedium (POPUP/MOBILE)
+   * @param {string} params.jwt the JSON Web Token (JWT) that is used
+   *                            to validate the data (can be disabled)
    * @return {Promise} template html if true.
    */
-  render(params = { widgetType: "", engagementMedium: "", jwt: ""}) {
-    this._validateInput(params, schema.upsertUser);
+  render(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
+    WidgetApi.validateInput(params, schema.upsertUser);
 
-    let tenant_alias = encodeURIComponent(this.tenantAlias);
-    let account_id = encodeURIComponent(params.user.accountId);
-    let user_id = encodeURIComponent(params.user.id);
-    let widget_type = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-    let engagement_medium = params.engagementMedium ? (widget_type ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widget_type ? '&' : '?') + 'engagementMedium=POPUP';
-    let optional_params = widget_type + engagement_medium;
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const accountId = encodeURIComponent(params.user.accountId);
+    const userId = encodeURIComponent(params.user.id);
+    const widgetType = params.widgetType ? `?widgetType=${encodeURIComponent(params.widgetType)}` : '';
+    const engagementMedium = params.engagementMedium ? `${widgetType ? '&' : '?'}engagementMedium=${encodeURIComponent(params.engagementMedium)}` : `${widgetType ? '&' : '?'}engagementMedium=POPUP`;
+    const optionalParams = widgetType + engagementMedium;
 
-    let path = `/api/v1/${tenant_alias}/widget/account/${account_id}/user/${user_id}/render${optional_params}`;
-    let url = this.domain + path;
-    return this._doRequest(url, params.jwt);
+    const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/render${optionalParams}`;
+    const url = this.domain + path;
+    return WidgetApi.doRequest(url, params.jwt);
   }
 
   /**
    * @private
    */
-  _validateInput(params, schema) {
-    let valid = validate(params, schema);
+  static validateInput(params, jsonSchema) {
+    const valid = validate(params, jsonSchema);
     if (!valid.valid) throw valid.errors;
   }
 
   /**
    * @private
    */
-  _doRequest(url, jwt) {
-    let _headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    }
-
-    if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
-
+  static doRequest(url, jwt) {
     return fetch(url, {
       method: 'GET',
-      headers: _headers,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-SaaSquatch-User-Token': jwt,
+      },
       credentials: 'include',
-      mode: 'cors'
-    }).then(function(response) {
+      mode: 'cors',
+    }).then((response) => {
       if (!response.ok) {
         return response.json();
       }
@@ -151,24 +154,18 @@ export class WidgetApi {
    * @private
    *
    */
-   _doPut(url, data, jwt) {
-
-     let _headers = {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json',
-       'X-SaaSquatch-Referrer': window ? window.location.href : ""
-     }
-
-     if (jwt) _headers['X-SaaSquatch-User-Token'] = jwt;
-
-     return fetch(url, {
-       method: 'PUT',
-       headers: _headers,
-       credentials: 'include',
-       mode: 'cors',
-       body: data
-     }).then(function(response) {
-       return response.json();
-     });
-   }
+  static doPut(url, data, jwt) {
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-SaaSquatch-User-Token': jwt,
+        'X-SaaSquatch-Referrer': window ? window.location.href : '',
+      },
+      credentials: 'include',
+      mode: 'cors',
+      body: data,
+    }).then(response => response.json());
+  }
 }

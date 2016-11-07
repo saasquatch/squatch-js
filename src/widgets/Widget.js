@@ -1,6 +1,6 @@
 import { domready } from '../utils/domready';
-import { AnalyticsApi } from '../api/AnalyticsApi';
-import { WidgetApi } from '../api/WidgetApi';
+import AnalyticsApi from '../api/AnalyticsApi';
+import WidgetApi from '../api/WidgetApi';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import debug from 'debug';
 

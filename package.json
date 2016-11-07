@@ -13,7 +13,8 @@
     "build:docs:html": "documentation build src/squatch.js -f html -o docs",
     "preversion": "npm run build:docs",
     "serve:docs": "documentation serve src/squatch.js --port $PORT --watch",
-    "lint:docs": "documentation lint src && eslint"
+    "lint:docs": "documentation lint src && eslint",
+    "eslint:src": "eslint src"
   },
   "devDependencies": {
     "babel-core": "^6.0.20",
@@ -24,6 +25,8 @@
     "eslint": "^3.9.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.6.0",
     "karma": "^1.2.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.0",

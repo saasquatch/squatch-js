@@ -5,11 +5,11 @@
  * @module squatch
  */
 // import { OpenApi } from './api/OpenApi';
-import { WidgetApi } from './api/WidgetApi'
+import WidgetApi from './api/WidgetApi'
 import { EmbedWidget } from './widgets/EmbedWidget';
 import { PopupWidget } from './widgets/PopupWidget';
 import { CtaWidget } from './widgets/CtaWidget';
-import { asyncLoad } from './async';
+import asyncLoad from './async';
 import debug from 'debug';
 import EventBus from 'eventbusjs';
 
@@ -55,14 +55,14 @@ export function init(config) {
       _log('response', response);
       load(response, config);
     }).catch(function(ex) {
-      throw new Error(ex);
+      throw ex;
     });
   } else {
     api.cookieUser(config).then(function(response) {
       _log('response', response);
       load(response, config);
     }).catch(function(ex) {
-      throw new Error(ex);
+      throw ex;
     });
   }
 }
@@ -87,6 +87,8 @@ export function load(response, config) {
   let params;
   let displayOnLoad = false;
   let displayCTA = false;
+
+  if (!response) throw new Error('Unable to get a response');
 
   if (response.apiErrorCode) {
     _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') ' + response.message));
