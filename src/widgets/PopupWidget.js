@@ -22,8 +22,6 @@ export class PopupWidget extends Widget {
 
     me.triggerElement.onclick = function() { me.open(); };
     me.popupdiv.onclick = function(event) { me._clickedOutside(event); };
-    me.eventBus.addEventListener('open_popup', function(e) { me.open(); });
-    me.eventBus.addEventListener('close_popup', function(e) { me.close(); });
   }
 
   load() {

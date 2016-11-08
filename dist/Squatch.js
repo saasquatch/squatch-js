@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.api = exports.eventBus = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
+	exports.api = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
 
 	var _WidgetApi = __webpack_require__(2);
 
@@ -106,6 +106,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.init = init;
 	exports.ready = ready;
 	exports.load = load;
+	exports.autofill = autofill;
+
+	__webpack_require__(3);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
@@ -116,10 +119,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _debug = __webpack_require__(32);
 
 	var _debug2 = _interopRequireDefault(_debug);
-
-	var _eventbusjs = __webpack_require__(38);
-
-	var _eventbusjs2 = _interopRequireDefault(_eventbusjs);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -134,13 +133,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _log = (0, _debug2.default)('squatch-js');
 
 	// export { OpenApi } from './api/OpenApi';
-	var eventBus = exports.eventBus = _eventbusjs2.default;
+
 
 	/**
 	 * Initializes a static `squatch` global. This sets up:
 	 *
 	 *  - `api` a static instance of the {@link WidgetApi}
-	 *  - `eventBus` an instance for managing events https://github.com/krasimir/EventBus
 	 *
 	 * @param {Object} config Configuration details
 	 * @param {string} config.tenantAlias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
@@ -157,27 +155,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  exports.api = api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
 
 	  _log("Widget API instance", api);
-	  if (!config.engagementMedium) {
-	    config.engagementMedium = 'POPUP';
-	  } else if (config.engagementMedium === 'NO_CONTENT') {
-	    config.engagementMedium = undefined;
-	  }
-
-	  if (config.user && config.user.id && config.user.accountId) {
-	    api.upsert(config).then(function (response) {
-	      _log('response', response);
-	      load(response, config);
-	    }).catch(function (ex) {
-	      throw ex;
-	    });
-	  } else {
-	    api.cookieUser(config).then(function (response) {
-	      _log('response', response);
-	      load(response, config);
-	    }).catch(function (ex) {
-	      throw ex;
-	    });
-	  }
 	}
 
 	/**
@@ -195,7 +172,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	// Refactor this function to make it simple
-	function load(response, config) {
+	function load(response) {
+	  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: "", engagementMedium: "" };
+
 	  var widget = void 0;
 	  var params = void 0;
 	  var displayOnLoad = false;
@@ -209,14 +188,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      content: "error",
 	      rsCode: response.rsCode,
 	      type: config.widgetType ? config.widgetType : "",
-	      eventBus: eventBus,
 	      api: api
 	    };
 	  } else if (response.jsOptions) {
 	    params = {
 	      content: response.template,
 	      type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
-	      eventBus: eventBus,
 	      api: api
 	    };
 
@@ -238,12 +215,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    params = {
 	      content: response,
 	      type: config.widgetType ? config.widgetType : '',
-	      eventBus: eventBus,
 	      api: api
 	    };
 	  }
-
-	  _log('params for widget', params);
 
 	  if (!displayCTA && config.engagementMedium === 'EMBED') {
 	    widget = new _EmbedWidget.EmbedWidget(params).load();
@@ -261,6 +235,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	    widget.load();
 	    widget.open();
 	  }
+	}
+
+	function autofill(element) {
+	  var el = void 0;
+
+	  if (typeof element === "function") {
+	    return api.autofill().then(element).catch(function (ex) {
+	      throw ex;
+	    });
+	  } else if (element.startsWith('#')) {
+	    el = document.getElementById(element.slice(1));
+	  } else if (element.startsWith('.')) {
+	    el = document.getElementsByClass(element.slice(1))[0];
+	  } else {
+	    _log("Element id/class or function missing");
+	  }
+
+	  return api.autofill().then(function (response) {
+	    el.value = response.code;
+	  }).catch(function (ex) {
+	    throw ex;
+	  });
 	}
 
 	function matchesUrl(rule) {
@@ -430,6 +426,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.code the user details
+	     * @return {Promise} code referral code if true.
+	     */
+
+	  }, {
+	    key: 'squatchReferralCookie',
+	    value: function squatchReferralCookie() {
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
+	      return WidgetApi.doRequest(url);
+	    }
+
+	    /**
 	     * @private
 	     */
 
@@ -446,22 +458,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: 'doRequest',
-	    value: function doRequest(url, jwt) {
+	    value: function doRequest(url) {
+	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'GET',
-	        headers: {
-	          Accept: 'application/json',
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': jwt
-	        },
+	        headers: headers,
 	        credentials: 'include',
 	        mode: 'cors'
 	      }).then(function (response) {
-	        if (!response.ok) {
-	          return response.json();
-	        }
-
-	        return response.text();
+	        return response.json();
 	      });
 	    }
 
@@ -4122,10 +4135,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * embedded.
 	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
 	   * for listening to the height of the widget content and make the iframe responsive.
-	   * The EventBus listens for events that get triggered in the widget.
 	   *
 	   * @param {string} content The html of the widget
-	   * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
 	   *
 	   */
 	  function Widget(params) {
@@ -4133,40 +4144,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _log('widget initializing ...');
 	    var me = this;
-	    me.eventBus = params.eventBus;
 	    me.content = params.content === 'error' ? me._error(params.rsCode) : params.content;
 	    me.type = params.type;
 	    me.widgetApi = params.api;
 	    me.analyticsApi = new _AnalyticsApi2.default();
 	    me.frame = document.createElement('iframe');
+	    me.frame.squatchJsApi = me;
 	    me.frame.width = '100%';
 	    me.frame.style = 'border: 0; background-color: none;';
 	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
-
-	    me.eventBus.addEventListener('fb_btn_clicked', function (e, _sqh) {
-	      _log("fb btn clicked");
-	      me._shareEvent(_sqh, 'FACEBOOK');
-	    });
-
-	    me.eventBus.addEventListener('tw_btn_clicked', function (e, _sqh) {
-	      _log("tw btn clicked");
-	      me._shareEvent(_sqh, 'TWITTER');
-	    });
-
-	    me.eventBus.addEventListener('email_btn_clicked', function (e, _sqh) {
-	      _log("email btn clicked");
-	      me._shareEvent(_sqh, 'EMAIL');
-	    });
-
-	    me.eventBus.addEventListener('copy_btn_clicked', function (e, _sqh) {
-	      _log("copy btn clicked");
-	      me._shareEvent(_sqh, 'DIRECT');
-	    });
-
-	    me.eventBus.addEventListener('email_submitted', function (e, params, jwt) {
-	      _log("email_submitted");
-	      me.reload(params, jwt);
-	    });
 	  }
 
 	  _createClass(Widget, [{
@@ -4177,7 +4163,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_loadEvent',
 	    value: function _loadEvent(sqh) {
-
 	      if (sqh) {
 	        this.analyticsApi.pushAnalyticsLoadEvent({
 	          tenantAlias: sqh.analytics.attributes.tenant,
@@ -4194,7 +4179,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_shareEvent',
 	    value: function _shareEvent(sqh, medium) {
-
 	      if (sqh) {
 	        this.analyticsApi.pushAnalyticsShareClickedEvent({
 	          tenantAlias: sqh.analytics.attributes.tenant,
@@ -4216,7 +4200,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
 
-	      return '<!DOCTYPE html>\n    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->\n    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->\n    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->\n    <head>\n    \t<link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">\n      <style>\n        ' + style + '\n      </style>\n    </head>\n    <body>\n\n      <div class="squatch-container ' + mode + '">\n        <div class="errorheader">\n          <button type="button" class="close" onclick="window.parent.squatch.eventBus.dispatch(\'close_popup\');">&times;</button>\n          <p class="errortitle">Error</p>\n        </div>\n        <div class="errorbody">\n          <div class="sadface"><img src="https://d35vcmgdka52pk.cloudfront.net/assets/images/face.png"></div>\n          <h4>Our referral program is temporarily unavailable.</h4><br>\n          <p>Please reload the page or check back later.</p>\n          <p>If the persists please contact our support team.</p>\n          <br>\n          <br>\n          <div class="right-align errtxt">\n            Error Code: ' + rs + '\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>';
+	      return '<!DOCTYPE html>\n    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->\n    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->\n    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->\n    <head>\n      <link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">\n      <style>\n        ' + style + '\n      </style>\n    </head>\n    <body>\n\n      <div class="squatch-container ' + mode + '">\n        <div class="errorheader">\n          <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>\n          <p class="errortitle">Error</p>\n        </div>\n        <div class="errorbody">\n          <div class="sadface"><img src="https://d35vcmgdka52pk.cloudfront.net/assets/images/face.png"></div>\n          <h4>Our referral program is temporarily unavailable.</h4><br>\n          <p>Please reload the page or check back later.</p>\n          <p>If the persists please contact our support team.</p>\n          <br>\n          <br>\n          <div class="right-align errtxt">\n            Error Code: ' + rs + '\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>';
 	    }
 	  }]);
 
@@ -6605,12 +6589,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.popupdiv.onclick = function (event) {
 	      me._clickedOutside(event);
 	    };
-	    me.eventBus.addEventListener('open_popup', function (e) {
-	      me.open();
-	    });
-	    me.eventBus.addEventListener('close_popup', function (e) {
-	      me.close();
-	    });
 	    return _this;
 	  }
 
@@ -6823,10 +6801,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.ctaFrame = document.createElement('iframe');
 	    me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; display: none;' + me.side + me.position;
 
-	    me.eventBus.addEventListener('cta_btn_clicked', function (e) {
-	      _log("cta btn clicked");
-	      me.open();
-	    });
 	    document.body.appendChild(_this.ctaFrame);
 	    return _this;
 	  }
@@ -6918,12 +6892,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	}
-
-/***/ },
-/* 38 */
-/***/ function(module, exports, __webpack_require__) {
-
-	(function(root,factory){if(true)module.exports=factory();else if(typeof define==="function"&&define.amd)define("EventBus",[],factory);else if(typeof exports==="object")exports["EventBus"]=factory();else root["EventBus"]=factory()})(this,function(){var EventBusClass={};EventBusClass=function(){this.listeners={}};EventBusClass.prototype={addEventListener:function(type,callback,scope){var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>3?args.splice(3,args.length-1):[];if(typeof this.listeners[type]!="undefined"){this.listeners[type].push({scope:scope,callback:callback,args:args})}else{this.listeners[type]=[{scope:scope,callback:callback,args:args}]}},removeEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;var newArray=[];for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener.scope==scope&&listener.callback==callback){}else{newArray.push(listener)}}this.listeners[type]=newArray}},hasEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;if(callback===undefined&&scope===undefined){return numOfCallbacks>0}for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if((scope?listener.scope==scope:true)&&listener.callback==callback){return true}}}return false},dispatch:function(type,target){var numOfListeners=0;var event={type:type,target:target};var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>2?args.splice(2,args.length-1):[];args=[event].concat(args);if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener&&listener.callback){var concatArgs=args.concat(listener.args);listener.callback.apply(listener.scope,concatArgs);numOfListeners+=1}}}},getEvents:function(){var str="";for(var type in this.listeners){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];str+=listener.scope&&listener.scope.className?listener.scope.className:"anonymous";str+=" listen for '"+type+"'\n"}}return str}};var EventBus=new EventBusClass;return EventBus});
 
 /***/ }
 /******/ ])

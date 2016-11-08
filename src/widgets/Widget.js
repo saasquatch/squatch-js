@@ -32,49 +32,22 @@ export class Widget {
    * embedded.
    * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
    * for listening to the height of the widget content and make the iframe responsive.
-   * The EventBus listens for events that get triggered in the widget.
    *
    * @param {string} content The html of the widget
-   * @param {EventBus} eventBus (https://github.com/krasimir/EventBus.git)
    *
    */
   constructor(params) {
     _log('widget initializing ...');
     let me = this;
-    me.eventBus = params.eventBus;
     me.content = (params.content === 'error') ? me._error(params.rsCode) : params.content;
     me.type = params.type;
     me.widgetApi = params.api;
     me.analyticsApi = new AnalyticsApi();
     me.frame = document.createElement('iframe');
+    me.frame.squatchJsApi = me;
     me.frame.width = '100%';
     me.frame.style = 'border: 0; background-color: none;';
     me.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
-
-    me.eventBus.addEventListener('fb_btn_clicked', function(e, _sqh) {
-      _log("fb btn clicked");
-      me._shareEvent(_sqh, 'FACEBOOK');
-    });
-
-    me.eventBus.addEventListener('tw_btn_clicked', function(e, _sqh) {
-      _log("tw btn clicked");
-      me._shareEvent(_sqh, 'TWITTER');
-    });
-
-    me.eventBus.addEventListener('email_btn_clicked', function(e, _sqh) {
-      _log("email btn clicked");
-      me._shareEvent(_sqh, 'EMAIL');
-    });
-
-    me.eventBus.addEventListener('copy_btn_clicked', function(e, _sqh) {
-      _log("copy btn clicked");
-      me._shareEvent(_sqh, 'DIRECT');
-    });
-
-    me.eventBus.addEventListener('email_submitted', function(e, params, jwt) {
-      _log("email_submitted");
-      me.reload(params, jwt);
-    });
   }
 
   reload(params, jwt) {
@@ -82,7 +55,6 @@ export class Widget {
   }
 
   _loadEvent(sqh) {
-
     if (sqh) {
       this.analyticsApi.pushAnalyticsLoadEvent({
         tenantAlias: sqh.analytics.attributes.tenant,
@@ -98,7 +70,6 @@ export class Widget {
   }
 
   _shareEvent(sqh, medium) {
-
     if (sqh) {
       this.analyticsApi.pushAnalyticsShareClickedEvent({
         tenantAlias: sqh.analytics.attributes.tenant,
@@ -121,7 +92,7 @@ export class Widget {
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
     <head>
-    	<link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">
+      <link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">
       <style>
         ${style}
       </style>
@@ -130,7 +101,7 @@ export class Widget {
 
       <div class="squatch-container ${mode}">
         <div class="errorheader">
-          <button type="button" class="close" onclick="window.parent.squatch.eventBus.dispatch('close_popup');">&times;</button>
+          <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>
           <p class="errortitle">Error</p>
         </div>
         <div class="errorbody">

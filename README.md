@@ -24,9 +24,9 @@ Or load the library synchronously from our CDN:
 
 
 ## Getting Started
-The `init` function lets you configure your global squatch instance. It lets you identify users, show them different types of referral widgets, automatically attribute referrals, track conversions and more all from one place.
+The `init` function lets you configure your global squatch instance.
 
-Unregistered users are also able to interact with your referral program, and later they can be registered. When `widgetType` is passed in the configuration of the `cookieUser` function, a widget will be displayed. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is loaded.
+Unregistered users are also able to interact with your referral program using the `cookieUser` function, and later they can be registered. If `engagementMedium` is not passed in the `squatch.load()` function, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is loaded.
 
 ```html
 <script type="text/javascript">
@@ -35,10 +35,22 @@ Unregistered users are also able to interact with your referral program, and lat
     // Always call init
     squatch.init({
       tenantAlias: "YOUR_TENANT_ALIAS",     // String (required)
-      engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
-      widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-      jwt: 'TOKEN'                          // String (required by default, talk to support if you'd like to disable Security)
     });
+
+    var user;
+
+    squatch.api.cookieUser({
+      engagementMedium: 'DEFAULT_IS_POPUP',        // String (optional: POPUP, EMBED)
+      widgetType: 'WIDGET_TYPE',                   // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
+      jwt: 'TOKEN'                                    // String (required by default, talk to support if you'd like to disable Security)
+    }).then(function(response) {
+      user = response.user;
+      squatch.load(response, {engagementMedium: 'POPUP'});               // Optionally load the widget
+    });
+
+    // autofill
+    var element = document.getElementById('my_coupon');
+    element.value = user.referredBy.code;
 
   });
 </script>
@@ -49,11 +61,14 @@ Include `user.id` and `user.accountId` in your configuration to register users.
 
 ```html
 <script type="text/javascript">
-  squatch.ready(function(){
+  squatch.ready(function() {
 
     // Always call init
     squatch.init({
       tenantAlias: "YOUR_TENANT_ALIAS"      // String (required)
+    });
+
+    squatch.api.upsert({
       user: {                               // Object (required)
         id: 'USER_ID',                      // String (required)
         accountId: 'USER_ACCOUNT_ID',       // String (required)
@@ -65,7 +80,32 @@ Include `user.id` and `user.accountId` in your configuration to register users.
       engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
       jwt: 'TOKEN'                          // String (required by default, talk to support if you'd like to disable Security)
+    }).then(function() {
+      user = response.user;
+      squatch.load(response);               // Optionally load the widget
     });
+
+  });
+</script>
+```
+
+## Get referral cookie code
+
+```html
+<script type="text/javascript">
+  squatch.ready(function(){
+
+    // Always call init
+    squatch.init({tenantAlias: 'YOUR_TENANT_ALIAS'});
+
+    var code;
+    // Example 1 -- use a success function
+    squatch.api.squatchReferralCookie().then(function(response) {
+      code = response.code;
+    });
+
+    // Example 2 -- use a selector
+    squatch.autofill('#my_coupon');
 
   });
 </script>

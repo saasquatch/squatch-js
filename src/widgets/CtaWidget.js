@@ -31,11 +31,7 @@ export class CtaWidget extends PopupWidget {
 
     me.ctaFrame = document.createElement('iframe');
     me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; display: none;' + me.side + me.position;
-
-    me.eventBus.addEventListener('cta_btn_clicked', function(e) {
-      _log("cta btn clicked");
-      me.open();
-    });
+    
     document.body.appendChild(this.ctaFrame);
   }
 

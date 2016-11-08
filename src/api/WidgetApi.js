@@ -121,6 +121,19 @@ export default class WidgetApi {
   }
 
   /**
+   * Description here.
+   *
+   * @param {Object} params
+   * @param {Object} params.code the user details
+   * @return {Promise} code referral code if true.
+   */
+  squatchReferralCookie() {
+    const tenantAlias = encodeURIComponent(this.tenantAlias);
+    const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson`;
+    return WidgetApi.doRequest(url);
+  }
+
+  /**
    * @private
    */
   static validateInput(params, jsonSchema) {
@@ -131,22 +144,21 @@ export default class WidgetApi {
   /**
    * @private
    */
-  static doRequest(url, jwt) {
+  static doRequest(url, jwt = "") {
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }
+
+    if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
     return fetch(url, {
       method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-SaaSquatch-User-Token': jwt,
-      },
+      headers: headers,
       credentials: 'include',
       mode: 'cors',
     }).then((response) => {
-      if (!response.ok) {
-        return response.json();
-      }
-
-      return response.text();
+      return response.json();
     });
   }
 

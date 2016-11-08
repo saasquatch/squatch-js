@@ -5,13 +5,13 @@
  * @module squatch
  */
 // import { OpenApi } from './api/OpenApi';
+import 'whatwg-fetch';
 import WidgetApi from './api/WidgetApi'
 import { EmbedWidget } from './widgets/EmbedWidget';
 import { PopupWidget } from './widgets/PopupWidget';
 import { CtaWidget } from './widgets/CtaWidget';
 import asyncLoad from './async';
 import debug from 'debug';
-import EventBus from 'eventbusjs';
 
 debug.disable('squatch-js*');
 let _log = debug('squatch-js');
@@ -21,13 +21,11 @@ export { WidgetApi } from './api/WidgetApi';
 export { EmbedWidget } from './widgets/EmbedWidget';
 export { PopupWidget } from './widgets/PopupWidget';
 export { CtaWidget } from './widgets/CtaWidget';
-export let eventBus = EventBus;
 
 /**
  * Initializes a static `squatch` global. This sets up:
  *
  *  - `api` a static instance of the {@link WidgetApi}
- *  - `eventBus` an instance for managing events https://github.com/krasimir/EventBus
  *
  * @param {Object} config Configuration details
  * @param {string} config.tenantAlias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
@@ -44,27 +42,6 @@ export function init(config) {
   api = new WidgetApi({ tenantAlias: config.tenantAlias });
 
   _log("Widget API instance", api);
-  if (!config.engagementMedium) {
-    config.engagementMedium = 'POPUP';
-  } else if (config.engagementMedium === 'NO_CONTENT'){
-    config.engagementMedium = undefined;
-  }
-
-  if (config.user && config.user.id && config.user.accountId) {
-    api.upsert(config).then(function(response) {
-      _log('response', response);
-      load(response, config);
-    }).catch(function(ex) {
-      throw ex;
-    });
-  } else {
-    api.cookieUser(config).then(function(response) {
-      _log('response', response);
-      load(response, config);
-    }).catch(function(ex) {
-      throw ex;
-    });
-  }
 }
 
 /**
@@ -82,7 +59,7 @@ export function ready(fn) {
 }
 
 // Refactor this function to make it simple
-export function load(response, config) {
+export function load(response, config = { widgetType: "", engagementMedium: ""}) {
   let widget;
   let params;
   let displayOnLoad = false;
@@ -96,14 +73,12 @@ export function load(response, config) {
       content: "error",
       rsCode: response.rsCode,
       type: config.widgetType ? config.widgetType : "",
-      eventBus: eventBus,
       api: api
     };
-  } else if (response.jsOptions){
+  } else if (response.jsOptions) {
     params = {
       content: response.template,
       type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
-      eventBus: eventBus,
       api: api,
     };
 
@@ -125,12 +100,9 @@ export function load(response, config) {
     params = {
       content: response,
       type: config.widgetType ? config.widgetType: '',
-      eventBus: eventBus,
       api: api
     }
   }
-
-  _log('params for widget', params)
 
   if (!displayCTA && config.engagementMedium === 'EMBED') {
     widget = new EmbedWidget(params).load();
@@ -151,6 +123,28 @@ export function load(response, config) {
     widget.load();
     widget.open();
   }
+}
+
+export function autofill(element) {
+  let el;
+
+  if (typeof element === "function") {
+    return api.autofill().then(element).catch(function(ex) {
+      throw ex;
+    });
+  } else if (element.startsWith('#')) {
+    el = document.getElementById(element.slice(1));
+  } else if (element.startsWith('.')) {
+    el = document.getElementsByClass(element.slice(1))[0];
+  } else {
+    _log("Element id/class or function missing");
+  }
+
+  return api.autofill().then(function(response){
+    el.value = response.code;
+  }).catch(function(ex) {
+    throw ex;
+  });
 }
 
 function matchesUrl(rule) {

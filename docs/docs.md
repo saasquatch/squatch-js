@@ -10,17 +10,16 @@ It can show referral widgets on any website, track users, generate unique referr
 Initializes a static `squatch` global. This sets up:
 
 -   `api` a static instance of the [WidgetApi](#widgetapi)
--   `eventBus` an instance for managing events <https://github.com/krasimir/EventBus>
 
 **Parameters**
 
 -   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Configuration details
-    -   `config.tenant_alias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant alias connects to your account. Note: There are both _live_ and _test_ tenant aliases.
+    -   `config.tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant alias connects to your account. Note: There are both _live_ and _test_ tenant aliases.
 
 **Examples**
 
 ```javascript
-squatch.init({tenant_alias:'test_basbtabstq51v'});
+squatch.init({tenantAlias:'test_basbtabstq51v'});
 ```
 
 Returns **void** 
@@ -32,7 +31,7 @@ Static instance of the [WidgetApi](#widgetapi). Make sure you call [init](#init)
 **Examples**
 
 ```javascript
-squatch.init({tenant_alias:'test_basbtabstq51v'});
+squatch.init({tenantAlias:'test_basbtabstq51v'});
 squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
 ```
 
@@ -79,10 +78,11 @@ Description here.
 
 **Parameters**
 
--   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: "", engagementMedium: "", jwt: "" })** 
-    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)
-    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the mode of the widget being loaded (POPUP/MOBILE)
-    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+-   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** 
+    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/CONVERSION_WIDGET)
+    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
+                                   validate the data (can be disabled)
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** json object if true, with the widget template, jsOptions and user details.
 
@@ -92,13 +92,14 @@ Description here.
 
 **Parameters**
 
--   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: "", engagementMedium: "", jwt: ""})** 
+-   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** 
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
-    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the mode of the widget being loaded (POPUP/MOBILE)
-    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/REFERRING_WIDGET)
+    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+                                   to validate the data (can be disabled)
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** string if true, with the widget template.
 
@@ -108,15 +109,27 @@ Description here.
 
 **Parameters**
 
--   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: "", engagementMedium: "", jwt: ""})** 
+-   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** 
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
-    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the mode of the widget being loaded (POPUP/MOBILE)
-    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/REFERRING_WIDGET)
+    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+                                   to validate the data (can be disabled)
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** template html if true.
+
+## squatchReferralCookie
+
+Description here.
+
+**Parameters**
+
+-   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `params.code` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** code referral code if true.
 
 # Widget
 
@@ -147,12 +160,10 @@ Creates an <iframe></iframe> in which the html content of the widget gets
 embedded.
 Uses element-resize-detector (<https://github.com/wnr/element-resize-detector>)
 for listening to the height of the widget content and make the iframe responsive.
-The EventBus listens for events that get triggered in the widget.
 
 **Parameters**
 
 -   `content` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The html of the widget
--   `eventBus` **EventBus** (<https://github.com/krasimir/EventBus.git>)
 -   `params`  
 
 # AnalyticsApi

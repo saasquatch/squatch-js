@@ -83,7 +83,7 @@
         },
         "end": {
           "line": 8,
-          "column": 43
+          "column": 22
         }
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
@@ -277,115 +277,6 @@
                 },
                 "indent": []
               }
-            },
-            {
-              "type": "listItem",
-              "loose": false,
-              "checked": null,
-              "children": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "type": "inlineCode",
-                      "value": "eventBus",
-                      "position": {
-                        "start": {
-                          "line": 4,
-                          "column": 4,
-                          "offset": 109
-                        },
-                        "end": {
-                          "line": 4,
-                          "column": 14,
-                          "offset": 119
-                        },
-                        "indent": []
-                      }
-                    },
-                    {
-                      "type": "text",
-                      "value": " an instance for managing events ",
-                      "position": {
-                        "start": {
-                          "line": 4,
-                          "column": 14,
-                          "offset": 119
-                        },
-                        "end": {
-                          "line": 4,
-                          "column": 47,
-                          "offset": 152
-                        },
-                        "indent": []
-                      }
-                    },
-                    {
-                      "type": "link",
-                      "title": null,
-                      "url": "https://github.com/krasimir/EventBus",
-                      "children": [
-                        {
-                          "type": "text",
-                          "value": "https://github.com/krasimir/EventBus",
-                          "position": {
-                            "start": {
-                              "line": 4,
-                              "column": 47,
-                              "offset": 152
-                            },
-                            "end": {
-                              "line": 4,
-                              "column": 83,
-                              "offset": 188
-                            },
-                            "indent": []
-                          }
-                        }
-                      ],
-                      "position": {
-                        "start": {
-                          "line": 4,
-                          "column": 47,
-                          "offset": 152
-                        },
-                        "end": {
-                          "line": 4,
-                          "column": 83,
-                          "offset": 188
-                        },
-                        "indent": []
-                      }
-                    }
-                  ],
-                  "position": {
-                    "start": {
-                      "line": 4,
-                      "column": 4,
-                      "offset": 109
-                    },
-                    "end": {
-                      "line": 4,
-                      "column": 83,
-                      "offset": 188
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 4,
-                  "column": 1,
-                  "offset": 106
-                },
-                "end": {
-                  "line": 4,
-                  "column": 83,
-                  "offset": 188
-                },
-                "indent": []
-              }
             }
           ],
           "position": {
@@ -395,13 +286,11 @@
               "offset": 54
             },
             "end": {
-              "line": 4,
-              "column": 83,
-              "offset": 188
+              "line": 3,
+              "column": 52,
+              "offset": 105
             },
-            "indent": [
-              1
-            ]
+            "indent": []
           }
         }
       ],
@@ -412,9 +301,9 @@
           "offset": 0
         },
         "end": {
-          "line": 4,
-          "column": 83,
-          "offset": 188
+          "line": 3,
+          "column": 52,
+          "offset": 105
         }
       }
     },
@@ -422,7 +311,7 @@
       {
         "title": "param",
         "description": "Configuration details",
-        "lineNumber": 6,
+        "lineNumber": 5,
         "type": {
           "type": "NameExpression",
           "name": "Object"
@@ -432,17 +321,17 @@
       {
         "title": "param",
         "description": "The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.",
-        "lineNumber": 7,
+        "lineNumber": 6,
         "type": {
           "type": "NameExpression",
           "name": "string"
         },
-        "name": "config.tenant_alias"
+        "name": "config.tenantAlias"
       },
       {
         "title": "returns",
         "description": null,
-        "lineNumber": 8,
+        "lineNumber": 7,
         "type": {
           "type": "NameExpression",
           "name": "void"
@@ -450,28 +339,28 @@
       },
       {
         "title": "example",
-        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});",
-        "lineNumber": 9
+        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});",
+        "lineNumber": 8
       }
     ],
     "loc": {
       "start": {
-        "line": 26,
+        "line": 25,
         "column": 0
       },
       "end": {
-        "line": 37,
+        "line": 35,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 38,
+          "line": 36,
           "column": 0
         },
         "end": {
-          "line": 57,
+          "line": 45,
           "column": 1
         }
       },
@@ -480,7 +369,7 @@
     "params": [
       {
         "name": "config",
-        "lineNumber": 6,
+        "lineNumber": 5,
         "description": {
           "type": "root",
           "children": [
@@ -539,8 +428,8 @@
         },
         "properties": [
           {
-            "name": "config.tenant_alias",
-            "lineNumber": 7,
+            "name": "config.tenantAlias",
+            "lineNumber": 6,
             "description": {
               "type": "root",
               "children": [
@@ -731,7 +620,7 @@
     ],
     "examples": [
       {
-        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});"
+        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});"
       }
     ],
     "name": "init",
@@ -897,28 +786,28 @@
       },
       {
         "title": "example",
-        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});",
+        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});",
         "lineNumber": 4
       }
     ],
     "loc": {
       "start": {
-        "line": 59,
+        "line": 47,
         "column": 0
       },
       "end": {
-        "line": 66,
+        "line": 54,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 67,
+          "line": 55,
           "column": 0
         },
         "end": {
-          "line": 67,
+          "line": 55,
           "column": 22
         }
       },
@@ -926,7 +815,7 @@
     },
     "examples": [
       {
-        "description": "squatch.init({tenant_alias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});"
+        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});"
       }
     ],
     "name": "api",
@@ -1012,7 +901,7 @@
           "column": 0
         },
         "end": {
-          "line": 174,
+          "line": 183,
           "column": 1
         }
       },
@@ -1724,7 +1613,7 @@
             },
             {
               "title": "param",
-              "description": "the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)",
+              "description": "(REFERRED_WIDGET/CONVERSION_WIDGET)",
               "lineNumber": 4,
               "type": {
                 "type": "NameExpression",
@@ -1734,7 +1623,7 @@
             },
             {
               "title": "param",
-              "description": "the mode of the widget being loaded (POPUP/MOBILE)",
+              "description": "(POPUP/MOBILE)",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
@@ -1744,7 +1633,7 @@
             },
             {
               "title": "param",
-              "description": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+              "description": "the JSON Web Token (JWT) that is used to\n                           validate the data (can be disabled)",
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
@@ -1755,7 +1644,7 @@
             {
               "title": "return",
               "description": "json object if true, with the widget template, jsOptions and user details.",
-              "lineNumber": 7,
+              "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
                 "name": "Promise"
@@ -1768,18 +1657,18 @@
               "column": 2
             },
             "end": {
-              "line": 44,
+              "line": 46,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 45,
+                "line": 47,
                 "column": 2
               },
               "end": {
-                "line": 57,
+                "line": 59,
                 "column": 3
               }
             },
@@ -1795,7 +1684,7 @@
                   "type": "NameExpression",
                   "name": "Object"
                 },
-                "default": "{ widgetType: \"\", engagementMedium: \"\", jwt: \"\" }"
+                "default": "{ widgetType: '', engagementMedium: '', jwt: '' }"
               },
               "properties": [
                 {
@@ -1809,7 +1698,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)",
+                            "value": "(REFERRED_WIDGET/CONVERSION_WIDGET)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -1818,8 +1707,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 72,
-                                "offset": 71
+                                "column": 36,
+                                "offset": 35
                               },
                               "indent": []
                             }
@@ -1833,8 +1722,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 72,
-                            "offset": 71
+                            "column": 36,
+                            "offset": 35
                           },
                           "indent": []
                         }
@@ -1848,8 +1737,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 72,
-                        "offset": 71
+                        "column": 36,
+                        "offset": 35
                       }
                     }
                   },
@@ -1869,7 +1758,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the mode of the widget being loaded (POPUP/MOBILE)",
+                            "value": "(POPUP/MOBILE)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -1878,8 +1767,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 51,
-                                "offset": 50
+                                "column": 15,
+                                "offset": 14
                               },
                               "indent": []
                             }
@@ -1893,8 +1782,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 51,
-                            "offset": 50
+                            "column": 15,
+                            "offset": 14
                           },
                           "indent": []
                         }
@@ -1908,8 +1797,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 51,
-                        "offset": 50
+                        "column": 15,
+                        "offset": 14
                       }
                     }
                   },
@@ -1929,7 +1818,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+                            "value": "the JSON Web Token (JWT) that is used to\n                           validate the data (can be disabled)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -1937,11 +1826,13 @@
                                 "offset": 0
                               },
                               "end": {
-                                "line": 1,
-                                "column": 77,
-                                "offset": 76
+                                "line": 2,
+                                "column": 63,
+                                "offset": 103
                               },
-                              "indent": []
+                              "indent": [
+                                1
+                              ]
                             }
                           }
                         ],
@@ -1952,11 +1843,13 @@
                             "offset": 0
                           },
                           "end": {
-                            "line": 1,
-                            "column": 77,
-                            "offset": 76
+                            "line": 2,
+                            "column": 63,
+                            "offset": 103
                           },
-                          "indent": []
+                          "indent": [
+                            1
+                          ]
                         }
                       }
                     ],
@@ -1967,9 +1860,9 @@
                         "offset": 0
                       },
                       "end": {
-                        "line": 1,
-                        "column": 77,
-                        "offset": 76
+                        "line": 2,
+                        "column": 63,
+                        "offset": 103
                       }
                     }
                   },
@@ -2158,7 +2051,7 @@
             },
             {
               "title": "param",
-              "description": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+              "description": "(REFERRED_WIDGET/REFERRING_WIDGET)",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -2168,7 +2061,7 @@
             },
             {
               "title": "param",
-              "description": "the mode of the widget being loaded (POPUP/MOBILE)",
+              "description": "(POPUP/MOBILE)",
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
@@ -2178,7 +2071,7 @@
             },
             {
               "title": "param",
-              "description": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+              "description": "the JSON Web Token (JWT) that is used\n                           to validate the data (can be disabled)",
               "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
@@ -2189,7 +2082,7 @@
             {
               "title": "return",
               "description": "string if true, with the widget template.",
-              "lineNumber": 10,
+              "lineNumber": 12,
               "type": {
                 "type": "NameExpression",
                 "name": "Promise"
@@ -2198,22 +2091,22 @@
           ],
           "loc": {
             "start": {
-              "line": 59,
+              "line": 61,
               "column": 2
             },
             "end": {
-              "line": 70,
+              "line": 74,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 71,
+                "line": 75,
                 "column": 2
               },
               "end": {
-                "line": 88,
+                "line": 93,
                 "column": 3
               }
             },
@@ -2229,7 +2122,7 @@
                   "type": "NameExpression",
                   "name": "Object"
                 },
-                "default": "{ widgetType: \"\", engagementMedium: \"\", jwt: \"\"}"
+                "default": "{ widgetType: '', engagementMedium: '', jwt: '' }"
               },
               "properties": [
                 {
@@ -2321,7 +2214,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+                            "value": "(REFERRED_WIDGET/REFERRING_WIDGET)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2330,8 +2223,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 71,
-                                "offset": 70
+                                "column": 35,
+                                "offset": 34
                               },
                               "indent": []
                             }
@@ -2345,8 +2238,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 71,
-                            "offset": 70
+                            "column": 35,
+                            "offset": 34
                           },
                           "indent": []
                         }
@@ -2360,8 +2253,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 71,
-                        "offset": 70
+                        "column": 35,
+                        "offset": 34
                       }
                     }
                   },
@@ -2381,7 +2274,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the mode of the widget being loaded (POPUP/MOBILE)",
+                            "value": "(POPUP/MOBILE)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2390,8 +2283,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 51,
-                                "offset": 50
+                                "column": 15,
+                                "offset": 14
                               },
                               "indent": []
                             }
@@ -2405,8 +2298,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 51,
-                            "offset": 50
+                            "column": 15,
+                            "offset": 14
                           },
                           "indent": []
                         }
@@ -2420,8 +2313,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 51,
-                        "offset": 50
+                        "column": 15,
+                        "offset": 14
                       }
                     }
                   },
@@ -2441,7 +2334,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+                            "value": "the JSON Web Token (JWT) that is used\n                           to validate the data (can be disabled)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2449,11 +2342,13 @@
                                 "offset": 0
                               },
                               "end": {
-                                "line": 1,
-                                "column": 77,
-                                "offset": 76
+                                "line": 2,
+                                "column": 66,
+                                "offset": 103
                               },
-                              "indent": []
+                              "indent": [
+                                1
+                              ]
                             }
                           }
                         ],
@@ -2464,11 +2359,13 @@
                             "offset": 0
                           },
                           "end": {
-                            "line": 1,
-                            "column": 77,
-                            "offset": 76
+                            "line": 2,
+                            "column": 66,
+                            "offset": 103
                           },
-                          "indent": []
+                          "indent": [
+                            1
+                          ]
                         }
                       }
                     ],
@@ -2479,9 +2376,9 @@
                         "offset": 0
                       },
                       "end": {
-                        "line": 1,
-                        "column": 77,
-                        "offset": 76
+                        "line": 2,
+                        "column": 66,
+                        "offset": 103
                       }
                     }
                   },
@@ -2670,7 +2567,7 @@
             },
             {
               "title": "param",
-              "description": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+              "description": "(REFERRED_WIDGET/REFERRING_WIDGET)",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -2680,7 +2577,7 @@
             },
             {
               "title": "param",
-              "description": "the mode of the widget being loaded (POPUP/MOBILE)",
+              "description": "(POPUP/MOBILE)",
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
@@ -2690,7 +2587,7 @@
             },
             {
               "title": "param",
-              "description": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+              "description": "the JSON Web Token (JWT) that is used\n                           to validate the data (can be disabled)",
               "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
@@ -2701,7 +2598,7 @@
             {
               "title": "return",
               "description": "template html if true.",
-              "lineNumber": 10,
+              "lineNumber": 11,
               "type": {
                 "type": "NameExpression",
                 "name": "Promise"
@@ -2710,22 +2607,22 @@
           ],
           "loc": {
             "start": {
-              "line": 90,
+              "line": 95,
               "column": 2
             },
             "end": {
-              "line": 101,
+              "line": 107,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 102,
+                "line": 108,
                 "column": 2
               },
               "end": {
-                "line": 115,
+                "line": 121,
                 "column": 3
               }
             },
@@ -2741,7 +2638,7 @@
                   "type": "NameExpression",
                   "name": "Object"
                 },
-                "default": "{ widgetType: \"\", engagementMedium: \"\", jwt: \"\"}"
+                "default": "{ widgetType: '', engagementMedium: '', jwt: '' }"
               },
               "properties": [
                 {
@@ -2833,7 +2730,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)",
+                            "value": "(REFERRED_WIDGET/REFERRING_WIDGET)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2842,8 +2739,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 71,
-                                "offset": 70
+                                "column": 35,
+                                "offset": 34
                               },
                               "indent": []
                             }
@@ -2857,8 +2754,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 71,
-                            "offset": 70
+                            "column": 35,
+                            "offset": 34
                           },
                           "indent": []
                         }
@@ -2872,8 +2769,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 71,
-                        "offset": 70
+                        "column": 35,
+                        "offset": 34
                       }
                     }
                   },
@@ -2893,7 +2790,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the mode of the widget being loaded (POPUP/MOBILE)",
+                            "value": "(POPUP/MOBILE)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2902,8 +2799,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 51,
-                                "offset": 50
+                                "column": 15,
+                                "offset": 14
                               },
                               "indent": []
                             }
@@ -2917,8 +2814,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 51,
-                            "offset": 50
+                            "column": 15,
+                            "offset": 14
                           },
                           "indent": []
                         }
@@ -2932,8 +2829,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 51,
-                        "offset": 50
+                        "column": 15,
+                        "offset": 14
                       }
                     }
                   },
@@ -2953,7 +2850,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the JSON Web Token (JWT) that is used to validate the data (can be disabled)",
+                            "value": "the JSON Web Token (JWT) that is used\n                           to validate the data (can be disabled)",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2961,11 +2858,13 @@
                                 "offset": 0
                               },
                               "end": {
-                                "line": 1,
-                                "column": 77,
-                                "offset": 76
+                                "line": 2,
+                                "column": 66,
+                                "offset": 103
                               },
-                              "indent": []
+                              "indent": [
+                                1
+                              ]
                             }
                           }
                         ],
@@ -2976,11 +2875,13 @@
                             "offset": 0
                           },
                           "end": {
-                            "line": 1,
-                            "column": 77,
-                            "offset": 76
+                            "line": 2,
+                            "column": 66,
+                            "offset": 103
                           },
-                          "indent": []
+                          "indent": [
+                            1
+                          ]
                         }
                       }
                     ],
@@ -2991,9 +2892,9 @@
                         "offset": 0
                       },
                       "end": {
-                        "line": 1,
-                        "column": 77,
-                        "offset": 76
+                        "line": 2,
+                        "column": 66,
+                        "offset": 103
                       }
                     }
                   },
@@ -3085,6 +2986,266 @@
             }
           ],
           "namespace": "WidgetApi#render"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Description here.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 18,
+                        "offset": 17
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 18,
+                    "offset": 17
+                  },
+                  "indent": []
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 1,
+                "column": 18,
+                "offset": 17
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": null,
+              "lineNumber": 3,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params"
+            },
+            {
+              "title": "param",
+              "description": "the user details",
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "name": "params.code"
+            },
+            {
+              "title": "return",
+              "description": "code referral code if true.",
+              "lineNumber": 5,
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 123,
+              "column": 2
+            },
+            "end": {
+              "line": 129,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 130,
+                "column": 2
+              },
+              "end": {
+                "line": 134,
+                "column": 3
+              }
+            },
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
+          },
+          "params": [
+            {
+              "name": "params",
+              "lineNumber": 3,
+              "type": {
+                "type": "NameExpression",
+                "name": "Object"
+              },
+              "properties": [
+                {
+                  "name": "params.code",
+                  "lineNumber": 4,
+                  "description": {
+                    "type": "root",
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "children": [
+                          {
+                            "type": "text",
+                            "value": "the user details",
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 17,
+                                "offset": 16
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17,
+                            "offset": 16
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17,
+                        "offset": 16
+                      }
+                    }
+                  },
+                  "type": {
+                    "type": "NameExpression",
+                    "name": "Object"
+                  }
+                }
+              ]
+            }
+          ],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "code referral code if true.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 28,
+                            "offset": 27
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 28,
+                        "offset": 27
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 28,
+                    "offset": 27
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "Promise"
+              }
+            }
+          ],
+          "name": "squatchReferralCookie",
+          "kind": "function",
+          "memberof": "WidgetApi",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "WidgetApi",
+              "kind": "class"
+            },
+            {
+              "name": "squatchReferralCookie",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "WidgetApi#squatchReferralCookie"
         }
       ],
       "static": [],
@@ -3176,7 +3337,7 @@
           "column": 0
         },
         "end": {
-          "line": 151,
+          "line": 122,
           "column": 1
         }
       },
@@ -3437,7 +3598,7 @@
                   },
                   {
                     "type": "text",
-                    "value": ")\nfor listening to the height of the widget content and make the iframe responsive.\nThe EventBus listens for events that get triggered in the widget.",
+                    "value": ")\nfor listening to the height of the widget content and make the iframe responsive.",
                     "position": {
                       "start": {
                         "line": 5,
@@ -3445,12 +3606,11 @@
                         "offset": 203
                       },
                       "end": {
-                        "line": 7,
-                        "column": 66,
-                        "offset": 352
+                        "line": 6,
+                        "column": 82,
+                        "offset": 286
                       },
                       "indent": [
-                        1,
                         1
                       ]
                     }
@@ -3463,12 +3623,11 @@
                     "offset": 43
                   },
                   "end": {
-                    "line": 7,
-                    "column": 66,
-                    "offset": 352
+                    "line": 6,
+                    "column": 82,
+                    "offset": 286
                   },
                   "indent": [
-                    1,
                     1,
                     1,
                     1
@@ -3483,9 +3642,9 @@
                 "offset": 0
               },
               "end": {
-                "line": 7,
-                "column": 66,
-                "offset": 352
+                "line": 6,
+                "column": 82,
+                "offset": 286
               }
             }
           },
@@ -3493,22 +3652,12 @@
             {
               "title": "param",
               "description": "The html of the widget",
-              "lineNumber": 9,
+              "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
                 "name": "string"
               },
               "name": "content"
-            },
-            {
-              "title": "param",
-              "description": "(https://github.com/krasimir/EventBus.git)",
-              "lineNumber": 10,
-              "type": {
-                "type": "NameExpression",
-                "name": "EventBus"
-              },
-              "name": "eventBus"
             }
           ],
           "loc": {
@@ -3517,18 +3666,18 @@
               "column": 2
             },
             "end": {
-              "line": 40,
+              "line": 38,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 41,
+                "line": 39,
                 "column": 2
               },
               "end": {
-                "line": 78,
+                "line": 51,
                 "column": 3
               }
             },
@@ -3537,7 +3686,7 @@
           "params": [
             {
               "name": "content",
-              "lineNumber": 9,
+              "lineNumber": 8,
               "description": {
                 "type": "root",
                 "children": [
@@ -3596,123 +3745,9 @@
               }
             },
             {
-              "name": "eventBus",
-              "lineNumber": 10,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "(",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 2,
-                            "offset": 1
-                          },
-                          "indent": []
-                        }
-                      },
-                      {
-                        "type": "link",
-                        "title": null,
-                        "url": "https://github.com/krasimir/EventBus.git",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "https://github.com/krasimir/EventBus.git",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 2,
-                                "offset": 1
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 42,
-                                "offset": 41
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 2,
-                            "offset": 1
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 42,
-                            "offset": 41
-                          },
-                          "indent": []
-                        }
-                      },
-                      {
-                        "type": "text",
-                        "value": ")",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 42,
-                            "offset": 41
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 43,
-                            "offset": 42
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 43,
-                        "offset": 42
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 43,
-                    "offset": 42
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "EventBus"
-              }
-            },
-            {
               "title": "param",
               "name": "params",
-              "lineNumber": 41
+              "lineNumber": 39
             }
           ],
           "name": "constructor",
@@ -3823,7 +3858,7 @@
           "column": 0
         },
         "end": {
-          "line": 61,
+          "line": 65,
           "column": 1
         }
       },

@@ -91,6 +91,12 @@
                         #render
                       </a></li>
                       
+                      <li><a
+                        href='#WidgetApi#squatchReferralCookie'
+                        class='regular pre-open'>
+                        #squatchReferralCookie
+                      </a></li>
+                      
                     </ul>
                   
                   
@@ -221,7 +227,6 @@ It can show referral widgets on any website, track users, generate unique referr
   <p>Initializes a static <code>squatch</code> global. This sets up:</p>
 <ul>
 <li><code>api</code> a static instance of the <a href="#widgetapi">WidgetApi</a></li>
-<li><code>eventBus</code> an instance for managing events <a href="https://github.com/krasimir/EventBus">https://github.com/krasimir/EventBus</a></li>
 </ul>
 
 
@@ -259,7 +264,7 @@ It can show referral widgets on any website, track users, generate unique referr
             <tbody class='mt1'>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>config.tenant_alias</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>config.tenantAlias</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
                   <td class='break-word'><span>The tenant alias connects to your account. Note: There are both 
 <em>live</em>
@@ -295,7 +300,7 @@ It can show referral widgets on any website, track users, generate unique referr
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>squatch.init({<span class="hljs-attr">tenant_alias</span>:<span class="hljs-string">'test_basbtabstq51v'</span>});</pre>
+      <pre class='p1 overflow-auto round fill-light'>squatch.init({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_basbtabstq51v'</span>});</pre>
     
   
 
@@ -345,7 +350,7 @@ It can show referral widgets on any website, track users, generate unique referr
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>squatch.init({<span class="hljs-attr">tenant_alias</span>:<span class="hljs-string">'test_basbtabstq51v'</span>});
+      <pre class='p1 overflow-auto round fill-light'>squatch.init({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_basbtabstq51v'</span>});
 squatch.api.createUser({<span class="hljs-attr">id</span>:<span class="hljs-string">'123'</span>, <span class="hljs-attr">accountId</span>:<span class="hljs-string">'abc'</span>, <span class="hljs-attr">firstName</span>:<span class="hljs-string">'Tom'</span>});</pre>
     
   
@@ -527,7 +532,7 @@ Useful if you want to use a proxy like
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>cookieUser(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: "" })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>cookieUser(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -543,7 +548,7 @@ Useful if you want to use a proxy like
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: "" }))</code> 
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' }))</code> 
           </div>
           
           <table class='mt1 mb2 fixed-table h5 col-12'>
@@ -562,21 +567,22 @@ Useful if you want to use a proxy like
                 <tr>
                   <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the type of widget template to load (REFERRED_WIDGET/CONVERSION_WIDGET)
+                  <td class='break-word'><span>(REFERRED_WIDGET/CONVERSION_WIDGET)
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the mode of the widget being loaded (POPUP/MOBILE)
+                  <td class='break-word'><span>(POPUP/MOBILE)
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>params.jwt</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+                  <td class='break-word'><span>the JSON Web Token (JWT) that is used to
+validate the data (can be disabled)
 </span></td>
                 </tr>
               
@@ -629,7 +635,7 @@ Useful if you want to use a proxy like
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>upsert(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""})): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>upsert(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -645,7 +651,7 @@ Useful if you want to use a proxy like
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""}))</code> 
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' }))</code> 
           </div>
           
           <table class='mt1 mb2 fixed-table h5 col-12'>
@@ -671,21 +677,22 @@ Useful if you want to use a proxy like
                 <tr>
                   <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+                  <td class='break-word'><span>(REFERRED_WIDGET/REFERRING_WIDGET)
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the mode of the widget being loaded (POPUP/MOBILE)
+                  <td class='break-word'><span>(POPUP/MOBILE)
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>params.jwt</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+                  <td class='break-word'><span>the JSON Web Token (JWT) that is used
+to validate the data (can be disabled)
 </span></td>
                 </tr>
               
@@ -738,7 +745,7 @@ Useful if you want to use a proxy like
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>render(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""})): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>render(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -754,7 +761,7 @@ Useful if you want to use a proxy like
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: "", engagementMedium: "", jwt: ""}))</code> 
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' }))</code> 
           </div>
           
           <table class='mt1 mb2 fixed-table h5 col-12'>
@@ -780,21 +787,22 @@ Useful if you want to use a proxy like
                 <tr>
                   <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the type of widget template to load (REFERRED_WIDGET/REFERRING_WIDGET)
+                  <td class='break-word'><span>(REFERRED_WIDGET/REFERRING_WIDGET)
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the mode of the widget being loaded (POPUP/MOBILE)
+                  <td class='break-word'><span>(POPUP/MOBILE)
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>params.jwt</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
                   </td>
-                  <td class='break-word'><span>the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+                  <td class='break-word'><span>the JSON Web Token (JWT) that is used
+to validate the data (can be disabled)
 </span></td>
                 </tr>
               
@@ -813,6 +821,94 @@ Useful if you want to use a proxy like
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
         template html if true.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='WidgetApi#squatchReferralCookie'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>squatchReferralCookie(params)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>Description here.</p>
+
+
+  <div class='pre p1 fill-light mt0'>squatchReferralCookie(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> 
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>params.code</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+                  </td>
+                  <td class='break-word'><span>the user details
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
+        code referral code if true.
 
       
     
@@ -902,7 +998,7 @@ Useful if you want to use a proxy like
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>constructor(content, eventBus, params)</span>
+            <span class='code strong strong truncate'>constructor(content, params)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -914,11 +1010,10 @@ Useful if you want to use a proxy like
 <p>Creates an <iframe></iframe> in which the html content of the widget gets
 embedded.
 Uses element-resize-detector (<a href="https://github.com/wnr/element-resize-detector">https://github.com/wnr/element-resize-detector</a>)
-for listening to the height of the widget content and make the iframe responsive.
-The EventBus listens for events that get triggered in the widget.</p>
+for listening to the height of the widget content and make the iframe responsive.</p>
 
 
-  <div class='pre p1 fill-light mt0'>constructor(content: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, eventBus: EventBus, params: any)</div>
+  <div class='pre p1 fill-light mt0'>constructor(content: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, params: any)</div>
 
   
 
@@ -935,16 +1030,6 @@ The EventBus listens for events that get triggered in the widget.</p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>content</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code> The html of the widget
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>eventBus</span> <code class='quiet'>(EventBus)</code> (
-<a href="https://github.com/krasimir/EventBus.git">https://github.com/krasimir/EventBus.git</a>
-)
 
           </div>
           

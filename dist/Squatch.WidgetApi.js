@@ -220,6 +220,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.code the user details
+	     * @return {Promise} code referral code if true.
+	     */
+
+	  }, {
+	    key: 'squatchReferralCookie',
+	    value: function squatchReferralCookie() {
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
+	      return WidgetApi.doRequest(url);
+	    }
+
+	    /**
 	     * @private
 	     */
 
@@ -236,22 +252,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  }, {
 	    key: 'doRequest',
-	    value: function doRequest(url, jwt) {
+	    value: function doRequest(url) {
+	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'GET',
-	        headers: {
-	          Accept: 'application/json',
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': jwt
-	        },
+	        headers: headers,
 	        credentials: 'include',
 	        mode: 'cors'
 	      }).then(function (response) {
-	        if (!response.ok) {
-	          return response.json();
-	        }
-
-	        return response.text();
+	        return response.json();
 	      });
 	    }
 
