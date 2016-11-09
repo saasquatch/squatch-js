@@ -1,32 +1,33 @@
-import { Widget } from './Widget';
-import { domready } from '../utils/domready';
 import debug from 'debug';
+import Widget from './Widget';
+import { domready } from '../utils/domready';
 
-let _log = debug('squatch-js:EMBEDwidget');
+const _log = debug('squatch-js:EMBEDwidget');
 
-export class EmbedWidget extends Widget {
+export default class EmbedWidget extends Widget {
   constructor(params, elementId = 'squatchembed') {
     super(params);
 
     this.element = document.getElementById(elementId);
 
-    if (!this.element) throw new Error("elementId \'" + elementId + "\' not found.");
+    if (!this.element) throw new Error(`elementId '${elementId}' not found.'`);
   }
 
   load() {
-    let me = this
+    const me = this;
 
-    if (!me.element.firstChild || me.element.firstChild.nodeName === '#text')
+    if (!me.element.firstChild || me.element.firstChild.nodeName === '#text') {
       me.element.appendChild(me.frame);
+    }
 
-    let frameDoc = me.frame.contentWindow.document;
+    const frameDoc = me.frame.contentWindow.document;
     frameDoc.open();
     frameDoc.write(me.content);
     frameDoc.close();
 
-    domready(frameDoc, function() {
-      let _sqh = me.frame.contentWindow.squatch;
-      let ctaElement = frameDoc.getElementById('cta');
+    domready(frameDoc, () => {
+      const _sqh = me.frame.contentWindow.squatch;
+      const ctaElement = frameDoc.getElementById('cta');
 
       if (ctaElement) {
         ctaElement.parentNode.removeChild(ctaElement);
@@ -35,36 +36,33 @@ export class EmbedWidget extends Widget {
       me.frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
-      me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function(element) {
-        let height = element.offsetHeight;
+      me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), (element) => {
+        const height = element.offsetHeight;
         me.frame.height = height;
       });
 
       me._loadEvent(_sqh);
-      _log("loaded");
+      _log('loaded');
     });
   }
 
   reload(params, jwt) {
-    super.reload(params, jwt);
-
-    let me = this;
+    const me = this;
 
     me.widgetApi.cookieUser({
       user: {
-        email: params
+        email: params,
       },
       engagementMedium: 'EMBED',
       widgetType: me.type,
-      jwt: jwt
-    }).then(function(response) {
+      jwt: jwt,
+    }).then((response) => {
       if (response.template) {
-        me.content = response.template
+        me.content = response.template;
         me.load();
-      };
-
-    }).catch(function(ex) {
-      _log('Failed to reload ' + ex);
+      }
+    }).catch((ex) => {
+      _log(`Failed to reload ${ex}`);
     });
   }
 

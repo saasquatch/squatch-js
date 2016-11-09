@@ -1,11 +1,8 @@
-import { domready } from '../utils/domready';
-import AnalyticsApi from '../api/AnalyticsApi';
-import WidgetApi from '../api/WidgetApi';
-import elementResizeDetectorMaker from 'element-resize-detector';
 import debug from 'debug';
+import elementResizeDetectorMaker from 'element-resize-detector';
+import AnalyticsApi from '../api/AnalyticsApi';
 
-let _log = debug('squatch-js:widget');
-
+const _log = debug('squatch-js:widget');
 
 /**
  *
@@ -24,7 +21,7 @@ let _log = debug('squatch-js:widget');
  *    }
  *
  */
-export class Widget {
+export default class Widget {
   /**
    * Initialize a new {@link Widget} instance.
    *
@@ -38,7 +35,7 @@ export class Widget {
    */
   constructor(params) {
     _log('widget initializing ...');
-    let me = this;
+    const me = this;
     me.content = (params.content === 'error') ? me._error(params.rsCode) : params.content;
     me.type = params.type;
     me.widgetApi = params.api;
@@ -47,11 +44,7 @@ export class Widget {
     me.frame.squatchJsApi = me;
     me.frame.width = '100%';
     me.frame.style = 'border: 0; background-color: none;';
-    me.erd = elementResizeDetectorMaker({ strategy: 'scroll'/*, debug: 'true'*/});
-  }
-
-  reload(params, jwt) {
-    _log("Reload after email - " + params + " is submitted");
+    me.erd = elementResizeDetectorMaker({ strategy: 'scroll' /* ,debug: 'true'*/ });
   }
 
   _loadEvent(sqh) {
@@ -60,11 +53,11 @@ export class Widget {
         tenantAlias: sqh.analytics.attributes.tenant,
         externalAccountId: sqh.analytics.attributes.accountId,
         externalUserId: sqh.analytics.attributes.userId,
-        engagementMedium: sqh.mode.widgetMode
-      }).then(function(response) {
-        _log(sqh.mode.widgetMode + " loaded event recorded");
-      }).catch(function(ex) {
-        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+        engagementMedium: sqh.mode.widgetMode,
+      }).then((response) => {
+        _log(`${sqh.mode.widgetMode} loaded event recorded. ${response}`);
+      }).catch((ex) => {
+        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
       });
     }
   }
@@ -76,18 +69,19 @@ export class Widget {
         externalAccountId: sqh.analytics.attributes.accountId,
         externalUserId: sqh.analytics.attributes.userId,
         engagementMedium: sqh.mode.widgetMode,
-        shareMedium: medium
-      }).then(function(response) {
-        _log(sqh.mode.widgetMode + " share " + medium + " event recorded");
-      }).catch(function(ex) {
-        _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+        shareMedium: medium,
+      }).then((response) => {
+        _log(`${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`);
+      }).catch((ex) => {
+        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
       });
     }
   }
 
   _error(rs, mode = 'modal', style = '') {
+    const me = this;
 
-    return `<!DOCTYPE html>
+    me.errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
@@ -118,5 +112,7 @@ export class Widget {
       </div>
     </body>
     </html>`;
+
+    return me.errorTemplate;
   }
 }

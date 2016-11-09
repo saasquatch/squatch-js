@@ -144,7 +144,7 @@ export default class WidgetApi {
   /**
    * @private
    */
-  static doRequest(url, jwt = "") {
+  static doRequest(url, jwt = '') {
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -157,9 +157,7 @@ export default class WidgetApi {
       headers: headers,
       credentials: 'include',
       mode: 'cors',
-    }).then((response) => {
-      return response.json();
-    });
+    }).then(response => response.json());
   }
 
   /**

@@ -13,6 +13,12 @@ rules:
     - error
     - unix
   no-underscore-dangle: off
+  no-param-reassign:
+    - error
+    - props: false
+  object-shorthand:
+    - 2
+    - consistent
   semi:
     - warn
     - always

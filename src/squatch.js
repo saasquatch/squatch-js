@@ -1,47 +1,32 @@
 /**
- * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app.
- * It can show referral widgets on any website, track users, generate unique referral short links and referral codes, and more.
+ * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
+ * integrate a referral program into your website or web app.
+ * It can show referral widgets on any website, track users, generate unique
+ * referral short links and referral codes, and more.
  *
  * @module squatch
  */
-// import { OpenApi } from './api/OpenApi';
 import 'whatwg-fetch';
-import WidgetApi from './api/WidgetApi'
-import { EmbedWidget } from './widgets/EmbedWidget';
-import { PopupWidget } from './widgets/PopupWidget';
-import { CtaWidget } from './widgets/CtaWidget';
-import asyncLoad from './async';
 import debug from 'debug';
+import WidgetApi from './api/WidgetApi';
+import EmbedWidget from './widgets/EmbedWidget';
+import PopupWidget from './widgets/PopupWidget';
+import CtaWidget from './widgets/CtaWidget';
+import asyncLoad from './async';
 
 debug.disable('squatch-js*');
-let _log = debug('squatch-js');
+const _log = debug('squatch-js');
 
-// export { OpenApi } from './api/OpenApi';
 export { WidgetApi } from './api/WidgetApi';
 export { EmbedWidget } from './widgets/EmbedWidget';
 export { PopupWidget } from './widgets/PopupWidget';
 export { CtaWidget } from './widgets/CtaWidget';
 
 /**
- * Initializes a static `squatch` global. This sets up:
- *
- *  - `api` a static instance of the {@link WidgetApi}
- *
- * @param {Object} config Configuration details
- * @param {string} config.tenantAlias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
- * @returns {void}
- * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * @private
  */
-export function init(config) {
-  if (config.tenantAlias.startsWith('test') || config.debug) {
-    debug.enable('squatch-js*');
-  }
-
-  _log('initializing ...');
-  api = new WidgetApi({ tenantAlias: config.tenantAlias });
-
-  _log("Widget API instance", api);
+function matchesUrl(rule) {
+  return window.location.href.match(new RegExp(rule));
 }
 
 /**
@@ -54,12 +39,35 @@ export function init(config) {
  */
 export let api = null;
 
+/**
+ * Initializes a static `squatch` global. This sets up:
+ *
+ *  - `api` a static instance of the {@link WidgetApi}
+ *
+ * @param {Object} config Configuration details
+ * @param {string} config.tenantAlias The tenant alias connects to your account.
+ *                        Note: There are both *live* and *test* tenant aliases.
+ * @returns {void}
+ * @example
+ * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ */
+export function init(config) {
+  if (config.tenantAlias.startsWith('test') || config.debug) {
+    debug.enable('squatch-js*');
+  }
+
+  _log('initializing ...');
+  api = new WidgetApi({ tenantAlias: config.tenantAlias });
+
+  _log('Widget API instance', api);
+}
+
 export function ready(fn) {
   fn();
 }
 
 // Refactor this function to make it simple
-export function load(response, config = { widgetType: "", engagementMedium: ""}) {
+export function load(response, config = { widgetType: '', engagementMedium: '' }) {
   let widget;
   let params;
   let displayOnLoad = false;
@@ -68,12 +76,12 @@ export function load(response, config = { widgetType: "", engagementMedium: ""})
   if (!response) throw new Error('Unable to get a response');
 
   if (response.apiErrorCode) {
-    _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') ' + response.message));
+    _log(new Error(`${response.apiErrorCode} (${response.rsCode}) response.message`));
     params = {
-      content: "error",
+      content: 'error',
       rsCode: response.rsCode,
-      type: config.widgetType ? config.widgetType : "",
-      api: api
+      type: config.widgetType ? config.widgetType : '',
+      api: api,
     };
   } else if (response.jsOptions) {
     params = {
@@ -82,42 +90,39 @@ export function load(response, config = { widgetType: "", engagementMedium: ""})
       api: api,
     };
 
-    response.jsOptions.widgetUrlMappings.forEach(rule => {
+    response.jsOptions.widgetUrlMappings.forEach((rule) => {
       if (matchesUrl(rule.url)) {
         displayOnLoad = true;
         displayCTA = rule.showAsCTA;
-        console.log("Display " + rule.widgetType + " on " + rule.url);
+        _log(`Display ${rule.widgetType} on ${rule.rul}`);
       }
     });
 
-    response.jsOptions.conversionUrls.forEach(rule => {
+    response.jsOptions.conversionUrls.forEach((rule) => {
       if (response.user.referredBy && matchesUrl(rule)) {
         displayOnLoad = true;
-        console.log("This is a conversion URL", rule);
+        _log('This is a conversion URL', rule);
       }
     });
   } else {
     params = {
       content: response,
-      type: config.widgetType ? config.widgetType: '',
-      api: api
-    }
+      type: config.widgetType ? config.widgetType : '',
+      api: api,
+    };
   }
 
   if (!displayCTA && config.engagementMedium === 'EMBED') {
     widget = new EmbedWidget(params).load();
-
   } else if (!displayCTA && config.engagementMedium === 'POPUP') {
     widget = new PopupWidget(params);
     widget.load();
     if (displayOnLoad) widget.open();
-
   } else if (displayCTA) {
-    let side = response.jsOptions.cta.content.buttonSide;
-    let position = response.jsOptions.cta.content.buttonPosition;
+    const side = response.jsOptions.cta.content.buttonSide;
+    const position = response.jsOptions.cta.content.buttonPosition;
 
-    widget = new CtaWidget(params, {side: side, position: position}).load();
-
+    widget = new CtaWidget(params, { side: side, position: position }).load();
   } else if (displayOnLoad) {
     widget = new PopupWidget(params);
     widget.load();
@@ -128,8 +133,8 @@ export function load(response, config = { widgetType: "", engagementMedium: ""})
 export function autofill(element) {
   let el;
 
-  if (typeof element === "function") {
-    return api.autofill().then(element).catch(function(ex) {
+  if (typeof element === 'function') {
+    return api.autofill().then(element).catch((ex) => {
       throw ex;
     });
   } else if (element.startsWith('#')) {
@@ -137,18 +142,14 @@ export function autofill(element) {
   } else if (element.startsWith('.')) {
     el = document.getElementsByClass(element.slice(1))[0];
   } else {
-    _log("Element id/class or function missing");
+    _log('Element id/class or function missing');
   }
 
-  return api.autofill().then(function(response){
+  return api.autofill().then((response) => {
     el.value = response.code;
-  }).catch(function(ex) {
+  }).catch((ex) => {
     throw ex;
   });
-}
-
-function matchesUrl(rule) {
-  return window.location.href.match(new RegExp(rule));
 }
 
 if (window) asyncLoad();

@@ -38,11 +38,10 @@
     });
 
     squatch.api.cookieUser({
-      // engagementMedium: 'POPUP',
+      // engagementMedium: 'EMBED',
       // widgetType: 'REFERRER_WIDGET',
       jwt: 'token'
     }).then(function(response) {
-      // console.log(response);
       squatch.load(response, {engagementMedium: 'POPUP'});
     });
 

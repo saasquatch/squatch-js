@@ -14,7 +14,7 @@
     "preversion": "npm run build:docs",
     "serve:docs": "documentation serve src/squatch.js --port $PORT --watch",
     "lint:docs": "documentation lint src && eslint",
-    "eslint:src": "eslint src"
+    "eslint:src": "eslint src/api src/widgets src/squatch.js"
   },
   "devDependencies": {
     "babel-core": "^6.0.20",

@@ -110,51 +110,40 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	__webpack_require__(3);
 
+	var _debug = __webpack_require__(16);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
+
+	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
+
+	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
+
+	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
 
 	var _async = __webpack_require__(37);
 
 	var _async2 = _interopRequireDefault(_async);
 
-	var _debug = __webpack_require__(32);
-
-	var _debug2 = _interopRequireDefault(_debug);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	_debug2.default.disable('squatch-js*'); /**
-	                                         * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app.
-	                                         * It can show referral widgets on any website, track users, generate unique referral short links and referral codes, and more.
+	                                         * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
+	                                         * integrate a referral program into your website or web app.
+	                                         * It can show referral widgets on any website, track users, generate unique
+	                                         * referral short links and referral codes, and more.
 	                                         *
 	                                         * @module squatch
 	                                         */
-	// import { OpenApi } from './api/OpenApi';
 
 	var _log = (0, _debug2.default)('squatch-js');
 
-	// export { OpenApi } from './api/OpenApi';
-
-
 	/**
-	 * Initializes a static `squatch` global. This sets up:
-	 *
-	 *  - `api` a static instance of the {@link WidgetApi}
-	 *
-	 * @param {Object} config Configuration details
-	 * @param {string} config.tenantAlias The tenant alias connects to your account. Note: There are both *live* and *test* tenant aliases.
-	 * @returns {void}
-	 * @example
-	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
+	 * @private
 	 */
-	function init(config) {
-	  if (config.tenantAlias.startsWith('test') || config.debug) {
-	    _debug2.default.enable('squatch-js*');
-	  }
-
-	  _log('initializing ...');
-	  exports.api = api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
-
-	  _log("Widget API instance", api);
+	function matchesUrl(rule) {
+	  return window.location.href.match(new RegExp(rule));
 	}
 
 	/**
@@ -167,13 +156,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var api = exports.api = null;
 
+	/**
+	 * Initializes a static `squatch` global. This sets up:
+	 *
+	 *  - `api` a static instance of the {@link WidgetApi}
+	 *
+	 * @param {Object} config Configuration details
+	 * @param {string} config.tenantAlias The tenant alias connects to your account.
+	 *                        Note: There are both *live* and *test* tenant aliases.
+	 * @returns {void}
+	 * @example
+	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
+	 */
+	function init(config) {
+	  if (config.tenantAlias.startsWith('test') || config.debug) {
+	    _debug2.default.enable('squatch-js*');
+	  }
+
+	  _log('initializing ...');
+	  exports.api = api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
+
+	  _log('Widget API instance', api);
+	}
+
 	function ready(fn) {
 	  fn();
 	}
 
 	// Refactor this function to make it simple
 	function load(response) {
-	  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: "", engagementMedium: "" };
+	  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
 
 	  var widget = void 0;
 	  var params = void 0;
@@ -183,11 +195,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (!response) throw new Error('Unable to get a response');
 
 	  if (response.apiErrorCode) {
-	    _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') ' + response.message));
+	    _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') response.message'));
 	    params = {
-	      content: "error",
+	      content: 'error',
 	      rsCode: response.rsCode,
-	      type: config.widgetType ? config.widgetType : "",
+	      type: config.widgetType ? config.widgetType : '',
 	      api: api
 	    };
 	  } else if (response.jsOptions) {
@@ -201,14 +213,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (matchesUrl(rule.url)) {
 	        displayOnLoad = true;
 	        displayCTA = rule.showAsCTA;
-	        console.log("Display " + rule.widgetType + " on " + rule.url);
+	        _log('Display ' + rule.widgetType + ' on ' + rule.rul);
 	      }
 	    });
 
 	    response.jsOptions.conversionUrls.forEach(function (rule) {
 	      if (response.user.referredBy && matchesUrl(rule)) {
 	        displayOnLoad = true;
-	        console.log("This is a conversion URL", rule);
+	        _log('This is a conversion URL', rule);
 	      }
 	    });
 	  } else {
@@ -220,18 +232,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  if (!displayCTA && config.engagementMedium === 'EMBED') {
-	    widget = new _EmbedWidget.EmbedWidget(params).load();
+	    widget = new _EmbedWidget2.default(params).load();
 	  } else if (!displayCTA && config.engagementMedium === 'POPUP') {
-	    widget = new _PopupWidget.PopupWidget(params);
+	    widget = new _PopupWidget2.default(params);
 	    widget.load();
 	    if (displayOnLoad) widget.open();
 	  } else if (displayCTA) {
 	    var side = response.jsOptions.cta.content.buttonSide;
 	    var position = response.jsOptions.cta.content.buttonPosition;
 
-	    widget = new _CtaWidget.CtaWidget(params, { side: side, position: position }).load();
+	    widget = new _CtaWidget2.default(params, { side: side, position: position }).load();
 	  } else if (displayOnLoad) {
-	    widget = new _PopupWidget.PopupWidget(params);
+	    widget = new _PopupWidget2.default(params);
 	    widget.load();
 	    widget.open();
 	  }
@@ -240,7 +252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function autofill(element) {
 	  var el = void 0;
 
-	  if (typeof element === "function") {
+	  if (typeof element === 'function') {
 	    return api.autofill().then(element).catch(function (ex) {
 	      throw ex;
 	    });
@@ -249,7 +261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  } else if (element.startsWith('.')) {
 	    el = document.getElementsByClass(element.slice(1))[0];
 	  } else {
-	    _log("Element id/class or function missing");
+	    _log('Element id/class or function missing');
 	  }
 
 	  return api.autofill().then(function (response) {
@@ -257,10 +269,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }).catch(function (ex) {
 	    throw ex;
 	  });
-	}
-
-	function matchesUrl(rule) {
-	  return window.location.href.match(new RegExp(rule));
 	}
 
 	if (window) (0, _async2.default)();
@@ -459,7 +467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
-	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
 	      var headers = {
 	        Accept: 'application/json',
@@ -3964,19 +3972,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EmbedWidget = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _Widget2 = __webpack_require__(16);
-
-	var _domready = __webpack_require__(17);
-
-	var _debug = __webpack_require__(32);
+	var _debug = __webpack_require__(16);
 
 	var _debug2 = _interopRequireDefault(_debug);
+
+	var _Widget2 = __webpack_require__(19);
+
+	var _Widget3 = _interopRequireDefault(_Widget2);
+
+	var _domready = __webpack_require__(34);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3988,7 +3997,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _log = (0, _debug2.default)('squatch-js:EMBEDwidget');
 
-	var EmbedWidget = exports.EmbedWidget = function (_Widget) {
+	var EmbedWidget = function (_Widget) {
 	  _inherits(EmbedWidget, _Widget);
 
 	  function EmbedWidget(params) {
@@ -4000,7 +4009,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    _this.element = document.getElementById(elementId);
 
-	    if (!_this.element) throw new Error("elementId \'" + elementId + "\' not found.");
+	    if (!_this.element) throw new Error('elementId \'' + elementId + '\' not found.\'');
 	    return _this;
 	  }
 
@@ -4009,7 +4018,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function load() {
 	      var me = this;
 
-	      if (!me.element.firstChild || me.element.firstChild.nodeName === '#text') me.element.appendChild(me.frame);
+	      if (!me.element.firstChild || me.element.firstChild.nodeName === '#text') {
+	        me.element.appendChild(me.frame);
+	      }
 
 	      var frameDoc = me.frame.contentWindow.document;
 	      frameDoc.open();
@@ -4033,14 +4044,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 
 	        me._loadEvent(_sqh);
-	        _log("loaded");
+	        _log('loaded');
 	      });
 	    }
 	  }, {
 	    key: 'reload',
 	    value: function reload(params, jwt) {
-	      _get(EmbedWidget.prototype.__proto__ || Object.getPrototypeOf(EmbedWidget.prototype), 'reload', this).call(this, params, jwt);
-
 	      var me = this;
 
 	      me.widgetApi.cookieUser({
@@ -4054,7 +4063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (response.template) {
 	          me.content = response.template;
 	          me.load();
-	        };
+	        }
 	      }).catch(function (ex) {
 	        _log('Failed to reload ' + ex);
 	      });
@@ -4070,10 +4079,545 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }]);
 
 	  return EmbedWidget;
-	}(_Widget2.Widget);
+	}(_Widget3.default);
+
+	exports.default = EmbedWidget;
 
 /***/ },
 /* 16 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * This is the web browser implementation of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = __webpack_require__(17);
+	exports.log = log;
+	exports.formatArgs = formatArgs;
+	exports.save = save;
+	exports.load = load;
+	exports.useColors = useColors;
+	exports.storage = 'undefined' != typeof chrome
+	               && 'undefined' != typeof chrome.storage
+	                  ? chrome.storage.local
+	                  : localstorage();
+
+	/**
+	 * Colors.
+	 */
+
+	exports.colors = [
+	  'lightseagreen',
+	  'forestgreen',
+	  'goldenrod',
+	  'dodgerblue',
+	  'darkorchid',
+	  'crimson'
+	];
+
+	/**
+	 * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+	 * and the Firebug extension (any Firefox version) are known
+	 * to support "%c" CSS customizations.
+	 *
+	 * TODO: add a `localStorage` variable to explicitly enable/disable colors
+	 */
+
+	function useColors() {
+	  // is webkit? http://stackoverflow.com/a/16459606/376773
+	  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
+	    // is firebug? http://stackoverflow.com/a/398120/376773
+	    (window.console && (console.firebug || (console.exception && console.table))) ||
+	    // is firefox >= v31?
+	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+	    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
+	}
+
+	/**
+	 * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+	 */
+
+	exports.formatters.j = function(v) {
+	  return JSON.stringify(v);
+	};
+
+
+	/**
+	 * Colorize log arguments if enabled.
+	 *
+	 * @api public
+	 */
+
+	function formatArgs() {
+	  var args = arguments;
+	  var useColors = this.useColors;
+
+	  args[0] = (useColors ? '%c' : '')
+	    + this.namespace
+	    + (useColors ? ' %c' : ' ')
+	    + args[0]
+	    + (useColors ? '%c ' : ' ')
+	    + '+' + exports.humanize(this.diff);
+
+	  if (!useColors) return args;
+
+	  var c = 'color: ' + this.color;
+	  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
+
+	  // the final "%c" is somewhat tricky, because there could be other
+	  // arguments passed either before or after the %c, so we need to
+	  // figure out the correct index to insert the CSS into
+	  var index = 0;
+	  var lastC = 0;
+	  args[0].replace(/%[a-z%]/g, function(match) {
+	    if ('%%' === match) return;
+	    index++;
+	    if ('%c' === match) {
+	      // we only are interested in the *last* %c
+	      // (the user may have provided their own)
+	      lastC = index;
+	    }
+	  });
+
+	  args.splice(lastC, 0, c);
+	  return args;
+	}
+
+	/**
+	 * Invokes `console.log()` when available.
+	 * No-op when `console.log` is not a "function".
+	 *
+	 * @api public
+	 */
+
+	function log() {
+	  // this hackery is required for IE8/9, where
+	  // the `console.log` function doesn't have 'apply'
+	  return 'object' === typeof console
+	    && console.log
+	    && Function.prototype.apply.call(console.log, console, arguments);
+	}
+
+	/**
+	 * Save `namespaces`.
+	 *
+	 * @param {String} namespaces
+	 * @api private
+	 */
+
+	function save(namespaces) {
+	  try {
+	    if (null == namespaces) {
+	      exports.storage.removeItem('debug');
+	    } else {
+	      exports.storage.debug = namespaces;
+	    }
+	  } catch(e) {}
+	}
+
+	/**
+	 * Load `namespaces`.
+	 *
+	 * @return {String} returns the previously persisted debug modes
+	 * @api private
+	 */
+
+	function load() {
+	  var r;
+	  try {
+	    r = exports.storage.debug;
+	  } catch(e) {}
+	  return r;
+	}
+
+	/**
+	 * Enable namespaces listed in `localStorage.debug` initially.
+	 */
+
+	exports.enable(load());
+
+	/**
+	 * Localstorage attempts to return the localstorage.
+	 *
+	 * This is necessary because safari throws
+	 * when a user disables cookies/localstorage
+	 * and you attempt to access it.
+	 *
+	 * @return {LocalStorage}
+	 * @api private
+	 */
+
+	function localstorage(){
+	  try {
+	    return window.localStorage;
+	  } catch (e) {}
+	}
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * This is the common logic for both the Node.js and web browser
+	 * implementations of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = debug.debug = debug;
+	exports.coerce = coerce;
+	exports.disable = disable;
+	exports.enable = enable;
+	exports.enabled = enabled;
+	exports.humanize = __webpack_require__(18);
+
+	/**
+	 * The currently active debug mode names, and names to skip.
+	 */
+
+	exports.names = [];
+	exports.skips = [];
+
+	/**
+	 * Map of special "%n" handling functions, for the debug "format" argument.
+	 *
+	 * Valid key names are a single, lowercased letter, i.e. "n".
+	 */
+
+	exports.formatters = {};
+
+	/**
+	 * Previously assigned color.
+	 */
+
+	var prevColor = 0;
+
+	/**
+	 * Previous log timestamp.
+	 */
+
+	var prevTime;
+
+	/**
+	 * Select a color.
+	 *
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function selectColor() {
+	  return exports.colors[prevColor++ % exports.colors.length];
+	}
+
+	/**
+	 * Create a debugger with the given `namespace`.
+	 *
+	 * @param {String} namespace
+	 * @return {Function}
+	 * @api public
+	 */
+
+	function debug(namespace) {
+
+	  // define the `disabled` version
+	  function disabled() {
+	  }
+	  disabled.enabled = false;
+
+	  // define the `enabled` version
+	  function enabled() {
+
+	    var self = enabled;
+
+	    // set `diff` timestamp
+	    var curr = +new Date();
+	    var ms = curr - (prevTime || curr);
+	    self.diff = ms;
+	    self.prev = prevTime;
+	    self.curr = curr;
+	    prevTime = curr;
+
+	    // add the `color` if not set
+	    if (null == self.useColors) self.useColors = exports.useColors();
+	    if (null == self.color && self.useColors) self.color = selectColor();
+
+	    var args = Array.prototype.slice.call(arguments);
+
+	    args[0] = exports.coerce(args[0]);
+
+	    if ('string' !== typeof args[0]) {
+	      // anything else let's inspect with %o
+	      args = ['%o'].concat(args);
+	    }
+
+	    // apply any `formatters` transformations
+	    var index = 0;
+	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
+	      // if we encounter an escaped % then don't increase the array index
+	      if (match === '%%') return match;
+	      index++;
+	      var formatter = exports.formatters[format];
+	      if ('function' === typeof formatter) {
+	        var val = args[index];
+	        match = formatter.call(self, val);
+
+	        // now we need to remove `args[index]` since it's inlined in the `format`
+	        args.splice(index, 1);
+	        index--;
+	      }
+	      return match;
+	    });
+
+	    if ('function' === typeof exports.formatArgs) {
+	      args = exports.formatArgs.apply(self, args);
+	    }
+	    var logFn = enabled.log || exports.log || console.log.bind(console);
+	    logFn.apply(self, args);
+	  }
+	  enabled.enabled = true;
+
+	  var fn = exports.enabled(namespace) ? enabled : disabled;
+
+	  fn.namespace = namespace;
+
+	  return fn;
+	}
+
+	/**
+	 * Enables a debug mode by namespaces. This can include modes
+	 * separated by a colon and wildcards.
+	 *
+	 * @param {String} namespaces
+	 * @api public
+	 */
+
+	function enable(namespaces) {
+	  exports.save(namespaces);
+
+	  var split = (namespaces || '').split(/[\s,]+/);
+	  var len = split.length;
+
+	  for (var i = 0; i < len; i++) {
+	    if (!split[i]) continue; // ignore empty strings
+	    namespaces = split[i].replace(/[\\^$+?.()|[\]{}]/g, '\\$&').replace(/\*/g, '.*?');
+	    if (namespaces[0] === '-') {
+	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+	    } else {
+	      exports.names.push(new RegExp('^' + namespaces + '$'));
+	    }
+	  }
+	}
+
+	/**
+	 * Disable debug output.
+	 *
+	 * @api public
+	 */
+
+	function disable() {
+	  exports.enable('');
+	}
+
+	/**
+	 * Returns true if the given mode name is enabled, false otherwise.
+	 *
+	 * @param {String} name
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	function enabled(name) {
+	  var i, len;
+	  for (i = 0, len = exports.skips.length; i < len; i++) {
+	    if (exports.skips[i].test(name)) {
+	      return false;
+	    }
+	  }
+	  for (i = 0, len = exports.names.length; i < len; i++) {
+	    if (exports.names[i].test(name)) {
+	      return true;
+	    }
+	  }
+	  return false;
+	}
+
+	/**
+	 * Coerce `val`.
+	 *
+	 * @param {Mixed} val
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	function coerce(val) {
+	  if (val instanceof Error) return val.stack || val.message;
+	  return val;
+	}
+
+
+/***/ },
+/* 18 */
+/***/ function(module, exports) {
+
+	/**
+	 * Helpers.
+	 */
+
+	var s = 1000
+	var m = s * 60
+	var h = m * 60
+	var d = h * 24
+	var y = d * 365.25
+
+	/**
+	 * Parse or format the given `val`.
+	 *
+	 * Options:
+	 *
+	 *  - `long` verbose formatting [false]
+	 *
+	 * @param {String|Number} val
+	 * @param {Object} options
+	 * @throws {Error} throw an error if val is not a non-empty string or a number
+	 * @return {String|Number}
+	 * @api public
+	 */
+
+	module.exports = function (val, options) {
+	  options = options || {}
+	  var type = typeof val
+	  if (type === 'string' && val.length > 0) {
+	    return parse(val)
+	  } else if (type === 'number' && isNaN(val) === false) {
+	    return options.long ?
+				fmtLong(val) :
+				fmtShort(val)
+	  }
+	  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
+	}
+
+	/**
+	 * Parse the given `str` and return milliseconds.
+	 *
+	 * @param {String} str
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function parse(str) {
+	  str = String(str)
+	  if (str.length > 10000) {
+	    return
+	  }
+	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str)
+	  if (!match) {
+	    return
+	  }
+	  var n = parseFloat(match[1])
+	  var type = (match[2] || 'ms').toLowerCase()
+	  switch (type) {
+	    case 'years':
+	    case 'year':
+	    case 'yrs':
+	    case 'yr':
+	    case 'y':
+	      return n * y
+	    case 'days':
+	    case 'day':
+	    case 'd':
+	      return n * d
+	    case 'hours':
+	    case 'hour':
+	    case 'hrs':
+	    case 'hr':
+	    case 'h':
+	      return n * h
+	    case 'minutes':
+	    case 'minute':
+	    case 'mins':
+	    case 'min':
+	    case 'm':
+	      return n * m
+	    case 'seconds':
+	    case 'second':
+	    case 'secs':
+	    case 'sec':
+	    case 's':
+	      return n * s
+	    case 'milliseconds':
+	    case 'millisecond':
+	    case 'msecs':
+	    case 'msec':
+	    case 'ms':
+	      return n
+	    default:
+	      return undefined
+	  }
+	}
+
+	/**
+	 * Short format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function fmtShort(ms) {
+	  if (ms >= d) {
+	    return Math.round(ms / d) + 'd'
+	  }
+	  if (ms >= h) {
+	    return Math.round(ms / h) + 'h'
+	  }
+	  if (ms >= m) {
+	    return Math.round(ms / m) + 'm'
+	  }
+	  if (ms >= s) {
+	    return Math.round(ms / s) + 's'
+	  }
+	  return ms + 'ms'
+	}
+
+	/**
+	 * Long format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function fmtLong(ms) {
+	  return plural(ms, d, 'day') ||
+	    plural(ms, h, 'hour') ||
+	    plural(ms, m, 'minute') ||
+	    plural(ms, s, 'second') ||
+	    ms + ' ms'
+	}
+
+	/**
+	 * Pluralization helper.
+	 */
+
+	function plural(ms, n, name) {
+	  if (ms < n) {
+	    return
+	  }
+	  if (ms < n * 1.5) {
+	    return Math.floor(ms / n) + ' ' + name
+	  }
+	  return Math.ceil(ms / n) + ' ' + name + 's'
+	}
+
+
+/***/ },
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4081,27 +4625,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Widget = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _domready = __webpack_require__(17);
+	var _debug = __webpack_require__(16);
 
-	var _AnalyticsApi = __webpack_require__(18);
+	var _debug2 = _interopRequireDefault(_debug);
 
-	var _AnalyticsApi2 = _interopRequireDefault(_AnalyticsApi);
-
-	var _WidgetApi = __webpack_require__(2);
-
-	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
-
-	var _elementResizeDetector = __webpack_require__(19);
+	var _elementResizeDetector = __webpack_require__(20);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
 
-	var _debug = __webpack_require__(32);
+	var _AnalyticsApi = __webpack_require__(33);
 
-	var _debug2 = _interopRequireDefault(_debug);
+	var _AnalyticsApi2 = _interopRequireDefault(_AnalyticsApi);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4127,7 +4664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 */
 
-	var Widget = exports.Widget = function () {
+	var Widget = function () {
 	  /**
 	   * Initialize a new {@link Widget} instance.
 	   *
@@ -4152,15 +4689,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.frame.squatchJsApi = me;
 	    me.frame.width = '100%';
 	    me.frame.style = 'border: 0; background-color: none;';
-	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /*, debug: 'true'*/ });
+	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /* ,debug: 'true'*/ });
 	  }
 
 	  _createClass(Widget, [{
-	    key: 'reload',
-	    value: function reload(params, jwt) {
-	      _log("Reload after email - " + params + " is submitted");
-	    }
-	  }, {
 	    key: '_loadEvent',
 	    value: function _loadEvent(sqh) {
 	      if (sqh) {
@@ -4170,7 +4702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          externalUserId: sqh.analytics.attributes.userId,
 	          engagementMedium: sqh.mode.widgetMode
 	        }).then(function (response) {
-	          _log(sqh.mode.widgetMode + " loaded event recorded");
+	          _log(sqh.mode.widgetMode + ' loaded event recorded. ' + response);
 	        }).catch(function (ex) {
 	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
 	        });
@@ -4187,7 +4719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          engagementMedium: sqh.mode.widgetMode,
 	          shareMedium: medium
 	        }).then(function (response) {
-	          _log(sqh.mode.widgetMode + " share " + medium + " event recorded");
+	          _log(sqh.mode.widgetMode + ' share ' + medium + ' event recorded. ' + response);
 	        }).catch(function (ex) {
 	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
 	        });
@@ -4199,160 +4731,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'modal';
 	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
+	      var me = this;
 
-	      return '<!DOCTYPE html>\n    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->\n    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->\n    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->\n    <head>\n      <link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">\n      <style>\n        ' + style + '\n      </style>\n    </head>\n    <body>\n\n      <div class="squatch-container ' + mode + '">\n        <div class="errorheader">\n          <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>\n          <p class="errortitle">Error</p>\n        </div>\n        <div class="errorbody">\n          <div class="sadface"><img src="https://d35vcmgdka52pk.cloudfront.net/assets/images/face.png"></div>\n          <h4>Our referral program is temporarily unavailable.</h4><br>\n          <p>Please reload the page or check back later.</p>\n          <p>If the persists please contact our support team.</p>\n          <br>\n          <br>\n          <div class="right-align errtxt">\n            Error Code: ' + rs + '\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>';
+	      me.errorTemplate = '<!DOCTYPE html>\n    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->\n    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->\n    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->\n    <head>\n      <link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">\n      <style>\n        ' + style + '\n      </style>\n    </head>\n    <body>\n\n      <div class="squatch-container ' + mode + '">\n        <div class="errorheader">\n          <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>\n          <p class="errortitle">Error</p>\n        </div>\n        <div class="errorbody">\n          <div class="sadface"><img src="https://d35vcmgdka52pk.cloudfront.net/assets/images/face.png"></div>\n          <h4>Our referral program is temporarily unavailable.</h4><br>\n          <p>Please reload the page or check back later.</p>\n          <p>If the persists please contact our support team.</p>\n          <br>\n          <br>\n          <div class="right-align errtxt">\n            Error Code: ' + rs + '\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>';
+
+	      return me.errorTemplate;
 	    }
 	  }]);
 
 	  return Widget;
 	}();
 
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.domready = domready;
-	/*!
-	  * domready (c) Dustin Diaz 2014 - License MIT
-	  *
-	  */
-	function domready(targetDoc, fn) {
-	  var fns = [],
-	      _listener = void 0,
-	      doc = targetDoc,
-	      hack = doc.documentElement.doScroll,
-	      domContentLoaded = 'DOMContentLoaded',
-	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
-
-	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
-	    doc.removeEventListener(domContentLoaded, _listener);
-	    loaded = 1;
-	    while (_listener = fns.shift()) {
-	      _listener();
-	    }
-	  });
-
-	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
-	}
+	exports.default = Widget;
 
 /***/ },
-/* 18 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(3);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
-	 * the SaaSquatch REST API. Used to record Widget events.
-	 *
-	 */
-	var AnalyticsApi = function () {
-	  /**
-	   * Initialize a new {@link AnalyticsApi} instance.
-	   *
-	   * @param {Object} config Config details
-	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-	   *
-	   */
-	  function AnalyticsApi() {
-	    _classCallCheck(this, AnalyticsApi);
-
-	    this.domain = 'https://staging.referralsaasquatch.com';
-	  }
-
-	  _createClass(AnalyticsApi, [{
-	    key: 'pushAnalyticsLoadEvent',
-	    value: function pushAnalyticsLoadEvent(params) {
-	      var tenantAlias = encodeURIComponent(params.tenantAlias);
-	      var accountId = encodeURIComponent(params.externalAccountId);
-	      var userId = encodeURIComponent(params.externalUserId);
-	      var engagementMedium = encodeURIComponent(params.engagementMedium);
-
-	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium;
-	      var url = this.domain + path;
-
-	      return AnalyticsApi.doPost(url, JSON.stringify({}));
-	    }
-	  }, {
-	    key: 'pushAnalyticsShareClickedEvent',
-	    value: function pushAnalyticsShareClickedEvent(params) {
-	      var tenantAlias = encodeURIComponent(params.tenantAlias);
-	      var accountId = encodeURIComponent(params.externalAccountId);
-	      var userId = encodeURIComponent(params.externalUserId);
-	      var engagementMedium = encodeURIComponent(params.engagementMedium);
-	      var shareMedium = encodeURIComponent(params.shareMedium);
-
-	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium + '&shareMedium=' + shareMedium;
-	      var url = this.domain + path;
-
-	      return AnalyticsApi.doPost(url, JSON.stringify({}));
-	    }
-
-	    /**
-	    * @private
-	    *
-	    * @param {String} url The requested url
-	    * @param {String} data Stringified json object
-	    *
-	    * @returns {Promise} fetch promise
-	    */
-
-	  }], [{
-	    key: 'doPost',
-	    value: function doPost(url, data) {
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: {
-	          Accept: 'application/json',
-	          'Content-Type': 'application/json'
-	        },
-	        body: data
-	      }).then(function (response) {
-	        return response.text();
-	      });
-	    }
-	  }]);
-
-	  return AnalyticsApi;
-	}();
-
-	exports.default = AnalyticsApi;
-
-/***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(20).forEach;
-	var elementUtilsMaker       = __webpack_require__(21);
-	var listenerHandlerMaker    = __webpack_require__(22);
-	var idGeneratorMaker        = __webpack_require__(23);
-	var idHandlerMaker          = __webpack_require__(24);
-	var reporterMaker           = __webpack_require__(25);
-	var browserDetector         = __webpack_require__(26);
-	var batchProcessorMaker     = __webpack_require__(27);
-	var stateHandler            = __webpack_require__(29);
+	var forEach                 = __webpack_require__(21).forEach;
+	var elementUtilsMaker       = __webpack_require__(22);
+	var listenerHandlerMaker    = __webpack_require__(23);
+	var idGeneratorMaker        = __webpack_require__(24);
+	var idHandlerMaker          = __webpack_require__(25);
+	var reporterMaker           = __webpack_require__(26);
+	var browserDetector         = __webpack_require__(27);
+	var batchProcessorMaker     = __webpack_require__(28);
+	var stateHandler            = __webpack_require__(30);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(30);
-	var scrollStrategyMaker     = __webpack_require__(31);
+	var objectStrategyMaker     = __webpack_require__(31);
+	var scrollStrategyMaker     = __webpack_require__(32);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -4662,7 +5072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4687,7 +5097,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4745,7 +5155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4811,7 +5221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4835,7 +5245,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4888,7 +5298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4936,7 +5346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4981,12 +5391,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(28);
+	var utils = __webpack_require__(29);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -5125,7 +5535,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5146,7 +5556,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5174,7 +5584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5184,7 +5594,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(26);
+	var browserDetector = __webpack_require__(27);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -5393,7 +5803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5403,7 +5813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(20).forEach;
+	var forEach = __webpack_require__(21).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -6020,512 +6430,131 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * This is the web browser implementation of `debug()`.
-	 *
-	 * Expose `debug()` as the module.
-	 */
-
-	exports = module.exports = __webpack_require__(33);
-	exports.log = log;
-	exports.formatArgs = formatArgs;
-	exports.save = save;
-	exports.load = load;
-	exports.useColors = useColors;
-	exports.storage = 'undefined' != typeof chrome
-	               && 'undefined' != typeof chrome.storage
-	                  ? chrome.storage.local
-	                  : localstorage();
-
-	/**
-	 * Colors.
-	 */
-
-	exports.colors = [
-	  'lightseagreen',
-	  'forestgreen',
-	  'goldenrod',
-	  'dodgerblue',
-	  'darkorchid',
-	  'crimson'
-	];
-
-	/**
-	 * Currently only WebKit-based Web Inspectors, Firefox >= v31,
-	 * and the Firebug extension (any Firefox version) are known
-	 * to support "%c" CSS customizations.
-	 *
-	 * TODO: add a `localStorage` variable to explicitly enable/disable colors
-	 */
-
-	function useColors() {
-	  // is webkit? http://stackoverflow.com/a/16459606/376773
-	  return ('WebkitAppearance' in document.documentElement.style) ||
-	    // is firebug? http://stackoverflow.com/a/398120/376773
-	    (window.console && (console.firebug || (console.exception && console.table))) ||
-	    // is firefox >= v31?
-	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-	    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
-	}
-
-	/**
-	 * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
-	 */
-
-	exports.formatters.j = function(v) {
-	  return JSON.stringify(v);
-	};
-
-
-	/**
-	 * Colorize log arguments if enabled.
-	 *
-	 * @api public
-	 */
-
-	function formatArgs() {
-	  var args = arguments;
-	  var useColors = this.useColors;
-
-	  args[0] = (useColors ? '%c' : '')
-	    + this.namespace
-	    + (useColors ? ' %c' : ' ')
-	    + args[0]
-	    + (useColors ? '%c ' : ' ')
-	    + '+' + exports.humanize(this.diff);
-
-	  if (!useColors) return args;
-
-	  var c = 'color: ' + this.color;
-	  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
-
-	  // the final "%c" is somewhat tricky, because there could be other
-	  // arguments passed either before or after the %c, so we need to
-	  // figure out the correct index to insert the CSS into
-	  var index = 0;
-	  var lastC = 0;
-	  args[0].replace(/%[a-z%]/g, function(match) {
-	    if ('%%' === match) return;
-	    index++;
-	    if ('%c' === match) {
-	      // we only are interested in the *last* %c
-	      // (the user may have provided their own)
-	      lastC = index;
-	    }
-	  });
-
-	  args.splice(lastC, 0, c);
-	  return args;
-	}
-
-	/**
-	 * Invokes `console.log()` when available.
-	 * No-op when `console.log` is not a "function".
-	 *
-	 * @api public
-	 */
-
-	function log() {
-	  // this hackery is required for IE8/9, where
-	  // the `console.log` function doesn't have 'apply'
-	  return 'object' === typeof console
-	    && console.log
-	    && Function.prototype.apply.call(console.log, console, arguments);
-	}
-
-	/**
-	 * Save `namespaces`.
-	 *
-	 * @param {String} namespaces
-	 * @api private
-	 */
-
-	function save(namespaces) {
-	  try {
-	    if (null == namespaces) {
-	      exports.storage.removeItem('debug');
-	    } else {
-	      exports.storage.debug = namespaces;
-	    }
-	  } catch(e) {}
-	}
-
-	/**
-	 * Load `namespaces`.
-	 *
-	 * @return {String} returns the previously persisted debug modes
-	 * @api private
-	 */
-
-	function load() {
-	  var r;
-	  try {
-	    r = exports.storage.debug;
-	  } catch(e) {}
-	  return r;
-	}
-
-	/**
-	 * Enable namespaces listed in `localStorage.debug` initially.
-	 */
-
-	exports.enable(load());
-
-	/**
-	 * Localstorage attempts to return the localstorage.
-	 *
-	 * This is necessary because safari throws
-	 * when a user disables cookies/localstorage
-	 * and you attempt to access it.
-	 *
-	 * @return {LocalStorage}
-	 * @api private
-	 */
-
-	function localstorage(){
-	  try {
-	    return window.localStorage;
-	  } catch (e) {}
-	}
-
-
-/***/ },
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(3);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 	/**
-	 * This is the common logic for both the Node.js and web browser
-	 * implementations of `debug()`.
 	 *
-	 * Expose `debug()` as the module.
-	 */
-
-	exports = module.exports = debug;
-	exports.coerce = coerce;
-	exports.disable = disable;
-	exports.enable = enable;
-	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(34);
-
-	/**
-	 * The currently active debug mode names, and names to skip.
-	 */
-
-	exports.names = [];
-	exports.skips = [];
-
-	/**
-	 * Map of special "%n" handling functions, for the debug "format" argument.
+	 * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
+	 * the SaaSquatch REST API. Used to record Widget events.
 	 *
-	 * Valid key names are a single, lowercased letter, i.e. "n".
 	 */
+	var AnalyticsApi = function () {
+	  /**
+	   * Initialize a new {@link AnalyticsApi} instance.
+	   *
+	   * @param {Object} config Config details
+	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
+	   *
+	   */
+	  function AnalyticsApi() {
+	    _classCallCheck(this, AnalyticsApi);
 
-	exports.formatters = {};
-
-	/**
-	 * Previously assigned color.
-	 */
-
-	var prevColor = 0;
-
-	/**
-	 * Previous log timestamp.
-	 */
-
-	var prevTime;
-
-	/**
-	 * Select a color.
-	 *
-	 * @return {Number}
-	 * @api private
-	 */
-
-	function selectColor() {
-	  return exports.colors[prevColor++ % exports.colors.length];
-	}
-
-	/**
-	 * Create a debugger with the given `namespace`.
-	 *
-	 * @param {String} namespace
-	 * @return {Function}
-	 * @api public
-	 */
-
-	function debug(namespace) {
-
-	  // define the `disabled` version
-	  function disabled() {
+	    this.domain = 'https://staging.referralsaasquatch.com';
 	  }
-	  disabled.enabled = false;
 
-	  // define the `enabled` version
-	  function enabled() {
+	  _createClass(AnalyticsApi, [{
+	    key: 'pushAnalyticsLoadEvent',
+	    value: function pushAnalyticsLoadEvent(params) {
+	      var tenantAlias = encodeURIComponent(params.tenantAlias);
+	      var accountId = encodeURIComponent(params.externalAccountId);
+	      var userId = encodeURIComponent(params.externalUserId);
+	      var engagementMedium = encodeURIComponent(params.engagementMedium);
 
-	    var self = enabled;
+	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium;
+	      var url = this.domain + path;
 
-	    // set `diff` timestamp
-	    var curr = +new Date();
-	    var ms = curr - (prevTime || curr);
-	    self.diff = ms;
-	    self.prev = prevTime;
-	    self.curr = curr;
-	    prevTime = curr;
+	      return AnalyticsApi.doPost(url, JSON.stringify({}));
+	    }
+	  }, {
+	    key: 'pushAnalyticsShareClickedEvent',
+	    value: function pushAnalyticsShareClickedEvent(params) {
+	      var tenantAlias = encodeURIComponent(params.tenantAlias);
+	      var accountId = encodeURIComponent(params.externalAccountId);
+	      var userId = encodeURIComponent(params.externalUserId);
+	      var engagementMedium = encodeURIComponent(params.engagementMedium);
+	      var shareMedium = encodeURIComponent(params.shareMedium);
 
-	    // add the `color` if not set
-	    if (null == self.useColors) self.useColors = exports.useColors();
-	    if (null == self.color && self.useColors) self.color = selectColor();
+	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium + '&shareMedium=' + shareMedium;
+	      var url = this.domain + path;
 
-	    var args = Array.prototype.slice.call(arguments);
-
-	    args[0] = exports.coerce(args[0]);
-
-	    if ('string' !== typeof args[0]) {
-	      // anything else let's inspect with %o
-	      args = ['%o'].concat(args);
+	      return AnalyticsApi.doPost(url, JSON.stringify({}));
 	    }
 
-	    // apply any `formatters` transformations
-	    var index = 0;
-	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
-	      // if we encounter an escaped % then don't increase the array index
-	      if (match === '%%') return match;
-	      index++;
-	      var formatter = exports.formatters[format];
-	      if ('function' === typeof formatter) {
-	        var val = args[index];
-	        match = formatter.call(self, val);
+	    /**
+	    * @private
+	    *
+	    * @param {String} url The requested url
+	    * @param {String} data Stringified json object
+	    *
+	    * @returns {Promise} fetch promise
+	    */
 
-	        // now we need to remove `args[index]` since it's inlined in the `format`
-	        args.splice(index, 1);
-	        index--;
-	      }
-	      return match;
-	    });
-
-	    if ('function' === typeof exports.formatArgs) {
-	      args = exports.formatArgs.apply(self, args);
+	  }], [{
+	    key: 'doPost',
+	    value: function doPost(url, data) {
+	      return fetch(url, {
+	        method: 'POST',
+	        headers: {
+	          Accept: 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: data
+	      }).then(function (response) {
+	        return response.text();
+	      });
 	    }
-	    var logFn = enabled.log || exports.log || console.log.bind(console);
-	    logFn.apply(self, args);
-	  }
-	  enabled.enabled = true;
+	  }]);
 
-	  var fn = exports.enabled(namespace) ? enabled : disabled;
+	  return AnalyticsApi;
+	}();
 
-	  fn.namespace = namespace;
-
-	  return fn;
-	}
-
-	/**
-	 * Enables a debug mode by namespaces. This can include modes
-	 * separated by a colon and wildcards.
-	 *
-	 * @param {String} namespaces
-	 * @api public
-	 */
-
-	function enable(namespaces) {
-	  exports.save(namespaces);
-
-	  var split = (namespaces || '').split(/[\s,]+/);
-	  var len = split.length;
-
-	  for (var i = 0; i < len; i++) {
-	    if (!split[i]) continue; // ignore empty strings
-	    namespaces = split[i].replace(/\*/g, '.*?');
-	    if (namespaces[0] === '-') {
-	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-	    } else {
-	      exports.names.push(new RegExp('^' + namespaces + '$'));
-	    }
-	  }
-	}
-
-	/**
-	 * Disable debug output.
-	 *
-	 * @api public
-	 */
-
-	function disable() {
-	  exports.enable('');
-	}
-
-	/**
-	 * Returns true if the given mode name is enabled, false otherwise.
-	 *
-	 * @param {String} name
-	 * @return {Boolean}
-	 * @api public
-	 */
-
-	function enabled(name) {
-	  var i, len;
-	  for (i = 0, len = exports.skips.length; i < len; i++) {
-	    if (exports.skips[i].test(name)) {
-	      return false;
-	    }
-	  }
-	  for (i = 0, len = exports.names.length; i < len; i++) {
-	    if (exports.names[i].test(name)) {
-	      return true;
-	    }
-	  }
-	  return false;
-	}
-
-	/**
-	 * Coerce `val`.
-	 *
-	 * @param {Mixed} val
-	 * @return {Mixed}
-	 * @api private
-	 */
-
-	function coerce(val) {
-	  if (val instanceof Error) return val.stack || val.message;
-	  return val;
-	}
-
+	exports.default = AnalyticsApi;
 
 /***/ },
 /* 34 */
 /***/ function(module, exports) {
 
-	/**
-	 * Helpers.
-	 */
+	'use strict';
 
-	var s = 1000;
-	var m = s * 60;
-	var h = m * 60;
-	var d = h * 24;
-	var y = d * 365.25;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.domready = domready;
+	/*!
+	  * domready (c) Dustin Diaz 2014 - License MIT
+	  *
+	  */
+	function domready(targetDoc, fn) {
+	  var fns = [],
+	      _listener = void 0,
+	      doc = targetDoc,
+	      hack = doc.documentElement.doScroll,
+	      domContentLoaded = 'DOMContentLoaded',
+	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
 
-	/**
-	 * Parse or format the given `val`.
-	 *
-	 * Options:
-	 *
-	 *  - `long` verbose formatting [false]
-	 *
-	 * @param {String|Number} val
-	 * @param {Object} options
-	 * @return {String|Number}
-	 * @api public
-	 */
+	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
+	    doc.removeEventListener(domContentLoaded, _listener);
+	    loaded = 1;
+	    while (_listener = fns.shift()) {
+	      _listener();
+	    }
+	  });
 
-	module.exports = function(val, options){
-	  options = options || {};
-	  if ('string' == typeof val) return parse(val);
-	  return options.long
-	    ? long(val)
-	    : short(val);
-	};
-
-	/**
-	 * Parse the given `str` and return milliseconds.
-	 *
-	 * @param {String} str
-	 * @return {Number}
-	 * @api private
-	 */
-
-	function parse(str) {
-	  str = '' + str;
-	  if (str.length > 10000) return;
-	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
-	  if (!match) return;
-	  var n = parseFloat(match[1]);
-	  var type = (match[2] || 'ms').toLowerCase();
-	  switch (type) {
-	    case 'years':
-	    case 'year':
-	    case 'yrs':
-	    case 'yr':
-	    case 'y':
-	      return n * y;
-	    case 'days':
-	    case 'day':
-	    case 'd':
-	      return n * d;
-	    case 'hours':
-	    case 'hour':
-	    case 'hrs':
-	    case 'hr':
-	    case 'h':
-	      return n * h;
-	    case 'minutes':
-	    case 'minute':
-	    case 'mins':
-	    case 'min':
-	    case 'm':
-	      return n * m;
-	    case 'seconds':
-	    case 'second':
-	    case 'secs':
-	    case 'sec':
-	    case 's':
-	      return n * s;
-	    case 'milliseconds':
-	    case 'millisecond':
-	    case 'msecs':
-	    case 'msec':
-	    case 'ms':
-	      return n;
-	  }
+	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
 	}
-
-	/**
-	 * Short format for `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {String}
-	 * @api private
-	 */
-
-	function short(ms) {
-	  if (ms >= d) return Math.round(ms / d) + 'd';
-	  if (ms >= h) return Math.round(ms / h) + 'h';
-	  if (ms >= m) return Math.round(ms / m) + 'm';
-	  if (ms >= s) return Math.round(ms / s) + 's';
-	  return ms + 'ms';
-	}
-
-	/**
-	 * Long format for `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {String}
-	 * @api private
-	 */
-
-	function long(ms) {
-	  return plural(ms, d, 'day')
-	    || plural(ms, h, 'hour')
-	    || plural(ms, m, 'minute')
-	    || plural(ms, s, 'second')
-	    || ms + ' ms';
-	}
-
-	/**
-	 * Pluralization helper.
-	 */
-
-	function plural(ms, n, name) {
-	  if (ms < n) return;
-	  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
-	  return Math.ceil(ms / n) + ' ' + name + 's';
-	}
-
 
 /***/ },
 /* 35 */
@@ -6536,19 +6565,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.PopupWidget = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _Widget2 = __webpack_require__(16);
-
-	var _domready = __webpack_require__(17);
-
-	var _debug = __webpack_require__(32);
+	var _debug = __webpack_require__(16);
 
 	var _debug2 = _interopRequireDefault(_debug);
+
+	var _Widget2 = __webpack_require__(19);
+
+	var _Widget3 = _interopRequireDefault(_Widget2);
+
+	var _domready = __webpack_require__(34);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6560,7 +6590,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _log = (0, _debug2.default)('squatch-js:POPUPwidget');
 
-	var PopupWidget = exports.PopupWidget = function (_Widget) {
+	var PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
 
 	  function PopupWidget(params) {
@@ -6574,14 +6604,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.triggerElement = document.getElementById(triggerId);
 
-	    if (!me.triggerElement) throw new Error("elementId \'" + triggerId + "\' not found. Add a div tag with id='squatchpop'.");
+	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add div tag with id=\'squatchpop\'.');
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
 	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
 
 	    me.popupcontent = document.createElement('div');
-	    me.popupcontent.style = "margin: auto; width: 80%; max-width: 500px; position: relative;";
+	    me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
 
 	    me.triggerElement.onclick = function () {
 	      me.open();
@@ -6610,7 +6640,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'reload',
 	    value: function reload(params, jwt) {
-	      _get(PopupWidget.prototype.__proto__ || Object.getPrototypeOf(PopupWidget.prototype), 'reload', this).call(this, params, jwt);
 	      var me = this;
 
 	      me.widgetApi.cookieUser({
@@ -6632,7 +6661,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            (0, _domready.domready)(frameDoc, function () {
 	              var ctaElement = frameDoc.getElementById('cta');
 
-	              if (ctaElement) ctaElement.parentNode.removeChild(ctaElement);
+	              if (ctaElement) {
+	                ctaElement.parentNode.removeChild(ctaElement);
+	              }
 
 	              me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
 	                var height = element.offsetHeight;
@@ -6640,16 +6671,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (height > 0) me.frame.height = height;
 
 	                if (window.innerHeight > me.frame.height) {
-	                  me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + "px";
+	                  me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + 'px';
 	                } else {
-	                  me.popupdiv.style.paddingTop = "5px";
+	                  me.popupdiv.style.paddingTop = '5px';
 	                }
 
-	                element.style.width = "100%";
-	                element.style.height = "100%";
+	                element.style.width = '100%';
+	                element.style.height = '100%';
 	              });
 
-	              _log("Popup reloaded");
+	              _log('Popup reloaded');
 	            });
 	          })();
 	        }
@@ -6666,14 +6697,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var frameWindow = frame.contentWindow;
 	      var frameDoc = frameWindow.document;
 	      var erd = this.erd;
-	      var analyticsApi = this.analyticsApi;
 
 	      // Adjust frame height when size of body changes
 	      (0, _domready.domready)(frameDoc, function () {
 	        var _sqh = frameWindow.squatch;
 	        var ctaElement = frameDoc.getElementById('cta');
 
-	        if (ctaElement) ctaElement.parentNode.removeChild(ctaElement);
+	        if (ctaElement) {
+	          ctaElement.parentNode.removeChild(ctaElement);
+	        }
 
 	        frameDoc.body.style.overflowY = 'hidden';
 	        popupdiv.style.display = 'table';
@@ -6687,13 +6719,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (height > 0) frame.height = height;
 
 	          if (window.innerHeight > frame.height) {
-	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + "px";
+	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + 'px';
 	          } else {
-	            popupdiv.style.paddingTop = "5px";
+	            popupdiv.style.paddingTop = '5px';
 	          }
 
-	          element.style.width = "100%";
-	          element.style.height = "100%";
+	          element.style.width = '100%';
+	          element.style.height = '100%';
 	        });
 
 	        me._loadEvent(_sqh);
@@ -6715,9 +6747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_clickedOutside',
 	    value: function _clickedOutside(e) {
-	      var popupdiv = this.popupdiv;
-
-	      if (e.target == this.popupdiv) {
+	      if (e.target === this.popupdiv) {
 	        this.close();
 	      }
 	    }
@@ -6729,12 +6759,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var _style = 'body { margin: 0; } .modal { box-shadow: none; border: 0; }';
 
-	      return _get(PopupWidget.prototype.__proto__ || Object.getPrototypeOf(PopupWidget.prototype), '_error', this).call(this, rs, mode, _style);
+	      return _get(PopupWidget.prototype.__proto__ || Object.getPrototypeOf(PopupWidget.prototype), '_error', this).call(this, rs, mode, style || _style);
 	    }
 	  }]);
 
 	  return PopupWidget;
-	}(_Widget2.Widget);
+	}(_Widget3.default);
+
+	exports.default = PopupWidget;
 
 /***/ },
 /* 36 */
@@ -6745,19 +6777,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.CtaWidget = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _PopupWidget2 = __webpack_require__(35);
-
-	var _domready = __webpack_require__(17);
-
-	var _debug = __webpack_require__(32);
+	var _debug = __webpack_require__(16);
 
 	var _debug2 = _interopRequireDefault(_debug);
+
+	var _PopupWidget2 = __webpack_require__(35);
+
+	var _PopupWidget3 = _interopRequireDefault(_PopupWidget2);
+
+	var _domready = __webpack_require__(34);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6769,7 +6802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _log = (0, _debug2.default)('squatch-js:CTAwidget');
 
-	var CtaWidget = exports.CtaWidget = function (_PopupWidget) {
+	var CtaWidget = function (_PopupWidget) {
 	  _inherits(CtaWidget, _PopupWidget);
 
 	  function CtaWidget(params, opts) {
@@ -6784,8 +6817,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var me = _this;
 
 	    if (!opts.side && !opts.position) {
-	      opts.position = "bottom";
-	      opts.side = "right";
+	      opts.position = 'bottom';
+	      opts.side = 'right';
 	    }
 
 	    if (opts.position === 'middle') {
@@ -6799,7 +6832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.positionClass = opts.position;
 
 	    me.ctaFrame = document.createElement('iframe');
-	    me.ctaFrame.style = 'border: 0; background-color: transparent; position:absolute; display: none;' + me.side + me.position;
+	    me.ctaFrame.style = 'border:0; background-color:transparent; position:absolute; display:none;' + me.side + me.position;
 
 	    document.body.appendChild(_this.ctaFrame);
 	    return _this;
@@ -6851,15 +6884,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 	    }
-	  }, {
-	    key: 'reload',
-	    value: function reload(params, jwt) {
-	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'reload', this).call(this, params, jwt);
-	    }
 	  }]);
 
 	  return CtaWidget;
-	}(_PopupWidget2.PopupWidget);
+	}(_PopupWidget3.default);
+
+	exports.default = CtaWidget;
 
 /***/ },
 /* 37 */

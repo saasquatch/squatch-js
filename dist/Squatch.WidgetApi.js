@@ -253,7 +253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
-	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
 	      var headers = {
 	        Accept: 'application/json',
