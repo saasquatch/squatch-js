@@ -31,7 +31,7 @@ export default class CtaWidget extends PopupWidget {
 
     me.ctaFrame = document.createElement('iframe');
     me.ctaFrame.squatchJsApi = me;
-    me.ctaFrame.style = `border:0; background-color:transparent; position:absolute; display:none;${me.side}${me.position}`;
+    me.ctaFrame.style = `border:0; background-color:transparent; position:fixed; display:none;${me.side}${me.position}`;
 
 
     document.body.appendChild(this.ctaFrame);
