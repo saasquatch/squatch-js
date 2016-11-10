@@ -142,7 +142,7 @@ export default class Widgets {
         if (this.matchesUrl(rule.url)) {
           displayOnLoad = true;
           displayCTA = rule.showAsCTA;
-          _log(`Display ${rule.widgetType} on ${rule.rul}`);
+          _log(`Display ${rule.widgetType} on ${rule.url}`);
         }
       });
     }
@@ -155,6 +155,8 @@ export default class Widgets {
         }
       });
     }
+
+    displayCTA = true;
 
     if (!displayCTA && config.engagementMedium === 'EMBED') {
       widget = new EmbedWidget(params);

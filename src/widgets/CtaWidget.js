@@ -30,7 +30,9 @@ export default class CtaWidget extends PopupWidget {
     me.positionClass = opts.position;
 
     me.ctaFrame = document.createElement('iframe');
+    me.ctaFrame.squatchJsApi = me;
     me.ctaFrame.style = `border:0; background-color:transparent; position:absolute; display:none;${me.side}${me.position}`;
+
 
     document.body.appendChild(this.ctaFrame);
   }
@@ -78,5 +80,9 @@ export default class CtaWidget extends PopupWidget {
         _log(new Error('CTA element not found in theme'));
       }
     });
+  }
+
+  open() {
+    super.open();
   }
 }

@@ -6827,6 +6827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.positionClass = opts.position;
 
 	    me.ctaFrame = document.createElement('iframe');
+	    me.ctaFrame.squatchJsApi = me;
 	    me.ctaFrame.style = 'border:0; background-color:transparent; position:absolute; display:none;' + me.side + me.position;
 
 	    document.body.appendChild(_this.ctaFrame);
@@ -6878,6 +6879,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _log(new Error('CTA element not found in theme'));
 	        }
 	      });
+	    }
+	  }, {
+	    key: 'open',
+	    value: function open() {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'open', this).call(this);
 	    }
 	  }]);
 
@@ -7086,7 +7092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          if (_this4.matchesUrl(rule.url)) {
 	            displayOnLoad = true;
 	            displayCTA = rule.showAsCTA;
-	            _log('Display ' + rule.widgetType + ' on ' + rule.rul);
+	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
 	          }
 	        });
 	      }
@@ -7099,6 +7105,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 	        });
 	      }
+
+	      displayCTA = true;
 
 	      if (!displayCTA && config.engagementMedium === 'EMBED') {
 	        widget = new _EmbedWidget2.default(params);
