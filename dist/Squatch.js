@@ -6803,6 +6803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.ctaFrame = document.createElement('iframe');
 	    me.ctaFrame.squatchJsApi = me;
+	    me.ctaFrame.scrolling = "no";
 	    me.ctaFrame.style = 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position;
 
 	    document.body.appendChild(_this.ctaFrame);
