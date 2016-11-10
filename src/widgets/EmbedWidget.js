@@ -4,7 +4,18 @@ import { domready } from '../utils/domready';
 
 const _log = debug('squatch-js:EMBEDwidget');
 
+
+/**
+ * An EmbedWidget is displayed inline in part of your page. 
+ * 
+ * To create an EmbedWidget use {@link Widgets}
+ * 
+ */
 export default class EmbedWidget extends Widget {
+  
+  /**
+   * @private
+   */
   constructor(params, elementId = 'squatchembed') {
     super(params);
 
