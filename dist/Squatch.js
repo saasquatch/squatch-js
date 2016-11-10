@@ -7106,8 +7106,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      }
 
-	      displayCTA = true;
-
 	      if (!displayCTA && config.engagementMedium === 'EMBED') {
 	        widget = new _EmbedWidget2.default(params);
 	        widget.load();

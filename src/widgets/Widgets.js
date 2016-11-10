@@ -156,8 +156,6 @@ export default class Widgets {
       });
     }
 
-    displayCTA = true;
-
     if (!displayCTA && config.engagementMedium === 'EMBED') {
       widget = new EmbedWidget(params);
       widget.load();
