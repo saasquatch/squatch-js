@@ -28,7 +28,7 @@ The `init` function lets you configure your global squatch instance.
 
 Unregistered users are also able to interact with your referral program using the `cookieUser` function, and later they can be registered in our system. To upsert `anonymous users`/`users` and load a widget, use the `squatch.widgets` instance.
 
-Note: If `engagementMedium` is required in the `squatch.widgets` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
+Note: `engagementMedium` is required in the `squatch.widgets` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
 
 ```html
 <script type="text/javascript">
