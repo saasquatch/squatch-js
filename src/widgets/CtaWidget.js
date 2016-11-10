@@ -4,7 +4,17 @@ import { domready } from '../utils/domready';
 
 const _log = debug('squatch-js:CTAwidget');
 
+/**
+ * A CtaWidget is displayed on top of your page 
+ * 
+ * To create a CtaWidget use {@link Widgets}
+ *
+ */
 export default class CtaWidget extends PopupWidget {
+  
+  /**
+   * @private
+   */
   constructor(params, opts) {
     const ctaElement = document.createElement('div');
     ctaElement.id = 'cta';
@@ -83,7 +93,16 @@ export default class CtaWidget extends PopupWidget {
     });
   }
 
+  /**
+   *  @inheritdoc
+   */
   open() {
     super.open();
+  }
+  /**
+   *  @inheritdoc
+   */
+  close() {
+    super.close();
   }
 }

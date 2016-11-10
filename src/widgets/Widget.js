@@ -4,7 +4,7 @@ import AnalyticsApi from '../api/AnalyticsApi';
 
 const _log = debug('squatch-js:widget');
 
-/**
+/*
  *
  * The Widget class is the base class for the different widget types available
  *
@@ -22,14 +22,15 @@ const _log = debug('squatch-js:widget');
  *
  */
 export default class Widget {
+
   /**
    * Initialize a new {@link Widget} instance.
    *
-   * Creates an <iframe></iframe> in which the html content of the widget gets
-   * embedded.
+   * Creates an `iframe` in which the html content of the widget gets embedded.
    * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
    * for listening to the height of the widget content and make the iframe responsive.
    *
+   * @private
    * @param {Object} params -> document this object
    *
    */

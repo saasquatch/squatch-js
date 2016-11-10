@@ -15,7 +15,8 @@ import asyncLoad from './async';
 debug.disable('squatch-js*');
 const _log = debug('squatch-js');
 
-export { WidgetApi } from './api/WidgetApi';
+
+export { WidgetApi, Widgets };
 export { EmbedWidget } from './widgets/EmbedWidget';
 export { PopupWidget } from './widgets/PopupWidget';
 export { CtaWidget } from './widgets/CtaWidget';
@@ -89,6 +90,9 @@ export function ready(fn) {
   fn();
 }
 
+/**
+ * 
+ */
 export function autofill(element) {
   let el;
 
