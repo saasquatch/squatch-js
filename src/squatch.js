@@ -30,7 +30,10 @@ export { CtaWidget } from './widgets/CtaWidget';
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  * squatch.api.cookieUser();
  */
-export let api = null;
+let _api = null;
+export function api() {
+  return _api;
+}
 
 /**
  * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
@@ -38,15 +41,18 @@ export let api = null;
  * @type {Widgets}
  * @example
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.widgets.cookieUser();
+ * squatch.widgets().cookieUser();
  */
-export let widgets = null;
+let _widgets = null;
+export function widgets() {
+  return _widgets;
+}
 
 /**
  * Initializes a static `squatch` global. This sets up:
  *
- *  - `api` a static instance of the {@link WidgetApi}
- *  - `widgets` a static instance of {@link Widgets}
+ *  - `_api` a static instance of the {@link WidgetApi}
+ *  - `_widgets` a static instance of {@link Widgets}
  *
  * @param {Object} config Configuration details
  * @param {string} config.tenantAlias The tenant alias connects to your account.
@@ -61,11 +67,11 @@ export function init(config) {
   }
 
   _log('initializing ...');
-  api = new WidgetApi({ tenantAlias: config.tenantAlias });
-  widgets = new Widgets({ tenantAlias: config.tenantAlias });
+  _api = new WidgetApi({ tenantAlias: config.tenantAlias });
+  _widgets = new Widgets({ tenantAlias: config.tenantAlias });
 
-  _log('Widget API instance', api);
-  _log('widgets instance', widgets);
+  _log('Widget API instance', _api);
+  _log('widgets instance', _widgets);
 }
 
 /**
@@ -85,38 +91,6 @@ export function ready(fn) {
 }
 
 /**
- * Creates an anonymous user.
- *
- * @param {Object} params
- * @param {string} params.jwt the JSON Web Token (JWT) that is used to
- *                            validate the data (can be disabled)
- *
- * @return {Promise} json object if true, with the widget template, jsOptions and user details.
- */
-export function createCookieUser(config) {
-  return api.cookieUser(config);
-}
-
-/**
- * Creates/upserts user.
- *
- * @param {Object} params
- * @param {Object} params.user the user details
- * @param {string} params.user.id
- * @param {string} params.user.accountId
- * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
- * @param {string} params.engagementMedium (POPUP/MOBILE)
- * @param {string} params.jwt the JSON Web Token (JWT) that is used
- *                            to validate the data (can be disabled)
- *
- * @return {Promise} json object if true, with the widget template, jsOptions and user details.
- */
-export function upsertUser(config) {
-  return api.upsert(config);
-}
-
-/**
- * Autofills a referral code
  * 
  */
 export function autofill(element) {

@@ -34,7 +34,7 @@ export default class WidgetApi {
   }
 
   /**
-   * Description here.
+   * Creates/upserts an anonymous user.
    *
    * @param {Object} params
    * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
@@ -59,7 +59,7 @@ export default class WidgetApi {
   }
 
   /**
-   * Description here.
+   * Creates/upserts user.
    *
    * @param {Object} params
    * @param {Object} params.user the user details
@@ -70,7 +70,7 @@ export default class WidgetApi {
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
-   * @return {Promise} string if true, with the widget template.
+   * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
   upsert(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
     WidgetApi.validateInput(params, schema.upsertUser);
