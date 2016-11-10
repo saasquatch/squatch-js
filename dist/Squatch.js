@@ -115,13 +115,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widgets = __webpack_require__(39);
+	var _Widgets = __webpack_require__(37);
 
 	var _Widgets2 = _interopRequireDefault(_Widgets);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
-	var _async = __webpack_require__(37);
+	var _async = __webpack_require__(38);
 
 	var _async2 = _interopRequireDefault(_async);
 
@@ -6888,39 +6888,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 37 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = asyncLoad;
-	function asyncLoad() {
-	  var loaded = window.squatch || null;
-	  var cached = window._squatch || null;
-
-	  if (loaded && cached) {
-	    var ready = cached.ready;
-
-	    ready.forEach(function (cb) {
-	      return setTimeout(function () {
-	        return cb();
-	      }, 0);
-	    });
-
-	    window._squatch = undefined;
-	    try {
-	      delete window._squatch;
-	    } catch (e) {
-	      throw e;
-	    }
-	  }
-	}
-
-/***/ },
-/* 38 */,
-/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7028,7 +6995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} config.user the user details
 	     * @param {string} config.user.id
 	     * @param {string} config.user.accountId
-	     * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} config.widgetType (CONVERSION_WIDGET/REFERRING_WIDGET)
 	     * @param {string} config.engagementMedium (POPUP/MOBILE)
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
@@ -7042,7 +7009,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 
 	      return new Promise(function (resolve, reject) {
-	        _this2.api.cookieUser(config).then(function (response) {
+	        _this2.api.upsert(config).then(function (response) {
 	          resolve({ widget: _this2.load(response, config), user: response.user });
 	        }).catch(function (err) {
 	          if (err.apiErrorCode) {
@@ -7108,7 +7075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var params = {
 	        content: response.template,
-	        type: config.widgetType || opts.widget.defaultWidgetType || '',
+	        type: config.widgetType || opts.widget.defaultWidgetType,
 	        api: this.api
 	      };
 
@@ -7192,6 +7159,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	}();
 
 	exports.default = Widgets;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = asyncLoad;
+	function asyncLoad() {
+	  var loaded = window.squatch || null;
+	  var cached = window._squatch || null;
+
+	  if (loaded && cached) {
+	    var ready = cached.ready;
+
+	    ready.forEach(function (cb) {
+	      return setTimeout(function () {
+	        return cb();
+	      }, 0);
+	    });
+
+	    window._squatch = undefined;
+	    try {
+	      delete window._squatch;
+	    } catch (e) {
+	      throw e;
+	    }
+	  }
+	}
 
 /***/ }
 /******/ ])

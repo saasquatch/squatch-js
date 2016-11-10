@@ -39,9 +39,6 @@ Note: `engagementMedium` is required in the `squatch.widgets` functions if you w
       tenantAlias: "YOUR_TENANT_ALIAS",     // String (required)
     });
 
-    var user;
-    var widget;
-
     squatch.widgets.createCookieUser({
       engagementMedium: 'DEFAULT_IS_POPUP',  // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',             // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)

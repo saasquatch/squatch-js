@@ -68,7 +68,7 @@ export default class Widgets {
    * @param {Object} config.user the user details
    * @param {string} config.user.id
    * @param {string} config.user.accountId
-   * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+   * @param {string} config.widgetType (CONVERSION_WIDGET/REFERRING_WIDGET)
    * @param {string} config.engagementMedium (POPUP/MOBILE)
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
@@ -77,7 +77,7 @@ export default class Widgets {
    */
   upsertUser(config) {
     return new Promise((resolve, reject) => {
-      this.api.cookieUser(config).then((response) => {
+      this.api.upsert(config).then((response) => {
         resolve({ widget: this.load(response, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {
@@ -131,7 +131,7 @@ export default class Widgets {
 
     const params = {
       content: response.template,
-      type: config.widgetType || opts.widget.defaultWidgetType || '',
+      type: config.widgetType || opts.widget.defaultWidgetType,
       api: this.api,
     };
 
