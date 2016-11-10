@@ -68,8 +68,8 @@ Note: `engagementMedium` is required in the `squatch.widgets` functions if you w
 </script>
 ```
 
-## Data only operations
-Include `user.id` and `user.accountId` in your configuration to register users.
+## Data Only Operations
+You can create/upsert users without loading a widget.
 
 ```html
 <script type="text/javascript">
@@ -113,7 +113,7 @@ Include `user.id` and `user.accountId` in your configuration to register users.
 </script>
 ```
 
-## Get referral cookie code
+## Get Referral Cookie Code
 You can also use the `api` static instance to call the WidgetApi methods directly.
 
 ```html
