@@ -181,7 +181,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  exports.widgets = widgets = new _Widgets2.default({ tenantAlias: config.tenantAlias });
 
 	  _log('Widget API instance', api);
-	  _log('widgets instace', widgets);
+	  _log('widgets instance', widgets);
 	}
 
 	/**
@@ -7065,7 +7065,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
 
+	      _log('Loading...');
 	      if (!response) throw new Error('Unable to get a response');
+	      if (!response.jsOptions) throw new Error('Missing jsOptions in response');
 	      _log(response, config);
 
 	      var widget = void 0;

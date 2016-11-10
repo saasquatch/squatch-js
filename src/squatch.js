@@ -64,7 +64,7 @@ export function init(config) {
   widgets = new Widgets({ tenantAlias: config.tenantAlias });
 
   _log('Widget API instance', api);
-  _log('widgets instace', widgets);
+  _log('widgets instance', widgets);
 }
 
 /**

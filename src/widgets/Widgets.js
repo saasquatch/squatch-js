@@ -121,7 +121,9 @@ export default class Widgets {
    *
    */
   load(response, config = { widgetType: '', engagementMedium: '' }) {
+    _log('Loading...');
     if (!response) throw new Error('Unable to get a response');
+    if (!response.jsOptions) throw new Error('Missing jsOptions in response');
     _log(response, config);
 
     let widget;
