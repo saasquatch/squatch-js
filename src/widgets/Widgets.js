@@ -137,20 +137,24 @@ export default class Widgets {
       api: this.api,
     };
 
-    opts.widgetUrlMappings.forEach((rule) => {
-      if (this.matchesUrl(rule.url)) {
-        displayOnLoad = true;
-        displayCTA = rule.showAsCTA;
-        _log(`Display ${rule.widgetType} on ${rule.rul}`);
-      }
-    });
+    if (opts.widgetUrlMappings) {
+      opts.widgetUrlMappings.forEach((rule) => {
+        if (this.matchesUrl(rule.url)) {
+          displayOnLoad = true;
+          displayCTA = rule.showAsCTA;
+          _log(`Display ${rule.widgetType} on ${rule.rul}`);
+        }
+      });
+    }
 
-    opts.conversionUrls.forEach((rule) => {
-      if (response.user.referredBy && this.matchesUrl(rule)) {
-        displayOnLoad = true;
-        _log('This is a conversion URL', rule);
-      }
-    });
+    if (opts.conversionUrls) {
+      opts.conversionUrls.forEach((rule) => {
+        if (response.user.referredBy && this.matchesUrl(rule)) {
+          displayOnLoad = true;
+          _log('This is a conversion URL', rule);
+        }
+      });
+    }
 
     if (!displayCTA && config.engagementMedium === 'EMBED') {
       widget = new EmbedWidget(params);

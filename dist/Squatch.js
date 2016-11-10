@@ -7081,20 +7081,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        api: this.api
 	      };
 
-	      opts.widgetUrlMappings.forEach(function (rule) {
-	        if (_this4.matchesUrl(rule.url)) {
-	          displayOnLoad = true;
-	          displayCTA = rule.showAsCTA;
-	          _log('Display ' + rule.widgetType + ' on ' + rule.rul);
-	        }
-	      });
+	      if (opts.widgetUrlMappings) {
+	        opts.widgetUrlMappings.forEach(function (rule) {
+	          if (_this4.matchesUrl(rule.url)) {
+	            displayOnLoad = true;
+	            displayCTA = rule.showAsCTA;
+	            _log('Display ' + rule.widgetType + ' on ' + rule.rul);
+	          }
+	        });
+	      }
 
-	      opts.conversionUrls.forEach(function (rule) {
-	        if (response.user.referredBy && _this4.matchesUrl(rule)) {
-	          displayOnLoad = true;
-	          _log('This is a conversion URL', rule);
-	        }
-	      });
+	      if (opts.conversionUrls) {
+	        opts.conversionUrls.forEach(function (rule) {
+	          if (response.user.referredBy && _this4.matchesUrl(rule)) {
+	            displayOnLoad = true;
+	            _log('This is a conversion URL', rule);
+	          }
+	        });
+	      }
 
 	      if (!displayCTA && config.engagementMedium === 'EMBED') {
 	        widget = new _EmbedWidget2.default(params);
