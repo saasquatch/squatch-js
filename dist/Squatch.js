@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.widgets = exports.api = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
+	exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
 
 	var _WidgetApi = __webpack_require__(2);
 
@@ -103,10 +103,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return _CtaWidget.CtaWidget;
 	  }
 	});
+	exports.api = api;
+	exports.widgets = widgets;
 	exports.init = init;
 	exports.ready = ready;
-	exports.createCookieUser = createCookieUser;
-	exports.upsertUser = upsertUser;
 	exports.autofill = autofill;
 
 	__webpack_require__(3);
@@ -146,7 +146,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 * squatch.api.cookieUser();
 	 */
-	var api = exports.api = null;
+	var _api = null;
+	function api() {
+	  return _api;
+	}
 
 	/**
 	 * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
@@ -154,15 +157,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @type {Widgets}
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.widgets.cookieUser();
+	 * squatch.widgets().cookieUser();
 	 */
-	var widgets = exports.widgets = null;
+	var _widgets = null;
+	function widgets() {
+	  return _widgets;
+	}
 
 	/**
 	 * Initializes a static `squatch` global. This sets up:
 	 *
-	 *  - `api` a static instance of the {@link WidgetApi}
-	 *  - `widgets` a static instance of {@link Widgets}
+	 *  - `_api` a static instance of the {@link WidgetApi}
+	 *  - `_widgets` a static instance of {@link Widgets}
 	 *
 	 * @param {Object} config Configuration details
 	 * @param {string} config.tenantAlias The tenant alias connects to your account.
@@ -177,11 +183,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  _log('initializing ...');
-	  exports.api = api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
-	  exports.widgets = widgets = new _Widgets2.default({ tenantAlias: config.tenantAlias });
+	  _api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
+	  _widgets = new _Widgets2.default({ tenantAlias: config.tenantAlias });
 
-	  _log('Widget API instance', api);
-	  _log('widgets instance', widgets);
+	  _log('Widget API instance', _api);
+	  _log('widgets instance', _widgets);
 	}
 
 	/**
@@ -198,37 +204,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	function ready(fn) {
 	  fn();
-	}
-
-	/**
-	 * Creates an anonymous user.
-	 *
-	 * @param {Object} params
-	 * @param {string} params.jwt the JSON Web Token (JWT) that is used to
-	 *                            validate the data (can be disabled)
-	 *
-	 * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-	 */
-	function createCookieUser(config) {
-	  return api.cookieUser(config);
-	}
-
-	/**
-	 * Creates/upserts user.
-	 *
-	 * @param {Object} params
-	 * @param {Object} params.user the user details
-	 * @param {string} params.user.id
-	 * @param {string} params.user.accountId
-	 * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	 * @param {string} params.engagementMedium (POPUP/MOBILE)
-	 * @param {string} params.jwt the JSON Web Token (JWT) that is used
-	 *                            to validate the data (can be disabled)
-	 *
-	 * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-	 */
-	function upsertUser(config) {
-	  return api.upsert(config);
 	}
 
 	function autofill(element) {
@@ -314,7 +289,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  /**
-	   * Description here.
+	   * Creates/upserts an anonymous user.
 	   *
 	   * @param {Object} params
 	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
@@ -345,7 +320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Description here.
+	     * Creates/upserts user.
 	     *
 	     * @param {Object} params
 	     * @param {Object} params.user the user details
@@ -356,7 +331,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
-	     * @return {Promise} string if true, with the widget template.
+	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
 	     */
 
 	  }, {
@@ -6983,10 +6958,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return new Promise(function (resolve, reject) {
 	        _this.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this.load(response, config), user: response.user });
+	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
 	        }).catch(function (err) {
 	          if (err.apiErrorCode) {
-	            _this.renderErrorWidget(err, config.engagementMedium);
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
 	          }
 	          reject(err);
 	        });
@@ -7016,10 +6991,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return new Promise(function (resolve, reject) {
 	        _this2.api.upsert(config).then(function (response) {
-	          resolve({ widget: _this2.load(response, config), user: response.user });
+	          resolve({ widget: _this2.renderWidget(response, config), user: response.user });
 	        }).catch(function (err) {
 	          if (err.apiErrorCode) {
-	            _this2.renderErrorWidget(err, config.engagementMedium);
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
 	          }
 	          reject(err);
 	        });
@@ -7049,10 +7024,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return new Promise(function (resolve, reject) {
 	        _this3.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this3.load({ template: response }, config), user: response.user });
+	          resolve({ widget: _this3.renderWidget({ template: response }, config), user: response.user });
 	        }).catch(function (err) {
 	          if (err.apiErrorCode) {
-	            _this3.renderErrorWidget(err, config.engagementMedium);
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
 	          }
 	          reject(err);
 	        });
@@ -7065,10 +7040,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 
 	  }, {
-	    key: 'load',
-	    value: function load(response) {
-	      var _this4 = this;
-
+	    key: 'renderWidget',
+	    value: function renderWidget(response) {
 	      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
 
 	      _log('Loading...');
@@ -7089,7 +7062,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (opts.widgetUrlMappings) {
 	        opts.widgetUrlMappings.forEach(function (rule) {
-	          if (_this4.matchesUrl(rule.url)) {
+	          if (Widgets.matchesUrl(rule.url)) {
 	            displayOnLoad = true;
 	            displayCTA = rule.showAsCTA;
 	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
@@ -7099,7 +7072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (opts.conversionUrls) {
 	        opts.conversionUrls.forEach(function (rule) {
-	          if (response.user.referredBy && _this4.matchesUrl(rule)) {
+	          if (response.user.referredBy && Widgets.matchesUrl(rule)) {
 	            displayOnLoad = true;
 	            _log('This is a conversion URL', rule);
 	          }
@@ -7133,7 +7106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *
 	     */
 
-	  }, {
+	  }], [{
 	    key: 'renderErrorWidget',
 	    value: function renderErrorWidget(error) {
 	      var em = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'POPUP';

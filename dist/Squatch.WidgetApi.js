@@ -117,7 +117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  /**
-	   * Description here.
+	   * Creates/upserts an anonymous user.
 	   *
 	   * @param {Object} params
 	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
@@ -148,7 +148,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Description here.
+	     * Creates/upserts user.
 	     *
 	     * @param {Object} params
 	     * @param {Object} params.user the user details
@@ -159,7 +159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
-	     * @return {Promise} string if true, with the widget template.
+	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
 	     */
 
 	  }, {

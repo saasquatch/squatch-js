@@ -50,10 +50,10 @@ export default class Widgets {
   createCookieUser(config) {
     return new Promise((resolve, reject) => {
       this.api.cookieUser(config).then((response) => {
-        resolve({ widget: this.load(response, config), user: response.user });
+        resolve({ widget: this.renderWidget(response, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {
-          this.renderErrorWidget(err, config.engagementMedium);
+          Widgets.renderErrorWidget(err, config.engagementMedium);
         }
         reject(err);
       });
@@ -78,10 +78,10 @@ export default class Widgets {
   upsertUser(config) {
     return new Promise((resolve, reject) => {
       this.api.upsert(config).then((response) => {
-        resolve({ widget: this.load(response, config), user: response.user });
+        resolve({ widget: this.renderWidget(response, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {
-          this.renderErrorWidget(err, config.engagementMedium);
+          Widgets.renderErrorWidget(err, config.engagementMedium);
         }
         reject(err);
       });
@@ -106,10 +106,10 @@ export default class Widgets {
   render(config) {
     return new Promise((resolve, reject) => {
       this.api.cookieUser(config).then((response) => {
-        resolve({ widget: this.load({ template: response }, config), user: response.user });
+        resolve({ widget: this.renderWidget({ template: response }, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {
-          this.renderErrorWidget(err, config.engagementMedium);
+          Widgets.renderErrorWidget(err, config.engagementMedium);
         }
         reject(err);
       });
@@ -120,7 +120,7 @@ export default class Widgets {
    * @private
    *
    */
-  load(response, config = { widgetType: '', engagementMedium: '' }) {
+  renderWidget(response, config = { widgetType: '', engagementMedium: '' }) {
     _log('Loading...');
     if (!response) throw new Error('Unable to get a response');
     if (!response.jsOptions) throw new Error('Missing jsOptions in response');
@@ -139,7 +139,7 @@ export default class Widgets {
 
     if (opts.widgetUrlMappings) {
       opts.widgetUrlMappings.forEach((rule) => {
-        if (this.matchesUrl(rule.url)) {
+        if (Widgets.matchesUrl(rule.url)) {
           displayOnLoad = true;
           displayCTA = rule.showAsCTA;
           _log(`Display ${rule.widgetType} on ${rule.url}`);
@@ -149,7 +149,7 @@ export default class Widgets {
 
     if (opts.conversionUrls) {
       opts.conversionUrls.forEach((rule) => {
-        if (response.user.referredBy && this.matchesUrl(rule)) {
+        if (response.user.referredBy && Widgets.matchesUrl(rule)) {
           displayOnLoad = true;
           _log('This is a conversion URL', rule);
         }
@@ -182,7 +182,7 @@ export default class Widgets {
    * @private
    *
    */
-  renderErrorWidget(error, em = 'POPUP') {
+  static renderErrorWidget(error, em = 'POPUP') {
     _log(new Error(`${error.apiErrorCode} (${error.rsCode}) ${error.message}`));
 
     let widget;
@@ -204,7 +204,7 @@ export default class Widgets {
   /**
    * @private
    */
-  matchesUrl(rule) {
+  static matchesUrl(rule) {
     return window.location.href.match(new RegExp(rule));
   }
 }
