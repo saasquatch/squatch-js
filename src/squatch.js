@@ -8,10 +8,8 @@
  */
 import 'whatwg-fetch';
 import debug from 'debug';
+import Widgets from './widgets/Widgets';
 import WidgetApi from './api/WidgetApi';
-import EmbedWidget from './widgets/EmbedWidget';
-import PopupWidget from './widgets/PopupWidget';
-import CtaWidget from './widgets/CtaWidget';
 import asyncLoad from './async';
 
 debug.disable('squatch-js*');
@@ -22,12 +20,6 @@ export { EmbedWidget } from './widgets/EmbedWidget';
 export { PopupWidget } from './widgets/PopupWidget';
 export { CtaWidget } from './widgets/CtaWidget';
 
-/**
- * @private
- */
-function matchesUrl(rule) {
-  return window.location.href.match(new RegExp(rule));
-}
 
 /**
  * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
@@ -35,14 +27,25 @@ function matchesUrl(rule) {
  * @type {WidgetApi}
  * @example
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
+ * squatch.api.cookieUser();
  */
 export let api = null;
+
+/**
+ * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
+ *
+ * @type {Widgets}
+ * @example
+ * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * squatch.widgets.cookieUser();
+ */
+export let widgets = null;
 
 /**
  * Initializes a static `squatch` global. This sets up:
  *
  *  - `api` a static instance of the {@link WidgetApi}
+ *  - `widgets` a static instance of {@link Widgets}
  *
  * @param {Object} config Configuration details
  * @param {string} config.tenantAlias The tenant alias connects to your account.
@@ -52,100 +55,82 @@ export let api = null;
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
 export function init(config) {
-  if (config.tenantAlias.startsWith('test') || config.debug) {
+  if (config.tenantAlias.match('^test') || config.debug) {
     debug.enable('squatch-js*');
   }
 
   _log('initializing ...');
   api = new WidgetApi({ tenantAlias: config.tenantAlias });
+  widgets = new Widgets({ tenantAlias: config.tenantAlias });
 
   _log('Widget API instance', api);
+  _log('widgets instace', widgets);
 }
 
+/**
+ * Squatch.js can't start safely making operations until it's "ready". This
+ * function detects that state.
+ *
+ * @param {function} fn Anonymous function
+ *
+ * @returns {void}
+ * @example
+ * squatch.ready(function() {
+ *   console.log("ready!");
+ * });
+ */
 export function ready(fn) {
   fn();
 }
 
-// Refactor this function to make it simple
-export function load(response, config = { widgetType: '', engagementMedium: '' }) {
-  let widget;
-  let params;
-  let displayOnLoad = false;
-  let displayCTA = false;
+/**
+ * Creates an anonymous user.
+ *
+ * @param {Object} params
+ * @param {string} params.jwt the JSON Web Token (JWT) that is used to
+ *                            validate the data (can be disabled)
+ *
+ * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+ */
+export function createCookieUser(config) {
+  return api.cookieUser(config);
+}
 
-  if (!response) throw new Error('Unable to get a response');
-
-  if (response.apiErrorCode) {
-    _log(new Error(`${response.apiErrorCode} (${response.rsCode}) response.message`));
-    params = {
-      content: 'error',
-      rsCode: response.rsCode,
-      type: config.widgetType ? config.widgetType : '',
-      api: api,
-    };
-  } else if (response.jsOptions) {
-    params = {
-      content: response.template,
-      type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
-      api: api,
-    };
-
-    response.jsOptions.widgetUrlMappings.forEach((rule) => {
-      if (matchesUrl(rule.url)) {
-        displayOnLoad = true;
-        displayCTA = rule.showAsCTA;
-        _log(`Display ${rule.widgetType} on ${rule.rul}`);
-      }
-    });
-
-    response.jsOptions.conversionUrls.forEach((rule) => {
-      if (response.user.referredBy && matchesUrl(rule)) {
-        displayOnLoad = true;
-        _log('This is a conversion URL', rule);
-      }
-    });
-  } else {
-    params = {
-      content: response,
-      type: config.widgetType ? config.widgetType : '',
-      api: api,
-    };
-  }
-
-  if (!displayCTA && config.engagementMedium === 'EMBED') {
-    widget = new EmbedWidget(params).load();
-  } else if (!displayCTA && config.engagementMedium === 'POPUP') {
-    widget = new PopupWidget(params);
-    widget.load();
-    if (displayOnLoad) widget.open();
-  } else if (displayCTA) {
-    const side = response.jsOptions.cta.content.buttonSide;
-    const position = response.jsOptions.cta.content.buttonPosition;
-
-    widget = new CtaWidget(params, { side: side, position: position }).load();
-  } else if (displayOnLoad) {
-    widget = new PopupWidget(params);
-    widget.load();
-    widget.open();
-  }
+/**
+ * Creates/upserts user.
+ *
+ * @param {Object} params
+ * @param {Object} params.user the user details
+ * @param {string} params.user.id
+ * @param {string} params.user.accountId
+ * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+ * @param {string} params.engagementMedium (POPUP/MOBILE)
+ * @param {string} params.jwt the JSON Web Token (JWT) that is used
+ *                            to validate the data (can be disabled)
+ *
+ * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+ */
+export function upsertUser(config) {
+  return api.upsert(config);
 }
 
 export function autofill(element) {
   let el;
 
   if (typeof element === 'function') {
-    return api.autofill().then(element).catch((ex) => {
+    return api.squatchReferralCookie().then(element).catch((ex) => {
       throw ex;
     });
-  } else if (element.startsWith('#')) {
+  } else if (element.match('^#')) {
     el = document.getElementById(element.slice(1));
-  } else if (element.startsWith('.')) {
-    el = document.getElementsByClass(element.slice(1))[0];
+  } else if (element.match('^[.]')) {
+    el = document.getElementsByClassName(element.slice(1))[0];
   } else {
     _log('Element id/class or function missing');
+    throw new Error('Element id/class or function missing');
   }
 
-  return api.autofill().then((response) => {
+  return api.squatchReferralCookie().then((response) => {
     el.value = response.code;
   }).catch((ex) => {
     throw ex;

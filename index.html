@@ -37,12 +37,19 @@
       tenantAlias: "test_ak9htmontgeca"
     });
 
-    squatch.api.cookieUser({
-      // engagementMedium: 'EMBED',
+    // Data and widget
+    var user;
+    var widget
+
+    squatch.widgets.createCookieUser({
+      engagementMedium: 'POPUP',
       // widgetType: 'REFERRER_WIDGET',
       jwt: 'token'
-    }).then(function(response) {
-      squatch.load(response, {engagementMedium: 'POPUP'});
+    }).then(function (response) {
+      user = response.user;
+      widget = response.widget;
+    }).catch(function (err) {
+      console.log(err);
     });
 
   });

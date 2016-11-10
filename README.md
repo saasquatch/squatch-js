@@ -26,7 +26,9 @@ Or load the library synchronously from our CDN:
 ## Getting Started
 The `init` function lets you configure your global squatch instance.
 
-Unregistered users are also able to interact with your referral program using the `cookieUser` function, and later they can be registered. If `engagementMedium` is not passed in the `squatch.load()` function, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is loaded.
+Unregistered users are also able to interact with your referral program using the `cookieUser` function, and later they can be registered in our system. To upsert `anonymous users`/`users` and load a widget, use the `squatch.widgets` instance.
+
+Note: If `engagementMedium` is required in the `squatch.widgets` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
 
 ```html
 <script type="text/javascript">
@@ -38,25 +40,35 @@ Unregistered users are also able to interact with your referral program using th
     });
 
     var user;
+    var widget;
 
-    squatch.api.cookieUser({
-      engagementMedium: 'DEFAULT_IS_POPUP',        // String (optional: POPUP, EMBED)
-      widgetType: 'WIDGET_TYPE',                   // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-      jwt: 'TOKEN'                                    // String (required by default, talk to support if you'd like to disable Security)
-    }).then(function(response) {
-      user = response.user;
-      squatch.load(response, {engagementMedium: 'POPUP'});               // Optionally load the widget
+    squatch.widgets.createCookieUser({
+      engagementMedium: 'DEFAULT_IS_POPUP',  // String (optional: POPUP, EMBED)
+      widgetType: 'WIDGET_TYPE',             // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
+      jwt: 'TOKEN'                           // String (required by default, or disable Security in the portal)
     });
 
-    // autofill
-    var element = document.getElementById('my_coupon');
-    element.value = user.referredBy.code;
+    // or
+
+    squatch.widgets.upsertUser({
+      user: {                               // Object (required)
+        id: 'USER_ID',                      // String (required)
+        accountId: 'USER_ACCOUNT_ID',       // String (required)
+        email: 'USER_EMAIL',                // String (optional)
+        firstName: 'USER_FIRST_NAME',       // String (optional)
+        lastName: 'USER_LAST_NAME',         // String (optional)
+        ...
+      },
+      engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
+      widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
+      jwt: 'TOKEN'                          // String (required by default, or disable Security in the portal)
+    });
 
   });
 </script>
 ```
 
-## Create/Upsert User
+## Data only operations
 Include `user.id` and `user.accountId` in your configuration to register users.
 
 ```html
@@ -68,7 +80,16 @@ Include `user.id` and `user.accountId` in your configuration to register users.
       tenantAlias: "YOUR_TENANT_ALIAS"      // String (required)
     });
 
-    squatch.api.upsert({
+    var user;
+
+    squatch.createCookieUser({
+      engagementMedium: 'DEFAULT_IS_POPUP',  // String (optional: POPUP, EMBED)
+      widgetType: 'WIDGET_TYPE',             // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
+      jwt: 'TOKEN'                           // String (required by default, or disable Security in the portal)
+    });
+
+    // or
+    squatch.upsertUser({
       user: {                               // Object (required)
         id: 'USER_ID',                      // String (required)
         accountId: 'USER_ACCOUNT_ID',       // String (required)
@@ -82,14 +103,18 @@ Include `user.id` and `user.accountId` in your configuration to register users.
       jwt: 'TOKEN'                          // String (required by default, talk to support if you'd like to disable Security)
     }).then(function() {
       user = response.user;
-      squatch.load(response);               // Optionally load the widget
     });
+
+    // autofill
+    var element = document.getElementById('my_coupon');
+    element.value = user.referredBy.code;
 
   });
 </script>
 ```
 
 ## Get referral cookie code
+You can also use the `api` static instance to call the WidgetApi methods directly.
 
 ```html
 <script type="text/javascript">
@@ -98,10 +123,13 @@ Include `user.id` and `user.accountId` in your configuration to register users.
     // Always call init
     squatch.init({tenantAlias: 'YOUR_TENANT_ALIAS'});
 
+
+    // Example 1 -- use the api
     var code;
-    // Example 1 -- use a success function
+    var element = document.getElementById('#my_coupon');
+
     squatch.api.squatchReferralCookie().then(function(response) {
-      code = response.code;
+      element.value = response.code;
     });
 
     // Example 2 -- use a selector

@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.api = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
+	exports.widgets = exports.api = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
 
 	var _WidgetApi = __webpack_require__(2);
 
@@ -105,7 +105,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.init = init;
 	exports.ready = ready;
-	exports.load = load;
+	exports.createCookieUser = createCookieUser;
+	exports.upsertUser = upsertUser;
 	exports.autofill = autofill;
 
 	__webpack_require__(3);
@@ -114,13 +115,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug2 = _interopRequireDefault(_debug);
 
+	var _Widgets = __webpack_require__(39);
+
+	var _Widgets2 = _interopRequireDefault(_Widgets);
+
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
-
-	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
-
-	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
-
-	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
 
 	var _async = __webpack_require__(37);
 
@@ -140,26 +139,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _log = (0, _debug2.default)('squatch-js');
 
 	/**
-	 * @private
-	 */
-	function matchesUrl(rule) {
-	  return window.location.href.match(new RegExp(rule));
-	}
-
-	/**
 	 * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
 	 *
 	 * @type {WidgetApi}
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
+	 * squatch.api.cookieUser();
 	 */
 	var api = exports.api = null;
+
+	/**
+	 * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
+	 *
+	 * @type {Widgets}
+	 * @example
+	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
+	 * squatch.widgets.cookieUser();
+	 */
+	var widgets = exports.widgets = null;
 
 	/**
 	 * Initializes a static `squatch` global. This sets up:
 	 *
 	 *  - `api` a static instance of the {@link WidgetApi}
+	 *  - `widgets` a static instance of {@link Widgets}
 	 *
 	 * @param {Object} config Configuration details
 	 * @param {string} config.tenantAlias The tenant alias connects to your account.
@@ -169,102 +172,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 */
 	function init(config) {
-	  if (config.tenantAlias.startsWith('test') || config.debug) {
+	  if (config.tenantAlias.match('^test') || config.debug) {
 	    _debug2.default.enable('squatch-js*');
 	  }
 
 	  _log('initializing ...');
 	  exports.api = api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
+	  exports.widgets = widgets = new _Widgets2.default({ tenantAlias: config.tenantAlias });
 
 	  _log('Widget API instance', api);
+	  _log('widgets instace', widgets);
 	}
 
+	/**
+	 * Squatch.js can't start safely making operations until it's "ready". This
+	 * function detects that state.
+	 *
+	 * @param {function} fn Anonymous function
+	 *
+	 * @returns {void}
+	 * @example
+	 * squatch.ready(function() {
+	 *   console.log("ready!");
+	 * });
+	 */
 	function ready(fn) {
 	  fn();
 	}
 
-	// Refactor this function to make it simple
-	function load(response) {
-	  var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
+	/**
+	 * Creates an anonymous user.
+	 *
+	 * @param {Object} params
+	 * @param {string} params.jwt the JSON Web Token (JWT) that is used to
+	 *                            validate the data (can be disabled)
+	 *
+	 * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	 */
+	function createCookieUser(config) {
+	  return api.cookieUser(config);
+	}
 
-	  var widget = void 0;
-	  var params = void 0;
-	  var displayOnLoad = false;
-	  var displayCTA = false;
-
-	  if (!response) throw new Error('Unable to get a response');
-
-	  if (response.apiErrorCode) {
-	    _log(new Error(response.apiErrorCode + ' (' + response.rsCode + ') response.message'));
-	    params = {
-	      content: 'error',
-	      rsCode: response.rsCode,
-	      type: config.widgetType ? config.widgetType : '',
-	      api: api
-	    };
-	  } else if (response.jsOptions) {
-	    params = {
-	      content: response.template,
-	      type: config.widgetType ? config.widgetType : response.jsOptions.widget.defaultWidgetType,
-	      api: api
-	    };
-
-	    response.jsOptions.widgetUrlMappings.forEach(function (rule) {
-	      if (matchesUrl(rule.url)) {
-	        displayOnLoad = true;
-	        displayCTA = rule.showAsCTA;
-	        _log('Display ' + rule.widgetType + ' on ' + rule.rul);
-	      }
-	    });
-
-	    response.jsOptions.conversionUrls.forEach(function (rule) {
-	      if (response.user.referredBy && matchesUrl(rule)) {
-	        displayOnLoad = true;
-	        _log('This is a conversion URL', rule);
-	      }
-	    });
-	  } else {
-	    params = {
-	      content: response,
-	      type: config.widgetType ? config.widgetType : '',
-	      api: api
-	    };
-	  }
-
-	  if (!displayCTA && config.engagementMedium === 'EMBED') {
-	    widget = new _EmbedWidget2.default(params).load();
-	  } else if (!displayCTA && config.engagementMedium === 'POPUP') {
-	    widget = new _PopupWidget2.default(params);
-	    widget.load();
-	    if (displayOnLoad) widget.open();
-	  } else if (displayCTA) {
-	    var side = response.jsOptions.cta.content.buttonSide;
-	    var position = response.jsOptions.cta.content.buttonPosition;
-
-	    widget = new _CtaWidget2.default(params, { side: side, position: position }).load();
-	  } else if (displayOnLoad) {
-	    widget = new _PopupWidget2.default(params);
-	    widget.load();
-	    widget.open();
-	  }
+	/**
+	 * Creates/upserts user.
+	 *
+	 * @param {Object} params
+	 * @param {Object} params.user the user details
+	 * @param {string} params.user.id
+	 * @param {string} params.user.accountId
+	 * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	 * @param {string} params.engagementMedium (POPUP/MOBILE)
+	 * @param {string} params.jwt the JSON Web Token (JWT) that is used
+	 *                            to validate the data (can be disabled)
+	 *
+	 * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	 */
+	function upsertUser(config) {
+	  return api.upsert(config);
 	}
 
 	function autofill(element) {
 	  var el = void 0;
 
 	  if (typeof element === 'function') {
-	    return api.autofill().then(element).catch(function (ex) {
+	    return api.squatchReferralCookie().then(element).catch(function (ex) {
 	      throw ex;
 	    });
-	  } else if (element.startsWith('#')) {
+	  } else if (element.match('^#')) {
 	    el = document.getElementById(element.slice(1));
-	  } else if (element.startsWith('.')) {
-	    el = document.getElementsByClass(element.slice(1))[0];
+	  } else if (element.match('^[.]')) {
+	    el = document.getElementsByClassName(element.slice(1))[0];
 	  } else {
 	    _log('Element id/class or function missing');
+	    throw new Error('Element id/class or function missing');
 	  }
 
-	  return api.autofill().then(function (response) {
+	  return api.squatchReferralCookie().then(function (response) {
 	    el.value = response.code;
 	  }).catch(function (ex) {
 	    throw ex;
@@ -482,7 +465,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        credentials: 'include',
 	        mode: 'cors'
 	      }).then(function (response) {
-	        return response.json();
+	        if (response.ok) {
+	          return response.text();
+	        }
+
+	        var json = response.json;
+	        return json.then(Promise.reject.bind(Promise));
 	      });
 	    }
 
@@ -494,19 +482,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'doPut',
 	    value: function doPut(url, data, jwt) {
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json',
+	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'PUT',
-	        headers: {
-	          Accept: 'application/json',
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': jwt,
-	          'X-SaaSquatch-Referrer': window ? window.location.href : ''
-	        },
+	        headers: headers,
 	        credentials: 'include',
 	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
-	        return response.json();
+	        var json = response.json();
+	        if (!response.ok) {
+	          return json.then(Promise.reject.bind(Promise));
+	        }
+	        return json;
 	      });
 	    }
 	  }]);
@@ -4673,7 +4668,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
 	   * for listening to the height of the widget content and make the iframe responsive.
 	   *
-	   * @param {string} content The html of the widget
+	   * @param {Object} params -> document this object
 	   *
 	   */
 	  function Widget(params) {
@@ -4682,8 +4677,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _log('widget initializing ...');
 	    var me = this;
 	    me.content = params.content === 'error' ? me._error(params.rsCode) : params.content;
-	    me.type = params.type;
-	    me.widgetApi = params.api;
+	    me.type = params.type; // don't need this?
+	    me.widgetApi = params.api || '';
 	    me.analyticsApi = new _AnalyticsApi2.default();
 	    me.frame = document.createElement('iframe');
 	    me.frame.squatchJsApi = me;
@@ -6922,6 +6917,281 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	}
+
+/***/ },
+/* 38 */,
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _debug = __webpack_require__(16);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	var _WidgetApi = __webpack_require__(2);
+
+	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
+
+	var _EmbedWidget = __webpack_require__(15);
+
+	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
+
+	var _PopupWidget = __webpack_require__(35);
+
+	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
+
+	var _CtaWidget = __webpack_require__(36);
+
+	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var _log = (0, _debug2.default)('squatch-js:widgets');
+
+	/**
+	 *
+	 * The Widgets class contains a widget loading process for different calls
+	 * to the WidgetApi.
+	 *
+	 */
+
+	var Widgets = function () {
+	  /**
+	   * Initialize a new {@link Widgets} instance.
+	   *
+	   * @param {Object} config Config details
+	   * @param {string} config.tenantAlias The tenant to access
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var Widgets = require('squatch-js').Widgets;
+	   * var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {Widgets} from 'squatch-js';
+	   * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   */
+	  function Widgets(config) {
+	    _classCallCheck(this, Widgets);
+
+	    this.tenantAlias = config.tenantAlias;
+	    this.api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
+	  }
+
+	  /**
+	   * This function calls the WidgetApi.cookieUser() method, and it renders
+	   * the widget if it is successful. Otherwise it shows the "error" widget.
+	   *
+	   * @param {Object} config
+	   * @param {string} config.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
+	   * @param {string} config.engagementMedium (POPUP/MOBILE)
+	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
+	   *                            validate the data (can be disabled)
+	   *
+	   * @return {Promise} json object if true, with a Widget and user details.
+	   */
+
+
+	  _createClass(Widgets, [{
+	    key: 'createCookieUser',
+	    value: function createCookieUser(config) {
+	      var _this = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this.api.cookieUser(config).then(function (response) {
+	          resolve({ widget: _this.load(response, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            _this.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * This function calls the WidgetApi.upsert() method, and it renders
+	     * the widget if it is successful. Otherwise it shows the "error" widget.
+	     *
+	     * @param {Object} config
+	     * @param {Object} config.user the user details
+	     * @param {string} config.user.id
+	     * @param {string} config.user.accountId
+	     * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} config.engagementMedium (POPUP/MOBILE)
+	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise} json object if true, with a Widget and user details.
+	     */
+
+	  }, {
+	    key: 'upsertUser',
+	    value: function upsertUser(config) {
+	      var _this2 = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this2.api.cookieUser(config).then(function (response) {
+	          resolve({ widget: _this2.load(response, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            _this2.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * This function calls the WidgetApi.render() method, and it renders
+	     * the widget if it is successful. Otherwise it shows the "error" widget.
+	     *
+	     * @param {Object} config
+	     * @param {Object} config.user the user details
+	     * @param {string} config.user.id
+	     * @param {string} config.user.accountId
+	     * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} config.engagementMedium (POPUP/MOBILE)
+	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise} json object if true, with a Widget and user details.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render(config) {
+	      var _this3 = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this3.api.cookieUser(config).then(function (response) {
+	          resolve({ widget: _this3.load({ template: response }, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            _this3.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }, {
+	    key: 'load',
+	    value: function load(response) {
+	      var _this4 = this;
+
+	      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
+
+	      if (!response) throw new Error('Unable to get a response');
+	      _log(response, config);
+
+	      var widget = void 0;
+	      var displayOnLoad = false;
+	      var displayCTA = false;
+	      var opts = response.jsOptions || '';
+
+	      var params = {
+	        content: response.template,
+	        type: config.widgetType || opts.widget.defaultWidgetType || '',
+	        api: this.api
+	      };
+
+	      opts.widgetUrlMappings.forEach(function (rule) {
+	        if (_this4.matchesUrl(rule.url)) {
+	          displayOnLoad = true;
+	          displayCTA = rule.showAsCTA;
+	          _log('Display ' + rule.widgetType + ' on ' + rule.rul);
+	        }
+	      });
+
+	      opts.conversionUrls.forEach(function (rule) {
+	        if (response.user.referredBy && _this4.matchesUrl(rule)) {
+	          displayOnLoad = true;
+	          _log('This is a conversion URL', rule);
+	        }
+	      });
+
+	      if (!displayCTA && config.engagementMedium === 'EMBED') {
+	        widget = new _EmbedWidget2.default(params);
+	        widget.load();
+	      } else if (!displayCTA && config.engagementMedium === 'POPUP') {
+	        widget = new _PopupWidget2.default(params);
+	        widget.load();
+	        if (displayOnLoad) widget.open();
+	      } else if (displayCTA) {
+	        var side = opts.cta.content.buttonSide;
+	        var position = opts.cta.content.buttonPosition;
+
+	        widget = new _CtaWidget2.default(params, { side: side, position: position });
+	        widget.load();
+	      } else if (displayOnLoad) {
+	        widget = new _PopupWidget2.default(params);
+	        widget.load();
+	        widget.open();
+	      }
+
+	      return widget;
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }, {
+	    key: 'renderErrorWidget',
+	    value: function renderErrorWidget(error) {
+	      var em = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'POPUP';
+
+	      _log(new Error(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message));
+
+	      var widget = void 0;
+	      var params = {
+	        content: 'error',
+	        rsCode: error.rsCode,
+	        type: 'ERROR_WIDGET'
+	      };
+
+	      if (em === 'EMBED') {
+	        widget = new _EmbedWidget2.default(params);
+	      } else if (em === 'POPUP') {
+	        widget = new _PopupWidget2.default(params);
+	      }
+
+	      widget.load();
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: 'matchesUrl',
+	    value: function matchesUrl(rule) {
+	      return window.location.href.match(new RegExp(rule));
+	    }
+	  }]);
+
+	  return Widgets;
+	}();
+
+	exports.default = Widgets;
 
 /***/ }
 /******/ ])

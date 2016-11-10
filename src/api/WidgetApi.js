@@ -157,7 +157,14 @@ export default class WidgetApi {
       headers: headers,
       credentials: 'include',
       mode: 'cors',
-    }).then(response => response.json());
+    }).then((response) => {
+      if (response.ok) {
+        return response.text();
+      }
+
+      const json = response.json;
+      return json.then(Promise.reject.bind(Promise));
+    });
   }
 
   /**
@@ -165,17 +172,26 @@ export default class WidgetApi {
    *
    */
   static doPut(url, data, jwt) {
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-SaaSquatch-Referrer': window ? window.location.href : '',
+    }
+
+    if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
     return fetch(url, {
       method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-SaaSquatch-User-Token': jwt,
-        'X-SaaSquatch-Referrer': window ? window.location.href : '',
-      },
+      headers: headers,
       credentials: 'include',
       mode: 'cors',
       body: data,
-    }).then(response => response.json());
+    }).then((response) => {
+      const json = response.json();
+      if (!response.ok) {
+        return json.then(Promise.reject.bind(Promise));
+      }
+      return json;
+    });
   }
 }

@@ -268,7 +268,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        credentials: 'include',
 	        mode: 'cors'
 	      }).then(function (response) {
-	        return response.json();
+	        if (response.ok) {
+	          return response.text();
+	        }
+
+	        var json = response.json;
+	        return json.then(Promise.reject.bind(Promise));
 	      });
 	    }
 
@@ -280,19 +285,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'doPut',
 	    value: function doPut(url, data, jwt) {
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json',
+	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
 	        method: 'PUT',
-	        headers: {
-	          Accept: 'application/json',
-	          'Content-Type': 'application/json',
-	          'X-SaaSquatch-User-Token': jwt,
-	          'X-SaaSquatch-Referrer': window ? window.location.href : ''
-	        },
+	        headers: headers,
 	        credentials: 'include',
 	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
-	        return response.json();
+	        var json = response.json();
+	        if (!response.ok) {
+	          return json.then(Promise.reject.bind(Promise));
+	        }
+	        return json;
 	      });
 	    }
 	  }]);
