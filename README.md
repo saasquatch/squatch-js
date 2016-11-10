@@ -48,22 +48,6 @@ Note: `engagementMedium` is required in the `squatch.widgets` functions if you w
       jwt: 'TOKEN'                           // String (required by default, or disable Security in the portal)
     });
 
-    // or
-
-    squatch.widgets.upsertUser({
-      user: {                               // Object (required)
-        id: 'USER_ID',                      // String (required)
-        accountId: 'USER_ACCOUNT_ID',       // String (required)
-        email: 'USER_EMAIL',                // String (optional)
-        firstName: 'USER_FIRST_NAME',       // String (optional)
-        lastName: 'USER_LAST_NAME',         // String (optional)
-        ...
-      },
-      engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
-      widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-      jwt: 'TOKEN'                          // String (required by default, or disable Security in the portal)
-    });
-
   });
 </script>
 ```
@@ -82,13 +66,6 @@ You can create/upsert users without loading a widget.
 
     var user;
 
-    squatch.createCookieUser({
-      engagementMedium: 'DEFAULT_IS_POPUP',  // String (optional: POPUP, EMBED)
-      widgetType: 'WIDGET_TYPE',             // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-      jwt: 'TOKEN'                           // String (required by default, or disable Security in the portal)
-    });
-
-    // or
     squatch.upsertUser({
       user: {                               // Object (required)
         id: 'USER_ID',                      // String (required)
@@ -101,8 +78,10 @@ You can create/upsert users without loading a widget.
       engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
       jwt: 'TOKEN'                          // String (required by default, talk to support if you'd like to disable Security)
-    }).then(function() {
+    }).then(function(response) {
       user = response.user;
+    }).catch(function(err){
+      console.log(err);
     });
 
     // autofill
