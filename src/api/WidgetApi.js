@@ -180,7 +180,7 @@ export default class WidgetApi {
     return fetch(url, {
       method: 'PUT',
       headers: headers,
-      credentials: 'include',
+      // credentials: 'include',
       mode: 'cors',
       body: data,
     }).then((response) => {

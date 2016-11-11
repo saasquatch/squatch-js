@@ -1298,7 +1298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'PUT',
 	        headers: headers,
-	        credentials: 'include',
+	        // credentials: 'include',
 	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
@@ -7002,16 +7002,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	          ctaElement.parentNode.removeChild(ctaElement);
 	        }
 
-	        frameDoc.body.style.overflowY = 'hidden';
+	        // frameDoc.body.style.overflowY = 'hidden';
 	        popupdiv.style.display = 'table';
 	        popupdiv.style.top = '0';
 
-	        frame.height = frameDoc.body.scrollHeight;
+	        frame.height = frameDoc.body.offsetHeight;
+	        _log(frame.height);
 
-	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container')[0], function (element) {
 	          var height = element.scrollHeight;
+	          var finalHeight = height;
+	          console.log('regular height', finalHeight);
 
-	          if (height > 0) frame.height = height;
+	          var referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
+	          var referralsHeight = referrals.offsetHeight;
+
+	          var el = frameDoc.getElementById('squatch-panel');
+
+	          // if (el.className !== 'open') {
+	          _log('before', finalHeight);
+	          finalHeight = finalHeight - referralsHeight;
+	          _log('after', finalHeight);
+	          // }
+
+	          if (finalHeight > 0) frame.height = finalHeight;
 
 	          if (window.innerHeight > frame.height) {
 	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + 'px';
@@ -7020,7 +7034,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 
 	          element.style.width = '100%';
-	          element.style.height = '100%';
+	          element.style.height = finalHeight + 'px';
 	        });
 
 	        me._loadEvent(_sqh);

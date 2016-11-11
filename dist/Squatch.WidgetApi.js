@@ -297,7 +297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'PUT',
 	        headers: headers,
-	        credentials: 'include',
+	        // credentials: 'include',
 	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
