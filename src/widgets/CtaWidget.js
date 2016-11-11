@@ -5,13 +5,12 @@ import { domready } from '../utils/domready';
 const _log = debug('squatch-js:CTAwidget');
 
 /**
- * A CtaWidget is displayed on top of your page 
- * 
+ * A CtaWidget is displayed on top of your page
+ *
  * To create a CtaWidget use {@link Widgets}
  *
  */
 export default class CtaWidget extends PopupWidget {
-  
   /**
    * @private
    */
@@ -41,7 +40,7 @@ export default class CtaWidget extends PopupWidget {
 
     me.ctaFrame = document.createElement('iframe');
     me.ctaFrame.squatchJsApi = me;
-    me.ctaFrame.scrolling = "no";
+    me.ctaFrame.scrolling = 'no';
     me.ctaFrame.style = `border:0; background-color:transparent; position:fixed; display:none;${me.side}${me.position}`;
 
 

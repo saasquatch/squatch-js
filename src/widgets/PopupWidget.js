@@ -6,14 +6,14 @@ const _log = debug('squatch-js:POPUPwidget');
 
 
 /**
- * The PopupWidget is used to display popups (also known as "Modals"). 
+ * The PopupWidget is used to display popups (also known as "Modals").
  * Popups widgets are rendered on top of other elements in a page.
- * 
+ *
  * To create a PopupWidget use {@link Widgets}
- * 
+ *
  */
 export default class PopupWidget extends Widget {
-  
+
   /**
    * @private
    */
@@ -147,7 +147,7 @@ export default class PopupWidget extends Widget {
 
   /**
    * Closes the widget
-   * 
+   *
    */
   close() {
     const popupdiv = this.popupdiv;

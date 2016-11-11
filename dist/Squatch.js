@@ -66,16 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.WidgetApi = undefined;
-
-	var _WidgetApi = __webpack_require__(2);
-
-	Object.defineProperty(exports, 'WidgetApi', {
-	  enumerable: true,
-	  get: function get() {
-	    return _WidgetApi.WidgetApi;
-	  }
-	});
+	exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = exports.WidgetApi = undefined;
 
 	var _EmbedWidget = __webpack_require__(15);
 
@@ -119,6 +110,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Widgets2 = _interopRequireDefault(_Widgets);
 
+	var _WidgetApi = __webpack_require__(2);
+
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
 	var _async = __webpack_require__(38);
@@ -137,6 +130,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                         */
 
 	var _log = (0, _debug2.default)('squatch-js');
+
+	exports.WidgetApi = _WidgetApi2.default;
+	exports.Widgets = _Widgets2.default;
+
 
 	/**
 	 * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
@@ -206,6 +203,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  fn();
 	}
 
+	/**
+	 * 
+	 */
 	function autofill(element) {
 	  var el = void 0;
 
@@ -3967,9 +3967,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _log = (0, _debug2.default)('squatch-js:EMBEDwidget');
 
+	/**
+	 * An EmbedWidget is displayed inline in part of your page.
+	 *
+	 * To create an EmbedWidget use {@link Widgets}
+	 *
+	 */
+
 	var EmbedWidget = function (_Widget) {
 	  _inherits(EmbedWidget, _Widget);
 
+	  /**
+	   * @private
+	   */
 	  function EmbedWidget(params) {
 	    var elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchembed';
 
@@ -4616,7 +4626,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _log = (0, _debug2.default)('squatch-js:widget');
 
-	/**
+	/*
 	 *
 	 * The Widget class is the base class for the different widget types available
 	 *
@@ -4635,14 +4645,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	var Widget = function () {
+
 	  /**
 	   * Initialize a new {@link Widget} instance.
 	   *
-	   * Creates an <iframe></iframe> in which the html content of the widget gets
-	   * embedded.
+	   * Creates an `iframe` in which the html content of the widget gets embedded.
 	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
 	   * for listening to the height of the widget content and make the iframe responsive.
 	   *
+	   * @private
 	   * @param {Object} params -> document this object
 	   *
 	   */
@@ -6560,9 +6571,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _log = (0, _debug2.default)('squatch-js:POPUPwidget');
 
+	/**
+	 * The PopupWidget is used to display popups (also known as "Modals").
+	 * Popups widgets are rendered on top of other elements in a page.
+	 *
+	 * To create a PopupWidget use {@link Widgets}
+	 *
+	 */
+
 	var PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
 
+	  /**
+	   * @private
+	   */
 	  function PopupWidget(params) {
 	    var triggerId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchpop';
 
@@ -6658,6 +6680,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _log('Failed to reload' + ex);
 	      });
 	    }
+
+	    /**
+	     * Opens the widget.
+	     */
+
 	  }, {
 	    key: 'open',
 	    value: function open() {
@@ -6702,6 +6729,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _log('Popup opened');
 	      });
 	    }
+
+	    /**
+	     * Closes the widget
+	     *
+	     */
+
 	  }, {
 	    key: 'close',
 	    value: function close() {
@@ -6772,9 +6805,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _log = (0, _debug2.default)('squatch-js:CTAwidget');
 
+	/**
+	 * A CtaWidget is displayed on top of your page
+	 *
+	 * To create a CtaWidget use {@link Widgets}
+	 *
+	 */
+
 	var CtaWidget = function (_PopupWidget) {
 	  _inherits(CtaWidget, _PopupWidget);
 
+	  /**
+	   * @private
+	   */
 	  function CtaWidget(params, opts) {
 	    _classCallCheck(this, CtaWidget);
 
@@ -6803,7 +6846,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.ctaFrame = document.createElement('iframe');
 	    me.ctaFrame.squatchJsApi = me;
-	    me.ctaFrame.scrolling = "no";
+	    me.ctaFrame.scrolling = 'no';
 	    me.ctaFrame.style = 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position;
 
 	    document.body.appendChild(_this.ctaFrame);
@@ -6856,10 +6899,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      });
 	    }
+
+	    /**
+	     *  @inheritdoc
+	     */
+
 	  }, {
 	    key: 'open',
 	    value: function open() {
 	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'open', this).call(this);
+	    }
+	    /**
+	     *  @inheritdoc
+	     */
+
+	  }, {
+	    key: 'close',
+	    value: function close() {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'close', this).call(this);
 	    }
 	  }]);
 
@@ -6907,6 +6964,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _log = (0, _debug2.default)('squatch-js:widgets');
 
 	/**
+	 * @interface WidgetLoad
+	 * @property {Widget} widget The widget that was created.
+	 * @property {User} user The user that's in the widget.
+	 */
+
+	/**
 	 *
 	 * The Widgets class contains a widget loading process for different calls
 	 * to the WidgetApi.
@@ -6948,7 +7011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
 	   *                            validate the data (can be disabled)
 	   *
-	   * @return {Promise} json object if true, with a Widget and user details.
+	   * @return {Promise<WidgetLoad>} json object if true, with a Widget and user details.
 	   */
 
 
@@ -6982,7 +7045,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
-	     * @return {Promise} json object if true, with a Widget and user details.
+	     * @return {Promise<WidgetLoad>} json object if true, with a Widget and user details.
 	     */
 
 	  }, {
@@ -7015,7 +7078,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
-	     * @return {Promise} json object if true, with a Widget and user details.
+	     * @return {Promise<WidgetLoad>} json object if true, with a Widget and user details.
 	     */
 
 	  }, {
