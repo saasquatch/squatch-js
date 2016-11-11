@@ -9,6 +9,9 @@
 import 'whatwg-fetch';
 import debug from 'debug';
 import Widgets from './widgets/Widgets';
+import { EmbedWidget } from './widgets/EmbedWidget';
+import { PopupWidget } from './widgets/PopupWidget';
+import { CtaWidget } from './widgets/CtaWidget';
 import WidgetApi from './api/WidgetApi';
 import asyncLoad from './async';
 
@@ -16,12 +19,13 @@ debug.disable('squatch-js*');
 const _log = debug('squatch-js');
 
 
-export { Widgets } from './widgets/Widgets';
-export { EmbedWidget } from './widgets/EmbedWidget';
-export { PopupWidget } from './widgets/PopupWidget';
-export { CtaWidget } from './widgets/CtaWidget';
-export { WidgetApi } from './api/WidgetApi';
-
+export { 
+  Widgets,
+  EmbedWidget,
+  PopupWidget,
+  CtaWidget,
+  WidgetApi
+};
 
 /**
  * Initializes the static `squatch` global. This sets up:
