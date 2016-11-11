@@ -5,6 +5,7 @@ import 'whatwg-fetch';
  * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
  * the SaaSquatch REST API. Used to record Widget events.
  *
+ * @private
  */
 export default class AnalyticsApi {
  /**

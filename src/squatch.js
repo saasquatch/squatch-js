@@ -16,48 +16,20 @@ debug.disable('squatch-js*');
 const _log = debug('squatch-js');
 
 
-export { WidgetApi, Widgets };
+export { Widgets } from './widgets/Widgets';
 export { EmbedWidget } from './widgets/EmbedWidget';
 export { PopupWidget } from './widgets/PopupWidget';
 export { CtaWidget } from './widgets/CtaWidget';
+export { WidgetApi } from './api/WidgetApi';
 
 
 /**
- * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
+ * Initializes the static `squatch` global. This sets up:
  *
- * @type {WidgetApi}
- * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.api.cookieUser();
- */
-let _api = null;
-export function api() {
-  return _api;
-}
-
-/**
- * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
+ *  - `squatch.api()` a static instance of the {@link WidgetApi}
+ *  - `squatch.widgets()` a static instance of {@link Widgets}
  *
- * @type {Widgets}
- * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.widgets().cookieUser();
- */
-let _widgets = null;
-export function widgets() {
-  return _widgets;
-}
-
-/**
- * Initializes a static `squatch` global. This sets up:
- *
- *  - `_api` a static instance of the {@link WidgetApi}
- *  - `_widgets` a static instance of {@link Widgets}
- *
- * @param {Object} config Configuration details
- * @param {string} config.tenantAlias The tenant alias connects to your account.
- *                        Note: There are both *live* and *test* tenant aliases.
- * @returns {void}
+ * @param {ConfigOptions} config Configuration details
  * @example
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
@@ -78,17 +50,47 @@ export function init(config) {
  * Squatch.js can't start safely making operations until it's "ready". This
  * function detects that state.
  *
- * @param {function} fn Anonymous function
+ * @param {function} fn A callback once Squatch.js is ready.
  *
- * @returns {void}
  * @example
  * squatch.ready(function() {
  *   console.log("ready!");
+ *   squatch.api().cookieUser();
  * });
  */
 export function ready(fn) {
   fn();
 }
+
+/**
+ * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
+ *
+ * @type {WidgetApi}
+ * @example
+ * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * squatch.ready(function() {
+ *   squatch.api().cookieUser();
+ * });
+ */
+export function api() {
+  return _api;
+}
+let _api = null;
+
+/**
+ * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
+ *
+ * @type {Widgets}
+ * @example
+ * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * squatch.ready(function() {
+ *   squatch.widgets().cookieUser().then(doSomething);
+ * });
+ */
+export function widgets() {
+  return _widgets;
+}
+let _widgets = null;
 
 /**
  * 
@@ -116,4 +118,5 @@ export function autofill(element) {
   });
 }
 
+export * from './docs.js';
 if (window) asyncLoad();
