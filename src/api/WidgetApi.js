@@ -11,10 +11,7 @@ export default class WidgetApi {
   /**
    * Initialize a new {@link WidgetApi} instance.
    *
-   * @param {Object} config Config details
-   * @param {string} config.tenantAlias The tenant to access
-   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
-   *    Useful if you want to use a proxy like {@link https://requestb.in/ RequestBin} or {@link https://runscope.com/ Runscope}.
+   * @param {ConfigOptions} config Config details
    *
    * @example <caption>Browser example</caption>
    * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});

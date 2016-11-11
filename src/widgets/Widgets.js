@@ -7,12 +7,6 @@ import CtaWidget from './CtaWidget';
 const _log = debug('squatch-js:widgets');
 
 /**
- * @interface WidgetLoad
- * @property {Widget} widget The widget that was created.
- * @property {User} user The user that's in the widget.
- */
-
-/**
  *
  * The Widgets class contains a widget loading process for different calls
  * to the WidgetApi.
@@ -22,8 +16,7 @@ export default class Widgets {
   /**
    * Initialize a new {@link Widgets} instance.
    *
-   * @param {Object} config Config details
-   * @param {string} config.tenantAlias The tenant to access
+   * @param {ConfigOptions} config Config details
    *
    * @example <caption>Browser example</caption>
    * var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
@@ -38,7 +31,7 @@ export default class Widgets {
    */
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
-    this.api = new WidgetApi({ tenantAlias: config.tenantAlias });
+    this.api = new WidgetApi(config);
   }
 
   /**
@@ -51,7 +44,7 @@ export default class Widgets {
    * @param {string} config.jwt the JSON Web Token (JWT) that is used to
    *                            validate the data (can be disabled)
    *
-   * @return {Promise<WidgetLoad>} json object if true, with a Widget and user details.
+   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
   createCookieUser(config) {
     return new Promise((resolve, reject) => {
@@ -79,7 +72,7 @@ export default class Widgets {
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
-   * @return {Promise<WidgetLoad>} json object if true, with a Widget and user details.
+   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
   upsertUser(config) {
     return new Promise((resolve, reject) => {
@@ -107,7 +100,7 @@ export default class Widgets {
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
-   * @return {Promise<WidgetLoad>} json object if true, with a Widget and user details.
+   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
   render(config) {
     return new Promise((resolve, reject) => {
