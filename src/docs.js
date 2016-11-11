@@ -19,3 +19,30 @@ export function help(){
  * @property {User} user The user that's in the widget.
  * 
  */
+
+/**
+ * EngagementMedium is an enum for the content of the widgets. 
+ * 
+ * @name EngagementMedium
+ * @enum {string}
+ * @readonly
+ * @property {string}  REFERRER_WIDGET      Widget content that lets people make referrals
+ * @property {string}  CONVERSION_WIDGET    Widget content that shows that someone has been referred
+ * @example
+ *  engagementMedium: "REFERRER_WIDGET"
+ * 
+ */
+ 
+ 
+ /**
+ * WidgetType is an enum for types of ways a Widget can be displayed.
+ * 
+ * @name WidgetType
+ * @enum {string}
+ * @readonly
+ * @property {string}  POPUP    Displays the widget as a modal popup. Creates a {@link PopupWidget}
+ * @property {string}  EMBED    Displays the widget embedded in the page. Create an {@link EmbedWidget}
+ * @example
+ *  widgetType: "POPUP"
+ * 
+ */

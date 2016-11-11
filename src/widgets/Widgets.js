@@ -39,8 +39,8 @@ export default class Widgets {
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
    * @param {Object} config
-   * @param {string} config.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-   * @param {string} config.engagementMedium (POPUP/MOBILE)
+   * @param {EngagementMedium} config.widgetType The content of the widget.
+   * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used to
    *                            validate the data (can be disabled)
    *
@@ -67,8 +67,8 @@ export default class Widgets {
    * @param {Object} config.user the user details
    * @param {string} config.user.id
    * @param {string} config.user.accountId
-   * @param {string} config.widgetType (CONVERSION_WIDGET/REFERRING_WIDGET)
-   * @param {string} config.engagementMedium (POPUP/MOBILE)
+   * @param {EngagementMedium} config.widgetType The content of the widget.
+   * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
@@ -95,8 +95,8 @@ export default class Widgets {
    * @param {Object} config.user the user details
    * @param {string} config.user.id
    * @param {string} config.user.accountId
-   * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-   * @param {string} config.engagementMedium (POPUP/MOBILE)
+   * @param {EngagementMedium} config.widgetType The content of the widget.
+   * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
