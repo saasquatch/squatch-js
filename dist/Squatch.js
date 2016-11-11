@@ -66,9 +66,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = exports.WidgetApi = undefined;
+	exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
 
-	var _EmbedWidget = __webpack_require__(2);
+	var _Widgets = __webpack_require__(2);
+
+	Object.defineProperty(exports, 'Widgets', {
+	  enumerable: true,
+	  get: function get() {
+	    return _Widgets.Widgets;
+	  }
+	});
+
+	var _EmbedWidget = __webpack_require__(19);
 
 	Object.defineProperty(exports, 'EmbedWidget', {
 	  enumerable: true,
@@ -77,7 +86,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _PopupWidget = __webpack_require__(10);
+	var _PopupWidget = __webpack_require__(36);
 
 	Object.defineProperty(exports, 'PopupWidget', {
 	  enumerable: true,
@@ -86,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _CtaWidget = __webpack_require__(11);
+	var _CtaWidget = __webpack_require__(37);
 
 	Object.defineProperty(exports, 'CtaWidget', {
 	  enumerable: true,
@@ -95,16 +104,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-	var _interfaces = __webpack_require__(12);
+	var _WidgetApi = __webpack_require__(6);
 
-	Object.keys(_interfaces).forEach(function (key) {
-	  if (key === "default" || key === "__esModule") return;
-	  Object.defineProperty(exports, key, {
-	    enumerable: true,
-	    get: function get() {
-	      return _interfaces[key];
-	    }
-	  });
+	Object.defineProperty(exports, 'WidgetApi', {
+	  enumerable: true,
+	  get: function get() {
+	    return _WidgetApi.WidgetApi;
+	  }
 	});
 	exports.init = init;
 	exports.ready = ready;
@@ -112,21 +118,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.widgets = widgets;
 	exports.autofill = autofill;
 
-	__webpack_require__(8);
+	var _docs = __webpack_require__(38);
+
+	Object.keys(_docs).forEach(function (key) {
+	  if (key === "default" || key === "__esModule") return;
+	  Object.defineProperty(exports, key, {
+	    enumerable: true,
+	    get: function get() {
+	      return _docs[key];
+	    }
+	  });
+	});
+
+	__webpack_require__(7);
 
 	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widgets = __webpack_require__(13);
-
 	var _Widgets2 = _interopRequireDefault(_Widgets);
-
-	var _WidgetApi = __webpack_require__(14);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
-	var _async = __webpack_require__(26);
+	var _async = __webpack_require__(39);
 
 	var _async2 = _interopRequireDefault(_async);
 
@@ -142,10 +156,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                         */
 
 	var _log = (0, _debug2.default)('squatch-js');
-
-	exports.WidgetApi = _WidgetApi2.default;
-	exports.Widgets = _Widgets2.default;
-
 
 	/**
 	 * Initializes the static `squatch` global. This sets up:
@@ -179,6 +189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * squatch.ready(function() {
 	 *   console.log("ready!");
+	 *   squatch.api().cookieUser();
 	 * });
 	 */
 	function ready(fn) {
@@ -191,7 +202,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @type {WidgetApi}
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.api().cookieUser();
+	 * squatch.ready(function() {
+	 *   squatch.api().cookieUser();
+	 * });
 	 */
 	function api() {
 	  return _api;
@@ -204,7 +217,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @type {Widgets}
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.widgets().cookieUser();
+	 * squatch.ready(function() {
+	 *   squatch.widgets().cookieUser().then(doSomething);
+	 * });
 	 */
 	function widgets() {
 	  return _widgets;
@@ -251,123 +266,270 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
 	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widget2 = __webpack_require__(6);
+	var _WidgetApi = __webpack_require__(6);
 
-	var _Widget3 = _interopRequireDefault(_Widget2);
+	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
-	var _domready = __webpack_require__(9);
+	var _EmbedWidget = __webpack_require__(19);
+
+	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
+
+	var _PopupWidget = __webpack_require__(36);
+
+	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
+
+	var _CtaWidget = __webpack_require__(37);
+
+	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _log = (0, _debug2.default)('squatch-js:EMBEDwidget');
+	var _log = (0, _debug2.default)('squatch-js:widgets');
 
 	/**
-	 * An EmbedWidget is displayed inline in part of your page. 
-	 * 
-	 * To create an EmbedWidget use {@link Widgets}
-	 * 
+	 *
+	 * The Widgets class contains a widget loading process for different calls
+	 * to the WidgetApi.
+	 *
 	 */
 
-	var EmbedWidget = function (_Widget) {
-	  _inherits(EmbedWidget, _Widget);
-
+	var Widgets = function () {
 	  /**
-	   * @private
+	   * Initialize a new {@link Widgets} instance.
+	   *
+	   * @param {ConfigOptions} config Config details
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var Widgets = require('squatch-js').Widgets;
+	   * var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {Widgets} from 'squatch-js';
+	   * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
 	   */
-	  function EmbedWidget(params) {
-	    var elementId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchembed' : arguments[1];
+	  function Widgets(config) {
+	    _classCallCheck(this, Widgets);
 
-	    _classCallCheck(this, EmbedWidget);
-
-	    var _this = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, params));
-
-	    _this.element = document.getElementById(elementId);
-
-	    if (!_this.element) throw new Error('elementId \'' + elementId + '\' not found.\'');
-	    return _this;
+	    this.tenantAlias = config.tenantAlias;
+	    this.api = new _WidgetApi2.default(config);
 	  }
 
-	  _createClass(EmbedWidget, [{
-	    key: 'load',
-	    value: function load() {
-	      var me = this;
+	  /**
+	   * This function calls the WidgetApi.cookieUser() method, and it renders
+	   * the widget if it is successful. Otherwise it shows the "error" widget.
+	   *
+	   * @param {Object} config
+	   * @param {string} config.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
+	   * @param {string} config.engagementMedium (POPUP/MOBILE)
+	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
+	   *                            validate the data (can be disabled)
+	   *
+	   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+	   */
 
-	      if (!me.element.firstChild || me.element.firstChild.nodeName === '#text') {
-	        me.element.appendChild(me.frame);
+
+	  _createClass(Widgets, [{
+	    key: 'createCookieUser',
+	    value: function createCookieUser(config) {
+	      var _this = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this.api.cookieUser(config).then(function (response) {
+	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * This function calls the WidgetApi.upsert() method, and it renders
+	     * the widget if it is successful. Otherwise it shows the "error" widget.
+	     *
+	     * @param {Object} config
+	     * @param {Object} config.user the user details
+	     * @param {string} config.user.id
+	     * @param {string} config.user.accountId
+	     * @param {string} config.widgetType (CONVERSION_WIDGET/REFERRING_WIDGET)
+	     * @param {string} config.engagementMedium (POPUP/MOBILE)
+	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+	     */
+
+	  }, {
+	    key: 'upsertUser',
+	    value: function upsertUser(config) {
+	      var _this2 = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this2.api.upsert(config).then(function (response) {
+	          resolve({ widget: _this2.renderWidget(response, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * This function calls the WidgetApi.render() method, and it renders
+	     * the widget if it is successful. Otherwise it shows the "error" widget.
+	     *
+	     * @param {Object} config
+	     * @param {Object} config.user the user details
+	     * @param {string} config.user.id
+	     * @param {string} config.user.accountId
+	     * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} config.engagementMedium (POPUP/MOBILE)
+	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render(config) {
+	      var _this3 = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this3.api.cookieUser(config).then(function (response) {
+	          resolve({ widget: _this3.renderWidget({ template: response }, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }, {
+	    key: 'renderWidget',
+	    value: function renderWidget(response) {
+	      var config = arguments.length <= 1 || arguments[1] === undefined ? { widgetType: '', engagementMedium: '' } : arguments[1];
+
+	      _log('Loading...');
+	      if (!response) throw new Error('Unable to get a response');
+	      if (!response.jsOptions) throw new Error('Missing jsOptions in response');
+	      _log(response, config);
+
+	      var widget = void 0;
+	      var displayOnLoad = false;
+	      var displayCTA = false;
+	      var opts = response.jsOptions || '';
+
+	      var params = {
+	        content: response.template,
+	        type: config.widgetType || opts.widget.defaultWidgetType,
+	        api: this.api
+	      };
+
+	      if (opts.widgetUrlMappings) {
+	        opts.widgetUrlMappings.forEach(function (rule) {
+	          if (Widgets.matchesUrl(rule.url)) {
+	            displayOnLoad = true;
+	            displayCTA = rule.showAsCTA;
+	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
+	          }
+	        });
 	      }
 
-	      var frameDoc = me.frame.contentWindow.document;
-	      frameDoc.open();
-	      frameDoc.write(me.content);
-	      frameDoc.close();
-
-	      (0, _domready.domready)(frameDoc, function () {
-	        var _sqh = me.frame.contentWindow.squatch;
-	        var ctaElement = frameDoc.getElementById('cta');
-
-	        if (ctaElement) {
-	          ctaElement.parentNode.removeChild(ctaElement);
-	        }
-
-	        me.frame.height = frameDoc.body.scrollHeight;
-
-	        // Adjust frame height when size of body changes
-	        me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	          var height = element.offsetHeight;
-	          me.frame.height = height;
+	      if (opts.conversionUrls) {
+	        opts.conversionUrls.forEach(function (rule) {
+	          if (response.user.referredBy && Widgets.matchesUrl(rule)) {
+	            displayOnLoad = true;
+	            _log('This is a conversion URL', rule);
+	          }
 	        });
+	      }
 
-	        me._loadEvent(_sqh);
-	        _log('loaded');
-	      });
+	      if (!displayCTA && config.engagementMedium === 'EMBED') {
+	        widget = new _EmbedWidget2.default(params);
+	        widget.load();
+	      } else if (!displayCTA && config.engagementMedium === 'POPUP') {
+	        widget = new _PopupWidget2.default(params);
+	        widget.load();
+	        if (displayOnLoad) widget.open();
+	      } else if (displayCTA) {
+	        var side = opts.cta.content.buttonSide;
+	        var position = opts.cta.content.buttonPosition;
+
+	        widget = new _CtaWidget2.default(params, { side: side, position: position });
+	        widget.load();
+	      } else if (displayOnLoad) {
+	        widget = new _PopupWidget2.default(params);
+	        widget.load();
+	        widget.open();
+	      }
+
+	      return widget;
 	    }
-	  }, {
-	    key: 'reload',
-	    value: function reload(params, jwt) {
-	      var me = this;
 
-	      me.widgetApi.cookieUser({
-	        user: {
-	          email: params
-	        },
-	        engagementMedium: 'EMBED',
-	        widgetType: me.type,
-	        jwt: jwt
-	      }).then(function (response) {
-	        if (response.template) {
-	          me.content = response.template;
-	          me.load();
-	        }
-	      }).catch(function (ex) {
-	        _log('Failed to reload ' + ex);
-	      });
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }], [{
+	    key: 'renderErrorWidget',
+	    value: function renderErrorWidget(error) {
+	      var em = arguments.length <= 1 || arguments[1] === undefined ? 'POPUP' : arguments[1];
+
+	      _log(new Error(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message));
+
+	      var widget = void 0;
+	      var params = {
+	        content: 'error',
+	        rsCode: error.rsCode,
+	        type: 'ERROR_WIDGET'
+	      };
+
+	      if (em === 'EMBED') {
+	        widget = new _EmbedWidget2.default(params);
+	      } else if (em === 'POPUP') {
+	        widget = new _PopupWidget2.default(params);
+	      }
+
+	      widget.load();
 	    }
-	  }, {
-	    key: '_error',
-	    value: function _error(rs) {
-	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'embed' : arguments[1];
-	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
 
-	      return _get(EmbedWidget.prototype.__proto__ || Object.getPrototypeOf(EmbedWidget.prototype), '_error', this).call(this, rs, mode, style);
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: 'matchesUrl',
+	    value: function matchesUrl(rule) {
+	      return window.location.href.match(new RegExp(rule));
 	    }
 	  }]);
 
-	  return EmbedWidget;
-	}(_Widget3.default);
+	  return Widgets;
+	}();
 
-	exports.default = EmbedWidget;
+	exports.default = Widgets;
 
 /***/ },
 /* 3 */
@@ -889,219 +1051,248 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _debug = __webpack_require__(3);
+	__webpack_require__(7);
 
-	var _debug2 = _interopRequireDefault(_debug);
+	var _jsonschema = __webpack_require__(8);
 
-	var _elementResizeDetector = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"element-resize-detector\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _schema = __webpack_require__(18);
 
-	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
-
-	var _AnalyticsApi = __webpack_require__(7);
-
-	var _AnalyticsApi2 = _interopRequireDefault(_AnalyticsApi);
+	var _schema2 = _interopRequireDefault(_schema);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	var _log = (0, _debug2.default)('squatch-js:widget');
-
-	/*
-	 *
-	 * The Widget class is the base class for the different widget types available
-	 *
-	 * @example <caption>Custom Widget example</caption>
-	 *    class CustomWidget extends Widget {
-	 *      constructor(params,stuff) {
-	 *        super(params);
-	 *        // do stuff
-	 *      }
-	 *
-	 *      load() {
-	 *        // custom loading of widget
-	 *      }
-	 *    }
-	 *
-	 */
-
-	var Widget = function () {
-
-	  /**
-	   * Initialize a new {@link Widget} instance.
-	   *
-	   * Creates an `iframe` in which the html content of the widget gets embedded.
-	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
-	   * for listening to the height of the widget content and make the iframe responsive.
-	   *
-	   * @private
-	   * @param {Object} params -> document this object
-	   *
-	   */
-	  function Widget(params) {
-	    _classCallCheck(this, Widget);
-
-	    _log('widget initializing ...');
-	    var me = this;
-	    me.content = params.content === 'error' ? me._error(params.rsCode) : params.content;
-	    me.type = params.type; // don't need this?
-	    me.widgetApi = params.api || '';
-	    me.analyticsApi = new _AnalyticsApi2.default();
-	    me.frame = document.createElement('iframe');
-	    me.frame.squatchJsApi = me;
-	    me.frame.width = '100%';
-	    me.frame.style = 'border: 0; background-color: none;';
-	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /* ,debug: 'true'*/ });
-	  }
-
-	  _createClass(Widget, [{
-	    key: '_loadEvent',
-	    value: function _loadEvent(sqh) {
-	      if (sqh) {
-	        this.analyticsApi.pushAnalyticsLoadEvent({
-	          tenantAlias: sqh.analytics.attributes.tenant,
-	          externalAccountId: sqh.analytics.attributes.accountId,
-	          externalUserId: sqh.analytics.attributes.userId,
-	          engagementMedium: sqh.mode.widgetMode
-	        }).then(function (response) {
-	          _log(sqh.mode.widgetMode + ' loaded event recorded. ' + response);
-	        }).catch(function (ex) {
-	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
-	        });
-	      }
-	    }
-	  }, {
-	    key: '_shareEvent',
-	    value: function _shareEvent(sqh, medium) {
-	      if (sqh) {
-	        this.analyticsApi.pushAnalyticsShareClickedEvent({
-	          tenantAlias: sqh.analytics.attributes.tenant,
-	          externalAccountId: sqh.analytics.attributes.accountId,
-	          externalUserId: sqh.analytics.attributes.userId,
-	          engagementMedium: sqh.mode.widgetMode,
-	          shareMedium: medium
-	        }).then(function (response) {
-	          _log(sqh.mode.widgetMode + ' share ' + medium + ' event recorded. ' + response);
-	        }).catch(function (ex) {
-	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
-	        });
-	      }
-	    }
-	  }, {
-	    key: '_error',
-	    value: function _error(rs) {
-	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'modal' : arguments[1];
-	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
-
-	      var me = this;
-
-	      me.errorTemplate = '<!DOCTYPE html>\n    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->\n    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->\n    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->\n    <head>\n      <link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">\n      <style>\n        ' + style + '\n      </style>\n    </head>\n    <body>\n\n      <div class="squatch-container ' + mode + '">\n        <div class="errorheader">\n          <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>\n          <p class="errortitle">Error</p>\n        </div>\n        <div class="errorbody">\n          <div class="sadface"><img src="https://d35vcmgdka52pk.cloudfront.net/assets/images/face.png"></div>\n          <h4>Our referral program is temporarily unavailable.</h4><br>\n          <p>Please reload the page or check back later.</p>\n          <p>If the persists please contact our support team.</p>\n          <br>\n          <br>\n          <div class="right-align errtxt">\n            Error Code: ' + rs + '\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>';
-
-	      return me.errorTemplate;
-	    }
-	  }]);
-
-	  return Widget;
-	}();
-
-	exports.default = Widget;
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(8);
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 	/**
 	 *
-	 * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
-	 * the SaaSquatch REST API. Used to record Widget events.
+	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
 	 *
 	 */
-	var AnalyticsApi = function () {
+	var WidgetApi = function () {
 	  /**
-	   * Initialize a new {@link AnalyticsApi} instance.
+	   * Initialize a new {@link WidgetApi} instance.
 	   *
-	   * @param {Object} config Config details
-	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
+	   * @param {ConfigOptions} config Config details
 	   *
+	   * @example <caption>Browser example</caption>
+	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var WidgetApi = require('squatch-js').WidgetApi;
+	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {WidgetApi} from 'squatch-js';
+	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   */
-	  function AnalyticsApi() {
-	    _classCallCheck(this, AnalyticsApi);
+	  function WidgetApi(config) {
+	    _classCallCheck(this, WidgetApi);
 
+	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
+	    this.tenantAlias = config.tenantAlias;
 	    this.domain = 'https://staging.referralsaasquatch.com';
 	  }
 
-	  _createClass(AnalyticsApi, [{
-	    key: 'pushAnalyticsLoadEvent',
-	    value: function pushAnalyticsLoadEvent(params) {
-	      var tenantAlias = encodeURIComponent(params.tenantAlias);
-	      var accountId = encodeURIComponent(params.externalAccountId);
-	      var userId = encodeURIComponent(params.externalUserId);
-	      var engagementMedium = encodeURIComponent(params.engagementMedium);
+	  /**
+	   * Creates/upserts an anonymous user.
+	   *
+	   * @param {Object} params
+	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
+	   * @param {string} params.engagementMedium (POPUP/MOBILE)
+	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
+	   *                            validate the data (can be disabled)
+	   *
+	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	   */
 
-	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium;
+
+	  _createClass(WidgetApi, [{
+	    key: 'cookieUser',
+	    value: function cookieUser() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+
+	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/user/cookie_user' + optionalParams;
 	      var url = this.domain + path;
 
-	      return AnalyticsApi.doPost(url, JSON.stringify({}));
-	    }
-	  }, {
-	    key: 'pushAnalyticsShareClickedEvent',
-	    value: function pushAnalyticsShareClickedEvent(params) {
-	      var tenantAlias = encodeURIComponent(params.tenantAlias);
-	      var accountId = encodeURIComponent(params.externalAccountId);
-	      var userId = encodeURIComponent(params.externalUserId);
-	      var engagementMedium = encodeURIComponent(params.engagementMedium);
-	      var shareMedium = encodeURIComponent(params.shareMedium);
-
-	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium + '&shareMedium=' + shareMedium;
-	      var url = this.domain + path;
-
-	      return AnalyticsApi.doPost(url, JSON.stringify({}));
+	      return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
 	    }
 
 	    /**
-	    * @private
-	    *
-	    * @param {String} url The requested url
-	    * @param {String} data Stringified json object
-	    *
-	    * @returns {Promise} fetch promise
-	    */
+	     * Creates/upserts user.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
+	     */
+
+	  }, {
+	    key: 'upsert',
+	    value: function upsert() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+
+	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.user.accountId);
+	      var userId = encodeURIComponent(params.user.id);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
+	      var url = this.domain + path;
+
+	      var user = params.user;
+	      delete user.accountId;
+	      delete user.id;
+
+	      return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
+	    }
+
+	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     * @return {Promise} template html if true.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+
+	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.user.accountId);
+	      var userId = encodeURIComponent(params.user.id);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/render' + optionalParams;
+	      var url = this.domain + path;
+	      return WidgetApi.doRequest(url, params.jwt);
+	    }
+
+	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.code the user details
+	     * @return {Promise} code referral code if true.
+	     */
+
+	  }, {
+	    key: 'squatchReferralCookie',
+	    value: function squatchReferralCookie() {
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
+	      return WidgetApi.doRequest(url);
+	    }
+
+	    /**
+	     * @private
+	     */
 
 	  }], [{
-	    key: 'doPost',
-	    value: function doPost(url, data) {
+	    key: 'validateInput',
+	    value: function validateInput(params, jsonSchema) {
+	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
+	      if (!valid.valid) throw valid.errors;
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: 'doRequest',
+	    value: function doRequest(url) {
+	      var jwt = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
 	      return fetch(url, {
-	        method: 'POST',
-	        headers: {
-	          Accept: 'application/json',
-	          'Content-Type': 'application/json'
-	        },
+	        method: 'GET',
+	        headers: headers,
+	        credentials: 'include',
+	        mode: 'cors'
+	      }).then(function (response) {
+	        if (response.ok) {
+	          return response.text();
+	        }
+
+	        var json = response.json;
+	        return json.then(Promise.reject.bind(Promise));
+	      });
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }, {
+	    key: 'doPut',
+	    value: function doPut(url, data, jwt) {
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json',
+	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
+	      return fetch(url, {
+	        method: 'PUT',
+	        headers: headers,
+	        credentials: 'include',
+	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
-	        return response.text();
+	        var json = response.json();
+	        if (!response.ok) {
+	          return json.then(Promise.reject.bind(Promise));
+	        }
+	        return json;
 	      });
 	    }
 	  }]);
 
-	  return AnalyticsApi;
+	  return WidgetApi;
 	}();
 
-	exports.default = AnalyticsApi;
+	exports.default = WidgetApi;
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -1540,994 +1731,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.domready = domready;
-	/*!
-	  * domready (c) Dustin Diaz 2014 - License MIT
-	  *
-	  */
-	function domready(targetDoc, fn) {
-	  var fns = [],
-	      _listener = void 0,
-	      doc = targetDoc,
-	      hack = doc.documentElement.doScroll,
-	      domContentLoaded = 'DOMContentLoaded',
-	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
-
-	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
-	    doc.removeEventListener(domContentLoaded, _listener);
-	    loaded = 1;
-	    while (_listener = fns.shift()) {
-	      _listener();
-	    }
-	  });
-
-	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
-	}
-
-/***/ },
-/* 10 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _debug = __webpack_require__(3);
-
-	var _debug2 = _interopRequireDefault(_debug);
-
-	var _Widget2 = __webpack_require__(6);
-
-	var _Widget3 = _interopRequireDefault(_Widget2);
-
-	var _domready = __webpack_require__(9);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _log = (0, _debug2.default)('squatch-js:POPUPwidget');
-
-	/**
-	 * The PopupWidget is used to display popups (also known as "Modals"). 
-	 * Popups widgets are rendered on top of other elements in a page.
-	 * 
-	 * To create a PopupWidget use {@link Widgets}
-	 * 
-	 */
-
-	var PopupWidget = function (_Widget) {
-	  _inherits(PopupWidget, _Widget);
-
-	  /**
-	   * @private
-	   */
-	  function PopupWidget(params) {
-	    var triggerId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchpop' : arguments[1];
-
-	    _classCallCheck(this, PopupWidget);
-
-	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, params));
-
-	    var me = _this;
-
-	    me.triggerElement = document.getElementById(triggerId);
-
-	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add div tag with id=\'squatchpop\'.');
-
-	    me.popupdiv = document.createElement('div');
-	    me.popupdiv.id = 'squatchModal';
-	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
-
-	    me.popupcontent = document.createElement('div');
-	    me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
-
-	    me.triggerElement.onclick = function () {
-	      me.open();
-	    };
-	    me.popupdiv.onclick = function (event) {
-	      me._clickedOutside(event);
-	    };
-	    return _this;
-	  }
-
-	  _createClass(PopupWidget, [{
-	    key: 'load',
-	    value: function load() {
-	      var me = this;
-
-	      me.popupdiv.appendChild(me.popupcontent);
-	      document.body.appendChild(me.popupdiv);
-	      me.popupcontent.appendChild(me.frame);
-
-	      var frameDoc = me.frame.contentWindow.document;
-	      frameDoc.open();
-	      frameDoc.write(me.content);
-	      frameDoc.close();
-	      _log('Popup template loaded into iframe');
-	    }
-	  }, {
-	    key: 'reload',
-	    value: function reload(params, jwt) {
-	      var me = this;
-
-	      me.widgetApi.cookieUser({
-	        user: {
-	          email: params
-	        },
-	        engagementMedium: 'POPUP',
-	        widgetType: me.type,
-	        jwt: jwt
-	      }).then(function (response) {
-	        if (response.template) {
-	          (function () {
-	            me.content = response.template;
-	            var frameDoc = me.frame.contentWindow.document;
-	            frameDoc.open();
-	            frameDoc.write(me.content);
-	            frameDoc.close();
-
-	            (0, _domready.domready)(frameDoc, function () {
-	              var ctaElement = frameDoc.getElementById('cta');
-
-	              if (ctaElement) {
-	                ctaElement.parentNode.removeChild(ctaElement);
-	              }
-
-	              me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	                var height = element.offsetHeight;
-
-	                if (height > 0) me.frame.height = height;
-
-	                if (window.innerHeight > me.frame.height) {
-	                  me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + 'px';
-	                } else {
-	                  me.popupdiv.style.paddingTop = '5px';
-	                }
-
-	                element.style.width = '100%';
-	                element.style.height = '100%';
-	              });
-
-	              _log('Popup reloaded');
-	            });
-	          })();
-	        }
-	      }).catch(function (ex) {
-	        _log('Failed to reload' + ex);
-	      });
-	    }
-
-	    /**
-	     * Opens the widget.
-	     */
-
-	  }, {
-	    key: 'open',
-	    value: function open() {
-	      var me = this;
-	      var popupdiv = me.popupdiv;
-	      var frame = me.frame;
-	      var frameWindow = frame.contentWindow;
-	      var frameDoc = frameWindow.document;
-	      var erd = this.erd;
-
-	      // Adjust frame height when size of body changes
-	      (0, _domready.domready)(frameDoc, function () {
-	        var _sqh = frameWindow.squatch;
-	        var ctaElement = frameDoc.getElementById('cta');
-
-	        if (ctaElement) {
-	          ctaElement.parentNode.removeChild(ctaElement);
-	        }
-
-	        frameDoc.body.style.overflowY = 'hidden';
-	        popupdiv.style.display = 'table';
-	        popupdiv.style.top = '0';
-
-	        frame.height = frameDoc.body.scrollHeight;
-
-	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	          var height = element.scrollHeight;
-
-	          if (height > 0) frame.height = height;
-
-	          if (window.innerHeight > frame.height) {
-	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + 'px';
-	          } else {
-	            popupdiv.style.paddingTop = '5px';
-	          }
-
-	          element.style.width = '100%';
-	          element.style.height = '100%';
-	        });
-
-	        me._loadEvent(_sqh);
-	        _log('Popup opened');
-	      });
-	    }
-
-	    /**
-	     * Closes the widget
-	     * 
-	     */
-
-	  }, {
-	    key: 'close',
-	    value: function close() {
-	      var popupdiv = this.popupdiv;
-	      var frameDoc = this.frame.contentWindow.document;
-	      var erd = this.erd;
-
-	      popupdiv.style.display = 'none';
-	      erd.uninstall(frameDoc.body);
-
-	      _log('Popup closed');
-	    }
-	  }, {
-	    key: '_clickedOutside',
-	    value: function _clickedOutside(e) {
-	      if (e.target === this.popupdiv) {
-	        this.close();
-	      }
-	    }
-	  }, {
-	    key: '_error',
-	    value: function _error(rs) {
-	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'modal' : arguments[1];
-	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
-
-	      var _style = 'body { margin: 0; } .modal { box-shadow: none; border: 0; }';
-
-	      return _get(PopupWidget.prototype.__proto__ || Object.getPrototypeOf(PopupWidget.prototype), '_error', this).call(this, rs, mode, style || _style);
-	    }
-	  }]);
-
-	  return PopupWidget;
-	}(_Widget3.default);
-
-	exports.default = PopupWidget;
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-	var _debug = __webpack_require__(3);
-
-	var _debug2 = _interopRequireDefault(_debug);
-
-	var _PopupWidget2 = __webpack_require__(10);
-
-	var _PopupWidget3 = _interopRequireDefault(_PopupWidget2);
-
-	var _domready = __webpack_require__(9);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var _log = (0, _debug2.default)('squatch-js:CTAwidget');
-
-	/**
-	 * A CtaWidget is displayed on top of your page 
-	 * 
-	 * To create a CtaWidget use {@link Widgets}
-	 *
-	 */
-
-	var CtaWidget = function (_PopupWidget) {
-	  _inherits(CtaWidget, _PopupWidget);
-
-	  /**
-	   * @private
-	   */
-	  function CtaWidget(params, opts) {
-	    _classCallCheck(this, CtaWidget);
-
-	    var ctaElement = document.createElement('div');
-	    ctaElement.id = 'cta';
-	    document.body.appendChild(ctaElement);
-
-	    var _this = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, params, 'cta'));
-
-	    var me = _this;
-
-	    if (!opts.side && !opts.position) {
-	      opts.position = 'bottom';
-	      opts.side = 'right';
-	    }
-
-	    if (opts.position === 'middle') {
-	      me.position = 'top: 45%;';
-	      me.side = opts.side === 'center' ? 'right: 45%;' : opts.side + ': -10px;';
-	    } else {
-	      me.position = opts.position + ': -10px;';
-	      me.side = opts.side === 'center' ? 'right: 45%;' : opts.side + ': 20px;';
-	    }
-
-	    me.positionClass = opts.position;
-
-	    me.ctaFrame = document.createElement('iframe');
-	    me.ctaFrame.squatchJsApi = me;
-	    me.ctaFrame.style = 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position;
-
-	    document.body.appendChild(_this.ctaFrame);
-	    return _this;
-	  }
-
-	  _createClass(CtaWidget, [{
-	    key: 'load',
-	    value: function load() {
-	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'load', this).call(this);
-
-	      var widgetFrameDoc = this.frame.contentWindow.document;
-	      var ctaFrame = this.ctaFrame;
-	      var ctaFrameDoc = this.ctaFrame.contentWindow.document;
-	      var positionClass = ' ' + this.positionClass;
-	      var erd = this.erd;
-
-	      // Wait for widget doc to be ready to grab the cta HTML
-	      (0, _domready.domready)(widgetFrameDoc, function () {
-	        var ctaElement = widgetFrameDoc.getElementById('cta');
-
-	        if (ctaElement) {
-	          ctaElement.parentNode.removeChild(ctaElement);
-
-	          ctaFrameDoc.open();
-	          ctaFrameDoc.write(ctaElement.innerHTML);
-	          ctaFrameDoc.close();
-
-	          // Figure out size of CTA as well
-	          (0, _domready.domready)(ctaFrameDoc, function () {
-	            ctaFrame.height = ctaFrameDoc.body.offsetHeight;
-	            ctaFrame.width = ctaFrameDoc.body.scrollWidth;
-
-	            ctaFrame.style.display = 'block';
-
-	            var ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
-	            ctaContainer.className += positionClass;
-
-	            erd.listenTo(ctaContainer, function (element) {
-	              var height = element.offsetHeight;
-	              var width = element.offsetWidth;
-	              ctaFrame.height = height;
-	              ctaFrame.width = width;
-	            });
-
-	            _log('CTA template loaded into iframe');
-	          });
-	        } else {
-	          _log(new Error('CTA element not found in theme'));
-	        }
-	      });
-	    }
-
-	    /**
-	     *  @inheritdoc
-	     */
-
-	  }, {
-	    key: 'open',
-	    value: function open() {
-	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'open', this).call(this);
-	    }
-	    /**
-	     *  @inheritdoc
-	     */
-
-	  }, {
-	    key: 'close',
-	    value: function close() {
-	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'close', this).call(this);
-	    }
-	  }]);
-
-	  return CtaWidget;
-	}(_PopupWidget3.default);
-
-	exports.default = CtaWidget;
-
-/***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * When you load Squatch.js you need to provide these configuration options.
-	 * 
-	 * @interface ConfigOptions
-	 * @property {string} tenantAlias The Tenant that you're using.
-	 * @property {string?} domain The domain for API. Defaults to `https://app.referralsaasquatch.com`
-	 */
-
-	export null;
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _debug = __webpack_require__(3);
-
-	var _debug2 = _interopRequireDefault(_debug);
-
-	var _WidgetApi = __webpack_require__(14);
-
-	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
-
-	var _EmbedWidget = __webpack_require__(2);
-
-	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
-
-	var _PopupWidget = __webpack_require__(10);
-
-	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
-
-	var _CtaWidget = __webpack_require__(11);
-
-	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var _log = (0, _debug2.default)('squatch-js:widgets');
-
-	/**
-	 * When a widget is loaded you'll get both the `user` data and the `widget` object back.
-	 * 
-	 * @interface WidgetResult
-	 * @property {Widget} widget The widget that was created.
-	 * @property {User} user The user that's in the widget.
-	 * 
-	 */
-
-	/**
-	 *
-	 * The Widgets class contains a widget loading process for different calls
-	 * to the WidgetApi.
-	 *
-	 */
-
-	var Widgets = function () {
-	  /**
-	   * Initialize a new {@link Widgets} instance.
-	   *
-	   * @param {Object} config Config details
-	   * @param {string} config.tenantAlias The tenant to access
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var Widgets = require('squatch-js').Widgets;
-	   * var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {Widgets} from 'squatch-js';
-	   * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
-	   */
-	  function Widgets(config) {
-	    _classCallCheck(this, Widgets);
-
-	    this.tenantAlias = config.tenantAlias;
-	    this.api = new _WidgetApi2.default({ tenantAlias: config.tenantAlias });
-	  }
-
-	  /**
-	   * This function calls the WidgetApi.cookieUser() method, and it renders
-	   * the widget if it is successful. Otherwise it shows the "error" widget.
-	   *
-	   * @param {Object} config
-	   * @param {string} config.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} config.engagementMedium (POPUP/MOBILE)
-	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
-	   *                            validate the data (can be disabled)
-	   *
-	   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-	   */
-
-
-	  _createClass(Widgets, [{
-	    key: 'createCookieUser',
-	    value: function createCookieUser(config) {
-	      var _this = this;
-
-	      return new Promise(function (resolve, reject) {
-	        _this.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
-	      });
-	    }
-
-	    /**
-	     * This function calls the WidgetApi.upsert() method, and it renders
-	     * the widget if it is successful. Otherwise it shows the "error" widget.
-	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
-	     * @param {string} config.widgetType (CONVERSION_WIDGET/REFERRING_WIDGET)
-	     * @param {string} config.engagementMedium (POPUP/MOBILE)
-	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     *
-	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-	     */
-
-	  }, {
-	    key: 'upsertUser',
-	    value: function upsertUser(config) {
-	      var _this2 = this;
-
-	      return new Promise(function (resolve, reject) {
-	        _this2.api.upsert(config).then(function (response) {
-	          resolve({ widget: _this2.renderWidget(response, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
-	      });
-	    }
-
-	    /**
-	     * This function calls the WidgetApi.render() method, and it renders
-	     * the widget if it is successful. Otherwise it shows the "error" widget.
-	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
-	     * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} config.engagementMedium (POPUP/MOBILE)
-	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     *
-	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-	     */
-
-	  }, {
-	    key: 'render',
-	    value: function render(config) {
-	      var _this3 = this;
-
-	      return new Promise(function (resolve, reject) {
-	        _this3.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this3.renderWidget({ template: response }, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
-	      });
-	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
-	  }, {
-	    key: 'renderWidget',
-	    value: function renderWidget(response) {
-	      var config = arguments.length <= 1 || arguments[1] === undefined ? { widgetType: '', engagementMedium: '' } : arguments[1];
-
-	      _log('Loading...');
-	      if (!response) throw new Error('Unable to get a response');
-	      if (!response.jsOptions) throw new Error('Missing jsOptions in response');
-	      _log(response, config);
-
-	      var widget = void 0;
-	      var displayOnLoad = false;
-	      var displayCTA = false;
-	      var opts = response.jsOptions || '';
-
-	      var params = {
-	        content: response.template,
-	        type: config.widgetType || opts.widget.defaultWidgetType,
-	        api: this.api
-	      };
-
-	      if (opts.widgetUrlMappings) {
-	        opts.widgetUrlMappings.forEach(function (rule) {
-	          if (Widgets.matchesUrl(rule.url)) {
-	            displayOnLoad = true;
-	            displayCTA = rule.showAsCTA;
-	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
-	          }
-	        });
-	      }
-
-	      if (opts.conversionUrls) {
-	        opts.conversionUrls.forEach(function (rule) {
-	          if (response.user.referredBy && Widgets.matchesUrl(rule)) {
-	            displayOnLoad = true;
-	            _log('This is a conversion URL', rule);
-	          }
-	        });
-	      }
-
-	      if (!displayCTA && config.engagementMedium === 'EMBED') {
-	        widget = new _EmbedWidget2.default(params);
-	        widget.load();
-	      } else if (!displayCTA && config.engagementMedium === 'POPUP') {
-	        widget = new _PopupWidget2.default(params);
-	        widget.load();
-	        if (displayOnLoad) widget.open();
-	      } else if (displayCTA) {
-	        var side = opts.cta.content.buttonSide;
-	        var position = opts.cta.content.buttonPosition;
-
-	        widget = new _CtaWidget2.default(params, { side: side, position: position });
-	        widget.load();
-	      } else if (displayOnLoad) {
-	        widget = new _PopupWidget2.default(params);
-	        widget.load();
-	        widget.open();
-	      }
-
-	      return widget;
-	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
-	  }], [{
-	    key: 'renderErrorWidget',
-	    value: function renderErrorWidget(error) {
-	      var em = arguments.length <= 1 || arguments[1] === undefined ? 'POPUP' : arguments[1];
-
-	      _log(new Error(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message));
-
-	      var widget = void 0;
-	      var params = {
-	        content: 'error',
-	        rsCode: error.rsCode,
-	        type: 'ERROR_WIDGET'
-	      };
-
-	      if (em === 'EMBED') {
-	        widget = new _EmbedWidget2.default(params);
-	      } else if (em === 'POPUP') {
-	        widget = new _PopupWidget2.default(params);
-	      }
-
-	      widget.load();
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: 'matchesUrl',
-	    value: function matchesUrl(rule) {
-	      return window.location.href.match(new RegExp(rule));
-	    }
-	  }]);
-
-	  return Widgets;
-	}();
-
-	exports.default = Widgets;
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(8);
-
-	var _jsonschema = __webpack_require__(15);
-
-	var _schema = __webpack_require__(25);
-
-	var _schema2 = _interopRequireDefault(_schema);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
-	 *
-	 */
-	var WidgetApi = function () {
-	  /**
-	   * Initialize a new {@link WidgetApi} instance.
-	   *
-	   * @param {ConfigOptions} config Config details
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   */
-	  function WidgetApi(config) {
-	    _classCallCheck(this, WidgetApi);
-
-	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
-	    this.tenantAlias = config.tenantAlias;
-	    this.domain = 'https://staging.referralsaasquatch.com';
-	  }
-
-	  /**
-	   * Creates/upserts an anonymous user.
-	   *
-	   * @param {Object} params
-	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} params.engagementMedium (POPUP/MOBILE)
-	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
-	   *                            validate the data (can be disabled)
-	   *
-	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-	   */
-
-
-	  _createClass(WidgetApi, [{
-	    key: 'cookieUser',
-	    value: function cookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
-
-	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/user/cookie_user' + optionalParams;
-	      var url = this.domain + path;
-
-	      return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
-	    }
-
-	    /**
-	     * Creates/upserts user.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
-	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     *
-	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
-	     */
-
-	  }, {
-	    key: 'upsert',
-	    value: function upsert() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
-
-	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var accountId = encodeURIComponent(params.user.accountId);
-	      var userId = encodeURIComponent(params.user.id);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
-	      var url = this.domain + path;
-
-	      var user = params.user;
-	      delete user.accountId;
-	      delete user.id;
-
-	      return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
-	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     * @return {Promise} template html if true.
-	     */
-
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
-
-	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var accountId = encodeURIComponent(params.user.accountId);
-	      var userId = encodeURIComponent(params.user.id);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/render' + optionalParams;
-	      var url = this.domain + path;
-	      return WidgetApi.doRequest(url, params.jwt);
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.code the user details
-	     * @return {Promise} code referral code if true.
-	     */
-
-	  }, {
-	    key: 'squatchReferralCookie',
-	    value: function squatchReferralCookie() {
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
-	      return WidgetApi.doRequest(url);
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }], [{
-	    key: 'validateInput',
-	    value: function validateInput(params, jsonSchema) {
-	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
-	      if (!valid.valid) throw valid.errors;
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: 'doRequest',
-	    value: function doRequest(url) {
-	      var jwt = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-
-	      var headers = {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/json'
-	      };
-
-	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'GET',
-	        headers: headers,
-	        credentials: 'include',
-	        mode: 'cors'
-	      }).then(function (response) {
-	        if (response.ok) {
-	          return response.text();
-	        }
-
-	        var json = response.json;
-	        return json.then(Promise.reject.bind(Promise));
-	      });
-	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
-	  }, {
-	    key: 'doPut',
-	    value: function doPut(url, data, jwt) {
-	      var headers = {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/json',
-	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
-	      };
-
-	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'PUT',
-	        headers: headers,
-	        credentials: 'include',
-	        mode: 'cors',
-	        body: data
-	      }).then(function (response) {
-	        var json = response.json();
-	        if (!response.ok) {
-	          return json.then(Promise.reject.bind(Promise));
-	        }
-	        return json;
-	      });
-	    }
-	  }]);
-
-	  return WidgetApi;
-	}();
-
-	exports.default = WidgetApi;
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Validator = module.exports.Validator = __webpack_require__(16);
-
-	module.exports.ValidatorResult = __webpack_require__(24).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(24).ValidationError;
-	module.exports.SchemaError = __webpack_require__(24).SchemaError;
+	var Validator = module.exports.Validator = __webpack_require__(9);
+
+	module.exports.ValidatorResult = __webpack_require__(17).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(17).ValidationError;
+	module.exports.SchemaError = __webpack_require__(17).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -2536,15 +1749,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(17);
+	var urilib = __webpack_require__(10);
 
-	var attribute = __webpack_require__(23);
-	var helpers = __webpack_require__(24);
+	var attribute = __webpack_require__(16);
+	var helpers = __webpack_require__(17);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -2862,7 +2075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2886,7 +2099,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(18);
+	var punycode = __webpack_require__(11);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -2958,7 +2171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(20);
+	    querystring = __webpack_require__(13);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -3575,7 +2788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -4107,10 +3320,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)(module), (function() { return this; }())))
 
 /***/ },
-/* 19 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -4126,17 +3339,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(21);
-	exports.encode = exports.stringify = __webpack_require__(22);
+	exports.decode = exports.parse = __webpack_require__(14);
+	exports.encode = exports.stringify = __webpack_require__(15);
 
 
 /***/ },
-/* 21 */
+/* 14 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -4222,7 +3435,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 15 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -4292,12 +3505,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(24);
+	var helpers = __webpack_require__(17);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -5083,12 +4296,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(17);
+	var uri = __webpack_require__(10);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -5368,7 +4581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -5526,7 +4739,2497 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _debug = __webpack_require__(3);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	var _Widget2 = __webpack_require__(20);
+
+	var _Widget3 = _interopRequireDefault(_Widget2);
+
+	var _domready = __webpack_require__(35);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _log = (0, _debug2.default)('squatch-js:EMBEDwidget');
+
+	/**
+	 * An EmbedWidget is displayed inline in part of your page. 
+	 * 
+	 * To create an EmbedWidget use {@link Widgets}
+	 * 
+	 */
+
+	var EmbedWidget = function (_Widget) {
+	  _inherits(EmbedWidget, _Widget);
+
+	  /**
+	   * @private
+	   */
+	  function EmbedWidget(params) {
+	    var elementId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchembed' : arguments[1];
+
+	    _classCallCheck(this, EmbedWidget);
+
+	    var _this = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, params));
+
+	    _this.element = document.getElementById(elementId);
+
+	    if (!_this.element) throw new Error('elementId \'' + elementId + '\' not found.\'');
+	    return _this;
+	  }
+
+	  _createClass(EmbedWidget, [{
+	    key: 'load',
+	    value: function load() {
+	      var me = this;
+
+	      if (!me.element.firstChild || me.element.firstChild.nodeName === '#text') {
+	        me.element.appendChild(me.frame);
+	      }
+
+	      var frameDoc = me.frame.contentWindow.document;
+	      frameDoc.open();
+	      frameDoc.write(me.content);
+	      frameDoc.close();
+
+	      (0, _domready.domready)(frameDoc, function () {
+	        var _sqh = me.frame.contentWindow.squatch;
+	        var ctaElement = frameDoc.getElementById('cta');
+
+	        if (ctaElement) {
+	          ctaElement.parentNode.removeChild(ctaElement);
+	        }
+
+	        me.frame.height = frameDoc.body.scrollHeight;
+
+	        // Adjust frame height when size of body changes
+	        me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	          var height = element.offsetHeight;
+	          me.frame.height = height;
+	        });
+
+	        me._loadEvent(_sqh);
+	        _log('loaded');
+	      });
+	    }
+	  }, {
+	    key: 'reload',
+	    value: function reload(params, jwt) {
+	      var me = this;
+
+	      me.widgetApi.cookieUser({
+	        user: {
+	          email: params
+	        },
+	        engagementMedium: 'EMBED',
+	        widgetType: me.type,
+	        jwt: jwt
+	      }).then(function (response) {
+	        if (response.template) {
+	          me.content = response.template;
+	          me.load();
+	        }
+	      }).catch(function (ex) {
+	        _log('Failed to reload ' + ex);
+	      });
+	    }
+	  }, {
+	    key: '_error',
+	    value: function _error(rs) {
+	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'embed' : arguments[1];
+	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+
+	      return _get(EmbedWidget.prototype.__proto__ || Object.getPrototypeOf(EmbedWidget.prototype), '_error', this).call(this, rs, mode, style);
+	    }
+	  }]);
+
+	  return EmbedWidget;
+	}(_Widget3.default);
+
+	exports.default = EmbedWidget;
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _debug = __webpack_require__(3);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	var _elementResizeDetector = __webpack_require__(21);
+
+	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
+
+	var _AnalyticsApi = __webpack_require__(34);
+
+	var _AnalyticsApi2 = _interopRequireDefault(_AnalyticsApi);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var _log = (0, _debug2.default)('squatch-js:widget');
+
+	/*
+	 *
+	 * The Widget class is the base class for the different widget types available
+	 *
+	 * @example <caption>Custom Widget example</caption>
+	 *    class CustomWidget extends Widget {
+	 *      constructor(params,stuff) {
+	 *        super(params);
+	 *        // do stuff
+	 *      }
+	 *
+	 *      load() {
+	 *        // custom loading of widget
+	 *      }
+	 *    }
+	 *
+	 */
+
+	var Widget = function () {
+
+	  /**
+	   * Initialize a new {@link Widget} instance.
+	   *
+	   * Creates an `iframe` in which the html content of the widget gets embedded.
+	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
+	   * for listening to the height of the widget content and make the iframe responsive.
+	   *
+	   * @private
+	   * @param {Object} params -> document this object
+	   *
+	   */
+	  function Widget(params) {
+	    _classCallCheck(this, Widget);
+
+	    _log('widget initializing ...');
+	    var me = this;
+	    me.content = params.content === 'error' ? me._error(params.rsCode) : params.content;
+	    me.type = params.type; // don't need this?
+	    me.widgetApi = params.api || '';
+	    me.analyticsApi = new _AnalyticsApi2.default();
+	    me.frame = document.createElement('iframe');
+	    me.frame.squatchJsApi = me;
+	    me.frame.width = '100%';
+	    me.frame.style = 'border: 0; background-color: none;';
+	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /* ,debug: 'true'*/ });
+	  }
+
+	  _createClass(Widget, [{
+	    key: '_loadEvent',
+	    value: function _loadEvent(sqh) {
+	      if (sqh) {
+	        this.analyticsApi.pushAnalyticsLoadEvent({
+	          tenantAlias: sqh.analytics.attributes.tenant,
+	          externalAccountId: sqh.analytics.attributes.accountId,
+	          externalUserId: sqh.analytics.attributes.userId,
+	          engagementMedium: sqh.mode.widgetMode
+	        }).then(function (response) {
+	          _log(sqh.mode.widgetMode + ' loaded event recorded. ' + response);
+	        }).catch(function (ex) {
+	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+	        });
+	      }
+	    }
+	  }, {
+	    key: '_shareEvent',
+	    value: function _shareEvent(sqh, medium) {
+	      if (sqh) {
+	        this.analyticsApi.pushAnalyticsShareClickedEvent({
+	          tenantAlias: sqh.analytics.attributes.tenant,
+	          externalAccountId: sqh.analytics.attributes.accountId,
+	          externalUserId: sqh.analytics.attributes.userId,
+	          engagementMedium: sqh.mode.widgetMode,
+	          shareMedium: medium
+	        }).then(function (response) {
+	          _log(sqh.mode.widgetMode + ' share ' + medium + ' event recorded. ' + response);
+	        }).catch(function (ex) {
+	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+	        });
+	      }
+	    }
+	  }, {
+	    key: '_error',
+	    value: function _error(rs) {
+	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'modal' : arguments[1];
+	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+
+	      var me = this;
+
+	      me.errorTemplate = '<!DOCTYPE html>\n    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->\n    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->\n    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->\n    <head>\n      <link rel="stylesheet" media="all" href="https://d35vcmgdka52pk.cloudfront.net/assets/css/widget/errorpage.min.css">\n      <style>\n        ' + style + '\n      </style>\n    </head>\n    <body>\n\n      <div class="squatch-container ' + mode + '">\n        <div class="errorheader">\n          <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>\n          <p class="errortitle">Error</p>\n        </div>\n        <div class="errorbody">\n          <div class="sadface"><img src="https://d35vcmgdka52pk.cloudfront.net/assets/images/face.png"></div>\n          <h4>Our referral program is temporarily unavailable.</h4><br>\n          <p>Please reload the page or check back later.</p>\n          <p>If the persists please contact our support team.</p>\n          <br>\n          <br>\n          <div class="right-align errtxt">\n            Error Code: ' + rs + '\n          </div>\n        </div>\n      </div>\n    </body>\n    </html>';
+
+	      return me.errorTemplate;
+	    }
+	  }]);
+
+	  return Widget;
+	}();
+
+	exports.default = Widget;
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var forEach                 = __webpack_require__(22).forEach;
+	var elementUtilsMaker       = __webpack_require__(23);
+	var listenerHandlerMaker    = __webpack_require__(24);
+	var idGeneratorMaker        = __webpack_require__(25);
+	var idHandlerMaker          = __webpack_require__(26);
+	var reporterMaker           = __webpack_require__(27);
+	var browserDetector         = __webpack_require__(28);
+	var batchProcessorMaker     = __webpack_require__(29);
+	var stateHandler            = __webpack_require__(31);
+
+	//Detection strategies.
+	var objectStrategyMaker     = __webpack_require__(32);
+	var scrollStrategyMaker     = __webpack_require__(33);
+
+	function isCollection(obj) {
+	    return Array.isArray(obj) || obj.length !== undefined;
+	}
+
+	function toArray(collection) {
+	    if (!Array.isArray(collection)) {
+	        var array = [];
+	        forEach(collection, function (obj) {
+	            array.push(obj);
+	        });
+	        return array;
+	    } else {
+	        return collection;
+	    }
+	}
+
+	function isElement(obj) {
+	    return obj && obj.nodeType === 1;
+	}
+
+	/**
+	 * @typedef idHandler
+	 * @type {object}
+	 * @property {function} get Gets the resize detector id of the element.
+	 * @property {function} set Generate and sets the resize detector id of the element.
+	 */
+
+	/**
+	 * @typedef Options
+	 * @type {object}
+	 * @property {boolean} callOnAdd    Determines if listeners should be called when they are getting added.
+	                                    Default is true. If true, the listener is guaranteed to be called when it has been added.
+	                                    If false, the listener will not be guarenteed to be called when it has been added (does not prevent it from being called).
+	 * @property {idHandler} idHandler  A custom id handler that is responsible for generating, setting and retrieving id's for elements.
+	                                    If not provided, a default id handler will be used.
+	 * @property {reporter} reporter    A custom reporter that handles reporting logs, warnings and errors.
+	                                    If not provided, a default id handler will be used.
+	                                    If set to false, then nothing will be reported.
+	 * @property {boolean} debug        If set to true, the the system will report debug messages as default for the listenTo method.
+	 */
+
+	/**
+	 * Creates an element resize detector instance.
+	 * @public
+	 * @param {Options?} options Optional global options object that will decide how this instance will work.
+	 */
+	module.exports = function(options) {
+	    options = options || {};
+
+	    //idHandler is currently not an option to the listenTo function, so it should not be added to globalOptions.
+	    var idHandler;
+
+	    if (options.idHandler) {
+	        // To maintain compatability with idHandler.get(element, readonly), make sure to wrap the given idHandler
+	        // so that readonly flag always is true when it's used here. This may be removed next major version bump.
+	        idHandler = {
+	            get: function (element) { return options.idHandler.get(element, true); },
+	            set: options.idHandler.set
+	        };
+	    } else {
+	        var idGenerator = idGeneratorMaker();
+	        var defaultIdHandler = idHandlerMaker({
+	            idGenerator: idGenerator,
+	            stateHandler: stateHandler
+	        });
+	        idHandler = defaultIdHandler;
+	    }
+
+	    //reporter is currently not an option to the listenTo function, so it should not be added to globalOptions.
+	    var reporter = options.reporter;
+
+	    if(!reporter) {
+	        //If options.reporter is false, then the reporter should be quiet.
+	        var quiet = reporter === false;
+	        reporter = reporterMaker(quiet);
+	    }
+
+	    //batchProcessor is currently not an option to the listenTo function, so it should not be added to globalOptions.
+	    var batchProcessor = getOption(options, "batchProcessor", batchProcessorMaker({ reporter: reporter }));
+
+	    //Options to be used as default for the listenTo function.
+	    var globalOptions = {};
+	    globalOptions.callOnAdd     = !!getOption(options, "callOnAdd", true);
+	    globalOptions.debug         = !!getOption(options, "debug", false);
+
+	    var eventListenerHandler    = listenerHandlerMaker(idHandler);
+	    var elementUtils            = elementUtilsMaker({
+	        stateHandler: stateHandler
+	    });
+
+	    //The detection strategy to be used.
+	    var detectionStrategy;
+	    var desiredStrategy = getOption(options, "strategy", "object");
+	    var strategyOptions = {
+	        reporter: reporter,
+	        batchProcessor: batchProcessor,
+	        stateHandler: stateHandler,
+	        idHandler: idHandler
+	    };
+
+	    if(desiredStrategy === "scroll") {
+	        if (browserDetector.isLegacyOpera()) {
+	            reporter.warn("Scroll strategy is not supported on legacy Opera. Changing to object strategy.");
+	            desiredStrategy = "object";
+	        } else if (browserDetector.isIE(9)) {
+	            reporter.warn("Scroll strategy is not supported on IE9. Changing to object strategy.");
+	            desiredStrategy = "object";
+	        }
+	    }
+
+	    if(desiredStrategy === "scroll") {
+	        detectionStrategy = scrollStrategyMaker(strategyOptions);
+	    } else if(desiredStrategy === "object") {
+	        detectionStrategy = objectStrategyMaker(strategyOptions);
+	    } else {
+	        throw new Error("Invalid strategy name: " + desiredStrategy);
+	    }
+
+	    //Calls can be made to listenTo with elements that are still being installed.
+	    //Also, same elements can occur in the elements list in the listenTo function.
+	    //With this map, the ready callbacks can be synchronized between the calls
+	    //so that the ready callback can always be called when an element is ready - even if
+	    //it wasn't installed from the function itself.
+	    var onReadyCallbacks = {};
+
+	    /**
+	     * Makes the given elements resize-detectable and starts listening to resize events on the elements. Calls the event callback for each event for each element.
+	     * @public
+	     * @param {Options?} options Optional options object. These options will override the global options. Some options may not be overriden, such as idHandler.
+	     * @param {element[]|element} elements The given array of elements to detect resize events of. Single element is also valid.
+	     * @param {function} listener The callback to be executed for each resize event for each element.
+	     */
+	    function listenTo(options, elements, listener) {
+	        function onResizeCallback(element) {
+	            var listeners = eventListenerHandler.get(element);
+	            forEach(listeners, function callListenerProxy(listener) {
+	                listener(element);
+	            });
+	        }
+
+	        function addListener(callOnAdd, element, listener) {
+	            eventListenerHandler.add(element, listener);
+
+	            if(callOnAdd) {
+	                listener(element);
+	            }
+	        }
+
+	        //Options object may be omitted.
+	        if(!listener) {
+	            listener = elements;
+	            elements = options;
+	            options = {};
+	        }
+
+	        if(!elements) {
+	            throw new Error("At least one element required.");
+	        }
+
+	        if(!listener) {
+	            throw new Error("Listener required.");
+	        }
+
+	        if (isElement(elements)) {
+	            // A single element has been passed in.
+	            elements = [elements];
+	        } else if (isCollection(elements)) {
+	            // Convert collection to array for plugins.
+	            // TODO: May want to check so that all the elements in the collection are valid elements.
+	            elements = toArray(elements);
+	        } else {
+	            return reporter.error("Invalid arguments. Must be a DOM element or a collection of DOM elements.");
+	        }
+
+	        var elementsReady = 0;
+
+	        var callOnAdd = getOption(options, "callOnAdd", globalOptions.callOnAdd);
+	        var onReadyCallback = getOption(options, "onReady", function noop() {});
+	        var debug = getOption(options, "debug", globalOptions.debug);
+
+	        forEach(elements, function attachListenerToElement(element) {
+	            if (!stateHandler.getState(element)) {
+	                stateHandler.initState(element);
+	                idHandler.set(element);
+	            }
+
+	            var id = idHandler.get(element);
+
+	            debug && reporter.log("Attaching listener to element", id, element);
+
+	            if(!elementUtils.isDetectable(element)) {
+	                debug && reporter.log(id, "Not detectable.");
+	                if(elementUtils.isBusy(element)) {
+	                    debug && reporter.log(id, "System busy making it detectable");
+
+	                    //The element is being prepared to be detectable. Do not make it detectable.
+	                    //Just add the listener, because the element will soon be detectable.
+	                    addListener(callOnAdd, element, listener);
+	                    onReadyCallbacks[id] = onReadyCallbacks[id] || [];
+	                    onReadyCallbacks[id].push(function onReady() {
+	                        elementsReady++;
+
+	                        if(elementsReady === elements.length) {
+	                            onReadyCallback();
+	                        }
+	                    });
+	                    return;
+	                }
+
+	                debug && reporter.log(id, "Making detectable...");
+	                //The element is not prepared to be detectable, so do prepare it and add a listener to it.
+	                elementUtils.markBusy(element, true);
+	                return detectionStrategy.makeDetectable({ debug: debug }, element, function onElementDetectable(element) {
+	                    debug && reporter.log(id, "onElementDetectable");
+
+	                    if (stateHandler.getState(element)) {
+	                        elementUtils.markAsDetectable(element);
+	                        elementUtils.markBusy(element, false);
+	                        detectionStrategy.addListener(element, onResizeCallback);
+	                        addListener(callOnAdd, element, listener);
+
+	                        // Since the element size might have changed since the call to "listenTo", we need to check for this change,
+	                        // so that a resize event may be emitted.
+	                        // Having the startSize object is optional (since it does not make sense in some cases such as unrendered elements), so check for its existance before.
+	                        // Also, check the state existance before since the element may have been uninstalled in the installation process.
+	                        var state = stateHandler.getState(element);
+	                        if (state && state.startSize) {
+	                            var width = element.offsetWidth;
+	                            var height = element.offsetHeight;
+	                            if (state.startSize.width !== width || state.startSize.height !== height) {
+	                                onResizeCallback(element);
+	                            }
+	                        }
+
+	                        if(onReadyCallbacks[id]) {
+	                            forEach(onReadyCallbacks[id], function(callback) {
+	                                callback();
+	                            });
+	                        }
+	                    } else {
+	                        // The element has been unisntalled before being detectable.
+	                        debug && reporter.log(id, "Element uninstalled before being detectable.");
+	                    }
+
+	                    delete onReadyCallbacks[id];
+
+	                    elementsReady++;
+	                    if(elementsReady === elements.length) {
+	                        onReadyCallback();
+	                    }
+	                });
+	            }
+
+	            debug && reporter.log(id, "Already detecable, adding listener.");
+
+	            //The element has been prepared to be detectable and is ready to be listened to.
+	            addListener(callOnAdd, element, listener);
+	            elementsReady++;
+	        });
+
+	        if(elementsReady === elements.length) {
+	            onReadyCallback();
+	        }
+	    }
+
+	    function uninstall(elements) {
+	        if(!elements) {
+	            return reporter.error("At least one element is required.");
+	        }
+
+	        if (isElement(elements)) {
+	            // A single element has been passed in.
+	            elements = [elements];
+	        } else if (isCollection(elements)) {
+	            // Convert collection to array for plugins.
+	            // TODO: May want to check so that all the elements in the collection are valid elements.
+	            elements = toArray(elements);
+	        } else {
+	            return reporter.error("Invalid arguments. Must be a DOM element or a collection of DOM elements.");
+	        }
+
+	        forEach(elements, function (element) {
+	            eventListenerHandler.removeAllListeners(element);
+	            detectionStrategy.uninstall(element);
+	            stateHandler.cleanState(element);
+	        });
+	    }
+
+	    return {
+	        listenTo: listenTo,
+	        removeListener: eventListenerHandler.removeListener,
+	        removeAllListeners: eventListenerHandler.removeAllListeners,
+	        uninstall: uninstall
+	    };
+	};
+
+	function getOption(options, name, defaultValue) {
+	    var value = options[name];
+
+	    if((value === undefined || value === null) && defaultValue !== undefined) {
+	        return defaultValue;
+	    }
+
+	    return value;
+	}
+
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var utils = module.exports = {};
+
+	/**
+	 * Loops through the collection and calls the callback for each element. if the callback returns truthy, the loop is broken and returns the same value.
+	 * @public
+	 * @param {*} collection The collection to loop through. Needs to have a length property set and have indices set from 0 to length - 1.
+	 * @param {function} callback The callback to be called for each element. The element will be given as a parameter to the callback. If this callback returns truthy, the loop is broken and the same value is returned.
+	 * @returns {*} The value that a callback has returned (if truthy). Otherwise nothing.
+	 */
+	utils.forEach = function(collection, callback) {
+	    for(var i = 0; i < collection.length; i++) {
+	        var result = callback(collection[i]);
+	        if(result) {
+	            return result;
+	        }
+	    }
+	};
+
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function(options) {
+	    var getState = options.stateHandler.getState;
+
+	    /**
+	     * Tells if the element has been made detectable and ready to be listened for resize events.
+	     * @public
+	     * @param {element} The element to check.
+	     * @returns {boolean} True or false depending on if the element is detectable or not.
+	     */
+	    function isDetectable(element) {
+	        var state = getState(element);
+	        return state && !!state.isDetectable;
+	    }
+
+	    /**
+	     * Marks the element that it has been made detectable and ready to be listened for resize events.
+	     * @public
+	     * @param {element} The element to mark.
+	     */
+	    function markAsDetectable(element) {
+	        getState(element).isDetectable = true;
+	    }
+
+	    /**
+	     * Tells if the element is busy or not.
+	     * @public
+	     * @param {element} The element to check.
+	     * @returns {boolean} True or false depending on if the element is busy or not.
+	     */
+	    function isBusy(element) {
+	        return !!getState(element).busy;
+	    }
+
+	    /**
+	     * Marks the object is busy and should not be made detectable.
+	     * @public
+	     * @param {element} element The element to mark.
+	     * @param {boolean} busy If the element is busy or not.
+	     */
+	    function markBusy(element, busy) {
+	        getState(element).busy = !!busy;
+	    }
+
+	    return {
+	        isDetectable: isDetectable,
+	        markAsDetectable: markAsDetectable,
+	        isBusy: isBusy,
+	        markBusy: markBusy
+	    };
+	};
+
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function(idHandler) {
+	    var eventListeners = {};
+
+	    /**
+	     * Gets all listeners for the given element.
+	     * @public
+	     * @param {element} element The element to get all listeners for.
+	     * @returns All listeners for the given element.
+	     */
+	    function getListeners(element) {
+	        var id = idHandler.get(element);
+
+	        if (id === undefined) {
+	            return [];
+	        }
+
+	        return eventListeners[id] || [];
+	    }
+
+	    /**
+	     * Stores the given listener for the given element. Will not actually add the listener to the element.
+	     * @public
+	     * @param {element} element The element that should have the listener added.
+	     * @param {function} listener The callback that the element has added.
+	     */
+	    function addListener(element, listener) {
+	        var id = idHandler.get(element);
+
+	        if(!eventListeners[id]) {
+	            eventListeners[id] = [];
+	        }
+
+	        eventListeners[id].push(listener);
+	    }
+
+	    function removeListener(element, listener) {
+	        var listeners = getListeners(element);
+	        for (var i = 0, len = listeners.length; i < len; ++i) {
+	            if (listeners[i] === listener) {
+	              listeners.splice(i, 1);
+	              break;
+	            }
+	        }
+	    }
+
+	    function removeAllListeners(element) {
+	      var listeners = getListeners(element);
+	      if (!listeners) { return; }
+	      listeners.length = 0;
+	    }
+
+	    return {
+	        get: getListeners,
+	        add: addListener,
+	        removeListener: removeListener,
+	        removeAllListeners: removeAllListeners
+	    };
+	};
+
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function() {
+	    var idCount = 1;
+
+	    /**
+	     * Generates a new unique id in the context.
+	     * @public
+	     * @returns {number} A unique id in the context.
+	     */
+	    function generate() {
+	        return idCount++;
+	    }
+
+	    return {
+	        generate: generate
+	    };
+	};
+
+
+/***/ },
 /* 26 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = function(options) {
+	    var idGenerator     = options.idGenerator;
+	    var getState        = options.stateHandler.getState;
+
+	    /**
+	     * Gets the resize detector id of the element.
+	     * @public
+	     * @param {element} element The target element to get the id of.
+	     * @returns {string|number|null} The id of the element. Null if it has no id.
+	     */
+	    function getId(element) {
+	        var state = getState(element);
+
+	        if (state && state.id !== undefined) {
+	            return state.id;
+	        }
+
+	        return null;
+	    }
+
+	    /**
+	     * Sets the resize detector id of the element. Requires the element to have a resize detector state initialized.
+	     * @public
+	     * @param {element} element The target element to set the id of.
+	     * @returns {string|number|null} The id of the element.
+	     */
+	    function setId(element) {
+	        var state = getState(element);
+
+	        if (!state) {
+	            throw new Error("setId required the element to have a resize detection state.");
+	        }
+
+	        var id = idGenerator.generate();
+
+	        state.id = id;
+
+	        return id;
+	    }
+
+	    return {
+	        get: getId,
+	        set: setId
+	    };
+	};
+
+
+/***/ },
+/* 27 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	/* global console: false */
+
+	/**
+	 * Reporter that handles the reporting of logs, warnings and errors.
+	 * @public
+	 * @param {boolean} quiet Tells if the reporter should be quiet or not.
+	 */
+	module.exports = function(quiet) {
+	    function noop() {
+	        //Does nothing.
+	    }
+
+	    var reporter = {
+	        log: noop,
+	        warn: noop,
+	        error: noop
+	    };
+
+	    if(!quiet && window.console) {
+	        var attachFunction = function(reporter, name) {
+	            //The proxy is needed to be able to call the method with the console context,
+	            //since we cannot use bind.
+	            reporter[name] = function reporterProxy() {
+	                var f = console[name];
+	                if (f.apply) { //IE9 does not support console.log.apply :)
+	                    f.apply(console, arguments);
+	                } else {
+	                    for (var i = 0; i < arguments.length; i++) {
+	                        f(arguments[i]);
+	                    }
+	                }
+	            };
+	        };
+
+	        attachFunction(reporter, "log");
+	        attachFunction(reporter, "warn");
+	        attachFunction(reporter, "error");
+	    }
+
+	    return reporter;
+	};
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var detector = module.exports = {};
+
+	detector.isIE = function(version) {
+	    function isAnyIeVersion() {
+	        var agent = navigator.userAgent.toLowerCase();
+	        return agent.indexOf("msie") !== -1 || agent.indexOf("trident") !== -1 || agent.indexOf(" edge/") !== -1;
+	    }
+
+	    if(!isAnyIeVersion()) {
+	        return false;
+	    }
+
+	    if(!version) {
+	        return true;
+	    }
+
+	    //Shamelessly stolen from https://gist.github.com/padolsey/527683
+	    var ieVersion = (function(){
+	        var undef,
+	            v = 3,
+	            div = document.createElement("div"),
+	            all = div.getElementsByTagName("i");
+
+	        do {
+	            div.innerHTML = "<!--[if gt IE " + (++v) + "]><i></i><![endif]-->";
+	        }
+	        while (all[0]);
+
+	        return v > 4 ? v : undef;
+	    }());
+
+	    return version === ieVersion;
+	};
+
+	detector.isLegacyOpera = function() {
+	    return !!window.opera;
+	};
+
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var utils = __webpack_require__(30);
+
+	module.exports = function batchProcessorMaker(options) {
+	    options             = options || {};
+	    var reporter        = options.reporter;
+	    var asyncProcess    = utils.getOption(options, "async", true);
+	    var autoProcess     = utils.getOption(options, "auto", true);
+
+	    if(autoProcess && !asyncProcess) {
+	        reporter && reporter.warn("Invalid options combination. auto=true and async=false is invalid. Setting async=true.");
+	        asyncProcess = true;
+	    }
+
+	    var batch = Batch();
+	    var asyncFrameHandler;
+	    var isProcessing = false;
+
+	    function addFunction(level, fn) {
+	        if(!isProcessing && autoProcess && asyncProcess && batch.size() === 0) {
+	            // Since this is async, it is guaranteed to be executed after that the fn is added to the batch.
+	            // This needs to be done before, since we're checking the size of the batch to be 0.
+	            processBatchAsync();
+	        }
+
+	        batch.add(level, fn);
+	    }
+
+	    function processBatch() {
+	        // Save the current batch, and create a new batch so that incoming functions are not added into the currently processing batch.
+	        // Continue processing until the top-level batch is empty (functions may be added to the new batch while processing, and so on).
+	        isProcessing = true;
+	        while (batch.size()) {
+	            var processingBatch = batch;
+	            batch = Batch();
+	            processingBatch.process();
+	        }
+	        isProcessing = false;
+	    }
+
+	    function forceProcessBatch(localAsyncProcess) {
+	        if (isProcessing) {
+	            return;
+	        }
+
+	        if(localAsyncProcess === undefined) {
+	            localAsyncProcess = asyncProcess;
+	        }
+
+	        if(asyncFrameHandler) {
+	            cancelFrame(asyncFrameHandler);
+	            asyncFrameHandler = null;
+	        }
+
+	        if(localAsyncProcess) {
+	            processBatchAsync();
+	        } else {
+	            processBatch();
+	        }
+	    }
+
+	    function processBatchAsync() {
+	        asyncFrameHandler = requestFrame(processBatch);
+	    }
+
+	    function clearBatch() {
+	        batch           = {};
+	        batchSize       = 0;
+	        topLevel        = 0;
+	        bottomLevel     = 0;
+	    }
+
+	    function cancelFrame(listener) {
+	        // var cancel = window.cancelAnimationFrame || window.mozCancelAnimationFrame || window.webkitCancelAnimationFrame || window.clearTimeout;
+	        var cancel = clearTimeout;
+	        return cancel(listener);
+	    }
+
+	    function requestFrame(callback) {
+	        // var raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || function(fn) { return window.setTimeout(fn, 20); };
+	        var raf = function(fn) { return setTimeout(fn, 0); };
+	        return raf(callback);
+	    }
+
+	    return {
+	        add: addFunction,
+	        force: forceProcessBatch
+	    };
+	};
+
+	function Batch() {
+	    var batch       = {};
+	    var size        = 0;
+	    var topLevel    = 0;
+	    var bottomLevel = 0;
+
+	    function add(level, fn) {
+	        if(!fn) {
+	            fn = level;
+	            level = 0;
+	        }
+
+	        if(level > topLevel) {
+	            topLevel = level;
+	        } else if(level < bottomLevel) {
+	            bottomLevel = level;
+	        }
+
+	        if(!batch[level]) {
+	            batch[level] = [];
+	        }
+
+	        batch[level].push(fn);
+	        size++;
+	    }
+
+	    function process() {
+	        for(var level = bottomLevel; level <= topLevel; level++) {
+	            var fns = batch[level];
+
+	            for(var i = 0; i < fns.length; i++) {
+	                var fn = fns[i];
+	                fn();
+	            }
+	        }
+	    }
+
+	    function getSize() {
+	        return size;
+	    }
+
+	    return {
+	        add: add,
+	        process: process,
+	        size: getSize
+	    };
+	}
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var utils = module.exports = {};
+
+	utils.getOption = getOption;
+
+	function getOption(options, name, defaultValue) {
+	    var value = options[name];
+
+	    if((value === undefined || value === null) && defaultValue !== undefined) {
+	        return defaultValue;
+	    }
+
+	    return value;
+	}
+
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var prop = "_erd";
+
+	function initState(element) {
+	    element[prop] = {};
+	    return getState(element);
+	}
+
+	function getState(element) {
+	    return element[prop];
+	}
+
+	function cleanState(element) {
+	    delete element[prop];
+	}
+
+	module.exports = {
+	    initState: initState,
+	    getState: getState,
+	    cleanState: cleanState
+	};
+
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Resize detection strategy that injects objects to elements in order to detect resize events.
+	 * Heavily inspired by: http://www.backalleycoder.com/2013/03/18/cross-browser-event-based-element-resize-detection/
+	 */
+
+	"use strict";
+
+	var browserDetector = __webpack_require__(28);
+
+	module.exports = function(options) {
+	    options             = options || {};
+	    var reporter        = options.reporter;
+	    var batchProcessor  = options.batchProcessor;
+	    var getState        = options.stateHandler.getState;
+
+	    if(!reporter) {
+	        throw new Error("Missing required dependency: reporter.");
+	    }
+
+	    /**
+	     * Adds a resize event listener to the element.
+	     * @public
+	     * @param {element} element The element that should have the listener added.
+	     * @param {function} listener The listener callback to be called for each resize event of the element. The element will be given as a parameter to the listener callback.
+	     */
+	    function addListener(element, listener) {
+	        if(!getObject(element)) {
+	            throw new Error("Element is not detectable by this strategy.");
+	        }
+
+	        function listenerProxy() {
+	            listener(element);
+	        }
+
+	        if(browserDetector.isIE(8)) {
+	            //IE 8 does not support object, but supports the resize event directly on elements.
+	            getState(element).object = {
+	                proxy: listenerProxy
+	            };
+	            element.attachEvent("onresize", listenerProxy);
+	        } else {
+	            var object = getObject(element);
+	            object.contentDocument.defaultView.addEventListener("resize", listenerProxy);
+	        }
+	    }
+
+	    /**
+	     * Makes an element detectable and ready to be listened for resize events. Will call the callback when the element is ready to be listened for resize changes.
+	     * @private
+	     * @param {object} options Optional options object.
+	     * @param {element} element The element to make detectable
+	     * @param {function} callback The callback to be called when the element is ready to be listened for resize changes. Will be called with the element as first parameter.
+	     */
+	    function makeDetectable(options, element, callback) {
+	        if (!callback) {
+	            callback = element;
+	            element = options;
+	            options = null;
+	        }
+
+	        options = options || {};
+	        var debug = options.debug;
+
+	        function injectObject(element, callback) {
+	            var OBJECT_STYLE = "display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; padding: 0; margin: 0; opacity: 0; z-index: -1000; pointer-events: none;";
+
+	            //The target element needs to be positioned (everything except static) so the absolute positioned object will be positioned relative to the target element.
+
+	            // Position altering may be performed directly or on object load, depending on if style resolution is possible directly or not.
+	            var positionCheckPerformed = false;
+
+	            // The element may not yet be attached to the DOM, and therefore the style object may be empty in some browsers.
+	            // Since the style object is a reference, it will be updated as soon as the element is attached to the DOM.
+	            var style = window.getComputedStyle(element);
+	            var width = element.offsetWidth;
+	            var height = element.offsetHeight;
+
+	            getState(element).startSize = {
+	                width: width,
+	                height: height
+	            };
+
+	            function mutateDom() {
+	                function alterPositionStyles() {
+	                    if(style.position === "static") {
+	                        element.style.position = "relative";
+
+	                        var removeRelativeStyles = function(reporter, element, style, property) {
+	                            function getNumericalValue(value) {
+	                                return value.replace(/[^-\d\.]/g, "");
+	                            }
+
+	                            var value = style[property];
+
+	                            if(value !== "auto" && getNumericalValue(value) !== "0") {
+	                                reporter.warn("An element that is positioned static has style." + property + "=" + value + " which is ignored due to the static positioning. The element will need to be positioned relative, so the style." + property + " will be set to 0. Element: ", element);
+	                                element.style[property] = 0;
+	                            }
+	                        };
+
+	                        //Check so that there are no accidental styles that will make the element styled differently now that is is relative.
+	                        //If there are any, set them to 0 (this should be okay with the user since the style properties did nothing before [since the element was positioned static] anyway).
+	                        removeRelativeStyles(reporter, element, style, "top");
+	                        removeRelativeStyles(reporter, element, style, "right");
+	                        removeRelativeStyles(reporter, element, style, "bottom");
+	                        removeRelativeStyles(reporter, element, style, "left");
+	                    }
+	                }
+
+	                function onObjectLoad() {
+	                    // The object has been loaded, which means that the element now is guaranteed to be attached to the DOM.
+	                    if (!positionCheckPerformed) {
+	                        alterPositionStyles();
+	                    }
+
+	                    /*jshint validthis: true */
+
+	                    function getDocument(element, callback) {
+	                        //Opera 12 seem to call the object.onload before the actual document has been created.
+	                        //So if it is not present, poll it with an timeout until it is present.
+	                        //TODO: Could maybe be handled better with object.onreadystatechange or similar.
+	                        if(!element.contentDocument) {
+	                            setTimeout(function checkForObjectDocument() {
+	                                getDocument(element, callback);
+	                            }, 100);
+
+	                            return;
+	                        }
+
+	                        callback(element.contentDocument);
+	                    }
+
+	                    //Mutating the object element here seems to fire another load event.
+	                    //Mutating the inner document of the object element is fine though.
+	                    var objectElement = this;
+
+	                    //Create the style element to be added to the object.
+	                    getDocument(objectElement, function onObjectDocumentReady(objectDocument) {
+	                        //Notify that the element is ready to be listened to.
+	                        callback(element);
+	                    });
+	                }
+
+	                // The element may be detached from the DOM, and some browsers does not support style resolving of detached elements.
+	                // The alterPositionStyles needs to be delayed until we know the element has been attached to the DOM (which we are sure of when the onObjectLoad has been fired), if style resolution is not possible.
+	                if (style.position !== "") {
+	                    alterPositionStyles(style);
+	                    positionCheckPerformed = true;
+	                }
+
+	                //Add an object element as a child to the target element that will be listened to for resize events.
+	                var object = document.createElement("object");
+	                object.style.cssText = OBJECT_STYLE;
+	                object.type = "text/html";
+	                object.onload = onObjectLoad;
+
+	                //Safari: This must occur before adding the object to the DOM.
+	                //IE: Does not like that this happens before, even if it is also added after.
+	                if(!browserDetector.isIE()) {
+	                    object.data = "about:blank";
+	                }
+
+	                element.appendChild(object);
+	                getState(element).object = object;
+
+	                //IE: This must occur after adding the object to the DOM.
+	                if(browserDetector.isIE()) {
+	                    object.data = "about:blank";
+	                }
+	            }
+
+	            if(batchProcessor) {
+	                batchProcessor.add(mutateDom);
+	            } else {
+	                mutateDom();
+	            }
+	        }
+
+	        if(browserDetector.isIE(8)) {
+	            //IE 8 does not support objects properly. Luckily they do support the resize event.
+	            //So do not inject the object and notify that the element is already ready to be listened to.
+	            //The event handler for the resize event is attached in the utils.addListener instead.
+	            callback(element);
+	        } else {
+	            injectObject(element, callback);
+	        }
+	    }
+
+	    /**
+	     * Returns the child object of the target element.
+	     * @private
+	     * @param {element} element The target element.
+	     * @returns The object element of the target.
+	     */
+	    function getObject(element) {
+	        return getState(element).object;
+	    }
+
+	    function uninstall(element) {
+	        if(browserDetector.isIE(8)) {
+	            element.detachEvent("onresize", getState(element).object.proxy);
+	        } else {
+	            element.removeChild(getObject(element));
+	        }
+	        delete getState(element).object;
+	    }
+
+	    return {
+	        makeDetectable: makeDetectable,
+	        addListener: addListener,
+	        uninstall: uninstall
+	    };
+	};
+
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Resize detection strategy that injects divs to elements in order to detect resize events on scroll events.
+	 * Heavily inspired by: https://github.com/marcj/css-element-queries/blob/master/src/ResizeSensor.js
+	 */
+
+	"use strict";
+
+	var forEach = __webpack_require__(22).forEach;
+
+	module.exports = function(options) {
+	    options             = options || {};
+	    var reporter        = options.reporter;
+	    var batchProcessor  = options.batchProcessor;
+	    var getState        = options.stateHandler.getState;
+	    var hasState        = options.stateHandler.hasState;
+	    var idHandler       = options.idHandler;
+
+	    if (!batchProcessor) {
+	        throw new Error("Missing required dependency: batchProcessor");
+	    }
+
+	    if (!reporter) {
+	        throw new Error("Missing required dependency: reporter.");
+	    }
+
+	    //TODO: Could this perhaps be done at installation time?
+	    var scrollbarSizes = getScrollbarSizes();
+
+	    // Inject the scrollbar styling that prevents them from appearing sometimes in Chrome.
+	    // The injected container needs to have a class, so that it may be styled with CSS (pseudo elements).
+	    var styleId = "erd_scroll_detection_scrollbar_style";
+	    var detectionContainerClass = "erd_scroll_detection_container";
+	    injectScrollStyle(styleId, detectionContainerClass);
+
+	    function getScrollbarSizes() {
+	        var width = 500;
+	        var height = 500;
+
+	        var child = document.createElement("div");
+	        child.style.cssText = "position: absolute; width: " + width*2 + "px; height: " + height*2 + "px; visibility: hidden; margin: 0; padding: 0;";
+
+	        var container = document.createElement("div");
+	        container.style.cssText = "position: absolute; width: " + width + "px; height: " + height + "px; overflow: scroll; visibility: none; top: " + -width*3 + "px; left: " + -height*3 + "px; visibility: hidden; margin: 0; padding: 0;";
+
+	        container.appendChild(child);
+
+	        document.body.insertBefore(container, document.body.firstChild);
+
+	        var widthSize = width - container.clientWidth;
+	        var heightSize = height - container.clientHeight;
+
+	        document.body.removeChild(container);
+
+	        return {
+	            width: widthSize,
+	            height: heightSize
+	        };
+	    }
+
+	    function injectScrollStyle(styleId, containerClass) {
+	        function injectStyle(style, method) {
+	            method = method || function (element) {
+	                document.head.appendChild(element);
+	            };
+
+	            var styleElement = document.createElement("style");
+	            styleElement.innerHTML = style;
+	            styleElement.id = styleId;
+	            method(styleElement);
+	            return styleElement;
+	        }
+
+	        if (!document.getElementById(styleId)) {
+	            var containerAnimationClass = containerClass + "_animation";
+	            var containerAnimationActiveClass = containerClass + "_animation_active";
+	            var style = "/* Created by the element-resize-detector library. */\n";
+	            style += "." + containerClass + " > div::-webkit-scrollbar { display: none; }\n\n";
+	            style += "." + containerAnimationActiveClass + " { -webkit-animation-duration: 0.1s; animation-duration: 0.1s; -webkit-animation-name: " + containerAnimationClass + "; animation-name: " + containerAnimationClass + "; }\n";
+	            style += "@-webkit-keyframes " + containerAnimationClass +  " { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }\n";
+	            style += "@keyframes " + containerAnimationClass +          " { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }";
+	            injectStyle(style);
+	        }
+	    }
+
+	    function addAnimationClass(element) {
+	        element.className += " " + detectionContainerClass + "_animation_active";
+	    }
+
+	    function addEvent(el, name, cb) {
+	        if (el.addEventListener) {
+	            el.addEventListener(name, cb);
+	        } else if(el.attachEvent) {
+	            el.attachEvent("on" + name, cb);
+	        } else {
+	            return reporter.error("[scroll] Don't know how to add event listeners.");
+	        }
+	    }
+
+	    function removeEvent(el, name, cb) {
+	        if (el.removeEventListener) {
+	            el.removeEventListener(name, cb);
+	        } else if(el.detachEvent) {
+	            el.detachEvent("on" + name, cb);
+	        } else {
+	            return reporter.error("[scroll] Don't know how to remove event listeners.");
+	        }
+	    }
+
+	    function getExpandElement(element) {
+	        return getState(element).container.childNodes[0].childNodes[0].childNodes[0];
+	    }
+
+	    function getShrinkElement(element) {
+	        return getState(element).container.childNodes[0].childNodes[0].childNodes[1];
+	    }
+
+	    /**
+	     * Adds a resize event listener to the element.
+	     * @public
+	     * @param {element} element The element that should have the listener added.
+	     * @param {function} listener The listener callback to be called for each resize event of the element. The element will be given as a parameter to the listener callback.
+	     */
+	    function addListener(element, listener) {
+	        var listeners = getState(element).listeners;
+
+	        if (!listeners.push) {
+	            throw new Error("Cannot add listener to an element that is not detectable.");
+	        }
+
+	        getState(element).listeners.push(listener);
+	    }
+
+	    /**
+	     * Makes an element detectable and ready to be listened for resize events. Will call the callback when the element is ready to be listened for resize changes.
+	     * @private
+	     * @param {object} options Optional options object.
+	     * @param {element} element The element to make detectable
+	     * @param {function} callback The callback to be called when the element is ready to be listened for resize changes. Will be called with the element as first parameter.
+	     */
+	    function makeDetectable(options, element, callback) {
+	        if (!callback) {
+	            callback = element;
+	            element = options;
+	            options = null;
+	        }
+
+	        options = options || {};
+
+	        function debug() {
+	            if (options.debug) {
+	                var args = Array.prototype.slice.call(arguments);
+	                args.unshift(idHandler.get(element), "Scroll: ");
+	                if (reporter.log.apply) {
+	                    reporter.log.apply(null, args);
+	                } else {
+	                    for (var i = 0; i < args.length; i++) {
+	                        reporter.log(args[i]);
+	                    }
+	                }
+	            }
+	        }
+
+	        function isDetached(element) {
+	            function isInDocument(element) {
+	                return element === element.ownerDocument.body || element.ownerDocument.body.contains(element);
+	            }
+	            return !isInDocument(element);
+	        }
+
+	        function isUnrendered(element) {
+	            // Check the absolute positioned container since the top level container is display: inline.
+	            var container = getState(element).container.childNodes[0];
+	            return getComputedStyle(container).width.indexOf("px") === -1; //Can only compute pixel value when rendered.
+	        }
+
+	        function getStyle() {
+	            // Some browsers only force layouts when actually reading the style properties of the style object, so make sure that they are all read here,
+	            // so that the user of the function can be sure that it will perform the layout here, instead of later (important for batching).
+	            var elementStyle            = getComputedStyle(element);
+	            var style                   = {};
+	            style.position              = elementStyle.position;
+	            style.width                 = element.offsetWidth;
+	            style.height                = element.offsetHeight;
+	            style.top                   = elementStyle.top;
+	            style.right                 = elementStyle.right;
+	            style.bottom                = elementStyle.bottom;
+	            style.left                  = elementStyle.left;
+	            style.widthCSS              = elementStyle.width;
+	            style.heightCSS             = elementStyle.height;
+	            return style;
+	        }
+
+	        function storeStartSize() {
+	            var style = getStyle();
+	            getState(element).startSize = {
+	                width: style.width,
+	                height: style.height
+	            };
+	            debug("Element start size", getState(element).startSize);
+	        }
+
+	        function initListeners() {
+	            getState(element).listeners = [];
+	        }
+
+	        function storeStyle() {
+	            debug("storeStyle invoked.");
+	            if (!getState(element)) {
+	                debug("Aborting because element has been uninstalled");
+	                return;
+	            }
+
+	            var style = getStyle();
+	            getState(element).style = style;
+	        }
+
+	        function storeCurrentSize(element, width, height) {
+	            getState(element).lastWidth = width;
+	            getState(element).lastHeight  = height;
+	        }
+
+	        function getExpandChildElement(element) {
+	            return getExpandElement(element).childNodes[0];
+	        }
+
+	        function getWidthOffset() {
+	            return 2 * scrollbarSizes.width + 1;
+	        }
+
+	        function getHeightOffset() {
+	            return 2 * scrollbarSizes.height + 1;
+	        }
+
+	        function getExpandWidth(width) {
+	            return width + 10 + getWidthOffset();
+	        }
+
+	        function getExpandHeight(height) {
+	            return height + 10 + getHeightOffset();
+	        }
+
+	        function getShrinkWidth(width) {
+	            return width * 2 + getWidthOffset();
+	        }
+
+	        function getShrinkHeight(height) {
+	            return height * 2 + getHeightOffset();
+	        }
+
+	        function positionScrollbars(element, width, height) {
+	            var expand          = getExpandElement(element);
+	            var shrink          = getShrinkElement(element);
+	            var expandWidth     = getExpandWidth(width);
+	            var expandHeight    = getExpandHeight(height);
+	            var shrinkWidth     = getShrinkWidth(width);
+	            var shrinkHeight    = getShrinkHeight(height);
+	            expand.scrollLeft   = expandWidth;
+	            expand.scrollTop    = expandHeight;
+	            shrink.scrollLeft   = shrinkWidth;
+	            shrink.scrollTop    = shrinkHeight;
+	        }
+
+	        function injectContainerElement() {
+	            var container = getState(element).container;
+
+	            if (!container) {
+	                container                   = document.createElement("div");
+	                container.className         = detectionContainerClass;
+	                container.style.cssText     = "visibility: hidden; display: inline; width: 0px; height: 0px; z-index: -1; overflow: hidden; margin: 0; padding: 0;";
+	                getState(element).container = container;
+	                addAnimationClass(container);
+	                element.appendChild(container);
+
+	                var onAnimationStart = function () {
+	                    getState(element).onRendered && getState(element).onRendered();
+	                };
+
+	                addEvent(container, "animationstart", onAnimationStart);
+
+	                // Store the event handler here so that they may be removed when uninstall is called.
+	                // See uninstall function for an explanation why it is needed.
+	                getState(element).onAnimationStart = onAnimationStart;
+	            }
+
+	            return container;
+	        }
+
+	        function injectScrollElements() {
+	            function alterPositionStyles() {
+	                var style = getState(element).style;
+
+	                if(style.position === "static") {
+	                    element.style.position = "relative";
+
+	                    var removeRelativeStyles = function(reporter, element, style, property) {
+	                        function getNumericalValue(value) {
+	                            return value.replace(/[^-\d\.]/g, "");
+	                        }
+
+	                        var value = style[property];
+
+	                        if(value !== "auto" && getNumericalValue(value) !== "0") {
+	                            reporter.warn("An element that is positioned static has style." + property + "=" + value + " which is ignored due to the static positioning. The element will need to be positioned relative, so the style." + property + " will be set to 0. Element: ", element);
+	                            element.style[property] = 0;
+	                        }
+	                    };
+
+	                    //Check so that there are no accidental styles that will make the element styled differently now that is is relative.
+	                    //If there are any, set them to 0 (this should be okay with the user since the style properties did nothing before [since the element was positioned static] anyway).
+	                    removeRelativeStyles(reporter, element, style, "top");
+	                    removeRelativeStyles(reporter, element, style, "right");
+	                    removeRelativeStyles(reporter, element, style, "bottom");
+	                    removeRelativeStyles(reporter, element, style, "left");
+	                }
+	            }
+
+	            function getLeftTopBottomRightCssText(left, top, bottom, right) {
+	                left = (!left ? "0" : (left + "px"));
+	                top = (!top ? "0" : (top + "px"));
+	                bottom = (!bottom ? "0" : (bottom + "px"));
+	                right = (!right ? "0" : (right + "px"));
+
+	                return "left: " + left + "; top: " + top + "; right: " + right + "; bottom: " + bottom + ";";
+	            }
+
+	            debug("Injecting elements");
+
+	            if (!getState(element)) {
+	                debug("Aborting because element has been uninstalled");
+	                return;
+	            }
+
+	            alterPositionStyles();
+
+	            var rootContainer = getState(element).container;
+
+	            if (!rootContainer) {
+	                rootContainer = injectContainerElement();
+	            }
+
+	            // Due to this WebKit bug https://bugs.webkit.org/show_bug.cgi?id=80808 (currently fixed in Blink, but still present in WebKit browsers such as Safari),
+	            // we need to inject two containers, one that is width/height 100% and another that is left/top -1px so that the final container always is 1x1 pixels bigger than
+	            // the targeted element.
+	            // When the bug is resolved, "containerContainer" may be removed.
+
+	            // The outer container can occasionally be less wide than the targeted when inside inline elements element in WebKit (see https://bugs.webkit.org/show_bug.cgi?id=152980).
+	            // This should be no problem since the inner container either way makes sure the injected scroll elements are at least 1x1 px.
+
+	            var scrollbarWidth          = scrollbarSizes.width;
+	            var scrollbarHeight         = scrollbarSizes.height;
+	            var containerContainerStyle = "position: absolute; overflow: hidden; z-index: -1; visibility: hidden; width: 100%; height: 100%; left: 0px; top: 0px;";
+	            var containerStyle          = "position: absolute; overflow: hidden; z-index: -1; visibility: hidden; " + getLeftTopBottomRightCssText(-(1 + scrollbarWidth), -(1 + scrollbarHeight), -scrollbarHeight, -scrollbarWidth);
+	            var expandStyle             = "position: absolute; overflow: scroll; z-index: -1; visibility: hidden; width: 100%; height: 100%;";
+	            var shrinkStyle             = "position: absolute; overflow: scroll; z-index: -1; visibility: hidden; width: 100%; height: 100%;";
+	            var expandChildStyle        = "position: absolute; left: 0; top: 0;";
+	            var shrinkChildStyle        = "position: absolute; width: 200%; height: 200%;";
+
+	            var containerContainer      = document.createElement("div");
+	            var container               = document.createElement("div");
+	            var expand                  = document.createElement("div");
+	            var expandChild             = document.createElement("div");
+	            var shrink                  = document.createElement("div");
+	            var shrinkChild             = document.createElement("div");
+
+	            // Some browsers choke on the resize system being rtl, so force it to ltr. https://github.com/wnr/element-resize-detector/issues/56
+	            // However, dir should not be set on the top level container as it alters the dimensions of the target element in some browsers.
+	            containerContainer.dir              = "ltr";
+
+	            containerContainer.style.cssText    = containerContainerStyle;
+	            containerContainer.className        = detectionContainerClass;
+	            container.className                 = detectionContainerClass;
+	            container.style.cssText             = containerStyle;
+	            expand.style.cssText                = expandStyle;
+	            expandChild.style.cssText           = expandChildStyle;
+	            shrink.style.cssText                = shrinkStyle;
+	            shrinkChild.style.cssText           = shrinkChildStyle;
+
+	            expand.appendChild(expandChild);
+	            shrink.appendChild(shrinkChild);
+	            container.appendChild(expand);
+	            container.appendChild(shrink);
+	            containerContainer.appendChild(container);
+	            rootContainer.appendChild(containerContainer);
+
+	            function onExpandScroll() {
+	                getState(element).onExpand && getState(element).onExpand();
+	            }
+
+	            function onShrinkScroll() {
+	                getState(element).onShrink && getState(element).onShrink();
+	            }
+
+	            addEvent(expand, "scroll", onExpandScroll);
+	            addEvent(shrink, "scroll", onShrinkScroll);
+
+	            // Store the event handlers here so that they may be removed when uninstall is called.
+	            // See uninstall function for an explanation why it is needed.
+	            getState(element).onExpandScroll = onExpandScroll;
+	            getState(element).onShrinkScroll = onShrinkScroll;
+	        }
+
+	        function registerListenersAndPositionElements() {
+	            function updateChildSizes(element, width, height) {
+	                var expandChild             = getExpandChildElement(element);
+	                var expandWidth             = getExpandWidth(width);
+	                var expandHeight            = getExpandHeight(height);
+	                expandChild.style.width     = expandWidth + "px";
+	                expandChild.style.height    = expandHeight + "px";
+	            }
+
+	            function updateDetectorElements(done) {
+	                var width           = element.offsetWidth;
+	                var height          = element.offsetHeight;
+
+	                debug("Storing current size", width, height);
+
+	                // Store the size of the element sync here, so that multiple scroll events may be ignored in the event listeners.
+	                // Otherwise the if-check in handleScroll is useless.
+	                storeCurrentSize(element, width, height);
+
+	                // Since we delay the processing of the batch, there is a risk that uninstall has been called before the batch gets to execute.
+	                // Since there is no way to cancel the fn executions, we need to add an uninstall guard to all fns of the batch.
+
+	                batchProcessor.add(0, function performUpdateChildSizes() {
+	                    if (!getState(element)) {
+	                        debug("Aborting because element has been uninstalled");
+	                        return;
+	                    }
+
+	                    if (options.debug) {
+	                        var w = element.offsetWidth;
+	                        var h = element.offsetHeight;
+
+	                        if (w !== width || h !== height) {
+	                            reporter.warn(idHandler.get(element), "Scroll: Size changed before updating detector elements.");
+	                        }
+	                    }
+
+	                    updateChildSizes(element, width, height);
+	                });
+
+	                batchProcessor.add(1, function updateScrollbars() {
+	                    if (!getState(element)) {
+	                        debug("Aborting because element has been uninstalled");
+	                        return;
+	                    }
+
+	                    positionScrollbars(element, width, height);
+	                });
+
+	                if (done) {
+	                    batchProcessor.add(2, function () {
+	                        if (!getState(element)) {
+	                            debug("Aborting because element has been uninstalled");
+	                            return;
+	                        }
+
+	                        done();
+	                    });
+	                }
+	            }
+
+	            function areElementsInjected() {
+	                return !!getState(element).container;
+	            }
+
+	            function notifyListenersIfNeeded() {
+	                function isFirstNotify() {
+	                    return getState(element).lastNotifiedWidth === undefined;
+	                }
+
+	                debug("notifyListenersIfNeeded invoked");
+
+	                var state = getState(element);
+
+	                // Don't notify the if the current size is the start size, and this is the first notification.
+	                if (isFirstNotify() && state.lastWidth === state.startSize.width && state.lastHeight === state.startSize.height) {
+	                    return debug("Not notifying: Size is the same as the start size, and there has been no notification yet.");
+	                }
+
+	                // Don't notify if the size already has been notified.
+	                if (state.lastWidth === state.lastNotifiedWidth && state.lastHeight === state.lastNotifiedHeight) {
+	                    return debug("Not notifying: Size already notified");
+	                }
+
+
+	                debug("Current size not notified, notifying...");
+	                state.lastNotifiedWidth = state.lastWidth;
+	                state.lastNotifiedHeight = state.lastHeight;
+	                forEach(getState(element).listeners, function (listener) {
+	                    listener(element);
+	                });
+	            }
+
+	            function handleRender() {
+	                debug("startanimation triggered.");
+
+	                if (isUnrendered(element)) {
+	                    debug("Ignoring since element is still unrendered...");
+	                    return;
+	                }
+
+	                debug("Element rendered.");
+	                var expand = getExpandElement(element);
+	                var shrink = getShrinkElement(element);
+	                if (expand.scrollLeft === 0 || expand.scrollTop === 0 || shrink.scrollLeft === 0 || shrink.scrollTop === 0) {
+	                    debug("Scrollbars out of sync. Updating detector elements...");
+	                    updateDetectorElements(notifyListenersIfNeeded);
+	                }
+	            }
+
+	            function handleScroll() {
+	                debug("Scroll detected.");
+
+	                if (isUnrendered(element)) {
+	                    // Element is still unrendered. Skip this scroll event.
+	                    debug("Scroll event fired while unrendered. Ignoring...");
+	                    return;
+	                }
+
+	                var width = element.offsetWidth;
+	                var height = element.offsetHeight;
+
+	                if (width !== element.lastWidth || height !== element.lastHeight) {
+	                    debug("Element size changed.");
+	                    updateDetectorElements(notifyListenersIfNeeded);
+	                } else {
+	                    debug("Element size has not changed (" + width + "x" + height + ").");
+	                }
+	            }
+
+	            debug("registerListenersAndPositionElements invoked.");
+
+	            if (!getState(element)) {
+	                debug("Aborting because element has been uninstalled");
+	                return;
+	            }
+
+	            getState(element).onRendered = handleRender;
+	            getState(element).onExpand = handleScroll;
+	            getState(element).onShrink = handleScroll;
+
+	            var style = getState(element).style;
+	            updateChildSizes(element, style.width, style.height);
+	        }
+
+	        function finalizeDomMutation() {
+	            debug("finalizeDomMutation invoked.");
+
+	            if (!getState(element)) {
+	                debug("Aborting because element has been uninstalled");
+	                return;
+	            }
+
+	            var style = getState(element).style;
+	            storeCurrentSize(element, style.width, style.height);
+	            positionScrollbars(element, style.width, style.height);
+	        }
+
+	        function ready() {
+	            callback(element);
+	        }
+
+	        function install() {
+	            debug("Installing...");
+	            initListeners();
+	            storeStartSize();
+
+	            batchProcessor.add(0, storeStyle);
+	            batchProcessor.add(1, injectScrollElements);
+	            batchProcessor.add(2, registerListenersAndPositionElements);
+	            batchProcessor.add(3, finalizeDomMutation);
+	            batchProcessor.add(4, ready);
+	        }
+
+	        debug("Making detectable...");
+
+	        if (isDetached(element)) {
+	            debug("Element is detached");
+
+	            injectContainerElement();
+
+	            debug("Waiting until element is attached...");
+
+	            getState(element).onRendered = function () {
+	                debug("Element is now attached");
+	                install();
+	            };
+	        } else {
+	            install();
+	        }
+	    }
+
+	    function uninstall(element) {
+	        var state = getState(element);
+
+	        if (!state) {
+	            // Uninstall has been called on a non-erd element.
+	            return;
+	        }
+
+	        // Uninstall may have been called in the following scenarios:
+	        // (1) Right between the sync code and async batch (here state.busy = true, but nothing have been registered or injected).
+	        // (2) In the ready callback of the last level of the batch by another element (here, state.busy = true, but all the stuff has been injected).
+	        // (3) After the installation process (here, state.busy = false and all the stuff has been injected).
+	        // So to be on the safe side, let's check for each thing before removing.
+
+	        // We need to remove the event listeners, because otherwise the event might fire on an uninstall element which results in an error when trying to get the state of the element.
+	        state.onExpandScroll && removeEvent(getExpandElement(element), "scroll", state.onExpandScroll);
+	        state.onShrinkScroll && removeEvent(getShrinkElement(element), "scroll", state.onShrinkScroll);
+	        state.onAnimationStart && removeEvent(state.container, "animationstart", state.onAnimationStart);
+
+	        state.container && element.removeChild(state.container);
+	    }
+
+	    return {
+	        makeDetectable: makeDetectable,
+	        addListener: addListener,
+	        uninstall: uninstall
+	    };
+	};
+
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(7);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 *
+	 * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
+	 * the SaaSquatch REST API. Used to record Widget events.
+	 *
+	 * @private
+	 */
+	var AnalyticsApi = function () {
+	  /**
+	   * Initialize a new {@link AnalyticsApi} instance.
+	   *
+	   * @param {Object} config Config details
+	   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
+	   *
+	   */
+	  function AnalyticsApi() {
+	    _classCallCheck(this, AnalyticsApi);
+
+	    this.domain = 'https://staging.referralsaasquatch.com';
+	  }
+
+	  _createClass(AnalyticsApi, [{
+	    key: 'pushAnalyticsLoadEvent',
+	    value: function pushAnalyticsLoadEvent(params) {
+	      var tenantAlias = encodeURIComponent(params.tenantAlias);
+	      var accountId = encodeURIComponent(params.externalAccountId);
+	      var userId = encodeURIComponent(params.externalUserId);
+	      var engagementMedium = encodeURIComponent(params.engagementMedium);
+
+	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium;
+	      var url = this.domain + path;
+
+	      return AnalyticsApi.doPost(url, JSON.stringify({}));
+	    }
+	  }, {
+	    key: 'pushAnalyticsShareClickedEvent',
+	    value: function pushAnalyticsShareClickedEvent(params) {
+	      var tenantAlias = encodeURIComponent(params.tenantAlias);
+	      var accountId = encodeURIComponent(params.externalAccountId);
+	      var userId = encodeURIComponent(params.externalUserId);
+	      var engagementMedium = encodeURIComponent(params.engagementMedium);
+	      var shareMedium = encodeURIComponent(params.shareMedium);
+
+	      var path = '/a/' + tenantAlias + '/widgets/analytics/loaded?externalAccountId=' + accountId + '&externalUserId=' + userId + '&engagementMedium=' + engagementMedium + '&shareMedium=' + shareMedium;
+	      var url = this.domain + path;
+
+	      return AnalyticsApi.doPost(url, JSON.stringify({}));
+	    }
+
+	    /**
+	    * @private
+	    *
+	    * @param {String} url The requested url
+	    * @param {String} data Stringified json object
+	    *
+	    * @returns {Promise} fetch promise
+	    */
+
+	  }], [{
+	    key: 'doPost',
+	    value: function doPost(url, data) {
+	      return fetch(url, {
+	        method: 'POST',
+	        headers: {
+	          Accept: 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: data
+	      }).then(function (response) {
+	        return response.text();
+	      });
+	    }
+	  }]);
+
+	  return AnalyticsApi;
+	}();
+
+	exports.default = AnalyticsApi;
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.domready = domready;
+	/*!
+	  * domready (c) Dustin Diaz 2014 - License MIT
+	  *
+	  */
+	function domready(targetDoc, fn) {
+	  var fns = [],
+	      _listener = void 0,
+	      doc = targetDoc,
+	      hack = doc.documentElement.doScroll,
+	      domContentLoaded = 'DOMContentLoaded',
+	      loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+
+	  if (!loaded) doc.addEventListener(domContentLoaded, _listener = function listener() {
+	    doc.removeEventListener(domContentLoaded, _listener);
+	    loaded = 1;
+	    while (_listener = fns.shift()) {
+	      _listener();
+	    }
+	  });
+
+	  return loaded ? setTimeout(fn, 0) : fns.push(fn);
+	}
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _debug = __webpack_require__(3);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	var _Widget2 = __webpack_require__(20);
+
+	var _Widget3 = _interopRequireDefault(_Widget2);
+
+	var _domready = __webpack_require__(35);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _log = (0, _debug2.default)('squatch-js:POPUPwidget');
+
+	/**
+	 * The PopupWidget is used to display popups (also known as "Modals"). 
+	 * Popups widgets are rendered on top of other elements in a page.
+	 * 
+	 * To create a PopupWidget use {@link Widgets}
+	 * 
+	 */
+
+	var PopupWidget = function (_Widget) {
+	  _inherits(PopupWidget, _Widget);
+
+	  /**
+	   * @private
+	   */
+	  function PopupWidget(params) {
+	    var triggerId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchpop' : arguments[1];
+
+	    _classCallCheck(this, PopupWidget);
+
+	    var _this = _possibleConstructorReturn(this, (PopupWidget.__proto__ || Object.getPrototypeOf(PopupWidget)).call(this, params));
+
+	    var me = _this;
+
+	    me.triggerElement = document.getElementById(triggerId);
+
+	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add div tag with id=\'squatchpop\'.');
+
+	    me.popupdiv = document.createElement('div');
+	    me.popupdiv.id = 'squatchModal';
+	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
+
+	    me.popupcontent = document.createElement('div');
+	    me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
+
+	    me.triggerElement.onclick = function () {
+	      me.open();
+	    };
+	    me.popupdiv.onclick = function (event) {
+	      me._clickedOutside(event);
+	    };
+	    return _this;
+	  }
+
+	  _createClass(PopupWidget, [{
+	    key: 'load',
+	    value: function load() {
+	      var me = this;
+
+	      me.popupdiv.appendChild(me.popupcontent);
+	      document.body.appendChild(me.popupdiv);
+	      me.popupcontent.appendChild(me.frame);
+
+	      var frameDoc = me.frame.contentWindow.document;
+	      frameDoc.open();
+	      frameDoc.write(me.content);
+	      frameDoc.close();
+	      _log('Popup template loaded into iframe');
+	    }
+	  }, {
+	    key: 'reload',
+	    value: function reload(params, jwt) {
+	      var me = this;
+
+	      me.widgetApi.cookieUser({
+	        user: {
+	          email: params
+	        },
+	        engagementMedium: 'POPUP',
+	        widgetType: me.type,
+	        jwt: jwt
+	      }).then(function (response) {
+	        if (response.template) {
+	          (function () {
+	            me.content = response.template;
+	            var frameDoc = me.frame.contentWindow.document;
+	            frameDoc.open();
+	            frameDoc.write(me.content);
+	            frameDoc.close();
+
+	            (0, _domready.domready)(frameDoc, function () {
+	              var ctaElement = frameDoc.getElementById('cta');
+
+	              if (ctaElement) {
+	                ctaElement.parentNode.removeChild(ctaElement);
+	              }
+
+	              me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	                var height = element.offsetHeight;
+
+	                if (height > 0) me.frame.height = height;
+
+	                if (window.innerHeight > me.frame.height) {
+	                  me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + 'px';
+	                } else {
+	                  me.popupdiv.style.paddingTop = '5px';
+	                }
+
+	                element.style.width = '100%';
+	                element.style.height = '100%';
+	              });
+
+	              _log('Popup reloaded');
+	            });
+	          })();
+	        }
+	      }).catch(function (ex) {
+	        _log('Failed to reload' + ex);
+	      });
+	    }
+
+	    /**
+	     * Opens the widget.
+	     */
+
+	  }, {
+	    key: 'open',
+	    value: function open() {
+	      var me = this;
+	      var popupdiv = me.popupdiv;
+	      var frame = me.frame;
+	      var frameWindow = frame.contentWindow;
+	      var frameDoc = frameWindow.document;
+	      var erd = this.erd;
+
+	      // Adjust frame height when size of body changes
+	      (0, _domready.domready)(frameDoc, function () {
+	        var _sqh = frameWindow.squatch;
+	        var ctaElement = frameDoc.getElementById('cta');
+
+	        if (ctaElement) {
+	          ctaElement.parentNode.removeChild(ctaElement);
+	        }
+
+	        frameDoc.body.style.overflowY = 'hidden';
+	        popupdiv.style.display = 'table';
+	        popupdiv.style.top = '0';
+
+	        frame.height = frameDoc.body.scrollHeight;
+
+	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	          var height = element.scrollHeight;
+
+	          if (height > 0) frame.height = height;
+
+	          if (window.innerHeight > frame.height) {
+	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + 'px';
+	          } else {
+	            popupdiv.style.paddingTop = '5px';
+	          }
+
+	          element.style.width = '100%';
+	          element.style.height = '100%';
+	        });
+
+	        me._loadEvent(_sqh);
+	        _log('Popup opened');
+	      });
+	    }
+
+	    /**
+	     * Closes the widget
+	     * 
+	     */
+
+	  }, {
+	    key: 'close',
+	    value: function close() {
+	      var popupdiv = this.popupdiv;
+	      var frameDoc = this.frame.contentWindow.document;
+	      var erd = this.erd;
+
+	      popupdiv.style.display = 'none';
+	      erd.uninstall(frameDoc.body);
+
+	      _log('Popup closed');
+	    }
+	  }, {
+	    key: '_clickedOutside',
+	    value: function _clickedOutside(e) {
+	      if (e.target === this.popupdiv) {
+	        this.close();
+	      }
+	    }
+	  }, {
+	    key: '_error',
+	    value: function _error(rs) {
+	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'modal' : arguments[1];
+	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+
+	      var _style = 'body { margin: 0; } .modal { box-shadow: none; border: 0; }';
+
+	      return _get(PopupWidget.prototype.__proto__ || Object.getPrototypeOf(PopupWidget.prototype), '_error', this).call(this, rs, mode, style || _style);
+	    }
+	  }]);
+
+	  return PopupWidget;
+	}(_Widget3.default);
+
+	exports.default = PopupWidget;
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+	var _debug = __webpack_require__(3);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	var _PopupWidget2 = __webpack_require__(36);
+
+	var _PopupWidget3 = _interopRequireDefault(_PopupWidget2);
+
+	var _domready = __webpack_require__(35);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _log = (0, _debug2.default)('squatch-js:CTAwidget');
+
+	/**
+	 * A CtaWidget is displayed on top of your page 
+	 * 
+	 * To create a CtaWidget use {@link Widgets}
+	 *
+	 */
+
+	var CtaWidget = function (_PopupWidget) {
+	  _inherits(CtaWidget, _PopupWidget);
+
+	  /**
+	   * @private
+	   */
+	  function CtaWidget(params, opts) {
+	    _classCallCheck(this, CtaWidget);
+
+	    var ctaElement = document.createElement('div');
+	    ctaElement.id = 'cta';
+	    document.body.appendChild(ctaElement);
+
+	    var _this = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, params, 'cta'));
+
+	    var me = _this;
+
+	    if (!opts.side && !opts.position) {
+	      opts.position = 'bottom';
+	      opts.side = 'right';
+	    }
+
+	    if (opts.position === 'middle') {
+	      me.position = 'top: 45%;';
+	      me.side = opts.side === 'center' ? 'right: 45%;' : opts.side + ': -10px;';
+	    } else {
+	      me.position = opts.position + ': -10px;';
+	      me.side = opts.side === 'center' ? 'right: 45%;' : opts.side + ': 20px;';
+	    }
+
+	    me.positionClass = opts.position;
+
+	    me.ctaFrame = document.createElement('iframe');
+	    me.ctaFrame.squatchJsApi = me;
+	    me.ctaFrame.style = 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position;
+
+	    document.body.appendChild(_this.ctaFrame);
+	    return _this;
+	  }
+
+	  _createClass(CtaWidget, [{
+	    key: 'load',
+	    value: function load() {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'load', this).call(this);
+
+	      var widgetFrameDoc = this.frame.contentWindow.document;
+	      var ctaFrame = this.ctaFrame;
+	      var ctaFrameDoc = this.ctaFrame.contentWindow.document;
+	      var positionClass = ' ' + this.positionClass;
+	      var erd = this.erd;
+
+	      // Wait for widget doc to be ready to grab the cta HTML
+	      (0, _domready.domready)(widgetFrameDoc, function () {
+	        var ctaElement = widgetFrameDoc.getElementById('cta');
+
+	        if (ctaElement) {
+	          ctaElement.parentNode.removeChild(ctaElement);
+
+	          ctaFrameDoc.open();
+	          ctaFrameDoc.write(ctaElement.innerHTML);
+	          ctaFrameDoc.close();
+
+	          // Figure out size of CTA as well
+	          (0, _domready.domready)(ctaFrameDoc, function () {
+	            ctaFrame.height = ctaFrameDoc.body.offsetHeight;
+	            ctaFrame.width = ctaFrameDoc.body.scrollWidth;
+
+	            ctaFrame.style.display = 'block';
+
+	            var ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
+	            ctaContainer.className += positionClass;
+
+	            erd.listenTo(ctaContainer, function (element) {
+	              var height = element.offsetHeight;
+	              var width = element.offsetWidth;
+	              ctaFrame.height = height;
+	              ctaFrame.width = width;
+	            });
+
+	            _log('CTA template loaded into iframe');
+	          });
+	        } else {
+	          _log(new Error('CTA element not found in theme'));
+	        }
+	      });
+	    }
+
+	    /**
+	     *  @inheritdoc
+	     */
+
+	  }, {
+	    key: 'open',
+	    value: function open() {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'open', this).call(this);
+	    }
+	    /**
+	     *  @inheritdoc
+	     */
+
+	  }, {
+	    key: 'close',
+	    value: function close() {
+	      _get(CtaWidget.prototype.__proto__ || Object.getPrototypeOf(CtaWidget.prototype), 'close', this).call(this);
+	    }
+	  }]);
+
+	  return CtaWidget;
+	}(_PopupWidget3.default);
+
+	exports.default = CtaWidget;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.help = help;
+	function help() {
+	  console.log("Having trouble using Squatch.js? Go to https://docs.referralsaasquatch.com/developer/ for tutorials, references and error codes.");
+	}
+
+	/**
+	 * When you load Squatch.js you need to provide these configuration options.
+	 * 
+	 * @interface ConfigOptions
+	 * @property {string} tenantAlias The Tenant that you're using.
+	 * @property {string?} domain The domain for API. Defaults to `https://app.referralsaasquatch.com`
+	 */
+
+	/**
+	 * When a widget is loaded using {@link Widgets} you'll get both the `user` data and the `widget` object back.
+	 * 
+	 * @interface WidgetResult
+	 * @property {Widget} widget The widget that was created.
+	 * @property {User} user The user that's in the widget.
+	 * 
+	 */
+
+/***/ },
+/* 39 */
 /***/ function(module, exports) {
 
 	"use strict";

@@ -54,8 +54,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(8);
-	module.exports = __webpack_require__(14);
+	__webpack_require__(7);
+	module.exports = __webpack_require__(6);
 
 
 /***/ },
@@ -64,9 +64,259 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */,
 /* 4 */,
 /* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(7);
+
+	var _jsonschema = __webpack_require__(8);
+
+	var _schema = __webpack_require__(18);
+
+	var _schema2 = _interopRequireDefault(_schema);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 *
+	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
+	 *
+	 */
+	var WidgetApi = function () {
+	  /**
+	   * Initialize a new {@link WidgetApi} instance.
+	   *
+	   * @param {ConfigOptions} config Config details
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var WidgetApi = require('squatch-js').WidgetApi;
+	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {WidgetApi} from 'squatch-js';
+	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   */
+	  function WidgetApi(config) {
+	    _classCallCheck(this, WidgetApi);
+
+	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
+	    this.tenantAlias = config.tenantAlias;
+	    this.domain = 'https://staging.referralsaasquatch.com';
+	  }
+
+	  /**
+	   * Creates/upserts an anonymous user.
+	   *
+	   * @param {Object} params
+	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
+	   * @param {string} params.engagementMedium (POPUP/MOBILE)
+	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
+	   *                            validate the data (can be disabled)
+	   *
+	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	   */
+
+
+	  _createClass(WidgetApi, [{
+	    key: 'cookieUser',
+	    value: function cookieUser() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+
+	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/user/cookie_user' + optionalParams;
+	      var url = this.domain + path;
+
+	      return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
+	    }
+
+	    /**
+	     * Creates/upserts user.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
+	     */
+
+	  }, {
+	    key: 'upsert',
+	    value: function upsert() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+
+	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.user.accountId);
+	      var userId = encodeURIComponent(params.user.id);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
+	      var url = this.domain + path;
+
+	      var user = params.user;
+	      delete user.accountId;
+	      delete user.id;
+
+	      return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
+	    }
+
+	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
+	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     * @return {Promise} template html if true.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+
+	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.user.accountId);
+	      var userId = encodeURIComponent(params.user.id);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/render' + optionalParams;
+	      var url = this.domain + path;
+	      return WidgetApi.doRequest(url, params.jwt);
+	    }
+
+	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.code the user details
+	     * @return {Promise} code referral code if true.
+	     */
+
+	  }, {
+	    key: 'squatchReferralCookie',
+	    value: function squatchReferralCookie() {
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
+	      return WidgetApi.doRequest(url);
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }], [{
+	    key: 'validateInput',
+	    value: function validateInput(params, jsonSchema) {
+	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
+	      if (!valid.valid) throw valid.errors;
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: 'doRequest',
+	    value: function doRequest(url) {
+	      var jwt = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
+	      return fetch(url, {
+	        method: 'GET',
+	        headers: headers,
+	        credentials: 'include',
+	        mode: 'cors'
+	      }).then(function (response) {
+	        if (response.ok) {
+	          return response.text();
+	        }
+
+	        var json = response.json;
+	        return json.then(Promise.reject.bind(Promise));
+	      });
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }, {
+	    key: 'doPut',
+	    value: function doPut(url, data, jwt) {
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json',
+	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
+	      return fetch(url, {
+	        method: 'PUT',
+	        headers: headers,
+	        credentials: 'include',
+	        mode: 'cors',
+	        body: data
+	      }).then(function (response) {
+	        var json = response.json();
+	        if (!response.ok) {
+	          return json.then(Promise.reject.bind(Promise));
+	        }
+	        return json;
+	      });
+	    }
+	  }]);
+
+	  return WidgetApi;
+	}();
+
+	exports.default = WidgetApi;
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -505,273 +755,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var Validator = module.exports.Validator = __webpack_require__(9);
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(8);
-
-	var _jsonschema = __webpack_require__(15);
-
-	var _schema = __webpack_require__(25);
-
-	var _schema2 = _interopRequireDefault(_schema);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
-	 *
-	 */
-	var WidgetApi = function () {
-	  /**
-	   * Initialize a new {@link WidgetApi} instance.
-	   *
-	   * @param {ConfigOptions} config Config details
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   */
-	  function WidgetApi(config) {
-	    _classCallCheck(this, WidgetApi);
-
-	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
-	    this.tenantAlias = config.tenantAlias;
-	    this.domain = 'https://staging.referralsaasquatch.com';
-	  }
-
-	  /**
-	   * Creates/upserts an anonymous user.
-	   *
-	   * @param {Object} params
-	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} params.engagementMedium (POPUP/MOBILE)
-	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
-	   *                            validate the data (can be disabled)
-	   *
-	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-	   */
-
-
-	  _createClass(WidgetApi, [{
-	    key: 'cookieUser',
-	    value: function cookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
-
-	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/user/cookie_user' + optionalParams;
-	      var url = this.domain + path;
-
-	      return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
-	    }
-
-	    /**
-	     * Creates/upserts user.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
-	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     *
-	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
-	     */
-
-	  }, {
-	    key: 'upsert',
-	    value: function upsert() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
-
-	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var accountId = encodeURIComponent(params.user.accountId);
-	      var userId = encodeURIComponent(params.user.id);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
-	      var url = this.domain + path;
-
-	      var user = params.user;
-	      delete user.accountId;
-	      delete user.id;
-
-	      return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
-	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     * @return {Promise} template html if true.
-	     */
-
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
-
-	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var accountId = encodeURIComponent(params.user.accountId);
-	      var userId = encodeURIComponent(params.user.id);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/render' + optionalParams;
-	      var url = this.domain + path;
-	      return WidgetApi.doRequest(url, params.jwt);
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.code the user details
-	     * @return {Promise} code referral code if true.
-	     */
-
-	  }, {
-	    key: 'squatchReferralCookie',
-	    value: function squatchReferralCookie() {
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
-	      return WidgetApi.doRequest(url);
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }], [{
-	    key: 'validateInput',
-	    value: function validateInput(params, jsonSchema) {
-	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
-	      if (!valid.valid) throw valid.errors;
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: 'doRequest',
-	    value: function doRequest(url) {
-	      var jwt = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-
-	      var headers = {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/json'
-	      };
-
-	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'GET',
-	        headers: headers,
-	        credentials: 'include',
-	        mode: 'cors'
-	      }).then(function (response) {
-	        if (response.ok) {
-	          return response.text();
-	        }
-
-	        var json = response.json;
-	        return json.then(Promise.reject.bind(Promise));
-	      });
-	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
-	  }, {
-	    key: 'doPut',
-	    value: function doPut(url, data, jwt) {
-	      var headers = {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/json',
-	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
-	      };
-
-	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'PUT',
-	        headers: headers,
-	        credentials: 'include',
-	        mode: 'cors',
-	        body: data
-	      }).then(function (response) {
-	        var json = response.json();
-	        if (!response.ok) {
-	          return json.then(Promise.reject.bind(Promise));
-	        }
-	        return json;
-	      });
-	    }
-	  }]);
-
-	  return WidgetApi;
-	}();
-
-	exports.default = WidgetApi;
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var Validator = module.exports.Validator = __webpack_require__(16);
-
-	module.exports.ValidatorResult = __webpack_require__(24).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(24).ValidationError;
-	module.exports.SchemaError = __webpack_require__(24).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(17).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(17).ValidationError;
+	module.exports.SchemaError = __webpack_require__(17).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -780,15 +773,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(17);
+	var urilib = __webpack_require__(10);
 
-	var attribute = __webpack_require__(23);
-	var helpers = __webpack_require__(24);
+	var attribute = __webpack_require__(16);
+	var helpers = __webpack_require__(17);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -1106,7 +1099,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -1130,7 +1123,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(18);
+	var punycode = __webpack_require__(11);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -1202,7 +1195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(20);
+	    querystring = __webpack_require__(13);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -1819,7 +1812,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -2351,10 +2344,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)(module), (function() { return this; }())))
 
 /***/ },
-/* 19 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -2370,17 +2363,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(21);
-	exports.encode = exports.stringify = __webpack_require__(22);
+	exports.decode = exports.parse = __webpack_require__(14);
+	exports.encode = exports.stringify = __webpack_require__(15);
 
 
 /***/ },
-/* 21 */
+/* 14 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2466,7 +2459,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 15 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2536,12 +2529,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(24);
+	var helpers = __webpack_require__(17);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -3327,12 +3320,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(17);
+	var uri = __webpack_require__(10);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -3612,7 +3605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = {
