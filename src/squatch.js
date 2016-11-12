@@ -9,17 +9,23 @@
 import 'whatwg-fetch';
 import debug from 'debug';
 import Widgets from './widgets/Widgets';
+import { EmbedWidget } from './widgets/EmbedWidget';
+import { PopupWidget } from './widgets/PopupWidget';
+import { CtaWidget } from './widgets/CtaWidget';
 import WidgetApi from './api/WidgetApi';
 import asyncLoad from './async';
 
 debug.disable('squatch-js*');
 const _log = debug('squatch-js');
 
-export { Widgets } from './widgets/Widgets';
-export { EmbedWidget } from './widgets/EmbedWidget';
-export { PopupWidget } from './widgets/PopupWidget';
-export { CtaWidget } from './widgets/CtaWidget';
-export { WidgetApi } from './api/WidgetApi';
+export {
+  Widgets,
+  EmbedWidget,
+  PopupWidget,
+  CtaWidget,
+  WidgetApi,
+};
+
 
 /**
  * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
@@ -31,10 +37,10 @@ export { WidgetApi } from './api/WidgetApi';
  *   squatch.api().cookieUser();
  * });
  */
+let _api = null;
 export function api() {
   return _api;
 }
-let _api = null;
 
 /**
  * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
@@ -46,10 +52,10 @@ let _api = null;
  *   squatch.widgets().cookieUser().then(doSomething);
  * });
  */
+let _widgets = null;
 export function widgets() {
   return _widgets;
 }
-let _widgets = null;
 
 /**
  * Initializes the static `squatch` global. This sets up:

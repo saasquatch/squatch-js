@@ -27,15 +27,15 @@ export default class WidgetApi {
   constructor(config) {
     if (!config.tenantAlias) throw new Error('tenantAlias not provided');
     this.tenantAlias = config.tenantAlias;
-    this.domain = 'https://staging.referralsaasquatch.com';
+    this.domain = config.domain || 'https://staging.referralsaasquatch.com';
   }
 
   /**
    * Creates/upserts an anonymous user.
    *
    * @param {Object} params
-   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-   * @param {string} params.engagementMedium (POPUP/MOBILE)
+   * @param {WidgetType} params.widgetType The content of the widget.
+   * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used to
    *                            validate the data (can be disabled)
    *
@@ -62,8 +62,8 @@ export default class WidgetApi {
    * @param {Object} params.user the user details
    * @param {string} params.user.id
    * @param {string} params.user.accountId
-   * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-   * @param {string} params.engagementMedium (POPUP/MOBILE)
+   * @param {WidgetType} params.widgetType The content of the widget.
+   * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
@@ -96,8 +96,8 @@ export default class WidgetApi {
    * @param {Object} params.user the user details
    * @param {string} params.user.id
    * @param {string} params.user.accountId
-   * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-   * @param {string} params.engagementMedium (POPUP/MOBILE)
+   * @param {WidgetType} params.widgetType The content of the widget.
+   * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    * @return {Promise} template html if true.
@@ -118,11 +118,9 @@ export default class WidgetApi {
   }
 
   /**
-   * Description here.
+   * Looks up the referral code of the current user, if there is any.
    *
-   * @param {Object} params
-   * @param {Object} params.code the user details
-   * @return {Promise} code referral code if true.
+   * @return {Promise<string>} code referral code if true.
    */
   squatchReferralCookie() {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
@@ -152,7 +150,7 @@ export default class WidgetApi {
     return fetch(url, {
       method: 'GET',
       headers: headers,
-      credentials: 'include',
+      credentials: jwt ? 'include' : 'omit', // omit when no-auth
       mode: 'cors',
     }).then((response) => {
       if (response.ok) {
@@ -180,7 +178,7 @@ export default class WidgetApi {
     return fetch(url, {
       method: 'PUT',
       headers: headers,
-      // credentials: 'include',
+      credentials: jwt ? 'include' : 'omit', // omit when no-auth
       mode: 'cors',
       body: data,
     }).then((response) => {

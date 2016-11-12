@@ -41,16 +41,7 @@
     var user;
     var widget
 
-    // squatch.widgets().createCookieUser({
-    //   engagementMedium: 'POPUP',
-    //   widgetType: 'REFERRER_WIDGET',
-    //   jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGxvd0Fub255bW91cyI6dHJ1ZX0.fe5IFfmNQDCClAHfGLtrFMWf6XLsFtJHYz3CL35-43Y'
-    // }).then(function (response) {
-    //   user = response.user;
-    //   widget = response.widget;
-    // }).catch(function (err) {
-    //   console.log(err);
-    // });
+    // squatch.widgets().createCookieUser({});
 
     squatch.widgets().upsertUser({
       user: {
@@ -62,7 +53,7 @@
       },
       engagementMedium: 'POPUP',
       widgetType: 'REFERRER_WIDGET',
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMTIzIiwiYWNjb3VudElkIjoiYWJjIiwiZmlyc3ROYW1lIjoiSm9yZ2UiLCJsYXN0TmFtZSI6IkNvbmRlIiwiZW1haWwiOiJqb3JnZUB1dmljLmNhIn19.XJkF46NCJVymr3o1532YCgofn_tBoApDWDDV-o-EXsI'
+      jwt: 'token'
     }).then(function (response) {
       user = response.user;
       widget = response.widget;

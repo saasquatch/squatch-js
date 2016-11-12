@@ -67,58 +67,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
-
-	var _Widgets = __webpack_require__(2);
-
-	Object.defineProperty(exports, 'Widgets', {
-	  enumerable: true,
-	  get: function get() {
-	    return _Widgets.Widgets;
-	  }
-	});
-
-	var _EmbedWidget = __webpack_require__(19);
-
-	Object.defineProperty(exports, 'EmbedWidget', {
-	  enumerable: true,
-	  get: function get() {
-	    return _EmbedWidget.EmbedWidget;
-	  }
-	});
-
-	var _PopupWidget = __webpack_require__(36);
-
-	Object.defineProperty(exports, 'PopupWidget', {
-	  enumerable: true,
-	  get: function get() {
-	    return _PopupWidget.PopupWidget;
-	  }
-	});
-
-	var _CtaWidget = __webpack_require__(37);
-
-	Object.defineProperty(exports, 'CtaWidget', {
-	  enumerable: true,
-	  get: function get() {
-	    return _CtaWidget.CtaWidget;
-	  }
-	});
-
-	var _WidgetApi = __webpack_require__(6);
-
-	Object.defineProperty(exports, 'WidgetApi', {
-	  enumerable: true,
-	  get: function get() {
-	    return _WidgetApi.WidgetApi;
-	  }
-	});
 	exports.api = api;
 	exports.widgets = widgets;
 	exports.init = init;
 	exports.ready = ready;
 	exports.autofill = autofill;
 
-	var _docs = __webpack_require__(38);
+	var _docs = __webpack_require__(2);
 
 	Object.keys(_docs).forEach(function (key) {
 	  if (key === "default" || key === "__esModule") return;
@@ -130,13 +85,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	});
 
-	__webpack_require__(7);
+	__webpack_require__(3);
 
-	var _debug = __webpack_require__(3);
+	var _debug = __webpack_require__(4);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
+	var _Widgets = __webpack_require__(7);
+
 	var _Widgets2 = _interopRequireDefault(_Widgets);
+
+	var _EmbedWidget = __webpack_require__(20);
+
+	var _PopupWidget = __webpack_require__(37);
+
+	var _CtaWidget = __webpack_require__(38);
+
+	var _WidgetApi = __webpack_require__(8);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
@@ -146,16 +111,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_debug2.default.disable('squatch-js*'); /**
-	                                         * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
-	                                         * integrate a referral program into your website or web app.
-	                                         * It can show referral widgets on any website, track users, generate unique
-	                                         * referral short links and referral codes, and more.
-	                                         *
-	                                         * @module squatch
-	                                         */
-
+	/**
+	 * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
+	 * integrate a referral program into your website or web app.
+	 * It can show referral widgets on any website, track users, generate unique
+	 * referral short links and referral codes, and more.
+	 *
+	 * @module squatch
+	 */
+	_debug2.default.disable('squatch-js*');
 	var _log = (0, _debug2.default)('squatch-js');
+
+	exports.Widgets = _Widgets2.default;
+	exports.EmbedWidget = _EmbedWidget.EmbedWidget;
+	exports.PopupWidget = _PopupWidget.PopupWidget;
+	exports.CtaWidget = _CtaWidget.CtaWidget;
+	exports.WidgetApi = _WidgetApi2.default;
 
 	/**
 	 * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
@@ -167,10 +138,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *   squatch.api().cookieUser();
 	 * });
 	 */
+
+	var _api = null;
 	function api() {
 	  return _api;
 	}
-	var _api = null;
 
 	/**
 	 * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
@@ -182,10 +154,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *   squatch.widgets().cookieUser().then(doSomething);
 	 * });
 	 */
+	var _widgets = null;
 	function widgets() {
 	  return _widgets;
 	}
-	var _widgets = null;
 
 	/**
 	 * Initializes the static `squatch` global. This sets up:
@@ -256,1068 +228,63 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _debug = __webpack_require__(3);
-
-	var _debug2 = _interopRequireDefault(_debug);
-
-	var _WidgetApi = __webpack_require__(6);
-
-	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
-
-	var _EmbedWidget = __webpack_require__(19);
-
-	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
-
-	var _PopupWidget = __webpack_require__(36);
-
-	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
-
-	var _CtaWidget = __webpack_require__(37);
-
-	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var _log = (0, _debug2.default)('squatch-js:widgets');
+	exports.help = help;
+	function help() {
+	  console.log("Having trouble using Squatch.js? Go to https://docs.referralsaasquatch.com/developer/ for tutorials, references and error codes.");
+	}
 
 	/**
-	 *
-	 * The Widgets class contains a widget loading process for different calls
-	 * to the WidgetApi.
-	 *
+	 * When you load Squatch.js you need to provide these configuration options.
+	 * 
+	 * @interface ConfigOptions
+	 * @property {string} tenantAlias The Tenant that you're using.
+	 * @property {string?} domain The domain for API. Defaults to `https://app.referralsaasquatch.com`
 	 */
 
-	var Widgets = function () {
-	  /**
-	   * Initialize a new {@link Widgets} instance.
-	   *
-	   * @param {ConfigOptions} config Config details
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var Widgets = require('squatch-js').Widgets;
-	   * var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {Widgets} from 'squatch-js';
-	   * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
-	   */
-	  function Widgets(config) {
-	    _classCallCheck(this, Widgets);
+	/**
+	 * When a widget is loaded using {@link Widgets} you'll get both the `user` data and the `widget` object back.
+	 * 
+	 * @interface WidgetResult
+	 * @property {Widget} widget The widget that was created.
+	 * @property {User} user The user that's in the widget.
+	 * 
+	 */
 
-	    this.tenantAlias = config.tenantAlias;
-	    this.api = new _WidgetApi2.default(config);
-	  }
+	/**
+	 * EngagementMedium is an enum for the content of the widgets. 
+	 * 
+	 * @name EngagementMedium
+	 * @enum {string}
+	 * @readonly
+	 * @property {string}  REFERRER_WIDGET      Widget content that lets people make referrals
+	 * @property {string}  CONVERSION_WIDGET    Widget content that shows that someone has been referred
+	 * @example
+	 *  engagementMedium: "REFERRER_WIDGET"
+	 * 
+	 */
 
-	  /**
-	   * This function calls the WidgetApi.cookieUser() method, and it renders
-	   * the widget if it is successful. Otherwise it shows the "error" widget.
-	   *
-	   * @param {Object} config
-	   * @param {string} config.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} config.engagementMedium (POPUP/MOBILE)
-	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
-	   *                            validate the data (can be disabled)
-	   *
-	   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-	   */
-
-
-	  _createClass(Widgets, [{
-	    key: 'createCookieUser',
-	    value: function createCookieUser(config) {
-	      var _this = this;
-
-	      return new Promise(function (resolve, reject) {
-	        _this.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
-	      });
-	    }
-
-	    /**
-	     * This function calls the WidgetApi.upsert() method, and it renders
-	     * the widget if it is successful. Otherwise it shows the "error" widget.
-	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
-	     * @param {string} config.widgetType (CONVERSION_WIDGET/REFERRING_WIDGET)
-	     * @param {string} config.engagementMedium (POPUP/MOBILE)
-	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     *
-	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-	     */
-
-	  }, {
-	    key: 'upsertUser',
-	    value: function upsertUser(config) {
-	      var _this2 = this;
-
-	      return new Promise(function (resolve, reject) {
-	        _this2.api.upsert(config).then(function (response) {
-	          resolve({ widget: _this2.renderWidget(response, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
-	      });
-	    }
-
-	    /**
-	     * This function calls the WidgetApi.render() method, and it renders
-	     * the widget if it is successful. Otherwise it shows the "error" widget.
-	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
-	     * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} config.engagementMedium (POPUP/MOBILE)
-	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     *
-	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-	     */
-
-	  }, {
-	    key: 'render',
-	    value: function render(config) {
-	      var _this3 = this;
-
-	      return new Promise(function (resolve, reject) {
-	        _this3.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this3.renderWidget({ template: response }, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
-	      });
-	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
-	  }, {
-	    key: 'renderWidget',
-	    value: function renderWidget(response) {
-	      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
-
-	      _log('Loading...');
-	      if (!response) throw new Error('Unable to get a response');
-	      if (!response.jsOptions) throw new Error('Missing jsOptions in response');
-	      _log(response, config);
-
-	      var widget = void 0;
-	      var displayOnLoad = false;
-	      var displayCTA = false;
-	      var opts = response.jsOptions || '';
-
-	      var params = {
-	        content: response.template,
-	        type: config.widgetType || opts.widget.defaultWidgetType,
-	        api: this.api
-	      };
-
-	      if (opts.widgetUrlMappings) {
-	        opts.widgetUrlMappings.forEach(function (rule) {
-	          if (Widgets.matchesUrl(rule.url)) {
-	            displayOnLoad = true;
-	            displayCTA = rule.showAsCTA;
-	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
-	          }
-	        });
-	      }
-
-	      if (opts.conversionUrls) {
-	        opts.conversionUrls.forEach(function (rule) {
-	          if (response.user.referredBy && Widgets.matchesUrl(rule)) {
-	            displayOnLoad = true;
-	            _log('This is a conversion URL', rule);
-	          }
-	        });
-	      }
-
-	      if (!displayCTA && config.engagementMedium === 'EMBED') {
-	        widget = new _EmbedWidget2.default(params);
-	        widget.load();
-	      } else if (!displayCTA && config.engagementMedium === 'POPUP') {
-	        widget = new _PopupWidget2.default(params);
-	        widget.load();
-	        if (displayOnLoad) widget.open();
-	      } else if (displayCTA) {
-	        var side = opts.cta.content.buttonSide;
-	        var position = opts.cta.content.buttonPosition;
-
-	        widget = new _CtaWidget2.default(params, { side: side, position: position });
-	        widget.load();
-	      } else if (displayOnLoad) {
-	        widget = new _PopupWidget2.default(params);
-	        widget.load();
-	        widget.open();
-	      }
-
-	      return widget;
-	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
-	  }], [{
-	    key: 'renderErrorWidget',
-	    value: function renderErrorWidget(error) {
-	      var em = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'POPUP';
-
-	      _log(new Error(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message));
-
-	      var widget = void 0;
-	      var params = {
-	        content: 'error',
-	        rsCode: error.rsCode,
-	        type: 'ERROR_WIDGET'
-	      };
-
-	      if (em === 'EMBED') {
-	        widget = new _EmbedWidget2.default(params);
-	      } else if (em === 'POPUP') {
-	        widget = new _PopupWidget2.default(params);
-	      }
-
-	      widget.load();
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: 'matchesUrl',
-	    value: function matchesUrl(rule) {
-	      return window.location.href.match(new RegExp(rule));
-	    }
-	  }]);
-
-	  return Widgets;
-	}();
-
-	exports.default = Widgets;
+	/**
+	* WidgetType is an enum for types of ways a Widget can be displayed.
+	* 
+	* @name WidgetType
+	* @enum {string}
+	* @readonly
+	* @property {string}  POPUP    Displays the widget as a modal popup. Creates a {@link PopupWidget}
+	* @property {string}  EMBED    Displays the widget embedded in the page. Create an {@link EmbedWidget}
+	* @example
+	*  widgetType: "POPUP"
+	* 
+	*/
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * This is the web browser implementation of `debug()`.
-	 *
-	 * Expose `debug()` as the module.
-	 */
-
-	exports = module.exports = __webpack_require__(4);
-	exports.log = log;
-	exports.formatArgs = formatArgs;
-	exports.save = save;
-	exports.load = load;
-	exports.useColors = useColors;
-	exports.storage = 'undefined' != typeof chrome
-	               && 'undefined' != typeof chrome.storage
-	                  ? chrome.storage.local
-	                  : localstorage();
-
-	/**
-	 * Colors.
-	 */
-
-	exports.colors = [
-	  'lightseagreen',
-	  'forestgreen',
-	  'goldenrod',
-	  'dodgerblue',
-	  'darkorchid',
-	  'crimson'
-	];
-
-	/**
-	 * Currently only WebKit-based Web Inspectors, Firefox >= v31,
-	 * and the Firebug extension (any Firefox version) are known
-	 * to support "%c" CSS customizations.
-	 *
-	 * TODO: add a `localStorage` variable to explicitly enable/disable colors
-	 */
-
-	function useColors() {
-	  // is webkit? http://stackoverflow.com/a/16459606/376773
-	  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-	  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
-	    // is firebug? http://stackoverflow.com/a/398120/376773
-	    (window.console && (console.firebug || (console.exception && console.table))) ||
-	    // is firefox >= v31?
-	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-	    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
-	}
-
-	/**
-	 * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
-	 */
-
-	exports.formatters.j = function(v) {
-	  return JSON.stringify(v);
-	};
-
-
-	/**
-	 * Colorize log arguments if enabled.
-	 *
-	 * @api public
-	 */
-
-	function formatArgs() {
-	  var args = arguments;
-	  var useColors = this.useColors;
-
-	  args[0] = (useColors ? '%c' : '')
-	    + this.namespace
-	    + (useColors ? ' %c' : ' ')
-	    + args[0]
-	    + (useColors ? '%c ' : ' ')
-	    + '+' + exports.humanize(this.diff);
-
-	  if (!useColors) return args;
-
-	  var c = 'color: ' + this.color;
-	  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
-
-	  // the final "%c" is somewhat tricky, because there could be other
-	  // arguments passed either before or after the %c, so we need to
-	  // figure out the correct index to insert the CSS into
-	  var index = 0;
-	  var lastC = 0;
-	  args[0].replace(/%[a-z%]/g, function(match) {
-	    if ('%%' === match) return;
-	    index++;
-	    if ('%c' === match) {
-	      // we only are interested in the *last* %c
-	      // (the user may have provided their own)
-	      lastC = index;
-	    }
-	  });
-
-	  args.splice(lastC, 0, c);
-	  return args;
-	}
-
-	/**
-	 * Invokes `console.log()` when available.
-	 * No-op when `console.log` is not a "function".
-	 *
-	 * @api public
-	 */
-
-	function log() {
-	  // this hackery is required for IE8/9, where
-	  // the `console.log` function doesn't have 'apply'
-	  return 'object' === typeof console
-	    && console.log
-	    && Function.prototype.apply.call(console.log, console, arguments);
-	}
-
-	/**
-	 * Save `namespaces`.
-	 *
-	 * @param {String} namespaces
-	 * @api private
-	 */
-
-	function save(namespaces) {
-	  try {
-	    if (null == namespaces) {
-	      exports.storage.removeItem('debug');
-	    } else {
-	      exports.storage.debug = namespaces;
-	    }
-	  } catch(e) {}
-	}
-
-	/**
-	 * Load `namespaces`.
-	 *
-	 * @return {String} returns the previously persisted debug modes
-	 * @api private
-	 */
-
-	function load() {
-	  var r;
-	  try {
-	    r = exports.storage.debug;
-	  } catch(e) {}
-	  return r;
-	}
-
-	/**
-	 * Enable namespaces listed in `localStorage.debug` initially.
-	 */
-
-	exports.enable(load());
-
-	/**
-	 * Localstorage attempts to return the localstorage.
-	 *
-	 * This is necessary because safari throws
-	 * when a user disables cookies/localstorage
-	 * and you attempt to access it.
-	 *
-	 * @return {LocalStorage}
-	 * @api private
-	 */
-
-	function localstorage(){
-	  try {
-	    return window.localStorage;
-	  } catch (e) {}
-	}
-
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * This is the common logic for both the Node.js and web browser
-	 * implementations of `debug()`.
-	 *
-	 * Expose `debug()` as the module.
-	 */
-
-	exports = module.exports = debug.debug = debug;
-	exports.coerce = coerce;
-	exports.disable = disable;
-	exports.enable = enable;
-	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(5);
-
-	/**
-	 * The currently active debug mode names, and names to skip.
-	 */
-
-	exports.names = [];
-	exports.skips = [];
-
-	/**
-	 * Map of special "%n" handling functions, for the debug "format" argument.
-	 *
-	 * Valid key names are a single, lowercased letter, i.e. "n".
-	 */
-
-	exports.formatters = {};
-
-	/**
-	 * Previously assigned color.
-	 */
-
-	var prevColor = 0;
-
-	/**
-	 * Previous log timestamp.
-	 */
-
-	var prevTime;
-
-	/**
-	 * Select a color.
-	 *
-	 * @return {Number}
-	 * @api private
-	 */
-
-	function selectColor() {
-	  return exports.colors[prevColor++ % exports.colors.length];
-	}
-
-	/**
-	 * Create a debugger with the given `namespace`.
-	 *
-	 * @param {String} namespace
-	 * @return {Function}
-	 * @api public
-	 */
-
-	function debug(namespace) {
-
-	  // define the `disabled` version
-	  function disabled() {
-	  }
-	  disabled.enabled = false;
-
-	  // define the `enabled` version
-	  function enabled() {
-
-	    var self = enabled;
-
-	    // set `diff` timestamp
-	    var curr = +new Date();
-	    var ms = curr - (prevTime || curr);
-	    self.diff = ms;
-	    self.prev = prevTime;
-	    self.curr = curr;
-	    prevTime = curr;
-
-	    // add the `color` if not set
-	    if (null == self.useColors) self.useColors = exports.useColors();
-	    if (null == self.color && self.useColors) self.color = selectColor();
-
-	    var args = Array.prototype.slice.call(arguments);
-
-	    args[0] = exports.coerce(args[0]);
-
-	    if ('string' !== typeof args[0]) {
-	      // anything else let's inspect with %o
-	      args = ['%o'].concat(args);
-	    }
-
-	    // apply any `formatters` transformations
-	    var index = 0;
-	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
-	      // if we encounter an escaped % then don't increase the array index
-	      if (match === '%%') return match;
-	      index++;
-	      var formatter = exports.formatters[format];
-	      if ('function' === typeof formatter) {
-	        var val = args[index];
-	        match = formatter.call(self, val);
-
-	        // now we need to remove `args[index]` since it's inlined in the `format`
-	        args.splice(index, 1);
-	        index--;
-	      }
-	      return match;
-	    });
-
-	    if ('function' === typeof exports.formatArgs) {
-	      args = exports.formatArgs.apply(self, args);
-	    }
-	    var logFn = enabled.log || exports.log || console.log.bind(console);
-	    logFn.apply(self, args);
-	  }
-	  enabled.enabled = true;
-
-	  var fn = exports.enabled(namespace) ? enabled : disabled;
-
-	  fn.namespace = namespace;
-
-	  return fn;
-	}
-
-	/**
-	 * Enables a debug mode by namespaces. This can include modes
-	 * separated by a colon and wildcards.
-	 *
-	 * @param {String} namespaces
-	 * @api public
-	 */
-
-	function enable(namespaces) {
-	  exports.save(namespaces);
-
-	  var split = (namespaces || '').split(/[\s,]+/);
-	  var len = split.length;
-
-	  for (var i = 0; i < len; i++) {
-	    if (!split[i]) continue; // ignore empty strings
-	    namespaces = split[i].replace(/[\\^$+?.()|[\]{}]/g, '\\$&').replace(/\*/g, '.*?');
-	    if (namespaces[0] === '-') {
-	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
-	    } else {
-	      exports.names.push(new RegExp('^' + namespaces + '$'));
-	    }
-	  }
-	}
-
-	/**
-	 * Disable debug output.
-	 *
-	 * @api public
-	 */
-
-	function disable() {
-	  exports.enable('');
-	}
-
-	/**
-	 * Returns true if the given mode name is enabled, false otherwise.
-	 *
-	 * @param {String} name
-	 * @return {Boolean}
-	 * @api public
-	 */
-
-	function enabled(name) {
-	  var i, len;
-	  for (i = 0, len = exports.skips.length; i < len; i++) {
-	    if (exports.skips[i].test(name)) {
-	      return false;
-	    }
-	  }
-	  for (i = 0, len = exports.names.length; i < len; i++) {
-	    if (exports.names[i].test(name)) {
-	      return true;
-	    }
-	  }
-	  return false;
-	}
-
-	/**
-	 * Coerce `val`.
-	 *
-	 * @param {Mixed} val
-	 * @return {Mixed}
-	 * @api private
-	 */
-
-	function coerce(val) {
-	  if (val instanceof Error) return val.stack || val.message;
-	  return val;
-	}
-
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	/**
-	 * Helpers.
-	 */
-
-	var s = 1000
-	var m = s * 60
-	var h = m * 60
-	var d = h * 24
-	var y = d * 365.25
-
-	/**
-	 * Parse or format the given `val`.
-	 *
-	 * Options:
-	 *
-	 *  - `long` verbose formatting [false]
-	 *
-	 * @param {String|Number} val
-	 * @param {Object} options
-	 * @throws {Error} throw an error if val is not a non-empty string or a number
-	 * @return {String|Number}
-	 * @api public
-	 */
-
-	module.exports = function (val, options) {
-	  options = options || {}
-	  var type = typeof val
-	  if (type === 'string' && val.length > 0) {
-	    return parse(val)
-	  } else if (type === 'number' && isNaN(val) === false) {
-	    return options.long ?
-				fmtLong(val) :
-				fmtShort(val)
-	  }
-	  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
-	}
-
-	/**
-	 * Parse the given `str` and return milliseconds.
-	 *
-	 * @param {String} str
-	 * @return {Number}
-	 * @api private
-	 */
-
-	function parse(str) {
-	  str = String(str)
-	  if (str.length > 10000) {
-	    return
-	  }
-	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str)
-	  if (!match) {
-	    return
-	  }
-	  var n = parseFloat(match[1])
-	  var type = (match[2] || 'ms').toLowerCase()
-	  switch (type) {
-	    case 'years':
-	    case 'year':
-	    case 'yrs':
-	    case 'yr':
-	    case 'y':
-	      return n * y
-	    case 'days':
-	    case 'day':
-	    case 'd':
-	      return n * d
-	    case 'hours':
-	    case 'hour':
-	    case 'hrs':
-	    case 'hr':
-	    case 'h':
-	      return n * h
-	    case 'minutes':
-	    case 'minute':
-	    case 'mins':
-	    case 'min':
-	    case 'm':
-	      return n * m
-	    case 'seconds':
-	    case 'second':
-	    case 'secs':
-	    case 'sec':
-	    case 's':
-	      return n * s
-	    case 'milliseconds':
-	    case 'millisecond':
-	    case 'msecs':
-	    case 'msec':
-	    case 'ms':
-	      return n
-	    default:
-	      return undefined
-	  }
-	}
-
-	/**
-	 * Short format for `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {String}
-	 * @api private
-	 */
-
-	function fmtShort(ms) {
-	  if (ms >= d) {
-	    return Math.round(ms / d) + 'd'
-	  }
-	  if (ms >= h) {
-	    return Math.round(ms / h) + 'h'
-	  }
-	  if (ms >= m) {
-	    return Math.round(ms / m) + 'm'
-	  }
-	  if (ms >= s) {
-	    return Math.round(ms / s) + 's'
-	  }
-	  return ms + 'ms'
-	}
-
-	/**
-	 * Long format for `ms`.
-	 *
-	 * @param {Number} ms
-	 * @return {String}
-	 * @api private
-	 */
-
-	function fmtLong(ms) {
-	  return plural(ms, d, 'day') ||
-	    plural(ms, h, 'hour') ||
-	    plural(ms, m, 'minute') ||
-	    plural(ms, s, 'second') ||
-	    ms + ' ms'
-	}
-
-	/**
-	 * Pluralization helper.
-	 */
-
-	function plural(ms, n, name) {
-	  if (ms < n) {
-	    return
-	  }
-	  if (ms < n * 1.5) {
-	    return Math.floor(ms / n) + ' ' + name
-	  }
-	  return Math.ceil(ms / n) + ' ' + name + 's'
-	}
-
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	__webpack_require__(7);
-
-	var _jsonschema = __webpack_require__(8);
-
-	var _schema = __webpack_require__(18);
-
-	var _schema2 = _interopRequireDefault(_schema);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	/**
-	 *
-	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
-	 *
-	 */
-	var WidgetApi = function () {
-	  /**
-	   * Initialize a new {@link WidgetApi} instance.
-	   *
-	   * @param {ConfigOptions} config Config details
-	   *
-	   * @example <caption>Browser example</caption>
-	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Browserify/Webpack example</caption>
-	   * var WidgetApi = require('squatch-js').WidgetApi;
-	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   *
-	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
-	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
-	   */
-	  function WidgetApi(config) {
-	    _classCallCheck(this, WidgetApi);
-
-	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
-	    this.tenantAlias = config.tenantAlias;
-	    this.domain = 'https://staging.referralsaasquatch.com';
-	  }
-
-	  /**
-	   * Creates/upserts an anonymous user.
-	   *
-	   * @param {Object} params
-	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} params.engagementMedium (POPUP/MOBILE)
-	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
-	   *                            validate the data (can be disabled)
-	   *
-	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-	   */
-
-
-	  _createClass(WidgetApi, [{
-	    key: 'cookieUser',
-	    value: function cookieUser() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
-
-	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/user/cookie_user' + optionalParams;
-	      var url = this.domain + path;
-
-	      return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
-	    }
-
-	    /**
-	     * Creates/upserts user.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
-	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     *
-	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
-	     */
-
-	  }, {
-	    key: 'upsert',
-	    value: function upsert() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
-
-	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var accountId = encodeURIComponent(params.user.accountId);
-	      var userId = encodeURIComponent(params.user.id);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
-	      var url = this.domain + path;
-
-	      var user = params.user;
-	      delete user.accountId;
-	      delete user.id;
-
-	      return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
-	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
-	     *                            to validate the data (can be disabled)
-	     * @return {Promise} template html if true.
-	     */
-
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
-
-	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
-
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var accountId = encodeURIComponent(params.user.accountId);
-	      var userId = encodeURIComponent(params.user.id);
-	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
-	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
-	      var optionalParams = widgetType + engagementMedium;
-
-	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/render' + optionalParams;
-	      var url = this.domain + path;
-	      return WidgetApi.doRequest(url, params.jwt);
-	    }
-
-	    /**
-	     * Description here.
-	     *
-	     * @param {Object} params
-	     * @param {Object} params.code the user details
-	     * @return {Promise} code referral code if true.
-	     */
-
-	  }, {
-	    key: 'squatchReferralCookie',
-	    value: function squatchReferralCookie() {
-	      var tenantAlias = encodeURIComponent(this.tenantAlias);
-	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
-	      return WidgetApi.doRequest(url);
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }], [{
-	    key: 'validateInput',
-	    value: function validateInput(params, jsonSchema) {
-	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
-	      if (!valid.valid) throw valid.errors;
-	    }
-
-	    /**
-	     * @private
-	     */
-
-	  }, {
-	    key: 'doRequest',
-	    value: function doRequest(url) {
-	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-
-	      var headers = {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/json'
-	      };
-
-	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'GET',
-	        headers: headers,
-	        credentials: 'include',
-	        mode: 'cors'
-	      }).then(function (response) {
-	        if (response.ok) {
-	          return response.text();
-	        }
-
-	        var json = response.json;
-	        return json.then(Promise.reject.bind(Promise));
-	      });
-	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
-	  }, {
-	    key: 'doPut',
-	    value: function doPut(url, data, jwt) {
-	      var headers = {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/json',
-	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
-	      };
-
-	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
-
-	      return fetch(url, {
-	        method: 'PUT',
-	        headers: headers,
-	        // credentials: 'include',
-	        mode: 'cors',
-	        body: data
-	      }).then(function (response) {
-	        var json = response.json();
-	        if (!response.ok) {
-	          return json.then(Promise.reject.bind(Promise));
-	        }
-	        return json;
-	      });
-	    }
-	  }]);
-
-	  return WidgetApi;
-	}();
-
-	exports.default = WidgetApi;
-
-/***/ },
-/* 7 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -1756,16 +723,1076 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * This is the web browser implementation of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = __webpack_require__(5);
+	exports.log = log;
+	exports.formatArgs = formatArgs;
+	exports.save = save;
+	exports.load = load;
+	exports.useColors = useColors;
+	exports.storage = 'undefined' != typeof chrome
+	               && 'undefined' != typeof chrome.storage
+	                  ? chrome.storage.local
+	                  : localstorage();
+
+	/**
+	 * Colors.
+	 */
+
+	exports.colors = [
+	  'lightseagreen',
+	  'forestgreen',
+	  'goldenrod',
+	  'dodgerblue',
+	  'darkorchid',
+	  'crimson'
+	];
+
+	/**
+	 * Currently only WebKit-based Web Inspectors, Firefox >= v31,
+	 * and the Firebug extension (any Firefox version) are known
+	 * to support "%c" CSS customizations.
+	 *
+	 * TODO: add a `localStorage` variable to explicitly enable/disable colors
+	 */
+
+	function useColors() {
+	  // is webkit? http://stackoverflow.com/a/16459606/376773
+	  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
+	    // is firebug? http://stackoverflow.com/a/398120/376773
+	    (window.console && (console.firebug || (console.exception && console.table))) ||
+	    // is firefox >= v31?
+	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
+	    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
+	}
+
+	/**
+	 * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+	 */
+
+	exports.formatters.j = function(v) {
+	  return JSON.stringify(v);
+	};
+
+
+	/**
+	 * Colorize log arguments if enabled.
+	 *
+	 * @api public
+	 */
+
+	function formatArgs() {
+	  var args = arguments;
+	  var useColors = this.useColors;
+
+	  args[0] = (useColors ? '%c' : '')
+	    + this.namespace
+	    + (useColors ? ' %c' : ' ')
+	    + args[0]
+	    + (useColors ? '%c ' : ' ')
+	    + '+' + exports.humanize(this.diff);
+
+	  if (!useColors) return args;
+
+	  var c = 'color: ' + this.color;
+	  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
+
+	  // the final "%c" is somewhat tricky, because there could be other
+	  // arguments passed either before or after the %c, so we need to
+	  // figure out the correct index to insert the CSS into
+	  var index = 0;
+	  var lastC = 0;
+	  args[0].replace(/%[a-z%]/g, function(match) {
+	    if ('%%' === match) return;
+	    index++;
+	    if ('%c' === match) {
+	      // we only are interested in the *last* %c
+	      // (the user may have provided their own)
+	      lastC = index;
+	    }
+	  });
+
+	  args.splice(lastC, 0, c);
+	  return args;
+	}
+
+	/**
+	 * Invokes `console.log()` when available.
+	 * No-op when `console.log` is not a "function".
+	 *
+	 * @api public
+	 */
+
+	function log() {
+	  // this hackery is required for IE8/9, where
+	  // the `console.log` function doesn't have 'apply'
+	  return 'object' === typeof console
+	    && console.log
+	    && Function.prototype.apply.call(console.log, console, arguments);
+	}
+
+	/**
+	 * Save `namespaces`.
+	 *
+	 * @param {String} namespaces
+	 * @api private
+	 */
+
+	function save(namespaces) {
+	  try {
+	    if (null == namespaces) {
+	      exports.storage.removeItem('debug');
+	    } else {
+	      exports.storage.debug = namespaces;
+	    }
+	  } catch(e) {}
+	}
+
+	/**
+	 * Load `namespaces`.
+	 *
+	 * @return {String} returns the previously persisted debug modes
+	 * @api private
+	 */
+
+	function load() {
+	  var r;
+	  try {
+	    r = exports.storage.debug;
+	  } catch(e) {}
+	  return r;
+	}
+
+	/**
+	 * Enable namespaces listed in `localStorage.debug` initially.
+	 */
+
+	exports.enable(load());
+
+	/**
+	 * Localstorage attempts to return the localstorage.
+	 *
+	 * This is necessary because safari throws
+	 * when a user disables cookies/localstorage
+	 * and you attempt to access it.
+	 *
+	 * @return {LocalStorage}
+	 * @api private
+	 */
+
+	function localstorage(){
+	  try {
+	    return window.localStorage;
+	  } catch (e) {}
+	}
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	/**
+	 * This is the common logic for both the Node.js and web browser
+	 * implementations of `debug()`.
+	 *
+	 * Expose `debug()` as the module.
+	 */
+
+	exports = module.exports = debug.debug = debug;
+	exports.coerce = coerce;
+	exports.disable = disable;
+	exports.enable = enable;
+	exports.enabled = enabled;
+	exports.humanize = __webpack_require__(6);
+
+	/**
+	 * The currently active debug mode names, and names to skip.
+	 */
+
+	exports.names = [];
+	exports.skips = [];
+
+	/**
+	 * Map of special "%n" handling functions, for the debug "format" argument.
+	 *
+	 * Valid key names are a single, lowercased letter, i.e. "n".
+	 */
+
+	exports.formatters = {};
+
+	/**
+	 * Previously assigned color.
+	 */
+
+	var prevColor = 0;
+
+	/**
+	 * Previous log timestamp.
+	 */
+
+	var prevTime;
+
+	/**
+	 * Select a color.
+	 *
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function selectColor() {
+	  return exports.colors[prevColor++ % exports.colors.length];
+	}
+
+	/**
+	 * Create a debugger with the given `namespace`.
+	 *
+	 * @param {String} namespace
+	 * @return {Function}
+	 * @api public
+	 */
+
+	function debug(namespace) {
+
+	  // define the `disabled` version
+	  function disabled() {
+	  }
+	  disabled.enabled = false;
+
+	  // define the `enabled` version
+	  function enabled() {
+
+	    var self = enabled;
+
+	    // set `diff` timestamp
+	    var curr = +new Date();
+	    var ms = curr - (prevTime || curr);
+	    self.diff = ms;
+	    self.prev = prevTime;
+	    self.curr = curr;
+	    prevTime = curr;
+
+	    // add the `color` if not set
+	    if (null == self.useColors) self.useColors = exports.useColors();
+	    if (null == self.color && self.useColors) self.color = selectColor();
+
+	    var args = Array.prototype.slice.call(arguments);
+
+	    args[0] = exports.coerce(args[0]);
+
+	    if ('string' !== typeof args[0]) {
+	      // anything else let's inspect with %o
+	      args = ['%o'].concat(args);
+	    }
+
+	    // apply any `formatters` transformations
+	    var index = 0;
+	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
+	      // if we encounter an escaped % then don't increase the array index
+	      if (match === '%%') return match;
+	      index++;
+	      var formatter = exports.formatters[format];
+	      if ('function' === typeof formatter) {
+	        var val = args[index];
+	        match = formatter.call(self, val);
+
+	        // now we need to remove `args[index]` since it's inlined in the `format`
+	        args.splice(index, 1);
+	        index--;
+	      }
+	      return match;
+	    });
+
+	    if ('function' === typeof exports.formatArgs) {
+	      args = exports.formatArgs.apply(self, args);
+	    }
+	    var logFn = enabled.log || exports.log || console.log.bind(console);
+	    logFn.apply(self, args);
+	  }
+	  enabled.enabled = true;
+
+	  var fn = exports.enabled(namespace) ? enabled : disabled;
+
+	  fn.namespace = namespace;
+
+	  return fn;
+	}
+
+	/**
+	 * Enables a debug mode by namespaces. This can include modes
+	 * separated by a colon and wildcards.
+	 *
+	 * @param {String} namespaces
+	 * @api public
+	 */
+
+	function enable(namespaces) {
+	  exports.save(namespaces);
+
+	  var split = (namespaces || '').split(/[\s,]+/);
+	  var len = split.length;
+
+	  for (var i = 0; i < len; i++) {
+	    if (!split[i]) continue; // ignore empty strings
+	    namespaces = split[i].replace(/[\\^$+?.()|[\]{}]/g, '\\$&').replace(/\*/g, '.*?');
+	    if (namespaces[0] === '-') {
+	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
+	    } else {
+	      exports.names.push(new RegExp('^' + namespaces + '$'));
+	    }
+	  }
+	}
+
+	/**
+	 * Disable debug output.
+	 *
+	 * @api public
+	 */
+
+	function disable() {
+	  exports.enable('');
+	}
+
+	/**
+	 * Returns true if the given mode name is enabled, false otherwise.
+	 *
+	 * @param {String} name
+	 * @return {Boolean}
+	 * @api public
+	 */
+
+	function enabled(name) {
+	  var i, len;
+	  for (i = 0, len = exports.skips.length; i < len; i++) {
+	    if (exports.skips[i].test(name)) {
+	      return false;
+	    }
+	  }
+	  for (i = 0, len = exports.names.length; i < len; i++) {
+	    if (exports.names[i].test(name)) {
+	      return true;
+	    }
+	  }
+	  return false;
+	}
+
+	/**
+	 * Coerce `val`.
+	 *
+	 * @param {Mixed} val
+	 * @return {Mixed}
+	 * @api private
+	 */
+
+	function coerce(val) {
+	  if (val instanceof Error) return val.stack || val.message;
+	  return val;
+	}
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	/**
+	 * Helpers.
+	 */
+
+	var s = 1000
+	var m = s * 60
+	var h = m * 60
+	var d = h * 24
+	var y = d * 365.25
+
+	/**
+	 * Parse or format the given `val`.
+	 *
+	 * Options:
+	 *
+	 *  - `long` verbose formatting [false]
+	 *
+	 * @param {String|Number} val
+	 * @param {Object} options
+	 * @throws {Error} throw an error if val is not a non-empty string or a number
+	 * @return {String|Number}
+	 * @api public
+	 */
+
+	module.exports = function (val, options) {
+	  options = options || {}
+	  var type = typeof val
+	  if (type === 'string' && val.length > 0) {
+	    return parse(val)
+	  } else if (type === 'number' && isNaN(val) === false) {
+	    return options.long ?
+				fmtLong(val) :
+				fmtShort(val)
+	  }
+	  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
+	}
+
+	/**
+	 * Parse the given `str` and return milliseconds.
+	 *
+	 * @param {String} str
+	 * @return {Number}
+	 * @api private
+	 */
+
+	function parse(str) {
+	  str = String(str)
+	  if (str.length > 10000) {
+	    return
+	  }
+	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str)
+	  if (!match) {
+	    return
+	  }
+	  var n = parseFloat(match[1])
+	  var type = (match[2] || 'ms').toLowerCase()
+	  switch (type) {
+	    case 'years':
+	    case 'year':
+	    case 'yrs':
+	    case 'yr':
+	    case 'y':
+	      return n * y
+	    case 'days':
+	    case 'day':
+	    case 'd':
+	      return n * d
+	    case 'hours':
+	    case 'hour':
+	    case 'hrs':
+	    case 'hr':
+	    case 'h':
+	      return n * h
+	    case 'minutes':
+	    case 'minute':
+	    case 'mins':
+	    case 'min':
+	    case 'm':
+	      return n * m
+	    case 'seconds':
+	    case 'second':
+	    case 'secs':
+	    case 'sec':
+	    case 's':
+	      return n * s
+	    case 'milliseconds':
+	    case 'millisecond':
+	    case 'msecs':
+	    case 'msec':
+	    case 'ms':
+	      return n
+	    default:
+	      return undefined
+	  }
+	}
+
+	/**
+	 * Short format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function fmtShort(ms) {
+	  if (ms >= d) {
+	    return Math.round(ms / d) + 'd'
+	  }
+	  if (ms >= h) {
+	    return Math.round(ms / h) + 'h'
+	  }
+	  if (ms >= m) {
+	    return Math.round(ms / m) + 'm'
+	  }
+	  if (ms >= s) {
+	    return Math.round(ms / s) + 's'
+	  }
+	  return ms + 'ms'
+	}
+
+	/**
+	 * Long format for `ms`.
+	 *
+	 * @param {Number} ms
+	 * @return {String}
+	 * @api private
+	 */
+
+	function fmtLong(ms) {
+	  return plural(ms, d, 'day') ||
+	    plural(ms, h, 'hour') ||
+	    plural(ms, m, 'minute') ||
+	    plural(ms, s, 'second') ||
+	    ms + ' ms'
+	}
+
+	/**
+	 * Pluralization helper.
+	 */
+
+	function plural(ms, n, name) {
+	  if (ms < n) {
+	    return
+	  }
+	  if (ms < n * 1.5) {
+	    return Math.floor(ms / n) + ' ' + name
+	  }
+	  return Math.ceil(ms / n) + ' ' + name + 's'
+	}
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _debug = __webpack_require__(4);
+
+	var _debug2 = _interopRequireDefault(_debug);
+
+	var _WidgetApi = __webpack_require__(8);
+
+	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
+
+	var _EmbedWidget = __webpack_require__(20);
+
+	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
+
+	var _PopupWidget = __webpack_require__(37);
+
+	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
+
+	var _CtaWidget = __webpack_require__(38);
+
+	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var _log = (0, _debug2.default)('squatch-js:widgets');
+
+	/**
+	 *
+	 * The Widgets class contains a widget loading process for different calls
+	 * to the WidgetApi.
+	 *
+	 */
+
+	var Widgets = function () {
+	  /**
+	   * Initialize a new {@link Widgets} instance.
+	   *
+	   * @param {ConfigOptions} config Config details
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var Widgets = require('squatch-js').Widgets;
+	   * var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {Widgets} from 'squatch-js';
+	   * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
+	   */
+	  function Widgets(config) {
+	    _classCallCheck(this, Widgets);
+
+	    this.tenantAlias = config.tenantAlias;
+	    this.api = new _WidgetApi2.default(config);
+	  }
+
+	  /**
+	   * This function calls the WidgetApi.cookieUser() method, and it renders
+	   * the widget if it is successful. Otherwise it shows the "error" widget.
+	   *
+	   * @param {Object} config
+	   * @param {EngagementMedium} config.widgetType The content of the widget.
+	   * @param {WidgetType} config.engagementMedium How to display the widget.
+	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
+	   *                            validate the data (can be disabled)
+	   *
+	   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+	   */
+
+
+	  _createClass(Widgets, [{
+	    key: 'createCookieUser',
+	    value: function createCookieUser(config) {
+	      var _this = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this.api.cookieUser(config).then(function (response) {
+	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * This function calls the WidgetApi.upsert() method, and it renders
+	     * the widget if it is successful. Otherwise it shows the "error" widget.
+	     *
+	     * @param {Object} config
+	     * @param {Object} config.user the user details
+	     * @param {string} config.user.id
+	     * @param {string} config.user.accountId
+	     * @param {EngagementMedium} config.widgetType The content of the widget.
+	     * @param {WidgetType} config.engagementMedium How to display the widget.
+	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+	     */
+
+	  }, {
+	    key: 'upsertUser',
+	    value: function upsertUser(config) {
+	      var _this2 = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this2.api.upsert(config).then(function (response) {
+	          resolve({ widget: _this2.renderWidget(response, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * This function calls the WidgetApi.render() method, and it renders
+	     * the widget if it is successful. Otherwise it shows the "error" widget.
+	     *
+	     * @param {Object} config
+	     * @param {Object} config.user the user details
+	     * @param {string} config.user.id
+	     * @param {string} config.user.accountId
+	     * @param {EngagementMedium} config.widgetType The content of the widget.
+	     * @param {WidgetType} config.engagementMedium How to display the widget.
+	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render(config) {
+	      var _this3 = this;
+
+	      return new Promise(function (resolve, reject) {
+	        _this3.api.cookieUser(config).then(function (response) {
+	          resolve({ widget: _this3.renderWidget({ template: response }, config), user: response.user });
+	        }).catch(function (err) {
+	          if (err.apiErrorCode) {
+	            Widgets.renderErrorWidget(err, config.engagementMedium);
+	          }
+	          reject(err);
+	        });
+	      });
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }, {
+	    key: 'renderWidget',
+	    value: function renderWidget(response) {
+	      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
+
+	      _log('Loading...');
+	      if (!response) throw new Error('Unable to get a response');
+	      if (!response.jsOptions) throw new Error('Missing jsOptions in response');
+	      _log(response, config);
+
+	      var widget = void 0;
+	      var displayOnLoad = false;
+	      var displayCTA = false;
+	      var opts = response.jsOptions || '';
+
+	      var params = {
+	        content: response.template,
+	        type: config.widgetType || opts.widget.defaultWidgetType,
+	        api: this.api
+	      };
+
+	      if (opts.widgetUrlMappings) {
+	        opts.widgetUrlMappings.forEach(function (rule) {
+	          if (Widgets.matchesUrl(rule.url)) {
+	            displayOnLoad = true;
+	            displayCTA = rule.showAsCTA;
+	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
+	          }
+	        });
+	      }
+
+	      if (opts.conversionUrls) {
+	        opts.conversionUrls.forEach(function (rule) {
+	          if (response.user.referredBy && Widgets.matchesUrl(rule)) {
+	            displayOnLoad = true;
+	            _log('This is a conversion URL', rule);
+	          }
+	        });
+	      }
+
+	      if (!displayCTA && config.engagementMedium === 'EMBED') {
+	        widget = new _EmbedWidget2.default(params);
+	        widget.load();
+	      } else if (!displayCTA && config.engagementMedium === 'POPUP') {
+	        widget = new _PopupWidget2.default(params);
+	        widget.load();
+	        if (displayOnLoad) widget.open();
+	      } else if (displayCTA) {
+	        var side = opts.cta.content.buttonSide;
+	        var position = opts.cta.content.buttonPosition;
+
+	        widget = new _CtaWidget2.default(params, { side: side, position: position });
+	        widget.load();
+	      } else if (displayOnLoad) {
+	        widget = new _PopupWidget2.default(params);
+	        widget.load();
+	        widget.open();
+	      }
+
+	      return widget;
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }], [{
+	    key: 'renderErrorWidget',
+	    value: function renderErrorWidget(error) {
+	      var em = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'POPUP';
+
+	      _log(new Error(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message));
+
+	      var widget = void 0;
+	      var params = {
+	        content: 'error',
+	        rsCode: error.rsCode,
+	        type: 'ERROR_WIDGET'
+	      };
+
+	      if (em === 'EMBED') {
+	        widget = new _EmbedWidget2.default(params);
+	      } else if (em === 'POPUP') {
+	        widget = new _PopupWidget2.default(params);
+	      }
+
+	      widget.load();
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: 'matchesUrl',
+	    value: function matchesUrl(rule) {
+	      return window.location.href.match(new RegExp(rule));
+	    }
+	  }]);
+
+	  return Widgets;
+	}();
+
+	exports.default = Widgets;
+
+/***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Validator = module.exports.Validator = __webpack_require__(9);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
-	module.exports.ValidatorResult = __webpack_require__(17).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(17).ValidationError;
-	module.exports.SchemaError = __webpack_require__(17).SchemaError;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	__webpack_require__(3);
+
+	var _jsonschema = __webpack_require__(9);
+
+	var _schema = __webpack_require__(19);
+
+	var _schema2 = _interopRequireDefault(_schema);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	/**
+	 *
+	 * The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.
+	 *
+	 */
+	var WidgetApi = function () {
+	  /**
+	   * Initialize a new {@link WidgetApi} instance.
+	   *
+	   * @param {ConfigOptions} config Config details
+	   *
+	   * @example <caption>Browser example</caption>
+	   * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Browserify/Webpack example</caption>
+	   * var WidgetApi = require('squatch-js').WidgetApi;
+	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   *
+	   * @example <caption>Babel+Browserify/Webpack example</caption>
+	   * import {WidgetApi} from 'squatch-js';
+	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
+	   */
+	  function WidgetApi(config) {
+	    _classCallCheck(this, WidgetApi);
+
+	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
+	    this.tenantAlias = config.tenantAlias;
+	    this.domain = config.domain || 'https://staging.referralsaasquatch.com';
+	  }
+
+	  /**
+	   * Creates/upserts an anonymous user.
+	   *
+	   * @param {Object} params
+	   * @param {WidgetType} params.widgetType The content of the widget.
+	   * @param {EngagementMedium} params.engagementMedium How to display the widget.
+	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
+	   *                            validate the data (can be disabled)
+	   *
+	   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
+	   */
+
+
+	  _createClass(WidgetApi, [{
+	    key: 'cookieUser',
+	    value: function cookieUser() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
+
+	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/user/cookie_user' + optionalParams;
+	      var url = this.domain + path;
+
+	      return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
+	    }
+
+	    /**
+	     * Creates/upserts user.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {WidgetType} params.widgetType The content of the widget.
+	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     *
+	     * @return {Promise} string if true, with the widget template, jsOptions and user details.
+	     */
+
+	  }, {
+	    key: 'upsert',
+	    value: function upsert() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
+
+	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.user.accountId);
+	      var userId = encodeURIComponent(params.user.id);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
+	      var url = this.domain + path;
+
+	      var user = params.user;
+	      delete user.accountId;
+	      delete user.id;
+
+	      return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
+	    }
+
+	    /**
+	     * Description here.
+	     *
+	     * @param {Object} params
+	     * @param {Object} params.user the user details
+	     * @param {string} params.user.id
+	     * @param {string} params.user.accountId
+	     * @param {WidgetType} params.widgetType The content of the widget.
+	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
+	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
+	     *                            to validate the data (can be disabled)
+	     * @return {Promise} template html if true.
+	     */
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
+
+	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
+
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var accountId = encodeURIComponent(params.user.accountId);
+	      var userId = encodeURIComponent(params.user.id);
+	      var widgetType = params.widgetType ? '?widgetType=' + encodeURIComponent(params.widgetType) : '';
+	      var engagementMedium = params.engagementMedium ? (widgetType ? '&' : '?') + 'engagementMedium=' + encodeURIComponent(params.engagementMedium) : (widgetType ? '&' : '?') + 'engagementMedium=POPUP';
+	      var optionalParams = widgetType + engagementMedium;
+
+	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/render' + optionalParams;
+	      var url = this.domain + path;
+	      return WidgetApi.doRequest(url, params.jwt);
+	    }
+
+	    /**
+	     * Looks up the referral code of the current user, if there is any.
+	     *
+	     * @return {Promise<string>} code referral code if true.
+	     */
+
+	  }, {
+	    key: 'squatchReferralCookie',
+	    value: function squatchReferralCookie() {
+	      var tenantAlias = encodeURIComponent(this.tenantAlias);
+	      var url = this.domain + '/a/' + tenantAlias + '/widgets/squatchcookiejson';
+	      return WidgetApi.doRequest(url);
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }], [{
+	    key: 'validateInput',
+	    value: function validateInput(params, jsonSchema) {
+	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
+	      if (!valid.valid) throw valid.errors;
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: 'doRequest',
+	    value: function doRequest(url) {
+	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
+	      return fetch(url, {
+	        method: 'GET',
+	        headers: headers,
+	        credentials: jwt ? 'include' : 'omit', // omit when no-auth
+	        mode: 'cors'
+	      }).then(function (response) {
+	        if (response.ok) {
+	          return response.text();
+	        }
+
+	        var json = response.json;
+	        return json.then(Promise.reject.bind(Promise));
+	      });
+	    }
+
+	    /**
+	     * @private
+	     *
+	     */
+
+	  }, {
+	    key: 'doPut',
+	    value: function doPut(url, data, jwt) {
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json',
+	        'X-SaaSquatch-Referrer': window ? window.location.href : ''
+	      };
+
+	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+
+	      return fetch(url, {
+	        method: 'PUT',
+	        headers: headers,
+	        credentials: jwt ? 'include' : 'omit', // omit when no-auth
+	        mode: 'cors',
+	        body: data
+	      }).then(function (response) {
+	        var json = response.json();
+	        if (!response.ok) {
+	          return json.then(Promise.reject.bind(Promise));
+	        }
+	        return json;
+	      });
+	    }
+	  }]);
+
+	  return WidgetApi;
+	}();
+
+	exports.default = WidgetApi;
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var Validator = module.exports.Validator = __webpack_require__(10);
+
+	module.exports.ValidatorResult = __webpack_require__(18).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(18).ValidationError;
+	module.exports.SchemaError = __webpack_require__(18).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -1774,15 +1801,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(10);
+	var urilib = __webpack_require__(11);
 
-	var attribute = __webpack_require__(16);
-	var helpers = __webpack_require__(17);
+	var attribute = __webpack_require__(17);
+	var helpers = __webpack_require__(18);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -2100,7 +2127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -2124,7 +2151,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(11);
+	var punycode = __webpack_require__(12);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -2196,7 +2223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(13);
+	    querystring = __webpack_require__(14);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -2813,7 +2840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -3345,10 +3372,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)(module), (function() { return this; }())))
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -3364,17 +3391,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(14);
-	exports.encode = exports.stringify = __webpack_require__(15);
+	exports.decode = exports.parse = __webpack_require__(15);
+	exports.encode = exports.stringify = __webpack_require__(16);
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -3460,7 +3487,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -3530,12 +3557,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(17);
+	var helpers = __webpack_require__(18);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -4321,12 +4348,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(10);
+	var uri = __webpack_require__(11);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -4606,7 +4633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -4764,7 +4791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4777,15 +4804,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _debug = __webpack_require__(3);
+	var _debug = __webpack_require__(4);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widget2 = __webpack_require__(20);
+	var _Widget2 = __webpack_require__(21);
 
 	var _Widget3 = _interopRequireDefault(_Widget2);
 
-	var _domready = __webpack_require__(35);
+	var _domready = __webpack_require__(36);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4894,7 +4921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = EmbedWidget;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4905,15 +4932,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _debug = __webpack_require__(3);
+	var _debug = __webpack_require__(4);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _elementResizeDetector = __webpack_require__(21);
+	var _elementResizeDetector = __webpack_require__(22);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
 
-	var _AnalyticsApi = __webpack_require__(34);
+	var _AnalyticsApi = __webpack_require__(35);
 
 	var _AnalyticsApi2 = _interopRequireDefault(_AnalyticsApi);
 
@@ -5023,24 +5050,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Widget;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(22).forEach;
-	var elementUtilsMaker       = __webpack_require__(23);
-	var listenerHandlerMaker    = __webpack_require__(24);
-	var idGeneratorMaker        = __webpack_require__(25);
-	var idHandlerMaker          = __webpack_require__(26);
-	var reporterMaker           = __webpack_require__(27);
-	var browserDetector         = __webpack_require__(28);
-	var batchProcessorMaker     = __webpack_require__(29);
-	var stateHandler            = __webpack_require__(31);
+	var forEach                 = __webpack_require__(23).forEach;
+	var elementUtilsMaker       = __webpack_require__(24);
+	var listenerHandlerMaker    = __webpack_require__(25);
+	var idGeneratorMaker        = __webpack_require__(26);
+	var idHandlerMaker          = __webpack_require__(27);
+	var reporterMaker           = __webpack_require__(28);
+	var browserDetector         = __webpack_require__(29);
+	var batchProcessorMaker     = __webpack_require__(30);
+	var stateHandler            = __webpack_require__(32);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(32);
-	var scrollStrategyMaker     = __webpack_require__(33);
+	var objectStrategyMaker     = __webpack_require__(33);
+	var scrollStrategyMaker     = __webpack_require__(34);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -5350,7 +5377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5375,7 +5402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5433,7 +5460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5499,7 +5526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5523,7 +5550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5576,7 +5603,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5624,7 +5651,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5669,12 +5696,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(30);
+	var utils = __webpack_require__(31);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -5813,7 +5840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5834,7 +5861,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5862,7 +5889,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -5872,7 +5899,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(28);
+	var browserDetector = __webpack_require__(29);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -6081,7 +6108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -6091,7 +6118,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(22).forEach;
+	var forEach = __webpack_require__(23).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -6708,7 +6735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6719,7 +6746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(7);
+	__webpack_require__(3);
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6803,7 +6830,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = AnalyticsApi;
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -6836,7 +6863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -6849,15 +6876,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _debug = __webpack_require__(3);
+	var _debug = __webpack_require__(4);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widget2 = __webpack_require__(20);
+	var _Widget2 = __webpack_require__(21);
 
 	var _Widget3 = _interopRequireDefault(_Widget2);
 
-	var _domready = __webpack_require__(35);
+	var _domready = __webpack_require__(36);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7002,28 +7029,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	          ctaElement.parentNode.removeChild(ctaElement);
 	        }
 
-	        // frameDoc.body.style.overflowY = 'hidden';
+	        frameDoc.body.style.overflowY = 'hidden';
 	        popupdiv.style.display = 'table';
 	        popupdiv.style.top = '0';
 
 	        frame.height = frameDoc.body.offsetHeight;
-	        _log(frame.height);
 
 	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container')[0], function (element) {
 	          var height = element.scrollHeight;
-	          var finalHeight = height;
-	          console.log('regular height', finalHeight);
-
 	          var referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
 	          var referralsHeight = referrals.offsetHeight;
-
-	          var el = frameDoc.getElementById('squatch-panel');
-
-	          // if (el.className !== 'open') {
-	          _log('before', finalHeight);
-	          finalHeight = finalHeight - referralsHeight;
-	          _log('after', finalHeight);
-	          // }
+	          var finalHeight = height - referralsHeight;
 
 	          if (finalHeight > 0) frame.height = finalHeight;
 
@@ -7084,7 +7100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = PopupWidget;
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7097,15 +7113,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _debug = __webpack_require__(3);
+	var _debug = __webpack_require__(4);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _PopupWidget2 = __webpack_require__(36);
+	var _PopupWidget2 = __webpack_require__(37);
 
 	var _PopupWidget3 = _interopRequireDefault(_PopupWidget2);
 
-	var _domready = __webpack_require__(35);
+	var _domready = __webpack_require__(36);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7236,37 +7252,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_PopupWidget3.default);
 
 	exports.default = CtaWidget;
-
-/***/ },
-/* 38 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.help = help;
-	function help() {
-	  console.log("Having trouble using Squatch.js? Go to https://docs.referralsaasquatch.com/developer/ for tutorials, references and error codes.");
-	}
-
-	/**
-	 * When you load Squatch.js you need to provide these configuration options.
-	 * 
-	 * @interface ConfigOptions
-	 * @property {string} tenantAlias The Tenant that you're using.
-	 * @property {string?} domain The domain for API. Defaults to `https://app.referralsaasquatch.com`
-	 */
-
-	/**
-	 * When a widget is loaded using {@link Widgets} you'll get both the `user` data and the `widget` object back.
-	 * 
-	 * @interface WidgetResult
-	 * @property {Widget} widget The widget that was created.
-	 * @property {User} user The user that's in the widget.
-	 * 
-	 */
 
 /***/ },
 /* 39 */

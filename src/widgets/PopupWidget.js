@@ -119,31 +119,19 @@ export default class PopupWidget extends Widget {
         ctaElement.parentNode.removeChild(ctaElement);
       }
 
-      // frameDoc.body.style.overflowY = 'hidden';
+      frameDoc.body.style.overflowY = 'hidden';
       popupdiv.style.display = 'table';
       popupdiv.style.top = '0';
 
       frame.height = frameDoc.body.offsetHeight;
-      _log(frame.height);
 
       erd.listenTo(frameDoc.getElementsByClassName('squatch-container')[0], (element) => {
         const height = element.scrollHeight;
-        let finalHeight = height;
-        console.log('regular height', finalHeight);
-
-        let referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
-        let referralsHeight = referrals.offsetHeight;
-
-        let el = frameDoc.getElementById('squatch-panel');
-
-        // if (el.className !== 'open') {
-          _log('before', finalHeight);
-          finalHeight = finalHeight - referralsHeight;
-          _log('after', finalHeight);
-        // }
+        const referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
+        const referralsHeight = referrals.offsetHeight;
+        const finalHeight = height - referralsHeight;
 
         if (finalHeight > 0) frame.height = finalHeight;
-
 
         if (window.innerHeight > frame.height) {
           popupdiv.style.paddingTop = `${((window.innerHeight - frame.height) / 2)}px`;

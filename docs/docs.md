@@ -2,19 +2,21 @@
 
 # squatch
 
-Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to integrate a referral program into your website or web app.
-It can show referral widgets on any website, track users, generate unique referral short links and referral codes, and more.
+Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
+integrate a referral program into your website or web app.
+It can show referral widgets on any website, track users, generate unique
+referral short links and referral codes, and more.
 
 # init
 
-Initializes a static `squatch` global. This sets up:
+Initializes the static `squatch` global. This sets up:
 
--   `api` a static instance of the [WidgetApi](#widgetapi)
+-   `squatch.api()` a static instance of the [WidgetApi](#widgetapi)
+-   `squatch.widgets()` a static instance of [Widgets](#widgets)
 
 **Parameters**
 
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Configuration details
-    -   `config.tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant alias connects to your account. Note: There are both _live_ and _test_ tenant aliases.
+-   `config` **[ConfigOptions](#configoptions)** Configuration details
 
 **Examples**
 
@@ -22,7 +24,23 @@ Initializes a static `squatch` global. This sets up:
 squatch.init({tenantAlias:'test_basbtabstq51v'});
 ```
 
-Returns **void** 
+# ready
+
+Squatch.js can't start safely making operations until it's "ready". This
+function detects that state.
+
+**Parameters**
+
+-   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** A callback once Squatch.js is ready.
+
+**Examples**
+
+```javascript
+squatch.ready(function() {
+  console.log("ready!");
+  squatch.api().cookieUser();
+});
+```
 
 # api
 
@@ -32,8 +50,170 @@ Static instance of the [WidgetApi](#widgetapi). Make sure you call [init](#init)
 
 ```javascript
 squatch.init({tenantAlias:'test_basbtabstq51v'});
-squatch.api.createUser({id:'123', accountId:'abc', firstName:'Tom'});
+squatch.ready(function() {
+  squatch.api().cookieUser();
+});
 ```
+
+# widgets
+
+Static instance of [Widgets](#widgets). Make sure you call [init](#init) first
+
+**Examples**
+
+```javascript
+squatch.init({tenantAlias:'test_basbtabstq51v'});
+squatch.ready(function() {
+  squatch.widgets().cookieUser().then(doSomething);
+});
+```
+
+# autofill
+
+**Parameters**
+
+-   `element`  
+
+# ConfigOptions
+
+When you load Squatch.js you need to provide these configuration options.
+
+**Properties**
+
+-   `tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Tenant that you're using.
+-   `domain` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** The domain for API. Defaults to `https://app.referralsaasquatch.com`
+
+# WidgetResult
+
+When a widget is loaded using [Widgets](#widgets) you'll get both the `user` data and the `widget` object back.
+
+**Properties**
+
+-   `widget` **Widget** The widget that was created.
+-   `user` **User** The user that's in the widget.
+
+# Widgets
+
+The Widgets class contains a widget loading process for different calls
+to the WidgetApi.
+
+## constructor
+
+Initialize a new [Widgets](#widgets) instance.
+
+**Parameters**
+
+-   `config` **[ConfigOptions](#configoptions)** Config details
+
+**Examples**
+
+_Browser example_
+
+```javascript
+var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
+```
+
+_Browserify/Webpack example_
+
+```javascript
+var Widgets = require('squatch-js').Widgets;
+var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
+```
+
+_Babel+Browserify/Webpack example_
+
+```javascript
+import {Widgets} from 'squatch-js';
+let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
+```
+
+## createCookieUser
+
+This function calls the WidgetApi.cookieUser() method, and it renders
+the widget if it is successful. Otherwise it shows the "error" widget.
+
+**Parameters**
+
+-   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `config.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/CONVERSION_WIDGET)
+    -   `config.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
+                                   validate the data (can be disabled)
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
+
+## upsertUser
+
+This function calls the WidgetApi.upsert() method, and it renders
+the widget if it is successful. Otherwise it shows the "error" widget.
+
+**Parameters**
+
+-   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
+        -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+        -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `config.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (CONVERSION_WIDGET/REFERRING_WIDGET)
+    -   `config.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+                                   to validate the data (can be disabled)
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
+
+## render
+
+This function calls the WidgetApi.render() method, and it renders
+the widget if it is successful. Otherwise it shows the "error" widget.
+
+**Parameters**
+
+-   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
+        -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+        -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `config.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/REFERRING_WIDGET)
+    -   `config.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+                                   to validate the data (can be disabled)
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
+
+# EmbedWidget
+
+**Extends Widget**
+
+An EmbedWidget is displayed inline in part of your page. 
+
+To create an EmbedWidget use [Widgets](#widgets)
+
+# PopupWidget
+
+**Extends Widget**
+
+The PopupWidget is used to display popups (also known as "Modals"). 
+Popups widgets are rendered on top of other elements in a page.
+
+To create a PopupWidget use [Widgets](#widgets)
+
+## open
+
+Opens the widget.
+
+## close
+
+Closes the widget
+
+# CtaWidget
+
+**Extends PopupWidget**
+
+A CtaWidget is displayed on top of your page 
+
+To create a CtaWidget use [Widgets](#widgets)
+
+## open
+
+## close
 
 # WidgetApi
 
@@ -45,10 +225,7 @@ Initialize a new [WidgetApi](#widgetapi) instance.
 
 **Parameters**
 
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
-    -   `config.tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The tenant to access
-    -   `config.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** The server domain.
-           Useful if you want to use a proxy like [RequestBin](https://requestb.in/) or [Runscope](https://runscope.com/). (optional, default `'https://app.referralsaasquatch.com'`)
+-   `config` **[ConfigOptions](#configoptions)** Config details
 
 **Examples**
 
@@ -74,7 +251,7 @@ let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 
 ## cookieUser
 
-Description here.
+Creates/upserts an anonymous user.
 
 **Parameters**
 
@@ -88,7 +265,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## upsert
 
-Description here.
+Creates/upserts user.
 
 **Parameters**
 
@@ -101,7 +278,7 @@ Description here.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** string if true, with the widget template.
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** string if true, with the widget template, jsOptions and user details.
 
 ## render
 
@@ -130,52 +307,3 @@ Description here.
     -   `params.code` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** code referral code if true.
-
-# Widget
-
-The Widget class is the base class for the different widget types available
-
-**Examples**
-
-_Custom Widget example_
-
-```javascript
-class CustomWidget extends Widget {
-     constructor(params,stuff) {
-       super(params);
-       // do stuff
-     }
-
-     load() {
-       // custom loading of widget
-     }
-   }
-```
-
-## constructor
-
-Initialize a new [Widget](#widget) instance.
-
-Creates an <iframe></iframe> in which the html content of the widget gets
-embedded.
-Uses element-resize-detector (<https://github.com/wnr/element-resize-detector>)
-for listening to the height of the widget content and make the iframe responsive.
-
-**Parameters**
-
--   `content` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The html of the widget
--   `params`  
-
-# AnalyticsApi
-
-The AnalyticsApi class is a wrapper around the Analytics Endpoints of
-the SaaSquatch REST API. Used to record Widget events.
-
-## constructor
-
-Initialize a new [AnalyticsApi](#analyticsapi) instance.
-
-**Parameters**
-
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
-    -   `config.domain` **\[[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)]** The server domain. (optional, default `'https://app.referralsaasquatch.com'`)
