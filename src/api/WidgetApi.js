@@ -34,8 +34,8 @@ export default class WidgetApi {
    * Creates/upserts an anonymous user.
    *
    * @param {Object} params
-   * @param {EngagementMedium} params.widgetType The content of the widget.
-   * @param {WidgetType} params.engagementMedium How to display the widget.
+   * @param {WidgetType} params.widgetType The content of the widget.
+   * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used to
    *                            validate the data (can be disabled)
    *
@@ -62,8 +62,8 @@ export default class WidgetApi {
    * @param {Object} params.user the user details
    * @param {string} params.user.id
    * @param {string} params.user.accountId
-   * @param {EngagementMedium} params.widgetType The content of the widget.
-   * @param {WidgetType} params.engagementMedium How to display the widget.
+   * @param {WidgetType} params.widgetType The content of the widget.
+   * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
@@ -96,8 +96,8 @@ export default class WidgetApi {
    * @param {Object} params.user the user details
    * @param {string} params.user.id
    * @param {string} params.user.accountId
-   * @param {EngagementMedium} params.widgetType The content of the widget.
-   * @param {WidgetType} params.engagementMedium How to display the widget.
+   * @param {WidgetType} params.widgetType The content of the widget.
+   * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    * @return {Promise} template html if true.

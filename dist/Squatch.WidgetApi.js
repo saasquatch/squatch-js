@@ -554,15 +554,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
 	    this.tenantAlias = config.tenantAlias;
-	    this.domain = 'https://staging.referralsaasquatch.com';
+	    this.domain = config.domain || 'https://staging.referralsaasquatch.com';
 	  }
 
 	  /**
 	   * Creates/upserts an anonymous user.
 	   *
 	   * @param {Object} params
-	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} params.engagementMedium (POPUP/MOBILE)
+	   * @param {WidgetType} params.widgetType The content of the widget.
+	   * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
 	   *                            validate the data (can be disabled)
 	   *
@@ -573,7 +573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(WidgetApi, [{
 	    key: 'cookieUser',
 	    value: function cookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
 
 	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
 
@@ -595,8 +595,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} params.user the user details
 	     * @param {string} params.user.id
 	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {WidgetType} params.widgetType The content of the widget.
+	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
@@ -606,7 +606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'upsert',
 	    value: function upsert() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
 
 	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
 
@@ -634,8 +634,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} params.user the user details
 	     * @param {string} params.user.id
 	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {WidgetType} params.widgetType The content of the widget.
+	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     * @return {Promise} template html if true.
@@ -644,7 +644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
 
 	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
 
@@ -661,11 +661,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Description here.
+	     * Looks up the referral code of the current user, if there is any.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.code the user details
-	     * @return {Promise} code referral code if true.
+	     * @return {Promise<string>} code referral code if true.
 	     */
 
 	  }, {
@@ -694,7 +692,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
-	      var jwt = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
 	      var headers = {
 	        Accept: 'application/json',

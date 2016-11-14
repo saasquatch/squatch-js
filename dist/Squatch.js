@@ -67,10 +67,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
-	exports.init = init;
-	exports.ready = ready;
 	exports.api = api;
 	exports.widgets = widgets;
+	exports.init = init;
+	exports.ready = ready;
 	exports.autofill = autofill;
 
 	var _docs = __webpack_require__(2);
@@ -129,6 +129,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.WidgetApi = _WidgetApi2.default;
 
 	/**
+	 * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
+	 *
+	 * @type {WidgetApi}
+	 * @example
+	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
+	 * squatch.ready(function() {
+	 *   squatch.api().cookieUser();
+	 * });
+	 */
+
+	var _api = null;
+	function api() {
+	  return _api;
+	}
+
+	/**
+	 * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
+	 *
+	 * @type {Widgets}
+	 * @example
+	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
+	 * squatch.ready(function() {
+	 *   squatch.widgets().cookieUser().then(doSomething);
+	 * });
+	 */
+	var _widgets = null;
+	function widgets() {
+	  return _widgets;
+	}
+
+	/**
 	 * Initializes the static `squatch` global. This sets up:
 	 *
 	 *  - `squatch.api()` a static instance of the {@link WidgetApi}
@@ -138,7 +169,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 */
-
 	function init(config) {
 	  if (config.tenantAlias.match('^test') || config.debug) {
 	    _debug2.default.enable('squatch-js*');
@@ -169,37 +199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
 	 *
-	 * @type {WidgetApi}
-	 * @example
-	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.ready(function() {
-	 *   squatch.api().cookieUser();
-	 * });
-	 */
-	function api() {
-	  return _api;
-	}
-	var _api = null;
-
-	/**
-	 * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
-	 *
-	 * @type {Widgets}
-	 * @example
-	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.ready(function() {
-	 *   squatch.widgets().cookieUser().then(doSomething);
-	 * });
-	 */
-	function widgets() {
-	  return _widgets;
-	}
-	var _widgets = null;
-
-	/**
-	 * 
 	 */
 	function autofill(element) {
 	  var el = void 0;
@@ -256,6 +256,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @property {User} user The user that's in the widget.
 	 * 
 	 */
+
+	/**
+	 * EngagementMedium is an enum for the content of the widgets. 
+	 * 
+	 * @name EngagementMedium
+	 * @enum {string}
+	 * @readonly
+	 * @property {string}  REFERRER_WIDGET      Widget content that lets people make referrals
+	 * @property {string}  CONVERSION_WIDGET    Widget content that shows that someone has been referred
+	 * @example
+	 *  engagementMedium: "REFERRER_WIDGET"
+	 * 
+	 */
+
+	/**
+	* WidgetType is an enum for types of ways a Widget can be displayed.
+	* 
+	* @name WidgetType
+	* @enum {string}
+	* @readonly
+	* @property {string}  POPUP    Displays the widget as a modal popup. Creates a {@link PopupWidget}
+	* @property {string}  EMBED    Displays the widget embedded in the page. Create an {@link EmbedWidget}
+	* @example
+	*  widgetType: "POPUP"
+	* 
+	*/
 
 /***/ },
 /* 3 */
@@ -741,7 +767,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function useColors() {
 	  // is webkit? http://stackoverflow.com/a/16459606/376773
-	  return ('WebkitAppearance' in document.documentElement.style) ||
+	  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
+	  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
 	    // is firebug? http://stackoverflow.com/a/398120/376773
 	    (window.console && (console.firebug || (console.exception && console.table))) ||
 	    // is firefox >= v31?
@@ -882,7 +909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = debug;
+	exports = module.exports = debug.debug = debug;
 	exports.coerce = coerce;
 	exports.disable = disable;
 	exports.enable = enable;
@@ -1017,7 +1044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  for (var i = 0; i < len; i++) {
 	    if (!split[i]) continue; // ignore empty strings
-	    namespaces = split[i].replace(/\*/g, '.*?');
+	    namespaces = split[i].replace(/[\\^$+?.()|[\]{}]/g, '\\$&').replace(/\*/g, '.*?');
 	    if (namespaces[0] === '-') {
 	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
 	    } else {
@@ -1081,11 +1108,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Helpers.
 	 */
 
-	var s = 1000;
-	var m = s * 60;
-	var h = m * 60;
-	var d = h * 24;
-	var y = d * 365.25;
+	var s = 1000
+	var m = s * 60
+	var h = m * 60
+	var d = h * 24
+	var y = d * 365.25
 
 	/**
 	 * Parse or format the given `val`.
@@ -1096,17 +1123,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {String|Number} val
 	 * @param {Object} options
+	 * @throws {Error} throw an error if val is not a non-empty string or a number
 	 * @return {String|Number}
 	 * @api public
 	 */
 
-	module.exports = function(val, options){
-	  options = options || {};
-	  if ('string' == typeof val) return parse(val);
-	  return options.long
-	    ? long(val)
-	    : short(val);
-	};
+	module.exports = function (val, options) {
+	  options = options || {}
+	  var type = typeof val
+	  if (type === 'string' && val.length > 0) {
+	    return parse(val)
+	  } else if (type === 'number' && isNaN(val) === false) {
+	    return options.long ?
+				fmtLong(val) :
+				fmtShort(val)
+	  }
+	  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
+	}
 
 	/**
 	 * Parse the given `str` and return milliseconds.
@@ -1117,47 +1150,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	function parse(str) {
-	  str = '' + str;
-	  if (str.length > 10000) return;
-	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
-	  if (!match) return;
-	  var n = parseFloat(match[1]);
-	  var type = (match[2] || 'ms').toLowerCase();
+	  str = String(str)
+	  if (str.length > 10000) {
+	    return
+	  }
+	  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str)
+	  if (!match) {
+	    return
+	  }
+	  var n = parseFloat(match[1])
+	  var type = (match[2] || 'ms').toLowerCase()
 	  switch (type) {
 	    case 'years':
 	    case 'year':
 	    case 'yrs':
 	    case 'yr':
 	    case 'y':
-	      return n * y;
+	      return n * y
 	    case 'days':
 	    case 'day':
 	    case 'd':
-	      return n * d;
+	      return n * d
 	    case 'hours':
 	    case 'hour':
 	    case 'hrs':
 	    case 'hr':
 	    case 'h':
-	      return n * h;
+	      return n * h
 	    case 'minutes':
 	    case 'minute':
 	    case 'mins':
 	    case 'min':
 	    case 'm':
-	      return n * m;
+	      return n * m
 	    case 'seconds':
 	    case 'second':
 	    case 'secs':
 	    case 'sec':
 	    case 's':
-	      return n * s;
+	      return n * s
 	    case 'milliseconds':
 	    case 'millisecond':
 	    case 'msecs':
 	    case 'msec':
 	    case 'ms':
-	      return n;
+	      return n
+	    default:
+	      return undefined
 	  }
 	}
 
@@ -1169,12 +1208,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @api private
 	 */
 
-	function short(ms) {
-	  if (ms >= d) return Math.round(ms / d) + 'd';
-	  if (ms >= h) return Math.round(ms / h) + 'h';
-	  if (ms >= m) return Math.round(ms / m) + 'm';
-	  if (ms >= s) return Math.round(ms / s) + 's';
-	  return ms + 'ms';
+	function fmtShort(ms) {
+	  if (ms >= d) {
+	    return Math.round(ms / d) + 'd'
+	  }
+	  if (ms >= h) {
+	    return Math.round(ms / h) + 'h'
+	  }
+	  if (ms >= m) {
+	    return Math.round(ms / m) + 'm'
+	  }
+	  if (ms >= s) {
+	    return Math.round(ms / s) + 's'
+	  }
+	  return ms + 'ms'
 	}
 
 	/**
@@ -1185,12 +1232,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @api private
 	 */
 
-	function long(ms) {
-	  return plural(ms, d, 'day')
-	    || plural(ms, h, 'hour')
-	    || plural(ms, m, 'minute')
-	    || plural(ms, s, 'second')
-	    || ms + ' ms';
+	function fmtLong(ms) {
+	  return plural(ms, d, 'day') ||
+	    plural(ms, h, 'hour') ||
+	    plural(ms, m, 'minute') ||
+	    plural(ms, s, 'second') ||
+	    ms + ' ms'
 	}
 
 	/**
@@ -1198,9 +1245,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	function plural(ms, n, name) {
-	  if (ms < n) return;
-	  if (ms < n * 1.5) return Math.floor(ms / n) + ' ' + name;
-	  return Math.ceil(ms / n) + ' ' + name + 's';
+	  if (ms < n) {
+	    return
+	  }
+	  if (ms < n * 1.5) {
+	    return Math.floor(ms / n) + ' ' + name
+	  }
+	  return Math.ceil(ms / n) + ' ' + name + 's'
 	}
 
 
@@ -1278,8 +1329,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * the widget if it is successful. Otherwise it shows the "error" widget.
 	   *
 	   * @param {Object} config
-	   * @param {string} config.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} config.engagementMedium (POPUP/MOBILE)
+	   * @param {EngagementMedium} config.widgetType The content of the widget.
+	   * @param {WidgetType} config.engagementMedium How to display the widget.
 	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
 	   *                            validate the data (can be disabled)
 	   *
@@ -1312,8 +1363,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} config.user the user details
 	     * @param {string} config.user.id
 	     * @param {string} config.user.accountId
-	     * @param {string} config.widgetType (CONVERSION_WIDGET/REFERRING_WIDGET)
-	     * @param {string} config.engagementMedium (POPUP/MOBILE)
+	     * @param {EngagementMedium} config.widgetType The content of the widget.
+	     * @param {WidgetType} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
@@ -1345,8 +1396,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} config.user the user details
 	     * @param {string} config.user.id
 	     * @param {string} config.user.accountId
-	     * @param {string} config.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} config.engagementMedium (POPUP/MOBILE)
+	     * @param {EngagementMedium} config.widgetType The content of the widget.
+	     * @param {WidgetType} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
@@ -1378,7 +1429,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderWidget',
 	    value: function renderWidget(response) {
-	      var config = arguments.length <= 1 || arguments[1] === undefined ? { widgetType: '', engagementMedium: '' } : arguments[1];
+	      var config = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { widgetType: '', engagementMedium: '' };
 
 	      _log('Loading...');
 	      if (!response) throw new Error('Unable to get a response');
@@ -1445,7 +1496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }], [{
 	    key: 'renderErrorWidget',
 	    value: function renderErrorWidget(error) {
-	      var em = arguments.length <= 1 || arguments[1] === undefined ? 'POPUP' : arguments[1];
+	      var em = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'POPUP';
 
 	      _log(new Error(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message));
 
@@ -1532,15 +1583,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
 	    this.tenantAlias = config.tenantAlias;
-	    this.domain = 'https://staging.referralsaasquatch.com';
+	    this.domain = config.domain || 'https://staging.referralsaasquatch.com';
 	  }
 
 	  /**
 	   * Creates/upserts an anonymous user.
 	   *
 	   * @param {Object} params
-	   * @param {string} params.widgetType (REFERRED_WIDGET/CONVERSION_WIDGET)
-	   * @param {string} params.engagementMedium (POPUP/MOBILE)
+	   * @param {WidgetType} params.widgetType The content of the widget.
+	   * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
 	   *                            validate the data (can be disabled)
 	   *
@@ -1551,7 +1602,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(WidgetApi, [{
 	    key: 'cookieUser',
 	    value: function cookieUser() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
 
 	      WidgetApi.validateInput(params, _schema2.default.cookieUser);
 
@@ -1573,8 +1624,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} params.user the user details
 	     * @param {string} params.user.id
 	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {WidgetType} params.widgetType The content of the widget.
+	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
@@ -1584,7 +1635,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'upsert',
 	    value: function upsert() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
 
 	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
 
@@ -1612,8 +1663,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} params.user the user details
 	     * @param {string} params.user.id
 	     * @param {string} params.user.accountId
-	     * @param {string} params.widgetType (REFERRED_WIDGET/REFERRING_WIDGET)
-	     * @param {string} params.engagementMedium (POPUP/MOBILE)
+	     * @param {WidgetType} params.widgetType The content of the widget.
+	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     * @return {Promise} template html if true.
@@ -1622,7 +1673,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var params = arguments.length <= 0 || arguments[0] === undefined ? { widgetType: '', engagementMedium: '', jwt: '' } : arguments[0];
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { widgetType: '', engagementMedium: '', jwt: '' };
 
 	      WidgetApi.validateInput(params, _schema2.default.upsertUser);
 
@@ -1639,11 +1690,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * Description here.
+	     * Looks up the referral code of the current user, if there is any.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.code the user details
-	     * @return {Promise} code referral code if true.
+	     * @return {Promise<string>} code referral code if true.
 	     */
 
 	  }, {
@@ -1672,7 +1721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
-	      var jwt = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
+	      var jwt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
 	      var headers = {
 	        Accept: 'application/json',
@@ -4776,10 +4825,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _log = (0, _debug2.default)('squatch-js:EMBEDwidget');
 
 	/**
-	 * An EmbedWidget is displayed inline in part of your page. 
-	 * 
+	 * An EmbedWidget is displayed inline in part of your page.
+	 *
 	 * To create an EmbedWidget use {@link Widgets}
-	 * 
+	 *
 	 */
 
 	var EmbedWidget = function (_Widget) {
@@ -4789,7 +4838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @private
 	   */
 	  function EmbedWidget(params) {
-	    var elementId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchembed' : arguments[1];
+	    var elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchembed';
 
 	    _classCallCheck(this, EmbedWidget);
 
@@ -4839,6 +4888,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'reload',
 	    value: function reload(params, jwt) {
 	      var me = this;
+	      var frameDoc = me.frame.contentWindow.document;
 
 	      me.widgetApi.cookieUser({
 	        user: {
@@ -4850,17 +4900,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }).then(function (response) {
 	        if (response.template) {
 	          me.content = response.template;
-	          me.load();
+	          me.content = response.template;
+	          var showStatsBtn = frameDoc.createElement('button');
+	          var registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
+
+	          showStatsBtn.className = 'btn btn-primary';
+	          showStatsBtn.id = 'show-stats-btn';
+	          showStatsBtn.textContent = 'Show Stats';
+	          showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	          showStatsBtn.onclick = function () {
+	            me.load();
+	          };
+
+	          registerForm.style.paddingTop = '30px';
+	          registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
+	          registerForm.appendChild(showStatsBtn);
 	        }
 	      }).catch(function (ex) {
-	        _log('Failed to reload ' + ex);
+	        _log('' + ex.message);
 	      });
 	    }
 	  }, {
 	    key: '_error',
 	    value: function _error(rs) {
-	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'embed' : arguments[1];
-	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+	      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'embed';
+	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
 	      return _get(EmbedWidget.prototype.__proto__ || Object.getPrototypeOf(EmbedWidget.prototype), '_error', this).call(this, rs, mode, style);
 	    }
@@ -4984,8 +5048,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_error',
 	    value: function _error(rs) {
-	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'modal' : arguments[1];
-	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+	      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'modal';
+	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
 	      var me = this;
 
@@ -6848,11 +6912,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _log = (0, _debug2.default)('squatch-js:POPUPwidget');
 
 	/**
-	 * The PopupWidget is used to display popups (also known as "Modals"). 
+	 * The PopupWidget is used to display popups (also known as "Modals").
 	 * Popups widgets are rendered on top of other elements in a page.
-	 * 
+	 *
 	 * To create a PopupWidget use {@link Widgets}
-	 * 
+	 *
 	 */
 
 	var PopupWidget = function (_Widget) {
@@ -6862,7 +6926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @private
 	   */
 	  function PopupWidget(params) {
-	    var triggerId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchpop' : arguments[1];
+	    var triggerId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchpop';
 
 	    _classCallCheck(this, PopupWidget);
 
@@ -6872,7 +6936,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.triggerElement = document.getElementById(triggerId);
 
-	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add div tag with id=\'squatchpop\'.');
+	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add element with id=\'squatchpop\'.');
+
+	    // If widget is loaded with CTA, look for a 'squatchpop' element to use
+	    // that element as a trigger as well.
+	    me.triggerWhenCTA = document.getElementById('squatchpop');
+
+	    if (triggerId === 'cta' && me.triggerWhenCTA) {
+	      me.triggerWhenCTA.onclick = function () {
+	        me.open();
+	      };
+	    }
+
+	    me.triggerElement.onclick = function () {
+	      me.open();
+	    };
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
@@ -6881,9 +6959,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.popupcontent = document.createElement('div');
 	    me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
 
-	    me.triggerElement.onclick = function () {
-	      me.open();
-	    };
 	    me.popupdiv.onclick = function (event) {
 	      me._clickedOutside(event);
 	    };
@@ -6909,6 +6984,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'reload',
 	    value: function reload(params, jwt) {
 	      var me = this;
+	      var frameDoc = me.frame.contentWindow.document;
 
 	      me.widgetApi.cookieUser({
 	        user: {
@@ -6919,41 +6995,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        jwt: jwt
 	      }).then(function (response) {
 	        if (response.template) {
-	          (function () {
-	            me.content = response.template;
-	            var frameDoc = me.frame.contentWindow.document;
-	            frameDoc.open();
-	            frameDoc.write(me.content);
-	            frameDoc.close();
+	          me.content = response.template;
+	          var showStatsBtn = frameDoc.createElement('button');
+	          var registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
 
-	            (0, _domready.domready)(frameDoc, function () {
-	              var ctaElement = frameDoc.getElementById('cta');
+	          showStatsBtn.className = 'btn btn-primary';
+	          showStatsBtn.id = 'show-stats-btn';
+	          showStatsBtn.textContent = 'Show Stats';
+	          showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	          showStatsBtn.onclick = function () {
+	            me.load();
+	            me.open();
+	          };
 
-	              if (ctaElement) {
-	                ctaElement.parentNode.removeChild(ctaElement);
-	              }
-
-	              me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	                var height = element.offsetHeight;
-
-	                if (height > 0) me.frame.height = height;
-
-	                if (window.innerHeight > me.frame.height) {
-	                  me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + 'px';
-	                } else {
-	                  me.popupdiv.style.paddingTop = '5px';
-	                }
-
-	                element.style.width = '100%';
-	                element.style.height = '100%';
-	              });
-
-	              _log('Popup reloaded');
-	            });
-	          })();
+	          registerForm.style.paddingTop = '30px';
+	          registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
+	          registerForm.appendChild(showStatsBtn);
 	        }
 	      }).catch(function (ex) {
-	        _log('Failed to reload' + ex);
+	        _log('' + ex.message);
 	      });
 	    }
 
@@ -6984,12 +7044,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        popupdiv.style.display = 'table';
 	        popupdiv.style.top = '0';
 
-	        frame.height = frameDoc.body.scrollHeight;
+	        frame.height = frameDoc.body.offsetHeight;
 
-	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
+	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container')[0], function (element) {
 	          var height = element.scrollHeight;
+	          var referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
+	          var referralsHeight = referrals ? referrals.offsetHeight : 0;
+	          var finalHeight = height - referralsHeight;
 
-	          if (height > 0) frame.height = height;
+	          if (finalHeight > 0) frame.height = finalHeight;
 
 	          if (window.innerHeight > frame.height) {
 	            popupdiv.style.paddingTop = (window.innerHeight - frame.height) / 2 + 'px';
@@ -6998,7 +7061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          }
 
 	          element.style.width = '100%';
-	          element.style.height = '100%';
+	          element.style.height = finalHeight + 'px';
 	        });
 
 	        me._loadEvent(_sqh);
@@ -7008,7 +7071,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * Closes the widget
-	     * 
+	     *
 	     */
 
 	  }, {
@@ -7033,8 +7096,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: '_error',
 	    value: function _error(rs) {
-	      var mode = arguments.length <= 1 || arguments[1] === undefined ? 'modal' : arguments[1];
-	      var style = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+	      var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'modal';
+	      var style = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
 	      var _style = 'body { margin: 0; } .modal { box-shadow: none; border: 0; }';
 
@@ -7082,8 +7145,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _log = (0, _debug2.default)('squatch-js:CTAwidget');
 
 	/**
-	 * A CtaWidget is displayed on top of your page 
-	 * 
+	 * A CtaWidget is displayed on top of your page
+	 *
 	 * To create a CtaWidget use {@link Widgets}
 	 *
 	 */
@@ -7122,6 +7185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.ctaFrame = document.createElement('iframe');
 	    me.ctaFrame.squatchJsApi = me;
+	    me.ctaFrame.scrolling = 'no';
 	    me.ctaFrame.style = 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position;
 
 	    document.body.appendChild(_this.ctaFrame);

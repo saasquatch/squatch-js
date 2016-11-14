@@ -18,13 +18,12 @@ import asyncLoad from './async';
 debug.disable('squatch-js*');
 const _log = debug('squatch-js');
 
-
-export { 
+export {
   Widgets,
   EmbedWidget,
   PopupWidget,
   CtaWidget,
-  WidgetApi
+  WidgetApi,
 };
 
 /**
@@ -66,6 +65,7 @@ export function ready(fn) {
   fn();
 }
 
+
 /**
  * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
  * 
@@ -77,6 +77,7 @@ export function api() {
   return _api;
 }
 let _api = null;
+
 
 /**
  * A static instance of the {@link Widgets} created when you call {@link #init init}.
@@ -90,8 +91,10 @@ export function widgets() {
 }
 let _widgets = null;
 
+
 /**
  * Autofills a referral code into an element when someone has been referred. Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
+ *
  */
 export function autofill(element) {
   let el;

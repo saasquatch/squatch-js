@@ -26,9 +26,9 @@ Or load the library synchronously from our CDN:
 ## Getting Started
 The `init` function lets you configure your global squatch instance.
 
-Unregistered users are also able to interact with your referral program using the `cookieUser` function, and later they can be registered in our system. To upsert `anonymous users`/`users` and load a widget, use the `squatch.widgets` instance.
+Unregistered users are also able to interact with your referral program using the `cookieUser` function, and later they can be registered in our system. To upsert `anonymous users`/`users` and load a widget, use the `squatch.widgets()` function.
 
-Note: `engagementMedium` is required in the `squatch.widgets` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
+Note: `engagementMedium` is required in the `squatch.widgets()` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
 
 ```html
 <script type="text/javascript">
@@ -39,7 +39,7 @@ Note: `engagementMedium` is required in the `squatch.widgets` functions if you w
       tenantAlias: "YOUR_TENANT_ALIAS",     // String (required)
     });
 
-    squatch.widgets.createCookieUser({
+    squatch.widgets().createCookieUser({
       engagementMedium: 'DEFAULT_IS_POPUP',  // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',             // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
       jwt: 'TOKEN'                           // String (required by default, or disable Security in the portal)
@@ -63,7 +63,7 @@ You can create/upsert users without loading a widget.
 
     var user;
 
-    squatch.upsertUser({
+    squatch.api().upsertUser({
       user: {                               // Object (required)
         id: 'USER_ID',                      // String (required)
         accountId: 'USER_ACCOUNT_ID',       // String (required)
@@ -90,7 +90,7 @@ You can create/upsert users without loading a widget.
 ```
 
 ## Get Referral Cookie Code
-You can also use the `api` static instance to call the WidgetApi methods directly.
+You can also use the `api()` function to call the WidgetApi methods directly.
 
 ```html
 <script type="text/javascript">
@@ -104,7 +104,7 @@ You can also use the `api` static instance to call the WidgetApi methods directl
     var code;
     var element = document.getElementById('#my_coupon');
 
-    squatch.api.squatchReferralCookie().then(function(response) {
+    squatch.api().squatchReferralCookie().then(function(response) {
       element.value = response.code;
     });
 
