@@ -44,35 +44,38 @@ squatch.ready(function() {
 
 # api
 
-Static instance of the [WidgetApi](#widgetapi). Make sure you call [init](#init) first
+A static instance of the [WidgetApi](#widgetapi) created when you call [init](#init).
 
-**Examples**
-
-```javascript
-squatch.init({tenantAlias:'test_basbtabstq51v'});
-squatch.ready(function() {
-  squatch.api().cookieUser();
-});
-```
+Read the [WidgetApi](#widgetapi) docs.
 
 # widgets
 
-Static instance of [Widgets](#widgets). Make sure you call [init](#init) first
+A static instance of the [Widgets](#widgets) created when you call [init](#init).
 
-**Examples**
-
-```javascript
-squatch.init({tenantAlias:'test_basbtabstq51v'});
-squatch.ready(function() {
-  squatch.widgets().cookieUser().then(doSomething);
-});
-```
+Read the [Widgets](#widgets) docs.
 
 # autofill
+
+Autofills a referral code into an element when someone has been referred. Uses [WidgetApi.squatchReferralCookie](WidgetApi.squatchReferralCookie) behind the scenes.
 
 **Parameters**
 
 -   `element`  
+
+# WidgetType
+
+WidgetType is an enum for types of ways a Widget can be displayed.
+
+**Properties**
+
+-   `POPUP` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Displays the widget as a modal popup. Creates a [PopupWidget](#popupwidget)
+-   `EMBED` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Displays the widget embedded in the page. Create an [EmbedWidget](#embedwidget)
+
+**Examples**
+
+```javascript
+widgetType: "POPUP"
+```
 
 # ConfigOptions
 
@@ -82,6 +85,21 @@ When you load Squatch.js you need to provide these configuration options.
 
 -   `tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Tenant that you're using.
 -   `domain` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** The domain for API. Defaults to `https://app.referralsaasquatch.com`
+
+# EngagementMedium
+
+EngagementMedium is an enum for the content of the widgets.
+
+**Properties**
+
+-   `REFERRER_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that lets people make referrals
+-   `CONVERSION_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that shows that someone has been referred
+
+**Examples**
+
+```javascript
+engagementMedium: "REFERRER_WIDGET"
+```
 
 # WidgetResult
 
@@ -94,8 +112,8 @@ When a widget is loaded using [Widgets](#widgets) you'll get both the `user` dat
 
 # Widgets
 
-The Widgets class contains a widget loading process for different calls
-to the WidgetApi.
+`Widgets` is a factory for creating widgets. It's possible to build your own widgets using the
+[WidgetApi](#widgetapi) but most people will prefer to use these easy methods.
 
 ## constructor
 
@@ -129,14 +147,14 @@ let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
 
 ## createCookieUser
 
-This function calls the WidgetApi.cookieUser() method, and it renders
+This function calls the [WidgetApi.cookieUser](WidgetApi.cookieUser) method, and it renders
 the widget if it is successful. Otherwise it shows the "error" widget.
 
 **Parameters**
 
 -   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `config.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/CONVERSION_WIDGET)
-    -   `config.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `config.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
+    -   `config.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
     -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
                                    validate the data (can be disabled)
 
@@ -144,7 +162,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## upsertUser
 
-This function calls the WidgetApi.upsert() method, and it renders
+This function calls the [WidgetApi.upsert](WidgetApi.upsert) method, and it renders
 the widget if it is successful. Otherwise it shows the "error" widget.
 
 **Parameters**
@@ -153,8 +171,8 @@ the widget if it is successful. Otherwise it shows the "error" widget.
     -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `config.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (CONVERSION_WIDGET/REFERRING_WIDGET)
-    -   `config.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `config.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
+    -   `config.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
     -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
@@ -162,7 +180,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## render
 
-This function calls the WidgetApi.render() method, and it renders
+This function calls the [WidgetApi.render](WidgetApi.render) method, and it renders
 the widget if it is successful. Otherwise it shows the "error" widget.
 
 **Parameters**
@@ -171,8 +189,8 @@ the widget if it is successful. Otherwise it shows the "error" widget.
     -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `config.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/REFERRING_WIDGET)
-    -   `config.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `config.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
+    -   `config.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
     -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
@@ -256,8 +274,8 @@ Creates/upserts an anonymous user.
 **Parameters**
 
 -   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** 
-    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/CONVERSION_WIDGET)
-    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `params.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
+    -   `params.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
                                    validate the data (can be disabled)
 
@@ -273,8 +291,8 @@ Creates/upserts user.
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/REFERRING_WIDGET)
-    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `params.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
+    -   `params.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
@@ -290,8 +308,8 @@ Description here.
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `params.widgetType` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (REFERRED_WIDGET/REFERRING_WIDGET)
-    -   `params.engagementMedium` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** (POPUP/MOBILE)
+    -   `params.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
+    -   `params.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
@@ -299,11 +317,6 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## squatchReferralCookie
 
-Description here.
+Looks up the referral code of the current user, if there is any.
 
-**Parameters**
-
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `params.code` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
-
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** code referral code if true.
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)>** code referral code if true.

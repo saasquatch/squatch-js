@@ -8,11 +8,12 @@ const _log = debug('squatch-js:widgets');
 
 /**
  *
- * The Widgets class contains a widget loading process for different calls
- * to the WidgetApi.
+ * `Widgets` is a factory for creating widgets. It's possible to build your own widgets using the
+ * {@link WidgetApi} but most people will prefer to use these easy methods.
  *
  */
 export default class Widgets {
+  
   /**
    * Initialize a new {@link Widgets} instance.
    *
@@ -35,7 +36,7 @@ export default class Widgets {
   }
 
   /**
-   * This function calls the WidgetApi.cookieUser() method, and it renders
+   * This function calls the {@link WidgetApi.cookieUser} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
    * @param {Object} config
@@ -60,7 +61,7 @@ export default class Widgets {
   }
 
   /**
-   * This function calls the WidgetApi.upsert() method, and it renders
+   * This function calls the {@link WidgetApi.upsert} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
    * @param {Object} config
@@ -88,7 +89,7 @@ export default class Widgets {
   }
 
   /**
-   * This function calls the WidgetApi.render() method, and it renders
+   * This function calls the {@link WidgetApi.render} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
    * @param {Object} config

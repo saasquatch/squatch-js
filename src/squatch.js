@@ -67,14 +67,11 @@ export function ready(fn) {
 }
 
 /**
- * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
+ * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
+ * 
+ * Read the {@link WidgetApi} docs.
  *
  * @type {WidgetApi}
- * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.ready(function() {
- *   squatch.api().cookieUser();
- * });
  */
 export function api() {
   return _api;
@@ -82,14 +79,11 @@ export function api() {
 let _api = null;
 
 /**
- * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
+ * A static instance of the {@link Widgets} created when you call {@link #init init}.
+ * 
+ * Read the {@link Widgets} docs.
  *
  * @type {Widgets}
- * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.ready(function() {
- *   squatch.widgets().cookieUser().then(doSomething);
- * });
  */
 export function widgets() {
   return _widgets;
@@ -97,7 +91,7 @@ export function widgets() {
 let _widgets = null;
 
 /**
- * 
+ * Autofills a referral code into an element when someone has been referred. Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
  */
 export function autofill(element) {
   let el;
