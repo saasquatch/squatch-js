@@ -41,25 +41,25 @@
     var user;
     var widget
 
-    // squatch.widgets().createCookieUser({});
+    squatch.widgets().createCookieUser({});
 
-    squatch.widgets().upsertUser({
-      user: {
-        id: '123',
-        accountId: 'abc',
-        firstName: 'Jorge',
-        lastName: 'Conde',
-        email: 'jorge@uvic.ca'
-      },
-      engagementMedium: 'POPUP',
-      widgetType: 'REFERRER_WIDGET',
-      jwt: 'token'
-    }).then(function (response) {
-      user = response.user;
-      widget = response.widget;
-    }).catch(function (err) {
-      console.log(err);
-    });
+    // squatch.widgets().upsertUser({
+    //   user: {
+    //     id: '123',
+    //     accountId: 'abc',
+    //     firstName: 'Jorge',
+    //     lastName: 'Conde',
+    //     email: 'jorge@uvic.ca'
+    //   },
+    //   engagementMedium: 'POPUP',
+    //   widgetType: 'REFERRER_WIDGET',
+    //   jwt: 'token'
+    // }).then(function (response) {
+    //   user = response.user;
+    //   widget = response.widget;
+    // }).catch(function (err) {
+    //   console.log(err);
+    // });
 
   });
 

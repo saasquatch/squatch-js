@@ -73,7 +73,8 @@ export default class EmbedWidget extends Widget {
         me.load();
       }
     }).catch((ex) => {
-      _log(`Failed to reload ${ex}`);
+      me.content = me._error(ex.rsCode);
+      me.load();
     });
   }
 

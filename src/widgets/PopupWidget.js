@@ -23,7 +23,17 @@ export default class PopupWidget extends Widget {
 
     me.triggerElement = document.getElementById(triggerId);
 
-    if (!me.triggerElement) throw new Error(`elementId '${triggerId}' not found. Add div tag with id='squatchpop'.`);
+    if (!me.triggerElement) throw new Error(`elementId '${triggerId}' not found. Add element with id='squatchpop'.`);
+
+    // If widget is loaded with CTA, look for a 'squatchpop' element to use
+    // that element as a trigger as well.
+    me.triggerWhenCTA = document.getElementById('squatchpop');
+
+    if (triggerId === 'cta' && me.triggerWhenCTA) {
+      me.triggerWhenCTA.onclick = () => { me.open(); };
+    }
+
+    me.triggerElement.onclick = () => { me.open(); };
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';
@@ -32,7 +42,6 @@ export default class PopupWidget extends Widget {
     me.popupcontent = document.createElement('div');
     me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
 
-    me.triggerElement.onclick = () => { me.open(); };
     me.popupdiv.onclick = (event) => { me._clickedOutside(event); };
   }
 
@@ -63,41 +72,16 @@ export default class PopupWidget extends Widget {
     }).then((response) => {
       if (response.template) {
         me.content = response.template;
-        const frameDoc = me.frame.contentWindow.document;
-        frameDoc.open();
-        frameDoc.write(me.content);
-        frameDoc.close();
-
-        domready(frameDoc, () => {
-          const ctaElement = frameDoc.getElementById('cta');
-
-          if (ctaElement) {
-            ctaElement.parentNode.removeChild(ctaElement);
-          }
-
-          me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), (element) => {
-            const height = element.offsetHeight;
-
-            if (height > 0) me.frame.height = height;
-
-            if (window.innerHeight > me.frame.height) {
-              me.popupdiv.style.paddingTop = `${((window.innerHeight - me.frame.height) / 2)}px`;
-            } else {
-              me.popupdiv.style.paddingTop = '5px';
-            }
-
-            element.style.width = '100%';
-            element.style.height = '100%';
-          });
-
-          _log('Popup reloaded');
-        });
+        me.load();
+        me.open();
       }
     }).catch((ex) => {
-      _log(`Failed to reload${ex}`);
+      _log(`${error.apiErrorCode} (${error.rsCode}) ${error.message}`);
+      me.content = me._error(ex.rsCode);
+      me.load();
+      me.open();
     });
   }
-
 
   /**
    * Opens the widget.
@@ -128,7 +112,7 @@ export default class PopupWidget extends Widget {
       erd.listenTo(frameDoc.getElementsByClassName('squatch-container')[0], (element) => {
         const height = element.scrollHeight;
         const referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
-        const referralsHeight = referrals.offsetHeight;
+        const referralsHeight = referrals ? referrals.offsetHeight : 0;
         const finalHeight = height - referralsHeight;
 
         if (finalHeight > 0) frame.height = finalHeight;

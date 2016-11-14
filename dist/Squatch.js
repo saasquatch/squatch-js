@@ -4902,7 +4902,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          me.load();
 	        }
 	      }).catch(function (ex) {
-	        _log('Failed to reload ' + ex);
+	        me.content = me._error(ex.rsCode);
+	        me.load();
 	      });
 	    }
 	  }, {
@@ -6921,7 +6922,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.triggerElement = document.getElementById(triggerId);
 
-	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add div tag with id=\'squatchpop\'.');
+	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add element with id=\'squatchpop\'.');
+
+	    // If widget is loaded with CTA, look for a 'squatchpop' element to use
+	    // that element as a trigger as well.
+	    me.triggerWhenCTA = document.getElementById('squatchpop');
+
+	    if (triggerId === 'cta' && me.triggerWhenCTA) {
+	      me.triggerWhenCTA.onclick = function () {
+	        me.open();
+	      };
+	    }
+
+	    me.triggerElement.onclick = function () {
+	      me.open();
+	    };
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
@@ -6930,9 +6945,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.popupcontent = document.createElement('div');
 	    me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
 
-	    me.triggerElement.onclick = function () {
-	      me.open();
-	    };
 	    me.popupdiv.onclick = function (event) {
 	      me._clickedOutside(event);
 	    };
@@ -6968,41 +6980,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        jwt: jwt
 	      }).then(function (response) {
 	        if (response.template) {
-	          (function () {
-	            me.content = response.template;
-	            var frameDoc = me.frame.contentWindow.document;
-	            frameDoc.open();
-	            frameDoc.write(me.content);
-	            frameDoc.close();
-
-	            (0, _domready.domready)(frameDoc, function () {
-	              var ctaElement = frameDoc.getElementById('cta');
-
-	              if (ctaElement) {
-	                ctaElement.parentNode.removeChild(ctaElement);
-	              }
-
-	              me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), function (element) {
-	                var height = element.offsetHeight;
-
-	                if (height > 0) me.frame.height = height;
-
-	                if (window.innerHeight > me.frame.height) {
-	                  me.popupdiv.style.paddingTop = (window.innerHeight - me.frame.height) / 2 + 'px';
-	                } else {
-	                  me.popupdiv.style.paddingTop = '5px';
-	                }
-
-	                element.style.width = '100%';
-	                element.style.height = '100%';
-	              });
-
-	              _log('Popup reloaded');
-	            });
-	          })();
+	          me.content = response.template;
+	          me.load();
+	          me.open();
 	        }
 	      }).catch(function (ex) {
-	        _log('Failed to reload' + ex);
+	        _log(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message);
+	        me.content = me._error(ex.rsCode);
+	        me.load();
+	        me.open();
 	      });
 	    }
 
@@ -7038,7 +7024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        erd.listenTo(frameDoc.getElementsByClassName('squatch-container')[0], function (element) {
 	          var height = element.scrollHeight;
 	          var referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
-	          var referralsHeight = referrals.offsetHeight;
+	          var referralsHeight = referrals ? referrals.offsetHeight : 0;
 	          var finalHeight = height - referralsHeight;
 
 	          if (finalHeight > 0) frame.height = finalHeight;
