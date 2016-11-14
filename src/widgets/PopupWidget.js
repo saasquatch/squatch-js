@@ -61,6 +61,7 @@ export default class PopupWidget extends Widget {
 
   reload(params, jwt) {
     const me = this;
+    const frameDoc = me.frame.contentWindow.document;
 
     me.widgetApi.cookieUser({
       user: {
@@ -72,14 +73,24 @@ export default class PopupWidget extends Widget {
     }).then((response) => {
       if (response.template) {
         me.content = response.template;
-        me.load();
-        me.open();
+        const showStatsBtn = frameDoc.createElement('button');
+        const registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
+
+        showStatsBtn.className = 'btn btn-primary';
+        showStatsBtn.id = 'show-stats-btn';
+        showStatsBtn.textContent = 'Show Stats';
+        showStatsBtn.style =  'margin-top: 10px; max-width: 130px; width: 100%;'
+        showStatsBtn.onclick = () => {
+          me.load();
+          me.open();
+        }
+
+        registerForm.style.paddingTop = '30px';
+        registerForm.innerHTML = `<p><strong>${params}</strong><br>Has been successfully registered</p>`;
+        registerForm.appendChild(showStatsBtn);
       }
     }).catch((ex) => {
-      _log(`${error.apiErrorCode} (${error.rsCode}) ${error.message}`);
-      me.content = me._error(ex.rsCode);
-      me.load();
-      me.open();
+      _log(`${ex.message}`);
     });
   }
 

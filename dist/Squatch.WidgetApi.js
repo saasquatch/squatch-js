@@ -704,7 +704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'GET',
 	        headers: headers,
-	        credentials: jwt ? 'include' : 'omit', // omit when no-auth
+	        credentials: 'include',
 	        mode: 'cors'
 	      }).then(function (response) {
 	        if (response.ok) {
@@ -735,7 +735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'PUT',
 	        headers: headers,
-	        credentials: jwt ? 'include' : 'omit', // omit when no-auth
+	        credentials: 'include',
 	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {

@@ -150,7 +150,7 @@ export default class WidgetApi {
     return fetch(url, {
       method: 'GET',
       headers: headers,
-      credentials: jwt ? 'include' : 'omit', // omit when no-auth
+      credentials: 'include',
       mode: 'cors',
     }).then((response) => {
       if (response.ok) {
@@ -178,7 +178,7 @@ export default class WidgetApi {
     return fetch(url, {
       method: 'PUT',
       headers: headers,
-      credentials: jwt ? 'include' : 'omit', // omit when no-auth
+      credentials: 'include',
       mode: 'cors',
       body: data,
     }).then((response) => {

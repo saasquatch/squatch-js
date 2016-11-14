@@ -1733,7 +1733,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'GET',
 	        headers: headers,
-	        credentials: jwt ? 'include' : 'omit', // omit when no-auth
+	        credentials: 'include',
 	        mode: 'cors'
 	      }).then(function (response) {
 	        if (response.ok) {
@@ -1764,7 +1764,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return fetch(url, {
 	        method: 'PUT',
 	        headers: headers,
-	        credentials: jwt ? 'include' : 'omit', // omit when no-auth
+	        credentials: 'include',
 	        mode: 'cors',
 	        body: data
 	      }).then(function (response) {
@@ -4888,6 +4888,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'reload',
 	    value: function reload(params, jwt) {
 	      var me = this;
+	      var frameDoc = me.frame.contentWindow.document;
 
 	      me.widgetApi.cookieUser({
 	        user: {
@@ -4899,11 +4900,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }).then(function (response) {
 	        if (response.template) {
 	          me.content = response.template;
-	          me.load();
+	          me.content = response.template;
+	          var showStatsBtn = frameDoc.createElement('button');
+	          var registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
+
+	          showStatsBtn.className = 'btn btn-primary';
+	          showStatsBtn.id = 'show-stats-btn';
+	          showStatsBtn.textContent = 'Show Stats';
+	          showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	          showStatsBtn.onclick = function () {
+	            me.load();
+	          };
+
+	          registerForm.style.paddingTop = '30px';
+	          registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
+	          registerForm.appendChild(showStatsBtn);
 	        }
 	      }).catch(function (ex) {
-	        me.content = me._error(ex.rsCode);
-	        me.load();
+	        _log('' + ex.message);
 	      });
 	    }
 	  }, {
@@ -6970,6 +6984,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'reload',
 	    value: function reload(params, jwt) {
 	      var me = this;
+	      var frameDoc = me.frame.contentWindow.document;
 
 	      me.widgetApi.cookieUser({
 	        user: {
@@ -6981,14 +6996,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }).then(function (response) {
 	        if (response.template) {
 	          me.content = response.template;
-	          me.load();
-	          me.open();
+	          var showStatsBtn = frameDoc.createElement('button');
+	          var registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
+
+	          showStatsBtn.className = 'btn btn-primary';
+	          showStatsBtn.id = 'show-stats-btn';
+	          showStatsBtn.textContent = 'Show Stats';
+	          showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	          showStatsBtn.onclick = function () {
+	            me.load();
+	            me.open();
+	          };
+
+	          registerForm.style.paddingTop = '30px';
+	          registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
+	          registerForm.appendChild(showStatsBtn);
 	        }
 	      }).catch(function (ex) {
-	        _log(error.apiErrorCode + ' (' + error.rsCode + ') ' + error.message);
-	        me.content = me._error(ex.rsCode);
-	        me.load();
-	        me.open();
+	        _log('' + ex.message);
 	      });
 	    }
 

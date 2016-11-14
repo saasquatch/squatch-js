@@ -59,6 +59,7 @@ export default class EmbedWidget extends Widget {
 
   reload(params, jwt) {
     const me = this;
+    const frameDoc = me.frame.contentWindow.document;
 
     me.widgetApi.cookieUser({
       user: {
@@ -70,11 +71,24 @@ export default class EmbedWidget extends Widget {
     }).then((response) => {
       if (response.template) {
         me.content = response.template;
-        me.load();
+        me.content = response.template;
+        const showStatsBtn = frameDoc.createElement('button');
+        const registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
+
+        showStatsBtn.className = 'btn btn-primary';
+        showStatsBtn.id = 'show-stats-btn';
+        showStatsBtn.textContent = 'Show Stats';
+        showStatsBtn.style =  'margin-top: 10px; max-width: 130px; width: 100%;'
+        showStatsBtn.onclick = () => {
+          me.load();
+        }
+
+        registerForm.style.paddingTop = '30px';
+        registerForm.innerHTML = `<p><strong>${params}</strong><br>Has been successfully registered</p>`;
+        registerForm.appendChild(showStatsBtn);
       }
     }).catch((ex) => {
-      me.content = me._error(ex.rsCode);
-      me.load();
+      _log(`${ex.message}`);
     });
   }
 
