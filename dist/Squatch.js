@@ -67,10 +67,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.EventBus = exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
-	exports.api = api;
-	exports.widgets = widgets;
 	exports.init = init;
 	exports.ready = ready;
+	exports.api = api;
+	exports.widgets = widgets;
 	exports.autofill = autofill;
 	exports.submitEmail = submitEmail;
 
@@ -135,37 +135,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.EventBus = _eventbusjs2.default;
 
 	/**
-	 * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
-	 *
-	 * @type {WidgetApi}
-	 * @example
-	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.ready(function() {
-	 *   squatch.api().cookieUser();
-	 * });
-	 */
-
-	var _api = null;
-	function api() {
-	  return _api;
-	}
-
-	/**
-	 * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
-	 *
-	 * @type {Widgets}
-	 * @example
-	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
-	 * squatch.ready(function() {
-	 *   squatch.widgets().cookieUser().then(doSomething);
-	 * });
-	 */
-	var _widgets = null;
-	function widgets() {
-	  return _widgets;
-	}
-
-	/**
 	 * Initializes the static `squatch` global. This sets up:
 	 *
 	 *  - `squatch.api()` a static instance of the {@link WidgetApi}
@@ -175,6 +144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 */
+
 	function init(config) {
 	  if (config.tenantAlias.match('^test') || config.debug) {
 	    _debug2.default.enable('squatch-js*');
@@ -205,6 +175,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
+	 * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
+	 *
+	 * Read the {@link WidgetApi} docs.
+	 *
+	 * @type {WidgetApi}
+	 */
+	function api() {
+	  return _api;
+	}
+	var _api = null;
+
+	/**
+	 * A static instance of the {@link Widgets} created when you call {@link #init init}.
+	 *
+	 * Read the {@link Widgets} docs.
+	 *
+	 * @type {Widgets}
+	 */
+	function widgets() {
+	  return _widgets;
+	}
+	var _widgets = null;
+
+	/**
+	 * Autofills a referral code into an element when someone has been referred. Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
 	 *
 	 */
 	function autofill(element) {
@@ -233,8 +228,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 *
 	 */
-	var cb = function cb(target, fn, email) {
-	  fn(email);
+	var cb = function cb(target, widget, email) {
+	  widget.reload(email);
 	};
 	_eventbusjs2.default.addEventListener('submit_email', cb);
 
@@ -1317,12 +1312,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 *
-	 * The Widgets class contains a widget loading process for different calls
-	 * to the WidgetApi.
+	 * `Widgets` is a factory for creating widgets. It's possible to build your own widgets using the
+	 * {@link WidgetApi} but most people will prefer to use these easy methods.
 	 *
 	 */
 
 	var Widgets = function () {
+
 	  /**
 	   * Initialize a new {@link Widgets} instance.
 	   *
@@ -1347,7 +1343,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  /**
-	   * This function calls the WidgetApi.cookieUser() method, and it renders
+	   * This function calls the {@link WidgetApi.cookieUser} method, and it renders
 	   * the widget if it is successful. Otherwise it shows the "error" widget.
 	   *
 	   * @param {Object} config
@@ -1379,7 +1375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * This function calls the WidgetApi.upsert() method, and it renders
+	     * This function calls the {@link WidgetApi.upsert} method, and it renders
 	     * the widget if it is successful. Otherwise it shows the "error" widget.
 	     *
 	     * @param {Object} config
@@ -1412,7 +1408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * This function calls the WidgetApi.render() method, and it renders
+	     * This function calls the {@link WidgetApi.render} method, and it renders
 	     * the widget if it is successful. Otherwise it shows the "error" widget.
 	     *
 	     * @param {Object} config

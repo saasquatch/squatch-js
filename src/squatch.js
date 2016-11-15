@@ -70,7 +70,7 @@ export function ready(fn) {
 
 /**
  * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
- * 
+ *
  * Read the {@link WidgetApi} docs.
  *
  * @type {WidgetApi}
@@ -83,7 +83,7 @@ let _api = null;
 
 /**
  * A static instance of the {@link Widgets} created when you call {@link #init init}.
- * 
+ *
  * Read the {@link Widgets} docs.
  *
  * @type {Widgets}
@@ -124,8 +124,8 @@ export function autofill(element) {
 /**
  *
  */
-let cb = (target, fn, email) => {
-  fn(email);
+let cb = (target, widget, email) => {
+  widget.reload(email);
 }
 EventBus.addEventListener('submit_email', cb);
 
