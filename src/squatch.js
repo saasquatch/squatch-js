@@ -28,37 +28,6 @@ export {
   EventBus,
 };
 
-
-/**
- * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
- *
- * @type {WidgetApi}
- * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.ready(function() {
- *   squatch.api().cookieUser();
- * });
- */
-let _api = null;
-export function api() {
-  return _api;
-}
-
-/**
- * Static instance of {@link Widgets}. Make sure you call {@link #init init} first
- *
- * @type {Widgets}
- * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
- * squatch.ready(function() {
- *   squatch.widgets().cookieUser().then(doSomething);
- * });
- */
-let _widgets = null;
-export function widgets() {
-  return _widgets;
-}
-
 /**
  * Initializes the static `squatch` global. This sets up:
  *
@@ -98,7 +67,35 @@ export function ready(fn) {
   fn();
 }
 
+
 /**
+ * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
+ * 
+ * Read the {@link WidgetApi} docs.
+ *
+ * @type {WidgetApi}
+ */
+export function api() {
+  return _api;
+}
+let _api = null;
+
+
+/**
+ * A static instance of the {@link Widgets} created when you call {@link #init init}.
+ * 
+ * Read the {@link Widgets} docs.
+ *
+ * @type {Widgets}
+ */
+export function widgets() {
+  return _widgets;
+}
+let _widgets = null;
+
+
+/**
+ * Autofills a referral code into an element when someone has been referred. Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
  *
  */
 export function autofill(element) {
