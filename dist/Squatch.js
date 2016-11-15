@@ -67,10 +67,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	exports.EventBus = exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
-	exports.init = init;
-	exports.ready = ready;
 	exports.api = api;
 	exports.widgets = widgets;
+	exports.init = init;
+	exports.ready = ready;
 	exports.autofill = autofill;
 	exports.submitEmail = submitEmail;
 
@@ -134,6 +134,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.WidgetApi = _WidgetApi2.default;
 	exports.EventBus = _eventbusjs2.default;
 
+
+	var _api = null;
+	var _widgets = null;
+
+	/**
+	 * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
+	 *
+	 * Read the {@link WidgetApi} docs.
+	 *
+	 * @type {WidgetApi}
+	 */
+	function api() {
+	  return _api;
+	}
+
+	/**
+	 * A static instance of the {@link Widgets} created when you call {@link #init init}.
+	 *
+	 * Read the {@link Widgets} docs.
+	 *
+	 * @type {Widgets}
+	 */
+	function widgets() {
+	  return _widgets;
+	}
+
 	/**
 	 * Initializes the static `squatch` global. This sets up:
 	 *
@@ -144,7 +170,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 */
-
 	function init(config) {
 	  if (config.tenantAlias.match('^test') || config.debug) {
 	    _debug2.default.enable('squatch-js*');
@@ -175,31 +200,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
-	 *
-	 * Read the {@link WidgetApi} docs.
-	 *
-	 * @type {WidgetApi}
-	 */
-	function api() {
-	  return _api;
-	}
-	var _api = null;
-
-	/**
-	 * A static instance of the {@link Widgets} created when you call {@link #init init}.
-	 *
-	 * Read the {@link Widgets} docs.
-	 *
-	 * @type {Widgets}
-	 */
-	function widgets() {
-	  return _widgets;
-	}
-	var _widgets = null;
-
-	/**
-	 * Autofills a referral code into an element when someone has been referred. Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
+	 * Autofills a referral code into an element when someone has been referred.
+	 * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
 	 *
 	 */
 	function autofill(element) {
@@ -226,15 +228,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	/**
-	 *
+	 * @private
 	 */
 	var cb = function cb(target, widget, email) {
 	  widget.reload(email);
 	};
+	// listens to a 'submit_email' event in the theme.
 	_eventbusjs2.default.addEventListener('submit_email', cb);
 
 	/**
+	 * Overrides the default function that submits the user email. If you have
+	 * Security enabled, the email needs to be signed before it's submitted.
 	 *
+	 * @param {function} fn Callback function for the 'submit_email' event.
+	 * @example
+	 * squatch.submitEmail(function(target, widget, email) {
+	 *   // Sign email and generate jwt token
+	 *   var jwt = 'token';
+	 *   widget.reload(email, jwt);
+	 * });
 	 */
 	function submitEmail(fn) {
 	  _eventbusjs2.default.removeEventListener('submit_email', cb);
@@ -1318,7 +1330,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	var Widgets = function () {
-
 	  /**
 	   * Initialize a new {@link Widgets} instance.
 	   *
@@ -1363,7 +1374,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return new Promise(function (resolve, reject) {
 	        _this.api.cookieUser(config).then(function (response) {
-	          console.log("HEY", response);
 	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
 	        }).catch(function (err) {
 	          if (err.apiErrorCode) {

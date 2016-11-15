@@ -28,6 +28,32 @@ export {
   EventBus,
 };
 
+let _api = null;
+let _widgets = null;
+
+/**
+ * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
+ *
+ * Read the {@link WidgetApi} docs.
+ *
+ * @type {WidgetApi}
+ */
+export function api() {
+  return _api;
+}
+
+/**
+ * A static instance of the {@link Widgets} created when you call {@link #init init}.
+ *
+ * Read the {@link Widgets} docs.
+ *
+ * @type {Widgets}
+ */
+export function widgets() {
+  return _widgets;
+}
+
+
 /**
  * Initializes the static `squatch` global. This sets up:
  *
@@ -67,35 +93,9 @@ export function ready(fn) {
   fn();
 }
 
-
 /**
- * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
- *
- * Read the {@link WidgetApi} docs.
- *
- * @type {WidgetApi}
- */
-export function api() {
-  return _api;
-}
-let _api = null;
-
-
-/**
- * A static instance of the {@link Widgets} created when you call {@link #init init}.
- *
- * Read the {@link Widgets} docs.
- *
- * @type {Widgets}
- */
-export function widgets() {
-  return _widgets;
-}
-let _widgets = null;
-
-
-/**
- * Autofills a referral code into an element when someone has been referred. Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
+ * Autofills a referral code into an element when someone has been referred.
+ * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
  *
  */
 export function autofill(element) {
@@ -122,15 +122,25 @@ export function autofill(element) {
 }
 
 /**
- *
+ * @private
  */
-let cb = (target, widget, email) => {
+const cb = (target, widget, email) => {
   widget.reload(email);
 }
+// listens to a 'submit_email' event in the theme.
 EventBus.addEventListener('submit_email', cb);
 
 /**
+ * Overrides the default function that submits the user email. If you have
+ * Security enabled, the email needs to be signed before it's submitted.
  *
+ * @param {function} fn Callback function for the 'submit_email' event.
+ * @example
+ * squatch.submitEmail(function(target, widget, email) {
+ *   // Sign email and generate jwt token
+ *   var jwt = 'token';
+ *   widget.reload(email, jwt);
+ * });
  */
 export function submitEmail(fn) {
   EventBus.removeEventListener('submit_email', cb);

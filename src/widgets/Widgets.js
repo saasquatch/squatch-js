@@ -13,7 +13,6 @@ const _log = debug('squatch-js:widgets');
  *
  */
 export default class Widgets {
-  
   /**
    * Initialize a new {@link Widgets} instance.
    *
@@ -50,7 +49,6 @@ export default class Widgets {
   createCookieUser(config) {
     return new Promise((resolve, reject) => {
       this.api.cookieUser(config).then((response) => {
-        console.log("HEY", response);
         resolve({ widget: this.renderWidget(response, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {

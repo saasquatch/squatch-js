@@ -27,7 +27,6 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.6.0",
-    "eventbusjs": "^0.1.0",
     "karma": "^1.2.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.0",
@@ -41,6 +40,7 @@
     "debug": "^2.2.0",
     "element-resize-detector": "^1.1.8",
     "es6-promise": "^3.2.1",
+    "eventbusjs": "^0.1.0",
     "json-loader": "^0.5.4",
     "jsonschema": "^1.1.0",
     "whatwg-fetch": "^1.0.0"
