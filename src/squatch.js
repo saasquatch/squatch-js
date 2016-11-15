@@ -8,6 +8,7 @@
  */
 import 'whatwg-fetch';
 import debug from 'debug';
+import EventBus from 'eventbusjs';
 import Widgets from './widgets/Widgets';
 import { EmbedWidget } from './widgets/EmbedWidget';
 import { PopupWidget } from './widgets/PopupWidget';
@@ -24,6 +25,7 @@ export {
   PopupWidget,
   CtaWidget,
   WidgetApi,
+  EventBus,
 };
 
 
@@ -120,6 +122,22 @@ export function autofill(element) {
   }).catch((ex) => {
     throw ex;
   });
+}
+
+/**
+ *
+ */
+let cb = (target, fn, email) => {
+  fn(email);
+}
+EventBus.addEventListener('submit_email', cb);
+
+/**
+ *
+ */
+export function submitEmail(fn) {
+  EventBus.removeEventListener('submit_email', cb);
+  EventBus.addEventListener('submit_email', fn);
 }
 
 export * from './docs.js';

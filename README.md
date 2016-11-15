@@ -74,7 +74,7 @@ You can create/upsert users without loading a widget.
       },
       engagementMedium: 'DEFAULT_IS_POPUP', // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',            // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
-      jwt: 'TOKEN'                          // String (required by default, talk to support if you'd like to disable Security)
+      jwt: 'TOKEN'                          // String (required)
     }).then(function(response) {
       user = response.user;
     }).catch(function(err){

@@ -38,7 +38,7 @@ export default class Widget {
     _log('widget initializing ...');
     const me = this;
     me.content = (params.content === 'error') ? me._error(params.rsCode) : params.content;
-    me.type = params.type; // don't need this?
+    me.type = params.type;
     me.widgetApi = params.api || '';
     me.analyticsApi = new AnalyticsApi();
     me.frame = document.createElement('iframe');

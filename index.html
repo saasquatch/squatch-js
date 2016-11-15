@@ -42,7 +42,7 @@
     var widget
 
     squatch.widgets().createCookieUser({
-      engagementMedium: 'EMBED'
+      engagementMedium: 'POPUP'
     });
 
     // squatch.widgets().upsertUser({
@@ -52,16 +52,20 @@
     //     firstName: 'Jorge',
     //     lastName: 'Conde',
     //     email: 'jorge@uvic.ca'
-    //   },
-    //   engagementMedium: 'POPUP',
-    //   widgetType: 'REFERRER_WIDGET',
-    //   jwt: 'token'
+    //   }
     // }).then(function (response) {
     //   user = response.user;
     //   widget = response.widget;
     // }).catch(function (err) {
     //   console.log(err);
     // });
+
+    // squatch.submitEmail(function(target, widget, email) {
+    //   // Sign email
+    //   var jwt = 'token';
+    //
+    //   widget.reload(email, jwt);
+    // })
 
   });
 

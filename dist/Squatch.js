@@ -66,12 +66,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
+	exports.EventBus = exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
 	exports.api = api;
 	exports.widgets = widgets;
 	exports.init = init;
 	exports.ready = ready;
 	exports.autofill = autofill;
+	exports.submitEmail = submitEmail;
 
 	var _docs = __webpack_require__(2);
 
@@ -90,6 +91,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _debug = __webpack_require__(4);
 
 	var _debug2 = _interopRequireDefault(_debug);
+
+	var _eventbusjs = __webpack_require__(40);
+
+	var _eventbusjs2 = _interopRequireDefault(_eventbusjs);
 
 	var _Widgets = __webpack_require__(7);
 
@@ -111,15 +116,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
-	 * integrate a referral program into your website or web app.
-	 * It can show referral widgets on any website, track users, generate unique
-	 * referral short links and referral codes, and more.
-	 *
-	 * @module squatch
-	 */
-	_debug2.default.disable('squatch-js*');
+	_debug2.default.disable('squatch-js*'); /**
+	                                         * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
+	                                         * integrate a referral program into your website or web app.
+	                                         * It can show referral widgets on any website, track users, generate unique
+	                                         * referral short links and referral codes, and more.
+	                                         *
+	                                         * @module squatch
+	                                         */
+
 	var _log = (0, _debug2.default)('squatch-js');
 
 	exports.Widgets = _Widgets2.default;
@@ -127,6 +132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.PopupWidget = _PopupWidget.PopupWidget;
 	exports.CtaWidget = _CtaWidget.CtaWidget;
 	exports.WidgetApi = _WidgetApi2.default;
+	exports.EventBus = _eventbusjs2.default;
 
 	/**
 	 * Static instance of the {@link WidgetApi}. Make sure you call {@link #init init} first
@@ -222,6 +228,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }).catch(function (ex) {
 	    throw ex;
 	  });
+	}
+
+	/**
+	 *
+	 */
+	var cb = function cb(target, fn, email) {
+	  fn(email);
+	};
+	_eventbusjs2.default.addEventListener('submit_email', cb);
+
+	/**
+	 *
+	 */
+	function submitEmail(fn) {
+	  _eventbusjs2.default.removeEventListener('submit_email', cb);
+	  _eventbusjs2.default.addEventListener('submit_email', fn);
 	}
 
 	if (window) (0, _async2.default)();
@@ -1345,6 +1367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      return new Promise(function (resolve, reject) {
 	        _this.api.cookieUser(config).then(function (response) {
+	          console.log("HEY", response);
 	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
 	        }).catch(function (err) {
 	          if (err.apiErrorCode) {
@@ -4900,21 +4923,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }).then(function (response) {
 	        if (response.template) {
 	          me.content = response.template;
-	          me.content = response.template;
 	          var showStatsBtn = frameDoc.createElement('button');
 	          var registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
 
-	          showStatsBtn.className = 'btn btn-primary';
-	          showStatsBtn.id = 'show-stats-btn';
-	          showStatsBtn.textContent = 'Show Stats';
-	          showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
-	          showStatsBtn.onclick = function () {
-	            me.load();
-	          };
+	          if (registerForm) {
+	            showStatsBtn.className = 'btn btn-primary';
+	            showStatsBtn.id = 'show-stats-btn';
+	            showStatsBtn.textContent = 'Show Stats';
+	            showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	            showStatsBtn.onclick = function () {
+	              me.load();
+	            };
 
-	          registerForm.style.paddingTop = '30px';
-	          registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
-	          registerForm.appendChild(showStatsBtn);
+	            registerForm.style.paddingTop = '30px';
+	            registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
+	            registerForm.appendChild(showStatsBtn);
+	          }
 	        }
 	      }).catch(function (ex) {
 	        _log('' + ex.message);
@@ -5002,7 +5026,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _log('widget initializing ...');
 	    var me = this;
 	    me.content = params.content === 'error' ? me._error(params.rsCode) : params.content;
-	    me.type = params.type; // don't need this?
+	    me.type = params.type;
 	    me.widgetApi = params.api || '';
 	    me.analyticsApi = new _AnalyticsApi2.default();
 	    me.frame = document.createElement('iframe');
@@ -6999,18 +7023,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	          var showStatsBtn = frameDoc.createElement('button');
 	          var registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
 
-	          showStatsBtn.className = 'btn btn-primary';
-	          showStatsBtn.id = 'show-stats-btn';
-	          showStatsBtn.textContent = 'Show Stats';
-	          showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
-	          showStatsBtn.onclick = function () {
-	            me.load();
-	            me.open();
-	          };
+	          if (registerForm) {
+	            showStatsBtn.className = 'btn btn-primary';
+	            showStatsBtn.id = 'show-stats-btn';
+	            showStatsBtn.textContent = 'Show Stats';
+	            showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	            showStatsBtn.onclick = function () {
+	              me.load();
+	              me.open();
+	            };
 
-	          registerForm.style.paddingTop = '30px';
-	          registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
-	          registerForm.appendChild(showStatsBtn);
+	            registerForm.style.paddingTop = '30px';
+	            registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
+	            registerForm.appendChild(showStatsBtn);
+	          }
 	        }
 	      }).catch(function (ex) {
 	        _log('' + ex.message);
@@ -7295,6 +7321,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	}
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root,factory){if(true)module.exports=factory();else if(typeof define==="function"&&define.amd)define("EventBus",[],factory);else if(typeof exports==="object")exports["EventBus"]=factory();else root["EventBus"]=factory()})(this,function(){var EventBusClass={};EventBusClass=function(){this.listeners={}};EventBusClass.prototype={addEventListener:function(type,callback,scope){var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>3?args.splice(3,args.length-1):[];if(typeof this.listeners[type]!="undefined"){this.listeners[type].push({scope:scope,callback:callback,args:args})}else{this.listeners[type]=[{scope:scope,callback:callback,args:args}]}},removeEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;var newArray=[];for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener.scope==scope&&listener.callback==callback){}else{newArray.push(listener)}}this.listeners[type]=newArray}},hasEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;if(callback===undefined&&scope===undefined){return numOfCallbacks>0}for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if((scope?listener.scope==scope:true)&&listener.callback==callback){return true}}}return false},dispatch:function(type,target){var numOfListeners=0;var event={type:type,target:target};var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>2?args.splice(2,args.length-1):[];args=[event].concat(args);if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener&&listener.callback){var concatArgs=args.concat(listener.args);listener.callback.apply(listener.scope,concatArgs);numOfListeners+=1}}}},getEvents:function(){var str="";for(var type in this.listeners){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];str+=listener.scope&&listener.scope.className?listener.scope.className:"anonymous";str+=" listen for '"+type+"'\n"}}return str}};var EventBus=new EventBusClass;return EventBus});
 
 /***/ }
 /******/ ])
