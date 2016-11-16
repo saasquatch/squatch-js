@@ -4936,7 +4936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            showStatsBtn.className = 'btn btn-primary';
 	            showStatsBtn.id = 'show-stats-btn';
 	            showStatsBtn.textContent = 'Show Stats';
-	            showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	            showStatsBtn.setAttribute('style', 'margin-top: 10px; max-width: 130px; width: 100%;');
 	            showStatsBtn.onclick = function () {
 	              me.load();
 	            };
@@ -5038,7 +5038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.frame = document.createElement('iframe');
 	    me.frame.squatchJsApi = me;
 	    me.frame.width = '100%';
-	    me.frame.style = 'border: 0; background-color: none;';
+	    me.frame.setAttribute('style', 'border: 0; background-color: none;');
 	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /* ,debug: 'true'*/ });
 	  }
 
@@ -6984,10 +6984,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
-	    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
+	    me.popupdiv.setAttribute('style', 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);');
 
 	    me.popupcontent = document.createElement('div');
-	    me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
+	    me.popupcontent.setAttribute('style', 'margin: auto; width: 80%; max-width: 500px; position: relative;');
 
 	    me.popupdiv.onclick = function (event) {
 	      me._clickedOutside(event);
@@ -7033,7 +7033,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            showStatsBtn.className = 'btn btn-primary';
 	            showStatsBtn.id = 'show-stats-btn';
 	            showStatsBtn.textContent = 'Show Stats';
-	            showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;';
+	            showStatsBtn.setAttribute('style', 'margin-top: 10px; max-width: 130px; width: 100%;');
 	            showStatsBtn.onclick = function () {
 	              me.load();
 	              me.open();
@@ -7218,7 +7218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.ctaFrame = document.createElement('iframe');
 	    me.ctaFrame.squatchJsApi = me;
 	    me.ctaFrame.scrolling = 'no';
-	    me.ctaFrame.style = 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position;
+	    me.ctaFrame.setAttribute('style', 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position);
 
 	    document.body.appendChild(_this.ctaFrame);
 	    return _this;
@@ -7231,7 +7231,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var widgetFrameDoc = this.frame.contentWindow.document;
 	      var ctaFrame = this.ctaFrame;
-	      var ctaFrameDoc = this.ctaFrame.contentWindow.document;
 	      var positionClass = ' ' + this.positionClass;
 	      var erd = this.erd;
 
@@ -7240,31 +7239,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var ctaElement = widgetFrameDoc.getElementById('cta');
 
 	        if (ctaElement) {
-	          ctaElement.parentNode.removeChild(ctaElement);
+	          (function () {
+	            ctaElement.parentNode.removeChild(ctaElement);
 
-	          ctaFrameDoc.open();
-	          ctaFrameDoc.write(ctaElement.innerHTML);
-	          ctaFrameDoc.close();
+	            var ctaFrameDoc = ctaFrame.contentWindow.document;
+	            ctaFrameDoc.open();
+	            ctaFrameDoc.write(ctaElement.innerHTML);
+	            ctaFrameDoc.close();
 
-	          // Figure out size of CTA as well
-	          (0, _domready.domready)(ctaFrameDoc, function () {
-	            ctaFrame.height = ctaFrameDoc.body.offsetHeight;
-	            ctaFrame.width = ctaFrameDoc.body.scrollWidth;
+	            // Figure out size of CTA as well
+	            (0, _domready.domready)(ctaFrameDoc, function () {
+	              ctaFrame.height = ctaFrameDoc.body.offsetHeight;
+	              ctaFrame.width = ctaFrameDoc.body.scrollWidth;
 
-	            ctaFrame.style.display = 'block';
+	              ctaFrame.style.display = 'block';
 
-	            var ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
-	            ctaContainer.className += positionClass;
+	              var ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
+	              ctaContainer.className += positionClass;
 
-	            erd.listenTo(ctaContainer, function (element) {
-	              var height = element.offsetHeight;
-	              var width = element.offsetWidth;
-	              ctaFrame.height = height;
-	              ctaFrame.width = width;
+	              erd.listenTo(ctaContainer, function (element) {
+	                var height = element.offsetHeight;
+	                var width = element.offsetWidth;
+	                ctaFrame.height = height;
+	                ctaFrame.width = width;
+	              });
+
+	              _log('CTA template loaded into iframe');
 	            });
-
-	            _log('CTA template loaded into iframe');
-	          });
+	          })();
 	        } else {
 	          _log(new Error('CTA element not found in theme'));
 	        }

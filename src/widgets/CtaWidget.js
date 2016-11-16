@@ -41,8 +41,7 @@ export default class CtaWidget extends PopupWidget {
     me.ctaFrame = document.createElement('iframe');
     me.ctaFrame.squatchJsApi = me;
     me.ctaFrame.scrolling = 'no';
-    me.ctaFrame.style = `border:0; background-color:transparent; position:fixed; display:none;${me.side}${me.position}`;
-
+    me.ctaFrame.setAttribute('style', `border:0; background-color:transparent; position:fixed; display:none;${me.side}${me.position}`);
 
     document.body.appendChild(this.ctaFrame);
   }
@@ -52,7 +51,6 @@ export default class CtaWidget extends PopupWidget {
 
     const widgetFrameDoc = this.frame.contentWindow.document;
     const ctaFrame = this.ctaFrame;
-    const ctaFrameDoc = this.ctaFrame.contentWindow.document;
     const positionClass = ` ${this.positionClass}`;
     const erd = this.erd;
 
@@ -63,6 +61,7 @@ export default class CtaWidget extends PopupWidget {
       if (ctaElement) {
         ctaElement.parentNode.removeChild(ctaElement);
 
+        const ctaFrameDoc = ctaFrame.contentWindow.document;
         ctaFrameDoc.open();
         ctaFrameDoc.write(ctaElement.innerHTML);
         ctaFrameDoc.close();

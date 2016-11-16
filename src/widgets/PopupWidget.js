@@ -37,10 +37,10 @@ export default class PopupWidget extends Widget {
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';
-    me.popupdiv.style = 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);';
+    me.popupdiv.setAttribute('style', 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);');
 
     me.popupcontent = document.createElement('div');
-    me.popupcontent.style = 'margin: auto; width: 80%; max-width: 500px; position: relative;';
+    me.popupcontent.setAttribute('style', 'margin: auto; width: 80%; max-width: 500px; position: relative;');
 
     me.popupdiv.onclick = (event) => { me._clickedOutside(event); };
   }
@@ -80,7 +80,7 @@ export default class PopupWidget extends Widget {
           showStatsBtn.className = 'btn btn-primary';
           showStatsBtn.id = 'show-stats-btn';
           showStatsBtn.textContent = 'Show Stats';
-          showStatsBtn.style = 'margin-top: 10px; max-width: 130px; width: 100%;'
+          showStatsBtn.setAttribute('style', 'margin-top: 10px; max-width: 130px; width: 100%;');
           showStatsBtn.onclick = () => {
             me.load();
             me.open();

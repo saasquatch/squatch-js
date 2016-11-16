@@ -9,7 +9,6 @@ export function domready(targetDoc, fn) {
     , domContentLoaded = 'DOMContentLoaded'
     , loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState)
 
-
   if (!loaded)
   doc.addEventListener(domContentLoaded, listener = function () {
     doc.removeEventListener(domContentLoaded, listener)
