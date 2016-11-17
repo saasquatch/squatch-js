@@ -1,4 +1,5 @@
 import debug from 'debug';
+import Promise from 'es6-promise';
 import WidgetApi from '../api/WidgetApi';
 import EmbedWidget from './EmbedWidget';
 import PopupWidget from './PopupWidget';

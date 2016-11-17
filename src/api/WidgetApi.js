@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import Promise from 'es6-promise';
 import { validate } from 'jsonschema';
 import schema from './schema.json';
 
@@ -153,11 +154,16 @@ export default class WidgetApi {
       credentials: 'include',
       mode: 'cors',
     }).then((response) => {
-      if (response.ok) {
+      const url = response.url.split('/');
+      const request = url[url.length - 1];
+
+      if (response.ok && request === 'squatchcookiejson') {
+        return response.json();
+      } else {
         return response.text();
       }
 
-      const json = response.json;
+      const json = response.json();
       return json.then(Promise.reject.bind(Promise));
     });
   }
