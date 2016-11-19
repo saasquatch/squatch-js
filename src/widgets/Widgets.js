@@ -50,6 +50,7 @@ export default class Widgets {
   createCookieUser(config) {
     return new Promise((resolve, reject) => {
       this.api.cookieUser(config).then((response) => {
+        _log('Got response');
         resolve({ widget: this.renderWidget(response, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {
@@ -121,7 +122,7 @@ export default class Widgets {
    *
    */
   renderWidget(response, config = { widgetType: '', engagementMedium: '' }) {
-    _log('Loading...');
+    _log('Rendering Widget...');
     if (!response) throw new Error('Unable to get a response');
     if (!response.jsOptions) throw new Error('Missing jsOptions in response');
     _log(response, config);
@@ -156,6 +157,8 @@ export default class Widgets {
       });
     }
 
+    _log('read jsOptions, now create Widget');
+
     if (!displayCTA && config.engagementMedium === 'EMBED') {
       widget = new EmbedWidget(params);
       widget.load();
@@ -164,17 +167,20 @@ export default class Widgets {
       widget.load();
       if (displayOnLoad) widget.open();
     } else if (displayCTA) {
+      _log('display CTA');
       const side = opts.cta.content.buttonSide;
       const position = opts.cta.content.buttonPosition;
 
       widget = new CtaWidget(params, { side: side, position: position });
       widget.load();
     } else if (displayOnLoad) {
+      _log('display popup on load');
       widget = new PopupWidget(params);
       widget.load();
       widget.open();
     }
 
+    _log('the widget returned', widget);
     return widget;
   }
 

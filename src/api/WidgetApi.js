@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+import superagent from 'superagent';
 import Promise from 'es6-promise';
 import { validate } from 'jsonschema';
 import schema from './schema.json';
@@ -148,24 +148,38 @@ export default class WidgetApi {
 
     if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
-    return fetch(url, {
-      method: 'GET',
-      headers: headers,
-      credentials: 'include',
-      mode: 'cors',
-    }).then((response) => {
-      const url = response.url.split('/');
-      const request = url[url.length - 1];
+    return superagent
+            .get(url)
+            .withCredentials()
+            .set(headers)
+            .then((response) => {
+              if (response.headers['content-type'] === 'application/json') {
+                return JSON.parse(response.text);
+              }
+              return response.text;
+            }, (error) => {
+              const json = JSON.parse(error.response.text);
+              return Promise.reject(json);
+            });
 
-      if (response.ok && request === 'squatchcookiejson') {
-        return response.json();
-      } else {
-        return response.text();
-      }
-
-      const json = response.json();
-      return json.then(Promise.reject.bind(Promise));
-    });
+    // return fetch(url, {
+    //   method: 'GET',
+    //   headers: headers,
+    //   credentials: 'include',
+    //   mode: 'cors',
+    // }).then((response) => {
+    //   const url = response.url.split('/');
+    //   const request = url[url.length - 1];
+    //
+    //   if (response.ok && request === 'squatchcookiejson') {
+    //     return response.json();
+    //   } else {
+    //     return response.text();
+    //   }
+    //
+    //   const json = response.json();
+    //   return json.then(Promise.reject.bind(Promise));
+    // });
   }
 
   /**
@@ -181,18 +195,17 @@ export default class WidgetApi {
 
     if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
-    return fetch(url, {
-      method: 'PUT',
-      headers: headers,
-      credentials: 'include',
-      mode: 'cors',
-      body: data,
-    }).then((response) => {
-      const json = response.json();
-      if (!response.ok) {
-        return json.then(Promise.reject.bind(Promise));
-      }
-      return json;
-    });
+
+    return superagent
+            .put(url)
+            .withCredentials()
+            .send(data)
+            .set(headers)
+            .then((response) => {
+              return JSON.parse(response.text);
+            },(error) => {
+              const json = JSON.parse(error.response.text);
+              return Promise.reject(json);
+            });
   }
 }

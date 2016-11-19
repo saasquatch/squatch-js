@@ -15,11 +15,14 @@ export default class CtaWidget extends PopupWidget {
    * @private
    */
   constructor(params, opts) {
+    _log('CTA constructor');
     const ctaElement = document.createElement('div');
     ctaElement.id = 'cta';
     document.body.appendChild(ctaElement);
+    _log('cta Element appended to body');
 
     super(params, 'cta');
+    _log('called popup constructor');
 
     const me = this;
 
@@ -38,12 +41,17 @@ export default class CtaWidget extends PopupWidget {
 
     me.positionClass = opts.position;
 
+    _log('chose position class', me.positionClass);
+
     me.ctaFrame = document.createElement('iframe');
     me.ctaFrame.squatchJsApi = me;
     me.ctaFrame.scrolling = 'no';
     me.ctaFrame.setAttribute('style', `border:0; background-color:transparent; position:fixed; display:none;${me.side}${me.position}`);
 
+    _log('cta Frame defined', me.ctaFrame);
+
     document.body.appendChild(this.ctaFrame);
+    _log('ctaframe appended to body')
   }
 
   load() {
@@ -70,6 +78,8 @@ export default class CtaWidget extends PopupWidget {
         domready(ctaFrameDoc, () => {
           ctaFrame.height = ctaFrameDoc.body.offsetHeight;
           ctaFrame.width = ctaFrameDoc.body.scrollWidth;
+          _log('first height', ctaFrame.height);
+          _log('first width', ctaFrame.width);
 
           ctaFrame.style.display = 'block';
 
@@ -81,6 +91,8 @@ export default class CtaWidget extends PopupWidget {
             const width = element.offsetWidth;
             ctaFrame.height = height;
             ctaFrame.width = width;
+            _log('listened height', ctaFrame.height);
+            _log('listened width', ctaFrame.width);
           });
 
           _log('CTA template loaded into iframe');
