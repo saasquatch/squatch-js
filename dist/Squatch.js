@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EventBus = exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
+	exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
 	exports.api = api;
 	exports.widgets = widgets;
 	exports.init = init;
@@ -90,10 +90,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _eventbusjs = __webpack_require__(7);
-
-	var _eventbusjs2 = _interopRequireDefault(_eventbusjs);
-
 	var _Widgets = __webpack_require__(8);
 
 	var _Widgets2 = _interopRequireDefault(_Widgets);
@@ -114,15 +110,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
-	 * integrate a referral program into your website or web app.
-	 * It can show referral widgets on any website, track users, generate unique
-	 * referral short links and referral codes, and more.
-	 *
-	 * @module squatch
-	 */
-	_debug2.default.disable('squatch-js*');
+	_debug2.default.disable('squatch-js*'); /**
+	                                         * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
+	                                         * integrate a referral program into your website or web app.
+	                                         * It can show referral widgets on any website, track users, generate unique
+	                                         * referral short links and referral codes, and more.
+	                                         *
+	                                         * @module squatch
+	                                         */
+
 	var _log = (0, _debug2.default)('squatch-js');
 
 	exports.Widgets = _Widgets2.default;
@@ -130,7 +126,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.PopupWidget = _PopupWidget.PopupWidget;
 	exports.CtaWidget = _CtaWidget.CtaWidget;
 	exports.WidgetApi = _WidgetApi2.default;
-	exports.EventBus = _eventbusjs2.default;
 
 
 	var _api = null;
@@ -202,37 +197,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
 	 *
 	 */
-	function autofill(element) {
-	  var el = void 0;
-
-	  if (typeof element === 'function') {
-	    return api.squatchReferralCookie().then(element).catch(function (ex) {
-	      throw ex;
-	    });
-	  } else if (element.match('^#')) {
-	    el = document.getElementById(element.slice(1));
-	  } else if (element.match('^[.]')) {
-	    el = document.getElementsByClassName(element.slice(1))[0];
-	  } else {
-	    _log('Element id/class or function missing');
-	    throw new Error('Element id/class or function missing');
-	  }
-
-	  return api.squatchReferralCookie().then(function (response) {
-	    el.value = response.code;
-	  }).catch(function (ex) {
-	    throw ex;
-	  });
+	function autofill(selector) {
+	  widgets().autofill(selector);
 	}
-
-	/**
-	 * @private
-	 */
-	var cb = function cb(target, widget, email) {
-	  widget.reload(email);
-	};
-	// listens to a 'submit_email' event in the theme.
-	_eventbusjs2.default.addEventListener('submit_email', cb);
 
 	/**
 	 * Overrides the default function that submits the user email. If you have
@@ -247,8 +214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * });
 	 */
 	function submitEmail(fn) {
-	  _eventbusjs2.default.removeEventListener('submit_email', cb);
-	  _eventbusjs2.default.addEventListener('submit_email', fn);
+	  widgets().submitEmail(fn);
 	}
 
 	if (window) (0, _async2.default)();
@@ -845,6 +811,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
+	var _eventbusjs = __webpack_require__(7);
+
+	var _eventbusjs2 = _interopRequireDefault(_eventbusjs);
+
 	var _WidgetApi = __webpack_require__(12);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
@@ -896,6 +866,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.tenantAlias = config.tenantAlias;
 	    this.api = new _WidgetApi2.default(config);
+	    this.eventBus = _eventbusjs2.default;
+	    // listens to a 'submit_email' event in the theme.
+	    this.eventBus.addEventListener('submit_email', Widgets.cb);
 	  }
 
 	  /**
@@ -997,6 +970,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * Autofills a referral code into an element when someone has been referred.
+	     * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
+	     *
+	     * @param {string} selector
+	     *
+	     */
+
+	  }, {
+	    key: 'autofill',
+	    value: function autofill(selector) {
+	      if (typeof selector === 'function') {
+	        this.api.squatchReferralCookie().then(selector).catch(function (ex) {
+	          throw ex;
+	        });
+	      }
+
+	      var elems = document.querySelectorAll(selector);
+
+	      if (elems.length > 0) {
+	        // Only use the first element found
+	        elems = elems[0];
+	      } else {
+	        _log('Element id/class or function missing');
+	        throw new Error('Element id/class or function missing');
+	      }
+
+	      this.api.squatchReferralCookie().then(function (response) {
+	        elems.value = response.code;
+	      }).catch(function (ex) {
+	        throw ex;
+	      });
+	    }
+
+	    /**
+	     * Overrides the default function that submits the user email. If you have
+	     * Security enabled, the email needs to be signed before it's submitted.
+	     *
+	     * @param {function} fn Callback function for the 'submit_email' event.
+	     */
+
+	  }, {
+	    key: 'submitEmail',
+	    value: function submitEmail(fn) {
+	      this.eventBus.removeEventListener('submit_email', Widgets.cb);
+	      this.eventBus.addEventListener('submit_email', fn);
+	    }
+
+	    /**
 	     * @private
 	     *
 	     */
@@ -1009,7 +1030,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _log('Rendering Widget...');
 	      if (!response) throw new Error('Unable to get a response');
 	      if (!response.jsOptions) throw new Error('Missing jsOptions in response');
-	      _log(response, config);
 
 	      var widget = void 0;
 	      var displayOnLoad = false;
@@ -1062,7 +1082,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        widget.open();
 	      }
 
-	      _log('the widget returned', widget);
 	      return widget;
 	    }
 
@@ -1102,6 +1121,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'matchesUrl',
 	    value: function matchesUrl(rule) {
 	      return window.location.href.match(new RegExp(rule));
+	    }
+
+	    /**
+	     * @private
+	     */
+
+	  }, {
+	    key: 'cb',
+	    value: function cb(target, widget, email) {
+	      widget.reload(email);
 	    }
 	  }]);
 
@@ -7481,33 +7510,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * The Widget class is the base class for the different widget types available
 	 *
-	 * @example <caption>Custom Widget example</caption>
-	 *    class CustomWidget extends Widget {
-	 *      constructor(params,stuff) {
-	 *        super(params);
-	 *        // do stuff
-	 *      }
-	 *
-	 *      load() {
-	 *        // custom loading of widget
-	 *      }
-	 *    }
+	 * Creates an `iframe` in which the html content of the widget gets embedded.
+	 * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
+	 * for listening to the height of the widget content and make the iframe responsive.
 	 *
 	 */
 
 	var Widget = function () {
-
-	  /**
-	   * Initialize a new {@link Widget} instance.
-	   *
-	   * Creates an `iframe` in which the html content of the widget gets embedded.
-	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
-	   * for listening to the height of the widget content and make the iframe responsive.
-	   *
-	   * @private
-	   * @param {Object} params -> document this object
-	   *
-	   */
 	  function Widget(params) {
 	    _classCallCheck(this, Widget);
 
@@ -9333,8 +9342,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * @private
 	    *
-	    * @param {String} url The requested url
-	    * @param {String} data Stringified json object
+	    * @param {string} url The requested url
+	    * @param {string} data Stringified json object
 	    *
 	    * @returns {Promise} superagent promise
 	    */

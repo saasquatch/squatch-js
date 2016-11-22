@@ -7,7 +7,6 @@
  * @module squatch
  */
 import debug from 'debug';
-import EventBus from 'eventbusjs';
 import Widgets from './widgets/Widgets';
 import { EmbedWidget } from './widgets/EmbedWidget';
 import { PopupWidget } from './widgets/PopupWidget';
@@ -24,7 +23,6 @@ export {
   PopupWidget,
   CtaWidget,
   WidgetApi,
-  EventBus,
 };
 
 let _api = null;
@@ -97,37 +95,9 @@ export function ready(fn) {
  * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
  *
  */
-export function autofill(element) {
-  let el;
-
-  if (typeof element === 'function') {
-    return api.squatchReferralCookie().then(element).catch((ex) => {
-      throw ex;
-    });
-  } else if (element.match('^#')) {
-    el = document.getElementById(element.slice(1));
-  } else if (element.match('^[.]')) {
-    el = document.getElementsByClassName(element.slice(1))[0];
-  } else {
-    _log('Element id/class or function missing');
-    throw new Error('Element id/class or function missing');
-  }
-
-  return api.squatchReferralCookie().then((response) => {
-    el.value = response.code;
-  }).catch((ex) => {
-    throw ex;
-  });
+export function autofill(selector) {
+  widgets().autofill(selector);
 }
-
-/**
- * @private
- */
-const cb = (target, widget, email) => {
-  widget.reload(email);
-};
-// listens to a 'submit_email' event in the theme.
-EventBus.addEventListener('submit_email', cb);
 
 /**
  * Overrides the default function that submits the user email. If you have
@@ -142,8 +112,7 @@ EventBus.addEventListener('submit_email', cb);
  * });
  */
 export function submitEmail(fn) {
-  EventBus.removeEventListener('submit_email', cb);
-  EventBus.addEventListener('submit_email', fn);
+  widgets().submitEmail(fn);
 }
 
 export * from './docs.js';

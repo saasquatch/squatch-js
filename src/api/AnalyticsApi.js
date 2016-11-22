@@ -47,8 +47,8 @@ export default class AnalyticsApi {
   /**
   * @private
   *
-  * @param {String} url The requested url
-  * @param {String} data Stringified json object
+  * @param {string} url The requested url
+  * @param {string} data Stringified json object
   *
   * @returns {Promise} superagent promise
   */

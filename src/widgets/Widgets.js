@@ -1,5 +1,6 @@
 import debug from 'debug';
 import Promise from 'es6-promise';
+import EventBus from 'eventbusjs';
 import WidgetApi from '../api/WidgetApi';
 import EmbedWidget from './EmbedWidget';
 import PopupWidget from './PopupWidget';
@@ -33,6 +34,9 @@ export default class Widgets {
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
     this.api = new WidgetApi(config);
+    this.eventBus = EventBus;
+    // listens to a 'submit_email' event in the theme.
+    this.eventBus.addEventListener('submit_email', Widgets.cb);
   }
 
   /**
@@ -118,6 +122,48 @@ export default class Widgets {
   }
 
   /**
+   * Autofills a referral code into an element when someone has been referred.
+   * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
+   *
+   * @param {string} selector
+   *
+   */
+  autofill(selector) {
+    if (typeof selector === 'function') {
+      this.api.squatchReferralCookie().then(selector).catch((ex) => {
+        throw ex;
+      });
+    }
+
+    let elems = document.querySelectorAll(selector);
+
+    if (elems.length > 0) {
+      // Only use the first element found
+      elems = elems[0];
+    } else {
+      _log('Element id/class or function missing');
+      throw new Error('Element id/class or function missing');
+    }
+
+    this.api.squatchReferralCookie().then((response) => {
+      elems.value = response.code;
+    }).catch((ex) => {
+      throw ex;
+    });
+  }
+
+  /**
+   * Overrides the default function that submits the user email. If you have
+   * Security enabled, the email needs to be signed before it's submitted.
+   *
+   * @param {function} fn Callback function for the 'submit_email' event.
+   */
+  submitEmail(fn) {
+    this.eventBus.removeEventListener('submit_email', Widgets.cb);
+    this.eventBus.addEventListener('submit_email', fn);
+  }
+
+  /**
    * @private
    *
    */
@@ -125,7 +171,6 @@ export default class Widgets {
     _log('Rendering Widget...');
     if (!response) throw new Error('Unable to get a response');
     if (!response.jsOptions) throw new Error('Missing jsOptions in response');
-    _log(response, config);
 
     let widget;
     let displayOnLoad = false;
@@ -178,7 +223,6 @@ export default class Widgets {
       widget.open();
     }
 
-    _log('the widget returned', widget);
     return widget;
   }
 
@@ -211,4 +255,11 @@ export default class Widgets {
   static matchesUrl(rule) {
     return window.location.href.match(new RegExp(rule));
   }
+
+  /**
+   * @private
+   */
+   static cb(target, widget, email) {
+     widget.reload(email);
+   }
 }
