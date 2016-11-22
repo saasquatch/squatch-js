@@ -6,7 +6,6 @@
  *
  * @module squatch
  */
-import 'whatwg-fetch';
 import debug from 'debug';
 import EventBus from 'eventbusjs';
 import Widgets from './widgets/Widgets';
@@ -126,7 +125,7 @@ export function autofill(element) {
  */
 const cb = (target, widget, email) => {
   widget.reload(email);
-}
+};
 // listens to a 'submit_email' event in the theme.
 EventBus.addEventListener('submit_email', cb);
 

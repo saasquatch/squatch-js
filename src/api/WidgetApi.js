@@ -121,7 +121,7 @@ export default class WidgetApi {
   /**
    * Looks up the referral code of the current user, if there is any.
    *
-   * @return {Promise<string>} code referral code if true.
+   * @return {Promise<json>} code referral code if true.
    */
   squatchReferralCookie() {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
@@ -153,7 +153,7 @@ export default class WidgetApi {
             .withCredentials()
             .set(headers)
             .then((response) => {
-              if (response.headers['content-type'] === 'application/json') {
+              if (response.headers['content-type'] === 'application/json; charset=utf-8') {
                 return JSON.parse(response.text);
               }
               return response.text;
@@ -161,25 +161,6 @@ export default class WidgetApi {
               const json = JSON.parse(error.response.text);
               return Promise.reject(json);
             });
-
-    // return fetch(url, {
-    //   method: 'GET',
-    //   headers: headers,
-    //   credentials: 'include',
-    //   mode: 'cors',
-    // }).then((response) => {
-    //   const url = response.url.split('/');
-    //   const request = url[url.length - 1];
-    //
-    //   if (response.ok && request === 'squatchcookiejson') {
-    //     return response.json();
-    //   } else {
-    //     return response.text();
-    //   }
-    //
-    //   const json = response.json();
-    //   return json.then(Promise.reject.bind(Promise));
-    // });
   }
 
   /**
@@ -201,9 +182,8 @@ export default class WidgetApi {
             .withCredentials()
             .send(data)
             .set(headers)
-            .then((response) => {
-              return JSON.parse(response.text);
-            },(error) => {
+            .then(response => JSON.parse(response.text),
+            (error) => {
               const json = JSON.parse(error.response.text);
               return Promise.reject(json);
             });

@@ -43,7 +43,6 @@
     "eventbusjs": "^0.1.0",
     "json-loader": "^0.5.4",
     "jsonschema": "^1.1.0",
-    "superagent": "^2.3.0",
-    "whatwg-fetch": "^1.0.0"
+    "superagent": "^2.3.0"
   }
 }

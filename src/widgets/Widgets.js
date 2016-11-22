@@ -157,8 +157,6 @@ export default class Widgets {
       });
     }
 
-    _log('read jsOptions, now create Widget');
-
     if (!displayCTA && config.engagementMedium === 'EMBED') {
       widget = new EmbedWidget(params);
       widget.load();
