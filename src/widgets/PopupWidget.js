@@ -14,9 +14,6 @@ const _log = debug('squatch-js:POPUPwidget');
  */
 export default class PopupWidget extends Widget {
 
-  /**
-   * @private
-   */
   constructor(params, triggerId = 'squatchpop') {
     super(params);
     const me = this;
@@ -84,7 +81,7 @@ export default class PopupWidget extends Widget {
           showStatsBtn.onclick = () => {
             me.load();
             me.open();
-          }
+          };
 
           registerForm.style.paddingTop = '30px';
           registerForm.innerHTML = `<p><strong>${params}</strong><br>Has been successfully registered</p>`;
@@ -96,9 +93,6 @@ export default class PopupWidget extends Widget {
     });
   }
 
-  /**
-   * Opens the widget.
-   */
   open() {
     const me = this;
     const popupdiv = me.popupdiv;
@@ -145,10 +139,6 @@ export default class PopupWidget extends Widget {
     });
   }
 
-  /**
-   * Closes the widget
-   *
-   */
   close() {
     const popupdiv = this.popupdiv;
     const frameDoc = this.frame.contentWindow.document;

@@ -34,7 +34,7 @@ export default class WidgetApi {
   /**
    * Creates/upserts an anonymous user.
    *
-   * @param {Object} params
+   * @param {Object} params Parameters for request
    * @param {WidgetType} params.widgetType The content of the widget.
    * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used to
@@ -59,10 +59,10 @@ export default class WidgetApi {
   /**
    * Creates/upserts user.
    *
-   * @param {Object} params
-   * @param {Object} params.user the user details
-   * @param {string} params.user.id
-   * @param {string} params.user.accountId
+   * @param {Object} params Parameters for request
+   * @param {Object} params.user The user details
+   * @param {string} params.user.id The user id
+   * @param {string} params.user.accountId The user account id
    * @param {WidgetType} params.widgetType The content of the widget.
    * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -93,10 +93,10 @@ export default class WidgetApi {
   /**
    * Description here.
    *
-   * @param {Object} params
-   * @param {Object} params.user the user details
-   * @param {string} params.user.id
-   * @param {string} params.user.accountId
+   * @param {Object} params Parameters for request
+   * @param {Object} params.user The user details
+   * @param {string} params.user.id The user id
+   * @param {string} params.user.accountId The user account id
    * @param {WidgetType} params.widgetType The content of the widget.
    * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -131,20 +131,20 @@ export default class WidgetApi {
 
   /**
    * @private
+   * @param {Object} params json object
+   * @param {Object} jsonSchema json schema object
+   * @returns {void}
    */
   static validateInput(params, jsonSchema) {
     const valid = validate(params, jsonSchema);
     if (!valid.valid) throw valid.errors;
   }
 
-  /**
-   * @private
-   */
   static doRequest(url, jwt = '') {
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-    }
+    };
 
     if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
@@ -163,16 +163,12 @@ export default class WidgetApi {
             });
   }
 
-  /**
-   * @private
-   *
-   */
   static doPut(url, data, jwt) {
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'X-SaaSquatch-Referrer': window ? window.location.href : '',
-    }
+    };
 
     if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 

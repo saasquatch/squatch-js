@@ -13,9 +13,6 @@ const _log = debug('squatch-js:EMBEDwidget');
  */
 export default class EmbedWidget extends Widget {
 
-  /**
-   * @private
-   */
   constructor(params, elementId = 'squatchembed') {
     super(params);
 
@@ -81,7 +78,7 @@ export default class EmbedWidget extends Widget {
           showStatsBtn.setAttribute('style', 'margin-top: 10px; max-width: 130px; width: 100%;');
           showStatsBtn.onclick = () => {
             me.load();
-          }
+          };
 
           registerForm.style.paddingTop = '30px';
           registerForm.innerHTML = `<p><strong>${params}</strong><br>Has been successfully registered</p>`;

@@ -1480,7 +1480,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Creates/upserts an anonymous user.
 	   *
-	   * @param {Object} params
+	   * @param {Object} params Parameters for request
 	   * @param {WidgetType} params.widgetType The content of the widget.
 	   * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
@@ -1511,10 +1511,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Creates/upserts user.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -1550,10 +1550,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Description here.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -1596,6 +1596,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     * @param {Object} params json object
+	     * @param {Object} jsonSchema json schema object
+	     * @returns {void}
 	     */
 
 	  }], [{
@@ -1604,11 +1607,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
 	      if (!valid.valid) throw valid.errors;
 	    }
-
-	    /**
-	     * @private
-	     */
-
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
@@ -1631,12 +1629,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _es6Promise2.default.reject(json);
 	      });
 	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
 	  }, {
 	    key: 'doPut',
 	    value: function doPut(url, data, jwt) {

@@ -137,6 +137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Read the {@link WidgetApi} docs.
 	 *
 	 * @type {WidgetApi}
+	 * @returns {WidgetApi} static instance
 	 */
 	function api() {
 	  return _api;
@@ -148,6 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Read the {@link Widgets} docs.
 	 *
 	 * @type {Widgets}
+	 * @returns {Widgets} static instance
 	 */
 	function widgets() {
 	  return _widgets;
@@ -160,6 +162,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  - `squatch.widgets()` a static instance of {@link Widgets}
 	 *
 	 * @param {ConfigOptions} config Configuration details
+	 * @returns {void}
+	 *
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 */
@@ -181,6 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * function detects that state.
 	 *
 	 * @param {function} fn A callback once Squatch.js is ready.
+	 * @returns {void}
 	 *
 	 * @example
 	 * squatch.ready(function() {
@@ -196,6 +201,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Autofills a referral code into an element when someone has been referred.
 	 * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
 	 *
+	 * @param {string} selector Element class/id
+	 * @returns {void}
 	 */
 	function autofill(selector) {
 	  widgets().autofill(selector);
@@ -206,6 +213,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Security enabled, the email needs to be signed before it's submitted.
 	 *
 	 * @param {function} fn Callback function for the 'submit_email' event.
+	 * @returns {void}
+	 *
 	 * @example
 	 * squatch.submitEmail(function(target, widget, email) {
 	 *   // Sign email and generate jwt token
@@ -875,7 +884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * This function calls the {@link WidgetApi.cookieUser} method, and it renders
 	   * the widget if it is successful. Otherwise it shows the "error" widget.
 	   *
-	   * @param {Object} config
+	   * @param {Object} config Config details
 	   * @param {EngagementMedium} config.widgetType The content of the widget.
 	   * @param {WidgetType} config.engagementMedium How to display the widget.
 	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
@@ -907,10 +916,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * This function calls the {@link WidgetApi.upsert} method, and it renders
 	     * the widget if it is successful. Otherwise it shows the "error" widget.
 	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
+	     * @param {Object} config Config details
+	     * @param {Object} config.user The user details
+	     * @param {string} config.user.id The user id
+	     * @param {string} config.user.accountId The user account id
 	     * @param {EngagementMedium} config.widgetType The content of the widget.
 	     * @param {WidgetType} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -940,10 +949,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * This function calls the {@link WidgetApi.render} method, and it renders
 	     * the widget if it is successful. Otherwise it shows the "error" widget.
 	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
+	     * @param {Object} config Config details
+	     * @param {Object} config.user The user details
+	     * @param {string} config.user.id The user id
+	     * @param {string} config.user.accountId The user account id
 	     * @param {EngagementMedium} config.widgetType The content of the widget.
 	     * @param {WidgetType} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -973,8 +982,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Autofills a referral code into an element when someone has been referred.
 	     * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
 	     *
-	     * @param {string} selector
-	     *
+	     * @param {string} selector Element class/id
+	     * @returns {void}
 	     */
 
 	  }, {
@@ -1008,6 +1017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * Security enabled, the email needs to be signed before it's submitted.
 	     *
 	     * @param {function} fn Callback function for the 'submit_email' event.
+	     * @returns {void}
 	     */
 
 	  }, {
@@ -1019,7 +1029,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
-	     *
+	     * @param {Object} response The json object return from the WidgetApi
+	     * @param {Object} config Config details
+	     * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
+	     * @param {string} config.engagementMedium (POPUP, EMBED)
+	     * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
 	     */
 
 	  }, {
@@ -1087,7 +1101,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
-	     *
+	     * @param {Object} error The json object containing the error details
+	     * @param {string} em The engagementMedium
+	     * @returns {void}
 	     */
 
 	  }], [{
@@ -1115,6 +1131,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     * @param {string} rule A regular expression
+	     * @returns {boolean} true if rule matches Url, false otherwise
 	     */
 
 	  }, {
@@ -1125,6 +1143,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     * @param {Object} target Object containing the target DOM element
+	     * @param {Widget} widget A widget (EmbedWidget, PopupWidget, CtaWidget)
+	     * @param {string} email A valid email address
+	     * @returns {void}
 	     */
 
 	  }, {
@@ -2554,7 +2576,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Creates/upserts an anonymous user.
 	   *
-	   * @param {Object} params
+	   * @param {Object} params Parameters for request
 	   * @param {WidgetType} params.widgetType The content of the widget.
 	   * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
@@ -2585,10 +2607,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Creates/upserts user.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -2624,10 +2646,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Description here.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -2670,6 +2692,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     * @param {Object} params json object
+	     * @param {Object} jsonSchema json schema object
+	     * @returns {void}
 	     */
 
 	  }], [{
@@ -2678,11 +2703,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
 	      if (!valid.valid) throw valid.errors;
 	    }
-
-	    /**
-	     * @private
-	     */
-
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
@@ -2705,12 +2725,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _es6Promise2.default.reject(json);
 	      });
 	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
 	  }, {
 	    key: 'doPut',
 	    value: function doPut(url, data, jwt) {
@@ -7374,9 +7388,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EmbedWidget = function (_Widget) {
 	  _inherits(EmbedWidget, _Widget);
 
-	  /**
-	   * @private
-	   */
 	  function EmbedWidget(params) {
 	    var elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchembed';
 
@@ -9445,9 +9456,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
 
-	  /**
-	   * @private
-	   */
 	  function PopupWidget(params) {
 	    var triggerId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchpop';
 
@@ -9541,11 +9549,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _log('' + ex.message);
 	      });
 	    }
-
-	    /**
-	     * Opens the widget.
-	     */
-
 	  }, {
 	    key: 'open',
 	    value: function open() {
@@ -9593,12 +9596,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _log('Popup opened');
 	      });
 	    }
-
-	    /**
-	     * Closes the widget
-	     *
-	     */
-
 	  }, {
 	    key: 'close',
 	    value: function close() {
@@ -9679,9 +9676,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CtaWidget = function (_PopupWidget) {
 	  _inherits(CtaWidget, _PopupWidget);
 
-	  /**
-	   * @private
-	   */
 	  function CtaWidget(params, opts) {
 	    _classCallCheck(this, CtaWidget);
 

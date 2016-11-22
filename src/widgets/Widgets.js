@@ -43,7 +43,7 @@ export default class Widgets {
    * This function calls the {@link WidgetApi.cookieUser} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
-   * @param {Object} config
+   * @param {Object} config Config details
    * @param {EngagementMedium} config.widgetType The content of the widget.
    * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used to
@@ -69,10 +69,10 @@ export default class Widgets {
    * This function calls the {@link WidgetApi.upsert} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
-   * @param {Object} config
-   * @param {Object} config.user the user details
-   * @param {string} config.user.id
-   * @param {string} config.user.accountId
+   * @param {Object} config Config details
+   * @param {Object} config.user The user details
+   * @param {string} config.user.id The user id
+   * @param {string} config.user.accountId The user account id
    * @param {EngagementMedium} config.widgetType The content of the widget.
    * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -97,10 +97,10 @@ export default class Widgets {
    * This function calls the {@link WidgetApi.render} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
-   * @param {Object} config
-   * @param {Object} config.user the user details
-   * @param {string} config.user.id
-   * @param {string} config.user.accountId
+   * @param {Object} config Config details
+   * @param {Object} config.user The user details
+   * @param {string} config.user.id The user id
+   * @param {string} config.user.accountId The user account id
    * @param {EngagementMedium} config.widgetType The content of the widget.
    * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -125,8 +125,8 @@ export default class Widgets {
    * Autofills a referral code into an element when someone has been referred.
    * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
    *
-   * @param {string} selector
-   *
+   * @param {string} selector Element class/id
+   * @returns {void}
    */
   autofill(selector) {
     if (typeof selector === 'function') {
@@ -157,6 +157,7 @@ export default class Widgets {
    * Security enabled, the email needs to be signed before it's submitted.
    *
    * @param {function} fn Callback function for the 'submit_email' event.
+   * @returns {void}
    */
   submitEmail(fn) {
     this.eventBus.removeEventListener('submit_email', Widgets.cb);
@@ -165,7 +166,11 @@ export default class Widgets {
 
   /**
    * @private
-   *
+   * @param {Object} response The json object return from the WidgetApi
+   * @param {Object} config Config details
+   * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
+   * @param {string} config.engagementMedium (POPUP, EMBED)
+   * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
    */
   renderWidget(response, config = { widgetType: '', engagementMedium: '' }) {
     _log('Rendering Widget...');
@@ -228,7 +233,9 @@ export default class Widgets {
 
   /**
    * @private
-   *
+   * @param {Object} error The json object containing the error details
+   * @param {string} em The engagementMedium
+   * @returns {void}
    */
   static renderErrorWidget(error, em = 'POPUP') {
     _log(new Error(`${error.apiErrorCode} (${error.rsCode}) ${error.message}`));
@@ -251,6 +258,8 @@ export default class Widgets {
 
   /**
    * @private
+   * @param {string} rule A regular expression
+   * @returns {boolean} true if rule matches Url, false otherwise
    */
   static matchesUrl(rule) {
     return window.location.href.match(new RegExp(rule));
@@ -258,8 +267,12 @@ export default class Widgets {
 
   /**
    * @private
+   * @param {Object} target Object containing the target DOM element
+   * @param {Widget} widget A widget (EmbedWidget, PopupWidget, CtaWidget)
+   * @param {string} email A valid email address
+   * @returns {void}
    */
-   static cb(target, widget, email) {
-     widget.reload(email);
-   }
+  static cb(target, widget, email) {
+    widget.reload(email);
+  }
 }

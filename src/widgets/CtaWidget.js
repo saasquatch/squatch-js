@@ -11,9 +11,7 @@ const _log = debug('squatch-js:CTAwidget');
  *
  */
 export default class CtaWidget extends PopupWidget {
-  /**
-   * @private
-   */
+
   constructor(params, opts) {
     _log('CTA constructor');
     const ctaElement = document.createElement('div');
@@ -45,7 +43,7 @@ export default class CtaWidget extends PopupWidget {
     me.ctaFrame.setAttribute('style', `border:0; background-color:transparent; position:fixed; display:none;${me.side}${me.position}`);
 
     document.body.appendChild(this.ctaFrame);
-    _log('ctaframe appended to body')
+    _log('ctaframe appended to body');
   }
 
   load() {

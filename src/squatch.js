@@ -34,6 +34,7 @@ let _widgets = null;
  * Read the {@link WidgetApi} docs.
  *
  * @type {WidgetApi}
+ * @returns {WidgetApi} static instance
  */
 export function api() {
   return _api;
@@ -45,6 +46,7 @@ export function api() {
  * Read the {@link Widgets} docs.
  *
  * @type {Widgets}
+ * @returns {Widgets} static instance
  */
 export function widgets() {
   return _widgets;
@@ -58,6 +60,8 @@ export function widgets() {
  *  - `squatch.widgets()` a static instance of {@link Widgets}
  *
  * @param {ConfigOptions} config Configuration details
+ * @returns {void}
+ *
  * @example
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
@@ -79,6 +83,7 @@ export function init(config) {
  * function detects that state.
  *
  * @param {function} fn A callback once Squatch.js is ready.
+ * @returns {void}
  *
  * @example
  * squatch.ready(function() {
@@ -94,6 +99,8 @@ export function ready(fn) {
  * Autofills a referral code into an element when someone has been referred.
  * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
  *
+ * @param {string} selector Element class/id
+ * @returns {void}
  */
 export function autofill(selector) {
   widgets().autofill(selector);
@@ -104,6 +111,8 @@ export function autofill(selector) {
  * Security enabled, the email needs to be signed before it's submitted.
  *
  * @param {function} fn Callback function for the 'submit_email' event.
+ * @returns {void}
+ *
  * @example
  * squatch.submitEmail(function(target, widget, email) {
  *   // Sign email and generate jwt token
