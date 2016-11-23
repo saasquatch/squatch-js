@@ -54,7 +54,6 @@ export default class Widgets {
   createCookieUser(config) {
     return new Promise((resolve, reject) => {
       this.api.cookieUser(config).then((response) => {
-        _log('Got response');
         resolve({ widget: this.renderWidget(response, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {
@@ -66,7 +65,7 @@ export default class Widgets {
   }
 
   /**
-   * This function calls the {@link WidgetApi.upsert} method, and it renders
+   * This function calls the {@link WidgetApi.upsertUser} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
    * @param {Object} config Config details
@@ -82,12 +81,13 @@ export default class Widgets {
    */
   upsertUser(config) {
     return new Promise((resolve, reject) => {
-      this.api.upsert(config).then((response) => {
+      this.api.upsertUser(config).then((response) => {
         resolve({ widget: this.renderWidget(response, config), user: response.user });
       }).catch((err) => {
         if (err.apiErrorCode) {
           Widgets.renderErrorWidget(err, config.engagementMedium);
         }
+        _log(err);
         reject(err);
       });
     });

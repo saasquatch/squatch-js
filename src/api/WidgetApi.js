@@ -70,7 +70,7 @@ export default class WidgetApi {
    *
    * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
-  upsert(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
+  upsertUser(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
     WidgetApi.validateInput(params, schema.upsertUser);
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
@@ -171,7 +171,6 @@ export default class WidgetApi {
     };
 
     if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
-
 
     return superagent
             .put(url)

@@ -41,9 +41,10 @@
     var user;
     var widget
 
-    squatch.widgets().createCookieUser({
-      engagementMedium: 'POPUP'
-    });
+    squatch.widgets().upsertUser({
+      engagementMedium: 'POPUP',
+      user: 'token'
+    }).then(function(res){console.log(res);});
 
     // squatch.widgets().upsertUser({
     //   user: {
