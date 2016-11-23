@@ -5,8 +5,8 @@ var PROD = process.env.NODE_ENV === 'production';
 
 module.exports = {
     entry: {
-      'Squatch.WidgetApi': ['./src/api/WidgetApi.js'],
-      Squatch: ['./src/squatch.js']
+      'squatch.WidgetApi': ['./src/api/WidgetApi.js'],
+      squatch: ['./src/squatch.js']
     },
     output: {
         path: path.join(__dirname, 'dist'),

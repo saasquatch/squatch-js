@@ -7,6 +7,18 @@ integrate a referral program into your website or web app.
 It can show referral widgets on any website, track users, generate unique
 referral short links and referral codes, and more.
 
+# api
+
+A static instance of the [WidgetApi](#widgetapi) created when you call [init](#init).
+
+Read the [WidgetApi](#widgetapi) docs.
+
+# widgets
+
+A static instance of the [Widgets](#widgets) created when you call [init](#init).
+
+Read the [Widgets](#widgets) docs.
+
 # init
 
 Initializes the static `squatch` global. This sets up:
@@ -42,25 +54,48 @@ squatch.ready(function() {
 });
 ```
 
-# api
-
-A static instance of the [WidgetApi](#widgetapi) created when you call [init](#init).
-
-Read the [WidgetApi](#widgetapi) docs.
-
-# widgets
-
-A static instance of the [Widgets](#widgets) created when you call [init](#init).
-
-Read the [Widgets](#widgets) docs.
-
 # autofill
 
-Autofills a referral code into an element when someone has been referred. Uses [WidgetApi.squatchReferralCookie](WidgetApi.squatchReferralCookie) behind the scenes.
+Autofills a referral code into an element when someone has been referred.
+Uses [WidgetApi.squatchReferralCookie](WidgetApi.squatchReferralCookie) behind the scenes.
 
 **Parameters**
 
 -   `element`  
+
+# submitEmail
+
+Overrides the default function that submits the user email. If you have
+Security enabled, the email needs to be signed before it's submitted.
+
+**Parameters**
+
+-   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** Callback function for the 'submit_email' event.
+
+**Examples**
+
+```javascript
+squatch.submitEmail(function(target, widget, email) {
+  // Sign email and generate jwt token
+  var jwt = 'token';
+  widget.reload(email, jwt);
+});
+```
+
+# EngagementMedium
+
+EngagementMedium is an enum for the content of the widgets.
+
+**Properties**
+
+-   `REFERRER_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that lets people make referrals
+-   `CONVERSION_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that shows that someone has been referred
+
+**Examples**
+
+```javascript
+engagementMedium: "REFERRER_WIDGET"
+```
 
 # WidgetType
 
@@ -85,21 +120,6 @@ When you load Squatch.js you need to provide these configuration options.
 
 -   `tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Tenant that you're using.
 -   `domain` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** The domain for API. Defaults to `https://app.referralsaasquatch.com`
-
-# EngagementMedium
-
-EngagementMedium is an enum for the content of the widgets.
-
-**Properties**
-
--   `REFERRER_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that lets people make referrals
--   `CONVERSION_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that shows that someone has been referred
-
-**Examples**
-
-```javascript
-engagementMedium: "REFERRER_WIDGET"
-```
 
 # WidgetResult
 
@@ -200,7 +220,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 **Extends Widget**
 
-An EmbedWidget is displayed inline in part of your page. 
+An EmbedWidget is displayed inline in part of your page.
 
 To create an EmbedWidget use [Widgets](#widgets)
 
@@ -208,7 +228,7 @@ To create an EmbedWidget use [Widgets](#widgets)
 
 **Extends Widget**
 
-The PopupWidget is used to display popups (also known as "Modals"). 
+The PopupWidget is used to display popups (also known as "Modals").
 Popups widgets are rendered on top of other elements in a page.
 
 To create a PopupWidget use [Widgets](#widgets)
@@ -225,7 +245,7 @@ Closes the widget
 
 **Extends PopupWidget**
 
-A CtaWidget is displayed on top of your page 
+A CtaWidget is displayed on top of your page
 
 To create a CtaWidget use [Widgets](#widgets)
 
@@ -274,8 +294,8 @@ Creates/upserts an anonymous user.
 **Parameters**
 
 -   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** 
-    -   `params.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
-    -   `params.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
+    -   `params.widgetType` **[WidgetType](#widgettype)** The content of the widget.
+    -   `params.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
                                    validate the data (can be disabled)
 
@@ -291,8 +311,8 @@ Creates/upserts user.
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `params.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
-    -   `params.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
+    -   `params.widgetType` **[WidgetType](#widgettype)** The content of the widget.
+    -   `params.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
@@ -308,8 +328,8 @@ Description here.
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-    -   `params.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
-    -   `params.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
+    -   `params.widgetType` **[WidgetType](#widgettype)** The content of the widget.
+    -   `params.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 

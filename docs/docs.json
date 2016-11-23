@@ -115,6 +115,530 @@
           "children": [
             {
               "type": "text",
+              "value": "A static instance of the ",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 26,
+                  "offset": 25
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "link",
+              "url": "WidgetApi",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "WidgetApi"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 26,
+                  "offset": 25
+                },
+                "end": {
+                  "line": 1,
+                  "column": 43,
+                  "offset": 42
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " created when you call ",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 43,
+                  "offset": 42
+                },
+                "end": {
+                  "line": 1,
+                  "column": 66,
+                  "offset": 65
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "link",
+              "url": "#init",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "init"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 66,
+                  "offset": 65
+                },
+                "end": {
+                  "line": 1,
+                  "column": 84,
+                  "offset": 83
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": ".",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 84,
+                  "offset": 83
+                },
+                "end": {
+                  "line": 1,
+                  "column": 85,
+                  "offset": 84
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 85,
+              "offset": 84
+            },
+            "indent": []
+          }
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Read the ",
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 1,
+                  "offset": 86
+                },
+                "end": {
+                  "line": 3,
+                  "column": 10,
+                  "offset": 95
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "link",
+              "url": "WidgetApi",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "WidgetApi"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 10,
+                  "offset": 95
+                },
+                "end": {
+                  "line": 3,
+                  "column": 27,
+                  "offset": 112
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " docs.",
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 27,
+                  "offset": 112
+                },
+                "end": {
+                  "line": 3,
+                  "column": 33,
+                  "offset": 118
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 86
+            },
+            "end": {
+              "line": 3,
+              "column": 33,
+              "offset": 118
+            },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 33,
+          "offset": 118
+        }
+      }
+    },
+    "tags": [
+      {
+        "title": "type",
+        "description": null,
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "WidgetApi"
+        }
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 34,
+        "column": 0
+      },
+      "end": {
+        "line": 40,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 41,
+          "column": 0
+        },
+        "end": {
+          "line": 43,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+    },
+    "name": "api",
+    "kind": "function",
+    "members": {
+      "instance": [],
+      "static": []
+    },
+    "path": [
+      {
+        "name": "api",
+        "kind": "function"
+      }
+    ],
+    "namespace": "api"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "A static instance of the ",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 26,
+                  "offset": 25
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "link",
+              "url": "Widgets",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Widgets"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 26,
+                  "offset": 25
+                },
+                "end": {
+                  "line": 1,
+                  "column": 41,
+                  "offset": 40
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " created when you call ",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 41,
+                  "offset": 40
+                },
+                "end": {
+                  "line": 1,
+                  "column": 64,
+                  "offset": 63
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "link",
+              "url": "#init",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "init"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 64,
+                  "offset": 63
+                },
+                "end": {
+                  "line": 1,
+                  "column": 82,
+                  "offset": 81
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": ".",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 82,
+                  "offset": 81
+                },
+                "end": {
+                  "line": 1,
+                  "column": 83,
+                  "offset": 82
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 83,
+              "offset": 82
+            },
+            "indent": []
+          }
+        },
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Read the ",
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 1,
+                  "offset": 84
+                },
+                "end": {
+                  "line": 3,
+                  "column": 10,
+                  "offset": 93
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "link",
+              "url": "Widgets",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Widgets"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 10,
+                  "offset": 93
+                },
+                "end": {
+                  "line": 3,
+                  "column": 25,
+                  "offset": 108
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " docs.",
+              "position": {
+                "start": {
+                  "line": 3,
+                  "column": 25,
+                  "offset": 108
+                },
+                "end": {
+                  "line": 3,
+                  "column": 31,
+                  "offset": 114
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 3,
+              "column": 1,
+              "offset": 84
+            },
+            "end": {
+              "line": 3,
+              "column": 31,
+              "offset": 114
+            },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 31,
+          "offset": 114
+        }
+      }
+    },
+    "tags": [
+      {
+        "title": "type",
+        "description": null,
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "Widgets"
+        }
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 45,
+        "column": 0
+      },
+      "end": {
+        "line": 51,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 52,
+          "column": 0
+        },
+        "end": {
+          "line": 54,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+    },
+    "name": "widgets",
+    "kind": "function",
+    "members": {
+      "instance": [],
+      "static": []
+    },
+    "path": [
+      {
+        "name": "widgets",
+        "kind": "function"
+      }
+    ],
+    "namespace": "widgets"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
               "value": "Initializes the static ",
               "position": {
                 "start": {
@@ -429,22 +953,22 @@
     ],
     "loc": {
       "start": {
-        "line": 30,
+        "line": 57,
         "column": 0
       },
       "end": {
-        "line": 39,
+        "line": 66,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 40,
+          "line": 67,
           "column": 0
         },
         "end": {
-          "line": 51,
+          "line": 78,
           "column": 1
         }
       },
@@ -607,22 +1131,22 @@
     ],
     "loc": {
       "start": {
-        "line": 53,
+        "line": 80,
         "column": 0
       },
       "end": {
-        "line": 64,
+        "line": 91,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 65,
+          "line": 92,
           "column": 0
         },
         "end": {
-          "line": 67,
+          "line": 94,
           "column": 1
         }
       },
@@ -718,7 +1242,7 @@
           "children": [
             {
               "type": "text",
-              "value": "Static instance of the ",
+              "value": "Autofills a referral code into an element when someone has been referred.\nUses ",
               "position": {
                 "start": {
                   "line": 1,
@@ -726,93 +1250,53 @@
                   "offset": 0
                 },
                 "end": {
-                  "line": 1,
-                  "column": 24,
-                  "offset": 23
+                  "line": 2,
+                  "column": 6,
+                  "offset": 79
                 },
-                "indent": []
+                "indent": [
+                  1
+                ]
               }
             },
             {
               "type": "link",
-              "url": "WidgetApi",
+              "url": "WidgetApi.squatchReferralCookie",
               "title": null,
               "jsdoc": true,
               "children": [
                 {
                   "type": "text",
-                  "value": "WidgetApi"
+                  "value": "WidgetApi.squatchReferralCookie"
                 }
               ],
               "position": {
                 "start": {
-                  "line": 1,
-                  "column": 24,
-                  "offset": 23
+                  "line": 2,
+                  "column": 6,
+                  "offset": 79
                 },
                 "end": {
-                  "line": 1,
-                  "column": 41,
-                  "offset": 40
+                  "line": 2,
+                  "column": 45,
+                  "offset": 118
                 },
                 "indent": []
               }
             },
             {
               "type": "text",
-              "value": ". Make sure you call ",
+              "value": " behind the scenes.",
               "position": {
                 "start": {
-                  "line": 1,
-                  "column": 41,
-                  "offset": 40
+                  "line": 2,
+                  "column": 45,
+                  "offset": 118
                 },
                 "end": {
-                  "line": 1,
-                  "column": 62,
-                  "offset": 61
-                },
-                "indent": []
-              }
-            },
-            {
-              "type": "link",
-              "url": "#init",
-              "title": null,
-              "jsdoc": true,
-              "children": [
-                {
-                  "type": "text",
-                  "value": "init"
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 62,
-                  "offset": 61
-                },
-                "end": {
-                  "line": 1,
-                  "column": 80,
-                  "offset": 79
-                },
-                "indent": []
-              }
-            },
-            {
-              "type": "text",
-              "value": " first",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 80,
-                  "offset": 79
-                },
-                "end": {
-                  "line": 1,
-                  "column": 86,
-                  "offset": 85
+                  "line": 2,
+                  "column": 64,
+                  "offset": 137
                 },
                 "indent": []
               }
@@ -825,11 +1309,13 @@
               "offset": 0
             },
             "end": {
-              "line": 1,
-              "column": 86,
-              "offset": 85
+              "line": 2,
+              "column": 64,
+              "offset": 137
             },
-            "indent": []
+            "indent": [
+              1
+            ]
           }
         }
       ],
@@ -840,286 +1326,31 @@
           "offset": 0
         },
         "end": {
-          "line": 1,
-          "column": 86,
-          "offset": 85
+          "line": 2,
+          "column": 64,
+          "offset": 137
         }
       }
     },
-    "tags": [
-      {
-        "title": "type",
-        "description": null,
-        "lineNumber": 3,
-        "type": {
-          "type": "NameExpression",
-          "name": "WidgetApi"
-        }
-      },
-      {
-        "title": "example",
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.ready(function() {\n  squatch.api().cookieUser();\n});",
-        "lineNumber": 4
-      }
-    ],
-    "loc": {
-      "start": {
-        "line": 69,
-        "column": 0
-      },
-      "end": {
-        "line": 78,
-        "column": 3
-      }
-    },
-    "context": {
-      "loc": {
-        "start": {
-          "line": 79,
-          "column": 0
-        },
-        "end": {
-          "line": 81,
-          "column": 1
-        }
-      },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
-    },
-    "examples": [
-      {
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.ready(function() {\n  squatch.api().cookieUser();\n});"
-      }
-    ],
-    "name": "api",
-    "kind": "function",
-    "members": {
-      "instance": [],
-      "static": []
-    },
-    "path": [
-      {
-        "name": "api",
-        "kind": "function"
-      }
-    ],
-    "namespace": "api"
-  },
-  {
-    "description": {
-      "type": "root",
-      "children": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
-              "value": "Static instance of ",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 20,
-                  "offset": 19
-                },
-                "indent": []
-              }
-            },
-            {
-              "type": "link",
-              "url": "Widgets",
-              "title": null,
-              "jsdoc": true,
-              "children": [
-                {
-                  "type": "text",
-                  "value": "Widgets"
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 20,
-                  "offset": 19
-                },
-                "end": {
-                  "line": 1,
-                  "column": 35,
-                  "offset": 34
-                },
-                "indent": []
-              }
-            },
-            {
-              "type": "text",
-              "value": ". Make sure you call ",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 35,
-                  "offset": 34
-                },
-                "end": {
-                  "line": 1,
-                  "column": 56,
-                  "offset": 55
-                },
-                "indent": []
-              }
-            },
-            {
-              "type": "link",
-              "url": "#init",
-              "title": null,
-              "jsdoc": true,
-              "children": [
-                {
-                  "type": "text",
-                  "value": "init"
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 56,
-                  "offset": 55
-                },
-                "end": {
-                  "line": 1,
-                  "column": 74,
-                  "offset": 73
-                },
-                "indent": []
-              }
-            },
-            {
-              "type": "text",
-              "value": " first",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 74,
-                  "offset": 73
-                },
-                "end": {
-                  "line": 1,
-                  "column": 80,
-                  "offset": 79
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 80,
-              "offset": 79
-            },
-            "indent": []
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 80,
-          "offset": 79
-        }
-      }
-    },
-    "tags": [
-      {
-        "title": "type",
-        "description": null,
-        "lineNumber": 3,
-        "type": {
-          "type": "NameExpression",
-          "name": "Widgets"
-        }
-      },
-      {
-        "title": "example",
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.ready(function() {\n  squatch.widgets().cookieUser().then(doSomething);\n});",
-        "lineNumber": 4
-      }
-    ],
-    "loc": {
-      "start": {
-        "line": 84,
-        "column": 0
-      },
-      "end": {
-        "line": 93,
-        "column": 3
-      }
-    },
-    "context": {
-      "loc": {
-        "start": {
-          "line": 94,
-          "column": 0
-        },
-        "end": {
-          "line": 96,
-          "column": 1
-        }
-      },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
-    },
-    "examples": [
-      {
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});\nsquatch.ready(function() {\n  squatch.widgets().cookieUser().then(doSomething);\n});"
-      }
-    ],
-    "name": "widgets",
-    "kind": "function",
-    "members": {
-      "instance": [],
-      "static": []
-    },
-    "path": [
-      {
-        "name": "widgets",
-        "kind": "function"
-      }
-    ],
-    "namespace": "widgets"
-  },
-  {
-    "description": "",
     "tags": [],
     "loc": {
       "start": {
-        "line": 99,
+        "line": 96,
         "column": 0
       },
       "end": {
-        "line": 101,
+        "line": 100,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 102,
+          "line": 101,
           "column": 0
         },
         "end": {
-          "line": 123,
+          "line": 122,
           "column": 1
         }
       },
@@ -1131,7 +1362,7 @@
       {
         "title": "param",
         "name": "element",
-        "lineNumber": 102
+        "lineNumber": 101
       }
     ],
     "members": {
@@ -1145,6 +1376,760 @@
       }
     ],
     "namespace": "autofill"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "Overrides the default function that submits the user email. If you have\nSecurity enabled, the email needs to be signed before it's submitted.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 2,
+                  "column": 70,
+                  "offset": 141
+                },
+                "indent": [
+                  1
+                ]
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 2,
+              "column": 70,
+              "offset": 141
+            },
+            "indent": [
+              1
+            ]
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 70,
+          "offset": 141
+        }
+      }
+    },
+    "tags": [
+      {
+        "title": "param",
+        "description": "Callback function for the 'submit_email' event.",
+        "lineNumber": 4,
+        "type": {
+          "type": "NameExpression",
+          "name": "function"
+        },
+        "name": "fn"
+      },
+      {
+        "title": "example",
+        "description": "squatch.submitEmail(function(target, widget, email) {\n  // Sign email and generate jwt token\n  var jwt = 'token';\n  widget.reload(email, jwt);\n});",
+        "lineNumber": 5
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 133,
+        "column": 0
+      },
+      "end": {
+        "line": 144,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 145,
+          "column": 0
+        },
+        "end": {
+          "line": 148,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+    },
+    "params": [
+      {
+        "name": "fn",
+        "lineNumber": 4,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Callback function for the 'submit_email' event.",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 48,
+                      "offset": 47
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 48,
+                  "offset": 47
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 48,
+              "offset": 47
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "function"
+        }
+      }
+    ],
+    "examples": [
+      {
+        "description": "squatch.submitEmail(function(target, widget, email) {\n  // Sign email and generate jwt token\n  var jwt = 'token';\n  widget.reload(email, jwt);\n});"
+      }
+    ],
+    "name": "submitEmail",
+    "kind": "function",
+    "members": {
+      "instance": [],
+      "static": []
+    },
+    "path": [
+      {
+        "name": "submitEmail",
+        "kind": "function"
+      }
+    ],
+    "namespace": "submitEmail"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "EngagementMedium is an enum for the content of the widgets.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 60,
+                  "offset": 59
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 60,
+              "offset": 59
+            },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 60,
+          "offset": 59
+        }
+      }
+    },
+    "tags": [
+      {
+        "title": "name",
+        "description": null,
+        "lineNumber": 3,
+        "name": "EngagementMedium"
+      },
+      {
+        "title": "enum",
+        "description": null,
+        "lineNumber": 4,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
+      },
+      {
+        "title": "readonly",
+        "description": null,
+        "lineNumber": 5
+      },
+      {
+        "title": "property",
+        "description": "Widget content that lets people make referrals",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "REFERRER_WIDGET"
+      },
+      {
+        "title": "property",
+        "description": "Widget content that shows that someone has been referred",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "CONVERSION_WIDGET"
+      },
+      {
+        "title": "example",
+        "description": "engagementMedium: \"REFERRER_WIDGET\"",
+        "lineNumber": 8
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 23,
+        "column": 0
+      },
+      "end": {
+        "line": 34,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
+    },
+    "name": "EngagementMedium",
+    "readonly": true,
+    "properties": [
+      {
+        "name": "REFERRER_WIDGET",
+        "lineNumber": 6,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Widget content that lets people make referrals",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 47,
+                      "offset": 46
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 47,
+                  "offset": 46
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 47,
+              "offset": 46
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
+      },
+      {
+        "name": "CONVERSION_WIDGET",
+        "lineNumber": 7,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Widget content that shows that someone has been referred",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 57,
+                      "offset": 56
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 57,
+                  "offset": 56
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 57,
+              "offset": 56
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
+      }
+    ],
+    "examples": [
+      {
+        "description": "engagementMedium: \"REFERRER_WIDGET\""
+      }
+    ],
+    "members": {
+      "instance": [],
+      "static": []
+    },
+    "path": [
+      {
+        "name": "EngagementMedium"
+      }
+    ],
+    "namespace": "EngagementMedium"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "WidgetType is an enum for types of ways a Widget can be displayed.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 67,
+                  "offset": 66
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 67,
+              "offset": 66
+            },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 67,
+          "offset": 66
+        }
+      }
+    },
+    "tags": [
+      {
+        "title": "name",
+        "description": null,
+        "lineNumber": 3,
+        "name": "WidgetType"
+      },
+      {
+        "title": "enum",
+        "description": null,
+        "lineNumber": 4,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
+      },
+      {
+        "title": "readonly",
+        "description": null,
+        "lineNumber": 5
+      },
+      {
+        "title": "property",
+        "description": "Displays the widget as a modal popup. Creates a {@link PopupWidget}",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "POPUP"
+      },
+      {
+        "title": "property",
+        "description": "Displays the widget embedded in the page. Create an {@link EmbedWidget}",
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "EMBED"
+      },
+      {
+        "title": "example",
+        "description": "widgetType: \"POPUP\"",
+        "lineNumber": 8
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 37,
+        "column": 1
+      },
+      "end": {
+        "line": 48,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
+    },
+    "name": "WidgetType",
+    "readonly": true,
+    "properties": [
+      {
+        "name": "POPUP",
+        "lineNumber": 6,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Displays the widget as a modal popup. Creates a ",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 49,
+                      "offset": 48
+                    },
+                    "indent": []
+                  }
+                },
+                {
+                  "type": "link",
+                  "url": "PopupWidget",
+                  "title": null,
+                  "jsdoc": true,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "PopupWidget"
+                    }
+                  ],
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 49,
+                      "offset": 48
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 68,
+                      "offset": 67
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 68,
+                  "offset": 67
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 68,
+              "offset": 67
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
+      },
+      {
+        "name": "EMBED",
+        "lineNumber": 7,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Displays the widget embedded in the page. Create an ",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 53,
+                      "offset": 52
+                    },
+                    "indent": []
+                  }
+                },
+                {
+                  "type": "link",
+                  "url": "EmbedWidget",
+                  "title": null,
+                  "jsdoc": true,
+                  "children": [
+                    {
+                      "type": "text",
+                      "value": "EmbedWidget"
+                    }
+                  ],
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 53,
+                      "offset": 52
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 72,
+                      "offset": 71
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 72,
+                  "offset": 71
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 72,
+              "offset": 71
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
+      }
+    ],
+    "examples": [
+      {
+        "description": "widgetType: \"POPUP\""
+      }
+    ],
+    "members": {
+      "instance": [],
+      "static": []
+    },
+    "path": [
+      {
+        "name": "WidgetType"
+      }
+    ],
+    "namespace": "WidgetType"
   },
   {
     "description": {
@@ -1765,8 +2750,8 @@
           "type": "paragraph",
           "children": [
             {
-              "type": "text",
-              "value": "The Widgets class contains a widget loading process for different calls\nto the WidgetApi.",
+              "type": "inlineCode",
+              "value": "Widgets",
               "position": {
                 "start": {
                   "line": 1,
@@ -1774,13 +2759,72 @@
                   "offset": 0
                 },
                 "end": {
+                  "line": 1,
+                  "column": 10,
+                  "offset": 9
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " is a factory for creating widgets. It's possible to build your own widgets using the\n",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 10,
+                  "offset": 9
+                },
+                "end": {
                   "line": 2,
-                  "column": 18,
-                  "offset": 89
+                  "column": 1,
+                  "offset": 95
                 },
                 "indent": [
                   1
                 ]
+              }
+            },
+            {
+              "type": "link",
+              "url": "WidgetApi",
+              "title": null,
+              "jsdoc": true,
+              "children": [
+                {
+                  "type": "text",
+                  "value": "WidgetApi"
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 2,
+                  "column": 1,
+                  "offset": 95
+                },
+                "end": {
+                  "line": 2,
+                  "column": 18,
+                  "offset": 112
+                },
+                "indent": []
+              }
+            },
+            {
+              "type": "text",
+              "value": " but most people will prefer to use these easy methods.",
+              "position": {
+                "start": {
+                  "line": 2,
+                  "column": 18,
+                  "offset": 112
+                },
+                "end": {
+                  "line": 2,
+                  "column": 73,
+                  "offset": 167
+                },
+                "indent": []
               }
             }
           ],
@@ -1792,8 +2836,8 @@
             },
             "end": {
               "line": 2,
-              "column": 18,
-              "offset": 89
+              "column": 73,
+              "offset": 167
             },
             "indent": [
               1
@@ -1809,30 +2853,30 @@
         },
         "end": {
           "line": 2,
-          "column": 18,
-          "offset": 89
+          "column": 73,
+          "offset": 167
         }
       }
     },
     "tags": [],
     "loc": {
       "start": {
-        "line": 9,
+        "line": 10,
         "column": 0
       },
       "end": {
-        "line": 14,
+        "line": 15,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 15,
+          "line": 16,
           "column": 0
         },
         "end": {
-          "line": 209,
+          "line": 216,
           "column": 1
         }
       },
@@ -1969,22 +3013,22 @@
           ],
           "loc": {
             "start": {
-              "line": 16,
+              "line": 17,
               "column": 2
             },
             "end": {
-              "line": 31,
+              "line": 32,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 32,
+                "line": 33,
                 "column": 2
               },
               "end": {
-                "line": 35,
+                "line": 36,
                 "column": 3
               }
             },
@@ -2249,7 +3293,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This function calls the WidgetApi.cookieUser() method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+                    "value": "This function calls the ",
                     "position": {
                       "start": {
                         "line": 1,
@@ -2257,9 +3301,51 @@
                         "offset": 0
                       },
                       "end": {
+                        "line": 1,
+                        "column": 25,
+                        "offset": 24
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "WidgetApi.cookieUser",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "WidgetApi.cookieUser"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 25,
+                        "offset": 24
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 53,
+                        "offset": 52
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 53,
+                        "offset": 52
+                      },
+                      "end": {
                         "line": 2,
                         "column": 71,
-                        "offset": 140
+                        "offset": 146
                       },
                       "indent": [
                         1
@@ -2276,7 +3362,7 @@
                   "end": {
                     "line": 2,
                     "column": 71,
-                    "offset": 140
+                    "offset": 146
                   },
                   "indent": [
                     1
@@ -2293,7 +3379,7 @@
               "end": {
                 "line": 2,
                 "column": 71,
-                "offset": 140
+                "offset": 146
               }
             }
           },
@@ -2310,21 +3396,21 @@
             },
             {
               "title": "param",
-              "description": "(REFERRED_WIDGET/CONVERSION_WIDGET)",
+              "description": "The content of the widget.",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "EngagementMedium"
               },
               "name": "config.widgetType"
             },
             {
               "title": "param",
-              "description": "(POPUP/MOBILE)",
+              "description": "How to display the widget.",
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "WidgetType"
               },
               "name": "config.engagementMedium"
             },
@@ -2359,22 +3445,22 @@
           ],
           "loc": {
             "start": {
-              "line": 37,
+              "line": 38,
               "column": 2
             },
             "end": {
-              "line": 48,
+              "line": 49,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 49,
+                "line": 50,
                 "column": 2
               },
               "end": {
-                "line": 60,
+                "line": 62,
                 "column": 3
               }
             },
@@ -2400,7 +3486,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(REFERRED_WIDGET/CONVERSION_WIDGET)",
+                            "value": "The content of the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2409,8 +3495,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 36,
-                                "offset": 35
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -2424,8 +3510,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 36,
-                            "offset": 35
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -2439,14 +3525,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 36,
-                        "offset": 35
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -2460,7 +3546,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(POPUP/MOBILE)",
+                            "value": "How to display the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2469,8 +3555,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 15,
-                                "offset": 14
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -2484,8 +3570,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 15,
-                            "offset": 14
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -2499,14 +3585,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 15,
-                        "offset": 14
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -2675,7 +3761,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This function calls the WidgetApi.upsert() method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+                    "value": "This function calls the ",
                     "position": {
                       "start": {
                         "line": 1,
@@ -2683,9 +3769,51 @@
                         "offset": 0
                       },
                       "end": {
+                        "line": 1,
+                        "column": 25,
+                        "offset": 24
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "WidgetApi.upsert",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "WidgetApi.upsert"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 25,
+                        "offset": 24
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 49,
+                        "offset": 48
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 49,
+                        "offset": 48
+                      },
+                      "end": {
                         "line": 2,
                         "column": 71,
-                        "offset": 136
+                        "offset": 142
                       },
                       "indent": [
                         1
@@ -2702,7 +3830,7 @@
                   "end": {
                     "line": 2,
                     "column": 71,
-                    "offset": 136
+                    "offset": 142
                   },
                   "indent": [
                     1
@@ -2719,7 +3847,7 @@
               "end": {
                 "line": 2,
                 "column": 71,
-                "offset": 136
+                "offset": 142
               }
             }
           },
@@ -2766,21 +3894,21 @@
             },
             {
               "title": "param",
-              "description": "(CONVERSION_WIDGET/REFERRING_WIDGET)",
+              "description": "The content of the widget.",
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "EngagementMedium"
               },
               "name": "config.widgetType"
             },
             {
               "title": "param",
-              "description": "(POPUP/MOBILE)",
+              "description": "How to display the widget.",
               "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "WidgetType"
               },
               "name": "config.engagementMedium"
             },
@@ -2815,22 +3943,22 @@
           ],
           "loc": {
             "start": {
-              "line": 62,
+              "line": 64,
               "column": 2
             },
             "end": {
-              "line": 76,
+              "line": 78,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 77,
+                "line": 79,
                 "column": 2
               },
               "end": {
-                "line": 88,
+                "line": 90,
                 "column": 3
               }
             },
@@ -2934,7 +4062,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(CONVERSION_WIDGET/REFERRING_WIDGET)",
+                            "value": "The content of the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -2943,8 +4071,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 37,
-                                "offset": 36
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -2958,8 +4086,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 37,
-                            "offset": 36
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -2973,14 +4101,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 37,
-                        "offset": 36
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -2994,7 +4122,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(POPUP/MOBILE)",
+                            "value": "How to display the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -3003,8 +4131,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 15,
-                                "offset": 14
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -3018,8 +4146,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 15,
-                            "offset": 14
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -3033,14 +4161,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 15,
-                        "offset": 14
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -3209,7 +4337,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "This function calls the WidgetApi.render() method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+                    "value": "This function calls the ",
                     "position": {
                       "start": {
                         "line": 1,
@@ -3217,9 +4345,51 @@
                         "offset": 0
                       },
                       "end": {
+                        "line": 1,
+                        "column": 25,
+                        "offset": 24
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "WidgetApi.render",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "WidgetApi.render"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 25,
+                        "offset": 24
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 49,
+                        "offset": 48
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 49,
+                        "offset": 48
+                      },
+                      "end": {
                         "line": 2,
                         "column": 71,
-                        "offset": 136
+                        "offset": 142
                       },
                       "indent": [
                         1
@@ -3236,7 +4406,7 @@
                   "end": {
                     "line": 2,
                     "column": 71,
-                    "offset": 136
+                    "offset": 142
                   },
                   "indent": [
                     1
@@ -3253,7 +4423,7 @@
               "end": {
                 "line": 2,
                 "column": 71,
-                "offset": 136
+                "offset": 142
               }
             }
           },
@@ -3300,21 +4470,21 @@
             },
             {
               "title": "param",
-              "description": "(REFERRED_WIDGET/REFERRING_WIDGET)",
+              "description": "The content of the widget.",
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "EngagementMedium"
               },
               "name": "config.widgetType"
             },
             {
               "title": "param",
-              "description": "(POPUP/MOBILE)",
+              "description": "How to display the widget.",
               "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "WidgetType"
               },
               "name": "config.engagementMedium"
             },
@@ -3349,22 +4519,22 @@
           ],
           "loc": {
             "start": {
-              "line": 90,
+              "line": 92,
               "column": 2
             },
             "end": {
-              "line": 104,
+              "line": 106,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 105,
+                "line": 107,
                 "column": 2
               },
               "end": {
-                "line": 116,
+                "line": 118,
                 "column": 3
               }
             },
@@ -3468,7 +4638,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(REFERRED_WIDGET/REFERRING_WIDGET)",
+                            "value": "The content of the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -3477,8 +4647,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 35,
-                                "offset": 34
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -3492,8 +4662,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 35,
-                            "offset": 34
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -3507,14 +4677,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 35,
-                        "offset": 34
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -3528,7 +4698,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(POPUP/MOBILE)",
+                            "value": "How to display the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -3537,8 +4707,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 15,
-                                "offset": 14
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -3552,8 +4722,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 15,
-                            "offset": 14
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -3567,14 +4737,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 15,
-                        "offset": 14
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -3755,7 +4925,7 @@
           "children": [
             {
               "type": "text",
-              "value": "An EmbedWidget is displayed inline in part of your page. ",
+              "value": "An EmbedWidget is displayed inline in part of your page.",
               "position": {
                 "start": {
                   "line": 1,
@@ -3764,8 +4934,8 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 58,
-                  "offset": 57
+                  "column": 57,
+                  "offset": 56
                 },
                 "indent": []
               }
@@ -3779,8 +4949,8 @@
             },
             "end": {
               "line": 1,
-              "column": 58,
-              "offset": 57
+              "column": 57,
+              "offset": 56
             },
             "indent": []
           }
@@ -3795,12 +4965,12 @@
                 "start": {
                   "line": 3,
                   "column": 1,
-                  "offset": 59
+                  "offset": 58
                 },
                 "end": {
                   "line": 3,
                   "column": 30,
-                  "offset": 88
+                  "offset": 87
                 },
                 "indent": []
               }
@@ -3820,12 +4990,12 @@
                 "start": {
                   "line": 3,
                   "column": 30,
-                  "offset": 88
+                  "offset": 87
                 },
                 "end": {
                   "line": 3,
                   "column": 45,
-                  "offset": 103
+                  "offset": 102
                 },
                 "indent": []
               }
@@ -3835,12 +5005,12 @@
             "start": {
               "line": 3,
               "column": 1,
-              "offset": 59
+              "offset": 58
             },
             "end": {
               "line": 3,
               "column": 45,
-              "offset": 103
+              "offset": 102
             },
             "indent": []
           }
@@ -3855,7 +5025,7 @@
         "end": {
           "line": 3,
           "column": 45,
-          "offset": 103
+          "offset": 102
         }
       }
     },
@@ -3877,7 +5047,7 @@
           "column": 0
         },
         "end": {
-          "line": 83,
+          "line": 99,
           "column": 1
         }
       },
@@ -3913,7 +5083,7 @@
           "children": [
             {
               "type": "text",
-              "value": "The PopupWidget is used to display popups (also known as \"Modals\"). \nPopups widgets are rendered on top of other elements in a page.",
+              "value": "The PopupWidget is used to display popups (also known as \"Modals\").\nPopups widgets are rendered on top of other elements in a page.",
               "position": {
                 "start": {
                   "line": 1,
@@ -3923,7 +5093,7 @@
                 "end": {
                   "line": 2,
                   "column": 64,
-                  "offset": 132
+                  "offset": 131
                 },
                 "indent": [
                   1
@@ -3940,7 +5110,7 @@
             "end": {
               "line": 2,
               "column": 64,
-              "offset": 132
+              "offset": 131
             },
             "indent": [
               1
@@ -3957,12 +5127,12 @@
                 "start": {
                   "line": 4,
                   "column": 1,
-                  "offset": 134
+                  "offset": 133
                 },
                 "end": {
                   "line": 4,
                   "column": 29,
-                  "offset": 162
+                  "offset": 161
                 },
                 "indent": []
               }
@@ -3982,12 +5152,12 @@
                 "start": {
                   "line": 4,
                   "column": 29,
-                  "offset": 162
+                  "offset": 161
                 },
                 "end": {
                   "line": 4,
                   "column": 44,
-                  "offset": 177
+                  "offset": 176
                 },
                 "indent": []
               }
@@ -3997,12 +5167,12 @@
             "start": {
               "line": 4,
               "column": 1,
-              "offset": 134
+              "offset": 133
             },
             "end": {
               "line": 4,
               "column": 44,
-              "offset": 177
+              "offset": 176
             },
             "indent": []
           }
@@ -4017,7 +5187,7 @@
         "end": {
           "line": 4,
           "column": 44,
-          "offset": 177
+          "offset": 176
         }
       }
     },
@@ -4111,18 +5281,18 @@
           "tags": [],
           "loc": {
             "start": {
-              "line": 102,
+              "line": 99,
               "column": 2
             },
             "end": {
-              "line": 104,
+              "line": 101,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 105,
+                "line": 102,
                 "column": 2
               },
               "end": {
@@ -4272,7 +5442,7 @@
           "children": [
             {
               "type": "text",
-              "value": "A CtaWidget is displayed on top of your page ",
+              "value": "A CtaWidget is displayed on top of your page",
               "position": {
                 "start": {
                   "line": 1,
@@ -4281,8 +5451,8 @@
                 },
                 "end": {
                   "line": 1,
-                  "column": 46,
-                  "offset": 45
+                  "column": 45,
+                  "offset": 44
                 },
                 "indent": []
               }
@@ -4296,8 +5466,8 @@
             },
             "end": {
               "line": 1,
-              "column": 46,
-              "offset": 45
+              "column": 45,
+              "offset": 44
             },
             "indent": []
           }
@@ -4312,12 +5482,12 @@
                 "start": {
                   "line": 3,
                   "column": 1,
-                  "offset": 47
+                  "offset": 46
                 },
                 "end": {
                   "line": 3,
                   "column": 27,
-                  "offset": 73
+                  "offset": 72
                 },
                 "indent": []
               }
@@ -4337,12 +5507,12 @@
                 "start": {
                   "line": 3,
                   "column": 27,
-                  "offset": 73
+                  "offset": 72
                 },
                 "end": {
                   "line": 3,
                   "column": 42,
-                  "offset": 88
+                  "offset": 87
                 },
                 "indent": []
               }
@@ -4352,12 +5522,12 @@
             "start": {
               "line": 3,
               "column": 1,
-              "offset": 47
+              "offset": 46
             },
             "end": {
               "line": 3,
               "column": 42,
-              "offset": 88
+              "offset": 87
             },
             "indent": []
           }
@@ -4372,7 +5542,7 @@
         "end": {
           "line": 3,
           "column": 42,
-          "offset": 88
+          "offset": 87
         }
       }
     },
@@ -4394,7 +5564,7 @@
           "column": 0
         },
         "end": {
-          "line": 107,
+          "line": 118,
           "column": 1
         }
       },
@@ -4421,22 +5591,22 @@
           ],
           "loc": {
             "start": {
-              "line": 95,
+              "line": 106,
               "column": 2
             },
             "end": {
-              "line": 97,
+              "line": 108,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 98,
+                "line": 109,
                 "column": 2
               },
               "end": {
-                "line": 100,
+                "line": 111,
                 "column": 3
               }
             },
@@ -4474,22 +5644,22 @@
           ],
           "loc": {
             "start": {
-              "line": 101,
+              "line": 112,
               "column": 2
             },
             "end": {
-              "line": 103,
+              "line": 114,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 104,
+                "line": 115,
                 "column": 2
               },
               "end": {
-                "line": 106,
+                "line": 117,
                 "column": 3
               }
             },
@@ -4584,22 +5754,22 @@
     "tags": [],
     "loc": {
       "start": {
-        "line": 5,
+        "line": 6,
         "column": 0
       },
       "end": {
-        "line": 9,
+        "line": 10,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 10,
+          "line": 11,
           "column": 0
         },
         "end": {
-          "line": 194,
+          "line": 211,
           "column": 1
         }
       },
@@ -4736,22 +5906,22 @@
           ],
           "loc": {
             "start": {
-              "line": 11,
+              "line": 12,
               "column": 2
             },
             "end": {
-              "line": 26,
+              "line": 27,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 27,
+                "line": 28,
                 "column": 2
               },
               "end": {
-                "line": 31,
+                "line": 32,
                 "column": 3
               }
             },
@@ -5073,21 +6243,21 @@
             },
             {
               "title": "param",
-              "description": "(REFERRED_WIDGET/CONVERSION_WIDGET)",
+              "description": "The content of the widget.",
               "lineNumber": 4,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "WidgetType"
               },
               "name": "params.widgetType"
             },
             {
               "title": "param",
-              "description": "(POPUP/MOBILE)",
+              "description": "How to display the widget.",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "EngagementMedium"
               },
               "name": "params.engagementMedium"
             },
@@ -5113,22 +6283,22 @@
           ],
           "loc": {
             "start": {
-              "line": 33,
+              "line": 34,
               "column": 2
             },
             "end": {
-              "line": 43,
+              "line": 44,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 44,
+                "line": 45,
                 "column": 2
               },
               "end": {
-                "line": 56,
+                "line": 57,
                 "column": 3
               }
             },
@@ -5158,7 +6328,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(REFERRED_WIDGET/CONVERSION_WIDGET)",
+                            "value": "The content of the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -5167,8 +6337,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 36,
-                                "offset": 35
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -5182,8 +6352,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 36,
-                            "offset": 35
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -5197,14 +6367,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 36,
-                        "offset": 35
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -5218,7 +6388,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(POPUP/MOBILE)",
+                            "value": "How to display the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -5227,8 +6397,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 15,
-                                "offset": 14
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -5242,8 +6412,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 15,
-                            "offset": 14
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -5257,14 +6427,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 15,
-                        "offset": 14
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -5511,21 +6681,21 @@
             },
             {
               "title": "param",
-              "description": "(REFERRED_WIDGET/REFERRING_WIDGET)",
+              "description": "The content of the widget.",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "WidgetType"
               },
               "name": "params.widgetType"
             },
             {
               "title": "param",
-              "description": "(POPUP/MOBILE)",
+              "description": "How to display the widget.",
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "EngagementMedium"
               },
               "name": "params.engagementMedium"
             },
@@ -5551,22 +6721,22 @@
           ],
           "loc": {
             "start": {
-              "line": 58,
+              "line": 59,
               "column": 2
             },
             "end": {
-              "line": 71,
+              "line": 72,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 72,
+                "line": 73,
                 "column": 2
               },
               "end": {
-                "line": 90,
+                "line": 91,
                 "column": 3
               }
             },
@@ -5674,7 +6844,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(REFERRED_WIDGET/REFERRING_WIDGET)",
+                            "value": "The content of the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -5683,8 +6853,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 35,
-                                "offset": 34
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -5698,8 +6868,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 35,
-                            "offset": 34
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -5713,14 +6883,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 35,
-                        "offset": 34
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -5734,7 +6904,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(POPUP/MOBILE)",
+                            "value": "How to display the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -5743,8 +6913,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 15,
-                                "offset": 14
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -5758,8 +6928,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 15,
-                            "offset": 14
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -5773,14 +6943,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 15,
-                        "offset": 14
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -6027,21 +7197,21 @@
             },
             {
               "title": "param",
-              "description": "(REFERRED_WIDGET/REFERRING_WIDGET)",
+              "description": "The content of the widget.",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "WidgetType"
               },
               "name": "params.widgetType"
             },
             {
               "title": "param",
-              "description": "(POPUP/MOBILE)",
+              "description": "How to display the widget.",
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
-                "name": "string"
+                "name": "EngagementMedium"
               },
               "name": "params.engagementMedium"
             },
@@ -6067,22 +7237,22 @@
           ],
           "loc": {
             "start": {
-              "line": 92,
+              "line": 93,
               "column": 2
             },
             "end": {
-              "line": 104,
+              "line": 105,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 105,
+                "line": 106,
                 "column": 2
               },
               "end": {
-                "line": 118,
+                "line": 119,
                 "column": 3
               }
             },
@@ -6190,7 +7360,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(REFERRED_WIDGET/REFERRING_WIDGET)",
+                            "value": "The content of the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -6199,8 +7369,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 35,
-                                "offset": 34
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -6214,8 +7384,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 35,
-                            "offset": 34
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -6229,14 +7399,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 35,
-                        "offset": 34
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -6250,7 +7420,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "(POPUP/MOBILE)",
+                            "value": "How to display the widget.",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -6259,8 +7429,8 @@
                               },
                               "end": {
                                 "line": 1,
-                                "column": 15,
-                                "offset": 14
+                                "column": 27,
+                                "offset": 26
                               },
                               "indent": []
                             }
@@ -6274,8 +7444,8 @@
                           },
                           "end": {
                             "line": 1,
-                            "column": 15,
-                            "offset": 14
+                            "column": 27,
+                            "offset": 26
                           },
                           "indent": []
                         }
@@ -6289,14 +7459,14 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 15,
-                        "offset": 14
+                        "column": 27,
+                        "offset": 26
                       }
                     }
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -6456,7 +7626,7 @@
                 "children": [
                   {
                     "type": "text",
-                    "value": "Description here.",
+                    "value": "Looks up the referral code of the current user, if there is any.",
                     "position": {
                       "start": {
                         "line": 1,
@@ -6465,8 +7635,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 18,
-                        "offset": 17
+                        "column": 65,
+                        "offset": 64
                       },
                       "indent": []
                     }
@@ -6480,8 +7650,8 @@
                   },
                   "end": {
                     "line": 1,
-                    "column": 18,
-                    "offset": 17
+                    "column": 65,
+                    "offset": 64
                   },
                   "indent": []
                 }
@@ -6495,137 +7665,54 @@
               },
               "end": {
                 "line": 1,
-                "column": 18,
-                "offset": 17
+                "column": 65,
+                "offset": 64
               }
             }
           },
           "tags": [
             {
-              "title": "param",
-              "description": null,
-              "lineNumber": 3,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params"
-            },
-            {
-              "title": "param",
-              "description": "the user details",
-              "lineNumber": 4,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "name": "params.code"
-            },
-            {
               "title": "return",
               "description": "code referral code if true.",
-              "lineNumber": 5,
+              "lineNumber": 3,
               "type": {
-                "type": "NameExpression",
-                "name": "Promise"
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Promise"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
               }
             }
           ],
           "loc": {
             "start": {
-              "line": 120,
+              "line": 121,
               "column": 2
             },
             "end": {
-              "line": 126,
+              "line": 125,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 127,
+                "line": 126,
                 "column": 2
               },
               "end": {
-                "line": 131,
+                "line": 130,
                 "column": 3
               }
             },
             "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
           },
-          "params": [
-            {
-              "name": "params",
-              "lineNumber": 3,
-              "type": {
-                "type": "NameExpression",
-                "name": "Object"
-              },
-              "properties": [
-                {
-                  "name": "params.code",
-                  "lineNumber": 4,
-                  "description": {
-                    "type": "root",
-                    "children": [
-                      {
-                        "type": "paragraph",
-                        "children": [
-                          {
-                            "type": "text",
-                            "value": "the user details",
-                            "position": {
-                              "start": {
-                                "line": 1,
-                                "column": 1,
-                                "offset": 0
-                              },
-                              "end": {
-                                "line": 1,
-                                "column": 17,
-                                "offset": 16
-                              },
-                              "indent": []
-                            }
-                          }
-                        ],
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 17,
-                            "offset": 16
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 17,
-                        "offset": 16
-                      }
-                    }
-                  },
-                  "type": {
-                    "type": "NameExpression",
-                    "name": "Object"
-                  }
-                }
-              ]
-            }
-          ],
           "returns": [
             {
               "description": {
@@ -6681,8 +7768,17 @@
                 }
               },
               "type": {
-                "type": "NameExpression",
-                "name": "Promise"
+                "type": "TypeApplication",
+                "expression": {
+                  "type": "NameExpression",
+                  "name": "Promise"
+                },
+                "applications": [
+                  {
+                    "type": "NameExpression",
+                    "name": "string"
+                  }
+                ]
               }
             }
           ],

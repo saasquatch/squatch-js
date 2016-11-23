@@ -35,26 +35,6 @@
               
                 
                 <li><a
-                  href='#init'
-                  class="">
-                  init
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#ready'
-                  class="">
-                  ready
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
                   href='#api'
                   class="">
                   api
@@ -75,9 +55,59 @@
               
                 
                 <li><a
+                  href='#init'
+                  class="">
+                  init
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#ready'
+                  class="">
+                  ready
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#autofill'
                   class="">
                   autofill
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#submitemail'
+                  class="">
+                  submitEmail
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#engagementmedium'
+                  class="">
+                  EngagementMedium
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#widgettype'
+                  class="">
+                  WidgetType
                   
                 </a>
                 
@@ -336,6 +366,96 @@ referral short links and referral codes, and more.</p>
 
   
   <div class='clearfix'>
+    <h3 class='fl m0' id='api'>
+      api
+    </h3>
+    
+  </div>
+  
+
+  <p>A static instance of the <a href="#widgetapi">WidgetApi</a> created when you call <a href="#init">init</a>.</p>
+<p>Read the <a href="#widgetapi">WidgetApi</a> docs.</p>
+
+
+  <div class='pre p1 fill-light mt0'>api()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    <h3 class='fl m0' id='widgets'>
+      widgets
+    </h3>
+    
+  </div>
+  
+
+  <p>A static instance of the <a href="#widgets">Widgets</a> created when you call <a href="#init">init</a>.</p>
+<p>Read the <a href="#widgets">Widgets</a> docs.</p>
+
+
+  <div class='pre p1 fill-light mt0'>widgets()</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
     <h3 class='fl m0' id='init'>
       init
     </h3>
@@ -470,112 +590,6 @@ function detects that state.</p>
 
   
   <div class='clearfix'>
-    <h3 class='fl m0' id='api'>
-      api
-    </h3>
-    
-  </div>
-  
-
-  <p>Static instance of the <a href="#widgetapi">WidgetApi</a>. Make sure you call <a href="#init">init</a> first</p>
-
-
-  <div class='pre p1 fill-light mt0'>api()</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>squatch.init({tenantAlias:<span class="hljs-string">'test_basbtabstq51v'</span>});
-squatch.ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  squatch.api().cookieUser();
-});</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    <h3 class='fl m0' id='widgets'>
-      widgets
-    </h3>
-    
-  </div>
-  
-
-  <p>Static instance of <a href="#widgets">Widgets</a>. Make sure you call <a href="#init">init</a> first</p>
-
-
-  <div class='pre p1 fill-light mt0'>widgets()</div>
-
-  
-
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'>squatch.init({tenantAlias:<span class="hljs-string">'test_basbtabstq51v'</span>});
-squatch.ready(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  squatch.widgets().cookieUser().then(doSomething);
-});</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
     <h3 class='fl m0' id='autofill'>
       autofill
     </h3>
@@ -583,7 +597,9 @@ squatch.ready(<span class="hljs-function"><span class="hljs-keyword">function</s
   </div>
   
 
-  
+  <p>Autofills a referral code into an element when someone has been referred.
+Uses <a href="WidgetApi.squatchReferralCookie">WidgetApi.squatchReferralCookie</a> behind the scenes.</p>
+
 
   <div class='pre p1 fill-light mt0'>autofill(element: any)</div>
 
@@ -615,6 +631,214 @@ squatch.ready(<span class="hljs-function"><span class="hljs-keyword">function</s
 
   
 
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    <h3 class='fl m0' id='submitemail'>
+      submitEmail
+    </h3>
+    
+  </div>
+  
+
+  <p>Overrides the default function that submits the user email. If you have
+Security enabled, the email needs to be signed before it&#x27;s submitted.</p>
+
+
+  <div class='pre p1 fill-light mt0'>submitEmail(fn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>fn</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code> Callback function for the &#x27;submit_email&#x27; event.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>squatch.submitEmail(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">target, widget, email</span>) </span>{
+  <span class="hljs-comment">// Sign email and generate jwt token</span>
+  <span class="hljs-keyword">var</span> jwt = <span class="hljs-string">'token'</span>;
+  widget.reload(email, jwt);
+});</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    <h3 class='fl m0' id='engagementmedium'>
+      EngagementMedium
+    </h3>
+    
+  </div>
+  
+
+  <p>EngagementMedium is an enum for the content of the widgets.</p>
+
+
+  <div class='pre p1 fill-light mt0'>EngagementMedium</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>REFERRER_WIDGET</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          : Widget content that lets people make referrals
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>CONVERSION_WIDGET</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          : Widget content that shows that someone has been referred
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>engagementMedium: <span class="hljs-string">"REFERRER_WIDGET"</span></pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    <h3 class='fl m0' id='widgettype'>
+      WidgetType
+    </h3>
+    
+  </div>
+  
+
+  <p>WidgetType is an enum for types of ways a Widget can be displayed.</p>
+
+
+  <div class='pre p1 fill-light mt0'>WidgetType</div>
+
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>POPUP</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          : Displays the widget as a modal popup. Creates a 
+<a href="#popupwidget">PopupWidget</a>
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>EMBED</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          : Displays the widget embedded in the page. Create an 
+<a href="#embedwidget">EmbedWidget</a>
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>widgetType: <span class="hljs-string">"POPUP"</span></pre>
+    
   
 
   
@@ -765,8 +989,8 @@ squatch.ready(<span class="hljs-function"><span class="hljs-keyword">function</s
   </div>
   
 
-  <p>The Widgets class contains a widget loading process for different calls
-to the WidgetApi.</p>
+  <p><code>Widgets</code> is a factory for creating widgets. It&#x27;s possible to build your own widgets using the
+<a href="#widgetapi">WidgetApi</a> but most people will prefer to use these easy methods.</p>
 
 
   <div class='pre p1 fill-light mt0'>new Widgets()</div>
@@ -882,7 +1106,7 @@ to the WidgetApi.</p>
 
   
 
-  <p>This function calls the WidgetApi.cookieUser() method, and it renders
+  <p>This function calls the <a href="WidgetApi.cookieUser">WidgetApi.cookieUser</a> method, and it renders
 the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.</p>
 
 
@@ -919,16 +1143,16 @@ the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.
             <tbody class='mt1'>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>config.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>config.widgetType</span> <code class='quiet'><a href="#engagementmedium">EngagementMedium</a></code>
                   </td>
-                  <td class='break-word'><span>(REFERRED_WIDGET/CONVERSION_WIDGET)
+                  <td class='break-word'><span>The content of the widget.
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>config.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>config.engagementMedium</span> <code class='quiet'><a href="#widgettype">WidgetType</a></code>
                   </td>
-                  <td class='break-word'><span>(POPUP/MOBILE)
+                  <td class='break-word'><span>How to display the widget.
 </span></td>
                 </tr>
               
@@ -986,7 +1210,7 @@ validate the data (can be disabled)
 
   
 
-  <p>This function calls the WidgetApi.upsert() method, and it renders
+  <p>This function calls the <a href="WidgetApi.upsert">WidgetApi.upsert</a> method, and it renders
 the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.</p>
 
 
@@ -1030,16 +1254,16 @@ the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>config.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>config.widgetType</span> <code class='quiet'><a href="#engagementmedium">EngagementMedium</a></code>
                   </td>
-                  <td class='break-word'><span>(CONVERSION_WIDGET/REFERRING_WIDGET)
+                  <td class='break-word'><span>The content of the widget.
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>config.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>config.engagementMedium</span> <code class='quiet'><a href="#widgettype">WidgetType</a></code>
                   </td>
-                  <td class='break-word'><span>(POPUP/MOBILE)
+                  <td class='break-word'><span>How to display the widget.
 </span></td>
                 </tr>
               
@@ -1097,7 +1321,7 @@ to validate the data (can be disabled)
 
   
 
-  <p>This function calls the WidgetApi.render() method, and it renders
+  <p>This function calls the <a href="WidgetApi.render">WidgetApi.render</a> method, and it renders
 the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.</p>
 
 
@@ -1141,16 +1365,16 @@ the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>config.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>config.widgetType</span> <code class='quiet'><a href="#engagementmedium">EngagementMedium</a></code>
                   </td>
-                  <td class='break-word'><span>(REFERRED_WIDGET/REFERRING_WIDGET)
+                  <td class='break-word'><span>The content of the widget.
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>config.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>config.engagementMedium</span> <code class='quiet'><a href="#widgettype">WidgetType</a></code>
                   </td>
-                  <td class='break-word'><span>(POPUP/MOBILE)
+                  <td class='break-word'><span>How to display the widget.
 </span></td>
                 </tr>
               
@@ -1716,16 +1940,16 @@ Popups widgets are rendered on top of other elements in a page.</p>
             <tbody class='mt1'>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="#widgettype">WidgetType</a></code>
                   </td>
-                  <td class='break-word'><span>(REFERRED_WIDGET/CONVERSION_WIDGET)
+                  <td class='break-word'><span>The content of the widget.
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="#engagementmedium">EngagementMedium</a></code>
                   </td>
-                  <td class='break-word'><span>(POPUP/MOBILE)
+                  <td class='break-word'><span>How to display the widget.
 </span></td>
                 </tr>
               
@@ -1826,16 +2050,16 @@ validate the data (can be disabled)
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="#widgettype">WidgetType</a></code>
                   </td>
-                  <td class='break-word'><span>(REFERRED_WIDGET/REFERRING_WIDGET)
+                  <td class='break-word'><span>The content of the widget.
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="#engagementmedium">EngagementMedium</a></code>
                   </td>
-                  <td class='break-word'><span>(POPUP/MOBILE)
+                  <td class='break-word'><span>How to display the widget.
 </span></td>
                 </tr>
               
@@ -1936,16 +2160,16 @@ to validate the data (can be disabled)
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>params.widgetType</span> <code class='quiet'><a href="#widgettype">WidgetType</a></code>
                   </td>
-                  <td class='break-word'><span>(REFERRED_WIDGET/REFERRING_WIDGET)
+                  <td class='break-word'><span>The content of the widget.
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+                  <td class='break-word'><span class='code bold'>params.engagementMedium</span> <code class='quiet'><a href="#engagementmedium">EngagementMedium</a></code>
                   </td>
-                  <td class='break-word'><span>(POPUP/MOBILE)
+                  <td class='break-word'><span>How to display the widget.
 </span></td>
                 </tr>
               
@@ -1995,7 +2219,7 @@ to validate the data (can be disabled)
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>squatchReferralCookie(params)</span>
+            <span class='code strong strong truncate'>squatchReferralCookie()</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2003,54 +2227,19 @@ to validate the data (can be disabled)
 
   
 
-  <p>Description here.</p>
+  <p>Looks up the referral code of the current user, if there is any.</p>
 
 
-  <div class='pre p1 fill-light mt0'>squatchReferralCookie(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>squatchReferralCookie(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>&gt;</div>
 
-  
-
-  
-  
-  
-  
   
 
   
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> 
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>params.code</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-                  </td>
-                  <td class='break-word'><span>the user details
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
+  
+  
+  
+  
+
   
 
   
@@ -2058,7 +2247,7 @@ to validate the data (can be disabled)
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></code>:
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>&gt;</code>:
         code referral code if true.
 
       
