@@ -90,7 +90,7 @@
           "column": 26
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
     "kind": "module",
     "name": "squatch",
@@ -361,7 +361,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
     "returns": [
       {
@@ -692,7 +692,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
     "returns": [
       {
@@ -1119,7 +1119,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1330,7 +1330,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1578,7 +1578,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1784,7 +1784,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1996,7 +1996,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
     },
     "interface": true,
     "name": "ConfigOptions",
@@ -2275,7 +2275,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
     },
     "name": "EngagementMedium",
     "readonly": true,
@@ -2538,7 +2538,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
     },
     "name": "WidgetType",
     "readonly": true,
@@ -2941,7 +2941,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
     },
     "interface": true,
     "name": "WidgetResult",
@@ -3216,7 +3216,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
     },
     "name": "Widgets",
     "kind": "class",
@@ -3368,7 +3368,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -3800,7 +3800,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -4350,7 +4350,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -5082,7 +5082,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -5745,7 +5745,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -5953,7 +5953,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -6209,7 +6209,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/widgets/EmbedWidget.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/EmbedWidget.js"
     },
     "name": "EmbedWidget",
     "augments": [
@@ -6370,7 +6370,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/widgets/PopupWidget.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/PopupWidget.js"
     },
     "name": "PopupWidget",
     "augments": [
@@ -6527,7 +6527,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/CtaWidget.js"
     },
     "name": "CtaWidget",
     "augments": [
@@ -6569,7 +6569,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/CtaWidget.js"
           },
           "name": "open",
           "kind": "function",
@@ -6622,7 +6622,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/CtaWidget.js"
           },
           "name": "close",
           "kind": "function",
@@ -6732,7 +6732,7 @@
           "column": 1
         }
       },
-      "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
+      "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
     },
     "name": "WidgetApi",
     "kind": "class",
@@ -6884,7 +6884,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -7261,7 +7261,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -7751,7 +7751,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -8423,7 +8423,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -9034,7 +9034,7 @@
                 "column": 3
               }
             },
-            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
+            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
           },
           "returns": [
             {

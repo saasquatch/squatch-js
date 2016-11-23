@@ -1,11 +1,18 @@
-var window = window || "";
-var wapi = window ? window.WidgetApi : require('../dist/Squatch.WidgetApi');
-var chai = window ? window.chai : require('../node_modules/chai/chai');
-
-console.log(wapi);
-var WidgetApi = wapi.default;
-console.log(WidgetApi);
+var squatch = require('../dist/squatch.js');
+var chai = require('chai');
 var assert = chai.assert;
+
+var WidgetApi = squatch.WidgetApi;
+console.log(WidgetApi);
+
+describe('Squatch.js global', function() {
+
+  it('inits without error', function() {
+    squatch.init({tenantAlias:'test_foobar'});
+  });
+
+  
+});
 
 describe('Widget API', function() {
   var config = {

@@ -507,7 +507,6 @@ referral short links and referral codes, and more.</p>
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code>void</code>:
         
-
       
     
   
@@ -518,7 +517,7 @@ referral short links and referral codes, and more.</p>
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>squatch.init({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_basbtabstq51v'</span>});</pre>
+      <pre class='p1 overflow-auto round fill-light'>squatch.init({tenantAlias:<span class="hljs-string">'test_basbtabstq51v'</span>});</pre>
     
   
 
@@ -543,7 +542,7 @@ referral short links and referral codes, and more.</p>
   </div>
   
 
-  <p>Squatch.js can't start safely making operations until it's "ready". This
+  <p>Squatch.js can&#x27;t start safely making operations until it&#x27;s &quot;ready&quot;. This
 function detects that state.</p>
 
 
@@ -579,7 +578,6 @@ function detects that state.</p>
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code>void</code>:
         
-
       
     
   
@@ -654,7 +652,6 @@ Uses <a href="WidgetApi.squatchReferralCookie">WidgetApi.squatchReferralCookie</
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code>void</code>:
         
-
       
     
   
@@ -685,7 +682,7 @@ Uses <a href="WidgetApi.squatchReferralCookie">WidgetApi.squatchReferralCookie</
   
 
   <p>Overrides the default function that submits the user email. If you have
-Security enabled, the email needs to be signed before it's submitted.</p>
+Security enabled, the email needs to be signed before it&#x27;s submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>submitEmail(fn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>): void</div>
@@ -704,7 +701,7 @@ Security enabled, the email needs to be signed before it's submitted.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fn</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code> Callback function for the 'submit_email' event.
+            <span class='code bold'>fn</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code> Callback function for the &#x27;submit_email&#x27; event.
 
           </div>
           
@@ -720,7 +717,6 @@ Security enabled, the email needs to be signed before it's submitted.</p>
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code>void</code>:
         
-
       
     
   
@@ -781,7 +777,7 @@ Security enabled, the email needs to be signed before it's submitted.</p>
       
         <div class='space-bottom0'>
           <span class='code bold'>tenantAlias</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          : The Tenant that you're using.
+          : The Tenant that you&#x27;re using.
 
           
         </div>
@@ -964,7 +960,7 @@ Security enabled, the email needs to be signed before it's submitted.</p>
   </div>
   
 
-  <p>When a widget is loaded using <a href="#widgets">Widgets</a> you'll get both the <code>user</code> data and the <code>widget</code> object back.</p>
+  <p>When a widget is loaded using <a href="#widgets">Widgets</a> you&#x27;ll get both the <code>user</code> data and the <code>widget</code> object back.</p>
 
 
   <div class='pre p1 fill-light mt0'>WidgetResult</div>
@@ -992,7 +988,7 @@ Security enabled, the email needs to be signed before it's submitted.</p>
       
         <div class='space-bottom0'>
           <span class='code bold'>user</span> <code class='quiet'>(User)</code>
-          : The user that's in the widget.
+          : The user that&#x27;s in the widget.
 
           
         </div>
@@ -1027,7 +1023,7 @@ Security enabled, the email needs to be signed before it's submitted.</p>
   </div>
   
 
-  <p><code>Widgets</code> is a factory for creating widgets. It's possible to build your own widgets using the
+  <p><code>Widgets</code> is a factory for creating widgets. It&#x27;s possible to build your own widgets using the
 <a href="#widgetapi">WidgetApi</a> but most people will prefer to use these easy methods.</p>
 
 
@@ -1108,17 +1104,17 @@ Security enabled, the email needs to be signed before it's submitted.</p>
     
       <p><p>Browser example</p>
 </p>
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> widgets = <span class="hljs-keyword">new</span> squatch.Widgets({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> widgets = <span class="hljs-keyword">new</span> squatch.Widgets({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
       <p><p>Browserify/Webpack example</p>
 </p>
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> Widgets = <span class="hljs-built_in">require</span>(<span class="hljs-string">'squatch-js'</span>).Widgets;
-<span class="hljs-keyword">var</span> widgets = <span class="hljs-keyword">new</span> Widgets({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+<span class="hljs-keyword">var</span> widgets = <span class="hljs-keyword">new</span> Widgets({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
       <p><p>Babel+Browserify/Webpack example</p>
 </p>
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> {Widgets} <span class="hljs-keyword">from</span> <span class="hljs-string">'squatch-js'</span>;
-<span class="hljs-keyword">let</span> widgets = <span class="hljs-keyword">new</span> Widgets({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+<span class="hljs-keyword">let</span> widgets = <span class="hljs-keyword">new</span> Widgets({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
   
 
@@ -1145,10 +1141,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
   
 
   <p>This function calls the <a href="WidgetApi.cookieUser">WidgetApi.cookieUser</a> method, and it renders
-the widget if it is successful. Otherwise it shows the "error" widget.</p>
+the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.</p>
 
 
-  <div class='pre p1 fill-light mt0'>createCookieUser(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></div>
+  <div class='pre p1 fill-light mt0'>createCookieUser(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="#widgetresult">WidgetResult</a>&gt;</div>
 
   
 
@@ -1216,7 +1212,7 @@ validate the data (can be disabled)
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></code>:
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="#widgetresult">WidgetResult</a>&gt;</code>:
         json object if true, with a Widget and user details.
 
       
@@ -1250,10 +1246,10 @@ validate the data (can be disabled)
   
 
   <p>This function calls the <a href="WidgetApi.upsert">WidgetApi.upsert</a> method, and it renders
-the widget if it is successful. Otherwise it shows the "error" widget.</p>
+the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.</p>
 
 
-  <div class='pre p1 fill-light mt0'>upsertUser(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></div>
+  <div class='pre p1 fill-light mt0'>upsertUser(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="#widgetresult">WidgetResult</a>&gt;</div>
 
   
 
@@ -1328,7 +1324,7 @@ to validate the data (can be disabled)
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></code>:
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="#widgetresult">WidgetResult</a>&gt;</code>:
         json object if true, with a Widget and user details.
 
       
@@ -1362,10 +1358,10 @@ to validate the data (can be disabled)
   
 
   <p>This function calls the <a href="WidgetApi.render">WidgetApi.render</a> method, and it renders
-the widget if it is successful. Otherwise it shows the "error" widget.</p>
+the widget if it is successful. Otherwise it shows the &quot;error&quot; widget.</p>
 
 
-  <div class='pre p1 fill-light mt0'>render(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></div>
+  <div class='pre p1 fill-light mt0'>render(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="#widgetresult">WidgetResult</a>&gt;</div>
 
   
 
@@ -1440,7 +1436,7 @@ to validate the data (can be disabled)
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></code>:
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="#widgetresult">WidgetResult</a>&gt;</code>:
         json object if true, with a Widget and user details.
 
       
@@ -1509,7 +1505,6 @@ Uses <a href="WidgetApi.squatchReferralCookie">WidgetApi.squatchReferralCookie</
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code>void</code>:
         
-
       
     
   
@@ -1541,7 +1536,7 @@ Uses <a href="WidgetApi.squatchReferralCookie">WidgetApi.squatchReferralCookie</
   
 
   <p>Overrides the default function that submits the user email. If you have
-Security enabled, the email needs to be signed before it's submitted.</p>
+Security enabled, the email needs to be signed before it&#x27;s submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>submitEmail(fn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>): void</div>
@@ -1560,7 +1555,7 @@ Security enabled, the email needs to be signed before it's submitted.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fn</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code> Callback function for the 'submit_email' event.
+            <span class='code bold'>fn</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code> Callback function for the &#x27;submit_email&#x27; event.
 
           </div>
           
@@ -1576,7 +1571,6 @@ Security enabled, the email needs to be signed before it's submitted.</p>
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code>void</code>:
         
-
       
     
   
@@ -1668,7 +1662,7 @@ Security enabled, the email needs to be signed before it's submitted.</p>
   </div>
   
 
-  <p>The PopupWidget is used to display popups (also known as "Modals").
+  <p>The PopupWidget is used to display popups (also known as &quot;Modals&quot;).
 Popups widgets are rendered on top of other elements in a page.</p>
 <p>To create a PopupWidget use <a href="#widgets">Widgets</a></p>
 
@@ -1947,17 +1941,17 @@ Popups widgets are rendered on top of other elements in a page.</p>
     
       <p><p>Browser example</p>
 </p>
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> squatch.WidgetApi({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> squatch.WidgetApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
       <p><p>Browserify/Webpack example</p>
 </p>
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">var</span> WidgetApi = <span class="hljs-built_in">require</span>(<span class="hljs-string">'squatch-js'</span>).WidgetApi;
-<span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+<span class="hljs-keyword">var</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
       <p><p>Babel+Browserify/Webpack example</p>
 </p>
       <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> {WidgetApi} <span class="hljs-keyword">from</span> <span class="hljs-string">'squatch-js'</span>;
-<span class="hljs-keyword">let</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({<span class="hljs-attr">tenantAlias</span>:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
+<span class="hljs-keyword">let</span> squatchApi = <span class="hljs-keyword">new</span> WidgetApi({tenantAlias:<span class="hljs-string">'test_12b5bo1b25125'</span>});</pre>
     
   
 
@@ -1986,7 +1980,7 @@ Popups widgets are rendered on top of other elements in a page.</p>
   <p>Creates/upserts an anonymous user.</p>
 
 
-  <div class='pre p1 fill-light mt0'>cookieUser(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>cookieUser(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &#x27;&#x27;, engagementMedium: &#x27;&#x27;, jwt: &#x27;&#x27; })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -2002,7 +1996,7 @@ Popups widgets are rendered on top of other elements in a page.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' }))</code> Parameters for request
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &#x27;&#x27;, engagementMedium: &#x27;&#x27;, jwt: &#x27;&#x27; }))</code> Parameters for request
 
           </div>
           
@@ -2090,7 +2084,7 @@ validate the data (can be disabled)
   <p>Creates/upserts user.</p>
 
 
-  <div class='pre p1 fill-light mt0'>upsert(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>upsert(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &#x27;&#x27;, engagementMedium: &#x27;&#x27;, jwt: &#x27;&#x27; })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -2106,7 +2100,7 @@ validate the data (can be disabled)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' }))</code> Parameters for request
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &#x27;&#x27;, engagementMedium: &#x27;&#x27;, jwt: &#x27;&#x27; }))</code> Parameters for request
 
           </div>
           
@@ -2201,7 +2195,7 @@ to validate the data (can be disabled)
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>render(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  <div class='pre p1 fill-light mt0'>render(params: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &#x27;&#x27;, engagementMedium: &#x27;&#x27;, jwt: &#x27;&#x27; })): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
 
   
 
@@ -2217,7 +2211,7 @@ to validate the data (can be disabled)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: '', engagementMedium: '', jwt: '' }))</code> Parameters for request
+            <span class='code bold'>params</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default { widgetType: &#x27;&#x27;, engagementMedium: &#x27;&#x27;, jwt: &#x27;&#x27; }))</code> Parameters for request
 
           </div>
           
@@ -2312,7 +2306,7 @@ to validate the data (can be disabled)
   <p>Looks up the referral code of the current user, if there is any.</p>
 
 
-  <div class='pre p1 fill-light mt0'>squatchReferralCookie(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">json</a>></div>
+  <div class='pre p1 fill-light mt0'>squatchReferralCookie(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">json</a>&gt;</div>
 
   
 
@@ -2329,7 +2323,7 @@ to validate the data (can be disabled)
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">json</a>></code>:
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">json</a>&gt;</code>:
         code referral code if true.
 
       

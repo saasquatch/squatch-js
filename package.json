@@ -1,19 +1,32 @@
 {
-  "name": "squatch-js",
-  "version": "2.0.0",
+  "name": "@saasquatch/squatch-js",
+  "version": "2.0.0-alpha.0",
   "description": "",
+  "license": "MIT",
+  "main": "dist/squatch.js",
+  "browser": "src/squatch.js",
+  "bugs": {
+    "url": "https://github.com/saasquatch/squatch-js/issues",
+    "email": "support@referralsaasquatch.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/saasquatch/squatch-js.git"
+  },
   "scripts": {
     "watch": "webpack --watch",
     "build": "webpack",
     "build:production": "NODE_ENV=production webpack",
-    "test": "./node_modules/karma/bin/karma start --log-level debug --single-run",
+    "test": "npm run test:karma && npm run lint:docs && npm run eslint:src",
+    "test:karma": "./node_modules/karma/bin/karma start --single-run",
     "build:docs": "npm run build:docs:markdown && npm run build:docs:json && npm run build:docs:html",
     "build:docs:markdown": "documentation build src/squatch.js -f md > docs/docs.md",
     "build:docs:json": "documentation build src/squatch.js -f json > docs/docs.json",
     "build:docs:html": "documentation build src/squatch.js -f html -o docs",
-    "preversion": "npm run build:docs",
+    "deploy:docs": "surge ./ -d squathjsv2.surge.sh",
+    "preversion": "npm run build && npm run build:production && npm run build:docs",
     "serve:docs": "documentation serve src/squatch.js --port $PORT --watch",
-    "lint:docs": "documentation lint src && eslint",
+    "lint:docs": "documentation lint src",
     "eslint:src": "eslint src/api src/widgets src/squatch.js"
   },
   "devDependencies": {
@@ -31,6 +44,7 @@
     "karma-chrome-launcher": "^2.0.0",
     "karma-firefox-launcher": "^1.0.0",
     "karma-mocha": "^1.1.1",
+    "karma-phantomjs-launcher": "^1.0.2",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
     "node-libs-browser": "^0.5.3",
