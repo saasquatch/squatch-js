@@ -893,14 +893,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this = this;
 
 	      return new _es6Promise2.default(function (resolve, reject) {
-	        _this.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this.renderWidget(response, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
+	        try {
+	          _this.api.cookieUser(config).then(function (response) {
+	            resolve({ widget: _this.renderWidget(response, config), user: response.user });
+	          }).catch(function (err) {
+	            if (err.apiErrorCode) {
+	              Widgets.renderErrorWidget(err, config.engagementMedium);
+	            }
+	            reject(err);
+	          });
+	        } catch (e) {
+	          throw new Error(e);
+	        }
 	      });
 	    }
 
@@ -926,15 +930,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this2 = this;
 
 	      return new _es6Promise2.default(function (resolve, reject) {
-	        _this2.api.upsertUser(config).then(function (response) {
-	          resolve({ widget: _this2.renderWidget(response, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          _log(err);
-	          reject(err);
-	        });
+	        try {
+	          _this2.api.upsertUser(config).then(function (response) {
+	            resolve({ widget: _this2.renderWidget(response, config), user: response.user });
+	          }).catch(function (err) {
+	            if (err.apiErrorCode) {
+	              Widgets.renderErrorWidget(err, config.engagementMedium);
+	            }
+	            _log(err);
+	            reject(err);
+	          });
+	        } catch (e) {
+	          throw new Error(e);
+	        }
 	      });
 	    }
 
@@ -960,14 +968,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this3 = this;
 
 	      return new _es6Promise2.default(function (resolve, reject) {
-	        _this3.api.cookieUser(config).then(function (response) {
-	          resolve({ widget: _this3.renderWidget({ template: response }, config), user: response.user });
-	        }).catch(function (err) {
-	          if (err.apiErrorCode) {
-	            Widgets.renderErrorWidget(err, config.engagementMedium);
-	          }
-	          reject(err);
-	        });
+	        try {
+	          _this3.api.cookieUser(config).then(function (response) {
+	            resolve({
+	              widget: _this3.renderWidget({ template: response }, config),
+	              user: response.user });
+	          }).catch(function (err) {
+	            if (err.apiErrorCode) {
+	              Widgets.renderErrorWidget(err, config.engagementMedium);
+	            }
+	            reject(err);
+	          });
+	        } catch (e) {
+	          throw new Error(e);
+	        }
 	      });
 	    }
 
@@ -2635,7 +2649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
 	      var url = this.domain + path;
 
-	      var user = params.user;
+	      var user = Object.assign({}, params.user);
 	      delete user.accountId;
 	      delete user.id;
 

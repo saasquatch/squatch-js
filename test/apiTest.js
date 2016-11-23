@@ -3,7 +3,6 @@ var chai = require('chai');
 var assert = chai.assert;
 
 var WidgetApi = squatch.WidgetApi;
-console.log(WidgetApi);
 
 describe('Squatch.js global', function() {
 
@@ -11,7 +10,7 @@ describe('Squatch.js global', function() {
     squatch.init({tenantAlias:'test_foobar'});
   });
 
-  
+
 });
 
 describe('Widget API', function() {

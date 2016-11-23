@@ -53,14 +53,18 @@ export default class Widgets {
    */
   createCookieUser(config) {
     return new Promise((resolve, reject) => {
-      this.api.cookieUser(config).then((response) => {
-        resolve({ widget: this.renderWidget(response, config), user: response.user });
-      }).catch((err) => {
-        if (err.apiErrorCode) {
-          Widgets.renderErrorWidget(err, config.engagementMedium);
-        }
-        reject(err);
-      });
+      try {
+        this.api.cookieUser(config).then((response) => {
+          resolve({ widget: this.renderWidget(response, config), user: response.user });
+        }).catch((err) => {
+          if (err.apiErrorCode) {
+            Widgets.renderErrorWidget(err, config.engagementMedium);
+          }
+          reject(err);
+        });
+      } catch (e) {
+        throw new Error(e);
+      }
     });
   }
 
@@ -81,15 +85,19 @@ export default class Widgets {
    */
   upsertUser(config) {
     return new Promise((resolve, reject) => {
-      this.api.upsertUser(config).then((response) => {
-        resolve({ widget: this.renderWidget(response, config), user: response.user });
-      }).catch((err) => {
-        if (err.apiErrorCode) {
-          Widgets.renderErrorWidget(err, config.engagementMedium);
-        }
-        _log(err);
-        reject(err);
-      });
+      try {
+        this.api.upsertUser(config).then((response) => {
+          resolve({ widget: this.renderWidget(response, config), user: response.user });
+        }).catch((err) => {
+          if (err.apiErrorCode) {
+            Widgets.renderErrorWidget(err, config.engagementMedium);
+          }
+          _log(err);
+          reject(err);
+        });
+      } catch (e) {
+        throw new Error(e);
+      }
     });
   }
 
@@ -110,14 +118,21 @@ export default class Widgets {
    */
   render(config) {
     return new Promise((resolve, reject) => {
-      this.api.cookieUser(config).then((response) => {
-        resolve({ widget: this.renderWidget({ template: response }, config), user: response.user });
-      }).catch((err) => {
-        if (err.apiErrorCode) {
-          Widgets.renderErrorWidget(err, config.engagementMedium);
-        }
-        reject(err);
-      });
+      try {
+        this.api.cookieUser(config).then((response) => {
+          resolve({
+            widget: this.renderWidget({ template: response }, config),
+            user: response.user }
+          );
+        }).catch((err) => {
+          if (err.apiErrorCode) {
+            Widgets.renderErrorWidget(err, config.engagementMedium);
+          }
+          reject(err);
+        });
+      } catch (e) {
+        throw new Error(e);
+      }
     });
   }
 

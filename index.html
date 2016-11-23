@@ -44,7 +44,7 @@
     squatch.widgets().upsertUser({
       engagementMedium: 'POPUP',
       user: 'token'
-    }).then(function(res){console.log(res);});
+    }).then(function(res){console.log(res);}).catch(function(err) {console.log(err)});
 
     // squatch.widgets().upsertUser({
     //   user: {
