@@ -4,7 +4,7 @@
   "description": "",
   "license": "MIT",
   "main": "dist/squatch.js",
-  "browser": "src/squatch.js",
+  "browser": "dist/squatch.js",
   "bugs": {
     "url": "https://github.com/saasquatch/squatch-js/issues",
     "email": "support@referralsaasquatch.com"
