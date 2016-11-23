@@ -34,7 +34,7 @@ export default class WidgetApi {
   /**
    * Creates/upserts an anonymous user.
    *
-   * @param {Object} params
+   * @param {Object} params Parameters for request
    * @param {WidgetType} params.widgetType The content of the widget.
    * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used to
@@ -59,10 +59,10 @@ export default class WidgetApi {
   /**
    * Creates/upserts user.
    *
-   * @param {Object} params
-   * @param {Object} params.user the user details
-   * @param {string} params.user.id
-   * @param {string} params.user.accountId
+   * @param {Object} params Parameters for request
+   * @param {Object} params.user The user details
+   * @param {string} params.user.id The user id
+   * @param {string} params.user.accountId The user account id
    * @param {WidgetType} params.widgetType The content of the widget.
    * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -93,10 +93,10 @@ export default class WidgetApi {
   /**
    * Description here.
    *
-   * @param {Object} params
-   * @param {Object} params.user the user details
-   * @param {string} params.user.id
-   * @param {string} params.user.accountId
+   * @param {Object} params Parameters for request
+   * @param {Object} params.user The user details
+   * @param {string} params.user.id The user id
+   * @param {string} params.user.accountId The user account id
    * @param {WidgetType} params.widgetType The content of the widget.
    * @param {EngagementMedium} params.engagementMedium How to display the widget.
    * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -121,7 +121,7 @@ export default class WidgetApi {
   /**
    * Looks up the referral code of the current user, if there is any.
    *
-   * @return {Promise<string>} code referral code if true.
+   * @return {Promise<json>} code referral code if true.
    */
   squatchReferralCookie() {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
@@ -131,20 +131,20 @@ export default class WidgetApi {
 
   /**
    * @private
+   * @param {Object} params json object
+   * @param {Object} jsonSchema json schema object
+   * @returns {void}
    */
   static validateInput(params, jsonSchema) {
     const valid = validate(params, jsonSchema);
     if (!valid.valid) throw valid.errors;
   }
 
-  /**
-   * @private
-   */
   static doRequest(url, jwt = '') {
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-    }
+    };
 
     if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
@@ -153,7 +153,7 @@ export default class WidgetApi {
             .withCredentials()
             .set(headers)
             .then((response) => {
-              if (response.headers['content-type'] === 'application/json') {
+              if (response.headers['content-type'] === 'application/json; charset=utf-8') {
                 return JSON.parse(response.text);
               }
               return response.text;
@@ -161,37 +161,14 @@ export default class WidgetApi {
               const json = JSON.parse(error.response.text);
               return Promise.reject(json);
             });
-
-    // return fetch(url, {
-    //   method: 'GET',
-    //   headers: headers,
-    //   credentials: 'include',
-    //   mode: 'cors',
-    // }).then((response) => {
-    //   const url = response.url.split('/');
-    //   const request = url[url.length - 1];
-    //
-    //   if (response.ok && request === 'squatchcookiejson') {
-    //     return response.json();
-    //   } else {
-    //     return response.text();
-    //   }
-    //
-    //   const json = response.json();
-    //   return json.then(Promise.reject.bind(Promise));
-    // });
   }
 
-  /**
-   * @private
-   *
-   */
   static doPut(url, data, jwt) {
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       'X-SaaSquatch-Referrer': window ? window.location.href : '',
-    }
+    };
 
     if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
@@ -201,9 +178,8 @@ export default class WidgetApi {
             .withCredentials()
             .send(data)
             .set(headers)
-            .then((response) => {
-              return JSON.parse(response.text);
-            },(error) => {
+            .then(response => JSON.parse(response.text),
+            (error) => {
               const json = JSON.parse(error.response.text);
               return Promise.reject(json);
             });

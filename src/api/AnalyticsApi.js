@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+import superagent from 'superagent';
 
 /**
  *
@@ -47,19 +47,21 @@ export default class AnalyticsApi {
   /**
   * @private
   *
-  * @param {String} url The requested url
-  * @param {String} data Stringified json object
+  * @param {string} url The requested url
+  * @param {string} data Stringified json object
   *
-  * @returns {Promise} fetch promise
+  * @returns {Promise} superagent promise
   */
   static doPost(url, data) {
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: data,
-    }).then(response => response.text());
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+
+    return superagent
+            .post(url)
+            .send(data)
+            .set(headers)
+            .then(response => response.text);
   }
 }

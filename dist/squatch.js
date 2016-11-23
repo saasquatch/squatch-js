@@ -66,7 +66,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.EventBus = exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
+	exports.WidgetApi = exports.CtaWidget = exports.PopupWidget = exports.EmbedWidget = exports.Widgets = undefined;
 	exports.api = api;
 	exports.widgets = widgets;
 	exports.init = init;
@@ -86,31 +86,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	});
 
-	__webpack_require__(3);
-
-	var _debug = __webpack_require__(4);
+	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _eventbusjs = __webpack_require__(7);
-
-	var _eventbusjs2 = _interopRequireDefault(_eventbusjs);
-
-	var _Widgets = __webpack_require__(8);
+	var _Widgets = __webpack_require__(6);
 
 	var _Widgets2 = _interopRequireDefault(_Widgets);
 
-	var _EmbedWidget = __webpack_require__(29);
+	var _EmbedWidget = __webpack_require__(28);
 
-	var _PopupWidget = __webpack_require__(46);
+	var _PopupWidget = __webpack_require__(45);
 
-	var _CtaWidget = __webpack_require__(47);
+	var _CtaWidget = __webpack_require__(46);
 
-	var _WidgetApi = __webpack_require__(12);
+	var _WidgetApi = __webpack_require__(11);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
-	var _async = __webpack_require__(48);
+	var _async = __webpack_require__(47);
 
 	var _async2 = _interopRequireDefault(_async);
 
@@ -132,7 +126,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.PopupWidget = _PopupWidget.PopupWidget;
 	exports.CtaWidget = _CtaWidget.CtaWidget;
 	exports.WidgetApi = _WidgetApi2.default;
-	exports.EventBus = _eventbusjs2.default;
 
 
 	var _api = null;
@@ -144,6 +137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Read the {@link WidgetApi} docs.
 	 *
 	 * @type {WidgetApi}
+	 * @returns {WidgetApi} static instance
 	 */
 	function api() {
 	  return _api;
@@ -155,6 +149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Read the {@link Widgets} docs.
 	 *
 	 * @type {Widgets}
+	 * @returns {Widgets} static instance
 	 */
 	function widgets() {
 	  return _widgets;
@@ -167,6 +162,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *  - `squatch.widgets()` a static instance of {@link Widgets}
 	 *
 	 * @param {ConfigOptions} config Configuration details
+	 * @returns {void}
+	 *
 	 * @example
 	 * squatch.init({tenantAlias:'test_basbtabstq51v'});
 	 */
@@ -188,6 +185,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * function detects that state.
 	 *
 	 * @param {function} fn A callback once Squatch.js is ready.
+	 * @returns {void}
 	 *
 	 * @example
 	 * squatch.ready(function() {
@@ -203,44 +201,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Autofills a referral code into an element when someone has been referred.
 	 * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
 	 *
+	 * @param {string} selector Element class/id
+	 * @returns {void}
 	 */
-	function autofill(element) {
-	  var el = void 0;
-
-	  if (typeof element === 'function') {
-	    return api.squatchReferralCookie().then(element).catch(function (ex) {
-	      throw ex;
-	    });
-	  } else if (element.match('^#')) {
-	    el = document.getElementById(element.slice(1));
-	  } else if (element.match('^[.]')) {
-	    el = document.getElementsByClassName(element.slice(1))[0];
-	  } else {
-	    _log('Element id/class or function missing');
-	    throw new Error('Element id/class or function missing');
-	  }
-
-	  return api.squatchReferralCookie().then(function (response) {
-	    el.value = response.code;
-	  }).catch(function (ex) {
-	    throw ex;
-	  });
+	function autofill(selector) {
+	  widgets().autofill(selector);
 	}
-
-	/**
-	 * @private
-	 */
-	var cb = function cb(target, widget, email) {
-	  widget.reload(email);
-	};
-	// listens to a 'submit_email' event in the theme.
-	_eventbusjs2.default.addEventListener('submit_email', cb);
 
 	/**
 	 * Overrides the default function that submits the user email. If you have
 	 * Security enabled, the email needs to be signed before it's submitted.
 	 *
 	 * @param {function} fn Callback function for the 'submit_email' event.
+	 * @returns {void}
+	 *
 	 * @example
 	 * squatch.submitEmail(function(target, widget, email) {
 	 *   // Sign email and generate jwt token
@@ -249,8 +223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * });
 	 */
 	function submitEmail(fn) {
-	  _eventbusjs2.default.removeEventListener('submit_email', cb);
-	  _eventbusjs2.default.addEventListener('submit_email', fn);
+	  widgets().submitEmail(fn);
 	}
 
 	if (window) (0, _async2.default)();
@@ -314,445 +287,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
-/***/ function(module, exports) {
-
-	(function(self) {
-	  'use strict';
-
-	  if (self.fetch) {
-	    return
-	  }
-
-	  var support = {
-	    searchParams: 'URLSearchParams' in self,
-	    iterable: 'Symbol' in self && 'iterator' in Symbol,
-	    blob: 'FileReader' in self && 'Blob' in self && (function() {
-	      try {
-	        new Blob()
-	        return true
-	      } catch(e) {
-	        return false
-	      }
-	    })(),
-	    formData: 'FormData' in self,
-	    arrayBuffer: 'ArrayBuffer' in self
-	  }
-
-	  function normalizeName(name) {
-	    if (typeof name !== 'string') {
-	      name = String(name)
-	    }
-	    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
-	      throw new TypeError('Invalid character in header field name')
-	    }
-	    return name.toLowerCase()
-	  }
-
-	  function normalizeValue(value) {
-	    if (typeof value !== 'string') {
-	      value = String(value)
-	    }
-	    return value
-	  }
-
-	  // Build a destructive iterator for the value list
-	  function iteratorFor(items) {
-	    var iterator = {
-	      next: function() {
-	        var value = items.shift()
-	        return {done: value === undefined, value: value}
-	      }
-	    }
-
-	    if (support.iterable) {
-	      iterator[Symbol.iterator] = function() {
-	        return iterator
-	      }
-	    }
-
-	    return iterator
-	  }
-
-	  function Headers(headers) {
-	    this.map = {}
-
-	    if (headers instanceof Headers) {
-	      headers.forEach(function(value, name) {
-	        this.append(name, value)
-	      }, this)
-
-	    } else if (headers) {
-	      Object.getOwnPropertyNames(headers).forEach(function(name) {
-	        this.append(name, headers[name])
-	      }, this)
-	    }
-	  }
-
-	  Headers.prototype.append = function(name, value) {
-	    name = normalizeName(name)
-	    value = normalizeValue(value)
-	    var list = this.map[name]
-	    if (!list) {
-	      list = []
-	      this.map[name] = list
-	    }
-	    list.push(value)
-	  }
-
-	  Headers.prototype['delete'] = function(name) {
-	    delete this.map[normalizeName(name)]
-	  }
-
-	  Headers.prototype.get = function(name) {
-	    var values = this.map[normalizeName(name)]
-	    return values ? values[0] : null
-	  }
-
-	  Headers.prototype.getAll = function(name) {
-	    return this.map[normalizeName(name)] || []
-	  }
-
-	  Headers.prototype.has = function(name) {
-	    return this.map.hasOwnProperty(normalizeName(name))
-	  }
-
-	  Headers.prototype.set = function(name, value) {
-	    this.map[normalizeName(name)] = [normalizeValue(value)]
-	  }
-
-	  Headers.prototype.forEach = function(callback, thisArg) {
-	    Object.getOwnPropertyNames(this.map).forEach(function(name) {
-	      this.map[name].forEach(function(value) {
-	        callback.call(thisArg, value, name, this)
-	      }, this)
-	    }, this)
-	  }
-
-	  Headers.prototype.keys = function() {
-	    var items = []
-	    this.forEach(function(value, name) { items.push(name) })
-	    return iteratorFor(items)
-	  }
-
-	  Headers.prototype.values = function() {
-	    var items = []
-	    this.forEach(function(value) { items.push(value) })
-	    return iteratorFor(items)
-	  }
-
-	  Headers.prototype.entries = function() {
-	    var items = []
-	    this.forEach(function(value, name) { items.push([name, value]) })
-	    return iteratorFor(items)
-	  }
-
-	  if (support.iterable) {
-	    Headers.prototype[Symbol.iterator] = Headers.prototype.entries
-	  }
-
-	  function consumed(body) {
-	    if (body.bodyUsed) {
-	      return Promise.reject(new TypeError('Already read'))
-	    }
-	    body.bodyUsed = true
-	  }
-
-	  function fileReaderReady(reader) {
-	    return new Promise(function(resolve, reject) {
-	      reader.onload = function() {
-	        resolve(reader.result)
-	      }
-	      reader.onerror = function() {
-	        reject(reader.error)
-	      }
-	    })
-	  }
-
-	  function readBlobAsArrayBuffer(blob) {
-	    var reader = new FileReader()
-	    reader.readAsArrayBuffer(blob)
-	    return fileReaderReady(reader)
-	  }
-
-	  function readBlobAsText(blob) {
-	    var reader = new FileReader()
-	    reader.readAsText(blob)
-	    return fileReaderReady(reader)
-	  }
-
-	  function Body() {
-	    this.bodyUsed = false
-
-	    this._initBody = function(body) {
-	      this._bodyInit = body
-	      if (typeof body === 'string') {
-	        this._bodyText = body
-	      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
-	        this._bodyBlob = body
-	      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
-	        this._bodyFormData = body
-	      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-	        this._bodyText = body.toString()
-	      } else if (!body) {
-	        this._bodyText = ''
-	      } else if (support.arrayBuffer && ArrayBuffer.prototype.isPrototypeOf(body)) {
-	        // Only support ArrayBuffers for POST method.
-	        // Receiving ArrayBuffers happens via Blobs, instead.
-	      } else {
-	        throw new Error('unsupported BodyInit type')
-	      }
-
-	      if (!this.headers.get('content-type')) {
-	        if (typeof body === 'string') {
-	          this.headers.set('content-type', 'text/plain;charset=UTF-8')
-	        } else if (this._bodyBlob && this._bodyBlob.type) {
-	          this.headers.set('content-type', this._bodyBlob.type)
-	        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
-	          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8')
-	        }
-	      }
-	    }
-
-	    if (support.blob) {
-	      this.blob = function() {
-	        var rejected = consumed(this)
-	        if (rejected) {
-	          return rejected
-	        }
-
-	        if (this._bodyBlob) {
-	          return Promise.resolve(this._bodyBlob)
-	        } else if (this._bodyFormData) {
-	          throw new Error('could not read FormData body as blob')
-	        } else {
-	          return Promise.resolve(new Blob([this._bodyText]))
-	        }
-	      }
-
-	      this.arrayBuffer = function() {
-	        return this.blob().then(readBlobAsArrayBuffer)
-	      }
-
-	      this.text = function() {
-	        var rejected = consumed(this)
-	        if (rejected) {
-	          return rejected
-	        }
-
-	        if (this._bodyBlob) {
-	          return readBlobAsText(this._bodyBlob)
-	        } else if (this._bodyFormData) {
-	          throw new Error('could not read FormData body as text')
-	        } else {
-	          return Promise.resolve(this._bodyText)
-	        }
-	      }
-	    } else {
-	      this.text = function() {
-	        var rejected = consumed(this)
-	        return rejected ? rejected : Promise.resolve(this._bodyText)
-	      }
-	    }
-
-	    if (support.formData) {
-	      this.formData = function() {
-	        return this.text().then(decode)
-	      }
-	    }
-
-	    this.json = function() {
-	      return this.text().then(JSON.parse)
-	    }
-
-	    return this
-	  }
-
-	  // HTTP methods whose capitalization should be normalized
-	  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT']
-
-	  function normalizeMethod(method) {
-	    var upcased = method.toUpperCase()
-	    return (methods.indexOf(upcased) > -1) ? upcased : method
-	  }
-
-	  function Request(input, options) {
-	    options = options || {}
-	    var body = options.body
-	    if (Request.prototype.isPrototypeOf(input)) {
-	      if (input.bodyUsed) {
-	        throw new TypeError('Already read')
-	      }
-	      this.url = input.url
-	      this.credentials = input.credentials
-	      if (!options.headers) {
-	        this.headers = new Headers(input.headers)
-	      }
-	      this.method = input.method
-	      this.mode = input.mode
-	      if (!body) {
-	        body = input._bodyInit
-	        input.bodyUsed = true
-	      }
-	    } else {
-	      this.url = input
-	    }
-
-	    this.credentials = options.credentials || this.credentials || 'omit'
-	    if (options.headers || !this.headers) {
-	      this.headers = new Headers(options.headers)
-	    }
-	    this.method = normalizeMethod(options.method || this.method || 'GET')
-	    this.mode = options.mode || this.mode || null
-	    this.referrer = null
-
-	    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
-	      throw new TypeError('Body not allowed for GET or HEAD requests')
-	    }
-	    this._initBody(body)
-	  }
-
-	  Request.prototype.clone = function() {
-	    return new Request(this)
-	  }
-
-	  function decode(body) {
-	    var form = new FormData()
-	    body.trim().split('&').forEach(function(bytes) {
-	      if (bytes) {
-	        var split = bytes.split('=')
-	        var name = split.shift().replace(/\+/g, ' ')
-	        var value = split.join('=').replace(/\+/g, ' ')
-	        form.append(decodeURIComponent(name), decodeURIComponent(value))
-	      }
-	    })
-	    return form
-	  }
-
-	  function headers(xhr) {
-	    var head = new Headers()
-	    var pairs = (xhr.getAllResponseHeaders() || '').trim().split('\n')
-	    pairs.forEach(function(header) {
-	      var split = header.trim().split(':')
-	      var key = split.shift().trim()
-	      var value = split.join(':').trim()
-	      head.append(key, value)
-	    })
-	    return head
-	  }
-
-	  Body.call(Request.prototype)
-
-	  function Response(bodyInit, options) {
-	    if (!options) {
-	      options = {}
-	    }
-
-	    this.type = 'default'
-	    this.status = options.status
-	    this.ok = this.status >= 200 && this.status < 300
-	    this.statusText = options.statusText
-	    this.headers = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
-	    this.url = options.url || ''
-	    this._initBody(bodyInit)
-	  }
-
-	  Body.call(Response.prototype)
-
-	  Response.prototype.clone = function() {
-	    return new Response(this._bodyInit, {
-	      status: this.status,
-	      statusText: this.statusText,
-	      headers: new Headers(this.headers),
-	      url: this.url
-	    })
-	  }
-
-	  Response.error = function() {
-	    var response = new Response(null, {status: 0, statusText: ''})
-	    response.type = 'error'
-	    return response
-	  }
-
-	  var redirectStatuses = [301, 302, 303, 307, 308]
-
-	  Response.redirect = function(url, status) {
-	    if (redirectStatuses.indexOf(status) === -1) {
-	      throw new RangeError('Invalid status code')
-	    }
-
-	    return new Response(null, {status: status, headers: {location: url}})
-	  }
-
-	  self.Headers = Headers
-	  self.Request = Request
-	  self.Response = Response
-
-	  self.fetch = function(input, init) {
-	    return new Promise(function(resolve, reject) {
-	      var request
-	      if (Request.prototype.isPrototypeOf(input) && !init) {
-	        request = input
-	      } else {
-	        request = new Request(input, init)
-	      }
-
-	      var xhr = new XMLHttpRequest()
-
-	      function responseURL() {
-	        if ('responseURL' in xhr) {
-	          return xhr.responseURL
-	        }
-
-	        // Avoid security warnings on getResponseHeader when not allowed by CORS
-	        if (/^X-Request-URL:/m.test(xhr.getAllResponseHeaders())) {
-	          return xhr.getResponseHeader('X-Request-URL')
-	        }
-
-	        return
-	      }
-
-	      xhr.onload = function() {
-	        var options = {
-	          status: xhr.status,
-	          statusText: xhr.statusText,
-	          headers: headers(xhr),
-	          url: responseURL()
-	        }
-	        var body = 'response' in xhr ? xhr.response : xhr.responseText
-	        resolve(new Response(body, options))
-	      }
-
-	      xhr.onerror = function() {
-	        reject(new TypeError('Network request failed'))
-	      }
-
-	      xhr.ontimeout = function() {
-	        reject(new TypeError('Network request failed'))
-	      }
-
-	      xhr.open(request.method, request.url, true)
-
-	      if (request.credentials === 'include') {
-	        xhr.withCredentials = true
-	      }
-
-	      if ('responseType' in xhr && support.blob) {
-	        xhr.responseType = 'blob'
-	      }
-
-	      request.headers.forEach(function(value, name) {
-	        xhr.setRequestHeader(name, value)
-	      })
-
-	      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit)
-	    })
-	  }
-	  self.fetch.polyfill = true
-	})(typeof self !== 'undefined' ? self : this);
-
-
-/***/ },
-/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -762,7 +296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = __webpack_require__(5);
+	exports = module.exports = __webpack_require__(4);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -926,7 +460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -942,7 +476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(6);
+	exports.humanize = __webpack_require__(5);
 
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -1129,7 +663,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	/**
@@ -1260,13 +794,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	(function(root,factory){if(true)module.exports=factory();else if(typeof define==="function"&&define.amd)define("EventBus",[],factory);else if(typeof exports==="object")exports["EventBus"]=factory();else root["EventBus"]=factory()})(this,function(){var EventBusClass={};EventBusClass=function(){this.listeners={}};EventBusClass.prototype={addEventListener:function(type,callback,scope){var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>3?args.splice(3,args.length-1):[];if(typeof this.listeners[type]!="undefined"){this.listeners[type].push({scope:scope,callback:callback,args:args})}else{this.listeners[type]=[{scope:scope,callback:callback,args:args}]}},removeEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;var newArray=[];for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener.scope==scope&&listener.callback==callback){}else{newArray.push(listener)}}this.listeners[type]=newArray}},hasEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;if(callback===undefined&&scope===undefined){return numOfCallbacks>0}for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if((scope?listener.scope==scope:true)&&listener.callback==callback){return true}}}return false},dispatch:function(type,target){var numOfListeners=0;var event={type:type,target:target};var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>2?args.splice(2,args.length-1):[];args=[event].concat(args);if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener&&listener.callback){var concatArgs=args.concat(listener.args);listener.callback.apply(listener.scope,concatArgs);numOfListeners+=1}}}},getEvents:function(){var str="";for(var type in this.listeners){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];str+=listener.scope&&listener.scope.className?listener.scope.className:"anonymous";str+=" listen for '"+type+"'\n"}}return str}};var EventBus=new EventBusClass;return EventBus});
-
-/***/ },
-/* 8 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1277,27 +805,31 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _debug = __webpack_require__(4);
+	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _es6Promise = __webpack_require__(9);
+	var _es6Promise = __webpack_require__(7);
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
-	var _WidgetApi = __webpack_require__(12);
+	var _eventbusjs = __webpack_require__(10);
+
+	var _eventbusjs2 = _interopRequireDefault(_eventbusjs);
+
+	var _WidgetApi = __webpack_require__(11);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
-	var _EmbedWidget = __webpack_require__(29);
+	var _EmbedWidget = __webpack_require__(28);
 
 	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
 
-	var _PopupWidget = __webpack_require__(46);
+	var _PopupWidget = __webpack_require__(45);
 
 	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
 
-	var _CtaWidget = __webpack_require__(47);
+	var _CtaWidget = __webpack_require__(46);
 
 	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
 
@@ -1336,13 +868,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.tenantAlias = config.tenantAlias;
 	    this.api = new _WidgetApi2.default(config);
+	    this.eventBus = _eventbusjs2.default;
+	    // listens to a 'submit_email' event in the theme.
+	    this.eventBus.addEventListener('submit_email', Widgets.cb);
 	  }
 
 	  /**
 	   * This function calls the {@link WidgetApi.cookieUser} method, and it renders
 	   * the widget if it is successful. Otherwise it shows the "error" widget.
 	   *
-	   * @param {Object} config
+	   * @param {Object} config Config details
 	   * @param {EngagementMedium} config.widgetType The content of the widget.
 	   * @param {WidgetType} config.engagementMedium How to display the widget.
 	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
@@ -1374,10 +909,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * This function calls the {@link WidgetApi.upsert} method, and it renders
 	     * the widget if it is successful. Otherwise it shows the "error" widget.
 	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
+	     * @param {Object} config Config details
+	     * @param {Object} config.user The user details
+	     * @param {string} config.user.id The user id
+	     * @param {string} config.user.accountId The user account id
 	     * @param {EngagementMedium} config.widgetType The content of the widget.
 	     * @param {WidgetType} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -1407,10 +942,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * This function calls the {@link WidgetApi.render} method, and it renders
 	     * the widget if it is successful. Otherwise it shows the "error" widget.
 	     *
-	     * @param {Object} config
-	     * @param {Object} config.user the user details
-	     * @param {string} config.user.id
-	     * @param {string} config.user.accountId
+	     * @param {Object} config Config details
+	     * @param {Object} config.user The user details
+	     * @param {string} config.user.id The user id
+	     * @param {string} config.user.accountId The user account id
 	     * @param {EngagementMedium} config.widgetType The content of the widget.
 	     * @param {WidgetType} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -1437,8 +972,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
-	     * @private
+	     * Autofills a referral code into an element when someone has been referred.
+	     * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
 	     *
+	     * @param {string} selector Element class/id
+	     * @returns {void}
+	     */
+
+	  }, {
+	    key: 'autofill',
+	    value: function autofill(selector) {
+	      if (typeof selector === 'function') {
+	        this.api.squatchReferralCookie().then(selector).catch(function (ex) {
+	          throw ex;
+	        });
+	      }
+
+	      var elems = document.querySelectorAll(selector);
+
+	      if (elems.length > 0) {
+	        // Only use the first element found
+	        elems = elems[0];
+	      } else {
+	        _log('Element id/class or function missing');
+	        throw new Error('Element id/class or function missing');
+	      }
+
+	      this.api.squatchReferralCookie().then(function (response) {
+	        elems.value = response.code;
+	      }).catch(function (ex) {
+	        throw ex;
+	      });
+	    }
+
+	    /**
+	     * Overrides the default function that submits the user email. If you have
+	     * Security enabled, the email needs to be signed before it's submitted.
+	     *
+	     * @param {function} fn Callback function for the 'submit_email' event.
+	     * @returns {void}
+	     */
+
+	  }, {
+	    key: 'submitEmail',
+	    value: function submitEmail(fn) {
+	      this.eventBus.removeEventListener('submit_email', Widgets.cb);
+	      this.eventBus.addEventListener('submit_email', fn);
+	    }
+
+	    /**
+	     * @private
+	     * @param {Object} response The json object return from the WidgetApi
+	     * @param {Object} config Config details
+	     * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
+	     * @param {string} config.engagementMedium (POPUP, EMBED)
+	     * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
 	     */
 
 	  }, {
@@ -1449,7 +1037,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _log('Rendering Widget...');
 	      if (!response) throw new Error('Unable to get a response');
 	      if (!response.jsOptions) throw new Error('Missing jsOptions in response');
-	      _log(response, config);
 
 	      var widget = void 0;
 	      var displayOnLoad = false;
@@ -1481,8 +1068,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	      }
 
-	      _log('read jsOptions, now create Widget');
-
 	      if (!displayCTA && config.engagementMedium === 'EMBED') {
 	        widget = new _EmbedWidget2.default(params);
 	        widget.load();
@@ -1504,13 +1089,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        widget.open();
 	      }
 
-	      _log('the widget returned', widget);
 	      return widget;
 	    }
 
 	    /**
 	     * @private
-	     *
+	     * @param {Object} error The json object containing the error details
+	     * @param {string} em The engagementMedium
+	     * @returns {void}
 	     */
 
 	  }], [{
@@ -1538,12 +1124,28 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     * @param {string} rule A regular expression
+	     * @returns {boolean} true if rule matches Url, false otherwise
 	     */
 
 	  }, {
 	    key: 'matchesUrl',
 	    value: function matchesUrl(rule) {
 	      return window.location.href.match(new RegExp(rule));
+	    }
+
+	    /**
+	     * @private
+	     * @param {Object} target Object containing the target DOM element
+	     * @param {Widget} widget A widget (EmbedWidget, PopupWidget, CtaWidget)
+	     * @param {string} email A valid email address
+	     * @returns {void}
+	     */
+
+	  }, {
+	    key: 'cb',
+	    value: function cb(target, widget, email) {
+	      widget.reload(email);
 	    }
 	  }]);
 
@@ -1553,7 +1155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Widgets;
 
 /***/ },
-/* 9 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -1688,7 +1290,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(11);
+	    var vertx = __webpack_require__(9);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -2710,10 +2312,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	})));
 	//# sourceMappingURL=es6-promise.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), (function() { return this; }())))
 
 /***/ },
-/* 10 */
+/* 8 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -2899,13 +2501,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 9 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 12 */
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function(root,factory){if(true)module.exports=factory();else if(typeof define==="function"&&define.amd)define("EventBus",[],factory);else if(typeof exports==="object")exports["EventBus"]=factory();else root["EventBus"]=factory()})(this,function(){var EventBusClass={};EventBusClass=function(){this.listeners={}};EventBusClass.prototype={addEventListener:function(type,callback,scope){var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>3?args.splice(3,args.length-1):[];if(typeof this.listeners[type]!="undefined"){this.listeners[type].push({scope:scope,callback:callback,args:args})}else{this.listeners[type]=[{scope:scope,callback:callback,args:args}]}},removeEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;var newArray=[];for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener.scope==scope&&listener.callback==callback){}else{newArray.push(listener)}}this.listeners[type]=newArray}},hasEventListener:function(type,callback,scope){if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;if(callback===undefined&&scope===undefined){return numOfCallbacks>0}for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if((scope?listener.scope==scope:true)&&listener.callback==callback){return true}}}return false},dispatch:function(type,target){var numOfListeners=0;var event={type:type,target:target};var args=[];var numOfArgs=arguments.length;for(var i=0;i<numOfArgs;i++){args.push(arguments[i])}args=args.length>2?args.splice(2,args.length-1):[];args=[event].concat(args);if(typeof this.listeners[type]!="undefined"){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];if(listener&&listener.callback){var concatArgs=args.concat(listener.args);listener.callback.apply(listener.scope,concatArgs);numOfListeners+=1}}}},getEvents:function(){var str="";for(var type in this.listeners){var numOfCallbacks=this.listeners[type].length;for(var i=0;i<numOfCallbacks;i++){var listener=this.listeners[type][i];str+=listener.scope&&listener.scope.className?listener.scope.className:"anonymous";str+=" listen for '"+type+"'\n"}}return str}};var EventBus=new EventBusClass;return EventBus});
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2916,17 +2524,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _superagent = __webpack_require__(13);
+	var _superagent = __webpack_require__(12);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var _es6Promise = __webpack_require__(9);
+	var _es6Promise = __webpack_require__(7);
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
-	var _jsonschema = __webpack_require__(18);
+	var _jsonschema = __webpack_require__(17);
 
-	var _schema = __webpack_require__(28);
+	var _schema = __webpack_require__(27);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
@@ -2967,7 +2575,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Creates/upserts an anonymous user.
 	   *
-	   * @param {Object} params
+	   * @param {Object} params Parameters for request
 	   * @param {WidgetType} params.widgetType The content of the widget.
 	   * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
@@ -2998,10 +2606,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Creates/upserts user.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -3037,10 +2645,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Description here.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -3070,7 +2678,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Looks up the referral code of the current user, if there is any.
 	     *
-	     * @return {Promise<string>} code referral code if true.
+	     * @return {Promise<json>} code referral code if true.
 	     */
 
 	  }, {
@@ -3083,6 +2691,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     * @param {Object} params json object
+	     * @param {Object} jsonSchema json schema object
+	     * @returns {void}
 	     */
 
 	  }], [{
@@ -3091,11 +2702,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
 	      if (!valid.valid) throw valid.errors;
 	    }
-
-	    /**
-	     * @private
-	     */
-
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
@@ -3109,7 +2715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
 	      return _superagent2.default.get(url).withCredentials().set(headers).then(function (response) {
-	        if (response.headers['content-type'] === 'application/json') {
+	        if (response.headers['content-type'] === 'application/json; charset=utf-8') {
 	          return JSON.parse(response.text);
 	        }
 	        return response.text;
@@ -3117,32 +2723,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var json = JSON.parse(error.response.text);
 	        return _es6Promise2.default.reject(json);
 	      });
-
-	      // return fetch(url, {
-	      //   method: 'GET',
-	      //   headers: headers,
-	      //   credentials: 'include',
-	      //   mode: 'cors',
-	      // }).then((response) => {
-	      //   const url = response.url.split('/');
-	      //   const request = url[url.length - 1];
-	      //
-	      //   if (response.ok && request === 'squatchcookiejson') {
-	      //     return response.json();
-	      //   } else {
-	      //     return response.text();
-	      //   }
-	      //
-	      //   const json = response.json();
-	      //   return json.then(Promise.reject.bind(Promise));
-	      // });
 	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
 	  }, {
 	    key: 'doPut',
 	    value: function doPut(url, data, jwt) {
@@ -3169,7 +2750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = WidgetApi;
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -3186,9 +2767,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  root = this;
 	}
 
-	var Emitter = __webpack_require__(14);
-	var requestBase = __webpack_require__(15);
-	var isObject = __webpack_require__(16);
+	var Emitter = __webpack_require__(13);
+	var requestBase = __webpack_require__(14);
+	var isObject = __webpack_require__(15);
 
 	/**
 	 * Noop.
@@ -3200,7 +2781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Expose `request`.
 	 */
 
-	var request = module.exports = __webpack_require__(17).bind(null, Request);
+	var request = module.exports = __webpack_require__(16).bind(null, Request);
 
 	/**
 	 * Determine XHR.
@@ -4151,7 +3732,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -4320,13 +3901,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module of mixed-in functions shared between node and client code
 	 */
-	var isObject = __webpack_require__(16);
+	var isObject = __webpack_require__(15);
 
 	/**
 	 * Clear previous timeout.
@@ -4698,7 +4279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
 	/**
@@ -4717,7 +4298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports) {
 
 	// The node and browser modules expose versions of this with the
@@ -4755,16 +4336,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Validator = module.exports.Validator = __webpack_require__(19);
+	var Validator = module.exports.Validator = __webpack_require__(18);
 
-	module.exports.ValidatorResult = __webpack_require__(27).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(27).ValidationError;
-	module.exports.SchemaError = __webpack_require__(27).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(26).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(26).ValidationError;
+	module.exports.SchemaError = __webpack_require__(26).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -4773,15 +4354,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(20);
+	var urilib = __webpack_require__(19);
 
-	var attribute = __webpack_require__(26);
-	var helpers = __webpack_require__(27);
+	var attribute = __webpack_require__(25);
+	var helpers = __webpack_require__(26);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -5099,7 +4680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -5123,7 +4704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(21);
+	var punycode = __webpack_require__(20);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -5195,7 +4776,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(23);
+	    querystring = __webpack_require__(22);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -5812,7 +5393,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -6344,10 +5925,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module), (function() { return this; }())))
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -6363,17 +5944,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(24);
-	exports.encode = exports.stringify = __webpack_require__(25);
+	exports.decode = exports.parse = __webpack_require__(23);
+	exports.encode = exports.stringify = __webpack_require__(24);
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -6459,7 +6040,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -6529,12 +6110,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(27);
+	var helpers = __webpack_require__(26);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -7320,12 +6901,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(20);
+	var uri = __webpack_require__(19);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -7605,7 +7186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -7763,7 +7344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7776,15 +7357,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _debug = __webpack_require__(4);
+	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widget2 = __webpack_require__(30);
+	var _Widget2 = __webpack_require__(29);
 
 	var _Widget3 = _interopRequireDefault(_Widget2);
 
-	var _domready = __webpack_require__(45);
+	var _domready = __webpack_require__(44);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7806,9 +7387,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EmbedWidget = function (_Widget) {
 	  _inherits(EmbedWidget, _Widget);
 
-	  /**
-	   * @private
-	   */
 	  function EmbedWidget(params) {
 	    var elementId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchembed' : arguments[1];
 
@@ -7909,7 +7487,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = EmbedWidget;
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7920,15 +7498,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _debug = __webpack_require__(4);
+	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _elementResizeDetector = __webpack_require__(31);
+	var _elementResizeDetector = __webpack_require__(30);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
 
-	var _AnalyticsApi = __webpack_require__(44);
+	var _AnalyticsApi = __webpack_require__(43);
 
 	var _AnalyticsApi2 = _interopRequireDefault(_AnalyticsApi);
 
@@ -7942,33 +7520,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * The Widget class is the base class for the different widget types available
 	 *
-	 * @example <caption>Custom Widget example</caption>
-	 *    class CustomWidget extends Widget {
-	 *      constructor(params,stuff) {
-	 *        super(params);
-	 *        // do stuff
-	 *      }
-	 *
-	 *      load() {
-	 *        // custom loading of widget
-	 *      }
-	 *    }
+	 * Creates an `iframe` in which the html content of the widget gets embedded.
+	 * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
+	 * for listening to the height of the widget content and make the iframe responsive.
 	 *
 	 */
 
 	var Widget = function () {
-
-	  /**
-	   * Initialize a new {@link Widget} instance.
-	   *
-	   * Creates an `iframe` in which the html content of the widget gets embedded.
-	   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
-	   * for listening to the height of the widget content and make the iframe responsive.
-	   *
-	   * @private
-	   * @param {Object} params -> document this object
-	   *
-	   */
 	  function Widget(params) {
 	    _classCallCheck(this, Widget);
 
@@ -8038,24 +7596,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Widget;
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(32).forEach;
-	var elementUtilsMaker       = __webpack_require__(33);
-	var listenerHandlerMaker    = __webpack_require__(34);
-	var idGeneratorMaker        = __webpack_require__(35);
-	var idHandlerMaker          = __webpack_require__(36);
-	var reporterMaker           = __webpack_require__(37);
-	var browserDetector         = __webpack_require__(38);
-	var batchProcessorMaker     = __webpack_require__(39);
-	var stateHandler            = __webpack_require__(41);
+	var forEach                 = __webpack_require__(31).forEach;
+	var elementUtilsMaker       = __webpack_require__(32);
+	var listenerHandlerMaker    = __webpack_require__(33);
+	var idGeneratorMaker        = __webpack_require__(34);
+	var idHandlerMaker          = __webpack_require__(35);
+	var reporterMaker           = __webpack_require__(36);
+	var browserDetector         = __webpack_require__(37);
+	var batchProcessorMaker     = __webpack_require__(38);
+	var stateHandler            = __webpack_require__(40);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(42);
-	var scrollStrategyMaker     = __webpack_require__(43);
+	var objectStrategyMaker     = __webpack_require__(41);
+	var scrollStrategyMaker     = __webpack_require__(42);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -8365,7 +7923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8390,7 +7948,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8448,7 +8006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8514,7 +8072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8538,7 +8096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8591,7 +8149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 37 */
+/* 36 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8639,7 +8197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 38 */
+/* 37 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8684,12 +8242,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(40);
+	var utils = __webpack_require__(39);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -8828,7 +8386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8849,7 +8407,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8877,7 +8435,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8887,7 +8445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(38);
+	var browserDetector = __webpack_require__(37);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -9096,7 +8654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9106,7 +8664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(32).forEach;
+	var forEach = __webpack_require__(31).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -9723,7 +9281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9734,7 +9292,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	__webpack_require__(3);
+	var _superagent = __webpack_require__(12);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -9790,24 +9352,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	    * @private
 	    *
-	    * @param {String} url The requested url
-	    * @param {String} data Stringified json object
+	    * @param {string} url The requested url
+	    * @param {string} data Stringified json object
 	    *
-	    * @returns {Promise} fetch promise
+	    * @returns {Promise} superagent promise
 	    */
 
 	  }], [{
 	    key: 'doPost',
 	    value: function doPost(url, data) {
-	      return fetch(url, {
-	        method: 'POST',
-	        headers: {
-	          Accept: 'application/json',
-	          'Content-Type': 'application/json'
-	        },
-	        body: data
-	      }).then(function (response) {
-	        return response.text();
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      return _superagent2.default.post(url).send(data).set(headers).then(function (response) {
+	        return response.text;
 	      });
 	    }
 	  }]);
@@ -9818,7 +9378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = AnalyticsApi;
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9851,7 +9411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9864,15 +9424,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _debug = __webpack_require__(4);
+	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widget2 = __webpack_require__(30);
+	var _Widget2 = __webpack_require__(29);
 
 	var _Widget3 = _interopRequireDefault(_Widget2);
 
-	var _domready = __webpack_require__(45);
+	var _domready = __webpack_require__(44);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9895,9 +9455,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var PopupWidget = function (_Widget) {
 	  _inherits(PopupWidget, _Widget);
 
-	  /**
-	   * @private
-	   */
 	  function PopupWidget(params) {
 	    var triggerId = arguments.length <= 1 || arguments[1] === undefined ? 'squatchpop' : arguments[1];
 
@@ -9991,11 +9548,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _log('' + ex.message);
 	      });
 	    }
-
-	    /**
-	     * Opens the widget.
-	     */
-
 	  }, {
 	    key: 'open',
 	    value: function open() {
@@ -10043,12 +9595,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _log('Popup opened');
 	      });
 	    }
-
-	    /**
-	     * Closes the widget
-	     *
-	     */
-
 	  }, {
 	    key: 'close',
 	    value: function close() {
@@ -10086,7 +9632,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = PopupWidget;
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -10099,15 +9645,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-	var _debug = __webpack_require__(4);
+	var _debug = __webpack_require__(3);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _PopupWidget2 = __webpack_require__(46);
+	var _PopupWidget2 = __webpack_require__(45);
 
 	var _PopupWidget3 = _interopRequireDefault(_PopupWidget2);
 
-	var _domready = __webpack_require__(45);
+	var _domready = __webpack_require__(44);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10129,9 +9675,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var CtaWidget = function (_PopupWidget) {
 	  _inherits(CtaWidget, _PopupWidget);
 
-	  /**
-	   * @private
-	   */
 	  function CtaWidget(params, opts) {
 	    _classCallCheck(this, CtaWidget);
 
@@ -10139,11 +9682,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var ctaElement = document.createElement('div');
 	    ctaElement.id = 'cta';
 	    document.body.appendChild(ctaElement);
-	    _log('cta Element appended to body');
 
 	    var _this = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, params, 'cta'));
-
-	    _log('called popup constructor');
 
 	    var me = _this;
 
@@ -10162,14 +9702,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.positionClass = opts.position;
 
-	    _log('chose position class', me.positionClass);
-
 	    me.ctaFrame = document.createElement('iframe');
 	    me.ctaFrame.squatchJsApi = me;
 	    me.ctaFrame.scrolling = 'no';
 	    me.ctaFrame.setAttribute('style', 'border:0; background-color:transparent; position:fixed; display:none;' + me.side + me.position);
-
-	    _log('cta Frame defined', me.ctaFrame);
 
 	    document.body.appendChild(_this.ctaFrame);
 	    _log('ctaframe appended to body');
@@ -10183,7 +9719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      var widgetFrameDoc = this.frame.contentWindow.document;
 	      var ctaFrame = this.ctaFrame;
-	      var positionClass = ' ' + this.positionClass;
+	      var positionClass = this.positionClass;
 	      var erd = this.erd;
 
 	      // Wait for widget doc to be ready to grab the cta HTML
@@ -10201,23 +9737,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            // Figure out size of CTA as well
 	            (0, _domready.domready)(ctaFrameDoc, function () {
-	              ctaFrame.height = ctaFrameDoc.body.offsetHeight;
-	              ctaFrame.width = ctaFrameDoc.body.scrollWidth;
-	              _log('first height', ctaFrame.height);
-	              _log('first width', ctaFrame.width);
+	              var ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
+	              ctaContainer.style.position = 'fixed';
+
+	              ctaFrame.height = ctaContainer.offsetHeight;
+	              ctaFrame.width = ctaContainer.scrollWidth;
 
 	              ctaFrame.style.display = 'block';
 
-	              var ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
-	              ctaContainer.className += positionClass;
+	              if (!ctaContainer.classList.contains(positionClass)) {
+	                ctaContainer.className += ' ' + positionClass;
+	              }
 
 	              erd.listenTo(ctaContainer, function (element) {
 	                var height = element.offsetHeight;
 	                var width = element.offsetWidth;
 	                ctaFrame.height = height;
 	                ctaFrame.width = width;
-	                _log('listened height', ctaFrame.height);
-	                _log('listened width', ctaFrame.width);
 	              });
 
 	              _log('CTA template loaded into iframe');
@@ -10255,7 +9791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = CtaWidget;
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports) {
 
 	"use strict";

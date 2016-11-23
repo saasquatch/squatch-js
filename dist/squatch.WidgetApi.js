@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(12);
+	module.exports = __webpack_require__(11);
 
 
 /***/ },
@@ -64,9 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */,
 /* 5 */,
 /* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -201,7 +199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function attemptVertx() {
 	  try {
 	    var r = require;
-	    var vertx = __webpack_require__(11);
+	    var vertx = __webpack_require__(9);
 	    vertxNext = vertx.runOnLoop || vertx.runOnContext;
 	    return useVertxTimer();
 	  } catch (e) {
@@ -1223,10 +1221,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	})));
 	//# sourceMappingURL=es6-promise.map
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), (function() { return this; }())))
 
 /***/ },
-/* 10 */
+/* 8 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -1412,13 +1410,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 11 */
+/* 9 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 12 */
+/* 10 */,
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1429,17 +1428,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _superagent = __webpack_require__(13);
+	var _superagent = __webpack_require__(12);
 
 	var _superagent2 = _interopRequireDefault(_superagent);
 
-	var _es6Promise = __webpack_require__(9);
+	var _es6Promise = __webpack_require__(7);
 
 	var _es6Promise2 = _interopRequireDefault(_es6Promise);
 
-	var _jsonschema = __webpack_require__(18);
+	var _jsonschema = __webpack_require__(17);
 
-	var _schema = __webpack_require__(28);
+	var _schema = __webpack_require__(27);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
@@ -1480,7 +1479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  /**
 	   * Creates/upserts an anonymous user.
 	   *
-	   * @param {Object} params
+	   * @param {Object} params Parameters for request
 	   * @param {WidgetType} params.widgetType The content of the widget.
 	   * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
@@ -1511,10 +1510,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Creates/upserts user.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -1550,10 +1549,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Description here.
 	     *
-	     * @param {Object} params
-	     * @param {Object} params.user the user details
-	     * @param {string} params.user.id
-	     * @param {string} params.user.accountId
+	     * @param {Object} params Parameters for request
+	     * @param {Object} params.user The user details
+	     * @param {string} params.user.id The user id
+	     * @param {string} params.user.accountId The user account id
 	     * @param {WidgetType} params.widgetType The content of the widget.
 	     * @param {EngagementMedium} params.engagementMedium How to display the widget.
 	     * @param {string} params.jwt the JSON Web Token (JWT) that is used
@@ -1583,7 +1582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Looks up the referral code of the current user, if there is any.
 	     *
-	     * @return {Promise<string>} code referral code if true.
+	     * @return {Promise<json>} code referral code if true.
 	     */
 
 	  }, {
@@ -1596,6 +1595,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    /**
 	     * @private
+	     * @param {Object} params json object
+	     * @param {Object} jsonSchema json schema object
+	     * @returns {void}
 	     */
 
 	  }], [{
@@ -1604,11 +1606,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var valid = (0, _jsonschema.validate)(params, jsonSchema);
 	      if (!valid.valid) throw valid.errors;
 	    }
-
-	    /**
-	     * @private
-	     */
-
 	  }, {
 	    key: 'doRequest',
 	    value: function doRequest(url) {
@@ -1622,7 +1619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
 	      return _superagent2.default.get(url).withCredentials().set(headers).then(function (response) {
-	        if (response.headers['content-type'] === 'application/json') {
+	        if (response.headers['content-type'] === 'application/json; charset=utf-8') {
 	          return JSON.parse(response.text);
 	        }
 	        return response.text;
@@ -1630,32 +1627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var json = JSON.parse(error.response.text);
 	        return _es6Promise2.default.reject(json);
 	      });
-
-	      // return fetch(url, {
-	      //   method: 'GET',
-	      //   headers: headers,
-	      //   credentials: 'include',
-	      //   mode: 'cors',
-	      // }).then((response) => {
-	      //   const url = response.url.split('/');
-	      //   const request = url[url.length - 1];
-	      //
-	      //   if (response.ok && request === 'squatchcookiejson') {
-	      //     return response.json();
-	      //   } else {
-	      //     return response.text();
-	      //   }
-	      //
-	      //   const json = response.json();
-	      //   return json.then(Promise.reject.bind(Promise));
-	      // });
 	    }
-
-	    /**
-	     * @private
-	     *
-	     */
-
 	  }, {
 	    key: 'doPut',
 	    value: function doPut(url, data, jwt) {
@@ -1682,7 +1654,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = WidgetApi;
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -1699,9 +1671,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  root = this;
 	}
 
-	var Emitter = __webpack_require__(14);
-	var requestBase = __webpack_require__(15);
-	var isObject = __webpack_require__(16);
+	var Emitter = __webpack_require__(13);
+	var requestBase = __webpack_require__(14);
+	var isObject = __webpack_require__(15);
 
 	/**
 	 * Noop.
@@ -1713,7 +1685,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Expose `request`.
 	 */
 
-	var request = module.exports = __webpack_require__(17).bind(null, Request);
+	var request = module.exports = __webpack_require__(16).bind(null, Request);
 
 	/**
 	 * Determine XHR.
@@ -2664,7 +2636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -2833,13 +2805,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module of mixed-in functions shared between node and client code
 	 */
-	var isObject = __webpack_require__(16);
+	var isObject = __webpack_require__(15);
 
 	/**
 	 * Clear previous timeout.
@@ -3211,7 +3183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
 	/**
@@ -3230,7 +3202,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports) {
 
 	// The node and browser modules expose versions of this with the
@@ -3268,16 +3240,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var Validator = module.exports.Validator = __webpack_require__(19);
+	var Validator = module.exports.Validator = __webpack_require__(18);
 
-	module.exports.ValidatorResult = __webpack_require__(27).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(27).ValidationError;
-	module.exports.SchemaError = __webpack_require__(27).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(26).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(26).ValidationError;
+	module.exports.SchemaError = __webpack_require__(26).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -3286,15 +3258,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var urilib = __webpack_require__(20);
+	var urilib = __webpack_require__(19);
 
-	var attribute = __webpack_require__(26);
-	var helpers = __webpack_require__(27);
+	var attribute = __webpack_require__(25);
+	var helpers = __webpack_require__(26);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -3612,7 +3584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -3636,7 +3608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-	var punycode = __webpack_require__(21);
+	var punycode = __webpack_require__(20);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -3708,7 +3680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(23);
+	    querystring = __webpack_require__(22);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
 	  if (url && isObject(url) && url instanceof Url) return url;
@@ -4325,7 +4297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/punycode v1.3.2 by @mathias */
@@ -4857,10 +4829,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	}(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)(module), (function() { return this; }())))
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -4876,17 +4848,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(24);
-	exports.encode = exports.stringify = __webpack_require__(25);
+	exports.decode = exports.parse = __webpack_require__(23);
+	exports.encode = exports.stringify = __webpack_require__(24);
 
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -4972,7 +4944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -5042,12 +5014,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(27);
+	var helpers = __webpack_require__(26);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -5833,12 +5805,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var uri = __webpack_require__(20);
+	var uri = __webpack_require__(19);
 
 	var ValidationError = exports.ValidationError = function ValidationError (message, instance, schema, propertyPath, name, argument) {
 	  if (propertyPath) {
@@ -6118,7 +6090,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports) {
 
 	module.exports = {

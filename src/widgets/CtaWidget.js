@@ -11,18 +11,14 @@ const _log = debug('squatch-js:CTAwidget');
  *
  */
 export default class CtaWidget extends PopupWidget {
-  /**
-   * @private
-   */
+
   constructor(params, opts) {
     _log('CTA constructor');
     const ctaElement = document.createElement('div');
     ctaElement.id = 'cta';
     document.body.appendChild(ctaElement);
-    _log('cta Element appended to body');
 
     super(params, 'cta');
-    _log('called popup constructor');
 
     const me = this;
 
@@ -41,17 +37,13 @@ export default class CtaWidget extends PopupWidget {
 
     me.positionClass = opts.position;
 
-    _log('chose position class', me.positionClass);
-
     me.ctaFrame = document.createElement('iframe');
     me.ctaFrame.squatchJsApi = me;
     me.ctaFrame.scrolling = 'no';
     me.ctaFrame.setAttribute('style', `border:0; background-color:transparent; position:fixed; display:none;${me.side}${me.position}`);
 
-    _log('cta Frame defined', me.ctaFrame);
-
     document.body.appendChild(this.ctaFrame);
-    _log('ctaframe appended to body')
+    _log('ctaframe appended to body');
   }
 
   load() {
@@ -59,7 +51,7 @@ export default class CtaWidget extends PopupWidget {
 
     const widgetFrameDoc = this.frame.contentWindow.document;
     const ctaFrame = this.ctaFrame;
-    const positionClass = ` ${this.positionClass}`;
+    const positionClass = this.positionClass;
     const erd = this.erd;
 
     // Wait for widget doc to be ready to grab the cta HTML
@@ -76,23 +68,23 @@ export default class CtaWidget extends PopupWidget {
 
         // Figure out size of CTA as well
         domready(ctaFrameDoc, () => {
-          ctaFrame.height = ctaFrameDoc.body.offsetHeight;
-          ctaFrame.width = ctaFrameDoc.body.scrollWidth;
-          _log('first height', ctaFrame.height);
-          _log('first width', ctaFrame.width);
+          const ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
+          ctaContainer.style.position = 'fixed';
+
+          ctaFrame.height = ctaContainer.offsetHeight;
+          ctaFrame.width = ctaContainer.scrollWidth;
 
           ctaFrame.style.display = 'block';
 
-          const ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
-          ctaContainer.className += positionClass;
+          if (!ctaContainer.classList.contains(positionClass)) {
+            ctaContainer.className += ` ${positionClass}`;
+          }
 
           erd.listenTo(ctaContainer, (element) => {
             const height = element.offsetHeight;
             const width = element.offsetWidth;
             ctaFrame.height = height;
             ctaFrame.width = width;
-            _log('listened height', ctaFrame.height);
-            _log('listened width', ctaFrame.width);
           });
 
           _log('CTA template loaded into iframe');

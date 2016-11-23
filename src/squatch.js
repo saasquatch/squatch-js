@@ -6,9 +6,7 @@
  *
  * @module squatch
  */
-import 'whatwg-fetch';
 import debug from 'debug';
-import EventBus from 'eventbusjs';
 import Widgets from './widgets/Widgets';
 import { EmbedWidget } from './widgets/EmbedWidget';
 import { PopupWidget } from './widgets/PopupWidget';
@@ -25,7 +23,6 @@ export {
   PopupWidget,
   CtaWidget,
   WidgetApi,
-  EventBus,
 };
 
 let _api = null;
@@ -37,6 +34,7 @@ let _widgets = null;
  * Read the {@link WidgetApi} docs.
  *
  * @type {WidgetApi}
+ * @returns {WidgetApi} static instance
  */
 export function api() {
   return _api;
@@ -48,6 +46,7 @@ export function api() {
  * Read the {@link Widgets} docs.
  *
  * @type {Widgets}
+ * @returns {Widgets} static instance
  */
 export function widgets() {
   return _widgets;
@@ -61,6 +60,8 @@ export function widgets() {
  *  - `squatch.widgets()` a static instance of {@link Widgets}
  *
  * @param {ConfigOptions} config Configuration details
+ * @returns {void}
+ *
  * @example
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
@@ -82,6 +83,7 @@ export function init(config) {
  * function detects that state.
  *
  * @param {function} fn A callback once Squatch.js is ready.
+ * @returns {void}
  *
  * @example
  * squatch.ready(function() {
@@ -97,44 +99,20 @@ export function ready(fn) {
  * Autofills a referral code into an element when someone has been referred.
  * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
  *
+ * @param {string} selector Element class/id
+ * @returns {void}
  */
-export function autofill(element) {
-  let el;
-
-  if (typeof element === 'function') {
-    return api.squatchReferralCookie().then(element).catch((ex) => {
-      throw ex;
-    });
-  } else if (element.match('^#')) {
-    el = document.getElementById(element.slice(1));
-  } else if (element.match('^[.]')) {
-    el = document.getElementsByClassName(element.slice(1))[0];
-  } else {
-    _log('Element id/class or function missing');
-    throw new Error('Element id/class or function missing');
-  }
-
-  return api.squatchReferralCookie().then((response) => {
-    el.value = response.code;
-  }).catch((ex) => {
-    throw ex;
-  });
+export function autofill(selector) {
+  widgets().autofill(selector);
 }
-
-/**
- * @private
- */
-const cb = (target, widget, email) => {
-  widget.reload(email);
-}
-// listens to a 'submit_email' event in the theme.
-EventBus.addEventListener('submit_email', cb);
 
 /**
  * Overrides the default function that submits the user email. If you have
  * Security enabled, the email needs to be signed before it's submitted.
  *
  * @param {function} fn Callback function for the 'submit_email' event.
+ * @returns {void}
+ *
  * @example
  * squatch.submitEmail(function(target, widget, email) {
  *   // Sign email and generate jwt token
@@ -143,8 +121,7 @@ EventBus.addEventListener('submit_email', cb);
  * });
  */
 export function submitEmail(fn) {
-  EventBus.removeEventListener('submit_email', cb);
-  EventBus.addEventListener('submit_email', fn);
+  widgets().submitEmail(fn);
 }
 
 export * from './docs.js';

@@ -1,5 +1,6 @@
 import debug from 'debug';
 import Promise from 'es6-promise';
+import EventBus from 'eventbusjs';
 import WidgetApi from '../api/WidgetApi';
 import EmbedWidget from './EmbedWidget';
 import PopupWidget from './PopupWidget';
@@ -33,13 +34,16 @@ export default class Widgets {
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
     this.api = new WidgetApi(config);
+    this.eventBus = EventBus;
+    // listens to a 'submit_email' event in the theme.
+    this.eventBus.addEventListener('submit_email', Widgets.cb);
   }
 
   /**
    * This function calls the {@link WidgetApi.cookieUser} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
-   * @param {Object} config
+   * @param {Object} config Config details
    * @param {EngagementMedium} config.widgetType The content of the widget.
    * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used to
@@ -65,10 +69,10 @@ export default class Widgets {
    * This function calls the {@link WidgetApi.upsert} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
-   * @param {Object} config
-   * @param {Object} config.user the user details
-   * @param {string} config.user.id
-   * @param {string} config.user.accountId
+   * @param {Object} config Config details
+   * @param {Object} config.user The user details
+   * @param {string} config.user.id The user id
+   * @param {string} config.user.accountId The user account id
    * @param {EngagementMedium} config.widgetType The content of the widget.
    * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -93,10 +97,10 @@ export default class Widgets {
    * This function calls the {@link WidgetApi.render} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
-   * @param {Object} config
-   * @param {Object} config.user the user details
-   * @param {string} config.user.id
-   * @param {string} config.user.accountId
+   * @param {Object} config Config details
+   * @param {Object} config.user The user details
+   * @param {string} config.user.id The user id
+   * @param {string} config.user.accountId The user account id
    * @param {EngagementMedium} config.widgetType The content of the widget.
    * @param {WidgetType} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -118,14 +122,60 @@ export default class Widgets {
   }
 
   /**
-   * @private
+   * Autofills a referral code into an element when someone has been referred.
+   * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
    *
+   * @param {string} selector Element class/id
+   * @returns {void}
+   */
+  autofill(selector) {
+    if (typeof selector === 'function') {
+      this.api.squatchReferralCookie().then(selector).catch((ex) => {
+        throw ex;
+      });
+    }
+
+    let elems = document.querySelectorAll(selector);
+
+    if (elems.length > 0) {
+      // Only use the first element found
+      elems = elems[0];
+    } else {
+      _log('Element id/class or function missing');
+      throw new Error('Element id/class or function missing');
+    }
+
+    this.api.squatchReferralCookie().then((response) => {
+      elems.value = response.code;
+    }).catch((ex) => {
+      throw ex;
+    });
+  }
+
+  /**
+   * Overrides the default function that submits the user email. If you have
+   * Security enabled, the email needs to be signed before it's submitted.
+   *
+   * @param {function} fn Callback function for the 'submit_email' event.
+   * @returns {void}
+   */
+  submitEmail(fn) {
+    this.eventBus.removeEventListener('submit_email', Widgets.cb);
+    this.eventBus.addEventListener('submit_email', fn);
+  }
+
+  /**
+   * @private
+   * @param {Object} response The json object return from the WidgetApi
+   * @param {Object} config Config details
+   * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
+   * @param {string} config.engagementMedium (POPUP, EMBED)
+   * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
    */
   renderWidget(response, config = { widgetType: '', engagementMedium: '' }) {
     _log('Rendering Widget...');
     if (!response) throw new Error('Unable to get a response');
     if (!response.jsOptions) throw new Error('Missing jsOptions in response');
-    _log(response, config);
 
     let widget;
     let displayOnLoad = false;
@@ -157,8 +207,6 @@ export default class Widgets {
       });
     }
 
-    _log('read jsOptions, now create Widget');
-
     if (!displayCTA && config.engagementMedium === 'EMBED') {
       widget = new EmbedWidget(params);
       widget.load();
@@ -180,13 +228,14 @@ export default class Widgets {
       widget.open();
     }
 
-    _log('the widget returned', widget);
     return widget;
   }
 
   /**
    * @private
-   *
+   * @param {Object} error The json object containing the error details
+   * @param {string} em The engagementMedium
+   * @returns {void}
    */
   static renderErrorWidget(error, em = 'POPUP') {
     _log(new Error(`${error.apiErrorCode} (${error.rsCode}) ${error.message}`));
@@ -209,8 +258,21 @@ export default class Widgets {
 
   /**
    * @private
+   * @param {string} rule A regular expression
+   * @returns {boolean} true if rule matches Url, false otherwise
    */
   static matchesUrl(rule) {
     return window.location.href.match(new RegExp(rule));
+  }
+
+  /**
+   * @private
+   * @param {Object} target Object containing the target DOM element
+   * @param {Widget} widget A widget (EmbedWidget, PopupWidget, CtaWidget)
+   * @param {string} email A valid email address
+   * @returns {void}
+   */
+  static cb(target, widget, email) {
+    widget.reload(email);
   }
 }

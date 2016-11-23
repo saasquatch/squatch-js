@@ -8,32 +8,13 @@ const _log = debug('squatch-js:widget');
  *
  * The Widget class is the base class for the different widget types available
  *
- * @example <caption>Custom Widget example</caption>
- *    class CustomWidget extends Widget {
- *      constructor(params,stuff) {
- *        super(params);
- *        // do stuff
- *      }
- *
- *      load() {
- *        // custom loading of widget
- *      }
- *    }
+ * Creates an `iframe` in which the html content of the widget gets embedded.
+ * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
+ * for listening to the height of the widget content and make the iframe responsive.
  *
  */
 export default class Widget {
 
-  /**
-   * Initialize a new {@link Widget} instance.
-   *
-   * Creates an `iframe` in which the html content of the widget gets embedded.
-   * Uses element-resize-detector (https://github.com/wnr/element-resize-detector)
-   * for listening to the height of the widget content and make the iframe responsive.
-   *
-   * @private
-   * @param {Object} params -> document this object
-   *
-   */
   constructor(params) {
     _log('widget initializing ...');
     const me = this;

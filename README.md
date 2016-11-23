@@ -102,7 +102,7 @@ You can also use the `api()` function to call the WidgetApi methods directly.
 
     // Example 1 -- use the api
     var code;
-    var element = document.getElementById('#my_coupon');
+    var element = document.getElementById('my_coupon');
 
     squatch.api().squatchReferralCookie().then(function(response) {
       element.value = response.code;

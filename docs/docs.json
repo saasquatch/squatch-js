@@ -87,7 +87,7 @@
         },
         "end": {
           "line": 9,
-          "column": 22
+          "column": 26
         }
       },
       "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
@@ -329,31 +329,100 @@
           "type": "NameExpression",
           "name": "WidgetApi"
         }
+      },
+      {
+        "title": "returns",
+        "description": "static instance",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "WidgetApi"
+        }
       }
     ],
     "loc": {
       "start": {
-        "line": 34,
+        "line": 31,
         "column": 0
       },
       "end": {
-        "line": 40,
+        "line": 38,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 41,
+          "line": 39,
           "column": 0
         },
         "end": {
-          "line": 43,
+          "line": 41,
           "column": 1
         }
       },
       "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
+    "returns": [
+      {
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "static instance",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 16,
+                      "offset": 15
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16,
+                  "offset": 15
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 16,
+              "offset": 15
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "WidgetApi"
+        }
+      }
+    ],
     "name": "api",
     "kind": "function",
     "members": {
@@ -591,31 +660,100 @@
           "type": "NameExpression",
           "name": "Widgets"
         }
+      },
+      {
+        "title": "returns",
+        "description": "static instance",
+        "lineNumber": 6,
+        "type": {
+          "type": "NameExpression",
+          "name": "Widgets"
+        }
       }
     ],
     "loc": {
       "start": {
-        "line": 45,
+        "line": 43,
         "column": 0
       },
       "end": {
-        "line": 51,
+        "line": 50,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 52,
+          "line": 51,
           "column": 0
         },
         "end": {
-          "line": 54,
+          "line": 53,
           "column": 1
         }
       },
       "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
+    "returns": [
+      {
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "static instance",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 16,
+                      "offset": 15
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 16,
+                  "offset": 15
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 16,
+              "offset": 15
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "Widgets"
+        }
+      }
+    ],
     "name": "widgets",
     "kind": "function",
     "members": {
@@ -946,29 +1084,38 @@
         "name": "config"
       },
       {
+        "title": "returns",
+        "description": null,
+        "lineNumber": 7,
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
+        }
+      },
+      {
         "title": "example",
         "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});",
-        "lineNumber": 7
+        "lineNumber": 9
       }
     ],
     "loc": {
       "start": {
-        "line": 57,
+        "line": 56,
         "column": 0
       },
       "end": {
-        "line": 66,
+        "line": 67,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 67,
+          "line": 68,
           "column": 0
         },
         "end": {
-          "line": 78,
+          "line": 79,
           "column": 1
         }
       },
@@ -1033,6 +1180,30 @@
         "type": {
           "type": "NameExpression",
           "name": "ConfigOptions"
+        }
+      }
+    ],
+    "returns": [
+      {
+        "description": {
+          "type": "root",
+          "children": [],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
         }
       }
     ],
@@ -1124,29 +1295,38 @@
         "name": "fn"
       },
       {
+        "title": "returns",
+        "description": null,
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
+        }
+      },
+      {
         "title": "example",
         "description": "squatch.ready(function() {\n  console.log(\"ready!\");\n  squatch.api().cookieUser();\n});",
-        "lineNumber": 6
+        "lineNumber": 7
       }
     ],
     "loc": {
       "start": {
-        "line": 80,
+        "line": 81,
         "column": 0
       },
       "end": {
-        "line": 91,
+        "line": 93,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 92,
+          "line": 94,
           "column": 0
         },
         "end": {
-          "line": 94,
+          "line": 96,
           "column": 1
         }
       },
@@ -1211,6 +1391,30 @@
         "type": {
           "type": "NameExpression",
           "name": "function"
+        }
+      }
+    ],
+    "returns": [
+      {
+        "description": {
+          "type": "root",
+          "children": [],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
         }
       }
     ],
@@ -1332,39 +1536,138 @@
         }
       }
     },
-    "tags": [],
+    "tags": [
+      {
+        "title": "param",
+        "description": "Element class/id",
+        "lineNumber": 4,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "selector"
+      },
+      {
+        "title": "returns",
+        "description": null,
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
+        }
+      }
+    ],
     "loc": {
       "start": {
-        "line": 96,
+        "line": 98,
         "column": 0
       },
       "end": {
-        "line": 100,
+        "line": 104,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 101,
+          "line": 105,
           "column": 0
         },
         "end": {
-          "line": 122,
+          "line": 107,
           "column": 1
         }
       },
       "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
     },
-    "name": "autofill",
-    "kind": "function",
     "params": [
       {
-        "title": "param",
-        "name": "element",
-        "lineNumber": 101
+        "name": "selector",
+        "lineNumber": 4,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "Element class/id",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 17,
+                      "offset": 16
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 17,
+                  "offset": 16
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 17,
+              "offset": 16
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
       }
     ],
+    "returns": [
+      {
+        "description": {
+          "type": "root",
+          "children": [],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
+        }
+      }
+    ],
+    "name": "autofill",
+    "kind": "function",
     "members": {
       "instance": [],
       "static": []
@@ -1446,29 +1749,38 @@
         "name": "fn"
       },
       {
+        "title": "returns",
+        "description": null,
+        "lineNumber": 5,
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
+        }
+      },
+      {
         "title": "example",
         "description": "squatch.submitEmail(function(target, widget, email) {\n  // Sign email and generate jwt token\n  var jwt = 'token';\n  widget.reload(email, jwt);\n});",
-        "lineNumber": 5
+        "lineNumber": 7
       }
     ],
     "loc": {
       "start": {
-        "line": 133,
+        "line": 109,
         "column": 0
       },
       "end": {
-        "line": 144,
+        "line": 122,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 145,
+          "line": 123,
           "column": 0
         },
         "end": {
-          "line": 148,
+          "line": 125,
           "column": 1
         }
       },
@@ -1536,6 +1848,30 @@
         }
       }
     ],
+    "returns": [
+      {
+        "description": {
+          "type": "root",
+          "children": [],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "void"
+        }
+      }
+    ],
     "examples": [
       {
         "description": "squatch.submitEmail(function(target, widget, email) {\n  // Sign email and generate jwt token\n  var jwt = 'token';\n  widget.reload(email, jwt);\n});"
@@ -1554,6 +1890,269 @@
       }
     ],
     "namespace": "submitEmail"
+  },
+  {
+    "description": {
+      "type": "root",
+      "children": [
+        {
+          "type": "paragraph",
+          "children": [
+            {
+              "type": "text",
+              "value": "When you load Squatch.js you need to provide these configuration options.",
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 74,
+                  "offset": 73
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 74,
+              "offset": 73
+            },
+            "indent": []
+          }
+        }
+      ],
+      "position": {
+        "start": {
+          "line": 1,
+          "column": 1,
+          "offset": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 74,
+          "offset": 73
+        }
+      }
+    },
+    "tags": [
+      {
+        "title": "interface",
+        "description": "ConfigOptions",
+        "lineNumber": 3
+      },
+      {
+        "title": "property",
+        "description": "The Tenant that you're using.",
+        "lineNumber": 4,
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        },
+        "name": "tenantAlias"
+      },
+      {
+        "title": "property",
+        "description": "The domain for API. Defaults to `https://app.referralsaasquatch.com`",
+        "lineNumber": 5,
+        "type": {
+          "type": "NullableType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "string"
+          },
+          "prefix": false
+        },
+        "name": "domain"
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 5,
+        "column": 0
+      },
+      "end": {
+        "line": 11,
+        "column": 3
+      }
+    },
+    "context": {
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 1
+        }
+      },
+      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
+    },
+    "interface": true,
+    "name": "ConfigOptions",
+    "properties": [
+      {
+        "name": "tenantAlias",
+        "lineNumber": 4,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "The Tenant that you're using.",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 30,
+                      "offset": 29
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 30,
+                  "offset": 29
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 30,
+              "offset": 29
+            }
+          }
+        },
+        "type": {
+          "type": "NameExpression",
+          "name": "string"
+        }
+      },
+      {
+        "name": "domain",
+        "lineNumber": 5,
+        "description": {
+          "type": "root",
+          "children": [
+            {
+              "type": "paragraph",
+              "children": [
+                {
+                  "type": "text",
+                  "value": "The domain for API. Defaults to ",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 1,
+                      "offset": 0
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 33,
+                      "offset": 32
+                    },
+                    "indent": []
+                  }
+                },
+                {
+                  "type": "inlineCode",
+                  "value": "https://app.referralsaasquatch.com",
+                  "position": {
+                    "start": {
+                      "line": 1,
+                      "column": 33,
+                      "offset": 32
+                    },
+                    "end": {
+                      "line": 1,
+                      "column": 69,
+                      "offset": 68
+                    },
+                    "indent": []
+                  }
+                }
+              ],
+              "position": {
+                "start": {
+                  "line": 1,
+                  "column": 1,
+                  "offset": 0
+                },
+                "end": {
+                  "line": 1,
+                  "column": 69,
+                  "offset": 68
+                },
+                "indent": []
+              }
+            }
+          ],
+          "position": {
+            "start": {
+              "line": 1,
+              "column": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 69,
+              "offset": 68
+            }
+          }
+        },
+        "type": {
+          "type": "NullableType",
+          "expression": {
+            "type": "NameExpression",
+            "name": "string"
+          },
+          "prefix": false
+        }
+      }
+    ],
+    "members": {
+      "instance": [],
+      "static": []
+    },
+    "path": [
+      {
+        "name": "ConfigOptions"
+      }
+    ],
+    "namespace": "ConfigOptions"
   },
   {
     "description": {
@@ -2140,269 +2739,6 @@
           "children": [
             {
               "type": "text",
-              "value": "When you load Squatch.js you need to provide these configuration options.",
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 74,
-                  "offset": 73
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 74,
-              "offset": 73
-            },
-            "indent": []
-          }
-        }
-      ],
-      "position": {
-        "start": {
-          "line": 1,
-          "column": 1,
-          "offset": 0
-        },
-        "end": {
-          "line": 1,
-          "column": 74,
-          "offset": 73
-        }
-      }
-    },
-    "tags": [
-      {
-        "title": "interface",
-        "description": "ConfigOptions",
-        "lineNumber": 3
-      },
-      {
-        "title": "property",
-        "description": "The Tenant that you're using.",
-        "lineNumber": 4,
-        "type": {
-          "type": "NameExpression",
-          "name": "string"
-        },
-        "name": "tenantAlias"
-      },
-      {
-        "title": "property",
-        "description": "The domain for API. Defaults to `https://app.referralsaasquatch.com`",
-        "lineNumber": 5,
-        "type": {
-          "type": "NullableType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "string"
-          },
-          "prefix": false
-        },
-        "name": "domain"
-      }
-    ],
-    "loc": {
-      "start": {
-        "line": 5,
-        "column": 0
-      },
-      "end": {
-        "line": 11,
-        "column": 3
-      }
-    },
-    "context": {
-      "loc": {
-        "start": {
-          "line": 1,
-          "column": 0
-        },
-        "end": {
-          "line": 3,
-          "column": 1
-        }
-      },
-      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
-    },
-    "interface": true,
-    "name": "ConfigOptions",
-    "properties": [
-      {
-        "name": "tenantAlias",
-        "lineNumber": 4,
-        "description": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "The Tenant that you're using.",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 30,
-                      "offset": 29
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 30,
-                  "offset": 29
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 30,
-              "offset": 29
-            }
-          }
-        },
-        "type": {
-          "type": "NameExpression",
-          "name": "string"
-        }
-      },
-      {
-        "name": "domain",
-        "lineNumber": 5,
-        "description": {
-          "type": "root",
-          "children": [
-            {
-              "type": "paragraph",
-              "children": [
-                {
-                  "type": "text",
-                  "value": "The domain for API. Defaults to ",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 1,
-                      "offset": 0
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 33,
-                      "offset": 32
-                    },
-                    "indent": []
-                  }
-                },
-                {
-                  "type": "inlineCode",
-                  "value": "https://app.referralsaasquatch.com",
-                  "position": {
-                    "start": {
-                      "line": 1,
-                      "column": 33,
-                      "offset": 32
-                    },
-                    "end": {
-                      "line": 1,
-                      "column": 69,
-                      "offset": 68
-                    },
-                    "indent": []
-                  }
-                }
-              ],
-              "position": {
-                "start": {
-                  "line": 1,
-                  "column": 1,
-                  "offset": 0
-                },
-                "end": {
-                  "line": 1,
-                  "column": 69,
-                  "offset": 68
-                },
-                "indent": []
-              }
-            }
-          ],
-          "position": {
-            "start": {
-              "line": 1,
-              "column": 1,
-              "offset": 0
-            },
-            "end": {
-              "line": 1,
-              "column": 69,
-              "offset": 68
-            }
-          }
-        },
-        "type": {
-          "type": "NullableType",
-          "expression": {
-            "type": "NameExpression",
-            "name": "string"
-          },
-          "prefix": false
-        }
-      }
-    ],
-    "members": {
-      "instance": [],
-      "static": []
-    },
-    "path": [
-      {
-        "name": "ConfigOptions"
-      }
-    ],
-    "namespace": "ConfigOptions"
-  },
-  {
-    "description": {
-      "type": "root",
-      "children": [
-        {
-          "type": "paragraph",
-          "children": [
-            {
-              "type": "text",
               "value": "When a widget is loaded using ",
               "position": {
                 "start": {
@@ -2861,22 +3197,22 @@
     "tags": [],
     "loc": {
       "start": {
-        "line": 10,
+        "line": 11,
         "column": 0
       },
       "end": {
-        "line": 15,
+        "line": 16,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 16,
+          "line": 17,
           "column": 0
         },
         "end": {
-          "line": 216,
+          "line": 278,
           "column": 1
         }
       },
@@ -3013,22 +3349,22 @@
           ],
           "loc": {
             "start": {
-              "line": 17,
+              "line": 18,
               "column": 2
             },
             "end": {
-              "line": 32,
+              "line": 33,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 33,
+                "line": 34,
                 "column": 2
               },
               "end": {
-                "line": 36,
+                "line": 40,
                 "column": 3
               }
             },
@@ -3386,7 +3722,7 @@
           "tags": [
             {
               "title": "param",
-              "description": null,
+              "description": "Config details",
               "lineNumber": 4,
               "type": {
                 "type": "NameExpression",
@@ -3445,22 +3781,22 @@
           ],
           "loc": {
             "start": {
-              "line": 38,
+              "line": 42,
               "column": 2
             },
             "end": {
-              "line": 49,
+              "line": 53,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 50,
+                "line": 54,
                 "column": 2
               },
               "end": {
-                "line": 62,
+                "line": 66,
                 "column": 3
               }
             },
@@ -3470,6 +3806,58 @@
             {
               "name": "config",
               "lineNumber": 4,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Config details",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 15,
+                            "offset": 14
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15,
+                        "offset": 14
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15,
+                    "offset": 14
+                  }
+                }
+              },
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -3854,7 +4242,7 @@
           "tags": [
             {
               "title": "param",
-              "description": null,
+              "description": "Config details",
               "lineNumber": 4,
               "type": {
                 "type": "NameExpression",
@@ -3864,7 +4252,7 @@
             },
             {
               "title": "param",
-              "description": "the user details",
+              "description": "The user details",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
@@ -3874,7 +4262,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user id",
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
@@ -3884,7 +4272,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user account id",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -3943,22 +4331,22 @@
           ],
           "loc": {
             "start": {
-              "line": 64,
+              "line": 68,
               "column": 2
             },
             "end": {
-              "line": 78,
+              "line": 82,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 79,
+                "line": 83,
                 "column": 2
               },
               "end": {
-                "line": 90,
+                "line": 94,
                 "column": 3
               }
             },
@@ -3968,6 +4356,58 @@
             {
               "name": "config",
               "lineNumber": 4,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Config details",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 15,
+                            "offset": 14
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15,
+                        "offset": 14
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15,
+                    "offset": 14
+                  }
+                }
+              },
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -3984,7 +4424,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the user details",
+                            "value": "The user details",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -4036,6 +4476,58 @@
                     {
                       "name": "config.user.id",
                       "lineNumber": 6,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 12,
+                                    "offset": 11
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 12,
+                                "offset": 11
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 12,
+                            "offset": 11
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -4044,6 +4536,58 @@
                     {
                       "name": "config.user.accountId",
                       "lineNumber": 7,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user account id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 20,
+                                    "offset": 19
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 20,
+                                "offset": 19
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 20,
+                            "offset": 19
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -4430,7 +4974,7 @@
           "tags": [
             {
               "title": "param",
-              "description": null,
+              "description": "Config details",
               "lineNumber": 4,
               "type": {
                 "type": "NameExpression",
@@ -4440,7 +4984,7 @@
             },
             {
               "title": "param",
-              "description": "the user details",
+              "description": "The user details",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
@@ -4450,7 +4994,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user id",
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
@@ -4460,7 +5004,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user account id",
               "lineNumber": 7,
               "type": {
                 "type": "NameExpression",
@@ -4519,22 +5063,22 @@
           ],
           "loc": {
             "start": {
-              "line": 92,
+              "line": 96,
               "column": 2
             },
             "end": {
-              "line": 106,
+              "line": 110,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 107,
+                "line": 111,
                 "column": 2
               },
               "end": {
-                "line": 118,
+                "line": 122,
                 "column": 3
               }
             },
@@ -4544,6 +5088,58 @@
             {
               "name": "config",
               "lineNumber": 4,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Config details",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 15,
+                            "offset": 14
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15,
+                        "offset": 14
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15,
+                    "offset": 14
+                  }
+                }
+              },
               "type": {
                 "type": "NameExpression",
                 "name": "Object"
@@ -4560,7 +5156,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the user details",
+                            "value": "The user details",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -4612,6 +5208,58 @@
                     {
                       "name": "config.user.id",
                       "lineNumber": 6,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 12,
+                                    "offset": 11
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 12,
+                                "offset": 11
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 12,
+                            "offset": 11
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -4620,6 +5268,58 @@
                     {
                       "name": "config.user.accountId",
                       "lineNumber": 7,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user account id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 20,
+                                    "offset": 19
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 20,
+                                "offset": 19
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 20,
+                            "offset": 19
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -4903,6 +5603,464 @@
             }
           ],
           "namespace": "Widgets#render"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Autofills a referral code into an element when someone has been referred.\nUses ",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 6,
+                        "offset": 79
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  },
+                  {
+                    "type": "link",
+                    "url": "WidgetApi.squatchReferralCookie",
+                    "title": null,
+                    "jsdoc": true,
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "WidgetApi.squatchReferralCookie"
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 2,
+                        "column": 6,
+                        "offset": 79
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 45,
+                        "offset": 118
+                      },
+                      "indent": []
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "value": " behind the scenes.",
+                    "position": {
+                      "start": {
+                        "line": 2,
+                        "column": 45,
+                        "offset": 118
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 64,
+                        "offset": 137
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 64,
+                    "offset": 137
+                  },
+                  "indent": [
+                    1
+                  ]
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 64,
+                "offset": 137
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": "Element class/id",
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              },
+              "name": "selector"
+            },
+            {
+              "title": "returns",
+              "description": null,
+              "lineNumber": 5,
+              "type": {
+                "type": "NameExpression",
+                "name": "void"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 124,
+              "column": 2
+            },
+            "end": {
+              "line": 130,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 131,
+                "column": 2
+              },
+              "end": {
+                "line": 153,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+          },
+          "params": [
+            {
+              "name": "selector",
+              "lineNumber": 4,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Element class/id",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 17,
+                            "offset": 16
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 17,
+                        "offset": 16
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 17,
+                    "offset": 16
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "string"
+              }
+            }
+          ],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "void"
+              }
+            }
+          ],
+          "name": "autofill",
+          "kind": "function",
+          "memberof": "Widgets",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "Widgets",
+              "kind": "class"
+            },
+            {
+              "name": "autofill",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "Widgets#autofill"
+        },
+        {
+          "description": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "value": "Overrides the default function that submits the user email. If you have\nSecurity enabled, the email needs to be signed before it's submitted.",
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 2,
+                        "column": 70,
+                        "offset": 141
+                      },
+                      "indent": [
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 70,
+                    "offset": 141
+                  },
+                  "indent": [
+                    1
+                  ]
+                }
+              }
+            ],
+            "position": {
+              "start": {
+                "line": 1,
+                "column": 1,
+                "offset": 0
+              },
+              "end": {
+                "line": 2,
+                "column": 70,
+                "offset": 141
+              }
+            }
+          },
+          "tags": [
+            {
+              "title": "param",
+              "description": "Callback function for the 'submit_email' event.",
+              "lineNumber": 4,
+              "type": {
+                "type": "NameExpression",
+                "name": "function"
+              },
+              "name": "fn"
+            },
+            {
+              "title": "returns",
+              "description": null,
+              "lineNumber": 5,
+              "type": {
+                "type": "NameExpression",
+                "name": "void"
+              }
+            }
+          ],
+          "loc": {
+            "start": {
+              "line": 155,
+              "column": 2
+            },
+            "end": {
+              "line": 161,
+              "column": 5
+            }
+          },
+          "context": {
+            "loc": {
+              "start": {
+                "line": 162,
+                "column": 2
+              },
+              "end": {
+                "line": 165,
+                "column": 3
+              }
+            },
+            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+          },
+          "params": [
+            {
+              "name": "fn",
+              "lineNumber": 4,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Callback function for the 'submit_email' event.",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 48,
+                            "offset": 47
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 48,
+                        "offset": 47
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 48,
+                    "offset": 47
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "function"
+              }
+            }
+          ],
+          "returns": [
+            {
+              "description": {
+                "type": "root",
+                "children": [],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "void"
+              }
+            }
+          ],
+          "name": "submitEmail",
+          "kind": "function",
+          "memberof": "Widgets",
+          "scope": "instance",
+          "members": {
+            "instance": [],
+            "static": []
+          },
+          "path": [
+            {
+              "name": "Widgets",
+              "kind": "class"
+            },
+            {
+              "name": "submitEmail",
+              "kind": "function",
+              "scope": "instance"
+            }
+          ],
+          "namespace": "Widgets#submitEmail"
         }
       ],
       "static": [],
@@ -5047,7 +6205,7 @@
           "column": 0
         },
         "end": {
-          "line": 99,
+          "line": 96,
           "column": 1
         }
       },
@@ -5063,8 +6221,7 @@
     "kind": "class",
     "members": {
       "instance": [],
-      "static": [],
-      "events": []
+      "static": []
     },
     "path": [
       {
@@ -5209,7 +6366,7 @@
           "column": 0
         },
         "end": {
-          "line": 174,
+          "line": 164,
           "column": 1
         }
       },
@@ -5224,206 +6381,8 @@
     ],
     "kind": "class",
     "members": {
-      "instance": [
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Opens the widget.",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 18,
-                        "offset": 17
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 18,
-                    "offset": 17
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 18,
-                "offset": 17
-              }
-            }
-          },
-          "tags": [],
-          "loc": {
-            "start": {
-              "line": 99,
-              "column": 2
-            },
-            "end": {
-              "line": 101,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 102,
-                "column": 2
-              },
-              "end": {
-                "line": 146,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/PopupWidget.js"
-          },
-          "name": "open",
-          "kind": "function",
-          "memberof": "PopupWidget",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "PopupWidget",
-              "kind": "class"
-            },
-            {
-              "name": "open",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "PopupWidget#open"
-        },
-        {
-          "description": {
-            "type": "root",
-            "children": [
-              {
-                "type": "paragraph",
-                "children": [
-                  {
-                    "type": "text",
-                    "value": "Closes the widget",
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 18,
-                        "offset": 17
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 18,
-                    "offset": 17
-                  },
-                  "indent": []
-                }
-              }
-            ],
-            "position": {
-              "start": {
-                "line": 1,
-                "column": 1,
-                "offset": 0
-              },
-              "end": {
-                "line": 1,
-                "column": 18,
-                "offset": 17
-              }
-            }
-          },
-          "tags": [],
-          "loc": {
-            "start": {
-              "line": 148,
-              "column": 2
-            },
-            "end": {
-              "line": 151,
-              "column": 5
-            }
-          },
-          "context": {
-            "loc": {
-              "start": {
-                "line": 152,
-                "column": 2
-              },
-              "end": {
-                "line": 161,
-                "column": 3
-              }
-            },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/PopupWidget.js"
-          },
-          "name": "close",
-          "kind": "function",
-          "memberof": "PopupWidget",
-          "scope": "instance",
-          "members": {
-            "instance": [],
-            "static": []
-          },
-          "path": [
-            {
-              "name": "PopupWidget",
-              "kind": "class"
-            },
-            {
-              "name": "close",
-              "kind": "function",
-              "scope": "instance"
-            }
-          ],
-          "namespace": "PopupWidget#close"
-        }
-      ],
-      "static": [],
-      "events": []
+      "instance": [],
+      "static": []
     },
     "path": [
       {
@@ -5564,7 +6523,7 @@
           "column": 0
         },
         "end": {
-          "line": 118,
+          "line": 110,
           "column": 1
         }
       },
@@ -5591,22 +6550,22 @@
           ],
           "loc": {
             "start": {
-              "line": 106,
+              "line": 98,
               "column": 2
             },
             "end": {
-              "line": 108,
+              "line": 100,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 109,
+                "line": 101,
                 "column": 2
               },
               "end": {
-                "line": 111,
+                "line": 103,
                 "column": 3
               }
             },
@@ -5644,22 +6603,22 @@
           ],
           "loc": {
             "start": {
-              "line": 112,
+              "line": 104,
               "column": 2
             },
             "end": {
-              "line": 114,
+              "line": 106,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 115,
+                "line": 107,
                 "column": 2
               },
               "end": {
-                "line": 117,
+                "line": 109,
                 "column": 3
               }
             },
@@ -5769,7 +6728,7 @@
           "column": 0
         },
         "end": {
-          "line": 211,
+          "line": 187,
           "column": 1
         }
       },
@@ -6233,7 +7192,7 @@
           "tags": [
             {
               "title": "param",
-              "description": null,
+              "description": "Parameters for request",
               "lineNumber": 3,
               "type": {
                 "type": "NameExpression",
@@ -6308,6 +7267,58 @@
             {
               "name": "params",
               "lineNumber": 3,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Parameters for request",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 23,
+                            "offset": 22
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 23,
+                        "offset": 22
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23,
+                    "offset": 22
+                  }
+                }
+              },
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -6641,7 +7652,7 @@
           "tags": [
             {
               "title": "param",
-              "description": null,
+              "description": "Parameters for request",
               "lineNumber": 3,
               "type": {
                 "type": "NameExpression",
@@ -6651,7 +7662,7 @@
             },
             {
               "title": "param",
-              "description": "the user details",
+              "description": "The user details",
               "lineNumber": 4,
               "type": {
                 "type": "NameExpression",
@@ -6661,7 +7672,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user id",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
@@ -6671,7 +7682,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user account id",
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
@@ -6746,6 +7757,58 @@
             {
               "name": "params",
               "lineNumber": 3,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Parameters for request",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 23,
+                            "offset": 22
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 23,
+                        "offset": 22
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23,
+                    "offset": 22
+                  }
+                }
+              },
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -6766,7 +7829,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the user details",
+                            "value": "The user details",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -6818,6 +7881,58 @@
                     {
                       "name": "params.user.id",
                       "lineNumber": 5,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 12,
+                                    "offset": 11
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 12,
+                                "offset": 11
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 12,
+                            "offset": 11
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -6826,6 +7941,58 @@
                     {
                       "name": "params.user.accountId",
                       "lineNumber": 6,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user account id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 20,
+                                    "offset": 19
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 20,
+                                "offset": 19
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 20,
+                            "offset": 19
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -7157,7 +8324,7 @@
           "tags": [
             {
               "title": "param",
-              "description": null,
+              "description": "Parameters for request",
               "lineNumber": 3,
               "type": {
                 "type": "NameExpression",
@@ -7167,7 +8334,7 @@
             },
             {
               "title": "param",
-              "description": "the user details",
+              "description": "The user details",
               "lineNumber": 4,
               "type": {
                 "type": "NameExpression",
@@ -7177,7 +8344,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user id",
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
@@ -7187,7 +8354,7 @@
             },
             {
               "title": "param",
-              "description": null,
+              "description": "The user account id",
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
@@ -7262,6 +8429,58 @@
             {
               "name": "params",
               "lineNumber": 3,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Parameters for request",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 23,
+                            "offset": 22
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 23,
+                        "offset": 22
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 23,
+                    "offset": 22
+                  }
+                }
+              },
               "type": {
                 "type": "OptionalType",
                 "expression": {
@@ -7282,7 +8501,7 @@
                         "children": [
                           {
                             "type": "text",
-                            "value": "the user details",
+                            "value": "The user details",
                             "position": {
                               "start": {
                                 "line": 1,
@@ -7334,6 +8553,58 @@
                     {
                       "name": "params.user.id",
                       "lineNumber": 5,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 12,
+                                    "offset": 11
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 12,
+                                "offset": 11
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 12,
+                            "offset": 11
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -7342,6 +8613,58 @@
                     {
                       "name": "params.user.accountId",
                       "lineNumber": 6,
+                      "description": {
+                        "type": "root",
+                        "children": [
+                          {
+                            "type": "paragraph",
+                            "children": [
+                              {
+                                "type": "text",
+                                "value": "The user account id",
+                                "position": {
+                                  "start": {
+                                    "line": 1,
+                                    "column": 1,
+                                    "offset": 0
+                                  },
+                                  "end": {
+                                    "line": 1,
+                                    "column": 20,
+                                    "offset": 19
+                                  },
+                                  "indent": []
+                                }
+                              }
+                            ],
+                            "position": {
+                              "start": {
+                                "line": 1,
+                                "column": 1,
+                                "offset": 0
+                              },
+                              "end": {
+                                "line": 1,
+                                "column": 20,
+                                "offset": 19
+                              },
+                              "indent": []
+                            }
+                          }
+                        ],
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 20,
+                            "offset": 19
+                          }
+                        }
+                      },
                       "type": {
                         "type": "NameExpression",
                         "name": "string"
@@ -7684,7 +9007,7 @@
                 "applications": [
                   {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "json"
                   }
                 ]
               }
@@ -7776,7 +9099,7 @@
                 "applications": [
                   {
                     "type": "NameExpression",
-                    "name": "string"
+                    "name": "json"
                   }
                 ]
               }
