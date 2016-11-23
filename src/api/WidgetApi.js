@@ -18,7 +18,7 @@ export default class WidgetApi {
    * var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Browserify/Webpack example</caption>
-   * var WidgetApi = require('squatch-js').WidgetApi;
+   * var WidgetApi = require('@saasquatch/squatch-js').WidgetApi;
    * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Babel+Browserify/Webpack example</caption>

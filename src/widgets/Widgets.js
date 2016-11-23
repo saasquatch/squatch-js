@@ -24,11 +24,11 @@ export default class Widgets {
    * var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Browserify/Webpack example</caption>
-   * var Widgets = require('squatch-js').Widgets;
+   * var Widgets = require('@saasquatch/squatch-js').Widgets;
    * var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
    *
    * @example <caption>Babel+Browserify/Webpack example</caption>
-   * import {Widgets} from 'squatch-js';
+   * import {Widgets} from '@saasquatch/squatch-js';
    * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(config) {
