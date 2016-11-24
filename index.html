@@ -34,16 +34,16 @@
 
   squatch.ready(function(){
     squatch.init({
-      tenantAlias: "test_ak9htmontgeca"
+      tenantAlias: "test_ak9htmontgeca",
+      domain: 'https://staging.referralsaasquatch.com'
     });
 
     // Data and widget
     var user;
     var widget
 
-    squatch.widgets().upsertUser({
-      engagementMedium: 'POPUP',
-      user: 'token'
+    squatch.widgets().createCookieUser({
+      engagementMedium: 'POPUP'
     }).then(function(res){console.log(res);}).catch(function(err) {console.log(err)});
 
     // squatch.widgets().upsertUser({

@@ -69,10 +69,15 @@ export function init(config) {
   if (config.tenantAlias.match('^test') || config.debug) {
     debug.enable('squatch-js*');
   }
-
   _log('initializing ...');
-  _api = new WidgetApi({ tenantAlias: config.tenantAlias });
-  _widgets = new Widgets({ tenantAlias: config.tenantAlias });
+
+  const initObj = {
+    tenantAlias: config.tenantAlias,
+    domain: config.domain,
+  };
+
+  _api = new WidgetApi(initObj);
+  _widgets = new Widgets(initObj);
 
   _log('Widget API instance', _api);
   _log('widgets instance', _widgets);

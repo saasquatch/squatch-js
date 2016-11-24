@@ -21,7 +21,7 @@ export default class Widget {
     me.content = (params.content === 'error') ? me._error(params.rsCode) : params.content;
     me.type = params.type;
     me.widgetApi = params.api || '';
-    me.analyticsApi = new AnalyticsApi();
+    me.analyticsApi = new AnalyticsApi({ domain: params.domain });
     me.frame = document.createElement('iframe');
     me.frame.squatchJsApi = me;
     me.frame.width = '100%';

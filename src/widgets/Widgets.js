@@ -35,6 +35,7 @@ export default class Widgets {
     this.tenantAlias = config.tenantAlias;
     this.api = new WidgetApi(config);
     this.eventBus = EventBus;
+    this.domain = config.domain || '';
     // listens to a 'submit_email' event in the theme.
     this.eventBus.addEventListener('submit_email', Widgets.cb);
   }
@@ -201,6 +202,7 @@ export default class Widgets {
       content: response.template,
       type: config.widgetType || opts.widget.defaultWidgetType,
       api: this.api,
+      domain: this.domain,
     };
 
     if (opts.widgetUrlMappings) {

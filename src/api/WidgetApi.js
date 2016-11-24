@@ -28,7 +28,7 @@ export default class WidgetApi {
   constructor(config) {
     if (!config.tenantAlias) throw new Error('tenantAlias not provided');
     this.tenantAlias = config.tenantAlias;
-    this.domain = config.domain || 'https://staging.referralsaasquatch.com';
+    this.domain = config.domain || 'https://app.referralsaasquatch.com';
   }
 
   /**

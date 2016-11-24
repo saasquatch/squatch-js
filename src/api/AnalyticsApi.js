@@ -15,8 +15,8 @@ export default class AnalyticsApi {
   * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
   *
   */
-  constructor() {
-    this.domain = 'https://staging.referralsaasquatch.com';
+  constructor(config) {
+    this.domain = config.domain || 'https://app.referralsaasquatch.com';
   }
 
   pushAnalyticsLoadEvent(params) {
