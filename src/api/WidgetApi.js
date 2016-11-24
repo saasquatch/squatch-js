@@ -83,11 +83,7 @@ export default class WidgetApi {
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
 
-    const user = Object.assign({}, params.user);
-    delete user.accountId;
-    delete user.id;
-
-    return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
+    return WidgetApi.doPut(url, JSON.stringify(params.user), params.jwt);
   }
 
   /**

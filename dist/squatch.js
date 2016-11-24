@@ -2693,11 +2693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var path = '/api/v1/' + tenantAlias + '/widget/account/' + accountId + '/user/' + userId + '/upsert' + optionalParams;
 	      var url = this.domain + path;
 
-	      var user = Object.assign({}, params.user);
-	      delete user.accountId;
-	      delete user.id;
-
-	      return WidgetApi.doPut(url, JSON.stringify(user), params.jwt);
+	      return WidgetApi.doPut(url, JSON.stringify(params.user), params.jwt);
 	    }
 
 	    /**
