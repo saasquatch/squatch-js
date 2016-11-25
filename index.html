@@ -34,43 +34,17 @@
 
   squatch.ready(function(){
     squatch.init({
-      tenantAlias: "test_ak9htmontgeca",
-      domain: 'https://staging.referralsaasquatch.com'
+      tenantAlias: "tenantAlias"
     });
 
-    // Data and widget
-    var user;
-    var widget
 
     squatch.widgets().createCookieUser({
-      engagementMedium: 'POPUP'
-    }).then(function(res){console.log(res);}).catch(function(err) {console.log(err)});
-
-    // squatch.widgets().upsertUser({
-    //   user: {
-    //     id: '123',
-    //     accountId: 'abc',
-    //     firstName: 'Jorge',
-    //     lastName: 'Conde',
-    //     email: 'jorge@uvic.ca'
-    //   }
-    // }).then(function (response) {
-    //   user = response.user;
-    //   widget = response.widget;
-    // }).catch(function (err) {
-    //   console.log(err);
-    // });
-
-    // squatch.submitEmail(function(target, widget, email) {
-    //   // Sign email
-    //   var jwt = 'token';
-    //
-    //   widget.reload(email, jwt);
-    // });
-
-    // squatch.api().render({user: {id: '123', accountId: 'abc'}}).then(function(response) {
-    //   console.log('response', response);
-    // });
+      engagementMedium: 'EMBED'
+    }).then(function(res){
+      console.log(res);
+    }).catch(function(err) {
+      console.log(err);
+    });
 
   });
 
