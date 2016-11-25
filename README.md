@@ -4,7 +4,7 @@
 
 ```ssh
 # via npm
-$ npm install squatch-js
+$ npm install @saasquatch/squatch-js
 ```
 
 To integrate our referral program to your website or web app, copy/paste this snippet of JavaScript above the `</head>` tag of your page:
