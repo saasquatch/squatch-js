@@ -1,7 +1,7 @@
 {
   "name": "@saasquatch/squatch-js",
   "version": "2.0.0",
-  "description": "`The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
+  "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "main": "dist/squatch.js",
   "browser": "dist/squatch.js",

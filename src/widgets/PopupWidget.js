@@ -18,13 +18,13 @@ export default class PopupWidget extends Widget {
     super(params);
     const me = this;
 
-    me.triggerElement = document.getElementById(triggerId);
+    me.triggerElement = document.getElementsByClassName(triggerId)[0];
 
-    if (!me.triggerElement) throw new Error(`elementId '${triggerId}' not found. Add element with id='squatchpop'.`);
+    if (!me.triggerElement) throw new Error(`element '${triggerId}' not found. Add element with class='squatchpop'.`);
 
     // If widget is loaded with CTA, look for a 'squatchpop' element to use
     // that element as a trigger as well.
-    me.triggerWhenCTA = document.getElementById('squatchpop');
+    me.triggerWhenCTA = document.getElementsByClassName('squatchpop')[0];
 
     if (triggerId === 'cta' && me.triggerWhenCTA) {
       me.triggerWhenCTA.onclick = () => { me.open(); };

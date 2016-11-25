@@ -166,14 +166,14 @@ var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});
 _Browserify/Webpack example_
 
 ```javascript
-var Widgets = require('squatch-js').Widgets;
+var Widgets = require('@saasquatch/squatch-js').Widgets;
 var widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
 ```
 
 _Babel+Browserify/Webpack example_
 
 ```javascript
-import {Widgets} from 'squatch-js';
+import {Widgets} from '@saasquatch/squatch-js';
 let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
 ```
 
@@ -194,7 +194,7 @@ Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## upsertUser
 
-This function calls the [WidgetApi.upsert](WidgetApi.upsert) method, and it renders
+This function calls the [WidgetApi.upsertUser](WidgetApi.upsertUser) method, and it renders
 the widget if it is successful. Otherwise it shows the "error" widget.
 
 **Parameters**
@@ -302,14 +302,14 @@ var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 _Browserify/Webpack example_
 
 ```javascript
-var WidgetApi = require('squatch-js').WidgetApi;
+var WidgetApi = require('@saasquatch/squatch-js').WidgetApi;
 var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 ```
 
 _Babel+Browserify/Webpack example_
 
 ```javascript
-import {WidgetApi} from 'squatch-js';
+import {WidgetApi} from '@saasquatch/squatch-js';
 let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 ```
 
@@ -319,7 +319,7 @@ Creates/upserts an anonymous user.
 
 **Parameters**
 
--   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** Parameters for request
+-   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?=  engagementMedium = params.engagementMedium ? \`${** Parameters for request
     -   `params.widgetType` **[WidgetType](#widgettype)** The content of the widget.
     -   `params.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
     -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
@@ -327,13 +327,14 @@ Creates/upserts an anonymous user.
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** json object if true, with the widget template, jsOptions and user details.
 
-## upsert
+## upsertUser
 
 Creates/upserts user.
 
 **Parameters**
 
--   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** Parameters for request
+-   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?= r.id);
+        const widgetType = params.widgetType ?** Parameters for request
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
@@ -350,7 +351,8 @@ Description here.
 
 **Parameters**
 
--   `params` **\[[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)](default { widgetType: '', engagementMedium: '', jwt: '' })** Parameters for request
+-   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?= r.id);
+        const widgetType = params.widgetType ?** Parameters for request
     -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
         -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
         -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id

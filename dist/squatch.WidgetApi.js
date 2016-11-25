@@ -1465,7 +1465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
+	   * import {WidgetApi} from '@saasquatch/squatch-js';
 	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   */
 	  function WidgetApi(config) {

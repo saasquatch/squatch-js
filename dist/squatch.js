@@ -2619,7 +2619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * var squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   *
 	   * @example <caption>Babel+Browserify/Webpack example</caption>
-	   * import {WidgetApi} from 'squatch-js';
+	   * import {WidgetApi} from '@saasquatch/squatch-js';
 	   * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
 	   */
 	  function WidgetApi(config) {
@@ -9518,13 +9518,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var me = _this;
 
-	    me.triggerElement = document.getElementById(triggerId);
+	    me.triggerElement = document.getElementsByClassName(triggerId)[0];
 
-	    if (!me.triggerElement) throw new Error('elementId \'' + triggerId + '\' not found. Add element with id=\'squatchpop\'.');
+	    if (!me.triggerElement) throw new Error('element \'' + triggerId + '\' not found. Add element with class=\'squatchpop\'.');
 
 	    // If widget is loaded with CTA, look for a 'squatchpop' element to use
 	    // that element as a trigger as well.
-	    me.triggerWhenCTA = document.getElementById('squatchpop');
+	    me.triggerWhenCTA = document.getElementsByClassName('squatchpop')[0];
 
 	    if (triggerId === 'cta' && me.triggerWhenCTA) {
 	      me.triggerWhenCTA.onclick = function () {

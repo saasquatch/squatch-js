@@ -90,7 +90,7 @@
           "column": 26
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "kind": "module",
     "name": "squatch",
@@ -361,7 +361,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "returns": [
       {
@@ -692,7 +692,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "returns": [
       {
@@ -1115,11 +1115,11 @@
           "column": 0
         },
         "end": {
-          "line": 79,
+          "line": 84,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1311,26 +1311,26 @@
     ],
     "loc": {
       "start": {
-        "line": 81,
+        "line": 86,
         "column": 0
       },
       "end": {
-        "line": 93,
+        "line": 98,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 94,
+          "line": 99,
           "column": 0
         },
         "end": {
-          "line": 96,
+          "line": 101,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1559,26 +1559,26 @@
     ],
     "loc": {
       "start": {
-        "line": 98,
+        "line": 103,
         "column": 0
       },
       "end": {
-        "line": 104,
+        "line": 109,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 105,
+          "line": 110,
           "column": 0
         },
         "end": {
-          "line": 107,
+          "line": 112,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1765,26 +1765,26 @@
     ],
     "loc": {
       "start": {
-        "line": 109,
+        "line": 114,
         "column": 0
       },
       "end": {
-        "line": 122,
+        "line": 127,
         "column": 3
       }
     },
     "context": {
       "loc": {
         "start": {
-          "line": 123,
+          "line": 128,
           "column": 0
         },
         "end": {
-          "line": 125,
+          "line": 130,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/squatch.js"
+      "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
     "params": [
       {
@@ -1996,7 +1996,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
+      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
     "interface": true,
     "name": "ConfigOptions",
@@ -2275,7 +2275,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
+      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
     "name": "EngagementMedium",
     "readonly": true,
@@ -2538,7 +2538,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
+      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
     "name": "WidgetType",
     "readonly": true,
@@ -2941,7 +2941,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/docs.js"
+      "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
     "interface": true,
     "name": "WidgetResult",
@@ -3212,11 +3212,11 @@
           "column": 0
         },
         "end": {
-          "line": 278,
+          "line": 295,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+      "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
     },
     "name": "Widgets",
     "kind": "class",
@@ -3336,13 +3336,13 @@
             },
             {
               "title": "example",
-              "description": "var Widgets = require('squatch-js').Widgets;\nvar widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "var Widgets = require('@saasquatch/squatch-js').Widgets;\nvar widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
               "lineNumber": 8,
               "caption": "Browserify/Webpack example"
             },
             {
               "title": "example",
-              "description": "import {Widgets} from 'squatch-js';\nlet widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "import {Widgets} from '@saasquatch/squatch-js';\nlet widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
               "lineNumber": 12,
               "caption": "Babel+Browserify/Webpack example"
             }
@@ -3364,11 +3364,11 @@
                 "column": 2
               },
               "end": {
-                "line": 40,
+                "line": 41,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -3489,7 +3489,7 @@
               }
             },
             {
-              "description": "var Widgets = require('squatch-js').Widgets;\nvar widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "var Widgets = require('@saasquatch/squatch-js').Widgets;\nvar widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
               "caption": {
                 "type": "root",
                 "children": [
@@ -3544,7 +3544,7 @@
               }
             },
             {
-              "description": "import {Widgets} from 'squatch-js';\nlet widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "import {Widgets} from '@saasquatch/squatch-js';\nlet widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});",
               "caption": {
                 "type": "root",
                 "children": [
@@ -3781,26 +3781,26 @@
           ],
           "loc": {
             "start": {
-              "line": 42,
+              "line": 43,
               "column": 2
             },
             "end": {
-              "line": 53,
+              "line": 54,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 54,
+                "line": 55,
                 "column": 2
               },
               "end": {
-                "line": 66,
+                "line": 70,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -4166,13 +4166,13 @@
                   },
                   {
                     "type": "link",
-                    "url": "WidgetApi.upsert",
+                    "url": "WidgetApi.upsertUser",
                     "title": null,
                     "jsdoc": true,
                     "children": [
                       {
                         "type": "text",
-                        "value": "WidgetApi.upsert"
+                        "value": "WidgetApi.upsertUser"
                       }
                     ],
                     "position": {
@@ -4183,8 +4183,8 @@
                       },
                       "end": {
                         "line": 1,
-                        "column": 49,
-                        "offset": 48
+                        "column": 53,
+                        "offset": 52
                       },
                       "indent": []
                     }
@@ -4195,13 +4195,13 @@
                     "position": {
                       "start": {
                         "line": 1,
-                        "column": 49,
-                        "offset": 48
+                        "column": 53,
+                        "offset": 52
                       },
                       "end": {
                         "line": 2,
                         "column": 71,
-                        "offset": 142
+                        "offset": 146
                       },
                       "indent": [
                         1
@@ -4218,7 +4218,7 @@
                   "end": {
                     "line": 2,
                     "column": 71,
-                    "offset": 142
+                    "offset": 146
                   },
                   "indent": [
                     1
@@ -4235,7 +4235,7 @@
               "end": {
                 "line": 2,
                 "column": 71,
-                "offset": 142
+                "offset": 146
               }
             }
           },
@@ -4331,26 +4331,26 @@
           ],
           "loc": {
             "start": {
-              "line": 68,
+              "line": 72,
               "column": 2
             },
             "end": {
-              "line": 82,
+              "line": 86,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 83,
+                "line": 87,
                 "column": 2
               },
               "end": {
-                "line": 94,
+                "line": 103,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -5063,26 +5063,26 @@
           ],
           "loc": {
             "start": {
-              "line": 96,
+              "line": 105,
               "column": 2
             },
             "end": {
-              "line": 110,
+              "line": 119,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 111,
+                "line": 120,
                 "column": 2
               },
               "end": {
-                "line": 122,
+                "line": 138,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -5726,26 +5726,26 @@
           ],
           "loc": {
             "start": {
-              "line": 124,
+              "line": 140,
               "column": 2
             },
             "end": {
-              "line": 130,
+              "line": 146,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 131,
+                "line": 147,
                 "column": 2
               },
               "end": {
-                "line": 153,
+                "line": 169,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -5934,26 +5934,26 @@
           ],
           "loc": {
             "start": {
-              "line": 155,
+              "line": 171,
               "column": 2
             },
             "end": {
-              "line": 161,
+              "line": 177,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 162,
+                "line": 178,
                 "column": 2
               },
               "end": {
-                "line": 165,
+                "line": 181,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/Widgets.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
           "params": [
             {
@@ -6209,7 +6209,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/EmbedWidget.js"
+      "file": "/Users/jorgeconde/squatch-js/src/widgets/EmbedWidget.js"
     },
     "name": "EmbedWidget",
     "augments": [
@@ -6370,7 +6370,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/PopupWidget.js"
+      "file": "/Users/jorgeconde/squatch-js/src/widgets/PopupWidget.js"
     },
     "name": "PopupWidget",
     "augments": [
@@ -6527,7 +6527,7 @@
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/widgets/CtaWidget.js"
+      "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
     },
     "name": "CtaWidget",
     "augments": [
@@ -6569,7 +6569,7 @@
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/CtaWidget.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
           },
           "name": "open",
           "kind": "function",
@@ -6622,7 +6622,7 @@
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/widgets/CtaWidget.js"
+            "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
           },
           "name": "close",
           "kind": "function",
@@ -6728,11 +6728,11 @@
           "column": 0
         },
         "end": {
-          "line": 187,
+          "line": 182,
           "column": 1
         }
       },
-      "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+      "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
     },
     "name": "WidgetApi",
     "kind": "class",
@@ -6852,13 +6852,13 @@
             },
             {
               "title": "example",
-              "description": "var WidgetApi = require('squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "var WidgetApi = require('@saasquatch/squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
               "lineNumber": 8,
               "caption": "Browserify/Webpack example"
             },
             {
               "title": "example",
-              "description": "import {WidgetApi} from 'squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "import {WidgetApi} from '@saasquatch/squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
               "lineNumber": 12,
               "caption": "Babel+Browserify/Webpack example"
             }
@@ -6884,7 +6884,7 @@
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -7005,7 +7005,7 @@
               }
             },
             {
-              "description": "var WidgetApi = require('squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "var WidgetApi = require('@saasquatch/squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
               "caption": {
                 "type": "root",
                 "children": [
@@ -7060,7 +7060,7 @@
               }
             },
             {
-              "description": "import {WidgetApi} from 'squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
+              "description": "import {WidgetApi} from '@saasquatch/squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
               "caption": {
                 "type": "root",
                 "children": [
@@ -7261,7 +7261,7 @@
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -7325,7 +7325,7 @@
                   "type": "NameExpression",
                   "name": "Object"
                 },
-                "default": "{ widgetType: '', engagementMedium: '', jwt: '' }"
+                "default": " engagementMedium = params.engagementMedium ? `${"
               },
               "properties": [
                 {
@@ -7747,11 +7747,11 @@
                 "column": 2
               },
               "end": {
-                "line": 91,
+                "line": 87,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -7815,7 +7815,7 @@
                   "type": "NameExpression",
                   "name": "Object"
                 },
-                "default": "{ widgetType: '', engagementMedium: '', jwt: '' }"
+                "default": "r.id);\n    const widgetType = params.widgetType ?"
               },
               "properties": [
                 {
@@ -8247,7 +8247,7 @@
               }
             }
           ],
-          "name": "upsert",
+          "name": "upsertUser",
           "kind": "function",
           "memberof": "WidgetApi",
           "scope": "instance",
@@ -8261,12 +8261,12 @@
               "kind": "class"
             },
             {
-              "name": "upsert",
+              "name": "upsertUser",
               "kind": "function",
               "scope": "instance"
             }
           ],
-          "namespace": "WidgetApi#upsert"
+          "namespace": "WidgetApi#upsertUser"
         },
         {
           "description": {
@@ -8404,26 +8404,26 @@
           ],
           "loc": {
             "start": {
-              "line": 93,
+              "line": 89,
               "column": 2
             },
             "end": {
-              "line": 105,
+              "line": 101,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 106,
+                "line": 102,
                 "column": 2
               },
               "end": {
-                "line": 119,
+                "line": 115,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "params": [
             {
@@ -8487,7 +8487,7 @@
                   "type": "NameExpression",
                   "name": "Object"
                 },
-                "default": "{ widgetType: '', engagementMedium: '', jwt: '' }"
+                "default": "r.id);\n    const widgetType = params.widgetType ?"
               },
               "properties": [
                 {
@@ -9015,26 +9015,26 @@
           ],
           "loc": {
             "start": {
-              "line": 121,
+              "line": 117,
               "column": 2
             },
             "end": {
-              "line": 125,
+              "line": 121,
               "column": 5
             }
           },
           "context": {
             "loc": {
               "start": {
-                "line": 126,
+                "line": 122,
                 "column": 2
               },
               "end": {
-                "line": 130,
+                "line": 126,
                 "column": 3
               }
             },
-            "file": "/home/ubuntu/workspace/squatch-js/src/api/WidgetApi.js"
+            "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
           "returns": [
             {
