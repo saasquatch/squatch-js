@@ -19,7 +19,7 @@ Please review [these guidelines](https://github.com/blog/1943-how-to-write-the-p
 
 Guidelines for submitting a pull request:
 - Create an issue first and/or discuss it with a team member
-- Update docs where necessary. We use (JSDoc)[http://usejsdoc.org/about-getting-started.html]
+- Update docs where necessary. We use [JSDoc](http://usejsdoc.org/about-getting-started.html)
 - Please make commits in logical sections with clear messages
 
 Please run through all testing steps before asking for a review, and follow the template below.
