@@ -14,19 +14,19 @@ const _log = debug('squatch-js:POPUPwidget');
  */
 export default class PopupWidget extends Widget {
 
-  constructor(params, triggerId = 'squatchpop') {
+  constructor(params, trigger = '.squatchpop') {
     super(params);
     const me = this;
 
-    me.triggerElement = document.getElementsByClassName(triggerId)[0];
+    me.triggerElement = document.querySelector(trigger);
 
-    if (!me.triggerElement) throw new Error(`element '${triggerId}' not found. Add element with class='squatchpop'.`);
+    if (!me.triggerElement) throw new Error(`element '${trigger}' not found. Add element with class='squatchpop'.`);
 
     // If widget is loaded with CTA, look for a 'squatchpop' element to use
     // that element as a trigger as well.
-    me.triggerWhenCTA = document.getElementsByClassName('squatchpop')[0];
+    me.triggerWhenCTA = document.querySelector('.squatchpop');
 
-    if (triggerId === 'cta' && me.triggerWhenCTA) {
+    if (trigger === '#cta' && me.triggerWhenCTA) {
       me.triggerWhenCTA.onclick = () => { me.open(); };
     }
 

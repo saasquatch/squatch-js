@@ -18,7 +18,7 @@ export default class CtaWidget extends PopupWidget {
     ctaElement.id = 'cta';
     document.body.appendChild(ctaElement);
 
-    super(params, 'cta');
+    super(params, '#cta');
 
     const me = this;
 

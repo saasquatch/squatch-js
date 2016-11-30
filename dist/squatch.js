@@ -9510,7 +9510,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _inherits(PopupWidget, _Widget);
 
 	  function PopupWidget(params) {
-	    var triggerId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchpop';
+	    var trigger = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.squatchpop';
 
 	    _classCallCheck(this, PopupWidget);
 
@@ -9518,15 +9518,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var me = _this;
 
-	    me.triggerElement = document.getElementsByClassName(triggerId)[0];
+	    me.triggerElement = document.querySelector(trigger);
 
-	    if (!me.triggerElement) throw new Error('element \'' + triggerId + '\' not found. Add element with class=\'squatchpop\'.');
+	    if (!me.triggerElement) throw new Error('element \'' + trigger + '\' not found. Add element with class=\'squatchpop\'.');
 
 	    // If widget is loaded with CTA, look for a 'squatchpop' element to use
 	    // that element as a trigger as well.
-	    me.triggerWhenCTA = document.getElementsByClassName('squatchpop')[0];
+	    me.triggerWhenCTA = document.querySelector('.squatchpop');
 
-	    if (triggerId === 'cta' && me.triggerWhenCTA) {
+	    if (trigger === '#cta' && me.triggerWhenCTA) {
 	      me.triggerWhenCTA.onclick = function () {
 	        me.open();
 	      };
@@ -9737,7 +9737,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    ctaElement.id = 'cta';
 	    document.body.appendChild(ctaElement);
 
-	    var _this = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, params, 'cta'));
+	    var _this = _possibleConstructorReturn(this, (CtaWidget.__proto__ || Object.getPrototypeOf(CtaWidget)).call(this, params, '#cta'));
 
 	    var me = _this;
 
