@@ -1295,7 +1295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (opts.widgetUrlMappings) {
 	        opts.widgetUrlMappings.forEach(function (rule) {
-	          if (Widgets.matchesUrl(rule)) {
+	          if (Widgets.matchesUrl(rule.url)) {
 	            displayOnLoad = rule.displayOnLoad;
 	            displayCTA = rule.showAsCTA;
 	            _log('Display ' + rule.widgetType + ' on ' + rule.url);

@@ -207,7 +207,7 @@ export default class Widgets {
 
     if (opts.widgetUrlMappings) {
       opts.widgetUrlMappings.forEach((rule) => {
-        if (Widgets.matchesUrl(rule)) {
+        if (Widgets.matchesUrl(rule.url)) {
           displayOnLoad = rule.displayOnLoad;
           displayCTA = rule.showAsCTA;
           _log(`Display ${rule.widgetType} on ${rule.url}`);
