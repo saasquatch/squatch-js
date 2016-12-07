@@ -20,7 +20,10 @@ export default class PopupWidget extends Widget {
 
     me.triggerElement = document.querySelector(trigger);
 
-    if (!me.triggerElement) throw new Error(`element '${trigger}' not found. Add element with class='squatchpop'.`);
+    // Trigger is optional
+    if (me.triggerElement) {
+      me.triggerElement.onclick = () => { me.open(); };
+    }
 
     // If widget is loaded with CTA, look for a 'squatchpop' element to use
     // that element as a trigger as well.
@@ -29,8 +32,6 @@ export default class PopupWidget extends Widget {
     if (trigger === '#cta' && me.triggerWhenCTA) {
       me.triggerWhenCTA.onclick = () => { me.open(); };
     }
-
-    me.triggerElement.onclick = () => { me.open(); };
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';

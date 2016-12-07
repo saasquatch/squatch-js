@@ -34,13 +34,11 @@
 
   squatch.ready(function(){
     squatch.init({
-      tenantAlias: "your tenant alias"
+      tenantAlias: "tenant_alias"
     });
 
 
-    squatch.widgets().createCookieUser({
-      engagementMedium: 'POPUP'
-    }).then(function(res){
+    squatch.widgets().createCookieUser({}).then(function(res){
       console.log(res);
     }).catch(function(err) {
       console.log(err);
@@ -52,6 +50,5 @@
 
   <input type="text" name="Coupon" id="my_coupon" value="" />
   <div id="squatchembed"></div>
-  <button class="squatchpop">Open Modal</button>
 </body>
 </html>

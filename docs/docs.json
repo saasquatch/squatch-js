@@ -3212,7 +3212,7 @@
           "column": 0
         },
         "end": {
-          "line": 295,
+          "line": 298,
           "column": 1
         }
       },
@@ -3736,7 +3736,7 @@
               "lineNumber": 5,
               "type": {
                 "type": "NameExpression",
-                "name": "EngagementMedium"
+                "name": "WidgetType"
               },
               "name": "config.widgetType"
             },
@@ -3746,7 +3746,7 @@
               "lineNumber": 6,
               "type": {
                 "type": "NameExpression",
-                "name": "WidgetType"
+                "name": "EngagementMedium"
               },
               "name": "config.engagementMedium"
             },
@@ -3920,7 +3920,7 @@
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "EngagementMedium"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -3980,7 +3980,7 @@
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "WidgetType"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -4286,7 +4286,7 @@
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
-                "name": "EngagementMedium"
+                "name": "WidgetType"
               },
               "name": "config.widgetType"
             },
@@ -4296,7 +4296,7 @@
               "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
-                "name": "WidgetType"
+                "name": "EngagementMedium"
               },
               "name": "config.engagementMedium"
             },
@@ -4652,7 +4652,7 @@
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "EngagementMedium"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -4712,7 +4712,7 @@
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "WidgetType"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -5018,7 +5018,7 @@
               "lineNumber": 8,
               "type": {
                 "type": "NameExpression",
-                "name": "EngagementMedium"
+                "name": "WidgetType"
               },
               "name": "config.widgetType"
             },
@@ -5028,7 +5028,7 @@
               "lineNumber": 9,
               "type": {
                 "type": "NameExpression",
-                "name": "WidgetType"
+                "name": "EngagementMedium"
               },
               "name": "config.engagementMedium"
             },
@@ -5384,7 +5384,7 @@
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "EngagementMedium"
+                    "name": "WidgetType"
                   }
                 },
                 {
@@ -5444,7 +5444,7 @@
                   },
                   "type": {
                     "type": "NameExpression",
-                    "name": "WidgetType"
+                    "name": "EngagementMedium"
                   }
                 },
                 {
@@ -6366,7 +6366,7 @@
           "column": 0
         },
         "end": {
-          "line": 164,
+          "line": 165,
           "column": 1
         }
       },

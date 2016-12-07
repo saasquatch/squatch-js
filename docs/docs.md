@@ -185,8 +185,8 @@ the widget if it is successful. Otherwise it shows the "error" widget.
 **Parameters**
 
 -   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
-    -   `config.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
-    -   `config.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
+    -   `config.widgetType` **[WidgetType](#widgettype)** The content of the widget.
+    -   `config.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
     -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
                                    validate the data (can be disabled)
 
@@ -203,8 +203,8 @@ the widget if it is successful. Otherwise it shows the "error" widget.
     -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
         -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
         -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
-    -   `config.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
-    -   `config.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
+    -   `config.widgetType` **[WidgetType](#widgettype)** The content of the widget.
+    -   `config.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
     -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
@@ -221,8 +221,8 @@ the widget if it is successful. Otherwise it shows the "error" widget.
     -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
         -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
         -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
-    -   `config.widgetType` **[EngagementMedium](#engagementmedium)** The content of the widget.
-    -   `config.engagementMedium` **[WidgetType](#widgettype)** How to display the widget.
+    -   `config.widgetType` **[WidgetType](#widgettype)** The content of the widget.
+    -   `config.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
     -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 

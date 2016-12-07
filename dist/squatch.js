@@ -1107,8 +1107,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * the widget if it is successful. Otherwise it shows the "error" widget.
 	   *
 	   * @param {Object} config Config details
-	   * @param {EngagementMedium} config.widgetType The content of the widget.
-	   * @param {WidgetType} config.engagementMedium How to display the widget.
+	   * @param {WidgetType} config.widgetType The content of the widget.
+	   * @param {EngagementMedium} config.engagementMedium How to display the widget.
 	   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
 	   *                            validate the data (can be disabled)
 	   *
@@ -1145,8 +1145,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} config.user The user details
 	     * @param {string} config.user.id The user id
 	     * @param {string} config.user.accountId The user account id
-	     * @param {EngagementMedium} config.widgetType The content of the widget.
-	     * @param {WidgetType} config.engagementMedium How to display the widget.
+	     * @param {WidgetType} config.widgetType The content of the widget.
+	     * @param {EngagementMedium} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
@@ -1183,8 +1183,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {Object} config.user The user details
 	     * @param {string} config.user.id The user id
 	     * @param {string} config.user.accountId The user account id
-	     * @param {EngagementMedium} config.widgetType The content of the widget.
-	     * @param {WidgetType} config.engagementMedium How to display the widget.
+	     * @param {WidgetType} config.widgetType The content of the widget.
+	     * @param {EngagementMedium} config.engagementMedium How to display the widget.
 	     * @param {string} config.jwt the JSON Web Token (JWT) that is used
 	     *                            to validate the data (can be disabled)
 	     *
@@ -1295,8 +1295,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      if (opts.widgetUrlMappings) {
 	        opts.widgetUrlMappings.forEach(function (rule) {
-	          if (Widgets.matchesUrl(rule.url)) {
-	            displayOnLoad = true;
+	          if (Widgets.matchesUrl(rule)) {
+	            displayOnLoad = rule.displayOnLoad;
 	            displayCTA = rule.showAsCTA;
 	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
 	          }
@@ -1326,6 +1326,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        widget = new _CtaWidget2.default(params, { side: side, position: position });
 	        widget.load();
+	        if (displayOnLoad) widget.open();
 	      } else if (displayOnLoad) {
 	        _log('display popup on load');
 	        widget = new _PopupWidget2.default(params);
@@ -9520,7 +9521,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.triggerElement = document.querySelector(trigger);
 
-	    if (!me.triggerElement) throw new Error('element \'' + trigger + '\' not found. Add element with class=\'squatchpop\'.');
+	    // Trigger is optional
+	    if (me.triggerElement) {
+	      me.triggerElement.onclick = function () {
+	        me.open();
+	      };
+	    }
 
 	    // If widget is loaded with CTA, look for a 'squatchpop' element to use
 	    // that element as a trigger as well.
@@ -9531,10 +9537,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        me.open();
 	      };
 	    }
-
-	    me.triggerElement.onclick = function () {
-	      me.open();
-	    };
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
