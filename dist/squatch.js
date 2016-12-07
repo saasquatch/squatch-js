@@ -1306,7 +1306,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (opts.conversionUrls) {
 	        opts.conversionUrls.forEach(function (rule) {
 	          if (response.user.referredBy && Widgets.matchesUrl(rule)) {
-	            displayOnLoad = true;
 	            _log('This is a conversion URL', rule);
 	          }
 	        });
@@ -1327,11 +1326,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        widget = new _CtaWidget2.default(params, { side: side, position: position });
 	        widget.load();
 	        if (displayOnLoad) widget.open();
-	      } else if (displayOnLoad) {
+	      } else {
 	        _log('display popup on load');
 	        widget = new _PopupWidget2.default(params);
 	        widget.load();
-	        widget.open();
+	        if (displayOnLoad) widget.open();
 	      }
 
 	      return widget;
