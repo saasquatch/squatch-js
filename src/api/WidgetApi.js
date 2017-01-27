@@ -149,7 +149,7 @@ export default class WidgetApi {
             .withCredentials()
             .set(headers)
             .then((response) => {
-              if (response.headers['content-type'] === 'application/json; charset=utf-8') {
+              if (response.headers['content-type'] && response.headers['content-type'].toLowerCase() === 'application/json; charset=utf-8') {
                 return JSON.parse(response.text);
               }
               return response.text;
