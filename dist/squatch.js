@@ -94,17 +94,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Widgets2 = _interopRequireDefault(_Widgets);
 
-	var _EmbedWidget = __webpack_require__(28);
+	var _EmbedWidget = __webpack_require__(29);
 
-	var _PopupWidget = __webpack_require__(45);
+	var _PopupWidget = __webpack_require__(46);
 
-	var _CtaWidget = __webpack_require__(46);
+	var _CtaWidget = __webpack_require__(47);
 
 	var _WidgetApi = __webpack_require__(11);
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
-	var _async = __webpack_require__(47);
+	var _async = __webpack_require__(48);
 
 	var _async2 = _interopRequireDefault(_async);
 
@@ -294,8 +294,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {
-	/**
+	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * This is the web browser implementation of `debug()`.
 	 *
 	 * Expose `debug()` as the module.
@@ -334,14 +333,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	function useColors() {
+	  // NB: In an Electron preload script, document will be defined but not fully
+	  // initialized. Since we know we're in Chrome, we'll just detect this case
+	  // explicitly
+	  if (typeof window !== 'undefined' && window && typeof window.process !== 'undefined' && window.process.type === 'renderer') {
+	    return true;
+	  }
+
 	  // is webkit? http://stackoverflow.com/a/16459606/376773
 	  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-	  return (typeof document !== 'undefined' && 'WebkitAppearance' in document.documentElement.style) ||
+	  return (typeof document !== 'undefined' && document && 'WebkitAppearance' in document.documentElement.style) ||
 	    // is firebug? http://stackoverflow.com/a/398120/376773
-	    (window.console && (console.firebug || (console.exception && console.table))) ||
+	    (typeof window !== 'undefined' && window && window.console && (console.firebug || (console.exception && console.table))) ||
 	    // is firefox >= v31?
 	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
-	    (navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31);
+	    (typeof navigator !== 'undefined' && navigator && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
+	    // double check webkit in userAgent just in case we are in a worker
+	    (typeof navigator !== 'undefined' && navigator && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
 	}
 
 	/**
@@ -363,8 +371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @api public
 	 */
 
-	function formatArgs() {
-	  var args = arguments;
+	function formatArgs(args) {
 	  var useColors = this.useColors;
 
 	  args[0] = (useColors ? '%c' : '')
@@ -374,17 +381,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    + (useColors ? '%c ' : ' ')
 	    + '+' + exports.humanize(this.diff);
 
-	  if (!useColors) return args;
+	  if (!useColors) return;
 
 	  var c = 'color: ' + this.color;
-	  args = [args[0], c, 'color: inherit'].concat(Array.prototype.slice.call(args, 1));
+	  args.splice(1, 0, c, 'color: inherit')
 
 	  // the final "%c" is somewhat tricky, because there could be other
 	  // arguments passed either before or after the %c, so we need to
 	  // figure out the correct index to insert the CSS into
 	  var index = 0;
 	  var lastC = 0;
-	  args[0].replace(/%[a-z%]/g, function(match) {
+	  args[0].replace(/%[a-zA-Z%]/g, function(match) {
 	    if ('%%' === match) return;
 	    index++;
 	    if ('%c' === match) {
@@ -395,7 +402,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 
 	  args.splice(lastC, 0, c);
-	  return args;
 	}
 
 	/**
@@ -438,7 +444,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	function load() {
-	  var r;
 	  try {
 	    return exports.storage.debug;
 	  } catch(e) {}
@@ -466,7 +471,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @api private
 	 */
 
-	function localstorage(){
+	function localstorage() {
 	  try {
 	    return window.localStorage;
 	  } catch (e) {}
@@ -672,7 +677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Expose `debug()` as the module.
 	 */
 
-	exports = module.exports = debug.debug = debug;
+	exports = module.exports = createDebug.debug = createDebug.default = createDebug;
 	exports.coerce = coerce;
 	exports.disable = disable;
 	exports.enable = enable;
@@ -689,16 +694,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Map of special "%n" handling functions, for the debug "format" argument.
 	 *
-	 * Valid key names are a single, lowercased letter, i.e. "n".
+	 * Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
 	 */
 
 	exports.formatters = {};
-
-	/**
-	 * Previously assigned color.
-	 */
-
-	var prevColor = 0;
 
 	/**
 	 * Previous log timestamp.
@@ -708,13 +707,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Select a color.
-	 *
+	 * @param {String} namespace
 	 * @return {Number}
 	 * @api private
 	 */
 
-	function selectColor() {
-	  return exports.colors[prevColor++ % exports.colors.length];
+	function selectColor(namespace) {
+	  var hash = 0, i;
+
+	  for (i in namespace) {
+	    hash  = ((hash << 5) - hash) + namespace.charCodeAt(i);
+	    hash |= 0; // Convert to 32bit integer
+	  }
+
+	  return exports.colors[Math.abs(hash) % exports.colors.length];
 	}
 
 	/**
@@ -725,17 +731,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @api public
 	 */
 
-	function debug(namespace) {
+	function createDebug(namespace) {
 
-	  // define the `disabled` version
-	  function disabled() {
-	  }
-	  disabled.enabled = false;
+	  function debug() {
+	    // disabled?
+	    if (!debug.enabled) return;
 
-	  // define the `enabled` version
-	  function enabled() {
-
-	    var self = enabled;
+	    var self = debug;
 
 	    // set `diff` timestamp
 	    var curr = +new Date();
@@ -745,10 +747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    self.curr = curr;
 	    prevTime = curr;
 
-	    // add the `color` if not set
-	    if (null == self.useColors) self.useColors = exports.useColors();
-	    if (null == self.color && self.useColors) self.color = selectColor();
-
+	    // turn the `arguments` into a proper Array
 	    var args = new Array(arguments.length);
 	    for (var i = 0; i < args.length; i++) {
 	      args[i] = arguments[i];
@@ -757,13 +756,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    args[0] = exports.coerce(args[0]);
 
 	    if ('string' !== typeof args[0]) {
-	      // anything else let's inspect with %o
-	      args = ['%o'].concat(args);
+	      // anything else let's inspect with %O
+	      args.unshift('%O');
 	    }
 
 	    // apply any `formatters` transformations
 	    var index = 0;
-	    args[0] = args[0].replace(/%([a-z%])/g, function(match, format) {
+	    args[0] = args[0].replace(/%([a-zA-Z%])/g, function(match, format) {
 	      // if we encounter an escaped % then don't increase the array index
 	      if (match === '%%') return match;
 	      index++;
@@ -779,19 +778,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return match;
 	    });
 
-	    // apply env-specific formatting
-	    args = exports.formatArgs.apply(self, args);
+	    // apply env-specific formatting (colors, etc.)
+	    exports.formatArgs.call(self, args);
 
-	    var logFn = enabled.log || exports.log || console.log.bind(console);
+	    var logFn = debug.log || exports.log || console.log.bind(console);
 	    logFn.apply(self, args);
 	  }
-	  enabled.enabled = true;
 
-	  var fn = exports.enabled(namespace) ? enabled : disabled;
+	  debug.namespace = namespace;
+	  debug.enabled = exports.enabled(namespace);
+	  debug.useColors = exports.useColors();
+	  debug.color = selectColor(namespace);
 
-	  fn.namespace = namespace;
+	  // env-specific initialization logic for debug instances
+	  if ('function' === typeof exports.init) {
+	    exports.init(debug);
+	  }
 
-	  return fn;
+	  return debug;
 	}
 
 	/**
@@ -810,7 +814,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  for (var i = 0; i < len; i++) {
 	    if (!split[i]) continue; // ignore empty strings
-	    namespaces = split[i].replace(/[\\^$+?.()|[\]{}]/g, '\\$&').replace(/\*/g, '.*?');
+	    namespaces = split[i].replace(/\*/g, '.*?');
 	    if (namespaces[0] === '-') {
 	      exports.skips.push(new RegExp('^' + namespaces.substr(1) + '$'));
 	    } else {
@@ -1049,15 +1053,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _WidgetApi2 = _interopRequireDefault(_WidgetApi);
 
-	var _EmbedWidget = __webpack_require__(28);
+	var _EmbedWidget = __webpack_require__(29);
 
 	var _EmbedWidget2 = _interopRequireDefault(_EmbedWidget);
 
-	var _PopupWidget = __webpack_require__(45);
+	var _PopupWidget = __webpack_require__(46);
 
 	var _PopupWidget2 = _interopRequireDefault(_PopupWidget);
 
-	var _CtaWidget = __webpack_require__(46);
+	var _CtaWidget = __webpack_require__(47);
 
 	var _CtaWidget2 = _interopRequireDefault(_CtaWidget);
 
@@ -1296,9 +1300,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (opts.widgetUrlMappings) {
 	        opts.widgetUrlMappings.forEach(function (rule) {
 	          if (Widgets.matchesUrl(rule.url)) {
-	            displayOnLoad = rule.displayOnLoad;
-	            displayCTA = rule.showAsCTA;
-	            _log('Display ' + rule.widgetType + ' on ' + rule.url);
+	            if (rule.widgetType !== 'CONVERSION_WIDGET' || response.user.referredBy && response.user.referredBy.code) {
+	              displayOnLoad = rule.displayOnLoad;
+	              displayCTA = rule.showAsCTA;
+	              _log('Display ' + rule.widgetType + ' on ' + rule.url);
+	            } else {
+	              _log('Don\'t display ' + rule.widgetType + ' when no referral on widget rule match ' + rule.url);
+	            }
 	          }
 	        });
 	      }
@@ -2592,7 +2600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _jsonschema = __webpack_require__(17);
 
-	var _schema = __webpack_require__(27);
+	var _schema = __webpack_require__(28);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
@@ -2769,7 +2777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
 	      return _superagent2.default.get(url).withCredentials().set(headers).then(function (response) {
-	        if (response.headers['content-type'] === 'application/json; charset=utf-8') {
+	        if (response.headers['content-type'] && response.headers['content-type'].toLowerCase() === 'application/json; charset=utf-8') {
 	          return JSON.parse(response.text);
 	        }
 	        return response.text;
@@ -4397,9 +4405,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Validator = module.exports.Validator = __webpack_require__(18);
 
-	module.exports.ValidatorResult = __webpack_require__(26).ValidatorResult;
-	module.exports.ValidationError = __webpack_require__(26).ValidationError;
-	module.exports.SchemaError = __webpack_require__(26).SchemaError;
+	module.exports.ValidatorResult = __webpack_require__(27).ValidatorResult;
+	module.exports.ValidationError = __webpack_require__(27).ValidationError;
+	module.exports.SchemaError = __webpack_require__(27).SchemaError;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -4415,8 +4423,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var urilib = __webpack_require__(19);
 
-	var attribute = __webpack_require__(25);
-	var helpers = __webpack_require__(26);
+	var attribute = __webpack_require__(26);
+	var helpers = __webpack_require__(27);
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
@@ -4570,6 +4578,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	/**
+	* @param Object schema
+	* @return mixed schema uri or false
+	*/
+	function shouldResolve(schema) {
+	  var ref = (typeof schema === 'string') ? schema : schema.$ref;
+	  if (typeof ref=='string') return ref;
+	  return false;
+	}
+
+	/**
 	 * Validates an instance against the schema (the actual work horse)
 	 * @param instance
 	 * @param schema
@@ -4579,41 +4597,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {ValidatorResult}
 	 */
 	Validator.prototype.validateSchema = function validateSchema (instance, schema, options, ctx) {
-	  var self = this;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!schema) {
 	    throw new Error("schema is undefined");
 	  }
 
-	  /**
-	  * @param Object schema
-	  * @return mixed schema uri or false
-	  */
-	  function shouldResolve(schema) {
-	    var ref = (typeof schema === 'string') ? schema : schema.$ref;
-	    if (typeof ref=='string') return ref;
-	    return false;
-	  }
-	  /**
-	  * @param Object schema
-	  * @param SchemaContext ctx
-	  * @returns Object schema or resolved schema
-	  */
-	  function resolve(schema, ctx) {
-	    var ref;
-	    if(ref = shouldResolve(schema)) {
-	      return self.resolve(schema, ref, ctx).subschema;
-	    }
-	    return schema;
-	  }
-
 	  if (schema['extends']) {
 	    if (schema['extends'] instanceof Array) {
-	      schema['extends'].forEach(function (s) {
-	        schema = helpers.deepMerge(schema, resolve(s, ctx));
-	      });
+	      var schemaobj = {schema: schema, ctx: ctx};
+	      schema['extends'].forEach(this.schemaTraverser.bind(this, schemaobj));
+	      schema = schemaobj.schema;
+	      schemaobj.schema = null;
+	      schemaobj.ctx = null;
+	      schemaobj = null;
 	    } else {
-	      schema = helpers.deepMerge(schema, resolve(schema['extends'], ctx));
+	      schema = helpers.deepMerge(schema, this.superResolve(schema['extends'], ctx));
 	    }
 	  }
 
@@ -4629,9 +4627,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  for (var key in schema) {
 	    if (!attribute.ignoreProperties[key] && skipAttributes.indexOf(key) < 0) {
 	      var validatorErr = null;
-	      var validator = self.attributes[key];
+	      var validator = this.attributes[key];
 	      if (validator) {
-	        validatorErr = validator.call(self, instance, schema, options, ctx);
+	        validatorErr = validator.call(this, instance, schema, options, ctx);
 	      } else if (options.allowUnknownAttributes === false) {
 	        // This represents an error with the schema itself, not an invalid instance
 	        throw new SchemaError("Unsupported attribute: " + key, schema);
@@ -4648,6 +4646,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  return result;
 	};
+
+	/**
+	* @private
+	* @param Object schema
+	* @param SchemaContext ctx
+	* @returns Object schema or resolved schema
+	*/
+	Validator.prototype.schemaTraverser = function schemaTraverser (schemaobj, s) {
+	  schemaobj.schema = helpers.deepMerge(schemaobj.schema, this.superResolve(s, schemaobj.ctx));
+	}
+
+	/**
+	* @private
+	* @param Object schema
+	* @param SchemaContext ctx
+	* @returns Object schema or resolved schema
+	*/
+	Validator.prototype.superResolve = function superResolve (schema, ctx) {
+	  var ref;
+	  if(ref = shouldResolve(schema)) {
+	    return this.resolve(schema, ref, ctx).subschema;
+	  }
+	  return schema;
+	}
 
 	/**
 	* @private
@@ -4758,7 +4780,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 	// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+	'use strict';
+
 	var punycode = __webpack_require__(20);
+	var util = __webpack_require__(22);
 
 	exports.parse = urlParse;
 	exports.resolve = urlResolve;
@@ -4789,6 +4814,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var protocolPattern = /^([a-z0-9.+-]+:)/i,
 	    portPattern = /:[0-9]*$/,
 
+	    // Special case for a simple path URL
+	    simplePathPattern = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/,
+
 	    // RFC 2396: characters reserved for delimiting URLs.
 	    // We actually just auto-escape these.
 	    delims = ['<', '>', '"', '`', ' ', '\r', '\n', '\t'],
@@ -4805,8 +4833,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    nonHostChars = ['%', '/', '?', ';', '#'].concat(autoEscape),
 	    hostEndingChars = ['/', '?', '#'],
 	    hostnameMaxLen = 255,
-	    hostnamePartPattern = /^[a-z0-9A-Z_-]{0,63}$/,
-	    hostnamePartStart = /^([a-z0-9A-Z_-]{0,63})(.*)$/,
+	    hostnamePartPattern = /^[+a-z0-9A-Z_-]{0,63}$/,
+	    hostnamePartStart = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
 	    // protocols that can allow "unsafe" and "unwise" chars.
 	    unsafeProtocol = {
 	      'javascript': true,
@@ -4830,10 +4858,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      'gopher:': true,
 	      'file:': true
 	    },
-	    querystring = __webpack_require__(22);
+	    querystring = __webpack_require__(23);
 
 	function urlParse(url, parseQueryString, slashesDenoteHost) {
-	  if (url && isObject(url) && url instanceof Url) return url;
+	  if (url && util.isObject(url) && url instanceof Url) return url;
 
 	  var u = new Url;
 	  u.parse(url, parseQueryString, slashesDenoteHost);
@@ -4841,15 +4869,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	Url.prototype.parse = function(url, parseQueryString, slashesDenoteHost) {
-	  if (!isString(url)) {
+	  if (!util.isString(url)) {
 	    throw new TypeError("Parameter 'url' must be a string, not " + typeof url);
 	  }
+
+	  // Copy chrome, IE, opera backslash-handling behavior.
+	  // Back slashes before the query string get converted to forward slashes
+	  // See: https://code.google.com/p/chromium/issues/detail?id=25916
+	  var queryIndex = url.indexOf('?'),
+	      splitter =
+	          (queryIndex !== -1 && queryIndex < url.indexOf('#')) ? '?' : '#',
+	      uSplit = url.split(splitter),
+	      slashRegex = /\\/g;
+	  uSplit[0] = uSplit[0].replace(slashRegex, '/');
+	  url = uSplit.join(splitter);
 
 	  var rest = url;
 
 	  // trim before proceeding.
 	  // This is to support parse stuff like "  http://foo.com  \n"
 	  rest = rest.trim();
+
+	  if (!slashesDenoteHost && url.split('#').length === 1) {
+	    // Try fast path regexp
+	    var simplePath = simplePathPattern.exec(rest);
+	    if (simplePath) {
+	      this.path = rest;
+	      this.href = rest;
+	      this.pathname = simplePath[1];
+	      if (simplePath[2]) {
+	        this.search = simplePath[2];
+	        if (parseQueryString) {
+	          this.query = querystring.parse(this.search.substr(1));
+	        } else {
+	          this.query = this.search.substr(1);
+	        }
+	      } else if (parseQueryString) {
+	        this.search = '';
+	        this.query = {};
+	      }
+	      return this;
+	    }
+	  }
 
 	  var proto = protocolPattern.exec(rest);
 	  if (proto) {
@@ -4988,18 +5049,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    if (!ipv6Hostname) {
-	      // IDNA Support: Returns a puny coded representation of "domain".
-	      // It only converts the part of the domain name that
-	      // has non ASCII characters. I.e. it dosent matter if
-	      // you call it with a domain that already is in ASCII.
-	      var domainArray = this.hostname.split('.');
-	      var newOut = [];
-	      for (var i = 0; i < domainArray.length; ++i) {
-	        var s = domainArray[i];
-	        newOut.push(s.match(/[^A-Za-z0-9_-]/) ?
-	            'xn--' + punycode.encode(s) : s);
-	      }
-	      this.hostname = newOut.join('.');
+	      // IDNA Support: Returns a punycoded representation of "domain".
+	      // It only converts parts of the domain name that
+	      // have non-ASCII characters, i.e. it doesn't matter if
+	      // you call it with a domain that already is ASCII-only.
+	      this.hostname = punycode.toASCII(this.hostname);
 	    }
 
 	    var p = this.port ? ':' + this.port : '';
@@ -5026,6 +5080,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // need to be.
 	    for (var i = 0, l = autoEscape.length; i < l; i++) {
 	      var ae = autoEscape[i];
+	      if (rest.indexOf(ae) === -1)
+	        continue;
 	      var esc = encodeURIComponent(ae);
 	      if (esc === ae) {
 	        esc = escape(ae);
@@ -5079,7 +5135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // If it's an obj, this is a no-op.
 	  // this way, you can call url_format() on strings
 	  // to clean up potentially wonky urls.
-	  if (isString(obj)) obj = urlParse(obj);
+	  if (util.isString(obj)) obj = urlParse(obj);
 	  if (!(obj instanceof Url)) return Url.prototype.format.call(obj);
 	  return obj.format();
 	}
@@ -5110,7 +5166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  if (this.query &&
-	      isObject(this.query) &&
+	      util.isObject(this.query) &&
 	      Object.keys(this.query).length) {
 	    query = querystring.stringify(this.query);
 	  }
@@ -5154,16 +5210,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	Url.prototype.resolveObject = function(relative) {
-	  if (isString(relative)) {
+	  if (util.isString(relative)) {
 	    var rel = new Url();
 	    rel.parse(relative, false, true);
 	    relative = rel;
 	  }
 
 	  var result = new Url();
-	  Object.keys(this).forEach(function(k) {
-	    result[k] = this[k];
-	  }, this);
+	  var tkeys = Object.keys(this);
+	  for (var tk = 0; tk < tkeys.length; tk++) {
+	    var tkey = tkeys[tk];
+	    result[tkey] = this[tkey];
+	  }
 
 	  // hash is always overridden, no matter what.
 	  // even href="" will remove it.
@@ -5178,10 +5236,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // hrefs like //foo/bar always cut to the protocol.
 	  if (relative.slashes && !relative.protocol) {
 	    // take everything except the protocol from relative
-	    Object.keys(relative).forEach(function(k) {
-	      if (k !== 'protocol')
-	        result[k] = relative[k];
-	    });
+	    var rkeys = Object.keys(relative);
+	    for (var rk = 0; rk < rkeys.length; rk++) {
+	      var rkey = rkeys[rk];
+	      if (rkey !== 'protocol')
+	        result[rkey] = relative[rkey];
+	    }
 
 	    //urlParse appends trailing / to urls like http://www.example.com
 	    if (slashedProtocol[result.protocol] &&
@@ -5203,9 +5263,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // because that's known to be hostless.
 	    // anything else is assumed to be absolute.
 	    if (!slashedProtocol[relative.protocol]) {
-	      Object.keys(relative).forEach(function(k) {
+	      var keys = Object.keys(relative);
+	      for (var v = 0; v < keys.length; v++) {
+	        var k = keys[v];
 	        result[k] = relative[k];
-	      });
+	      }
 	      result.href = result.format();
 	      return result;
 	    }
@@ -5294,14 +5356,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    srcPath = srcPath.concat(relPath);
 	    result.search = relative.search;
 	    result.query = relative.query;
-	  } else if (!isNullOrUndefined(relative.search)) {
+	  } else if (!util.isNullOrUndefined(relative.search)) {
 	    // just pull out the search.
 	    // like href='?foo'.
 	    // Put this after the other two cases because it simplifies the booleans
 	    if (psychotic) {
 	      result.hostname = result.host = srcPath.shift();
 	      //occationaly the auth can get stuck only in host
-	      //this especialy happens in cases like
+	      //this especially happens in cases like
 	      //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
 	      var authInHost = result.host && result.host.indexOf('@') > 0 ?
 	                       result.host.split('@') : false;
@@ -5313,7 +5375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    result.search = relative.search;
 	    result.query = relative.query;
 	    //to support http.request
-	    if (!isNull(result.pathname) || !isNull(result.search)) {
+	    if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
 	      result.path = (result.pathname ? result.pathname : '') +
 	                    (result.search ? result.search : '');
 	    }
@@ -5340,15 +5402,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // then it must NOT get a trailing slash.
 	  var last = srcPath.slice(-1)[0];
 	  var hasTrailingSlash = (
-	      (result.host || relative.host) && (last === '.' || last === '..') ||
-	      last === '');
+	      (result.host || relative.host || srcPath.length > 1) &&
+	      (last === '.' || last === '..') || last === '');
 
 	  // strip single dots, resolve double dots to parent dir
 	  // if the path tries to go above the root, `up` ends up > 0
 	  var up = 0;
 	  for (var i = srcPath.length; i >= 0; i--) {
 	    last = srcPath[i];
-	    if (last == '.') {
+	    if (last === '.') {
 	      srcPath.splice(i, 1);
 	    } else if (last === '..') {
 	      srcPath.splice(i, 1);
@@ -5383,7 +5445,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    result.hostname = result.host = isAbsolute ? '' :
 	                                    srcPath.length ? srcPath.shift() : '';
 	    //occationaly the auth can get stuck only in host
-	    //this especialy happens in cases like
+	    //this especially happens in cases like
 	    //url.resolveObject('mailto:local1@domain1', 'local2@domain2')
 	    var authInHost = result.host && result.host.indexOf('@') > 0 ?
 	                     result.host.split('@') : false;
@@ -5407,7 +5469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  //to support request.http
-	  if (!isNull(result.pathname) || !isNull(result.search)) {
+	  if (!util.isNull(result.pathname) || !util.isNull(result.search)) {
 	    result.path = (result.pathname ? result.pathname : '') +
 	                  (result.search ? result.search : '');
 	  }
@@ -5429,21 +5491,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  if (host) this.hostname = host;
 	};
-
-	function isString(arg) {
-	  return typeof arg === "string";
-	}
-
-	function isObject(arg) {
-	  return typeof arg === 'object' && arg !== null;
-	}
-
-	function isNull(arg) {
-	  return arg === null;
-	}
-	function isNullOrUndefined(arg) {
-	  return  arg == null;
-	}
 
 
 /***/ },
@@ -5999,16 +6046,38 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 22 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
-	exports.decode = exports.parse = __webpack_require__(23);
-	exports.encode = exports.stringify = __webpack_require__(24);
+	module.exports = {
+	  isString: function(arg) {
+	    return typeof(arg) === 'string';
+	  },
+	  isObject: function(arg) {
+	    return typeof(arg) === 'object' && arg !== null;
+	  },
+	  isNull: function(arg) {
+	    return arg === null;
+	  },
+	  isNullOrUndefined: function(arg) {
+	    return arg == null;
+	  }
+	};
 
 
 /***/ },
 /* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	exports.decode = exports.parse = __webpack_require__(24);
+	exports.encode = exports.stringify = __webpack_require__(25);
+
+
+/***/ },
+/* 24 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -6094,7 +6163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -6164,12 +6233,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var helpers = __webpack_require__(26);
+	var helpers = __webpack_require__(27);
 
 	/** @type ValidatorResult */
 	var ValidatorResult = helpers.ValidatorResult;
@@ -6213,7 +6282,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return null;
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  var types = (schema.type instanceof Array) ? schema.type : [schema.type];
+	  var types = Array.isArray(schema.type) ? schema.type : [schema.type];
 	  if (!types.some(this.testType.bind(this, instance, schema, options, ctx))) {
 	    var list = types.map(function (v) {
 	      return v.id && ('<' + v.id + '>') || (v+'');
@@ -6227,8 +6296,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return result;
 	};
 
-	function testSchema(instance, options, ctx, schema){
-	  return this.validateSchema(instance, schema, options, ctx).valid;
+	function testSchema(instance, options, ctx, callback, schema){
+	  var res = this.validateSchema(instance, schema, options, ctx);
+	  if (! res.valid && callback instanceof Function) {
+	    callback(res);
+	  }
+	  return res.valid;
 	}
 
 	/**
@@ -6245,13 +6318,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return null;
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (!(schema.anyOf instanceof Array)){
+	  var inner = new ValidatorResult(instance, schema, options, ctx);
+	  if (!Array.isArray(schema.anyOf)){
 	    throw new SchemaError("anyOf must be an array");
 	  }
-	  if (!schema.anyOf.some(testSchema.bind(this, instance, options, ctx))) {
+	  if (!schema.anyOf.some(
+	    testSchema.bind(
+	      this, instance, options, ctx, function(res){inner.importErrors(res);}
+	      ))) {
 	    var list = schema.anyOf.map(function (v, i) {
 	      return (v.id && ('<' + v.id + '>')) || (v.title && JSON.stringify(v.title)) || (v['$ref'] && ('<' + v['$ref'] + '>')) || '[subschema '+i+']';
 	    });
+	    if (options.nestedErrors) {
+	      result.importErrors(inner);
+	    }
 	    result.addError({
 	      name: 'anyOf',
 	      argument: list,
@@ -6274,7 +6354,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (instance === undefined) {
 	    return null;
 	  }
-	  if (!(schema.allOf instanceof Array)){
+	  if (!Array.isArray(schema.allOf)){
 	    throw new SchemaError("allOf must be an array");
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
@@ -6307,15 +6387,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (instance === undefined) {
 	    return null;
 	  }
-	  if (!(schema.oneOf instanceof Array)){
+	  if (!Array.isArray(schema.oneOf)){
 	    throw new SchemaError("oneOf must be an array");
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  var count = schema.oneOf.filter(testSchema.bind(this, instance, options, ctx)).length;
+	  var inner = new ValidatorResult(instance, schema, options, ctx);
+	  var count = schema.oneOf.filter(
+	    testSchema.bind(
+	      this, instance, options, ctx, function(res) {inner.importErrors(res);}
+	      ) ).length;
 	  var list = schema.oneOf.map(function (v, i) {
 	    return (v.id && ('<' + v.id + '>')) || (v.title && JSON.stringify(v.title)) || (v['$ref'] && ('<' + v['$ref'] + '>')) || '[subschema '+i+']';
 	  });
 	  if (count!==1) {
+	    if (options.nestedErrors) {
+	      result.importErrors(inner);
+	    }
 	    result.addError({
 	      name: 'oneOf',
 	      argument: list,
@@ -6480,7 +6567,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null|ValidatorResult}
 	 */
 	validators.items = function validateItems (instance, schema, options, ctx) {
-	  if (!(instance instanceof Array)) {
+	  if (!Array.isArray(instance)) {
 	    return null;
 	  }
 	  var self = this;
@@ -6489,7 +6576,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return result;
 	  }
 	  instance.every(function (value, i) {
-	    var items = (schema.items instanceof Array) ? (schema.items[i] || schema.additionalItems) : schema.items;
+	    var items = Array.isArray(schema.items) ? (schema.items[i] || schema.additionalItems) : schema.items;
 	    if (items === undefined) {
 	      return true;
 	    }
@@ -6748,7 +6835,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.minItems = function validateMinItems (instance, schema, options, ctx) {
-	  if (!(instance instanceof Array)) {
+	  if (!Array.isArray(instance)) {
 	    return null;
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
@@ -6769,7 +6856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.maxItems = function validateMaxItems (instance, schema, options, ctx) {
-	  if (!(instance instanceof Array)) {
+	  if (!Array.isArray(instance)) {
 	    return null;
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
@@ -6793,7 +6880,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	validators.uniqueItems = function validateUniqueItems (instance, schema, options, ctx) {
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (!(instance instanceof Array)) {
+	  if (!Array.isArray(instance)) {
 	    return result;
 	  }
 	  function testArrays (v, i, a) {
@@ -6835,7 +6922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.uniqueItems = function validateUniqueItems (instance, schema, options, ctx) {
-	  if (!(instance instanceof Array)) {
+	  if (!Array.isArray(instance)) {
 	    return null;
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
@@ -6870,7 +6957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (typeof dep == 'string') {
 	      dep = [dep];
 	    }
-	    if (dep instanceof Array) {
+	    if (Array.isArray(dep)) {
 	      dep.forEach(function (prop) {
 	        if (instance[prop] === undefined) {
 	          result.addError({
@@ -6906,7 +6993,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {ValidatorResult|null}
 	 */
 	validators['enum'] = function validateEnum (instance, schema, options, ctx) {
-	  if (!(schema['enum'] instanceof Array)) {
+	  if (!Array.isArray(schema['enum'])) {
 	    throw new SchemaError("enum expects an array", schema);
 	  }
 	  if (instance === undefined) {
@@ -6937,7 +7024,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var notTypes = schema.not || schema.disallow;
 	  if(!notTypes) return null;
-	  if(!(notTypes instanceof Array)) notTypes=[notTypes];
+	  if(!Array.isArray(notTypes)) notTypes=[notTypes];
 	  notTypes.forEach(function (type) {
 	    if (self.testType(instance, schema, options, ctx, type)) {
 	      var schemaId = type && type.id && ('<' + type.id + '>') || type;
@@ -6955,7 +7042,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7019,15 +7106,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (typeof res == 'string' || (res && res.validatorType)) {
 	    this.addError(res);
 	  } else if (res && res.errors) {
-	    var errs = this.errors;
-	    res.errors.forEach(function (v) {
-	      errs.push(v);
-	    });
+	    Array.prototype.push.apply(this.errors, res.errors);
 	  }
 	};
 
+	function stringizer (v,i){
+	  return i+': '+v.toString()+'\n';
+	}
 	ValidatorResult.prototype.toString = function toString(res) {
-	  return this.errors.map(function(v,i){ return i+': '+v.toString()+'\n'; }).join('');
+	  return this.errors.map(stringizer).join('');
 	};
 
 	Object.defineProperty(ValidatorResult.prototype, "valid", { get: function() {
@@ -7170,44 +7257,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return a === b;
 	};
 
-	module.exports.deepMerge = function deepMerge (target, src) {
+	function deepMerger (target, dst, e, i) {
+	  if (typeof e === 'object') {
+	    dst[i] = deepMerge(target[i], e)
+	  } else {
+	    if (target.indexOf(e) === -1) {
+	      dst.push(e)
+	    }
+	  }
+	}
+
+	function copyist (src, dst, key) {
+	  dst[key] = src[key];
+	}
+
+	function copyistWithDeepMerge (target, src, dst, key) {
+	  if (typeof src[key] !== 'object' || !src[key]) {
+	    dst[key] = src[key];
+	  }
+	  else {
+	    if (!target[key]) {
+	      dst[key] = src[key];
+	    } else {
+	      dst[key] = deepMerge(target[key], src[key])
+	    }
+	  }
+	}
+
+	function deepMerge (target, src) {
 	  var array = Array.isArray(src);
 	  var dst = array && [] || {};
 
 	  if (array) {
 	    target = target || [];
 	    dst = dst.concat(target);
-	    src.forEach(function (e, i) {
-	      if (typeof e === 'object') {
-	        dst[i] = deepMerge(target[i], e)
-	      } else {
-	        if (target.indexOf(e) === -1) {
-	          dst.push(e)
-	        }
-	      }
-	    });
+	    src.forEach(deepMerger.bind(null, target, dst));
 	  } else {
 	    if (target && typeof target === 'object') {
-	      Object.keys(target).forEach(function (key) {
-	        dst[key] = target[key];
-	      });
+	      Object.keys(target).forEach(copyist.bind(null, target, dst));
 	    }
-	    Object.keys(src).forEach(function (key) {
-	      if (typeof src[key] !== 'object' || !src[key]) {
-	        dst[key] = src[key];
-	      }
-	      else {
-	        if (!target[key]) {
-	          dst[key] = src[key];
-	        } else {
-	          dst[key] = deepMerge(target[key], src[key])
-	        }
-	      }
-	    });
+	    Object.keys(src).forEach(copyistWithDeepMerge.bind(null, target, src, dst));
 	  }
 
 	  return dst;
 	};
+
+	module.exports.deepMerge = deepMerge;
 
 	/**
 	 * Validates instance against the provided schema
@@ -7227,6 +7322,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return o;
 	};
 
+	function pathEncoder (v) {
+	  return '/'+encodeURIComponent(v).replace(/~/g,'%7E');
+	}
 	/**
 	 * Accept an Array of property names and return a JSON Pointer URI fragment
 	 * @param Array a
@@ -7235,12 +7333,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.encodePath = function encodePointer(a){
 		// ~ must be encoded explicitly because hacks
 		// the slash is encoded by encodeURIComponent
-		return a.map(function(v){ return '/'+encodeURIComponent(v).replace(/~/g,'%7E'); }).join('');
+		return a.map(pathEncoder).join('');
 	};
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -7398,7 +7496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7415,11 +7513,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widget2 = __webpack_require__(29);
+	var _Widget2 = __webpack_require__(30);
 
 	var _Widget3 = _interopRequireDefault(_Widget2);
 
-	var _domready = __webpack_require__(44);
+	var _domready = __webpack_require__(45);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7541,7 +7639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = EmbedWidget;
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -7556,11 +7654,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _elementResizeDetector = __webpack_require__(30);
+	var _elementResizeDetector = __webpack_require__(31);
 
 	var _elementResizeDetector2 = _interopRequireDefault(_elementResizeDetector);
 
-	var _AnalyticsApi = __webpack_require__(43);
+	var _AnalyticsApi = __webpack_require__(44);
 
 	var _AnalyticsApi2 = _interopRequireDefault(_AnalyticsApi);
 
@@ -7650,24 +7748,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Widget;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var forEach                 = __webpack_require__(31).forEach;
-	var elementUtilsMaker       = __webpack_require__(32);
-	var listenerHandlerMaker    = __webpack_require__(33);
-	var idGeneratorMaker        = __webpack_require__(34);
-	var idHandlerMaker          = __webpack_require__(35);
-	var reporterMaker           = __webpack_require__(36);
-	var browserDetector         = __webpack_require__(37);
-	var batchProcessorMaker     = __webpack_require__(38);
-	var stateHandler            = __webpack_require__(40);
+	var forEach                 = __webpack_require__(32).forEach;
+	var elementUtilsMaker       = __webpack_require__(33);
+	var listenerHandlerMaker    = __webpack_require__(34);
+	var idGeneratorMaker        = __webpack_require__(35);
+	var idHandlerMaker          = __webpack_require__(36);
+	var reporterMaker           = __webpack_require__(37);
+	var browserDetector         = __webpack_require__(38);
+	var batchProcessorMaker     = __webpack_require__(39);
+	var stateHandler            = __webpack_require__(41);
 
 	//Detection strategies.
-	var objectStrategyMaker     = __webpack_require__(41);
-	var scrollStrategyMaker     = __webpack_require__(42);
+	var objectStrategyMaker     = __webpack_require__(42);
+	var scrollStrategyMaker     = __webpack_require__(43);
 
 	function isCollection(obj) {
 	    return Array.isArray(obj) || obj.length !== undefined;
@@ -7977,7 +8075,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8002,7 +8100,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8060,7 +8158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8126,7 +8224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8150,7 +8248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8203,7 +8301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8251,7 +8349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8296,12 +8394,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 
-	var utils = __webpack_require__(39);
+	var utils = __webpack_require__(40);
 
 	module.exports = function batchProcessorMaker(options) {
 	    options             = options || {};
@@ -8440,7 +8538,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8461,7 +8559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8489,7 +8587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8499,7 +8597,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var browserDetector = __webpack_require__(37);
+	var browserDetector = __webpack_require__(38);
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -8645,6 +8743,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                //Add an object element as a child to the target element that will be listened to for resize events.
 	                var object = document.createElement("object");
 	                object.style.cssText = OBJECT_STYLE;
+	                object.tabIndex = -1;
 	                object.type = "text/html";
 	                object.onload = onObjectLoad;
 
@@ -8708,7 +8807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -8718,7 +8817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	var forEach = __webpack_require__(31).forEach;
+	var forEach = __webpack_require__(32).forEach;
 
 	module.exports = function(options) {
 	    options             = options || {};
@@ -9061,10 +9160,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	            var scrollbarWidth          = scrollbarSizes.width;
 	            var scrollbarHeight         = scrollbarSizes.height;
-	            var containerContainerStyle = "position: absolute; overflow: hidden; z-index: -1; visibility: hidden; width: 100%; height: 100%; left: 0px; top: 0px;";
-	            var containerStyle          = "position: absolute; overflow: hidden; z-index: -1; visibility: hidden; " + getLeftTopBottomRightCssText(-(1 + scrollbarWidth), -(1 + scrollbarHeight), -scrollbarHeight, -scrollbarWidth);
-	            var expandStyle             = "position: absolute; overflow: scroll; z-index: -1; visibility: hidden; width: 100%; height: 100%;";
-	            var shrinkStyle             = "position: absolute; overflow: scroll; z-index: -1; visibility: hidden; width: 100%; height: 100%;";
+	            var containerContainerStyle = "position: absolute; flex: none; overflow: hidden; z-index: -1; visibility: hidden; width: 100%; height: 100%; left: 0px; top: 0px;";
+	            var containerStyle          = "position: absolute; flex: none; overflow: hidden; z-index: -1; visibility: hidden; " + getLeftTopBottomRightCssText(-(1 + scrollbarWidth), -(1 + scrollbarHeight), -scrollbarHeight, -scrollbarWidth);
+	            var expandStyle             = "position: absolute; flex: none; overflow: scroll; z-index: -1; visibility: hidden; width: 100%; height: 100%;";
+	            var shrinkStyle             = "position: absolute; flex: none; overflow: scroll; z-index: -1; visibility: hidden; width: 100%; height: 100%;";
 	            var expandChildStyle        = "position: absolute; left: 0; top: 0;";
 	            var shrinkChildStyle        = "position: absolute; width: 200%; height: 200%;";
 
@@ -9335,7 +9434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9432,7 +9531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = AnalyticsApi;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9465,7 +9564,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9482,11 +9581,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _Widget2 = __webpack_require__(29);
+	var _Widget2 = __webpack_require__(30);
 
 	var _Widget3 = _interopRequireDefault(_Widget2);
 
-	var _domready = __webpack_require__(44);
+	var _domready = __webpack_require__(45);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9687,7 +9786,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = PopupWidget;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -9704,11 +9803,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _PopupWidget2 = __webpack_require__(45);
+	var _PopupWidget2 = __webpack_require__(46);
 
 	var _PopupWidget3 = _interopRequireDefault(_PopupWidget2);
 
-	var _domready = __webpack_require__(44);
+	var _domready = __webpack_require__(45);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9846,7 +9945,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = CtaWidget;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports) {
 
 	"use strict";

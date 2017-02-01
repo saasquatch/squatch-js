@@ -208,9 +208,13 @@ export default class Widgets {
     if (opts.widgetUrlMappings) {
       opts.widgetUrlMappings.forEach((rule) => {
         if (Widgets.matchesUrl(rule.url)) {
-          displayOnLoad = rule.displayOnLoad;
-          displayCTA = rule.showAsCTA;
-          _log(`Display ${rule.widgetType} on ${rule.url}`);
+          if (rule.widgetType !== 'CONVERSION_WIDGET' || (response.user.referredBy && response.user.referredBy.code)) {
+            displayOnLoad = rule.displayOnLoad;
+            displayCTA = rule.showAsCTA;
+            _log(`Display ${rule.widgetType} on ${rule.url}`);
+          } else {
+            _log(`Don't display ${rule.widgetType} when no referral on widget rule match ${rule.url}`);
+          }
         }
       });
     }
