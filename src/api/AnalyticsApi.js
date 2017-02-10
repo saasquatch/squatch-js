@@ -38,7 +38,7 @@ export default class AnalyticsApi {
     const engagementMedium = encodeURIComponent(params.engagementMedium);
     const shareMedium = encodeURIComponent(params.shareMedium);
 
-    const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}&shareMedium=${shareMedium}`;
+    const path = `/a/${tenantAlias}/widgets/analytics/shared?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}&shareMedium=${shareMedium}`;
     const url = this.domain + path;
 
     return AnalyticsApi.doPost(url, JSON.stringify({}));
