@@ -3,7 +3,7 @@ export default function asyncLoad() {
   const cached = window._squatch || null;
 
   if (loaded && cached) {
-    const ready = cached.ready;
+    const ready = cached.ready || [];
 
     ready.forEach(cb => setTimeout(() => cb(), 0));
 
