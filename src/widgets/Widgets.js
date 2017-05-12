@@ -227,6 +227,20 @@ export default class Widgets {
       });
     }
 
+    if (opts.fuelTankAutofillUrls) {
+      _log('We found a fuel tank autofill!');
+
+      opts.fuelTankAutofillUrls.forEach((rule) => {
+        if (Widgets.matchesUrl(rule.url)) {
+          _log('Fuel Tank URL matches');
+          if (response.user.referredBy && response.user.referredBy.code) {
+            const formAutofill = document.querySelector(rule.formSelector);
+            formAutofill.value = response.user.referredBy.referredReward.fuelTankCode || '';
+          }
+        }
+      });
+    }
+
     if (!displayCTA && config.engagementMedium === 'EMBED') {
       widget = new EmbedWidget(params);
       widget.load();

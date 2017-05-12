@@ -336,15 +336,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // NB: In an Electron preload script, document will be defined but not fully
 	  // initialized. Since we know we're in Chrome, we'll just detect this case
 	  // explicitly
-	  if (typeof window !== 'undefined' && window && typeof window.process !== 'undefined' && window.process.type === 'renderer') {
+	  if (typeof window !== 'undefined' && window.process && window.process.type === 'renderer') {
 	    return true;
 	  }
 
 	  // is webkit? http://stackoverflow.com/a/16459606/376773
 	  // document is undefined in react-native: https://github.com/facebook/react-native/pull/1632
-	  return (typeof document !== 'undefined' && document && 'WebkitAppearance' in document.documentElement.style) ||
+	  return (typeof document !== 'undefined' && document && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
 	    // is firebug? http://stackoverflow.com/a/398120/376773
-	    (typeof window !== 'undefined' && window && window.console && (console.firebug || (console.exception && console.table))) ||
+	    (typeof window !== 'undefined' && window && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
 	    // is firefox >= v31?
 	    // https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
 	    (typeof navigator !== 'undefined' && navigator && navigator.userAgent && navigator.userAgent.toLowerCase().match(/firefox\/(\d+)/) && parseInt(RegExp.$1, 10) >= 31) ||
@@ -656,6 +656,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
+	process.prependListener = noop;
+	process.prependOnceListener = noop;
+
+	process.listeners = function (name) { return [] }
 
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
@@ -1321,6 +1325,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        opts.conversionUrls.forEach(function (rule) {
 	          if (response.user.referredBy && Widgets.matchesUrl(rule)) {
 	            _log('This is a conversion URL', rule);
+	          }
+	        });
+	      }
+
+	      if (opts.fuelTankAutofillUrls) {
+	        _log('We found a fuel tank autofill!');
+
+	        opts.fuelTankAutofillUrls.forEach(function (rule) {
+	          if (Widgets.matchesUrl(rule.url)) {
+	            _log('Fuel Tank URL matches');
+	            if (response.user.referredBy && response.user.referredBy.code) {
+	              var formAutofill = document.querySelector(rule.formSelector);
+	              formAutofill.value = response.user.referredBy.referredReward.fuelTankCode || '';
+	            }
 	          }
 	        });
 	      }
@@ -8935,13 +8953,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	            function isInDocument(element) {
 	                return element === element.ownerDocument.body || element.ownerDocument.body.contains(element);
 	            }
-	            return !isInDocument(element);
+
+	            if (!isInDocument(element)) {
+	                return true;
+	            }
+
+	            // FireFox returns null style in hidden iframes. See https://github.com/wnr/element-resize-detector/issues/68 and https://bugzilla.mozilla.org/show_bug.cgi?id=795520
+	            if (getComputedStyle(element) === null) {
+	                return true;
+	            }
+
+	            return false;
 	        }
 
 	        function isUnrendered(element) {
 	            // Check the absolute positioned container since the top level container is display: inline.
 	            var container = getState(element).container.childNodes[0];
-	            return getComputedStyle(container).width.indexOf("px") === -1; //Can only compute pixel value when rendered.
+	            var style = getComputedStyle(container);
+	            return !style.width || style.width.indexOf("px") === -1; //Can only compute pixel value when rendered.
 	        }
 
 	        function getStyle() {
