@@ -34,7 +34,7 @@
 
   squatch.ready(function(){
     squatch.init({
-      tenantAlias: "test_aggrb70ymy559",
+      tenantAlias: "tenant",
       domain: "https://staging.referralsaasquatch.com"
     });
 
@@ -48,7 +48,7 @@
       },
       engagementMedium: 'EMBED',
       widgetType: 'REFERRER_WIDGET',
-      jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiMTIzIiwiYWNjb3VudElkIjoiYWJjIiwiZmlyc3ROYW1lIjoiRWR1YXJkbyIsImxhc3ROYW1lIjoiUm9kcmlndWV6In19.LjZVMU0EKe0ag442LOMRv0k6wJPxNiv8qCy_3GE5FWg'
+      jwt: 'token'
     }).then(function(res){
       console.log(res);
     }).catch(function(err) {
