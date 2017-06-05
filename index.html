@@ -34,11 +34,22 @@
 
   squatch.ready(function(){
     squatch.init({
-      tenantAlias: "tenant_alias"
+      tenantAlias: "tenant",
+      domain: "https://staging.referralsaasquatch.com"
     });
 
 
-    squatch.widgets().createCookieUser({}).then(function(res){
+    squatch.widgets().upsertUser({
+      user: {
+        id: '123',
+        accountId: 'abc',
+        firstName: 'Eduardo',
+        lastName: 'Rodriguez'
+      },
+      engagementMedium: 'EMBED',
+      widgetType: 'REFERRER_WIDGET',
+      jwt: 'token'
+    }).then(function(res){
       console.log(res);
     }).catch(function(err) {
       console.log(err);
@@ -48,7 +59,7 @@
 
   </script>
 
-  <input type="text" name="Coupon" id="my_coupon" value="" />
+  <input type="text" name="Coupon" class="testClass" value="" />
   <div id="squatchembed"></div>
 </body>
 </html>
