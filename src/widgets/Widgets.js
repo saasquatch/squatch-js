@@ -312,7 +312,7 @@ export default class Widgets {
    * @param {string} email A valid email address
    * @returns {void}
    */
-  static cb(target, widget, email) {
-    widget.reload(email);
+  static cb(target, widget, params) {
+    widget.reload(params);
   }
 }

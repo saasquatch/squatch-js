@@ -60,7 +60,9 @@ export default class EmbedWidget extends Widget {
 
     me.widgetApi.cookieUser({
       user: {
-        email: params,
+        email: params.email || null,
+        firstName: params.firstName || null,
+        lastName: params.lastName || null,
       },
       engagementMedium: 'EMBED',
       widgetType: me.type,
@@ -81,7 +83,7 @@ export default class EmbedWidget extends Widget {
           };
 
           registerForm.style.paddingTop = '30px';
-          registerForm.innerHTML = `<p><strong>${params}</strong><br>Has been successfully registered</p>`;
+          registerForm.innerHTML = `<p><strong>${params.email}</strong><br>Has been successfully registered</p>`;
           registerForm.appendChild(showStatsBtn);
         }
       }
