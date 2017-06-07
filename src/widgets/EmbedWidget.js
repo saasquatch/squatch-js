@@ -76,7 +76,7 @@ export default class EmbedWidget extends Widget {
         if (registerForm) {
           showStatsBtn.className = 'btn btn-primary';
           showStatsBtn.id = 'show-stats-btn';
-          showStatsBtn.textContent = 'Show Stats';
+          showStatsBtn.textContent = (me.type === 'REFERRER_WIDGET') ? 'Show Stats' : 'Show Reward';
           showStatsBtn.setAttribute('style', 'margin-top: 10px; max-width: 130px; width: 100%;');
           showStatsBtn.onclick = () => {
             me.load();
