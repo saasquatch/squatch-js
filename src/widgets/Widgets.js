@@ -309,10 +309,20 @@ export default class Widgets {
    * @private
    * @param {Object} target Object containing the target DOM element
    * @param {Widget} widget A widget (EmbedWidget, PopupWidget, CtaWidget)
-   * @param {string} email A valid email address
+   * @param {Object} params An object with valid parameters
+   *                        (e.g) {email:'email', firstName:'firstName'}
    * @returns {void}
    */
-  static cb(target, widget, email) {
-    widget.reload(email);
+  static cb(target, widget, params) {
+    let paramsObj;
+
+    // If params is a string, then it should be an email
+    if (typeof params === 'string' || params instanceof String) {
+      paramsObj = { email: params };
+    } else {
+      paramsObj = params;
+    }
+
+    widget.reload(paramsObj);
   }
 }

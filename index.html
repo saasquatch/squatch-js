@@ -34,21 +34,13 @@
 
   squatch.ready(function(){
     squatch.init({
-      tenantAlias: "tenant",
-      domain: "https://staging.referralsaasquatch.com"
+      tenantAlias: "alias"
     });
 
 
-    squatch.widgets().upsertUser({
-      user: {
-        id: '123',
-        accountId: 'abc',
-        firstName: 'Eduardo',
-        lastName: 'Rodriguez'
-      },
+    squatch.widgets().createCookieUser({
       engagementMedium: 'EMBED',
-      widgetType: 'REFERRER_WIDGET',
-      jwt: 'token'
+      widgetType: 'CONVERSION_WIDGET'
     }).then(function(res){
       console.log(res);
     }).catch(function(err) {
