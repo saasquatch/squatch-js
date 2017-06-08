@@ -1439,7 +1439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        paramsObj = params;
 	      }
 
-	      widget.reload(params);
+	      widget.reload(paramsObj);
 	    }
 	  }]);
 

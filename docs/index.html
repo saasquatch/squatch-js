@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>  | Documentation</title>
+  <title>@saasquatch/squatch-js 2.0.7 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -13,8 +13,8 @@
     <div class='clearfix md-mxn2'>
       <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
         <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'></h3>
-          <div class='mb1'><code></code></div>
+          <h3 class='mb0 no-anchor'>@saasquatch/squatch-js</h3>
+          <div class='mb1'><code>2.0.7</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -186,6 +186,7 @@
                     </ul>
                   
                   
+                  
                 </div>
                 
                 </li>
@@ -239,6 +240,7 @@
                     </ul>
                   
                   
+                  
                 </div>
                 
                 </li>
@@ -290,6 +292,7 @@
                     </ul>
                   
                   
+                  
                 </div>
                 
                 </li>
@@ -324,9 +327,10 @@ referral short links and referral codes, and more.</p>
 
 
   <div class='pre p1 fill-light mt0'>squatch</div>
-
+  
   
 
+  
   
   
   
@@ -371,9 +375,10 @@ referral short links and referral codes, and more.</p>
 
 
   <div class='pre p1 fill-light mt0'>api(): <a href="#widgetapi">WidgetApi</a></div>
-
+  
   
 
+  
   
   
   
@@ -426,9 +431,10 @@ referral short links and referral codes, and more.</p>
 
 
   <div class='pre p1 fill-light mt0'>widgets(): <a href="#widgets">Widgets</a></div>
-
+  
   
 
+  
   
   
   
@@ -484,9 +490,10 @@ referral short links and referral codes, and more.</p>
 
 
   <div class='pre p1 fill-light mt0'>init(config: <a href="#configoptions">ConfigOptions</a>): void</div>
-
+  
   
 
+  
   
   
   
@@ -559,9 +566,10 @@ function detects that state.</p>
 
 
   <div class='pre p1 fill-light mt0'>ready(fn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>): void</div>
-
+  
   
 
+  
   
   
   
@@ -637,9 +645,10 @@ Uses <a href="WidgetApi.squatchReferralCookie">WidgetApi.squatchReferralCookie</
 
 
   <div class='pre p1 fill-light mt0'>autofill(selector: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): void</div>
-
+  
   
 
+  
   
   
   
@@ -706,9 +715,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>submitEmail(fn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>): void</div>
-
+  
   
 
+  
   
   
   
@@ -784,9 +794,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>ConfigOptions</div>
-
+  
   
 
+  
   
   
   
@@ -850,9 +861,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>EngagementMedium</div>
-
+  
   
 
+  
   
   
   
@@ -921,9 +933,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>WidgetType</div>
-
+  
   
 
+  
   
   
   
@@ -994,9 +1007,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>WidgetResult</div>
-
+  
   
 
+  
   
   
   
@@ -1059,16 +1073,30 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 <a href="#widgetapi">WidgetApi</a> but most people will prefer to use these easy methods.</p>
 
 
-  <div class='pre p1 fill-light mt0'>new Widgets()</div>
-
-  
-
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>new Widgets(config: any)</div>
   
   
 
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>config</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -1101,9 +1129,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>constructor(config: <a href="#configoptions">ConfigOptions</a>)</div>
-
+  
   
 
+  
   
   
   
@@ -1178,9 +1207,10 @@ the widget if it is successful. Otherwise it shows the "error" widget.</p>
 
 
   <div class='pre p1 fill-light mt0'>createCookieUser(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></div>
-
+  
   
 
+  
   
   
   
@@ -1284,9 +1314,10 @@ the widget if it is successful. Otherwise it shows the "error" widget.</p>
 
 
   <div class='pre p1 fill-light mt0'>upsertUser(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></div>
-
+  
   
 
+  
   
   
   
@@ -1397,9 +1428,10 @@ the widget if it is successful. Otherwise it shows the "error" widget.</p>
 
 
   <div class='pre p1 fill-light mt0'>render(config: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="#widgetresult">WidgetResult</a>></div>
-
+  
   
 
+  
   
   
   
@@ -1510,9 +1542,10 @@ Uses <a href="WidgetApi.squatchReferralCookie">WidgetApi.squatchReferralCookie</
 
 
   <div class='pre p1 fill-light mt0'>autofill(selector: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): void</div>
-
+  
   
 
+  
   
   
   
@@ -1578,9 +1611,10 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 
 
   <div class='pre p1 fill-light mt0'>submitEmail(fn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>): void</div>
-
+  
   
 
+  
   
   
   
@@ -1656,8 +1690,8 @@ Security enabled, the email needs to be signed before it's submitted.</p>
 <p>To create an EmbedWidget use <a href="#widgets">Widgets</a></p>
 
 
-  <div class='pre p1 fill-light mt0'>new EmbedWidget()</div>
-
+  <div class='pre p1 fill-light mt0'>new EmbedWidget(params: any, elementId: any)</div>
+  
   
     <p>
       Extends
@@ -1672,7 +1706,30 @@ Security enabled, the email needs to be signed before it's submitted.</p>
   
   
   
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>params</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>elementId</span> <code class='quiet'>(any
+            = <code>&#39;squatchembed&#39;</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -1711,8 +1768,8 @@ Popups widgets are rendered on top of other elements in a page.</p>
 <p>To create a PopupWidget use <a href="#widgets">Widgets</a></p>
 
 
-  <div class='pre p1 fill-light mt0'>new PopupWidget()</div>
-
+  <div class='pre p1 fill-light mt0'>new PopupWidget(params: any, trigger: any)</div>
+  
   
     <p>
       Extends
@@ -1727,7 +1784,30 @@ Popups widgets are rendered on top of other elements in a page.</p>
   
   
   
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>params</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>trigger</span> <code class='quiet'>(any
+            = <code>&#39;.squatchpop&#39;</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -1765,8 +1845,8 @@ Popups widgets are rendered on top of other elements in a page.</p>
 <p>To create a CtaWidget use <a href="#widgets">Widgets</a></p>
 
 
-  <div class='pre p1 fill-light mt0'>new CtaWidget()</div>
-
+  <div class='pre p1 fill-light mt0'>new CtaWidget(params: any, opts: any)</div>
+  
   
     <p>
       Extends
@@ -1781,7 +1861,29 @@ Popups widgets are rendered on top of other elements in a page.</p>
   
   
   
+  
 
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>params</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -1813,9 +1915,10 @@ Popups widgets are rendered on top of other elements in a page.</p>
   
 
   <div class='pre p1 fill-light mt0'>open()</div>
-
+  
   
 
+  
   
   
   
@@ -1857,9 +1960,10 @@ Popups widgets are rendered on top of other elements in a page.</p>
   
 
   <div class='pre p1 fill-light mt0'>close()</div>
-
+  
   
 
+  
   
   
   
@@ -1912,16 +2016,30 @@ Popups widgets are rendered on top of other elements in a page.</p>
   <p>The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API.</p>
 
 
-  <div class='pre p1 fill-light mt0'>new WidgetApi()</div>
-
-  
-
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>new WidgetApi(config: any)</div>
   
   
 
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>config</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -1954,9 +2072,10 @@ Popups widgets are rendered on top of other elements in a page.</p>
 
 
   <div class='pre p1 fill-light mt0'>constructor(config: <a href="#configoptions">ConfigOptions</a>)</div>
-
+  
   
 
+  
   
   
   
@@ -2018,7 +2137,7 @@ Popups widgets are rendered on top of other elements in a page.</p>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>cookieUser(params?)</span>
+            <span class='code strong strong truncate'>cookieUser(params)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2029,10 +2148,11 @@ Popups widgets are rendered on top of other elements in a page.</p>
   <p>Creates/upserts an anonymous user.</p>
 
 
-  <div class='pre p1 fill-light mt0'>cookieUser(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?=  engagementMedium = params.engagementMedium ? `${): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-
+  <div class='pre p1 fill-light mt0'>cookieUser(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  
   
 
+  
   
   
   
@@ -2045,7 +2165,8 @@ Popups widgets are rendered on top of other elements in a page.</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?=  engagementMedium = params.engagementMedium ? `${)</code>
+            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{widgetType:&#39;&#39;,engagementMedium:&#39;&#39;,jwt:&#39;&#39;}</code>)</code>
 	    Parameters for request
 
           </div>
@@ -2123,7 +2244,7 @@ validate the data (can be disabled)
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>upsertUser(params?)</span>
+            <span class='code strong strong truncate'>upsertUser(params)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2134,10 +2255,11 @@ validate the data (can be disabled)
   <p>Creates/upserts user.</p>
 
 
-  <div class='pre p1 fill-light mt0'>upsertUser(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?= r.id);const widgetType = params.widgetType ?): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-
+  <div class='pre p1 fill-light mt0'>upsertUser(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  
   
 
+  
   
   
   
@@ -2150,7 +2272,8 @@ validate the data (can be disabled)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?= r.id);const widgetType = params.widgetType ?)</code>
+            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{widgetType:&#39;&#39;,engagementMedium:&#39;&#39;,jwt:&#39;&#39;}</code>)</code>
 	    Parameters for request
 
           </div>
@@ -2235,7 +2358,7 @@ to validate the data (can be disabled)
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>render(params?)</span>
+            <span class='code strong strong truncate'>render(params)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2246,10 +2369,11 @@ to validate the data (can be disabled)
   <p>Description here.</p>
 
 
-  <div class='pre p1 fill-light mt0'>render(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?= r.id);const widgetType = params.widgetType ?): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
-
+  <div class='pre p1 fill-light mt0'>render(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a></div>
+  
   
 
+  
   
   
   
@@ -2262,7 +2386,8 @@ to validate the data (can be disabled)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?= r.id);const widgetType = params.widgetType ?)</code>
+            <span class='code bold'>params</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{widgetType:&#39;&#39;,engagementMedium:&#39;&#39;,jwt:&#39;&#39;}</code>)</code>
 	    Parameters for request
 
           </div>
@@ -2359,9 +2484,10 @@ to validate the data (can be disabled)
 
 
   <div class='pre p1 fill-light mt0'>squatchReferralCookie(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">json</a>></div>
-
+  
   
 
+  
   
   
   

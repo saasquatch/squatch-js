@@ -92,10 +92,21 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
+    "augments": [],
+    "examples": [],
+    "params": [],
+    "properties": [],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "kind": "module",
     "name": "squatch",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -363,6 +374,10 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
+    "augments": [],
+    "examples": [],
+    "params": [],
+    "properties": [],
     "returns": [
       {
         "description": {
@@ -417,16 +432,23 @@
             }
           }
         },
+        "title": "returns",
         "type": {
           "type": "NameExpression",
           "name": "WidgetApi"
         }
       }
     ],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "api",
     "kind": "function",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -694,6 +716,10 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
+    "augments": [],
+    "examples": [],
+    "params": [],
+    "properties": [],
     "returns": [
       {
         "description": {
@@ -748,16 +774,23 @@
             }
           }
         },
+        "title": "returns",
         "type": {
           "type": "NameExpression",
           "name": "Widgets"
         }
       }
     ],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "widgets",
     "kind": "function",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -1121,8 +1154,15 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
+    "augments": [],
+    "examples": [
+      {
+        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});"
+      }
+    ],
     "params": [
       {
+        "title": "param",
         "name": "config",
         "lineNumber": 6,
         "description": {
@@ -1183,6 +1223,7 @@
         }
       }
     ],
+    "properties": [],
     "returns": [
       {
         "description": {
@@ -1201,21 +1242,23 @@
             }
           }
         },
+        "title": "returns",
         "type": {
           "type": "NameExpression",
           "name": "void"
         }
       }
     ],
-    "examples": [
-      {
-        "description": "squatch.init({tenantAlias:'test_basbtabstq51v'});"
-      }
-    ],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "init",
     "kind": "function",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -1332,8 +1375,15 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
+    "augments": [],
+    "examples": [
+      {
+        "description": "squatch.ready(function() {\n  console.log(\"ready!\");\n  squatch.api().cookieUser();\n});"
+      }
+    ],
     "params": [
       {
+        "title": "param",
         "name": "fn",
         "lineNumber": 4,
         "description": {
@@ -1394,6 +1444,7 @@
         }
       }
     ],
+    "properties": [],
     "returns": [
       {
         "description": {
@@ -1412,21 +1463,23 @@
             }
           }
         },
+        "title": "returns",
         "type": {
           "type": "NameExpression",
           "name": "void"
         }
       }
     ],
-    "examples": [
-      {
-        "description": "squatch.ready(function() {\n  console.log(\"ready!\");\n  squatch.api().cookieUser();\n});"
-      }
-    ],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "ready",
     "kind": "function",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -1580,8 +1633,11 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
+    "augments": [],
+    "examples": [],
     "params": [
       {
+        "title": "param",
         "name": "selector",
         "lineNumber": 4,
         "description": {
@@ -1642,6 +1698,7 @@
         }
       }
     ],
+    "properties": [],
     "returns": [
       {
         "description": {
@@ -1660,16 +1717,23 @@
             }
           }
         },
+        "title": "returns",
         "type": {
           "type": "NameExpression",
           "name": "void"
         }
       }
     ],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "autofill",
     "kind": "function",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -1786,8 +1850,15 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/squatch.js"
     },
+    "augments": [],
+    "examples": [
+      {
+        "description": "squatch.submitEmail(function(target, widget, email) {\n  // Sign email and generate jwt token\n  var jwt = 'token';\n  widget.reload(email, jwt);\n});"
+      }
+    ],
     "params": [
       {
+        "title": "param",
         "name": "fn",
         "lineNumber": 4,
         "description": {
@@ -1848,6 +1919,7 @@
         }
       }
     ],
+    "properties": [],
     "returns": [
       {
         "description": {
@@ -1866,21 +1938,23 @@
             }
           }
         },
+        "title": "returns",
         "type": {
           "type": "NameExpression",
           "name": "void"
         }
       }
     ],
-    "examples": [
-      {
-        "description": "squatch.submitEmail(function(target, widget, email) {\n  // Sign email and generate jwt token\n  var jwt = 'token';\n  widget.reload(email, jwt);\n});"
-      }
-    ],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "submitEmail",
     "kind": "function",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -1998,10 +2072,12 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
-    "interface": true,
-    "name": "ConfigOptions",
+    "augments": [],
+    "examples": [],
+    "params": [],
     "properties": [
       {
+        "title": "property",
         "name": "tenantAlias",
         "lineNumber": 4,
         "description": {
@@ -2062,6 +2138,7 @@
         }
       },
       {
+        "title": "property",
         "name": "domain",
         "lineNumber": 5,
         "description": {
@@ -2143,8 +2220,17 @@
         }
       }
     ],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "interface": true,
+    "name": "ConfigOptions",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -2277,10 +2363,16 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
-    "name": "EngagementMedium",
-    "readonly": true,
+    "augments": [],
+    "examples": [
+      {
+        "description": "engagementMedium: \"REFERRER_WIDGET\""
+      }
+    ],
+    "params": [],
     "properties": [
       {
+        "title": "property",
         "name": "REFERRER_WIDGET",
         "lineNumber": 6,
         "description": {
@@ -2341,6 +2433,7 @@
         }
       },
       {
+        "title": "property",
         "name": "CONVERSION_WIDGET",
         "lineNumber": 7,
         "description": {
@@ -2401,13 +2494,17 @@
         }
       }
     ],
-    "examples": [
-      {
-        "description": "engagementMedium: \"REFERRER_WIDGET\""
-      }
-    ],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "name": "EngagementMedium",
+    "readonly": true,
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -2540,10 +2637,16 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
-    "name": "WidgetType",
-    "readonly": true,
+    "augments": [],
+    "examples": [
+      {
+        "description": "widgetType: \"POPUP\""
+      }
+    ],
+    "params": [],
     "properties": [
       {
+        "title": "property",
         "name": "POPUP",
         "lineNumber": 6,
         "description": {
@@ -2629,6 +2732,7 @@
         }
       },
       {
+        "title": "property",
         "name": "EMBED",
         "lineNumber": 7,
         "description": {
@@ -2714,13 +2818,17 @@
         }
       }
     ],
-    "examples": [
-      {
-        "description": "widgetType: \"POPUP\""
-      }
-    ],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "name": "WidgetType",
+    "readonly": true,
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -2943,10 +3051,12 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/docs.js"
     },
-    "interface": true,
-    "name": "WidgetResult",
+    "augments": [],
+    "examples": [],
+    "params": [],
     "properties": [
       {
+        "title": "property",
         "name": "widget",
         "lineNumber": 4,
         "description": {
@@ -3007,6 +3117,7 @@
         }
       },
       {
+        "title": "property",
         "name": "user",
         "lineNumber": 5,
         "description": {
@@ -3067,8 +3178,17 @@
         }
       }
     ],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "interface": true,
+    "name": "WidgetResult",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -3212,15 +3332,31 @@
           "column": 0
         },
         "end": {
-          "line": 298,
+          "line": 328,
           "column": 1
         }
       },
       "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
     },
+    "augments": [],
+    "examples": [],
+    "params": [
+      {
+        "title": "param",
+        "name": "config",
+        "lineNumber": 34
+      }
+    ],
+    "properties": [],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "Widgets",
     "kind": "class",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [
         {
           "description": {
@@ -3370,68 +3506,7 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
-          "params": [
-            {
-              "name": "config",
-              "lineNumber": 3,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Config details",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 15,
-                            "offset": 14
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 15,
-                        "offset": 14
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 15,
-                    "offset": 14
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "ConfigOptions"
-              }
-            }
-          ],
+          "augments": [],
           "examples": [
             {
               "description": "var widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});",
@@ -3599,12 +3674,83 @@
               }
             }
           ],
+          "params": [
+            {
+              "title": "param",
+              "name": "config",
+              "lineNumber": 3,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Config details",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 15,
+                            "offset": 14
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15,
+                        "offset": 14
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15,
+                    "offset": 14
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "ConfigOptions"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "constructor",
           "kind": "function",
           "memberof": "Widgets",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -3802,8 +3948,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "config",
               "lineNumber": 4,
               "description": {
@@ -3864,6 +4013,7 @@
               },
               "properties": [
                 {
+                  "title": "param",
                   "name": "config.widgetType",
                   "lineNumber": 5,
                   "description": {
@@ -3924,6 +4074,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "config.engagementMedium",
                   "lineNumber": 6,
                   "description": {
@@ -3984,6 +4135,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "config.jwt",
                   "lineNumber": 7,
                   "description": {
@@ -4050,6 +4202,7 @@
               ]
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -4104,6 +4257,7 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -4119,12 +4273,18 @@
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "createCookieUser",
           "kind": "function",
           "memberof": "Widgets",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -4352,8 +4512,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "config",
               "lineNumber": 4,
               "description": {
@@ -4414,6 +4577,7 @@
               },
               "properties": [
                 {
+                  "title": "param",
                   "name": "config.user",
                   "lineNumber": 5,
                   "description": {
@@ -4474,6 +4638,7 @@
                   },
                   "properties": [
                     {
+                      "title": "param",
                       "name": "config.user.id",
                       "lineNumber": 6,
                       "description": {
@@ -4534,6 +4699,7 @@
                       }
                     },
                     {
+                      "title": "param",
                       "name": "config.user.accountId",
                       "lineNumber": 7,
                       "description": {
@@ -4596,6 +4762,7 @@
                   ]
                 },
                 {
+                  "title": "param",
                   "name": "config.widgetType",
                   "lineNumber": 8,
                   "description": {
@@ -4656,6 +4823,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "config.engagementMedium",
                   "lineNumber": 9,
                   "description": {
@@ -4716,6 +4884,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "config.jwt",
                   "lineNumber": 10,
                   "description": {
@@ -4782,6 +4951,7 @@
               ]
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -4836,6 +5006,7 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -4851,12 +5022,18 @@
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "upsertUser",
           "kind": "function",
           "memberof": "Widgets",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -5084,8 +5261,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "config",
               "lineNumber": 4,
               "description": {
@@ -5146,6 +5326,7 @@
               },
               "properties": [
                 {
+                  "title": "param",
                   "name": "config.user",
                   "lineNumber": 5,
                   "description": {
@@ -5206,6 +5387,7 @@
                   },
                   "properties": [
                     {
+                      "title": "param",
                       "name": "config.user.id",
                       "lineNumber": 6,
                       "description": {
@@ -5266,6 +5448,7 @@
                       }
                     },
                     {
+                      "title": "param",
                       "name": "config.user.accountId",
                       "lineNumber": 7,
                       "description": {
@@ -5328,6 +5511,7 @@
                   ]
                 },
                 {
+                  "title": "param",
                   "name": "config.widgetType",
                   "lineNumber": 8,
                   "description": {
@@ -5388,6 +5572,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "config.engagementMedium",
                   "lineNumber": 9,
                   "description": {
@@ -5448,6 +5633,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "config.jwt",
                   "lineNumber": 10,
                   "description": {
@@ -5514,6 +5700,7 @@
               ]
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -5568,6 +5755,7 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -5583,12 +5771,18 @@
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "render",
           "kind": "function",
           "memberof": "Widgets",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -5747,8 +5941,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "selector",
               "lineNumber": 4,
               "description": {
@@ -5809,6 +6006,7 @@
               }
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -5827,18 +6025,25 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "NameExpression",
                 "name": "void"
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "autofill",
           "kind": "function",
           "memberof": "Widgets",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -5955,8 +6160,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/Widgets.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "fn",
               "lineNumber": 4,
               "description": {
@@ -6017,6 +6225,7 @@
               }
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -6035,18 +6244,25 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "NameExpression",
                 "name": "void"
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "submitEmail",
           "kind": "function",
           "memberof": "Widgets",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -6063,8 +6279,8 @@
           "namespace": "Widgets#submitEmail"
         }
       ],
-      "static": [],
-      "events": []
+      "events": [],
+      "static": []
     },
     "path": [
       {
@@ -6205,22 +6421,44 @@
           "column": 0
         },
         "end": {
-          "line": 96,
+          "line": 98,
           "column": 1
         }
       },
       "file": "/Users/jorgeconde/squatch-js/src/widgets/EmbedWidget.js"
     },
-    "name": "EmbedWidget",
     "augments": [
       {
         "title": "augments",
         "name": "Widget"
       }
     ],
+    "examples": [],
+    "params": [
+      {
+        "title": "param",
+        "name": "params",
+        "lineNumber": 16
+      },
+      {
+        "title": "param",
+        "name": "elementId",
+        "lineNumber": 16,
+        "default": "'squatchembed'"
+      }
+    ],
+    "properties": [],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "name": "EmbedWidget",
     "kind": "class",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -6366,22 +6604,44 @@
           "column": 0
         },
         "end": {
-          "line": 165,
+          "line": 167,
           "column": 1
         }
       },
       "file": "/Users/jorgeconde/squatch-js/src/widgets/PopupWidget.js"
     },
-    "name": "PopupWidget",
     "augments": [
       {
         "title": "augments",
         "name": "Widget"
       }
     ],
+    "examples": [],
+    "params": [
+      {
+        "title": "param",
+        "name": "params",
+        "lineNumber": 17
+      },
+      {
+        "title": "param",
+        "name": "trigger",
+        "lineNumber": 17,
+        "default": "'.squatchpop'"
+      }
+    ],
+    "properties": [],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "name": "PopupWidget",
     "kind": "class",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [],
+      "events": [],
       "static": []
     },
     "path": [
@@ -6529,15 +6789,35 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
     },
-    "name": "CtaWidget",
     "augments": [
       {
         "title": "augments",
         "name": "PopupWidget"
       }
     ],
+    "examples": [],
+    "params": [
+      {
+        "title": "param",
+        "name": "params",
+        "lineNumber": 15
+      },
+      {
+        "title": "param",
+        "name": "opts",
+        "lineNumber": 15
+      }
+    ],
+    "properties": [],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
+    "name": "CtaWidget",
     "kind": "class",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [
         {
           "description": "",
@@ -6571,12 +6851,23 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
           },
+          "augments": [],
+          "examples": [],
+          "params": [],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "open",
           "kind": "function",
           "memberof": "CtaWidget",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -6624,12 +6915,23 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/widgets/CtaWidget.js"
           },
+          "augments": [],
+          "examples": [],
+          "params": [],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "close",
           "kind": "function",
           "memberof": "CtaWidget",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -6646,8 +6948,8 @@
           "namespace": "CtaWidget#close"
         }
       ],
-      "static": [],
-      "events": []
+      "events": [],
+      "static": []
     },
     "path": [
       {
@@ -6734,9 +7036,25 @@
       },
       "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
     },
+    "augments": [],
+    "examples": [],
+    "params": [
+      {
+        "title": "param",
+        "name": "config",
+        "lineNumber": 28
+      }
+    ],
+    "properties": [],
+    "returns": [],
+    "sees": [],
+    "throws": [],
+    "todos": [],
     "name": "WidgetApi",
     "kind": "class",
     "members": {
+      "global": [],
+      "inner": [],
       "instance": [
         {
           "description": {
@@ -6886,68 +7204,7 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
-          "params": [
-            {
-              "name": "config",
-              "lineNumber": 3,
-              "description": {
-                "type": "root",
-                "children": [
-                  {
-                    "type": "paragraph",
-                    "children": [
-                      {
-                        "type": "text",
-                        "value": "Config details",
-                        "position": {
-                          "start": {
-                            "line": 1,
-                            "column": 1,
-                            "offset": 0
-                          },
-                          "end": {
-                            "line": 1,
-                            "column": 15,
-                            "offset": 14
-                          },
-                          "indent": []
-                        }
-                      }
-                    ],
-                    "position": {
-                      "start": {
-                        "line": 1,
-                        "column": 1,
-                        "offset": 0
-                      },
-                      "end": {
-                        "line": 1,
-                        "column": 15,
-                        "offset": 14
-                      },
-                      "indent": []
-                    }
-                  }
-                ],
-                "position": {
-                  "start": {
-                    "line": 1,
-                    "column": 1,
-                    "offset": 0
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 15,
-                    "offset": 14
-                  }
-                }
-              },
-              "type": {
-                "type": "NameExpression",
-                "name": "ConfigOptions"
-              }
-            }
-          ],
+          "augments": [],
           "examples": [
             {
               "description": "var squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});",
@@ -7115,12 +7372,83 @@
               }
             }
           ],
+          "params": [
+            {
+              "title": "param",
+              "name": "config",
+              "lineNumber": 3,
+              "description": {
+                "type": "root",
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "children": [
+                      {
+                        "type": "text",
+                        "value": "Config details",
+                        "position": {
+                          "start": {
+                            "line": 1,
+                            "column": 1,
+                            "offset": 0
+                          },
+                          "end": {
+                            "line": 1,
+                            "column": 15,
+                            "offset": 14
+                          },
+                          "indent": []
+                        }
+                      }
+                    ],
+                    "position": {
+                      "start": {
+                        "line": 1,
+                        "column": 1,
+                        "offset": 0
+                      },
+                      "end": {
+                        "line": 1,
+                        "column": 15,
+                        "offset": 14
+                      },
+                      "indent": []
+                    }
+                  }
+                ],
+                "position": {
+                  "start": {
+                    "line": 1,
+                    "column": 1,
+                    "offset": 0
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15,
+                    "offset": 14
+                  }
+                }
+              },
+              "type": {
+                "type": "NameExpression",
+                "name": "ConfigOptions"
+              }
+            }
+          ],
+          "properties": [],
+          "returns": [],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "constructor",
           "kind": "function",
           "memberof": "WidgetApi",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -7263,8 +7591,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "params",
               "lineNumber": 3,
               "description": {
@@ -7320,15 +7651,12 @@
                 }
               },
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                },
-                "default": " engagementMedium = params.engagementMedium ? `${"
+                "type": "NameExpression",
+                "name": "Object"
               },
               "properties": [
                 {
+                  "title": "param",
                   "name": "params.widgetType",
                   "lineNumber": 4,
                   "description": {
@@ -7389,6 +7717,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "params.engagementMedium",
                   "lineNumber": 5,
                   "description": {
@@ -7449,6 +7778,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "params.jwt",
                   "lineNumber": 6,
                   "description": {
@@ -7512,9 +7842,11 @@
                     "name": "string"
                   }
                 }
-              ]
+              ],
+              "default": "{widgetType:'',engagementMedium:'',jwt:''}"
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -7569,18 +7901,25 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "NameExpression",
                 "name": "Promise"
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "cookieUser",
           "kind": "function",
           "memberof": "WidgetApi",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -7753,8 +8092,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "params",
               "lineNumber": 3,
               "description": {
@@ -7810,15 +8152,12 @@
                 }
               },
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                },
-                "default": "r.id);\n    const widgetType = params.widgetType ?"
+                "type": "NameExpression",
+                "name": "Object"
               },
               "properties": [
                 {
+                  "title": "param",
                   "name": "params.user",
                   "lineNumber": 4,
                   "description": {
@@ -7879,6 +8218,7 @@
                   },
                   "properties": [
                     {
+                      "title": "param",
                       "name": "params.user.id",
                       "lineNumber": 5,
                       "description": {
@@ -7939,6 +8279,7 @@
                       }
                     },
                     {
+                      "title": "param",
                       "name": "params.user.accountId",
                       "lineNumber": 6,
                       "description": {
@@ -8001,6 +8342,7 @@
                   ]
                 },
                 {
+                  "title": "param",
                   "name": "params.widgetType",
                   "lineNumber": 7,
                   "description": {
@@ -8061,6 +8403,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "params.engagementMedium",
                   "lineNumber": 8,
                   "description": {
@@ -8121,6 +8464,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "params.jwt",
                   "lineNumber": 9,
                   "description": {
@@ -8184,9 +8528,11 @@
                     "name": "string"
                   }
                 }
-              ]
+              ],
+              "default": "{widgetType:'',engagementMedium:'',jwt:''}"
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -8241,18 +8587,25 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "NameExpression",
                 "name": "Promise"
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "upsertUser",
           "kind": "function",
           "memberof": "WidgetApi",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -8425,8 +8778,11 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
+          "augments": [],
+          "examples": [],
           "params": [
             {
+              "title": "param",
               "name": "params",
               "lineNumber": 3,
               "description": {
@@ -8482,15 +8838,12 @@
                 }
               },
               "type": {
-                "type": "OptionalType",
-                "expression": {
-                  "type": "NameExpression",
-                  "name": "Object"
-                },
-                "default": "r.id);\n    const widgetType = params.widgetType ?"
+                "type": "NameExpression",
+                "name": "Object"
               },
               "properties": [
                 {
+                  "title": "param",
                   "name": "params.user",
                   "lineNumber": 4,
                   "description": {
@@ -8551,6 +8904,7 @@
                   },
                   "properties": [
                     {
+                      "title": "param",
                       "name": "params.user.id",
                       "lineNumber": 5,
                       "description": {
@@ -8611,6 +8965,7 @@
                       }
                     },
                     {
+                      "title": "param",
                       "name": "params.user.accountId",
                       "lineNumber": 6,
                       "description": {
@@ -8673,6 +9028,7 @@
                   ]
                 },
                 {
+                  "title": "param",
                   "name": "params.widgetType",
                   "lineNumber": 7,
                   "description": {
@@ -8733,6 +9089,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "params.engagementMedium",
                   "lineNumber": 8,
                   "description": {
@@ -8793,6 +9150,7 @@
                   }
                 },
                 {
+                  "title": "param",
                   "name": "params.jwt",
                   "lineNumber": 9,
                   "description": {
@@ -8856,9 +9214,11 @@
                     "name": "string"
                   }
                 }
-              ]
+              ],
+              "default": "{widgetType:'',engagementMedium:'',jwt:''}"
             }
           ],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -8913,18 +9273,25 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "NameExpression",
                 "name": "Promise"
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "render",
           "kind": "function",
           "memberof": "WidgetApi",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -9036,6 +9403,10 @@
             },
             "file": "/Users/jorgeconde/squatch-js/src/api/WidgetApi.js"
           },
+          "augments": [],
+          "examples": [],
+          "params": [],
+          "properties": [],
           "returns": [
             {
               "description": {
@@ -9090,6 +9461,7 @@
                   }
                 }
               },
+              "title": "returns",
               "type": {
                 "type": "TypeApplication",
                 "expression": {
@@ -9105,12 +9477,18 @@
               }
             }
           ],
+          "sees": [],
+          "throws": [],
+          "todos": [],
           "name": "squatchReferralCookie",
           "kind": "function",
           "memberof": "WidgetApi",
           "scope": "instance",
           "members": {
+            "global": [],
+            "inner": [],
             "instance": [],
+            "events": [],
             "static": []
           },
           "path": [
@@ -9127,8 +9505,8 @@
           "namespace": "WidgetApi#squatchReferralCookie"
         }
       ],
-      "static": [],
-      "events": []
+      "events": [],
+      "static": []
     },
     "path": [
       {
