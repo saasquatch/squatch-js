@@ -40,7 +40,7 @@
 
     squatch.widgets().createCookieUser({
       engagementMedium: 'EMBED',
-      widgetType: 'CONVERSION_WIDGET'
+      widgetType: 'REFERRER_WIDGET'
     }).then(function(res){
       console.log(res);
     }).catch(function(err) {
@@ -53,5 +53,6 @@
 
   <input type="text" name="Coupon" class="testClass" value="" />
   <div id="squatchembed"></div>
+  <div class="squatchpop">click here</div>
 </body>
 </html>
