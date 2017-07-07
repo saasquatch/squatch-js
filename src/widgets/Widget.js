@@ -25,7 +25,6 @@ export default class Widget {
     me.frame = document.createElement('iframe');
     me.frame.squatchJsApi = me;
     me.frame.width = '100%';
-    me.frame.scrolling = 'no';
     me.frame.setAttribute('style', 'border: 0; background-color: none;');
     me.erd = elementResizeDetectorMaker({ strategy: 'scroll' /* ,debug: 'true'*/ });
   }
@@ -57,6 +56,21 @@ export default class Widget {
         _log(`${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`);
       }).catch((ex) => {
         _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+      });
+    }
+  }
+
+  _inviteContacts(sqh, emailList) {
+    if (sqh) {
+      this.widgetApi.invite({
+        tenantAlias: sqh.analytics.attributes.tenant,
+        accountId: sqh.analytics.attributes.accountId,
+        userId: sqh.analytics.attributes.userId,
+        emailList: emailList,
+      }).then((response) => {
+        _log(`Sent email invites to share ${emailList}. ${response}`);
+      }).catch((ex) => {
+        _log(new Error(`invite() ${ex}`));
       });
     }
   }

@@ -114,6 +114,31 @@ export default class WidgetApi {
     return WidgetApi.doRequest(url, params.jwt);
   }
 
+
+  /**
+   * An API call to send out referral invites to contacts
+   *
+   * @param {Object} params Parameters for request
+   * @param {Array} params.emailList The list of recipients to send to
+   * @param {string} params.userId The user id
+   * @param {string} params.accountId The user account id
+   *
+   * @return {Promise} an object containing total accepted / rejected emails send or error
+   */
+  invite(params = { emailList: [] }) {
+    const tenantAlias = encodeURIComponent(params.tenantAlias);
+
+    const path = `/api/v1/${tenantAlias}/mail/referralinvite`;
+    const url = this.domain + path;
+    const request = {
+      sendingAccountId: params.accountId,
+      sendingUserId: params.userId,
+      recipients: params.emailList,
+    };
+    return WidgetApi.doPost(url, JSON.stringify(request));
+  }
+
+
   /**
    * Looks up the referral code of the current user, if there is any.
    *
@@ -179,4 +204,26 @@ export default class WidgetApi {
               return Promise.reject(json);
             });
   }
+
+  /**
+  * @private
+  *
+  * @param {string} url The requested url
+  * @param {string} data Stringified json object
+  *
+  * @returns {Promise} superagent promise
+  */
+  static doPost(url, data) {
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    };
+
+    return superagent
+            .post(url)
+            .send(data)
+            .set(headers)
+            .then(response => response.text);
+  }
+
 }
