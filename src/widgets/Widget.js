@@ -25,6 +25,7 @@ export default class Widget {
     me.frame = document.createElement('iframe');
     me.frame.squatchJsApi = me;
     me.frame.width = '100%';
+    me.frame.scrolling = 'no';
     me.frame.setAttribute('style', 'border: 0; background-color: none;');
     me.erd = elementResizeDetectorMaker({ strategy: 'scroll' /* ,debug: 'true'*/ });
   }
