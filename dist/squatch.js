@@ -2780,6 +2780,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    /**
+	     * An API call to send out referral invites to contacts
+	     *
+	     * @param {Object} params Parameters for request
+	     * @param {Array} params.emailList The list of recipients to send to
+	     * @param {string} params.userId The user id
+	     * @param {string} params.accountId The user account id
+	     *
+	     * @return {Promise} an object containing total accepted / rejected emails send or error
+	     */
+
+	  }, {
+	    key: 'invite',
+	    value: function invite() {
+	      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { emailList: [] };
+
+	      var tenantAlias = encodeURIComponent(params.tenantAlias);
+
+	      var path = '/api/v1/' + tenantAlias + '/mail/referralinvite';
+	      var url = this.domain + path;
+	      var request = {
+	        sendingAccountId: params.accountId,
+	        sendingUserId: params.userId,
+	        recipients: params.emailList
+	      };
+	      return WidgetApi.doPost(url, JSON.stringify(request));
+	    }
+
+	    /**
 	     * Looks up the referral code of the current user, if there is any.
 	     *
 	     * @return {Promise<json>} code referral code if true.
@@ -2844,6 +2872,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, function (error) {
 	        var json = JSON.parse(error.response.text);
 	        return _es6Promise2.default.reject(json);
+	      });
+	    }
+
+	    /**
+	    * @private
+	    *
+	    * @param {string} url The requested url
+	    * @param {string} data Stringified json object
+	    *
+	    * @returns {Promise} superagent promise
+	    */
+
+	  }, {
+	    key: 'doPost',
+	    value: function doPost(url, data) {
+	      var headers = {
+	        Accept: 'application/json',
+	        'Content-Type': 'application/json'
+	      };
+
+	      return _superagent2.default.post(url).send(data).set(headers).then(function (response) {
+	        return response.text;
 	      });
 	    }
 	  }]);
@@ -7688,7 +7738,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    me.frame = document.createElement('iframe');
 	    me.frame.squatchJsApi = me;
 	    me.frame.width = '100%';
-	    me.frame.scrolling = 'no';
 	    me.frame.setAttribute('style', 'border: 0; background-color: none;');
 	    me.erd = (0, _elementResizeDetector2.default)({ strategy: 'scroll' /* ,debug: 'true'*/ });
 	  }
@@ -7723,6 +7772,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _log(sqh.mode.widgetMode + ' share ' + medium + ' event recorded. ' + response);
 	        }).catch(function (ex) {
 	          _log(new Error('pushAnalyticsLoadEvent() ' + ex));
+	        });
+	      }
+	    }
+	  }, {
+	    key: '_inviteContacts',
+	    value: function _inviteContacts(sqh, emailList) {
+	      if (sqh) {
+	        this.widgetApi.invite({
+	          tenantAlias: sqh.analytics.attributes.tenant,
+	          accountId: sqh.analytics.attributes.accountId,
+	          userId: sqh.analytics.attributes.userId,
+	          emailList: emailList
+	        }).then(function (response) {
+	          _log('Sent email invites to share ' + emailList + '. ' + response);
+	        }).catch(function (ex) {
+	          _log(new Error('invite() ' + ex));
 	        });
 	      }
 	    }

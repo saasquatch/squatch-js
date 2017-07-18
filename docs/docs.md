@@ -30,6 +30,7 @@
     -   [cookieUser](#cookieuser)
     -   [upsertUser](#upsertuser-1)
     -   [render](#render-1)
+    -   [invite](#invite)
     -   [squatchReferralCookie](#squatchreferralcookie)
 
 ## squatch
@@ -415,6 +416,19 @@ Description here.
                                    to validate the data (can be disabled)
 
 Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** template html if true.
+
+### invite
+
+An API call to send out referral invites to contacts
+
+**Parameters**
+
+-   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{emailList:[]}`)
+    -   `params.emailList` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The list of recipients to send to
+    -   `params.userId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
+    -   `params.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
+
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** an object containing total accepted / rejected emails send or error
 
 ### squatchReferralCookie
 
