@@ -13,12 +13,12 @@ const _log = debug('squatch-js:EMBEDwidget');
  */
 export default class EmbedWidget extends Widget {
 
-  constructor(params, elementId = 'squatchembed') {
+  constructor(params, selector = '#squatchembed') {
     super(params);
 
-    this.element = document.getElementById(elementId);
+    this.element = document.querySelector(selector) || document.querySelector('.squatchembed');
 
-    if (!this.element) throw new Error(`elementId '${elementId}' not found.'`);
+    if (!this.element) throw new Error(`element with selector '${selector}' not found.'`);
   }
 
   load() {

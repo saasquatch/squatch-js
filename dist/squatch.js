@@ -7386,159 +7386,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 27 */
 /***/ (function(module, exports) {
 
-	module.exports = {
-		"user": {
-			"type": "object",
-			"properties": {
-				"id": {
-					"type": "string"
-				},
-				"accountId": {
-					"type": "string"
-				},
-				"email": {
-					"type": "string"
-				},
-				"firstName": {
-					"type": "string"
-				},
-				"lastName": {
-					"type": "string"
-				},
-				"imageUrl": {
-					"type": "string"
-				},
-				"referralCode": {
-					"type": "string"
-				},
-				"locale": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"id",
-				"accountId"
-			]
-		},
-		"userLookUp": {
-			"type": "object",
-			"properties": {
-				"id": {
-					"type": "string"
-				},
-				"accountId": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"id",
-				"accountId"
-			]
-		},
-		"userReferralCode": {
-			"type": "object",
-			"properties": {
-				"referralCode": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"referralCode"
-			]
-		},
-		"applyReferralCode": {
-			"type": "object",
-			"properties": {
-				"id": {
-					"type": "string"
-				},
-				"accountId": {
-					"type": "string"
-				},
-				"referralCode": {
-					"type": "string"
-				}
-			},
-			"required": [
-				"id",
-				"accountId",
-				"referralCode"
-			]
-		},
-		"cookieUser": {
-			"type": "object",
-			"properties": {
-				"widgetType": {
-					"type": "string",
-					"default": ""
-				},
-				"engagementMedium": {
-					"type": "string",
-					"default": ""
-				}
-			}
-		},
-		"upsertUser": {
-			"type": "object",
-			"properties": {
-				"user": {
-					"type": "object",
-					"properties": {
-						"id": {
-							"type": "string"
-						},
-						"accountId": {
-							"type": "string"
-						},
-						"email": {
-							"type": "string"
-						},
-						"firstName": {
-							"type": "string"
-						},
-						"lastName": {
-							"type": "string"
-						},
-						"imageUrl": {
-							"type": "string"
-						},
-						"referredBy": {
-							"type": "object",
-							"properties": {
-								"code": {
-									"type": "string"
-								},
-								"isConverted": {
-									"type": "boolean"
-								}
-							}
-						},
-						"locale": {
-							"type": "string"
-						},
-						"paymentProviderId": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"id",
-						"accountId"
-					]
-				},
-				"widgetType": {
-					"type": "string",
-					"default": ""
-				},
-				"engagementMedium": {
-					"type": "string",
-					"default": ""
-				}
-			},
-			"required": [
-				"user"
-			]
-		}
-	};
+	module.exports = {"user":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"imageUrl":{"type":"string"},"referralCode":{"type":"string"},"locale":{"type":"string"}},"required":["id","accountId"]},"userLookUp":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"}},"required":["id","accountId"]},"userReferralCode":{"type":"object","properties":{"referralCode":{"type":"string"}},"required":["referralCode"]},"applyReferralCode":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"referralCode":{"type":"string"}},"required":["id","accountId","referralCode"]},"cookieUser":{"type":"object","properties":{"widgetType":{"type":"string","default":""},"engagementMedium":{"type":"string","default":""}}},"upsertUser":{"type":"object","properties":{"user":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"imageUrl":{"type":"string"},"referredBy":{"type":"object","properties":{"code":{"type":"string"},"isConverted":{"type":"boolean"}}},"locale":{"type":"string"},"paymentProviderId":{"type":"string"}},"required":["id","accountId"]},"widgetType":{"type":"string","default":""},"engagementMedium":{"type":"string","default":""}},"required":["user"]}}
 
 /***/ }),
 /* 28 */
@@ -7585,15 +7433,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _inherits(EmbedWidget, _Widget);
 
 	  function EmbedWidget(params) {
-	    var elementId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'squatchembed';
+	    var selector = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '#squatchembed';
 
 	    _classCallCheck(this, EmbedWidget);
 
 	    var _this = _possibleConstructorReturn(this, (EmbedWidget.__proto__ || Object.getPrototypeOf(EmbedWidget)).call(this, params));
 
-	    _this.element = document.getElementById(elementId);
+	    _this.element = document.querySelector(selector) || document.querySelector('.squatchembed');
 
-	    if (!_this.element) throw new Error('elementId \'' + elementId + '\' not found.\'');
+	    if (!_this.element) throw new Error('element with selector \'' + selector + '\' not found.\'');
 	    return _this;
 	  }
 
