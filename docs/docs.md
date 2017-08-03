@@ -298,7 +298,7 @@ To create an EmbedWidget use [Widgets](#widgets)
 **Parameters**
 
 -   `params`  
--   `elementId`   (optional, default `'squatchembed'`)
+-   `selector`   (optional, default `'#squatchembed'`)
 
 ## PopupWidget
 

@@ -6442,9 +6442,9 @@
       },
       {
         "title": "param",
-        "name": "elementId",
+        "name": "selector",
         "lineNumber": 16,
-        "default": "'squatchembed'"
+        "default": "'#squatchembed'"
       }
     ],
     "properties": [],
