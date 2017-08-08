@@ -9634,7 +9634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            };
 
 	            registerForm.style.paddingTop = '30px';
-	            registerForm.innerHTML = '<p><strong>' + params + '</strong><br>Has been successfully registered</p>';
+	            registerForm.innerHTML = '<p><strong>' + params.email + '</strong><br>Has been successfully registered</p>';
 	            registerForm.appendChild(showStatsBtn);
 	          }
 	        }
