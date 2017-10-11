@@ -4769,7 +4769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	* @param Object switchSchema
 	* @param SchemaContext ctx
 	* @return Object resolved schemas {subschema:String, switchSchema: String}
-	* @thorws SchemaError
+	* @throws SchemaError
 	*/
 	Validator.prototype.resolve = function resolve (schema, switchSchema, ctx) {
 	  switchSchema = ctx.resolve(switchSchema);
@@ -4828,7 +4828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return typeof instance == 'boolean';
 	};
 	types.array = function testArray (instance) {
-	  return instance instanceof Array;
+	  return Array.isArray(instance);
 	};
 	types['null'] = function testNull (instance) {
 	  return instance === null;
@@ -6695,59 +6695,60 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 	/**
-	 * Validates divisibleBy when the type of the instance value is a number.
-	 * Of course, this is susceptible to floating point error since it compares the floating points
-	 * and not the JSON byte sequences to arbitrary precision.
+	 * Perform validation for multipleOf and divisibleBy, which are essentially the same.
 	 * @param instance
 	 * @param schema
-	 * @return {String|null}
+	 * @param validationType
+	 * @param errorMessage
+	 * @returns {String|null}
 	 */
-	validators.divisibleBy = function validateDivisibleBy (instance, schema, options, ctx) {
+	var validateMultipleOfOrDivisbleBy = function validateMultipleOfOrDivisbleBy (instance, schema, options, ctx, validationType, errorMessage) {
 	  if (typeof instance !== 'number') {
 	    return null;
 	  }
 
-	  if (schema.divisibleBy == 0) {
-	    throw new SchemaError("divisibleBy cannot be zero");
+	  var validationArgument = schema[validationType];
+	  if (validationArgument == 0) {
+	    throw new SchemaError(validationType + " cannot be zero");
 	  }
 
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (instance / schema.divisibleBy % 1) {
+
+	  var instanceDecimals = helpers.getDecimalPlaces(instance);
+	  var divisorDecimals = helpers.getDecimalPlaces(validationArgument);
+
+	  var maxDecimals = Math.max(instanceDecimals , divisorDecimals);
+	  var multiplier = Math.pow(10, maxDecimals);
+
+	  if (Math.round(instance * multiplier) % Math.round(validationArgument * multiplier) !== 0) {
 	    result.addError({
-	      name: 'divisibleBy',
-	      argument: schema.divisibleBy,
-	      message: "is not divisible by (multiple of) " + JSON.stringify(schema.divisibleBy),
+	      name: validationType,
+	      argument:  validationArgument,
+	      message: errorMessage + JSON.stringify(validationArgument)
 	    });
 	  }
+
 	  return result;
 	};
 
 	/**
 	 * Validates divisibleBy when the type of the instance value is a number.
-	 * Of course, this is susceptible to floating point error since it compares the floating points
-	 * and not the JSON byte sequences to arbitrary precision.
 	 * @param instance
 	 * @param schema
 	 * @return {String|null}
 	 */
 	validators.multipleOf = function validateMultipleOf (instance, schema, options, ctx) {
-	  if (typeof instance !== 'number') {
-	    return null;
-	  }
+	 return validateMultipleOfOrDivisbleBy(instance, schema, options, ctx, "multipleOf", "is not a multiple of (divisible by) ");
+	};
 
-	  if (schema.multipleOf == 0) {
-	    throw new SchemaError("multipleOf cannot be zero");
-	  }
-
-	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (instance / schema.multipleOf % 1) {
-	    result.addError({
-	      name: 'multipleOf',
-	      argument:  schema.multipleOf,
-	      message: "is not a multiple of (divisible by) " + JSON.stringify(schema.multipleOf),
-	    });
-	  }
-	  return result;
+	/**
+	 * Validates multipleOf when the type of the instance value is a number.
+	 * @param instance
+	 * @param schema
+	 * @return {String|null}
+	 */
+	validators.divisibleBy = function validateDivisibleBy (instance, schema, options, ctx) {
+	  return validateMultipleOfOrDivisbleBy(instance, schema, options, ctx, "divisibleBy", "is not divisible by (multiple of) ");
 	};
 
 	/**
@@ -6759,6 +6760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	validators.required = function validateRequired (instance, schema, options, ctx) {
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (instance === undefined && schema.required === true) {
+	    // A boolean form is implemented for reverse-compatability with schemas written against older drafts
 	    result.addError({
 	      name: 'required',
 	      message: "is required"
@@ -7050,6 +7052,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      name: 'enum',
 	      argument: schema['enum'],
 	      message: "is not one of enum values: " + schema['enum'].join(','),
+	    });
+	  }
+	  return result;
+	};
+
+	/**
+	 * Validates whether the instance exactly matches a given value
+	 *
+	 * @param instance
+	 * @param schema
+	 * @return {ValidatorResult|null}
+	 */
+	validators['const'] = function validateEnum (instance, schema, options, ctx) {
+	  var result = new ValidatorResult(instance, schema, options, ctx);
+	  if (!helpers.deepCompareStrict(schema['const'], instance)) {
+	    result.addError({
+	      name: 'const',
+	      argument: schema['const'],
+	      message: "does not exactly match expected constant: " + schema['const'],
 	    });
 	  }
 	  return result;
@@ -7380,6 +7401,41 @@ return /******/ (function(modules) { // webpackBootstrap
 		// the slash is encoded by encodeURIComponent
 		return a.map(pathEncoder).join('');
 	};
+
+
+	/**
+	 * Calculate the number of decimal places a number uses
+	 * We need this to get correct results out of multipleOf and divisibleBy
+	 * when either figure is has decimal places, due to IEEE-754 float issues.
+	 * @param number
+	 * @returns {number}
+	 */
+	exports.getDecimalPlaces = function getDecimalPlaces(number) {
+
+	  var decimalPlaces = 0;
+	  if (isNaN(number)) return decimalPlaces;
+
+	  if (typeof number !== 'number') {
+	    number = Number(number);
+	  }
+
+	  var parts = number.toString().split('e');
+	  if (parts.length === 2) {
+	    if (parts[1][0] !== '-') {
+	      return decimalPlaces;
+	    } else {
+	      decimalPlaces = Number(parts[1].slice(1));
+	    }
+	  }
+
+	  var decimalParts = parts[0].split('.');
+	  if (decimalParts.length === 2) {
+	    decimalPlaces += decimalParts[1].length;
+	  }
+
+	  return decimalPlaces;
+	};
+
 
 
 /***/ }),
@@ -9576,7 +9632,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    me.popupdiv = document.createElement('div');
 	    me.popupdiv.id = 'squatchModal';
-	    me.popupdiv.setAttribute('style', 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);');
+	    me.popupdiv.setAttribute('style', 'display: none; position: absolute; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);');
 
 	    me.popupcontent = document.createElement('div');
 	    me.popupcontent.setAttribute('style', 'margin: auto; width: 80%; max-width: 500px; position: relative;');
