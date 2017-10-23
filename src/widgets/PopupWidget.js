@@ -35,7 +35,7 @@ export default class PopupWidget extends Widget {
 
     me.popupdiv = document.createElement('div');
     me.popupdiv.id = 'squatchModal';
-    me.popupdiv.setAttribute('style', 'display: none; position: absolute; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);');
+    me.popupdiv.setAttribute('style', 'display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);');
 
     me.popupcontent = document.createElement('div');
     me.popupcontent.setAttribute('style', 'margin: auto; width: 80%; max-width: 500px; position: relative;');
@@ -114,7 +114,7 @@ export default class PopupWidget extends Widget {
       }
 
       frameDoc.body.style.overflowY = 'hidden';
-      popupdiv.style.display = 'table';
+      popupdiv.style.display = 'block';
       popupdiv.style.top = '0';
 
       frame.height = frameDoc.body.offsetHeight;
