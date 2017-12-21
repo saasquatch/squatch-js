@@ -28,7 +28,7 @@ describe('Widget API', function() {
     
     widgetApi.squatchReferralCookie().then(function(cookie){
       
-      if(!cookie || !cookie.code){
+      if(!cookie || typeof cookie !== 'object'){
         done("Expected a cookie as an object with a valid code, but got" + cookie + ", a " + typeof cookie);
       }else{
         done();

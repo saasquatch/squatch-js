@@ -1430,7 +1430,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); // Polyfill
+
 
 	var _superagent = __webpack_require__(12);
 
@@ -1442,7 +1443,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _jsonschema = __webpack_require__(17);
 
-	var _schema = __webpack_require__(27);
+	__webpack_require__(27);
+
+	var _schema = __webpack_require__(28);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
@@ -1647,7 +1650,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
 
 	      return _superagent2.default.get(url).withCredentials().set(headers).then(function (response) {
-	        if (response.headers['content-type'] && response.headers['content-type'].toLowerCase() === 'application/json; charset=utf-8') {
+	        if (response.headers['content-type'] && response.headers['content-type'].toLowerCase().includes('application/json')) {
 	          return JSON.parse(response.text);
 	        }
 	        return response.text;
@@ -5270,6 +5273,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var properties = schema.properties || {};
 	  for (var property in properties) {
+	    if (typeof options.preValidateProperty == 'function') {
+	      options.preValidateProperty(instance, property, properties[property], options, ctx);
+	    }
+
 	    var prop = (instance || undefined) && instance[property];
 	    var res = this.validateSchema(prop, properties[property], options, ctx.makeChild(properties[property], property));
 	    if(res.instance !== result.instance[property]) result.instance[property] = res.instance;
@@ -5297,6 +5304,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  } else {
 	    var additionalProperties = schema.additionalProperties || {};
+
+	    if (typeof options.preValidateProperty == 'function') {
+	      options.preValidateProperty(instance, property, additionalProperties, options, ctx);
+	    }
+
 	    var res = this.validateSchema(instance[property], additionalProperties, options, ctx.makeChild(additionalProperties, property));
 	    if(res.instance !== result.instance[property]) result.instance[property] = res.instance;
 	    result.importErrors(res);
@@ -5325,6 +5337,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        continue;
 	      }
 	      test = false;
+
+	      if (typeof options.preValidateProperty == 'function') {
+	        options.preValidateProperty(instance, property, patternProperties[pattern], options, ctx);
+	      }
+
 	      var res = this.validateSchema(instance[property], patternProperties[pattern], options, ctx.makeChild(patternProperties[pattern], property));
 	      if(res.instance !== result.instance[property]) result.instance[property] = res.instance;
 	      result.importErrors(res);
@@ -6240,6 +6257,62 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 27 */
+/***/ (function(module, exports) {
+
+	/*! https://mths.be/includes v0.2.0 by @mathias */
+	if (!String.prototype.includes) {
+		(function() {
+			'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
+			var toString = {}.toString;
+			var defineProperty = (function() {
+				// IE 8 only supports `Object.defineProperty` on DOM elements
+				try {
+					var object = {};
+					var $defineProperty = Object.defineProperty;
+					var result = $defineProperty(object, object, object) && $defineProperty;
+				} catch(error) {}
+				return result;
+			}());
+			var indexOf = ''.indexOf;
+			var includes = function(search) {
+				if (this == null) {
+					throw TypeError();
+				}
+				var string = String(this);
+				if (search && toString.call(search) == '[object RegExp]') {
+					throw TypeError();
+				}
+				var stringLength = string.length;
+				var searchString = String(search);
+				var searchLength = searchString.length;
+				var position = arguments.length > 1 ? arguments[1] : undefined;
+				// `ToInteger`
+				var pos = position ? Number(position) : 0;
+				if (pos != pos) { // better `isNaN`
+					pos = 0;
+				}
+				var start = Math.min(Math.max(pos, 0), stringLength);
+				// Avoid the `indexOf` call if no match is possible
+				if (searchLength + start > stringLength) {
+					return false;
+				}
+				return indexOf.call(string, searchString, pos) != -1;
+			};
+			if (defineProperty) {
+				defineProperty(String.prototype, 'includes', {
+					'value': includes,
+					'configurable': true,
+					'writable': true
+				});
+			} else {
+				String.prototype.includes = includes;
+			}
+		}());
+	}
+
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports) {
 
 	module.exports = {"user":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"imageUrl":{"type":"string"},"referralCode":{"type":"string"},"locale":{"type":"string"}},"required":["id","accountId"]},"userLookUp":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"}},"required":["id","accountId"]},"userReferralCode":{"type":"object","properties":{"referralCode":{"type":"string"}},"required":["referralCode"]},"applyReferralCode":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"referralCode":{"type":"string"}},"required":["id","accountId","referralCode"]},"cookieUser":{"type":"object","properties":{"widgetType":{"type":"string","default":""},"engagementMedium":{"type":"string","default":""}}},"upsertUser":{"type":"object","properties":{"user":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"imageUrl":{"type":"string"},"referredBy":{"type":"object","properties":{"code":{"type":"string"},"isConverted":{"type":"boolean"}}},"locale":{"type":"string"},"paymentProviderId":{"type":"string"}},"required":["id","accountId"]},"widgetType":{"type":"string","default":""},"engagementMedium":{"type":"string","default":""}},"required":["user"]}}
