@@ -23,4 +23,16 @@ describe('Widget API', function() {
   it('should be defined', function() {
     assert.equal(widgetApi.tenantAlias, config.tenantAlias);
   });
+  
+  it('should be able to get a referral cookie (or none)', function(done){
+    
+    widgetApi.squatchReferralCookie().then(function(cookie){
+      
+      if(!cookie || !cookie.code){
+        done("Expected a cookie as an object with a valid code, but got" + cookie + ", a " + typeof cookie);
+      }else{
+        done();
+      }
+    }).catch(done);
+  })
 });

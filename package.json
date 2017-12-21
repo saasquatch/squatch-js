@@ -19,6 +19,7 @@
     "build:production": "NODE_ENV=production webpack",
     "test": "npm run test:karma && npm run lint:docs && npm run eslint:src",
     "test:karma": "./node_modules/karma/bin/karma start --single-run",
+    "test:watch": "./node_modules/karma/bin/karma start --auto-watch ",
     "build:docs": "npm run build:docs:markdown && npm run build:docs:json && npm run build:docs:html",
     "build:docs:markdown": "documentation build src/squatch.js -f md > docs/docs.md",
     "build:docs:json": "documentation build src/squatch.js -f json > docs/docs.json",
@@ -48,7 +49,6 @@
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
     "node-libs-browser": "^0.5.3",
-    "string.prototype.includes": "^1.0.0",
     "webpack": "^1.13.2"
   },
   "dependencies": {
@@ -58,6 +58,7 @@
     "eventbusjs": "^0.1.0",
     "json-loader": "^0.5.4",
     "jsonschema": "^1.1.0",
+    "string.prototype.includes": "^1.0.0",
     "superagent": "^2.3.0"
   }
 }
