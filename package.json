@@ -48,6 +48,7 @@
     "karma-webpack": "^1.8.0",
     "mocha": "^3.0.2",
     "node-libs-browser": "^0.5.3",
+    "string.prototype.includes": "^1.0.0",
     "webpack": "^1.13.2"
   },
   "dependencies": {

@@ -2,6 +2,7 @@ import superagent from 'superagent';
 import Promise from 'es6-promise';
 import { validate } from 'jsonschema';
 import schema from './schema.json';
+import 'string.prototype.includes'; // Polyfill
 
 /**
  *
@@ -174,7 +175,7 @@ export default class WidgetApi {
             .withCredentials()
             .set(headers)
             .then((response) => {
-              if (response.headers['content-type'] && response.headers['content-type'].toLowerCase() === 'application/json; charset=utf-8') {
+              if (response.headers['content-type'] && response.headers['content-type'].toLowerCase().includes('application/json') ) {
                 return JSON.parse(response.text);
               }
               return response.text;
