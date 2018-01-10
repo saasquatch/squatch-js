@@ -204,7 +204,7 @@ export default class WidgetApi {
               let json;
 
               try {
-                json = JSON.parse(error.response.text.here);
+                json = JSON.parse(error.response.text);
               } catch (e) {
                 return Promise.reject(error || e);
               }

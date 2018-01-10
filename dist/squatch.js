@@ -2876,7 +2876,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var json = void 0;
 
 	        try {
-	          json = JSON.parse(error.response.text.here);
+	          json = JSON.parse(error.response.text);
 	        } catch (e) {
 	          return _es6Promise2.default.reject(error || e);
 	        }
