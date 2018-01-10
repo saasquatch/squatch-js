@@ -1673,7 +1673,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _superagent2.default.put(url).withCredentials().send(data).set(headers).then(function (response) {
 	        return JSON.parse(response.text);
 	      }, function (error) {
-	        var json = JSON.parse(error.response.text);
+	        var json = void 0;
+
+	        try {
+	          json = JSON.parse(error.response.text.here);
+	        } catch (e) {
+	          return _es6Promise2.default.reject(error || e);
+	        }
+
 	        return _es6Promise2.default.reject(json);
 	      });
 	    }

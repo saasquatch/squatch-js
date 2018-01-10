@@ -201,7 +201,14 @@ export default class WidgetApi {
             .set(headers)
             .then(response => JSON.parse(response.text),
             (error) => {
-              const json = JSON.parse(error.response.text);
+              let json;
+
+              try {
+                json = JSON.parse(error.response.text.here);
+              } catch (e) {
+                return Promise.reject(error || e);
+              }
+
               return Promise.reject(json);
             });
   }
