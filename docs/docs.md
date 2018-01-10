@@ -82,7 +82,7 @@ function detects that state.
 
 **Parameters**
 
--   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** A callback once Squatch.js is ready.
+-   `fn` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** A callback once Squatch.js is ready.
 
 **Examples**
 
@@ -102,7 +102,7 @@ Uses [WidgetApi.squatchReferralCookie](WidgetApi.squatchReferralCookie) behind t
 
 **Parameters**
 
--   `selector` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Element class/id
+-   `selector` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Element class/id
 
 Returns **void** 
 
@@ -113,7 +113,7 @@ Security enabled, the email needs to be signed before it's submitted.
 
 **Parameters**
 
--   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** Callback function for the 'submit_email' event.
+-   `fn` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback function for the 'submit_email' event.
 
 **Examples**
 
@@ -133,8 +133,8 @@ When you load Squatch.js you need to provide these configuration options.
 
 **Properties**
 
--   `tenantAlias` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Tenant that you're using.
--   `domain` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** The domain for API. Defaults to `https://app.referralsaasquatch.com`
+-   `tenantAlias` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The Tenant that you're using.
+-   `domain` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** The domain for API. Defaults to `https://app.referralsaasquatch.com`
 
 ## EngagementMedium
 
@@ -142,8 +142,8 @@ EngagementMedium is an enum for the content of the widgets.
 
 **Properties**
 
--   `REFERRER_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that lets people make referrals
--   `CONVERSION_WIDGET` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that shows that someone has been referred
+-   `REFERRER_WIDGET` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that lets people make referrals
+-   `CONVERSION_WIDGET` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Widget content that shows that someone has been referred
 
 **Examples**
 
@@ -157,8 +157,8 @@ WidgetType is an enum for types of ways a Widget can be displayed.
 
 **Properties**
 
--   `POPUP` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Displays the widget as a modal popup. Creates a [PopupWidget](#popupwidget)
--   `EMBED` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Displays the widget embedded in the page. Create an [EmbedWidget](#embedwidget)
+-   `POPUP` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Displays the widget as a modal popup. Creates a [PopupWidget](#popupwidget)
+-   `EMBED` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Displays the widget embedded in the page. Create an [EmbedWidget](#embedwidget)
 
 **Examples**
 
@@ -221,13 +221,13 @@ the widget if it is successful. Otherwise it shows the "error" widget.
 
 **Parameters**
 
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
+-   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
     -   `config.widgetType` **[WidgetType](#widgettype)** The content of the widget.
     -   `config.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
-    -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
+    -   `config.jwt` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
                                    validate the data (can be disabled)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
 
 ### upsertUser
 
@@ -236,16 +236,16 @@ the widget if it is successful. Otherwise it shows the "error" widget.
 
 **Parameters**
 
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
-    -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
-        -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
-        -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
+-   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
+    -   `config.user` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
+        -   `config.user.id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
+        -   `config.user.accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
     -   `config.widgetType` **[WidgetType](#widgettype)** The content of the widget.
     -   `config.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
-    -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+    -   `config.jwt` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
 
 ### render
 
@@ -254,16 +254,16 @@ the widget if it is successful. Otherwise it shows the "error" widget.
 
 **Parameters**
 
--   `config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
-    -   `config.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
-        -   `config.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
-        -   `config.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
+-   `config` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Config details
+    -   `config.user` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
+        -   `config.user.id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
+        -   `config.user.accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
     -   `config.widgetType` **[WidgetType](#widgettype)** The content of the widget.
     -   `config.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
-    -   `config.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+    -   `config.jwt` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[WidgetResult](#widgetresult)>** json object if true, with a Widget and user details.
 
 ### autofill
 
@@ -272,7 +272,7 @@ Uses [WidgetApi.squatchReferralCookie](WidgetApi.squatchReferralCookie) behind t
 
 **Parameters**
 
--   `selector` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Element class/id
+-   `selector` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Element class/id
 
 Returns **void** 
 
@@ -283,7 +283,7 @@ Security enabled, the email needs to be signed before it's submitted.
 
 **Parameters**
 
--   `fn` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** Callback function for the 'submit_email' event.
+-   `fn` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback function for the 'submit_email' event.
 
 Returns **void** 
 
@@ -375,13 +375,13 @@ Creates/upserts an anonymous user.
 
 **Parameters**
 
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{widgetType:'',engagementMedium:'',jwt:''}`)
+-   `params` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{widgetType:'',engagementMedium:'',jwt:''}`)
     -   `params.widgetType` **[WidgetType](#widgettype)** The content of the widget.
     -   `params.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
-    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
+    -   `params.jwt` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used to
                                    validate the data (can be disabled)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** json object if true, with the widget template, jsOptions and user details.
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** json object if true, with the widget template, jsOptions and user details.
 
 ### upsertUser
 
@@ -389,16 +389,16 @@ Creates/upserts user.
 
 **Parameters**
 
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{widgetType:'',engagementMedium:'',jwt:''}`)
-    -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
-        -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
-        -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
+-   `params` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{widgetType:'',engagementMedium:'',jwt:''}`)
+    -   `params.user` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
+        -   `params.user.id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
+        -   `params.user.accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
     -   `params.widgetType` **[WidgetType](#widgettype)** The content of the widget.
     -   `params.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
-    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+    -   `params.jwt` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** string if true, with the widget template, jsOptions and user details.
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** string if true, with the widget template, jsOptions and user details.
 
 ### render
 
@@ -406,16 +406,16 @@ Description here.
 
 **Parameters**
 
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{widgetType:'',engagementMedium:'',jwt:''}`)
-    -   `params.user` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
-        -   `params.user.id` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
-        -   `params.user.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
+-   `params` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{widgetType:'',engagementMedium:'',jwt:''}`)
+    -   `params.user` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The user details
+        -   `params.user.id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
+        -   `params.user.accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
     -   `params.widgetType` **[WidgetType](#widgettype)** The content of the widget.
     -   `params.engagementMedium` **[EngagementMedium](#engagementmedium)** How to display the widget.
-    -   `params.jwt` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
+    -   `params.jwt` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the JSON Web Token (JWT) that is used
                                    to validate the data (can be disabled)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** template html if true.
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** template html if true.
 
 ### invite
 
@@ -423,15 +423,15 @@ An API call to send out referral invites to contacts
 
 **Parameters**
 
--   `params` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{emailList:[]}`)
-    -   `params.emailList` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The list of recipients to send to
-    -   `params.userId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
-    -   `params.accountId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
+-   `params` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parameters for request (optional, default `{emailList:[]}`)
+    -   `params.emailList` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The list of recipients to send to
+    -   `params.userId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user id
+    -   `params.accountId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The user account id
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** an object containing total accepted / rejected emails send or error
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** an object containing total accepted / rejected emails send or error
 
 ### squatchReferralCookie
 
 Looks up the referral code of the current user, if there is any.
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[json](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)>** code referral code if true.
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;[json](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON)>** code referral code if true.
