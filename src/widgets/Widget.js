@@ -1,5 +1,5 @@
 import debug from 'debug';
-import elementResizeDetectorMaker from 'element-resize-detector';
+import ResizeObserver from 'resize-observer-polyfill';
 import AnalyticsApi from '../api/AnalyticsApi';
 
 const _log = debug('squatch-js:widget');
@@ -27,7 +27,7 @@ export default class Widget {
     me.frame.width = '100%';
     me.frame.scrolling = 'no';
     me.frame.setAttribute('style', 'border: 0; background-color: none;');
-    me.erd = elementResizeDetectorMaker({ strategy: 'scroll' /* ,debug: 'true'*/ });
+    me.ResizeObserver = ResizeObserver;
   }
 
   _loadEvent(sqh) {

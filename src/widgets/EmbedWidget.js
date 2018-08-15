@@ -4,7 +4,6 @@ import { domready } from '../utils/domready';
 
 const _log = debug('squatch-js:EMBEDwidget');
 
-
 /**
  * An EmbedWidget is displayed inline in part of your page.
  *
@@ -44,10 +43,18 @@ export default class EmbedWidget extends Widget {
       me.frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
-      me.erd.listenTo(frameDoc.getElementsByClassName('squatch-container'), (element) => {
-        const height = element.offsetHeight;
-        me.frame.height = height;
+      const ro = new me.ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { height } = entry.contentRect;
+          me.frame.height = height;
+        }
       });
+
+      const container = frameDoc.getElementsByTagName('sqh-global-container');
+      const fallback = container.length > 0 ? container[0] : frameDoc.getElementsByClassName('squatch-container')[0];
+
+      if (!fallback) _log('Error: no container found.');
+      ro.observe(fallback);
 
       me._loadEvent(_sqh);
       _log('loaded');

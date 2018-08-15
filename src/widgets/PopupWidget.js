@@ -102,7 +102,6 @@ export default class PopupWidget extends Widget {
     const frame = me.frame;
     const frameWindow = frame.contentWindow;
     const frameDoc = frameWindow.document;
-    const erd = this.erd;
 
     // Adjust frame height when size of body changes
     domready(frameDoc, () => {
@@ -119,23 +118,32 @@ export default class PopupWidget extends Widget {
 
       frame.height = frameDoc.body.offsetHeight;
 
-      erd.listenTo(frameDoc.getElementsByClassName('squatch-container')[0], (element) => {
-        const height = element.scrollHeight;
-        const referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
-        const referralsHeight = referrals ? referrals.offsetHeight : 0;
-        const finalHeight = height - referralsHeight;
+      const container = frameDoc.getElementsByTagName('sqh-global-container');
+      const fallback = container.length > 0 ? container[0] : frameDoc.getElementsByClassName('squatch-container')[0];
 
-        if (finalHeight > 0) frame.height = finalHeight;
+      // Adjust frame height when size of body changes
+      const ro = new me.ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { height } = entry.contentRect;
+          const referrals = frameDoc.getElementsByClassName('squatch-referrals')[0];
+          const referralsHeight = referrals ? referrals.offsetHeight : 0;
+          const finalHeight = height - referralsHeight;
 
-        if (window.innerHeight > frame.height) {
-          popupdiv.style.paddingTop = `${((window.innerHeight - frame.height) / 2)}px`;
-        } else {
-          popupdiv.style.paddingTop = '5px';
+          if (finalHeight > 0) frame.height = finalHeight;
+
+          if (window.innerHeight > frame.height) {
+            popupdiv.style.paddingTop = `${((window.innerHeight - frame.height) / 2)}px`;
+          } else {
+            popupdiv.style.paddingTop = '5px';
+          }
+
+          fallback.style.width = '100%';
+          fallback.style.height = `${finalHeight}px`;
         }
-
-        element.style.width = '100%';
-        element.style.height = `${finalHeight}px`;
       });
+
+      if (!fallback) _log('Error: no container found.');
+      ro.observe(fallback);
 
       me._loadEvent(_sqh);
       _log('Popup opened');
@@ -143,13 +151,7 @@ export default class PopupWidget extends Widget {
   }
 
   close() {
-    const popupdiv = this.popupdiv;
-    const frameDoc = this.frame.contentWindow.document;
-    const erd = this.erd;
-
-    popupdiv.style.display = 'none';
-    erd.uninstall(frameDoc.body);
-
+    this.popupdiv.style.display = 'none';
     _log('Popup closed');
   }
 

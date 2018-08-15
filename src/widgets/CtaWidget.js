@@ -52,7 +52,7 @@ export default class CtaWidget extends PopupWidget {
     const widgetFrameDoc = this.frame.contentWindow.document;
     const ctaFrame = this.ctaFrame;
     const positionClass = this.positionClass;
-    const erd = this.erd;
+    const ResizeObserver = this.ResizeObserver;
 
     // Wait for widget doc to be ready to grab the cta HTML
     domready(widgetFrameDoc, () => {
@@ -80,12 +80,16 @@ export default class CtaWidget extends PopupWidget {
             ctaContainer.className += ` ${positionClass}`;
           }
 
-          erd.listenTo(ctaContainer, (element) => {
-            const height = element.offsetHeight;
-            const width = element.offsetWidth;
-            ctaFrame.height = height;
-            ctaFrame.width = width;
+          // Adjust frame height when size of body changes
+          const ro = new ResizeObserver((entries) => {
+            for (const entry of entries) {
+              const { height, width } = entry.contentRect;
+              ctaFrame.height = height;
+              ctaFrame.width = width;
+            }
           });
+
+          ro.observe(ctaContainer);
 
           _log('CTA template loaded into iframe');
         });

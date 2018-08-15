@@ -1443,9 +1443,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _jsonschema = __webpack_require__(17);
 
-	__webpack_require__(27);
+	__webpack_require__(28);
 
-	var _schema = __webpack_require__(28);
+	var _schema = __webpack_require__(29);
 
 	var _schema2 = _interopRequireDefault(_schema);
 
@@ -3310,6 +3310,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports.ValidatorResult = __webpack_require__(26).ValidatorResult;
 	module.exports.ValidationError = __webpack_require__(26).ValidationError;
 	module.exports.SchemaError = __webpack_require__(26).SchemaError;
+	module.exports.SchemaScanResult = __webpack_require__(27).SchemaScanResult;
+	module.exports.scan = __webpack_require__(27).scan;
 
 	module.exports.validate = function (instance, schema, options) {
 	  var v = new Validator();
@@ -3327,9 +3329,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var attribute = __webpack_require__(25);
 	var helpers = __webpack_require__(26);
+	var scanSchema = __webpack_require__(27).scan;
 	var ValidatorResult = helpers.ValidatorResult;
 	var SchemaError = helpers.SchemaError;
 	var SchemaContext = helpers.SchemaContext;
+	//var anonymousBase = 'vnd.jsonschema:///';
+	var anonymousBase = '/';
 
 	/**
 	 * Creates a new Validator object
@@ -3363,56 +3368,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param urn
 	 * @return {Object}
 	 */
-	Validator.prototype.addSchema = function addSchema (schema, uri) {
+	Validator.prototype.addSchema = function addSchema (schema, base) {
+	  var self = this;
 	  if (!schema) {
 	    return null;
 	  }
-	  var ourUri = uri || schema.id;
-	  this.addSubSchema(ourUri, schema);
-	  if (ourUri) {
-	    this.schemas[ourUri] = schema;
+	  var scan = scanSchema(base||anonymousBase, schema);
+	  var ourUri = base || schema.id;
+	  for(var uri in scan.id){
+	    this.schemas[uri] = scan.id[uri];
 	  }
-	  return this.schemas[ourUri];
-	};
-
-	Validator.prototype.addSubSchema = function addSubSchema(baseuri, schema) {
-	  if(!schema || typeof schema!='object') return;
-	  // Mark all referenced schemas so we can tell later which schemas are referred to, but never defined
-	  if(schema.$ref){
-	    var resolvedUri = urilib.resolve(baseuri, schema.$ref);
-	    // Only mark unknown schemas as unresolved
-	    if (this.schemas[resolvedUri] === undefined) {
-	      this.schemas[resolvedUri] = null;
-	      this.unresolvedRefs.push(resolvedUri);
-	    }
-	    return;
+	  for(var uri in scan.ref){
+	    this.unresolvedRefs.push(uri);
 	  }
-	  var ourUri = schema.id && urilib.resolve(baseuri, schema.id);
-	  var ourBase = ourUri || baseuri;
-	  if (ourUri) {
-	    if(this.schemas[ourUri]){
-	      if(!helpers.deepCompareStrict(this.schemas[ourUri], schema)){
-	        throw new Error('Schema <'+schema+'> already exists with different definition');
-	      }
-	      return this.schemas[ourUri];
-	    }
-	    this.schemas[ourUri] = schema;
-	    var documentUri = ourUri.replace(/^([^#]*)#$/, '$1');
-	    this.schemas[documentUri] = schema;
-	  }
-	  this.addSubSchemaArray(ourBase, ((schema.items instanceof Array)?schema.items:[schema.items]));
-	  this.addSubSchemaArray(ourBase, ((schema.extends instanceof Array)?schema.extends:[schema.extends]));
-	  this.addSubSchema(ourBase, schema.additionalItems);
-	  this.addSubSchemaObject(ourBase, schema.properties);
-	  this.addSubSchema(ourBase, schema.additionalProperties);
-	  this.addSubSchemaObject(ourBase, schema.definitions);
-	  this.addSubSchemaObject(ourBase, schema.patternProperties);
-	  this.addSubSchemaObject(ourBase, schema.dependencies);
-	  this.addSubSchemaArray(ourBase, schema.disallow);
-	  this.addSubSchemaArray(ourBase, schema.allOf);
-	  this.addSubSchemaArray(ourBase, schema.anyOf);
-	  this.addSubSchemaArray(ourBase, schema.oneOf);
-	  this.addSubSchema(ourBase, schema.not);
+	  this.unresolvedRefs = this.unresolvedRefs.filter(function(uri){
+	    return typeof self.schemas[uri]==='undefined';
+	  });
 	  return this.schemas[ourUri];
 	};
 
@@ -3462,11 +3433,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  var propertyName = options.propertyName || 'instance';
 	  // This will work so long as the function at uri.resolve() will resolve a relative URI to a relative URI
-	  var base = urilib.resolve(options.base||'/', schema.id||'');
+	  var base = urilib.resolve(options.base||anonymousBase, schema.id||'');
 	  if(!ctx){
 	    ctx = new SchemaContext(schema, options, propertyName, base, Object.create(this.schemas));
 	    if (!ctx.schemas[base]) {
 	      ctx.schemas[base] = schema;
+	    }
+	    var found = scanSchema(base, schema);
+	    for(var n in found.id){
+	      var sch = found.id[n];
+	      ctx.schemas[n] = sch;
 	    }
 	  }
 	  if (schema) {
@@ -3500,7 +3476,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	Validator.prototype.validateSchema = function validateSchema (instance, schema, options, ctx) {
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (!schema) {
+
+	    // Support for the true/false schemas
+	  if(typeof schema==='boolean') {
+	    if(schema===true){
+	      // `true` is always valid
+	      schema = {};
+	    }else if(schema===false){
+	      // `false` is always invalid
+	      schema = {type: []};
+	    }
+	  }else if(!schema){
+	    // This might be a string
 	    throw new Error("schema is undefined");
 	  }
 
@@ -3517,6 +3504,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 
+	  // If passed a string argument, load that schema URI
 	  var switchSchema;
 	  if (switchSchema = shouldResolve(schema)) {
 	    var resolved = this.resolve(schema, switchSchema, ctx);
@@ -5151,8 +5139,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return result;
 	};
 
-	function testSchema(instance, options, ctx, callback, schema){
+	function testSchemaNoThrow(instance, options, ctx, callback, schema){
+	  var throwError = options.throwError;
+	  options.throwError = false;
 	  var res = this.validateSchema(instance, schema, options, ctx);
+	  options.throwError = throwError;
+
 	  if (! res.valid && callback instanceof Function) {
 	    callback(res);
 	  }
@@ -5178,7 +5170,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw new SchemaError("anyOf must be an array");
 	  }
 	  if (!schema.anyOf.some(
-	    testSchema.bind(
+	    testSchemaNoThrow.bind(
 	      this, instance, options, ctx, function(res){inner.importErrors(res);}
 	      ))) {
 	    var list = schema.anyOf.map(function (v, i) {
@@ -5248,7 +5240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var inner = new ValidatorResult(instance, schema, options, ctx);
 	  var count = schema.oneOf.filter(
-	    testSchema.bind(
+	    testSchemaNoThrow.bind(
 	      this, instance, options, ctx, function(res) {inner.importErrors(res);}
 	      ) ).length;
 	  var list = schema.oneOf.map(function (v, i) {
@@ -5276,7 +5268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null|ValidatorResult}
 	 */
 	validators.properties = function validateProperties (instance, schema, options, ctx) {
-	  if(instance === undefined || !(instance instanceof Object)) return;
+	  if(!this.types.object(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var properties = schema.properties || {};
 	  for (var property in properties) {
@@ -5284,7 +5276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      options.preValidateProperty(instance, property, properties[property], options, ctx);
 	    }
 
-	    var prop = (instance || undefined) && instance[property];
+	    var prop = Object.hasOwnProperty.call(instance, property) ? instance[property] : undefined;
 	    var res = this.validateSchema(prop, properties[property], options, ctx.makeChild(properties[property], property));
 	    if(res.instance !== result.instance[property]) result.instance[property] = res.instance;
 	    result.importErrors(res);
@@ -5300,6 +5292,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {boolean}
 	 */
 	function testAdditionalProperty (instance, schema, options, ctx, property, result) {
+	  if(!this.types.object(instance)) return;
 	  if (schema.properties && schema.properties[property] !== undefined) {
 	    return;
 	  }
@@ -5331,7 +5324,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null|ValidatorResult}
 	 */
 	validators.patternProperties = function validatePatternProperties (instance, schema, options, ctx) {
-	  if(instance === undefined) return;
 	  if(!this.types.object(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var patternProperties = schema.patternProperties || {};
@@ -5370,7 +5362,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null|ValidatorResult}
 	 */
 	validators.additionalProperties = function validateAdditionalProperties (instance, schema, options, ctx) {
-	  if(instance === undefined) return;
 	  if(!this.types.object(instance)) return;
 	  // if patternProperties is defined then we'll test when that one is called instead
 	  if (schema.patternProperties) {
@@ -5390,9 +5381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.minProperties = function validateMinProperties (instance, schema, options, ctx) {
-	  if (!instance || typeof instance !== 'object') {
-	    return null;
-	  }
+	  if (!this.types.object(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var keys = Object.keys(instance);
 	  if (!(keys.length >= schema.minProperties)) {
@@ -5412,9 +5401,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.maxProperties = function validateMaxProperties (instance, schema, options, ctx) {
-	  if (!instance || typeof instance !== 'object') {
-	    return null;
-	  }
+	  if (!this.types.object(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var keys = Object.keys(instance);
 	  if (!(keys.length <= schema.maxProperties)) {
@@ -5436,14 +5423,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null|ValidatorResult}
 	 */
 	validators.items = function validateItems (instance, schema, options, ctx) {
-	  if (!Array.isArray(instance)) {
-	    return null;
-	  }
 	  var self = this;
+	  if (!this.types.array(instance)) return;
+	  if (!schema.items) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (instance === undefined || !schema.items) {
-	    return result;
-	  }
 	  instance.every(function (value, i) {
 	    var items = Array.isArray(schema.items) ? (schema.items[i] || schema.additionalItems) : schema.items;
 	    if (items === undefined) {
@@ -5471,9 +5454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.minimum = function validateMinimum (instance, schema, options, ctx) {
-	  if (typeof instance !== 'number') {
-	    return null;
-	  }
+	  if (!this.types.number(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var valid = true;
 	  if (schema.exclusiveMinimum && schema.exclusiveMinimum === true) {
@@ -5498,9 +5479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.maximum = function validateMaximum (instance, schema, options, ctx) {
-	  if (typeof instance !== 'number') {
-	    return null;
-	  }
+	  if (!this.types.number(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  var valid;
 	  if (schema.exclusiveMaximum && schema.exclusiveMaximum === true) {
@@ -5527,9 +5506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {String|null}
 	 */
 	var validateMultipleOfOrDivisbleBy = function validateMultipleOfOrDivisbleBy (instance, schema, options, ctx, validationType, errorMessage) {
-	  if (typeof instance !== 'number') {
-	    return null;
-	  }
+	  if (!this.types.number(instance)) return;
 
 	  var validationArgument = schema[validationType];
 	  if (validationArgument == 0) {
@@ -5562,7 +5539,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.multipleOf = function validateMultipleOf (instance, schema, options, ctx) {
-	 return validateMultipleOfOrDivisbleBy(instance, schema, options, ctx, "multipleOf", "is not a multiple of (divisible by) ");
+	 return validateMultipleOfOrDivisbleBy.call(this, instance, schema, options, ctx, "multipleOf", "is not a multiple of (divisible by) ");
 	};
 
 	/**
@@ -5572,7 +5549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.divisibleBy = function validateDivisibleBy (instance, schema, options, ctx) {
-	  return validateMultipleOfOrDivisbleBy(instance, schema, options, ctx, "divisibleBy", "is not divisible by (multiple of) ");
+	  return validateMultipleOfOrDivisbleBy.call(this, instance, schema, options, ctx, "divisibleBy", "is not divisible by (multiple of) ");
 	};
 
 	/**
@@ -5589,7 +5566,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      name: 'required',
 	      message: "is required"
 	    });
-	  } else if (instance && typeof instance==='object' && Array.isArray(schema.required)) {
+	  } else if (this.types.object(instance) && Array.isArray(schema.required)) {
 	    schema.required.forEach(function(n){
 	      if(instance[n]===undefined){
 	        result.addError({
@@ -5610,9 +5587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.pattern = function validatePattern (instance, schema, options, ctx) {
-	  if (typeof instance !== 'string') {
-	    return null;
-	  }
+	  if (!this.types.string(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!instance.match(schema.pattern)) {
 	    result.addError({
@@ -5646,6 +5621,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.format = function validateFormat (instance, schema, options, ctx) {
+	  if (instance===undefined) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!result.disableFormat && !helpers.isFormat(instance, schema.format, this)) {
 	    result.addError({
@@ -5664,11 +5640,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.minLength = function validateMinLength (instance, schema, options, ctx) {
-	  if (!(typeof instance === 'string')) {
-	    return null;
-	  }
+	  if (!this.types.string(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (!(instance.length >= schema.minLength)) {
+	  var hsp = instance.match(/[\uDC00-\uDFFF]/g);
+	  var length = instance.length - (hsp ? hsp.length : 0);
+	  if (!(length >= schema.minLength)) {
 	    result.addError({
 	      name: 'minLength',
 	      argument: schema.minLength,
@@ -5685,11 +5661,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.maxLength = function validateMaxLength (instance, schema, options, ctx) {
-	  if (!(typeof instance === 'string')) {
-	    return null;
-	  }
+	  if (!this.types.string(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (!(instance.length <= schema.maxLength)) {
+	  // TODO if this was already computed in "minLength", use that value instead of re-computing
+	  var hsp = instance.match(/[\uDC00-\uDFFF]/g);
+	  var length = instance.length - (hsp ? hsp.length : 0);
+	  if (!(length <= schema.maxLength)) {
 	    result.addError({
 	      name: 'maxLength',
 	      argument: schema.maxLength,
@@ -5706,9 +5683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.minItems = function validateMinItems (instance, schema, options, ctx) {
-	  if (!Array.isArray(instance)) {
-	    return null;
-	  }
+	  if (!this.types.array(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!(instance.length >= schema.minItems)) {
 	    result.addError({
@@ -5727,9 +5702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.maxItems = function validateMaxItems (instance, schema, options, ctx) {
-	  if (!Array.isArray(instance)) {
-	    return null;
-	  }
+	  if (!this.types.array(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!(instance.length <= schema.maxItems)) {
 	    result.addError({
@@ -5750,10 +5723,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null|ValidatorResult}
 	 */
 	validators.uniqueItems = function validateUniqueItems (instance, schema, options, ctx) {
+	  if (!this.types.array(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
-	  if (!Array.isArray(instance)) {
-	    return result;
-	  }
 	  function testArrays (v, i, a) {
 	    for (var j = i + 1; j < a.length; j++) if (helpers.deepCompareStrict(v, a[j])) {
 	      return false;
@@ -5793,9 +5764,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {String|null}
 	 */
 	validators.uniqueItems = function validateUniqueItems (instance, schema, options, ctx) {
-	  if (!Array.isArray(instance)) {
-	    return null;
-	  }
+	  if (!this.types.array(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!instance.every(testArrays)) {
 	    result.addError({
@@ -5815,9 +5784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {null|ValidatorResult}
 	 */
 	validators.dependencies = function validateDependencies (instance, schema, options, ctx) {
-	  if (!instance || typeof instance != 'object') {
-	    return null;
-	  }
+	  if (!this.types.object(instance)) return;
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  for (var property in schema.dependencies) {
 	    if (instance[property] === undefined) {
@@ -5864,18 +5831,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {ValidatorResult|null}
 	 */
 	validators['enum'] = function validateEnum (instance, schema, options, ctx) {
-	  if (!Array.isArray(schema['enum'])) {
-	    throw new SchemaError("enum expects an array", schema);
-	  }
 	  if (instance === undefined) {
 	    return null;
+	  }
+	  if (!Array.isArray(schema['enum'])) {
+	    throw new SchemaError("enum expects an array", schema);
 	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!schema['enum'].some(helpers.deepCompareStrict.bind(null, instance))) {
 	    result.addError({
 	      name: 'enum',
 	      argument: schema['enum'],
-	      message: "is not one of enum values: " + schema['enum'].join(','),
+	      message: "is not one of enum values: " + schema['enum'].map(String).join(','),
 	    });
 	  }
 	  return result;
@@ -5889,6 +5856,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {ValidatorResult|null}
 	 */
 	validators['const'] = function validateEnum (instance, schema, options, ctx) {
+	  if (instance === undefined) {
+	    return null;
+	  }
 	  var result = new ValidatorResult(instance, schema, options, ctx);
 	  if (!helpers.deepCompareStrict(schema['const'], instance)) {
 	    result.addError({
@@ -6264,6 +6234,86 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ }),
 /* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	
+	var urilib = __webpack_require__(19);
+	var helpers = __webpack_require__(26);
+
+	module.exports.SchemaScanResult = SchemaScanResult;
+	function SchemaScanResult(found, ref){
+	  this.id = found;
+	  this.ref = ref;
+	}
+
+	/**
+	 * Adds a schema with a certain urn to the Validator instance.
+	 * @param string uri
+	 * @param object schema
+	 * @return {Object}
+	 */
+	module.exports.scan = function scan(base, schema){
+	  function scanSchema(baseuri, schema){
+	    if(!schema || typeof schema!='object') return;
+	    // Mark all referenced schemas so we can tell later which schemas are referred to, but never defined
+	    if(schema.$ref){
+	      var resolvedUri = urilib.resolve(baseuri, schema.$ref);
+	      ref[resolvedUri] = ref[resolvedUri] ? ref[resolvedUri]+1 : 0;
+	      return;
+	    }
+	    var ourBase = schema.id ? urilib.resolve(baseuri, schema.id) : baseuri;
+	    if (ourBase) {
+	      // If there's no fragment, append an empty one
+	      if(ourBase.indexOf('#')<0) ourBase += '#';
+	      if(found[ourBase]){
+	        if(!helpers.deepCompareStrict(found[ourBase], schema)){
+	          throw new Error('Schema <'+schema+'> already exists with different definition');
+	        }
+	        return found[ourBase];
+	      }
+	      found[ourBase] = schema;
+	      // strip trailing fragment
+	      if(ourBase[ourBase.length-1]=='#'){
+	        found[ourBase.substring(0, ourBase.length-1)] = schema;
+	      }
+	    }
+	    scanArray(ourBase+'/items', ((schema.items instanceof Array)?schema.items:[schema.items]));
+	    scanArray(ourBase+'/extends', ((schema.extends instanceof Array)?schema.extends:[schema.extends]));
+	    scanSchema(ourBase+'/additionalItems', schema.additionalItems);
+	    scanObject(ourBase+'/properties', schema.properties);
+	    scanSchema(ourBase+'/additionalProperties', schema.additionalProperties);
+	    scanObject(ourBase+'/definitions', schema.definitions);
+	    scanObject(ourBase+'/patternProperties', schema.patternProperties);
+	    scanObject(ourBase+'/dependencies', schema.dependencies);
+	    scanArray(ourBase+'/disallow', schema.disallow);
+	    scanArray(ourBase+'/allOf', schema.allOf);
+	    scanArray(ourBase+'/anyOf', schema.anyOf);
+	    scanArray(ourBase+'/oneOf', schema.oneOf);
+	    scanSchema(ourBase+'/not', schema.not);
+	  }
+	  function scanArray(baseuri, schemas){
+	    if(!(schemas instanceof Array)) return;
+	    for(var i=0; i<schemas.length; i++){
+	      scanSchema(baseuri+'/'+i, schemas[i]);
+	    }
+	  }
+	  function scanObject(baseuri, schemas){
+	    if(!schemas || typeof schemas!='object') return;
+	    for(var p in schemas){
+	      scanSchema(baseuri+'/'+p, schemas[p]);
+	    }
+	  }
+
+	  var found = {};
+	  var ref = {};
+	  var schemaUri = base;
+	  scanSchema(base, schema);
+	  return new SchemaScanResult(found, ref);
+	}
+
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports) {
 
 	/*! https://mths.be/includes v0.2.0 by @mathias */
@@ -6319,7 +6369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 	module.exports = {"user":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"imageUrl":{"type":"string"},"referralCode":{"type":"string"},"locale":{"type":"string"}},"required":["id","accountId"]},"userLookUp":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"}},"required":["id","accountId"]},"userReferralCode":{"type":"object","properties":{"referralCode":{"type":"string"}},"required":["referralCode"]},"applyReferralCode":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"referralCode":{"type":"string"}},"required":["id","accountId","referralCode"]},"cookieUser":{"type":"object","properties":{"widgetType":{"type":"string","default":""},"engagementMedium":{"type":"string","default":""}}},"upsertUser":{"type":"object","properties":{"user":{"type":"object","properties":{"id":{"type":"string"},"accountId":{"type":"string"},"email":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"imageUrl":{"type":"string"},"referredBy":{"type":"object","properties":{"code":{"type":"string"},"isConverted":{"type":"boolean"}}},"locale":{"type":"string"},"paymentProviderId":{"type":"string"}},"required":["id","accountId"]},"widgetType":{"type":"string","default":""},"engagementMedium":{"type":"string","default":""}},"required":["user"]}}
