@@ -12,6 +12,7 @@ rules:
   linebreak-style:
     - error
     - unix
+    - windows
   no-underscore-dangle: off
   no-param-reassign:
     - error
