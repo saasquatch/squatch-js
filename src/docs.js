@@ -1,3 +1,4 @@
+// @ts-check
 export function help(){
     console.log(`Having trouble using Squatch.js? Go to https://docs.referralsaasquatch.com/developer/ for tutorials, references and error codes.`);
 }
@@ -5,6 +6,7 @@ export function help(){
 /**
  * When you load Squatch.js you need to provide these configuration options.
  * 
+ * @namespace Interfaces
  * @interface ConfigOptions
  * @property {string} tenantAlias The Tenant that you're using.
  * @property {string?} domain The domain for API. Defaults to `https://app.referralsaasquatch.com`
@@ -14,6 +16,7 @@ export function help(){
 /**
  * When a widget is loaded using {@link Widgets} you'll get both the `user` data and the `widget` object back.
  * 
+ * @namespace Interfaces
  * @interface WidgetResult
  * @property {Widget} widget The widget that was created.
  * @property {User} user The user that's in the widget.
@@ -23,13 +26,14 @@ export function help(){
 /**
  * EngagementMedium is an enum for the content of the widgets. 
  * 
+ * @namespace Interfaces
  * @name EngagementMedium
  * @enum {string}
  * @readonly
- * @property {string}  REFERRER_WIDGET      Widget content that lets people make referrals
- * @property {string}  CONVERSION_WIDGET    Widget content that shows that someone has been referred
+ * @property {string}  POPUP    Displays the widget as a modal popup. Creates a {@link PopupWidget}
+ * @property {string}  EMBED    Displays the widget embedded in the page. Create an {@link EmbedWidget}
  * @example
- *  engagementMedium: "REFERRER_WIDGET"
+ *  widgetType: "POPUP"
  * 
  */
  
@@ -37,12 +41,13 @@ export function help(){
  /**
  * WidgetType is an enum for types of ways a Widget can be displayed.
  * 
+ * @namespace Interfaces
  * @name WidgetType
  * @enum {string}
  * @readonly
- * @property {string}  POPUP    Displays the widget as a modal popup. Creates a {@link PopupWidget}
- * @property {string}  EMBED    Displays the widget embedded in the page. Create an {@link EmbedWidget}
+ * @property {string}  REFERRER_WIDGET      Widget content that lets people make referrals
+ * @property {string}  CONVERSION_WIDGET    Widget content that shows that someone has been referred
  * @example
- *  widgetType: "POPUP"
+ *  engagementMedium: "REFERRER_WIDGET"
  * 
  */
