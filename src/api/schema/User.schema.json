@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "accountId": { "type": "string" },
+    "email": { "type": "string" },
+    "firstName": { "type": "string" },
+    "lastName": { "type": "string" },
+    "imageUrl": { "type": "string" },
+    "referralCode": { "type": "string" },
+    "locale": { "type": "string" }
+  },
+  "required": ["id", "accountId"]
+}

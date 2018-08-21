@@ -1,8 +1,20 @@
-import superagent from 'superagent';
-import Promise from 'es6-promise';
-import { validate } from 'jsonschema';
-import 'string.prototype.includes'; // Polyfill
-import schema from './schema.json';
+//@ts-check
+import superagent from "superagent";
+import Promise from "../utils/Promise";
+import { validate } from "jsonschema";
+import "string.prototype.includes"; // Polyfill
+
+import CookieUser from "./schema/CookieUser.schema.json";
+import UpsertUser from "./schema/UpsertUser.schema.json";
+// import ApplyReferralCode from "./schema/ApplyReferralCode.schema.json"
+// import User from "./schema/User.schema.json"
+// import UserLookup from "./schema/UserLookup.schema.json"
+// import UserReferralCode from "./schema/UserReferralCode.schema.json"
+
+function validateInput(props, schema) {
+  let o = validate(props, schema);
+  if (!o.valid) throw o.errors;
+}
 
 /**
  *
@@ -27,9 +39,9 @@ export default class WidgetApi {
    * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(config) {
-    if (!config.tenantAlias) throw new Error('tenantAlias not provided');
+    if (!config.tenantAlias) throw new Error("tenantAlias not provided");
     this.tenantAlias = config.tenantAlias;
-    this.domain = config.domain || 'https://app.referralsaasquatch.com';
+    this.domain = config.domain || "https://app.referralsaasquatch.com";
   }
 
   /**
@@ -43,18 +55,28 @@ export default class WidgetApi {
    *
    * @return {Promise} json object if true, with the widget template, jsOptions and user details.
    */
-  cookieUser(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
-    WidgetApi.validateInput(params, schema.cookieUser);
+  cookieUser(params = { widgetType: "", engagementMedium: "", jwt: "" }) {
+    validateInput(params, CookieUser);
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const widgetType = params.widgetType ? `?widgetType=${encodeURIComponent(params.widgetType)}` : '';
-    const engagementMedium = params.engagementMedium ? `${widgetType ? '&' : '?'}engagementMedium=${encodeURIComponent(params.engagementMedium)}` : `${widgetType ? '&' : '?'}engagementMedium=POPUP`;
+    const widgetType = params.widgetType
+      ? `?widgetType=${encodeURIComponent(params.widgetType)}`
+      : "";
+    const engagementMedium = params.engagementMedium
+      ? `${widgetType ? "&" : "?"}engagementMedium=${encodeURIComponent(
+          params.engagementMedium
+        )}`
+      : `${widgetType ? "&" : "?"}engagementMedium=POPUP`;
     const optionalParams = widgetType + engagementMedium;
 
     const path = `/api/v1/${tenantAlias}/widget/user/cookie_user${optionalParams}`;
     const url = this.domain + path;
 
-    return WidgetApi.doPut(url, JSON.stringify(params.user ? params.user : {}), params.jwt);
+    return WidgetApi.doPut(
+      url,
+      JSON.stringify(params.user ? params.user : {}),
+      params.jwt
+    );
   }
 
   /**
@@ -71,14 +93,20 @@ export default class WidgetApi {
    *
    * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
-  upsertUser(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
-    WidgetApi.validateInput(params, schema.upsertUser);
+  upsertUser(params = { widgetType: "", engagementMedium: "", jwt: "" }) {
+    validateInput(params, UpsertUser);
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(params.user.accountId);
     const userId = encodeURIComponent(params.user.id);
-    const widgetType = params.widgetType ? `?widgetType=${encodeURIComponent(params.widgetType)}` : '';
-    const engagementMedium = params.engagementMedium ? `${widgetType ? '&' : '?'}engagementMedium=${encodeURIComponent(params.engagementMedium)}` : `${widgetType ? '&' : '?'}engagementMedium=POPUP`;
+    const widgetType = params.widgetType
+      ? `?widgetType=${encodeURIComponent(params.widgetType)}`
+      : "";
+    const engagementMedium = params.engagementMedium
+      ? `${widgetType ? "&" : "?"}engagementMedium=${encodeURIComponent(
+          params.engagementMedium
+        )}`
+      : `${widgetType ? "&" : "?"}engagementMedium=POPUP`;
     const optionalParams = widgetType + engagementMedium;
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
@@ -100,21 +128,26 @@ export default class WidgetApi {
    *                            to validate the data (can be disabled)
    * @return {Promise} template html if true.
    */
-  render(params = { widgetType: '', engagementMedium: '', jwt: '' }) {
-    WidgetApi.validateInput(params, schema.upsertUser);
+  render(params = { widgetType: "", engagementMedium: "", jwt: "" }) {
+    validateInput(params, UpsertUser);
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(params.user.accountId);
     const userId = encodeURIComponent(params.user.id);
-    const widgetType = params.widgetType ? `?widgetType=${encodeURIComponent(params.widgetType)}` : '';
-    const engagementMedium = params.engagementMedium ? `${widgetType ? '&' : '?'}engagementMedium=${encodeURIComponent(params.engagementMedium)}` : `${widgetType ? '&' : '?'}engagementMedium=POPUP`;
+    const widgetType = params.widgetType
+      ? `?widgetType=${encodeURIComponent(params.widgetType)}`
+      : "";
+    const engagementMedium = params.engagementMedium
+      ? `${widgetType ? "&" : "?"}engagementMedium=${encodeURIComponent(
+          params.engagementMedium
+        )}`
+      : `${widgetType ? "&" : "?"}engagementMedium=POPUP`;
     const optionalParams = widgetType + engagementMedium;
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/render${optionalParams}`;
     const url = this.domain + path;
     return WidgetApi.doRequest(url, params.jwt);
   }
-
 
   /**
    * An API call to send out referral invites to contacts
@@ -134,11 +167,10 @@ export default class WidgetApi {
     const request = {
       sendingAccountId: params.accountId,
       sendingUserId: params.userId,
-      recipients: params.emailList,
+      recipients: params.emailList
     };
     return WidgetApi.doPost(url, JSON.stringify(request));
   }
-
 
   /**
    * Looks up the referral code of the current user, if there is any.
@@ -151,87 +183,85 @@ export default class WidgetApi {
     return WidgetApi.doRequest(url);
   }
 
-  /**
-   * @private
-   * @param {Object} params json object
-   * @param {Object} jsonSchema json schema object
-   * @returns {void}
-   */
-  static validateInput(params, jsonSchema) {
-    const valid = validate(params, jsonSchema);
-    if (!valid.valid) throw valid.errors;
-  }
-
-  static doRequest(url, jwt = '') {
+  static doRequest(url, jwt = "") {
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json"
     };
 
-    if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+    if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
     return superagent
-            .get(url)
-            .withCredentials()
-            .set(headers)
-            .then((response) => {
-              if (response.headers['content-type'] && response.headers['content-type'].toLowerCase().includes('application/json')) {
-                return JSON.parse(response.text);
-              }
-              return response.text;
-            }, (error) => {
-              const json = JSON.parse(error.response.text);
-              return Promise.reject(json);
-            });
+      .get(url)
+      .withCredentials()
+      .set(headers)
+      .then(
+        response => {
+          if (
+            response.headers["content-type"] &&
+            response.headers["content-type"]
+              .toLowerCase()
+              .includes("application/json")
+          ) {
+            return JSON.parse(response.text);
+          }
+          return response.text;
+        },
+        error => {
+          const json = JSON.parse(error.response.text);
+          return Promise.reject(json);
+        }
+      );
   }
 
   static doPut(url, data, jwt) {
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-SaaSquatch-Referrer': window ? window.location.href : '',
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-SaaSquatch-Referrer": window ? window.location.href : ""
     };
 
-    if (jwt) headers['X-SaaSquatch-User-Token'] = jwt;
+    if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
     return superagent
-            .put(url)
-            .withCredentials()
-            .send(data)
-            .set(headers)
-            .then(response => JSON.parse(response.text),
-            (error) => {
-              let json;
+      .put(url)
+      .withCredentials()
+      .send(data)
+      .set(headers)
+      .then(
+        response => JSON.parse(response.text),
+        error => {
+          let json;
 
-              try {
-                json = JSON.parse(error.response.text);
-              } catch (e) {
-                return Promise.reject(error || e);
-              }
+          try {
+            json = JSON.parse(error.response.text);
+          } catch (e) {
+            return Promise.reject(error || e);
+          }
 
-              return Promise.reject(json);
-            });
+          return Promise.reject(json);
+        }
+      );
   }
 
   /**
-  * @private
-  *
-  * @param {string} url The requested url
-  * @param {string} data Stringified json object
-  *
-  * @returns {Promise} superagent promise
-  */
+   * @private
+   *
+   * @param {string} url The requested url
+   * @param {string} data Stringified json object
+   *
+   * @returns {Promise} superagent promise
+   */
   static doPost(url, data) {
     const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json"
     };
 
     return superagent
-            .post(url)
-            .send(data)
-            .set(headers)
-            .then(response => response.text);
+      .post(url)
+      .send(data)
+      .set(headers)
+      .then(response => response.text);
   }
-
 }

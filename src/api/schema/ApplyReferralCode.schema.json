@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "id": { "type": "string" },
+    "accountId": { "type": "string" },
+    "referralCode": { "type": "string" }
+  },
+  "required": ["id", "accountId", "referralCode"]
+}

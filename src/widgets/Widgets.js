@@ -1,5 +1,5 @@
 import debug from 'debug';
-import Promise from 'es6-promise';
+import Promise from '../utils/Promise';
 import EventBus from 'eventbusjs';
 import WidgetApi from '../api/WidgetApi';
 import EmbedWidget from './EmbedWidget';
