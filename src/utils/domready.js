@@ -1,5 +1,6 @@
+//@ts-check
 /*!
-  * domready (c) Dustin Diaz 2014 - License MIT
+  * 1domready (c) Dustin Diaz 2014 - License MIT
   *
   */
 export function domready(targetDoc, fn) {
@@ -12,7 +13,7 @@ export function domready(targetDoc, fn) {
   if (!loaded)
   doc.addEventListener(domContentLoaded, listener = function () {
     doc.removeEventListener(domContentLoaded, listener)
-    loaded = 1
+    loaded = true
     while (listener = fns.shift()) listener()
   })
 

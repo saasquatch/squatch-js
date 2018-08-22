@@ -1,4 +1,5 @@
-import superagent from 'superagent';
+// @ts-check
+import {doPost} from "../utils/io";
 
 /**
  *
@@ -28,7 +29,7 @@ export default class AnalyticsApi {
     const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}`;
     const url = this.domain + path;
 
-    return AnalyticsApi.doPost(url, JSON.stringify({}));
+    return doPost(url, JSON.stringify({}));
   }
 
   pushAnalyticsShareClickedEvent(params) {
@@ -41,27 +42,8 @@ export default class AnalyticsApi {
     const path = `/a/${tenantAlias}/widgets/analytics/shared?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}&shareMedium=${shareMedium}`;
     const url = this.domain + path;
 
-    return AnalyticsApi.doPost(url, JSON.stringify({}));
+    return doPost(url, JSON.stringify({}));
   }
 
-  /**
-  * @private
-  *
-  * @param {string} url The requested url
-  * @param {string} data Stringified json object
-  *
-  * @returns {Promise} superagent promise
-  */
-  static doPost(url, data) {
-    const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    };
 
-    return superagent
-            .post(url)
-            .send(data)
-            .set(headers)
-            .then(response => response.text);
-  }
 }

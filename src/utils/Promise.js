@@ -1,4 +1,5 @@
-// import Promise from 'es6-promise';
+
+//@ts-check
 import Promise from 'promise-polyfill';
 
 export default Promise;

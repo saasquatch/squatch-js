@@ -1,4 +1,7 @@
+// @ts-check
+
 import debug from 'debug';
+import ResizeObserver from 'resize-observer-polyfill';
 import Widget from './Widget';
 import { domready } from '../utils/domready';
 
@@ -33,6 +36,7 @@ export default class EmbedWidget extends Widget {
     frameDoc.close();
 
     domready(frameDoc, () => {
+      // @ts-ignore -- Assume that squatch does exist
       const _sqh = me.frame.contentWindow.squatch;
       const ctaElement = frameDoc.getElementById('cta');
 
@@ -40,13 +44,15 @@ export default class EmbedWidget extends Widget {
         ctaElement.parentNode.removeChild(ctaElement);
       }
 
-      me.frame.height = frameDoc.body.scrollHeight;
+      // @ts-ignore -- number will be cast to string by browsers
+      this.frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
-      const ro = new me.ResizeObserver((entries) => {
+      const ro = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const { height } = entry.contentRect;
-          me.frame.height = height;
+          // @ts-ignore -- number will be cast to string by browsers
+          this.frame.height = height;
         }
       });
 
@@ -62,33 +68,33 @@ export default class EmbedWidget extends Widget {
   }
 
   reload(params, jwt) {
-    const me = this;
-    const frameDoc = me.frame.contentWindow.document;
+    const frameDoc = this.frame.contentWindow.document;
 
-    me.widgetApi.cookieUser({
+    this.widgetApi.cookieUser({
       user: {
         email: params.email || null,
         firstName: params.firstName || null,
         lastName: params.lastName || null,
       },
       engagementMedium: 'EMBED',
-      widgetType: me.type,
+      widgetType: this.type,
       jwt: jwt,
     }).then((response) => {
       if (response.template) {
-        me.content = response.template;
+        this.content = response.template;
         const showStatsBtn = frameDoc.createElement('button');
         const registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
 
         if (registerForm) {
           showStatsBtn.className = 'btn btn-primary';
           showStatsBtn.id = 'show-stats-btn';
-          showStatsBtn.textContent = (me.type === 'REFERRER_WIDGET') ? 'Show Stats' : 'Show Reward';
+          showStatsBtn.textContent = (this.type === 'REFERRER_WIDGET') ? 'Show Stats' : 'Show Reward';
           showStatsBtn.setAttribute('style', 'margin-top: 10px; max-width: 130px; width: 100%;');
           showStatsBtn.onclick = () => {
-            me.load();
+            this.load();
           };
 
+          // @ts-ignore -- expect register form to be a stylable element
           registerForm.style.paddingTop = '30px';
           registerForm.innerHTML = `<p><strong>${params.email}</strong><br>Has been successfully registered</p>`;
           registerForm.appendChild(showStatsBtn);

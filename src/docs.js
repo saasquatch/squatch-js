@@ -6,17 +6,17 @@ export function help(){
 /**
  * When you load Squatch.js you need to provide these configuration options.
  * 
- * @namespace Interfaces
+ * @public
  * @interface ConfigOptions
  * @property {string} tenantAlias The Tenant that you're using.
  * @property {string?} domain The domain for API. Defaults to `https://app.referralsaasquatch.com`
+ * @property {boolean?} debug Enables debug logging
  */
 
 
 /**
  * When a widget is loaded using {@link Widgets} you'll get both the `user` data and the `widget` object back.
  * 
- * @namespace Interfaces
  * @interface WidgetResult
  * @property {Widget} widget The widget that was created.
  * @property {User} user The user that's in the widget.
@@ -26,7 +26,6 @@ export function help(){
 /**
  * EngagementMedium is an enum for the content of the widgets. 
  * 
- * @namespace Interfaces
  * @name EngagementMedium
  * @enum {string}
  * @readonly
@@ -41,7 +40,6 @@ export function help(){
  /**
  * WidgetType is an enum for types of ways a Widget can be displayed.
  * 
- * @namespace Interfaces
  * @name WidgetType
  * @enum {string}
  * @readonly

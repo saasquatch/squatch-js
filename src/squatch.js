@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * Squatch.js is the Referral SaaSquatch javascript SDK and a one-stop shop to
  * integrate a referral program into your website or web app.
@@ -8,12 +9,15 @@
  */
 import debug from 'debug';
 import Widgets from './widgets/Widgets';
-import { EmbedWidget } from './widgets/EmbedWidget';
-import { PopupWidget } from './widgets/PopupWidget';
-import { CtaWidget } from './widgets/CtaWidget';
+import EmbedWidget from './widgets/EmbedWidget';
+import PopupWidget from './widgets/PopupWidget';
+import CtaWidget from './widgets/CtaWidget';
 import WidgetApi from './api/WidgetApi';
+import EventsApi from './api/EventsApi';
 import asyncLoad from './async';
+// import {ConfigOptions, WidgetResult} from './docs';
 
+//@ts-ignore
 debug.disable('squatch-js*');
 const _log = debug('squatch-js');
 
@@ -27,6 +31,7 @@ export {
 
 let _api = null;
 let _widgets = null;
+let _events = null;
 
 /**
  * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
@@ -52,12 +57,25 @@ export function widgets() {
   return _widgets;
 }
 
+/**
+ * A static instance of the {@link EventsApi} created when you call {@link #init init}.
+ *
+ * Read the {@link EventsApi} docs.
+ *
+ * @type {EventsApi}
+ * @returns {EventsApi} static instance
+ */
+export function events() {
+  return _events;
+}
+
 
 /**
  * Initializes the static `squatch` global. This sets up:
  *
  *  - `squatch.api()` a static instance of the {@link WidgetApi}
  *  - `squatch.widgets()` a static instance of {@link Widgets}
+ *  - `squatch.events()` a static instance of {@link EventsApi}
  *
  * @param {ConfigOptions} config Configuration details
  * @returns {void}

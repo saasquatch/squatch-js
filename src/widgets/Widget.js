@@ -1,5 +1,6 @@
+// @ts-check
+
 import debug from 'debug';
-import ResizeObserver from 'resize-observer-polyfill';
 import AnalyticsApi from '../api/AnalyticsApi';
 
 const _log = debug('squatch-js:widget');
@@ -17,17 +18,15 @@ export default class Widget {
 
   constructor(params) {
     _log('widget initializing ...');
-    const me = this;
-    me.content = (params.content === 'error') ? me._error(params.rsCode) : params.content;
-    me.type = params.type;
-    me.widgetApi = params.api || '';
-    me.analyticsApi = new AnalyticsApi({ domain: params.domain });
-    me.frame = document.createElement('iframe');
-    me.frame.squatchJsApi = me;
-    me.frame.width = '100%';
-    me.frame.scrolling = 'no';
-    me.frame.setAttribute('style', 'border: 0; background-color: none;');
-    me.ResizeObserver = ResizeObserver;
+    this.content = (params.content === 'error') ? this._error(params.rsCode) : params.content;
+    this.type = params.type;
+    this.widgetApi = params.api || '';
+    this.analyticsApi = new AnalyticsApi({ domain: params.domain });
+    this.frame = document.createElement('iframe');
+    this.frame["squatchJsApi"] = this;
+    this.frame.width = '100%';
+    this.frame.scrolling = 'no';
+    this.frame.setAttribute('style', 'border: 0; background-color: none;');
   }
 
   _loadEvent(sqh) {
@@ -77,9 +76,7 @@ export default class Widget {
   }
 
   _error(rs, mode = 'modal', style = '') {
-    const me = this;
-
-    me.errorTemplate = `<!DOCTYPE html>
+    this.errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
@@ -111,6 +108,6 @@ export default class Widget {
     </body>
     </html>`;
 
-    return me.errorTemplate;
+    return this.errorTemplate;
   }
 }
