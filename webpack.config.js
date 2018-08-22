@@ -8,8 +8,8 @@ var PROD = process.env.NODE_ENV === "production";
 
 module.exports = {
   entry: {
-    "squatch.WidgetApi": ["./src/api/WidgetApi.js"],
-    squatch: ["./src/squatch.js"]
+    "squatch.WidgetApi": ["./src/api/WidgetApi.ts"],
+    squatch: ["./src/squatch.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),
@@ -18,20 +18,20 @@ module.exports = {
     libraryTarget: "umd"
   },
   module: {
-    loaders: [
+    rules: [
       {
-        loader: "babel-loader",
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        query: {
-          presets: "es2015"
-        }
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
-      {
-        test: /\.schema.json$/,
-        use: ["json-loader"]
-      }
+      // {
+      //   test: /\.schema.json$/,
+      //   use: ["json-loader"]
+      // }
     ]
+  },
+  resolve: {
+    extensions: [ '.tsx', '.ts', '.js' ]
   },
   plugins: PROD
     ? [
@@ -48,4 +48,5 @@ module.exports = {
     // Nice colored output
     colors: true
   },
+  mode: "production"
 };

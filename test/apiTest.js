@@ -3,13 +3,18 @@ var chai = require('chai');
 var assert = chai.assert;
 
 var WidgetApi = squatch.WidgetApi;
+throw new Error("Test is running1!");
 
 describe('Squatch.js global', function() {
 
   it('inits without error', function() {
     squatch.init({tenantAlias:'test_foobar'});
+    var wasRun = false;
+    squatch.ready(function(){
+      wasRun = true;
+    });
+    assert.equal(wasRun, true, "Should run ready functions");
   });
-
 
 });
 

@@ -2,6 +2,7 @@
 
 import debug from 'debug';
 import AnalyticsApi from '../api/AnalyticsApi';
+import WidgetApi from '../api/WidgetApi';
 
 const _log = debug('squatch-js:widget');
 
@@ -15,12 +16,17 @@ const _log = debug('squatch-js:widget');
  *
  */
 export default class Widget {
+  frame: HTMLIFrameElement;
+  type: WidgetType;
+  content: string;
+  analyticsApi: AnalyticsApi;
+  widgetApi: WidgetApi;
 
   constructor(params) {
     _log('widget initializing ...');
     this.content = (params.content === 'error') ? this._error(params.rsCode) : params.content;
     this.type = params.type;
-    this.widgetApi = params.api || '';
+    this.widgetApi = params.api || null;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
     this.frame = document.createElement('iframe');
     this.frame["squatchJsApi"] = this;
@@ -66,7 +72,7 @@ export default class Widget {
         tenantAlias: sqh.analytics.attributes.tenant,
         accountId: sqh.analytics.attributes.accountId,
         userId: sqh.analytics.attributes.userId,
-        emailList: emailList,
+        emailList,
       }).then((response) => {
         _log(`Sent email invites to share ${emailList}. ${response}`);
       }).catch((ex) => {
@@ -76,7 +82,7 @@ export default class Widget {
   }
 
   _error(rs, mode = 'modal', style = '') {
-    this.errorTemplate = `<!DOCTYPE html>
+    const errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
@@ -108,6 +114,6 @@ export default class Widget {
     </body>
     </html>`;
 
-    return this.errorTemplate;
+    return errorTemplate;
   }
 }

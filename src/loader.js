@@ -1,17 +1,20 @@
-!function(a,b){
+!((a, b) => {
   a("squatch","./dist/Squatch.js",b)
-}(function(a,b,c){
+})((a, b, c) => {
   // a = context
   // b = file
   // c = context
   // console.log(a,b,c === window);
 
-  var d,e,f;
-  c["_" + a] = {},
+  let d;
+
+  let e;
+  let f;
+  c[`_${a}`] = {},
   c[a] = {},
-  c[a].ready = function(b){
-    c["_" + a].ready =  c["_" + a].ready || [];
-    c["_" + a].ready.push(b);
+  c[a].ready = b => {
+    c[`_${a}`].ready =  c[`_${a}`].ready || [];
+    c[`_${a}`].ready.push(b);
   },
 
   e=document.createElement("script"),

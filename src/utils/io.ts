@@ -1,5 +1,6 @@
 //@ts-check
 import superagent from "superagent";
+import * as PPromise from "./Promise"
 
 export function doRequest(url, jwt = "") {
   const headers = {
@@ -27,9 +28,9 @@ export function doRequest(url, jwt = "") {
         }
         return response.text;
       },
-      error => {
-        const json = JSON.parse(error.response.text);
-        return Promise.reject(json);
+      ({response}) => {
+        const json = JSON.parse(response.text);
+        throw json;
       }
     );
 }
@@ -51,7 +52,7 @@ export function doPost(url, data) {
     .post(url)
     .send(data)
     .set(headers)
-    .then(response => response.text);
+    .then(({text}) => text);
 }
 
 export function doPut(url, data, jwt) {
@@ -69,17 +70,17 @@ export function doPut(url, data, jwt) {
     .send(data)
     .set(headers)
     .then(
-      response => JSON.parse(response.text),
+      ({text}) => JSON.parse(text),
       error => {
         let json;
 
         try {
           json = JSON.parse(error.response.text);
         } catch (e) {
-          return Promise.reject(error || e);
+          const out = error || e;
+          throw out;
         }
-
-        return Promise.reject(json);
+        throw json;
       }
     );
 }

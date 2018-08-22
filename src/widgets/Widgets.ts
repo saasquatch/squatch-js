@@ -1,7 +1,5 @@
-// @ts-check
-
 import debug from "debug";
-import Promise from "../utils/Promise";
+import Polyfill from "../utils/Promise";
 import EventBus from "eventbusjs";
 import WidgetApi from "../api/WidgetApi";
 import EmbedWidget from "./EmbedWidget";
@@ -18,6 +16,11 @@ const _log = debug("squatch-js:widgets");
  *
  */
 export default class Widgets {
+  api: WidgetApi;
+  tenantAlias: string;
+  domain: string;
+  eventBus: EventBus;
+
   /**
    * Initialize a new {@link Widgets} instance.
    *
@@ -56,8 +59,8 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  createCookieUser(config) {
-    return new Promise((resolve, reject) => {
+  createCookieUser(config):Promise<WidgetResult> {
+    return new Polyfill((resolve, reject) => {
       try {
         this.api
           .cookieUser(config)
@@ -95,7 +98,7 @@ export default class Widgets {
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
   upsertUser(config) {
-    return new Promise((resolve, reject) => {
+    return new Polyfill((resolve, reject) => {
       try {
         this.api
           .upsertUser(config)
@@ -134,7 +137,7 @@ export default class Widgets {
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
   render(config) {
-    return new Promise((resolve, reject) => {
+    return new Polyfill((resolve, reject) => {
       try {
         this.api
           .cookieUser(config)
@@ -185,8 +188,9 @@ export default class Widgets {
 
     this.api
       .squatchReferralCookie()
-      .then(response => {
-        elem.value = response.code;
+      //@ts-ignore
+      .then(({code}) => {
+        elem.value = code;
       })
       .catch(ex => {
         throw ex;
@@ -262,11 +266,11 @@ export default class Widgets {
     if (opts.fuelTankAutofillUrls) {
       _log("We found a fuel tank autofill!");
 
-      opts.fuelTankAutofillUrls.forEach(rule => {
-        if (Widgets.matchesUrl(rule.url)) {
+      opts.fuelTankAutofillUrls.forEach(({url, formSelector}) => {
+        if (Widgets.matchesUrl(url)) {
           _log("Fuel Tank URL matches");
           if (response.user.referredBy && response.user.referredBy.code) {
-            const formAutofill = document.querySelector(rule.formSelector);
+            const formAutofill = document.querySelector(formSelector);
 
             if (formAutofill) {
               formAutofill.value =
@@ -274,7 +278,7 @@ export default class Widgets {
             } else {
               _log(
                 new Error(
-                  `Element with id/class ${rule.formSelector} was not found.`
+                  `Element with id/class ${formSelector} was not found.`
                 )
               );
             }
@@ -295,7 +299,7 @@ export default class Widgets {
       const side = opts.cta.content.buttonSide;
       const position = opts.cta.content.buttonPosition;
 
-      widget = new CtaWidget(params, { side: side, position: position });
+      widget = new CtaWidget(params, { side, position });
       widget.load();
       if (displayOnLoad) widget.open();
     } else {
@@ -314,13 +318,13 @@ export default class Widgets {
    * @param {string} em The engagementMedium
    * @returns {void}
    */
-  static renderErrorWidget(error, em = "POPUP") {
-    _log(new Error(`${error.apiErrorCode} (${error.rsCode}) ${error.message}`));
+  static renderErrorWidget({apiErrorCode, rsCode, message}, em = "POPUP") {
+    _log(new Error(`${apiErrorCode} (${rsCode}) ${message}`));
 
     let widget;
     const params = {
       content: "error",
-      rsCode: error.rsCode,
+      rsCode,
       type: "ERROR_WIDGET"
     };
 

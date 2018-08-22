@@ -14,33 +14,39 @@ const _log = debug('squatch-js:EMBEDwidget');
  *
  */
 export default class EmbedWidget extends Widget {
-
+  element: Element;
+  
   constructor(params, selector = '#squatchembed') {
     super(params);
 
-    this.element = document.querySelector(selector) || document.querySelector('.squatchembed');
+    const element = document.querySelector(selector) || document.querySelector('.squatchembed');
 
-    if (!this.element) throw new Error(`element with selector '${selector}' not found.'`);
+    if (!element) throw new Error(`element with selector '${selector}' not found.'`);
+    this.element = element;
   }
 
   load() {
-    const me = this;
 
-    if (!me.element.firstChild || me.element.firstChild.nodeName === '#text') {
-      me.element.appendChild(me.frame);
+    if (!this.element.firstChild || this.element.firstChild.nodeName === '#text') {
+      this.element.appendChild(this.frame);
     }
-
-    const frameDoc = me.frame.contentWindow.document;
+    if(!this.frame.contentWindow){
+      throw new Error("Frame needs a content window");
+    }
+    const frameDoc = this.frame.contentWindow.document;
     frameDoc.open();
-    frameDoc.write(me.content);
+    frameDoc.write(this.content);
     frameDoc.close();
 
     domready(frameDoc, () => {
       // @ts-ignore -- Assume that squatch does exist
-      const _sqh = me.frame.contentWindow.squatch;
+      const _sqh = this.frame.contentWindow.squatch;
       const ctaElement = frameDoc.getElementById('cta');
 
       if (ctaElement) {
+        if(!ctaElement.parentNode){
+          throw new Error("ctaElement needs a parentNode");
+        }
         ctaElement.parentNode.removeChild(ctaElement);
       }
 
@@ -62,26 +68,29 @@ export default class EmbedWidget extends Widget {
       if (!fallback) _log('Error: no container found.');
       ro.observe(fallback);
 
-      me._loadEvent(_sqh);
+      this._loadEvent(_sqh);
       _log('loaded');
     });
   }
 
-  reload(params, jwt) {
+  reload({email, firstName, lastName}, jwt) {
+    if(!this.frame.contentWindow){
+      throw new Error("Frame needs a content window");
+    }
     const frameDoc = this.frame.contentWindow.document;
 
     this.widgetApi.cookieUser({
       user: {
-        email: params.email || null,
-        firstName: params.firstName || null,
-        lastName: params.lastName || null,
+        email: email || null,
+        firstName: firstName || null,
+        lastName: lastName || null,
       },
       engagementMedium: 'EMBED',
       widgetType: this.type,
-      jwt: jwt,
-    }).then((response) => {
-      if (response.template) {
-        this.content = response.template;
+      jwt,
+    }).then(({template}) => {
+      if (template) {
+        this.content = template;
         const showStatsBtn = frameDoc.createElement('button');
         const registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
 
@@ -96,12 +105,12 @@ export default class EmbedWidget extends Widget {
 
           // @ts-ignore -- expect register form to be a stylable element
           registerForm.style.paddingTop = '30px';
-          registerForm.innerHTML = `<p><strong>${params.email}</strong><br>Has been successfully registered</p>`;
+          registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
           registerForm.appendChild(showStatsBtn);
         }
       }
-    }).catch((ex) => {
-      _log(`${ex.message}`);
+    }).catch(({message}) => {
+      _log(`${message}`);
     });
   }
 

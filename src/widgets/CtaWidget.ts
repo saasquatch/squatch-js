@@ -1,6 +1,4 @@
-// @ts-check
-
-import debug from 'debug';
+import * as debug from 'debug';
 import ResizeObserver from 'resize-observer-polyfill';
 
 import PopupWidget from './PopupWidget';
@@ -15,6 +13,11 @@ const _log = debug('squatch-js:CTAwidget');
  *
  */
 export default class CtaWidget extends PopupWidget {
+
+  position: string;
+  side: string;
+  positionClass: string;
+  ctaFrame: HTMLIFrameElement;
 
   constructor(params, opts) {
     _log('CTA constructor');
@@ -52,6 +55,9 @@ export default class CtaWidget extends PopupWidget {
   load() {
     super.load();
 
+    if(!this.frame.contentWindow){
+      throw new Error("frame requires a contentWindow");
+    }
     const widgetFrameDoc = this.frame.contentWindow.document;
     const ctaFrame = this.ctaFrame;
     const positionClass = this.positionClass;
@@ -61,8 +67,14 @@ export default class CtaWidget extends PopupWidget {
       const ctaElement = widgetFrameDoc.getElementById('cta');
 
       if (ctaElement) {
+        if(!ctaElement.parentNode){
+          throw new Error("ctaElement requires a parentNode");
+        }
         ctaElement.parentNode.removeChild(ctaElement);
 
+        if(!ctaFrame.contentWindow){
+          throw new Error("ctaFrame requires a contentWindow");
+        }
         const ctaFrameDoc = ctaFrame.contentWindow.document;
         ctaFrameDoc.open();
         ctaFrameDoc.write(ctaElement.innerHTML);

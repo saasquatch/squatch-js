@@ -15,6 +15,9 @@ import CtaWidget from './widgets/CtaWidget';
 import WidgetApi from './api/WidgetApi';
 import EventsApi from './api/EventsApi';
 import asyncLoad from './async';
+
+export * from './docs';
+
 // import {ConfigOptions, WidgetResult} from './docs';
 
 //@ts-ignore
@@ -29,9 +32,9 @@ export {
   WidgetApi,
 };
 
-let _api = null;
-let _widgets = null;
-let _events = null;
+let _api:WidgetApi|null = null;
+let _widgets:Widgets|null = null;
+let _events:EventsApi|null = null;
 
 /**
  * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
@@ -39,9 +42,9 @@ let _events = null;
  * Read the {@link WidgetApi} docs.
  *
  * @type {WidgetApi}
- * @returns {WidgetApi} static instance
+ * @returns {WidgetApi?} static instance
  */
-export function api() {
+export function api(): WidgetApi | null {
   return _api;
 }
 
@@ -51,9 +54,9 @@ export function api() {
  * Read the {@link Widgets} docs.
  *
  * @type {Widgets}
- * @returns {Widgets} static instance
+ * @returns {Widgets?} static instance
  */
-export function widgets() {
+export function widgets(): Widgets | null {
   return _widgets;
 }
 
@@ -63,9 +66,9 @@ export function widgets() {
  * Read the {@link EventsApi} docs.
  *
  * @type {EventsApi}
- * @returns {EventsApi} static instance
+ * @returns {EventsApi?} static instance
  */
-export function events() {
+export function events(): EventsApi | null {
   return _events;
 }
 
@@ -83,7 +86,7 @@ export function events() {
  * @example
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
-export function init(config) {
+export function init(config: ConfigOptions): void {
   if (config.tenantAlias.match('^test') || config.debug) {
     debug.enable('squatch-js*');
   }
@@ -114,7 +117,7 @@ export function init(config) {
  *   squatch.api().cookieUser();
  * });
  */
-export function ready(fn) {
+export function ready(fn: ()=>any): void {
   fn();
 }
 
@@ -125,7 +128,8 @@ export function ready(fn) {
  * @param {string} selector Element class/id
  * @returns {void}
  */
-export function autofill(selector) {
+export function autofill(selector: string): void {
+  // @ts-ignore -- will throw occasionally throw a null pointer exception at runtime
   widgets().autofill(selector);
 }
 
@@ -143,9 +147,9 @@ export function autofill(selector) {
  *   widget.reload(email, jwt);
  * });
  */
-export function submitEmail(fn) {
+export function submitEmail(fn: (target, widget, email)=>any): void {
+  // @ts-ignore -- will throw occasionally throw a null pointer exception at runtime
   widgets().submitEmail(fn);
 }
 
-export * from './docs.js';
 if (window) asyncLoad();

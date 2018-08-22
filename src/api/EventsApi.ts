@@ -1,6 +1,3 @@
-//@ts-check
-import superagent from "superagent";
-import Promise from "../utils/Promise";
 import "string.prototype.includes"; // Polyfill
 
 import { doPut } from "../utils/io";
@@ -11,6 +8,8 @@ import { doPut } from "../utils/io";
  *
  */
 export default class EventsApi {
+  tenantAlias: string;
+  domain: string;
   /**
    * Initialize a new {@link EventsApi} instance.
    *
@@ -27,10 +26,10 @@ export default class EventsApi {
    * import {EventsApi} from '@saasquatch/squatch-js';
    * let squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});
    */
-  constructor(config) {
-    if (!config.tenantAlias) throw new Error("tenantAlias not provided");
-    this.tenantAlias = config.tenantAlias;
-    this.domain = config.domain || "https://app.referralsaasquatch.com";
+  constructor({ tenantAlias, domain }: ConfigOptions) {
+    if (!tenantAlias) throw new Error("tenantAlias not provided");
+    this.tenantAlias = tenantAlias;
+    this.domain = domain || "https://app.referralsaasquatch.com";
   }
 
   /**
@@ -38,12 +37,13 @@ export default class EventsApi {
    *
    * @param {Object} params Parameters for request
    * @param {String} params.type The type of event to log
-   * @param {Object} params.fields The fields for the event
-   * @param {string} params.jwt the JSON Web Token (JWT) that is used to authenticate the user
+   * @param {Object?} params.fields The fields for the event
+   * @param {string?} params.jwt the JSON Web Token (JWT) that is used to authenticate the user
    *
    * @return {Promise} An ID to confirm the event has been accepted for asynchronous processing
    */
-  logEvent({ type = "", fields = null, jwt = "" }) {
+  logEvent(params: { type: string; fields?: object; jwt?: JWT }) {
+    const { type, fields = null, jwt } = params;
     const ta = encodeURIComponent(this.tenantAlias);
     const path = `/api/v1/${ta}/open/events/log`;
     const url = this.domain + path;

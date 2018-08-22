@@ -1,3 +1,13 @@
+
+declare global {
+  interface Window { 
+    _squatch: {
+      ready: any[];
+    };
+    squatch: any;
+  }
+}
+
 export default function asyncLoad() {
   const loaded = window.squatch || null;
   const cached = window._squatch || null;
@@ -7,6 +17,7 @@ export default function asyncLoad() {
 
     ready.forEach(cb => setTimeout(() => cb(), 0));
 
+    // @ts-ignore -- intetionally deletes `_squatch` to cleanup initialization
     window._squatch = undefined;
     try {
       delete window._squatch;

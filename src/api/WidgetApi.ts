@@ -1,21 +1,18 @@
-//@ts-check
-import superagent from "superagent";
-import Promise from "../utils/Promise";
 import { validate } from "jsonschema";
 import "string.prototype.includes"; // Polyfill
 
 import { doPost, doPut, doRequest } from "../utils/io";
 
 // @ts-ignore
-import CookieUser from "./schema/CookieUser.schema.json";
+import CookieUserSchema from "./schema/CookieUser.schema.json";
 // @ts-ignore
-import UpsertUser from "./schema/UpsertUser.schema.json";
+import UpsertUserSchema from "./schema/UpsertUser.schema.json";
 // import ApplyReferralCode from "./schema/ApplyReferralCode.schema.json"
 // import User from "./schema/User.schema.json"
 // import UserLookup from "./schema/UserLookup.schema.json"
 // import UserReferralCode from "./schema/UserReferralCode.schema.json"
 
-function validateInput(props, schema) {
+function validateInput(props: object, schema: object) {
   let o = validate(props, schema);
   if (!o.valid) throw o.errors;
 }
@@ -26,6 +23,9 @@ function validateInput(props, schema) {
  *
  */
 export default class WidgetApi {
+  tenantAlias: string;
+  domain: string;
+
   /**
    * Initialize a new {@link WidgetApi} instance.
    *
@@ -42,10 +42,10 @@ export default class WidgetApi {
    * import {WidgetApi} from '@saasquatch/squatch-js';
    * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    */
-  constructor(config) {
-    if (!config.tenantAlias) throw new Error("tenantAlias not provided");
-    this.tenantAlias = config.tenantAlias;
-    this.domain = config.domain || "https://app.referralsaasquatch.com";
+  constructor({ tenantAlias, domain }: ConfigOptions) {
+    if (!tenantAlias) throw new Error("tenantAlias not provided");
+    this.tenantAlias = tenantAlias;
+    this.domain = domain || "https://app.referralsaasquatch.com";
   }
 
   /**
@@ -54,51 +54,56 @@ export default class WidgetApi {
    * @param {Object} params Parameters for request
    * @param {WidgetType} params.widgetType The content of the widget.
    * @param {EngagementMedium} params.engagementMedium How to display the widget.
-   * @param {User} params.user An optional user object 
+   * @param {CookieUser} params.user An optional user object
    * @param {string} params.jwt the JSON Web Token (JWT) that is used to
    *                            validate the data (can be disabled)
    *
    * @return {Promise} json object if true, with the widget template, jsOptions and user details.
    */
-  cookieUser(params) {
-    validateInput(params, CookieUser);
+  cookieUser(params: {
+    widgetType: WidgetType;
+    engagementMedium: EngagementMedium;
+    user: CookieUser;
+    jwt: JWT;
+  }): Promise<any> {
+    validateInput(params, CookieUserSchema);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const optionalParams = _buildParams({widgetType, engagementMedium})
+    const optionalParams = _buildParams({ widgetType, engagementMedium });
     const path = `/api/v1/${tenantAlias}/widget/user/cookie_user${optionalParams}`;
     const url = this.domain + path;
 
-    return doPut(
-      url,
-      // TODO: This seems like a clear and present bug
-      JSON.stringify(user ? user : {}),
-      jwt
-    );
+    return doPut(url, JSON.stringify(user ? user : {}), jwt);
   }
 
   /**
    * Creates/upserts user.
    *
    * @param {Object} params Parameters for request
-   * @param {Object} params.user The user details
+   * @param {Object?} params.user The user details
    * @param {string} params.user.id The user id
    * @param {string} params.user.accountId The user account id
    * @param {WidgetType} params.widgetType The content of the widget.
-   * @param {EngagementMedium} params.engagementMedium How to display the widget.
-   * @param {string} params.jwt the JSON Web Token (JWT) that is used
+   * @param {EngagementMedium?} params.engagementMedium How to display the widget.
+   * @param {string?} params.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
    * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
-  upsertUser(params) {
-    validateInput(params, UpsertUser);
+  upsertUser(params: {
+    widgetType?: WidgetType;
+    engagementMedium?: EngagementMedium;
+    jwt?: JWT;
+    user: User;
+  }): Promise<any> {
+    validateInput(params, UpsertUserSchema);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(user.accountId);
     const userId = encodeURIComponent(user.id);
 
-    const optionalParams = _buildParams({widgetType, engagementMedium})
+    const optionalParams = _buildParams({ widgetType, engagementMedium });
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
@@ -119,14 +124,19 @@ export default class WidgetApi {
    *                            to validate the data (can be disabled)
    * @return {Promise} template html if true.
    */
-  render(params) {
-    validateInput(params, UpsertUser);
+  render(params: {
+    user: User;
+    widgetType?: WidgetType;
+    engagementMedium?: EngagementMedium;
+    jwt?: JWT;
+  }): Promise<any> {
+    validateInput(params, UpsertUserSchema);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(user.accountId);
     const userId = encodeURIComponent(user.id);
-    const optionalParams = _buildParams({widgetType, engagementMedium})
+    const optionalParams = _buildParams({ widgetType, engagementMedium });
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/render${optionalParams}`;
     const url = this.domain + path;
@@ -144,7 +154,17 @@ export default class WidgetApi {
    *
    * @return {Promise} an object containing total accepted / rejected emails send or error
    */
-  invite({ emailList = [], userId, accountId, tenantAlias }) {
+  invite({
+    emailList = [],
+    userId,
+    accountId,
+    tenantAlias
+  }: {
+    emailList: string[];
+    userId: string;
+    accountId: string;
+    tenantAlias: string;
+  }): Promise<any> {
     const tenantAliasP = encodeURIComponent(tenantAlias);
 
     const path = `/api/v1/${tenantAliasP}/mail/referralinvite`;
@@ -162,7 +182,7 @@ export default class WidgetApi {
    *
    * @return {Promise<Object>} code referral code if true.
    */
-  squatchReferralCookie() {
+  squatchReferralCookie(): Promise<object> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson`;
     return doRequest(url);
@@ -170,7 +190,13 @@ export default class WidgetApi {
 }
 
 // builds a param string for widgets
-function _buildParams({ widgetType, engagementMedium }) {
+function _buildParams({
+  widgetType,
+  engagementMedium
+}: {
+  widgetType?: WidgetType;
+  engagementMedium: EngagementMedium;
+}) {
   const widgetTypeP = widgetType
     ? `?widgetType=${encodeURIComponent(widgetType)}`
     : null;

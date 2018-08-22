@@ -42,6 +42,7 @@ module.exports = function(config) {
       // webpack watches dependencies
 
       // webpack configuration
+      entry: "test/apiTest.js"
     },
 
     webpackMiddleware: {
