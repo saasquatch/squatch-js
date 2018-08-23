@@ -1,6 +1,7 @@
 import * as superagent from "superagent";
+import { JWT } from "..";
 
-export function doRequest(url, jwt = "") {
+export function doGet(url, jwt = "") {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json"
@@ -26,7 +27,7 @@ export function doRequest(url, jwt = "") {
         }
         return response.text;
       },
-      ({response}) => {
+      ({ response }) => {
         const json = JSON.parse(response.text);
         throw json;
       }
@@ -35,25 +36,39 @@ export function doRequest(url, jwt = "") {
 /**
  * @hidden
  *
- * @param {string} url The requested url
- * @param {string} data Stringified json object
+ * @param url The requested url
+ * @param data Stringified json object
  *
  * @returns {Promise} superagent promise
  */
-export function doPost(url, data) {
+export function doPost(url: string, data: any, jwt?: JWT) {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json"
   };
+  if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
   return superagent
     .post(url)
     .send(data)
     .set(headers)
-    .then(({text}) => text);
+    .then(
+      ({ text }) => JSON.parse(text),
+      error => {
+        let json;
+
+        try {
+          json = JSON.parse(error.response.text);
+        } catch (e) {
+          const out = error || e;
+          throw out;
+        }
+        throw json;
+      }
+    );
 }
 
-export function doPut(url, data, jwt) {
+export function doPut(url: string, data: any, jwt?: JWT) {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -68,7 +83,7 @@ export function doPut(url, data, jwt) {
     .send(data)
     .set(headers)
     .then(
-      ({text}) => JSON.parse(text),
+      ({ text }) => JSON.parse(text),
       error => {
         let json;
 

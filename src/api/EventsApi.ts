@@ -1,7 +1,21 @@
 import "string.prototype.includes"; // Polyfill
 
-import { doPut } from "../utils/io";
-import { ConfigOptions, JWT } from "..";
+import { doPost } from "../utils/io";
+import { ConfigOptions, JWT, User } from "..";
+import { hasProps, isObject, assertProp } from "../utils/validate";
+
+interface UserEventInput {
+  userId: string;
+  accountId: string;
+  events: UserEventDataInput[];
+}
+
+interface UserEventDataInput {
+  id: string;
+  key: string;
+  fields?: any;
+  dateTriggered?: number;
+}
 
 /**
  *
@@ -27,35 +41,35 @@ export default class EventsApi {
    * import {EventsApi} from '@saasquatch/squatch-js';
    * let squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});
    */
-  constructor({ tenantAlias, domain }: ConfigOptions) {
-    if (!tenantAlias) throw new Error("tenantAlias not provided");
-    this.tenantAlias = tenantAlias;
-    this.domain = domain || "https://app.referralsaasquatch.com";
+  constructor(config: ConfigOptions) {
+    const raw = config as unknown;
+    if (!isObject(raw)) throw new Error("config must be an object");
+    if (!hasProps(raw, "tenantAlias"))
+      throw new Error("tenantAlias not provided");
+    this.tenantAlias = raw.tenantAlias;
+    this.domain =
+      (hasProps(raw, "domain") && raw.domain) ||
+      "https://app.referralsaasquatch.com";
   }
 
   /**
    * Logs an event for a user
    *
-   * @param {Object} params Parameters for request
-   * @param {String} params.type The type of event to log
-   * @param {Object?} params.fields The fields for the event
-   * @param {string?} params.jwt the JSON Web Token (JWT) that is used to authenticate the user
+   * @param params Parameters for request
+   * @param params.jwt the JSON Web Token (JWT) that is used to authenticate the user
    *
-   * @return {Promise} An ID to confirm the event has been accepted for asynchronous processing
+   * @return An ID to confirm the event has been accepted for asynchronous processing
    */
-  logEvent(params: { type: string; fields?: object; jwt?: JWT }) {
-    const { type, fields = null, jwt } = params;
+  logEvent(params: UserEventInput & { jwt?: JWT }): Promise<any> {
+    const raw = params as unknown;
+    if (!assertProp(raw, "accountId", "events", "userId"))
+      throw new Error("Fields required");
+    const { events } = raw;
     const ta = encodeURIComponent(this.tenantAlias);
-    const path = `/api/v1/${ta}/open/events/log`;
+    const userId = encodeURIComponent(raw.userId);
+    const accountId = encodeURIComponent(raw.accountId);
+    const path = `/api/v1/${ta}/open/account/${accountId}/user/${userId}/events`;
     const url = this.domain + path;
-
-    return doPut(
-      url,
-      JSON.stringify({
-        type,
-        fields
-      }),
-      jwt
-    );
+    return doPost(url, JSON.stringify(events), hasProps(raw, "jwt") && raw.jwt);
   }
 }

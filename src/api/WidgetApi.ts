@@ -1,6 +1,6 @@
 import "string.prototype.includes"; // Polyfill
 
-import { doPost, doPut, doRequest } from "../utils/io";
+import { doPost, doPut, doGet } from "../utils/io";
 import { ConfigOptions, EngagementMedium, WidgetType, CookieUser, JWT, User } from "..";
 
 
@@ -127,7 +127,7 @@ export default class WidgetApi {
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/render${optionalParams}`;
     const url = this.domain + path;
-    return doRequest(url, jwt);
+    return doGet(url, jwt);
   }
 
   /**
@@ -172,7 +172,7 @@ export default class WidgetApi {
   squatchReferralCookie(): Promise<object> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson`;
-    return doRequest(url);
+    return doGet(url);
   }
 }
 
