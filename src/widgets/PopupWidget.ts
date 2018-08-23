@@ -147,8 +147,7 @@ export default class PopupWidget extends Widget {
       popupdiv.style.display = "block";
       popupdiv.style.top = "0";
 
-      // @ts-ignore -- number will be cast to string by browsers
-      frame.height = frameDoc.body.offsetHeight;
+      frame.height = `${frameDoc.body.offsetHeight}px`;
 
       const container = frameDoc.getElementsByTagName("sqh-global-container");
       const fallback =
@@ -167,21 +166,21 @@ export default class PopupWidget extends Widget {
           const referralsHeight = referrals ? referrals.offsetHeight : 0;
           const finalHeight = height - referralsHeight;
 
-          if (finalHeight > 0) frame.height = `${finalHeight}px`;
+          if (finalHeight > 0) {
+            frame.height = `${finalHeight}px`;
+          }
 
-          // @ts-ignore Comparing number and string.
-          if (window.innerHeight > frame.height) {
-          // @ts-ignore adding number to string
-          popupdiv.style.paddingTop = `${(window.innerHeight - frame.height) /
-              2}px`;
+          if (window.innerHeight > finalHeight) {
+            const center = (window.innerHeight - finalHeight) / 2;
+            popupdiv.style.paddingTop = `${center}px`;
           } else {
             popupdiv.style.paddingTop = "5px";
           }
 
           // @ts-ignore -- we assume fallback is a styleable html element
-          fallback.style.width = "100%";
+          // fallback.style.width = "100%";
           // @ts-ignore -- we assume fallback is a styleable html element
-          fallback.style.height = `${finalHeight}px`;
+          // fallback.style.height = `${finalHeight}px`;
         }
       });
 

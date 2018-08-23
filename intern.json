@@ -1,0 +1,6 @@
+{
+    "suites": "tests/unit/**/*.ts",
+    "functionalSuites": "tests/functional/**/*.ts",
+    "plugins": "node_modules/ts-node/register/index.js",
+    "environments": ["node"]
+}

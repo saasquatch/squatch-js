@@ -20,14 +20,14 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.json$/,
+        use: 'json-loader',
+      },
+      {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
-      },
-      // {
-      //   test: /\.schema.json$/,
-      //   use: ["json-loader"]
-      // }
+      }
     ]
   },
   resolve: {
@@ -36,14 +36,11 @@ module.exports = {
   plugins: PROD
     ? [
         new MinifyPlugin({}, {}),
-        // new webpack.optimize.UglifyJsPlugin({
-        //   minimize: true,
-        //   output: { comments: false },
-        //   compress: { warnings: false }
-        // }),
         new Visualizer()
       ]
-    : [],
+    : [
+      new Visualizer()
+    ],
   stats: {
     // Nice colored output
     colors: true

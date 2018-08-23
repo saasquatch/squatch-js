@@ -99,9 +99,11 @@ export function init(config: ConfigOptions): void {
 
   _api = new WidgetApi(initObj);
   _widgets = new Widgets(initObj);
+  _events = new EventsApi(initObj);
 
   _log('Widget API instance', _api);
-  _log('widgets instance', _widgets);
+  _log('Widgets instance', _widgets);
+  _log('Events API instance', _events);
 }
 
 /**

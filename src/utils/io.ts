@@ -1,6 +1,4 @@
-//@ts-check
-import superagent from "superagent";
-import * as PPromise from "./Promise"
+import * as superagent from "superagent";
 
 export function doRequest(url, jwt = "") {
   const headers = {

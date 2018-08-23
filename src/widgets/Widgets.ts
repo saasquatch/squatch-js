@@ -1,11 +1,11 @@
 import debug from "debug";
-import Polyfill from "../utils/Promise";
-import EventBus from "eventbusjs";
+import * as EventBus from "eventbusjs";
 import WidgetApi from "../api/WidgetApi";
 import EmbedWidget from "./EmbedWidget";
 import PopupWidget from "./PopupWidget";
 import CtaWidget from "./CtaWidget";
 import Widget from "./Widget";
+// import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
 
@@ -19,7 +19,6 @@ export default class Widgets {
   api: WidgetApi;
   tenantAlias: string;
   domain: string;
-  eventBus: EventBus;
 
   /**
    * Initialize a new {@link Widgets} instance.
@@ -40,10 +39,9 @@ export default class Widgets {
   constructor(config) {
     this.tenantAlias = config.tenantAlias;
     this.api = new WidgetApi(config);
-    this.eventBus = EventBus;
     this.domain = config.domain || "";
     // listens to a 'submit_email' event in the theme.
-    this.eventBus.addEventListener("submit_email", Widgets.cb);
+    EventBus.addEventListener("submit_email", Widgets.cb);
   }
 
   /**
@@ -59,27 +57,20 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  createCookieUser(config):Promise<WidgetResult> {
-    return new Polyfill((resolve, reject) => {
-      try {
-        this.api
-          .cookieUser(config)
-          .then(response => {
-            resolve({
-              widget: this.renderWidget(response, config),
-              user: response.user
-            });
-          })
-          .catch(err => {
-            if (err.apiErrorCode) {
-              Widgets.renderErrorWidget(err, config.engagementMedium);
-            }
-            reject(err);
-          });
-      } catch (e) {
-        throw new Error(e);
+  async createCookieUser(config): Promise<WidgetResult> {
+    try {
+      const response = await this.api.cookieUser(config);
+      return {
+        widget: this.renderWidget(response, config),
+        user: response.user
+      };
+    } catch (err) {
+      _log(err);
+      if (err.apiErrorCode) {
+        Widgets.renderErrorWidget(err, config.engagementMedium);
       }
-    });
+      throw err;
+    }
   }
 
   /**
@@ -97,28 +88,20 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  upsertUser(config) {
-    return new Polyfill((resolve, reject) => {
-      try {
-        this.api
-          .upsertUser(config)
-          .then(response => {
-            resolve({
-              widget: this.renderWidget(response, config),
-              user: response.user
-            });
-          })
-          .catch(err => {
-            if (err.apiErrorCode) {
-              Widgets.renderErrorWidget(err, config.engagementMedium);
-            }
-            _log(err);
-            reject(err);
-          });
-      } catch (e) {
-        throw new Error(e);
+  async upsertUser(config) {
+    try {
+      const response = await this.api.upsertUser(config);
+      return {
+        widget: this.renderWidget(response, config),
+        user: response.user
+      };
+    } catch (err) {
+      _log(err);
+      if (err.apiErrorCode) {
+        Widgets.renderErrorWidget(err, config.engagementMedium);
       }
-    });
+      throw err;
+    }
   }
 
   /**
@@ -136,27 +119,19 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  render(config) {
-    return new Polyfill((resolve, reject) => {
-      try {
-        this.api
-          .cookieUser(config)
-          .then(response => {
-            resolve({
-              widget: this.renderWidget({ template: response }, config),
-              user: response.user
-            });
-          })
-          .catch(err => {
-            if (err.apiErrorCode) {
-              Widgets.renderErrorWidget(err, config.engagementMedium);
-            }
-            reject(err);
-          });
-      } catch (e) {
-        throw new Error(e);
+  async render(config): Promise<WidgetResult> {
+    try {
+      const response = await this.api.cookieUser(config);
+      return {
+        widget: this.renderWidget({ template: response }, config),
+        user: response.user
+      };
+    } catch (err) {
+      if (err.apiErrorCode) {
+        Widgets.renderErrorWidget(err, config.engagementMedium);
       }
-    });
+      throw err;
+    }
   }
 
   /**
@@ -172,6 +147,7 @@ export default class Widgets {
         .squatchReferralCookie()
         .then(selector)
         .catch(ex => {
+          _log("Autofill error", ex);
           throw ex;
         });
     }
@@ -189,7 +165,7 @@ export default class Widgets {
     this.api
       .squatchReferralCookie()
       //@ts-ignore
-      .then(({code}) => {
+      .then(({ code }) => {
         elem.value = code;
       })
       .catch(ex => {
@@ -205,8 +181,8 @@ export default class Widgets {
    * @returns {void}
    */
   submitEmail(fn) {
-    this.eventBus.removeEventListener("submit_email", Widgets.cb);
-    this.eventBus.addEventListener("submit_email", fn);
+    EventBus.removeEventListener("submit_email", Widgets.cb);
+    EventBus.addEventListener("submit_email", fn);
   }
 
   /**
@@ -266,7 +242,7 @@ export default class Widgets {
     if (opts.fuelTankAutofillUrls) {
       _log("We found a fuel tank autofill!");
 
-      opts.fuelTankAutofillUrls.forEach(({url, formSelector}) => {
+      opts.fuelTankAutofillUrls.forEach(({ url, formSelector }) => {
         if (Widgets.matchesUrl(url)) {
           _log("Fuel Tank URL matches");
           if (response.user.referredBy && response.user.referredBy.code) {
@@ -318,7 +294,7 @@ export default class Widgets {
    * @param {string} em The engagementMedium
    * @returns {void}
    */
-  static renderErrorWidget({apiErrorCode, rsCode, message}, em = "POPUP") {
+  static renderErrorWidget({ apiErrorCode, rsCode, message }, em = "POPUP") {
     _log(new Error(`${apiErrorCode} (${rsCode}) ${message}`));
 
     let widget;

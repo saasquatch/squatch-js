@@ -1,9 +1,13 @@
-var squatch = require('../dist/squatch.js');
-var chai = require('chai');
+import squatch from '../../dist/squatch.js';
+import chai from 'chai';
+import * as promise from 'es6-promise';
+
+promise.polyfill();
+
 var assert = chai.assert;
 
+const { describe, it } = intern.getPlugin('interface.bdd');
 var WidgetApi = squatch.WidgetApi;
-throw new Error("Test is running1!");
 
 describe('Squatch.js global', function() {
 
@@ -29,15 +33,10 @@ describe('Widget API', function() {
     assert.equal(widgetApi.tenantAlias, config.tenantAlias);
   });
   
-  it('should be able to get a referral cookie (or none)', function(done){
-    
-    widgetApi.squatchReferralCookie().then(function(cookie){
-      
-      if(!cookie || typeof cookie !== 'object'){
-        done("Expected a cookie as an object with a valid code, but got" + cookie + ", a " + typeof cookie);
-      }else{
-        done();
-      }
-    }).catch(done);
+  it('should be able to get a referral cookie (or none)', async function(done){
+    const cookie = await widgetApi.squatchReferralCookie();
+    if(!cookie || typeof cookie !== 'object'){
+      throw new Error("Expected a cookie as an object with a valid code, but got" + cookie + ", a " + typeof cookie);
+    }
   })
 });

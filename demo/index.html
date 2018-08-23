@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Squatch.JS Playground</title>
+  <script src="./generate.tsx"></script>
+  <script>
+    !function (a, b) {
+      a("squatch", window.sandbox.script, b)
+    }(function (a, b, c) {
+      // a = context
+      // b = file
+      // c = context
+      // console.log(a,b,c === window);
+
+      var d, e, f;
+      c["_" + a] = {},
+        c[a] = {},
+        c[a].ready = function (b) {
+          c["_" + a].ready = c["_" + a].ready || [];
+          c["_" + a].ready.push(b);
+        }
+      e = document.createElement("script"),
+        e.async = 1,
+        e.src = b,
+        f = document.getElementsByTagName("script")[0],
+        f.parentNode.insertBefore(e, f)
+    }, this);
+  </script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <script>
+    localStorage.debug = '*';
+    console.log("Loading Squatch.js using sandbox", window.sandbox);
+    squatch.ready(function () {
+      console.log("Squatch.js is ready", squatch);
+      squatch.init({
+        domain: window.sandbox.domain,
+        tenantAlias: window.sandbox.tenantAlias,
+        debug: true
+      });
+      squatch.widgets().upsertUser(window.sandbox.initObj).then(function (res) {
+        console.log("Upsert done", res);
+        if(res.widget.open) res.widget.open();
+      }).catch(function (err) {
+        console.log("Upsert error", err);
+      });
+
+    });
+
+  </script>
+
+  <div class="container">
+    <div id="app"></div>
+    <div>
+      <h2>Autofill will be here:</h2>
+      <input type="text" name="Coupon" class="testClass" value="" />
+    </div>
+    <button class="squatchpop">Click to Open</button>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Embed here</h2>
+        <div id="squatchembed">
+          Loading....
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./toolbar.tsx"></script>
+</body>
+
+</html>

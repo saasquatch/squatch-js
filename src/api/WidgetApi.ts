@@ -1,21 +1,7 @@
-import { validate } from "jsonschema";
 import "string.prototype.includes"; // Polyfill
 
 import { doPost, doPut, doRequest } from "../utils/io";
 
-// @ts-ignore
-import CookieUserSchema from "./schema/CookieUser.schema.json";
-// @ts-ignore
-import UpsertUserSchema from "./schema/UpsertUser.schema.json";
-// import ApplyReferralCode from "./schema/ApplyReferralCode.schema.json"
-// import User from "./schema/User.schema.json"
-// import UserLookup from "./schema/UserLookup.schema.json"
-// import UserReferralCode from "./schema/UserReferralCode.schema.json"
-
-function validateInput(props: object, schema: object) {
-  let o = validate(props, schema);
-  if (!o.valid) throw o.errors;
-}
 
 /**
  *
@@ -66,7 +52,7 @@ export default class WidgetApi {
     user: CookieUser;
     jwt: JWT;
   }): Promise<any> {
-    validateInput(params, CookieUserSchema);
+    // validateInput(params, CookieUserSchema);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const optionalParams = _buildParams({ widgetType, engagementMedium });
@@ -90,13 +76,13 @@ export default class WidgetApi {
    *
    * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
-  upsertUser(params: {
+  upsertUser(params: {  
     widgetType?: WidgetType;
     engagementMedium?: EngagementMedium;
     jwt?: JWT;
     user: User;
   }): Promise<any> {
-    validateInput(params, UpsertUserSchema);
+    // validateInput(params, UpsertUserSchema);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
@@ -130,7 +116,7 @@ export default class WidgetApi {
     engagementMedium?: EngagementMedium;
     jwt?: JWT;
   }): Promise<any> {
-    validateInput(params, UpsertUserSchema);
+    // validateInput(params, UpsertUserSchema);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
