@@ -27,16 +27,18 @@ const widgetTypes = [
   "CONVERSION_WIDGET",
   "p/jorge3/w/referrerWidget"
 ];
+const staticVersions = ["HEAD","latest","alpha"];
 
 /**
  * Use the addUrlProps higher-order component to hook-in react-url-query.
  */
 class App extends Component {
   state = {
-    versions: ["HEAD"]
+    versions: staticVersions
   };
   async componentWillMount() {
-    const versions = await getVersions();
+    const apiVersions = await getVersions();
+    const versions = [...staticVersions, ...apiVersions];
     this.setState({ versions });
   }
   render() {
