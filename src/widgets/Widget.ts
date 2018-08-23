@@ -1,10 +1,10 @@
 // @ts-check
 
-import debug from 'debug';
-import AnalyticsApi from '../api/AnalyticsApi';
-import WidgetApi from '../api/WidgetApi';
+import debug from "debug";
+import AnalyticsApi from "../api/AnalyticsApi";
+import WidgetApi from "../api/WidgetApi";
 
-const _log = debug('squatch-js:widget');
+const _log = debug("squatch-js:widget");
 
 /*
  *
@@ -23,65 +23,77 @@ export default class Widget {
   widgetApi: WidgetApi;
 
   constructor(params) {
-    _log('widget initializing ...');
-    this.content = (params.content === 'error') ? this._error(params.rsCode) : params.content;
+    _log("widget initializing ...");
+    this.content =
+      params.content === "error" ? this._error(params.rsCode) : params.content;
     this.type = params.type;
     this.widgetApi = params.api || null;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
-    this.frame = document.createElement('iframe');
+    this.frame = document.createElement("iframe");
     this.frame["squatchJsApi"] = this;
-    this.frame.width = '100%';
-    this.frame.scrolling = 'no';
-    this.frame.setAttribute('style', 'border: 0; background-color: none;');
+    this.frame.width = "100%";
+    this.frame.scrolling = "no";
+    this.frame.setAttribute("style", "border: 0; background-color: none;");
   }
 
   _loadEvent(sqh) {
     if (sqh) {
-      this.analyticsApi.pushAnalyticsLoadEvent({
-        tenantAlias: sqh.analytics.attributes.tenant,
-        externalAccountId: sqh.analytics.attributes.accountId,
-        externalUserId: sqh.analytics.attributes.userId,
-        engagementMedium: sqh.mode.widgetMode,
-      }).then((response) => {
-        _log(`${sqh.mode.widgetMode} loaded event recorded. ${response}`);
-      }).catch((ex) => {
-        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
-      });
+      this.analyticsApi
+        .pushAnalyticsLoadEvent({
+          tenantAlias: sqh.analytics.attributes.tenant,
+          externalAccountId: sqh.analytics.attributes.accountId,
+          externalUserId: sqh.analytics.attributes.userId,
+          engagementMedium: sqh.mode.widgetMode
+        })
+        .then(response => {
+          _log(`${sqh.mode.widgetMode} loaded event recorded. ${response}`);
+        })
+        .catch(ex => {
+          _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+        });
     }
   }
 
   _shareEvent(sqh, medium) {
     if (sqh) {
-      this.analyticsApi.pushAnalyticsShareClickedEvent({
-        tenantAlias: sqh.analytics.attributes.tenant,
-        externalAccountId: sqh.analytics.attributes.accountId,
-        externalUserId: sqh.analytics.attributes.userId,
-        engagementMedium: sqh.mode.widgetMode,
-        shareMedium: medium,
-      }).then((response) => {
-        _log(`${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`);
-      }).catch((ex) => {
-        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
-      });
+      this.analyticsApi
+        .pushAnalyticsShareClickedEvent({
+          tenantAlias: sqh.analytics.attributes.tenant,
+          externalAccountId: sqh.analytics.attributes.accountId,
+          externalUserId: sqh.analytics.attributes.userId,
+          engagementMedium: sqh.mode.widgetMode,
+          shareMedium: medium
+        })
+        .then(response => {
+          _log(
+            `${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`
+          );
+        })
+        .catch(ex => {
+          _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+        });
     }
   }
 
   _inviteContacts(sqh, emailList) {
     if (sqh) {
-      this.widgetApi.invite({
-        tenantAlias: sqh.analytics.attributes.tenant,
-        accountId: sqh.analytics.attributes.accountId,
-        userId: sqh.analytics.attributes.userId,
-        emailList,
-      }).then((response) => {
-        _log(`Sent email invites to share ${emailList}. ${response}`);
-      }).catch((ex) => {
-        _log(new Error(`invite() ${ex}`));
-      });
+      this.widgetApi
+        .invite({
+          tenantAlias: sqh.analytics.attributes.tenant,
+          accountId: sqh.analytics.attributes.accountId,
+          userId: sqh.analytics.attributes.userId,
+          emailList
+        })
+        .then(response => {
+          _log(`Sent email invites to share ${emailList}. ${response}`);
+        })
+        .catch(ex => {
+          _log(new Error(`invite() ${ex}`));
+        });
     }
   }
 
-  _error(rs, mode = 'modal', style = '') {
+  _error(rs, mode = "modal", style = "") {
     const errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
@@ -115,5 +127,26 @@ export default class Widget {
     </html>`;
 
     return errorTemplate;
+  }
+
+  _findInnerContainer() {
+    const { contentWindow } = this.frame;
+    if (!contentWindow)
+      throw new Error("Squatch.hs frame inner frame is empty");
+    const frameDoc = contentWindow.document;
+    const containers = frameDoc.getElementsByTagName("sqh-global-container");
+    const legacyContainers = frameDoc.getElementsByClassName(
+      "squatch-container"
+    );
+    const fallback =
+      containers.length > 0
+        ? containers[0]
+        : legacyContainers.length > 0
+          ? legacyContainers[0]
+          : null;
+    if (!fallback){
+      return frameDoc.body;
+    } 
+    return fallback;
   }
 }

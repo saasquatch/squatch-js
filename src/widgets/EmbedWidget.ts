@@ -30,17 +30,17 @@ export default class EmbedWidget extends Widget {
     if (!this.element.firstChild || this.element.firstChild.nodeName === '#text') {
       this.element.appendChild(this.frame);
     }
-    if(!this.frame.contentWindow){
+    const {contentWindow} = this.frame;
+    if(!contentWindow){
       throw new Error("Frame needs a content window");
     }
-    const frameDoc = this.frame.contentWindow.document;
+    const frameDoc = contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
     frameDoc.close();
 
     domready(frameDoc, () => {
-      // @ts-ignore -- Assume that squatch does exist
-      const _sqh = this.frame.contentWindow.squatch;
+      const _sqh = contentWindow.squatch;
       const ctaElement = frameDoc.getElementById('cta');
 
       if (ctaElement) {
@@ -62,11 +62,7 @@ export default class EmbedWidget extends Widget {
         }
       });
 
-      const container = frameDoc.getElementsByTagName('sqh-global-container');
-      const fallback = container.length > 0 ? container[0] : frameDoc.getElementsByClassName('squatch-container')[0];
-
-      if (!fallback) _log('Error: no container found.');
-      ro.observe(fallback);
+      ro.observe(this._findInnerContainer());
 
       this._loadEvent(_sqh);
       _log('loaded');

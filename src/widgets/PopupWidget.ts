@@ -74,6 +74,7 @@ export default class PopupWidget extends Widget {
     frameDoc.write(this.content);
     frameDoc.close();
     _log("Popup template loaded into iframe");
+    this._setupResizeHandler();
   }
 
   reload({ email, firstName, lastName }, jwt) {
@@ -125,7 +126,7 @@ export default class PopupWidget extends Widget {
       });
   }
 
-  open() {
+  _setupResizeHandler(){
     const popupdiv = this.popupdiv;
     const frame = this.frame;
     const frameWindow = frame.contentWindow;
@@ -134,8 +135,65 @@ export default class PopupWidget extends Widget {
 
     // Adjust frame height when size of body changes
     domready(frameDoc, () => {
-      // @ts-ignore -- we assume that `squatch` does exist on the window.
-      const _sqh = frameWindow.squatch;
+
+      frameDoc.body.style.overflowY = "hidden";
+      popupdiv.style.visibility = "hidden";
+      popupdiv.style.display = "block";
+      popupdiv.style.top = "0";
+      frame.height = `${frameDoc.body.offsetHeight}px`;
+      // Adjust frame height when size of body changes
+      const ro = new ResizeObserver(entries => {
+        for (const entry of entries) {
+          const { target } = entry;
+          const { height } = entry.contentRect;
+          const referralsEls = frameDoc.getElementsByClassName('squatch-referrals');
+          let referralsHeight = 0;
+          if(!referralsEls || referralsEls.length === 0){
+            _log("Can't find element .squatch-referrals")
+          }else{
+            const referrals = referralsEls[0];
+            if(!(referrals instanceof HTMLElement)){
+              _log("Referrals element has no offset height")
+            }else{
+              referralsHeight = referrals.offsetHeight;
+            }
+          }
+          const finalHeight = height - referralsHeight;
+  
+          if (finalHeight > 0){
+            frame.height = finalHeight + "";
+          }
+  
+          // @ts-ignore - number vs string comparison, should fail...
+          if (window.innerHeight > frame.height) {
+            // @ts-ignore - number vs string comparison, should fail...
+            popupdiv.style.paddingTop = `${((window.innerHeight - frame.height) / 2)}px`;
+          } else {
+            popupdiv.style.paddingTop = '5px';
+          }
+          
+          if(!(target instanceof HTMLElement)){
+            _log("Popup target can't be styled")
+            break;
+          }
+          target.style.width = '100%';
+          target.style.height = `${finalHeight}px`; 
+        }
+      });
+      ro.observe(this._findInnerContainer());
+    });
+  }
+
+  open() {
+    const popupdiv = this.popupdiv;
+    const frame = this.frame;
+    const {contentWindow} = frame;
+    if(!contentWindow) throw new Error("Squatch.js has an empty iframe");
+    const frameDoc = contentWindow.document;
+
+    // Adjust frame height when size of body changes
+    domready(frameDoc, () => {
+      const _sqh = contentWindow.squatch;
       const ctaElement = frameDoc.getElementById("cta");
 
       if (ctaElement) {
@@ -143,57 +201,14 @@ export default class PopupWidget extends Widget {
         ctaElement.parentNode.removeChild(ctaElement);
       }
 
-      frameDoc.body.style.overflowY = "hidden";
-      popupdiv.style.display = "block";
-      popupdiv.style.top = "0";
-
-      frame.height = `${frameDoc.body.offsetHeight}px`;
-
-      const container = frameDoc.getElementsByTagName("sqh-global-container");
-      const fallback =
-        container.length > 0
-          ? container[0]
-          : frameDoc.getElementsByClassName("squatch-container")[0];
-
-      // Adjust frame height when size of body changes
-      const ro = new ResizeObserver(entries => {
-        for (const entry of entries) {
-          const { height } = entry.contentRect;
-          const referrals = frameDoc.getElementsByClassName(
-            "squatch-referrals"
-          )[0];
-          // @ts-ignore -- we assume offsetHeight exists on referrals
-          const referralsHeight = referrals ? referrals.offsetHeight : 0;
-          const finalHeight = height - referralsHeight;
-
-          if (finalHeight > 0) {
-            frame.height = `${finalHeight}px`;
-          }
-
-          if (window.innerHeight > finalHeight) {
-            const center = (window.innerHeight - finalHeight) / 2;
-            popupdiv.style.paddingTop = `${center}px`;
-          } else {
-            popupdiv.style.paddingTop = "5px";
-          }
-
-          // @ts-ignore -- we assume fallback is a styleable html element
-          // fallback.style.width = "100%";
-          // @ts-ignore -- we assume fallback is a styleable html element
-          // fallback.style.height = `${finalHeight}px`;
-        }
-      });
-
-      if (!fallback) _log("Error: no container found.");
-      ro.observe(fallback);
-
+      popupdiv.style.visibility = "visible";
       this._loadEvent(_sqh);
       _log("Popup opened");
     });
   }
 
   close() {
-    this.popupdiv.style.display = "none";
+    this.popupdiv.style.visibility = "hidden";
     _log("Popup closed");
   }
 
