@@ -1,0 +1,6042 @@
+{
+	"id": 0,
+	"name": "@saasquatch/squatch-js",
+	"kind": 0,
+	"flags": {},
+	"children": [
+		{
+			"id": 320,
+			"name": "\"api/AnalyticsApi\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/api/AnalyticsApi.ts",
+			"sources": [
+				{
+					"fileName": "api/AnalyticsApi.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 239,
+			"name": "\"api/EventsApi\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/api/EventsApi.ts",
+			"children": [
+				{
+					"id": 240,
+					"name": "EventsApi",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "The EventsApi class is a wrapper around the open endpoints of the SaaSquatch REST API."
+					},
+					"children": [
+						{
+							"id": 243,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Initialize a new {@link EventsApi} instance.",
+								"tags": [
+									{
+										"tag": "example",
+										"text": "<caption>Browser example</caption>\nvar squatchApi = new squatch.EventsApi({tenantAlias:'test_12b5bo1b25125'});\n"
+									},
+									{
+										"tag": "example",
+										"text": "<caption>Browserify/Webpack example</caption>\nvar EventsApi = require('@saasquatch/squatch-js').EventsApi;\nvar squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});\n"
+									},
+									{
+										"tag": "example",
+										"text": "<caption>Babel+Browserify/Webpack example</caption>\nimport {EventsApi} from '@saasquatch/squatch-js';\nlet squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});\n"
+									}
+								]
+							},
+							"signatures": [
+								{
+									"id": 244,
+									"name": "new EventsApi",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Initialize a new {@link EventsApi} instance.",
+										"tags": [
+											{
+												"tag": "example",
+												"text": "<caption>Browser example</caption>\nvar squatchApi = new squatch.EventsApi({tenantAlias:'test_12b5bo1b25125'});\n"
+											},
+											{
+												"tag": "example",
+												"text": "<caption>Browserify/Webpack example</caption>\nvar EventsApi = require('@saasquatch/squatch-js').EventsApi;\nvar squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});\n"
+											},
+											{
+												"tag": "example",
+												"text": "<caption>Babel+Browserify/Webpack example</caption>\nimport {EventsApi} from '@saasquatch/squatch-js';\nlet squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});\n"
+											}
+										]
+									},
+									"parameters": [
+										{
+											"id": 245,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 246,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 248,
+															"name": "domain",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/EventsApi.ts",
+																	"line": 30,
+																	"character": 35
+																}
+															],
+															"type": {
+																"type": "union",
+																"types": [
+																	{
+																		"type": "intrinsic",
+																		"name": "undefined"
+																	},
+																	{
+																		"type": "intrinsic",
+																		"name": "string"
+																	}
+																]
+															}
+														},
+														{
+															"id": 247,
+															"name": "tenantAlias",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/EventsApi.ts",
+																	"line": 30,
+																	"character": 27
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "string"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																248,
+																247
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "api/EventsApi.ts",
+															"line": 30,
+															"character": 14
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "EventsApi",
+										"id": 240
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/EventsApi.ts",
+									"line": 13,
+									"character": 17
+								}
+							]
+						},
+						{
+							"id": 242,
+							"name": "domain",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "api/EventsApi.ts",
+									"line": 13,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 241,
+							"name": "tenantAlias",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "api/EventsApi.ts",
+									"line": 12,
+									"character": 13
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 249,
+							"name": "logEvent",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 250,
+									"name": "logEvent",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Logs an event for a user",
+										"returns": "An ID to confirm the event has been accepted for asynchronous processing\n"
+									},
+									"parameters": [
+										{
+											"id": 251,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Parameters for request"
+											},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 252,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 254,
+															"name": "fields",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "The fields for the event"
+															},
+															"sources": [
+																{
+																	"fileName": "api/EventsApi.ts",
+																	"line": 46,
+																	"character": 41
+																}
+															],
+															"type": {
+																"type": "union",
+																"types": [
+																	{
+																		"type": "intrinsic",
+																		"name": "undefined"
+																	},
+																	{
+																		"type": "intrinsic",
+																		"name": "object"
+																	}
+																]
+															}
+														},
+														{
+															"id": 255,
+															"name": "jwt",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "the JSON Web Token (JWT) that is used to authenticate the user\n"
+															},
+															"sources": [
+																{
+																	"fileName": "api/EventsApi.ts",
+																	"line": 46,
+																	"character": 55
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "JWT",
+																"id": 286
+															}
+														},
+														{
+															"id": 253,
+															"name": "type",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"comment": {
+																"text": "The type of event to log"
+															},
+															"sources": [
+																{
+																	"fileName": "api/EventsApi.ts",
+																	"line": 46,
+																	"character": 25
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "string"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																254,
+																255,
+																253
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "api/EventsApi.ts",
+															"line": 46,
+															"character": 18
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/EventsApi.ts",
+									"line": 46,
+									"character": 10
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								243
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								242,
+								241
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								249
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "api/EventsApi.ts",
+							"line": 11,
+							"character": 30
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						240
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "api/EventsApi.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 15,
+			"name": "\"api/WidgetApi\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/api/WidgetApi.ts",
+			"children": [
+				{
+					"id": 16,
+					"name": "WidgetApi",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "The WidgetApi class is a wrapper around the Widget Endpoints of the SaaSquatch REST API."
+					},
+					"children": [
+						{
+							"id": 19,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Initialize a new {@link WidgetApi} instance.",
+								"tags": [
+									{
+										"tag": "example",
+										"text": "<caption>Browser example</caption>\nvar squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});\n"
+									},
+									{
+										"tag": "example",
+										"text": "<caption>Browserify/Webpack example</caption>\nvar WidgetApi = require('@saasquatch/squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});\n"
+									},
+									{
+										"tag": "example",
+										"text": "<caption>Babel+Browserify/Webpack example</caption>\nimport {WidgetApi} from '@saasquatch/squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});\n"
+									}
+								]
+							},
+							"signatures": [
+								{
+									"id": 20,
+									"name": "new WidgetApi",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Initialize a new {@link WidgetApi} instance.",
+										"tags": [
+											{
+												"tag": "example",
+												"text": "<caption>Browser example</caption>\nvar squatchApi = new squatch.WidgetApi({tenantAlias:'test_12b5bo1b25125'});\n"
+											},
+											{
+												"tag": "example",
+												"text": "<caption>Browserify/Webpack example</caption>\nvar WidgetApi = require('@saasquatch/squatch-js').WidgetApi;\nvar squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});\n"
+											},
+											{
+												"tag": "example",
+												"text": "<caption>Babel+Browserify/Webpack example</caption>\nimport {WidgetApi} from '@saasquatch/squatch-js';\nlet squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});\n"
+											}
+										]
+									},
+									"parameters": [
+										{
+											"id": 21,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 22,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 24,
+															"name": "domain",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 32,
+																	"character": 35
+																}
+															],
+															"type": {
+																"type": "union",
+																"types": [
+																	{
+																		"type": "intrinsic",
+																		"name": "undefined"
+																	},
+																	{
+																		"type": "intrinsic",
+																		"name": "string"
+																	}
+																]
+															}
+														},
+														{
+															"id": 23,
+															"name": "tenantAlias",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 32,
+																	"character": 27
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "string"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																24,
+																23
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "api/WidgetApi.ts",
+															"line": 32,
+															"character": 14
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "WidgetApi",
+										"id": 16
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 14,
+									"character": 17
+								}
+							]
+						},
+						{
+							"id": 18,
+							"name": "domain",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 14,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 17,
+							"name": "tenantAlias",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 13,
+									"character": 13
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 25,
+							"name": "cookieUser",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 26,
+									"name": "cookieUser",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Creates/upserts an anonymous user.",
+										"returns": "json object if true, with the widget template, jsOptions and user details.\n"
+									},
+									"parameters": [
+										{
+											"id": 27,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Parameters for request"
+											},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 28,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 30,
+															"name": "engagementMedium",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"comment": {
+																"text": "How to display the widget."
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 52,
+																	"character": 20
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "EngagementMedium",
+																"id": 283
+															}
+														},
+														{
+															"id": 32,
+															"name": "jwt",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"comment": {
+																"text": "the JSON Web Token (JWT) that is used to\n                           validate the data (can be disabled)\n"
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 54,
+																	"character": 7
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "JWT",
+																"id": 286
+															}
+														},
+														{
+															"id": 31,
+															"name": "user",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"comment": {
+																"text": "An optional user object"
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 53,
+																	"character": 8
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "CookieUser",
+																"id": 279
+															}
+														},
+														{
+															"id": 29,
+															"name": "widgetType",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"comment": {
+																"text": "The content of the widget."
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 51,
+																	"character": 14
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "WidgetType",
+																"id": 284
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																30,
+																32,
+																31,
+																29
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "api/WidgetApi.ts",
+															"line": 50,
+															"character": 20
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 50,
+									"character": 12
+								}
+							]
+						},
+						{
+							"id": 49,
+							"name": "invite",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 50,
+									"name": "invite",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "An API call to send out referral invites to contacts",
+										"returns": "an object containing total accepted / rejected emails send or error\n"
+									},
+									"parameters": [
+										{
+											"id": 51,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 52,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 55,
+															"name": "accountId",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 147,
+																	"character": 13
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "string"
+															}
+														},
+														{
+															"id": 53,
+															"name": "emailList",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 145,
+																	"character": 13
+																}
+															],
+															"type": {
+																"type": "array",
+																"elementType": {
+																	"type": "intrinsic",
+																	"name": "string"
+																}
+															},
+															"defaultValue": " []"
+														},
+														{
+															"id": 56,
+															"name": "tenantAlias",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 148,
+																	"character": 15
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "string"
+															}
+														},
+														{
+															"id": 54,
+															"name": "userId",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 146,
+																	"character": 10
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "string"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																55,
+																53,
+																56,
+																54
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "api/WidgetApi.ts",
+															"line": 144,
+															"character": 9
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 144,
+									"character": 8
+								}
+							]
+						},
+						{
+							"id": 41,
+							"name": "render",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 42,
+									"name": "render",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Description here.",
+										"returns": "template html if true.\n"
+									},
+									"parameters": [
+										{
+											"id": 43,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Parameters for request"
+											},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 44,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 47,
+															"name": "engagementMedium",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "How to display the widget."
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 117,
+																	"character": 20
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "EngagementMedium",
+																"id": 283
+															}
+														},
+														{
+															"id": 48,
+															"name": "jwt",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "the JSON Web Token (JWT) that is used\n                           to validate the data (can be disabled)"
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 118,
+																	"character": 7
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "JWT",
+																"id": 286
+															}
+														},
+														{
+															"id": 45,
+															"name": "user",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"comment": {
+																"text": "The user details"
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 115,
+																	"character": 8
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "User",
+																"id": 273
+															}
+														},
+														{
+															"id": 46,
+															"name": "widgetType",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "The content of the widget."
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 116,
+																	"character": 14
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "WidgetType",
+																"id": 284
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																47,
+																48,
+																45,
+																46
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "api/WidgetApi.ts",
+															"line": 114,
+															"character": 16
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 114,
+									"character": 8
+								}
+							]
+						},
+						{
+							"id": 57,
+							"name": "squatchReferralCookie",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 58,
+									"name": "squatchReferralCookie",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Looks up the referral code of the current user, if there is any.",
+										"returns": "code referral code if true.\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 172,
+									"character": 23
+								}
+							]
+						},
+						{
+							"id": 33,
+							"name": "upsertUser",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 34,
+									"name": "upsertUser",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Creates/upserts user.",
+										"returns": "string if true, with the widget template, jsOptions and user details.\n"
+									},
+									"parameters": [
+										{
+											"id": 35,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Parameters for request"
+											},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 36,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 38,
+															"name": "engagementMedium",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "How to display the widget."
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 82,
+																	"character": 20
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "EngagementMedium",
+																"id": 283
+															}
+														},
+														{
+															"id": 39,
+															"name": "jwt",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "the JSON Web Token (JWT) that is used\n                           to validate the data (can be disabled)\n"
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 83,
+																	"character": 7
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "JWT",
+																"id": 286
+															}
+														},
+														{
+															"id": 40,
+															"name": "user",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"comment": {
+																"text": "The user details"
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 84,
+																	"character": 8
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "User",
+																"id": 273
+															}
+														},
+														{
+															"id": 37,
+															"name": "widgetType",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {
+																"isOptional": true
+															},
+															"comment": {
+																"text": "The content of the widget."
+															},
+															"sources": [
+																{
+																	"fileName": "api/WidgetApi.ts",
+																	"line": 81,
+																	"character": 14
+																}
+															],
+															"type": {
+																"type": "reference",
+																"name": "WidgetType",
+																"id": 284
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																38,
+																39,
+																40,
+																37
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "api/WidgetApi.ts",
+															"line": 80,
+															"character": 20
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 80,
+									"character": 12
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								19
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								18,
+								17
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								25,
+								49,
+								41,
+								57,
+								33
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "api/WidgetApi.ts",
+							"line": 12,
+							"character": 30
+						}
+					]
+				},
+				{
+					"id": 59,
+					"name": "_buildParams",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"signatures": [
+						{
+							"id": 60,
+							"name": "_buildParams",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 61,
+									"name": "__namedParameters",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"originalName": "__0",
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 62,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 64,
+													"name": "engagementMedium",
+													"kind": 32,
+													"kindString": "Variable",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "api/WidgetApi.ts",
+															"line": 182,
+															"character": 18
+														}
+													],
+													"type": {
+														"type": "union",
+														"types": [
+															{
+																"type": "stringLiteral",
+																"value": "POPUP"
+															},
+															{
+																"type": "stringLiteral",
+																"value": "EMBED"
+															}
+														]
+													}
+												},
+												{
+													"id": 63,
+													"name": "widgetType",
+													"kind": 32,
+													"kindString": "Variable",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "api/WidgetApi.ts",
+															"line": 181,
+															"character": 12
+														}
+													],
+													"type": {
+														"type": "union",
+														"types": [
+															{
+																"type": "intrinsic",
+																"name": "undefined"
+															},
+															{
+																"type": "intrinsic",
+																"name": "string"
+															}
+														]
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Variables",
+													"kind": 32,
+													"children": [
+														64,
+														63
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "api/WidgetApi.ts",
+													"line": 180,
+													"character": 22
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "api/WidgetApi.ts",
+							"line": 180,
+							"character": 21
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						16
+					]
+				},
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						59
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "api/WidgetApi.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 256,
+			"name": "\"async\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/async.ts",
+			"children": [
+				{
+					"id": 257,
+					"name": "__global",
+					"kind": 2,
+					"kindString": "Module",
+					"flags": {},
+					"children": [
+						{
+							"id": 258,
+							"name": "Window",
+							"kind": 256,
+							"kindString": "Interface",
+							"flags": {},
+							"children": [
+								{
+									"id": 259,
+									"name": "_squatch",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "async.ts",
+											"line": 4,
+											"character": 12
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 260,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"children": [
+												{
+													"id": 261,
+													"name": "ready",
+													"kind": 32,
+													"kindString": "Variable",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "async.ts",
+															"line": 5,
+															"character": 11
+														}
+													],
+													"type": {
+														"type": "array",
+														"elementType": {
+															"type": "intrinsic",
+															"name": "any"
+														}
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Variables",
+													"kind": 32,
+													"children": [
+														261
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "async.ts",
+													"line": 4,
+													"character": 13
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 262,
+									"name": "squatch",
+									"kind": 1024,
+									"kindString": "Property",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "async.ts",
+											"line": 7,
+											"character": 11
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"kind": 1024,
+									"children": [
+										259,
+										262
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "async.ts",
+									"line": 3,
+									"character": 18
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Interfaces",
+							"kind": 256,
+							"children": [
+								258
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "async.ts",
+							"line": 2,
+							"character": 14
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Modules",
+					"kind": 2,
+					"children": [
+						257
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "async.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 287,
+			"name": "\"docs\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/docs.ts",
+			"children": [
+				{
+					"id": 288,
+					"name": "help",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 289,
+							"name": "help",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "docs.ts",
+							"line": 2,
+							"character": 20
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						288
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "docs.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 290,
+			"name": "\"index\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/index.ts",
+			"children": [
+				{
+					"id": 295,
+					"name": "api",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 296,
+							"name": "api",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "A static instance of the {@link WidgetApi} created when you call {@link #init init}.",
+								"text": "Read the {@link WidgetApi} docs.\n",
+								"returns": "WidgetApi static instance\n"
+							},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "WidgetApi",
+										"id": 16
+									},
+									{
+										"type": "intrinsic",
+										"name": "null"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 50,
+							"character": 19
+						}
+					]
+				},
+				{
+					"id": 309,
+					"name": "autofill",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 310,
+							"name": "autofill",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Autofills a referral code into an element when someone has been referred.\nUses {@link WidgetApi.squatchReferralCookie} behind the scenes.",
+								"returns": "\n"
+							},
+							"parameters": [
+								{
+									"id": 311,
+									"name": "selector",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Element class/id"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 132,
+							"character": 24
+						}
+					]
+				},
+				{
+					"id": 299,
+					"name": "events",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 300,
+							"name": "events",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "A static instance of the {@link EventsApi} created when you call {@link #init init}.",
+								"text": "Read the {@link EventsApi} docs.\n",
+								"returns": "EventsApi static instance\n"
+							},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "EventsApi",
+										"id": 240
+									},
+									{
+										"type": "intrinsic",
+										"name": "null"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 72,
+							"character": 22
+						}
+					]
+				},
+				{
+					"id": 301,
+					"name": "init",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 302,
+							"name": "init",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Initializes the static `squatch` global. This sets up:",
+								"text": " - `squatch.api()` a static instance of the {@link WidgetApi}\n - `squatch.widgets()` a static instance of {@link Widgets}\n - `squatch.events()` a static instance of {@link EventsApi}\n",
+								"tags": [
+									{
+										"tag": "example",
+										"text": "\nsquatch.init({tenantAlias:'test_basbtabstq51v'});\n"
+									}
+								]
+							},
+							"parameters": [
+								{
+									"id": 303,
+									"name": "config",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Configuration details\n"
+									},
+									"type": {
+										"type": "reference",
+										"name": "ConfigOptions",
+										"id": 266
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 89,
+							"character": 20
+						}
+					]
+				},
+				{
+					"id": 304,
+					"name": "ready",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 305,
+							"name": "ready",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Squatch.js can't start safely making operations until it's \"ready\". This\nfunction detects that state.",
+								"tags": [
+									{
+										"tag": "example",
+										"text": "\nsquatch.ready(function() {\n  console.log(\"ready!\");\n  squatch.api().cookieUser();\n});\n"
+									}
+								]
+							},
+							"parameters": [
+								{
+									"id": 306,
+									"name": "fn",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "A callback once Squatch.js is ready.\n"
+									},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 307,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"signatures": [
+												{
+													"id": 308,
+													"name": "__call",
+													"kind": 4096,
+													"kindString": "Call signature",
+													"flags": {},
+													"type": {
+														"type": "intrinsic",
+														"name": "any"
+													}
+												}
+											],
+											"sources": [
+												{
+													"fileName": "index.ts",
+													"line": 121,
+													"character": 25
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 121,
+							"character": 21
+						}
+					]
+				},
+				{
+					"id": 312,
+					"name": "submitEmail",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 313,
+							"name": "submitEmail",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Overrides the default function that submits the user email. If you have\nSecurity enabled, the email needs to be signed before it's submitted.",
+								"returns": "\n",
+								"tags": [
+									{
+										"tag": "example",
+										"text": "\nsquatch.submitEmail(function(target, widget, email) {\n  // Sign email and generate jwt token\n  var jwt = 'token';\n  widget.reload(email, jwt);\n});\n"
+									}
+								]
+							},
+							"parameters": [
+								{
+									"id": 314,
+									"name": "fn",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"comment": {
+										"text": "Callback function for the 'submit_email' event."
+									},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 315,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"signatures": [
+												{
+													"id": 316,
+													"name": "__call",
+													"kind": 4096,
+													"kindString": "Call signature",
+													"flags": {},
+													"parameters": [
+														{
+															"id": 317,
+															"name": "target",
+															"kind": 32768,
+															"kindString": "Parameter",
+															"flags": {},
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 318,
+															"name": "widget",
+															"kind": 32768,
+															"kindString": "Parameter",
+															"flags": {},
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 319,
+															"name": "email",
+															"kind": 32768,
+															"kindString": "Parameter",
+															"flags": {},
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "any"
+													}
+												}
+											],
+											"sources": [
+												{
+													"fileName": "index.ts",
+													"line": 151,
+													"character": 31
+												}
+											]
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 151,
+							"character": 27
+						}
+					]
+				},
+				{
+					"id": 297,
+					"name": "widgets",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 298,
+							"name": "widgets",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "A static instance of the {@link Widgets} created when you call {@link #init init}.",
+								"text": "Read the {@link Widgets} docs.\n",
+								"returns": "static instance\n"
+							},
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "Widgets",
+										"id": 190
+									},
+									{
+										"type": "intrinsic",
+										"name": "null"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "index.ts",
+							"line": 61,
+							"character": 23
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						295,
+						309,
+						299,
+						301,
+						304,
+						312,
+						297
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 265,
+			"name": "\"types\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/types.ts",
+			"children": [
+				{
+					"id": 266,
+					"name": "ConfigOptions",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "When you load Squatch.js you need to provide these configuration options.",
+						"tags": [
+							{
+								"tag": "param",
+								"text": "The Tenant that you're using.",
+								"param": "tenantAlias"
+							},
+							{
+								"tag": "param",
+								"text": "The domain for API. Defaults to `https://app.referralsaasquatch.com`",
+								"param": "domain"
+							},
+							{
+								"tag": "param",
+								"text": "Enables debug logging. Defaults to `false`.\n",
+								"param": "debug"
+							}
+						]
+					},
+					"children": [
+						{
+							"id": 269,
+							"name": "debug",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 13,
+									"character": 7
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "false"
+									},
+									{
+										"type": "intrinsic",
+										"name": "true"
+									}
+								]
+							}
+						},
+						{
+							"id": 268,
+							"name": "domain",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 12,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						},
+						{
+							"id": 267,
+							"name": "tenantAlias",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 11,
+									"character": 13
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								269,
+								268,
+								267
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 10,
+							"character": 30
+						}
+					]
+				},
+				{
+					"id": 270,
+					"name": "WidgetResult",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "When a widget is loaded using {@link Widgets} you'll get both the `user` data and the `widget` object back.",
+						"tags": [
+							{
+								"tag": "param",
+								"text": "The widget that was created.",
+								"param": "widget"
+							},
+							{
+								"tag": "param",
+								"text": "The user that's in the widget.\n\n",
+								"param": "user"
+							}
+						]
+					},
+					"children": [
+						{
+							"id": 272,
+							"name": "user",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 25,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "User",
+								"id": 273
+							}
+						},
+						{
+							"id": 271,
+							"name": "widget",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 24,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Widget",
+								"id": 66
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								272,
+								271
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 23,
+							"character": 29
+						}
+					]
+				},
+				{
+					"id": 279,
+					"name": "CookieUser",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 34,
+							"character": 22
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 280,
+							"name": "__type",
+							"kind": 65536,
+							"kindString": "Type literal",
+							"flags": {},
+							"indexSignature": {
+								"id": 281,
+								"name": "__index",
+								"kind": 8192,
+								"kindString": "Index signature",
+								"flags": {},
+								"parameters": [
+									{
+										"id": 282,
+										"name": "key",
+										"kind": 32768,
+										"kindString": "Parameter",
+										"flags": {},
+										"type": {
+											"type": "intrinsic",
+											"name": "string"
+										}
+									}
+								],
+								"type": {
+									"type": "intrinsic",
+									"name": "any"
+								}
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 34,
+									"character": 24
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 283,
+					"name": "EngagementMedium",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "EngagementMedium is an enum for the content of the widgets.",
+						"tags": [
+							{
+								"tag": "example",
+								"text": "`widgetType: \"POPUP\"`\n"
+							}
+						]
+					},
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 43,
+							"character": 28
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "stringLiteral",
+								"value": "POPUP"
+							},
+							{
+								"type": "stringLiteral",
+								"value": "EMBED"
+							}
+						]
+					}
+				},
+				{
+					"id": 286,
+					"name": "JWT",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 61,
+							"character": 15
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 285,
+					"name": "ShareMedium",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 60,
+							"character": 23
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 273,
+					"name": "User",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {
+						"isExported": true
+					},
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 28,
+							"character": 16
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 274,
+							"name": "__type",
+							"kind": 65536,
+							"kindString": "Type literal",
+							"flags": {},
+							"indexSignature": {
+								"id": 277,
+								"name": "__index",
+								"kind": 8192,
+								"kindString": "Index signature",
+								"flags": {},
+								"parameters": [
+									{
+										"id": 278,
+										"name": "key",
+										"kind": 32768,
+										"kindString": "Parameter",
+										"flags": {},
+										"type": {
+											"type": "intrinsic",
+											"name": "string"
+										}
+									}
+								],
+								"type": {
+									"type": "intrinsic",
+									"name": "any"
+								}
+							},
+							"children": [
+								{
+									"id": 276,
+									"name": "accountId",
+									"kind": 32,
+									"kindString": "Variable",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "types.ts",
+											"line": 30,
+											"character": 11
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 275,
+									"name": "id",
+									"kind": 32,
+									"kindString": "Variable",
+									"flags": {},
+									"sources": [
+										{
+											"fileName": "types.ts",
+											"line": 29,
+											"character": 4
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Variables",
+									"kind": 32,
+									"children": [
+										276,
+										275
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 28,
+									"character": 18
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 284,
+					"name": "WidgetType",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "WidgetType is an enum for types of ways a Widget can be displayed."
+					},
+					"sources": [
+						{
+							"fileName": "types.ts",
+							"line": 52,
+							"character": 22
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "stringLiteral",
+								"value": "REFERRER_WIDGET"
+							},
+							{
+								"type": "stringLiteral",
+								"value": "CONVERSION_WIDGET"
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Interfaces",
+					"kind": 256,
+					"children": [
+						266,
+						270
+					]
+				},
+				{
+					"title": "Type aliases",
+					"kind": 4194304,
+					"children": [
+						279,
+						283,
+						286,
+						285,
+						273,
+						284
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "types.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 1,
+			"name": "\"utils/io\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/utils/io.ts",
+			"children": [
+				{
+					"id": 10,
+					"name": "doPut",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 11,
+							"name": "doPut",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 12,
+									"name": "url",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 13,
+									"name": "data",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 14,
+									"name": "jwt",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "utils/io.ts",
+							"line": 56,
+							"character": 21
+						}
+					]
+				},
+				{
+					"id": 2,
+					"name": "doRequest",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {
+						"isExported": true
+					},
+					"signatures": [
+						{
+							"id": 3,
+							"name": "doRequest",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"parameters": [
+								{
+									"id": 4,
+									"name": "url",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "any"
+									}
+								},
+								{
+									"id": 5,
+									"name": "jwt",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									},
+									"defaultValue": "\"\""
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Promise",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								]
+							}
+						}
+					],
+					"sources": [
+						{
+							"fileName": "utils/io.ts",
+							"line": 3,
+							"character": 25
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Functions",
+					"kind": 64,
+					"children": [
+						10,
+						2
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "utils/io.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 143,
+			"name": "\"widgets/CtaWidget\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/widgets/CtaWidget.ts",
+			"children": [
+				{
+					"id": 144,
+					"name": "CtaWidget",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "A CtaWidget is displayed on top of your page",
+						"text": "To create a CtaWidget use {@link Widgets}\n\n"
+					},
+					"children": [
+						{
+							"id": 149,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 150,
+									"name": "new CtaWidget",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 151,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										},
+										{
+											"id": 152,
+											"name": "opts",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "CtaWidget",
+										"id": 144
+									},
+									"overwrites": {
+										"type": "reference",
+										"name": "PopupWidget.__constructor",
+										"id": 107
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 20,
+									"character": 30
+								}
+							],
+							"overwrites": {
+								"type": "reference",
+								"name": "PopupWidget.__constructor",
+								"id": 107
+							}
+						},
+						{
+							"id": 186,
+							"name": "analyticsApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 24,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "AnalyticsApi"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.analyticsApi",
+								"id": 70
+							}
+						},
+						{
+							"id": 185,
+							"name": "content",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 23,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.content",
+								"id": 69
+							}
+						},
+						{
+							"id": 148,
+							"name": "ctaFrame",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 20,
+									"character": 10
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLIFrameElement"
+							}
+						},
+						{
+							"id": 183,
+							"name": "frame",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 21,
+									"character": 7
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLIFrameElement"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.frame",
+								"id": 67
+							}
+						},
+						{
+							"id": 162,
+							"name": "popupcontent",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 22,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLElement"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget.popupcontent",
+								"id": 106
+							}
+						},
+						{
+							"id": 161,
+							"name": "popupdiv",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 21,
+									"character": 10
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLElement"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget.popupdiv",
+								"id": 105
+							}
+						},
+						{
+							"id": 145,
+							"name": "position",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 17,
+									"character": 10
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 147,
+							"name": "positionClass",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 19,
+									"character": 15
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 146,
+							"name": "side",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 18,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 159,
+							"name": "triggerElement",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 19,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "HTMLElement"
+									},
+									{
+										"type": "intrinsic",
+										"name": "null"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget.triggerElement",
+								"id": 103
+							}
+						},
+						{
+							"id": 160,
+							"name": "triggerWhenCTA",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 20,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "HTMLElement"
+									},
+									{
+										"type": "intrinsic",
+										"name": "null"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget.triggerWhenCTA",
+								"id": 104
+							}
+						},
+						{
+							"id": 184,
+							"name": "type",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 22,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetType",
+								"id": 284
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.type",
+								"id": 68
+							}
+						},
+						{
+							"id": 187,
+							"name": "widgetApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 25,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetApi",
+								"id": 16
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.widgetApi",
+								"id": 71
+							}
+						},
+						{
+							"id": 173,
+							"name": "_clickedOutside",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 174,
+									"name": "_clickedOutside",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 175,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 176,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 177,
+															"name": "target",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 215,
+																	"character": 26
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																177
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "widgets/PopupWidget.ts",
+															"line": 215,
+															"character": 18
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "PopupWidget._clickedOutside",
+										"id": 127
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 215,
+									"character": 17
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget._clickedOutside",
+								"id": 127
+							}
+						},
+						{
+							"id": 178,
+							"name": "_error",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 179,
+									"name": "_error",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 180,
+											"name": "rs",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										},
+										{
+											"id": 181,
+											"name": "mode",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\"modal\""
+										},
+										{
+											"id": 182,
+											"name": "style",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\"\""
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "PopupWidget._error",
+										"id": 132
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 221,
+									"character": 8
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget._error",
+								"id": 132
+							}
+						},
+						{
+							"id": 171,
+							"name": "_setupResizeHandler",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 172,
+									"name": "_setupResizeHandler",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "PopupWidget._setupResizeHandler",
+										"id": 121
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 129,
+									"character": 21
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget._setupResizeHandler",
+								"id": 121
+							}
+						},
+						{
+							"id": 157,
+							"name": "close",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 158,
+									"name": "close",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": " @inheritdoc"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"overwrites": {
+										"type": "reference",
+										"name": "PopupWidget.close",
+										"id": 125
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 129,
+									"character": 7
+								}
+							],
+							"overwrites": {
+								"type": "reference",
+								"name": "PopupWidget.close",
+								"id": 125
+							}
+						},
+						{
+							"id": 153,
+							"name": "load",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 154,
+									"name": "load",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"overwrites": {
+										"type": "reference",
+										"name": "PopupWidget.load",
+										"id": 111
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 55,
+									"character": 6
+								}
+							],
+							"overwrites": {
+								"type": "reference",
+								"name": "PopupWidget.load",
+								"id": 111
+							}
+						},
+						{
+							"id": 155,
+							"name": "open",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 156,
+									"name": "open",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": " @inheritdoc"
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"overwrites": {
+										"type": "reference",
+										"name": "PopupWidget.open",
+										"id": 123
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/CtaWidget.ts",
+									"line": 123,
+									"character": 6
+								}
+							],
+							"overwrites": {
+								"type": "reference",
+								"name": "PopupWidget.open",
+								"id": 123
+							}
+						},
+						{
+							"id": 163,
+							"name": "reload",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 164,
+									"name": "reload",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 165,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 166,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 167,
+															"name": "email",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 80,
+																	"character": 16
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 168,
+															"name": "firstName",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 80,
+																	"character": 27
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 169,
+															"name": "lastName",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 80,
+																	"character": 37
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																167,
+																168,
+																169
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "widgets/PopupWidget.ts",
+															"line": 80,
+															"character": 9
+														}
+													]
+												}
+											}
+										},
+										{
+											"id": 170,
+											"name": "jwt",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "PopupWidget.reload",
+										"id": 113
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 80,
+									"character": 8
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "PopupWidget.reload",
+								"id": 113
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								149
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								186,
+								185,
+								148,
+								183,
+								162,
+								161,
+								145,
+								147,
+								146,
+								159,
+								160,
+								184,
+								187
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								173,
+								178,
+								171,
+								157,
+								153,
+								155,
+								163
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "widgets/CtaWidget.ts",
+							"line": 15,
+							"character": 30
+						}
+					],
+					"extendedTypes": [
+						{
+							"type": "reference",
+							"name": "PopupWidget",
+							"id": 102
+						}
+					]
+				},
+				{
+					"id": 188,
+					"name": "_log",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "widgets/CtaWidget.ts",
+							"line": 7,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "IDebugger"
+					},
+					"defaultValue": " debug('squatch-js:CTAwidget')"
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						144
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						188
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "widgets/CtaWidget.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 73,
+			"name": "\"widgets/EmbedWidget\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/widgets/EmbedWidget.ts",
+			"children": [
+				{
+					"id": 74,
+					"name": "EmbedWidget",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "An EmbedWidget is displayed inline in part of your page.",
+						"text": "To create an EmbedWidget use {@link Widgets}\n\n"
+					},
+					"children": [
+						{
+							"id": 76,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 77,
+									"name": "new EmbedWidget",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 78,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										},
+										{
+											"id": 79,
+											"name": "selector",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\"#squatchembed\""
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "EmbedWidget",
+										"id": 74
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/EmbedWidget.ts",
+									"line": 17,
+									"character": 19
+								}
+							]
+						},
+						{
+							"id": 98,
+							"name": "analyticsApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 24,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "AnalyticsApi"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.analyticsApi",
+								"id": 70
+							}
+						},
+						{
+							"id": 97,
+							"name": "content",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 23,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.content",
+								"id": 69
+							}
+						},
+						{
+							"id": 75,
+							"name": "element",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/EmbedWidget.ts",
+									"line": 17,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "Element"
+							}
+						},
+						{
+							"id": 95,
+							"name": "frame",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 21,
+									"character": 7
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLIFrameElement"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.frame",
+								"id": 67
+							}
+						},
+						{
+							"id": 96,
+							"name": "type",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 22,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetType",
+								"id": 284
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.type",
+								"id": 68
+							}
+						},
+						{
+							"id": 99,
+							"name": "widgetApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 25,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetApi",
+								"id": 16
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.widgetApi",
+								"id": 71
+							}
+						},
+						{
+							"id": 90,
+							"name": "_error",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 91,
+									"name": "_error",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 92,
+											"name": "rs",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										},
+										{
+											"id": 93,
+											"name": "mode",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\"embed\""
+										},
+										{
+											"id": 94,
+											"name": "style",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\"\""
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/EmbedWidget.ts",
+									"line": 113,
+									"character": 8
+								}
+							]
+						},
+						{
+							"id": 80,
+							"name": "load",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 81,
+									"name": "load",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/EmbedWidget.ts",
+									"line": 28,
+									"character": 6
+								}
+							]
+						},
+						{
+							"id": 82,
+							"name": "reload",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 83,
+									"name": "reload",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 84,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 85,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 86,
+															"name": "email",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/EmbedWidget.ts",
+																	"line": 72,
+																	"character": 15
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 87,
+															"name": "firstName",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/EmbedWidget.ts",
+																	"line": 72,
+																	"character": 26
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 88,
+															"name": "lastName",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/EmbedWidget.ts",
+																	"line": 72,
+																	"character": 36
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																86,
+																87,
+																88
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "widgets/EmbedWidget.ts",
+															"line": 72,
+															"character": 9
+														}
+													]
+												}
+											}
+										},
+										{
+											"id": 89,
+											"name": "jwt",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/EmbedWidget.ts",
+									"line": 72,
+									"character": 8
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								76
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								98,
+								97,
+								75,
+								95,
+								96,
+								99
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								90,
+								80,
+								82
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "widgets/EmbedWidget.ts",
+							"line": 16,
+							"character": 32
+						}
+					],
+					"extendedTypes": [
+						{
+							"type": "reference",
+							"name": "Widget",
+							"id": 66
+						}
+					]
+				},
+				{
+					"id": 100,
+					"name": "_log",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "widgets/EmbedWidget.ts",
+							"line": 8,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "IDebugger"
+					},
+					"defaultValue": " debug('squatch-js:EMBEDwidget')"
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						74
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						100
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "widgets/EmbedWidget.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 101,
+			"name": "\"widgets/PopupWidget\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/widgets/PopupWidget.ts",
+			"children": [
+				{
+					"id": 102,
+					"name": "PopupWidget",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "The PopupWidget is used to display popups (also known as \"Modals\").\nPopups widgets are rendered on top of other elements in a page.",
+						"text": "To create a PopupWidget use {@link Widgets}\n\n"
+					},
+					"children": [
+						{
+							"id": 107,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 108,
+									"name": "new PopupWidget",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 109,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										},
+										{
+											"id": 110,
+											"name": "trigger",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\".squatchpop\""
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "PopupWidget",
+										"id": 102
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 22,
+									"character": 28
+								}
+							]
+						},
+						{
+							"id": 140,
+							"name": "analyticsApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 24,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "AnalyticsApi"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.analyticsApi",
+								"id": 70
+							}
+						},
+						{
+							"id": 139,
+							"name": "content",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 23,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.content",
+								"id": 69
+							}
+						},
+						{
+							"id": 137,
+							"name": "frame",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 21,
+									"character": 7
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLIFrameElement"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.frame",
+								"id": 67
+							}
+						},
+						{
+							"id": 106,
+							"name": "popupcontent",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 22,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLElement"
+							}
+						},
+						{
+							"id": 105,
+							"name": "popupdiv",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 21,
+									"character": 10
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLElement"
+							}
+						},
+						{
+							"id": 103,
+							"name": "triggerElement",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 19,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "HTMLElement"
+									},
+									{
+										"type": "intrinsic",
+										"name": "null"
+									}
+								]
+							}
+						},
+						{
+							"id": 104,
+							"name": "triggerWhenCTA",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 20,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "HTMLElement"
+									},
+									{
+										"type": "intrinsic",
+										"name": "null"
+									}
+								]
+							}
+						},
+						{
+							"id": 138,
+							"name": "type",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 22,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetType",
+								"id": 284
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.type",
+								"id": 68
+							}
+						},
+						{
+							"id": 141,
+							"name": "widgetApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 25,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetApi",
+								"id": 16
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Widget.widgetApi",
+								"id": 71
+							}
+						},
+						{
+							"id": 127,
+							"name": "_clickedOutside",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 128,
+									"name": "_clickedOutside",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 129,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 130,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 131,
+															"name": "target",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 215,
+																	"character": 26
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																131
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "widgets/PopupWidget.ts",
+															"line": 215,
+															"character": 18
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 215,
+									"character": 17
+								}
+							]
+						},
+						{
+							"id": 132,
+							"name": "_error",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 133,
+									"name": "_error",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 134,
+											"name": "rs",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										},
+										{
+											"id": 135,
+											"name": "mode",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\"modal\""
+										},
+										{
+											"id": 136,
+											"name": "style",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "string"
+											},
+											"defaultValue": "\"\""
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 221,
+									"character": 8
+								}
+							]
+						},
+						{
+							"id": 121,
+							"name": "_setupResizeHandler",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 122,
+									"name": "_setupResizeHandler",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 129,
+									"character": 21
+								}
+							]
+						},
+						{
+							"id": 125,
+							"name": "close",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 126,
+									"name": "close",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 210,
+									"character": 7
+								}
+							]
+						},
+						{
+							"id": 111,
+							"name": "load",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 112,
+									"name": "load",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 66,
+									"character": 6
+								}
+							]
+						},
+						{
+							"id": 123,
+							"name": "open",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 124,
+									"name": "open",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 187,
+									"character": 6
+								}
+							]
+						},
+						{
+							"id": 113,
+							"name": "reload",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 114,
+									"name": "reload",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 115,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"originalName": "__0",
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 116,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 117,
+															"name": "email",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 80,
+																	"character": 16
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 118,
+															"name": "firstName",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 80,
+																	"character": 27
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														},
+														{
+															"id": 119,
+															"name": "lastName",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/PopupWidget.ts",
+																	"line": 80,
+																	"character": 37
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																117,
+																118,
+																119
+															]
+														}
+													],
+													"sources": [
+														{
+															"fileName": "widgets/PopupWidget.ts",
+															"line": 80,
+															"character": 9
+														}
+													]
+												}
+											}
+										},
+										{
+											"id": 120,
+											"name": "jwt",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/PopupWidget.ts",
+									"line": 80,
+									"character": 8
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								107
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								140,
+								139,
+								137,
+								106,
+								105,
+								103,
+								104,
+								138,
+								141
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								127,
+								132,
+								121,
+								125,
+								111,
+								123,
+								113
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "widgets/PopupWidget.ts",
+							"line": 18,
+							"character": 32
+						}
+					],
+					"extendedTypes": [
+						{
+							"type": "reference",
+							"name": "Widget",
+							"id": 66
+						}
+					],
+					"extendedBy": [
+						{
+							"type": "reference",
+							"name": "CtaWidget",
+							"id": 144
+						}
+					]
+				},
+				{
+					"id": 142,
+					"name": "_log",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "widgets/PopupWidget.ts",
+							"line": 9,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "IDebugger"
+					},
+					"defaultValue": " debug(\"squatch-js:POPUPwidget\")"
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						102
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						142
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "widgets/PopupWidget.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 65,
+			"name": "\"widgets/Widget\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/widgets/Widget.ts",
+			"children": [
+				{
+					"id": 66,
+					"name": "Widget",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true,
+						"isAbstract": true
+					},
+					"children": [
+						{
+							"id": 70,
+							"name": "analyticsApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 24,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "AnalyticsApi"
+							}
+						},
+						{
+							"id": 69,
+							"name": "content",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 23,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 67,
+							"name": "frame",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 21,
+									"character": 7
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "HTMLIFrameElement"
+							}
+						},
+						{
+							"id": 68,
+							"name": "type",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 22,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetType",
+								"id": 284
+							}
+						},
+						{
+							"id": 71,
+							"name": "widgetApi",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widget.ts",
+									"line": 25,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetApi",
+								"id": 16
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								70,
+								69,
+								67,
+								68,
+								71
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "widgets/Widget.ts",
+							"line": 20,
+							"character": 36
+						}
+					],
+					"extendedBy": [
+						{
+							"type": "reference",
+							"name": "EmbedWidget",
+							"id": 74
+						},
+						{
+							"type": "reference",
+							"name": "PopupWidget",
+							"id": 102
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						66
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "widgets/Widget.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 189,
+			"name": "\"widgets/Widgets\"",
+			"kind": 1,
+			"kindString": "External module",
+			"flags": {
+				"isExported": true
+			},
+			"originalName": "D:/dev/workspace/squatch-js/src/widgets/Widgets.ts",
+			"children": [
+				{
+					"id": 190,
+					"name": "Widgets",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {
+						"isExported": true
+					},
+					"comment": {
+						"shortText": "`Widgets` is a factory for creating widgets. It's possible to build your own widgets using the\n{@link WidgetApi} but most people will prefer to use these easy methods."
+					},
+					"children": [
+						{
+							"id": 194,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {
+								"isExported": true
+							},
+							"comment": {
+								"shortText": "Initialize a new {@link Widgets} instance.",
+								"tags": [
+									{
+										"tag": "example",
+										"text": "<caption>Browser example</caption>\nvar widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});\n"
+									},
+									{
+										"tag": "example",
+										"text": "<caption>Browserify/Webpack example</caption>\nvar Widgets = require('@saasquatch/squatch-js').Widgets;\nvar widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});\n"
+									},
+									{
+										"tag": "example",
+										"text": "<caption>Babel+Browserify/Webpack example</caption>\nimport {Widgets} from '@saasquatch/squatch-js';\nlet widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});\n"
+									}
+								]
+							},
+							"signatures": [
+								{
+									"id": 195,
+									"name": "new Widgets",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Initialize a new {@link Widgets} instance.",
+										"tags": [
+											{
+												"tag": "example",
+												"text": "<caption>Browser example</caption>\nvar widgets = new squatch.Widgets({tenantAlias:'test_12b5bo1b25125'});\n"
+											},
+											{
+												"tag": "example",
+												"text": "<caption>Browserify/Webpack example</caption>\nvar Widgets = require('@saasquatch/squatch-js').Widgets;\nvar widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});\n"
+											},
+											{
+												"tag": "example",
+												"text": "<caption>Babel+Browserify/Webpack example</caption>\nimport {Widgets} from '@saasquatch/squatch-js';\nlet widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});\n"
+											}
+										]
+									},
+									"parameters": [
+										{
+											"id": 196,
+											"name": "config",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"shortText": "Config details\n"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Widgets",
+										"id": 190
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 22,
+									"character": 17
+								}
+							]
+						},
+						{
+							"id": 191,
+							"name": "api",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 20,
+									"character": 5
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "WidgetApi",
+								"id": 16
+							}
+						},
+						{
+							"id": 193,
+							"name": "domain",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 22,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 192,
+							"name": "tenantAlias",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true
+							},
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 21,
+									"character": 13
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 209,
+							"name": "autofill",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 210,
+									"name": "autofill",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Autofills a referral code into an element when someone has been referred.\nUses {@link WidgetApi.squatchReferralCookie} behind the scenes.",
+										"returns": "\n"
+									},
+									"parameters": [
+										{
+											"id": 211,
+											"name": "selector",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Element class/id"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 145,
+									"character": 10
+								}
+							]
+						},
+						{
+							"id": 197,
+							"name": "createCookieUser",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 198,
+									"name": "createCookieUser",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "This function calls the {@link WidgetApi.cookieUser} method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+										"returns": "json object if true, with a Widget and user details.\n"
+									},
+									"parameters": [
+										{
+											"id": 199,
+											"name": "config",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Config details"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "WidgetResult",
+												"id": 270
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 61,
+									"character": 24
+								}
+							]
+						},
+						{
+							"id": 206,
+							"name": "render",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 207,
+									"name": "render",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "This function calls the {@link WidgetApi.render} method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+										"returns": "json object if true, with a Widget and user details.\n"
+									},
+									"parameters": [
+										{
+											"id": 208,
+											"name": "config",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Config details"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "WidgetResult",
+												"id": 270
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 123,
+									"character": 14
+								}
+							]
+						},
+						{
+							"id": 212,
+							"name": "submitEmail",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 213,
+									"name": "submitEmail",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Overrides the default function that submits the user email. If you have\nSecurity enabled, the email needs to be signed before it's submitted.",
+										"returns": "\n"
+									},
+									"parameters": [
+										{
+											"id": 214,
+											"name": "fn",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Callback function for the 'submit_email' event."
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 184,
+									"character": 13
+								}
+							]
+						},
+						{
+							"id": 200,
+							"name": "upsertUser",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 201,
+									"name": "upsertUser",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "This function calls the {@link WidgetApi.upsertUser} method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
+										"returns": "json object if true, with a Widget and user details.\n"
+									},
+									"parameters": [
+										{
+											"id": 202,
+											"name": "config",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "Config details"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"name": "Promise",
+										"typeArguments": [
+											{
+												"type": "reflection",
+												"declaration": {
+													"id": 203,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 205,
+															"name": "user",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/Widgets.ts",
+																	"line": 97,
+																	"character": 12
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															},
+															"defaultValue": " response.user"
+														},
+														{
+															"id": 204,
+															"name": "widget",
+															"kind": 32,
+															"kindString": "Variable",
+															"flags": {},
+															"sources": [
+																{
+																	"fileName": "widgets/Widgets.ts",
+																	"line": 96,
+																	"character": 14
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															},
+															"defaultValue": " this.renderWidget(response, config)"
+														}
+													],
+													"groups": [
+														{
+															"title": "Variables",
+															"kind": 32,
+															"children": [
+																205,
+																204
+															]
+														}
+													]
+												}
+											}
+										]
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/Widgets.ts",
+									"line": 92,
+									"character": 18
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								194
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								191,
+								193,
+								192
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								209,
+								197,
+								206,
+								212,
+								200
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "widgets/Widgets.ts",
+							"line": 19,
+							"character": 28
+						}
+					]
+				},
+				{
+					"id": 238,
+					"name": "_log",
+					"kind": 32,
+					"kindString": "Variable",
+					"flags": {
+						"isConst": true
+					},
+					"sources": [
+						{
+							"fileName": "widgets/Widgets.ts",
+							"line": 11,
+							"character": 10
+						}
+					],
+					"type": {
+						"type": "reference",
+						"name": "IDebugger"
+					},
+					"defaultValue": " debug(\"squatch-js:widgets\")"
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						190
+					]
+				},
+				{
+					"title": "Variables",
+					"kind": 32,
+					"children": [
+						238
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "widgets/Widgets.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		}
+	],
+	"groups": [
+		{
+			"title": "External modules",
+			"kind": 1,
+			"children": [
+				320,
+				239,
+				15,
+				256,
+				287,
+				290,
+				265,
+				1,
+				143,
+				73,
+				101,
+				65,
+				189
+			]
+		}
+	]
+}
