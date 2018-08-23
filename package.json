@@ -28,8 +28,11 @@
     "serve:docs": "documentation serve src/squatch.js --port $PORT --watch",
     "lint:docs": "documentation lint src",
     "demo": "run-p static parcel",
+    "demo:deploy": "run-s parcel:build parcel:deploy",
     "static": "serve dist",
     "parcel": "cd demo && parcel index.html",
+    "parcel:build": "cd demo && parcel build index.html",
+    "parcel:deploy": "surge demo/dist -d squathjs-demo.surge.sh",
     "intern": "intern"
   },
   "devDependencies": {
