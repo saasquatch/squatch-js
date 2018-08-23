@@ -1,5 +1,6 @@
 declare interface Sandbox {
   script: string;
+  version?: string;
   domain: string;
   tenantAlias: string;
   debug?: boolean;

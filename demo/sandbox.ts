@@ -1,8 +1,8 @@
 import { getQueryStringParams } from "./util";
 
-const tenantAlias = "test_ahq6tdmfclzwx";
-const domain = "https://staging.referralsaasquatch.com";
-const script = "http://localhost:5000/squatch.min.js";
+export const tenantAlias = "test_ahq6tdmfclzwx";
+export const domain = "https://staging.referralsaasquatch.com";
+export const script = "http://localhost:5000/squatch.min.js";
 
 
 export const popup: Sandbox = {

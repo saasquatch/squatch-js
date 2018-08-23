@@ -6,6 +6,7 @@
   <title>Squatch.JS Playground</title>
   <script src="./generate.tsx"></script>
   <script>
+    var start = Date.now();
     !function (a, b) {
       a("squatch", window.sandbox.script, b)
     }(function (a, b, c) {
@@ -35,13 +36,24 @@
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
     crossorigin="anonymous">
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
   <script>
+    function setStatus(text){
+      var el = document.getElementById("status");
+      el && (el.innerText = text);
+    }
+    function hideSpineer(){
+      document.getElementById("spinner").className="hidden";
+    }
     localStorage.debug = '*';
     console.log("Loading Squatch.js using sandbox", window.sandbox);
+    setStatus("Loading squatch.js")
     squatch.ready(function () {
+      setStatus("Rendering widget")
       console.log("Squatch.js is ready", squatch);
       squatch.init({
         domain: window.sandbox.domain,
@@ -50,9 +62,13 @@
       });
       squatch.widgets().upsertUser(window.sandbox.initObj).then(function (res) {
         console.log("Upsert done", res);
-        if(res.widget.open) res.widget.open();
+        setStatus("Done in " + ((Date.now()-start))/1000 + " seconds");
+        hideSpineer()
+        if (res.widget.open) res.widget.open();
       }).catch(function (err) {
         console.log("Upsert error", err);
+        setStatus("Error" + JSON.stringify(err));
+        hideSpineer();
       });
 
     });
@@ -61,12 +77,16 @@
 
   <div class="container">
     <div id="app"></div>
+    <ul class="list-group" id="statuslist">
+      <li class="list-group-item">
+        <div class="lds-dual-ring" id="spinner"></div> <span id="status">Loading page</span></li>
+    </ul>
+    <hr/>
     <div>
       <h2>Autofill will be here:</h2>
       <input type="text" name="Coupon" class="testClass" value="" />
     </div>
     <button class="squatchpop">Click to Open</button>
-
     <div class="row">
       <div class="col-md-6">
         <h2>Embed here</h2>
