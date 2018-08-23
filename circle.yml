@@ -10,5 +10,3 @@ dependencies:
 test:
   override:
     - npm test
-  post:
-    - npm run lint:docs
