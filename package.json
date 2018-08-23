@@ -27,7 +27,7 @@
     "static": "serve dist",
     "parcel": "cd demo && parcel index.html",
     "parcel:build": "cd demo && parcel build index.html",
-    "parcel:deploy": "surge demo/dist -d squathjs-demo.surge.sh",
+    "parcel:deploy": "surge demo/dist -d squathjs-demo.surge.sh"
   },
   "devDependencies": {
     "@types/debug": "0.0.30",
@@ -43,7 +43,6 @@
     "chai": "^3.5.0",
     "cross-env": "^5.2.0",
     "es6-promise": "^4.2.4",
-    "intern": "^4.2.3",
     "json-loader": "^0.5.7",
     "mocha": "^3.0.2",
     "node-libs-browser": "^0.5.3",
