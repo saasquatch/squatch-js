@@ -20,7 +20,7 @@
     "build:production": "cross-env NODE_ENV=production webpack",
     "test": "echo \"No tests defined\"",
     "build:docs": "typedoc --out docs/ src/ ",
-    "deploy": "np",
+    "deploy": "np --no-cleanup",
     "deploy:docs": "surge ./ -d squathjsv2.surge.sh",
     "preversion": "run-s build build:production build:docs",
     "demo": "run-p static parcel",
