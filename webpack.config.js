@@ -9,7 +9,7 @@ var PROD = process.env.NODE_ENV === "production";
 module.exports = {
   entry: {
     "squatch.WidgetApi": ["./src/api/WidgetApi.ts"],
-    squatch: ["./src/squatch.ts"]
+    squatch: ["./src/index.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),

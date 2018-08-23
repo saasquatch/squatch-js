@@ -3,7 +3,9 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
+import { WidgetType } from "..";
 
+/** @hidden */
 const _log = debug("squatch-js:widget");
 
 /*
@@ -15,14 +17,14 @@ const _log = debug("squatch-js:widget");
  * for listening to the height of the widget content and make the iframe responsive.
  *
  */
-export default class Widget {
+export default abstract class Widget {
   frame: HTMLIFrameElement;
   type: WidgetType;
   content: string;
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
 
-  constructor(params) {
+  protected constructor(params) {
     _log("widget initializing ...");
     this.content =
       params.content === "error" ? this._error(params.rsCode) : params.content;
@@ -36,7 +38,7 @@ export default class Widget {
     this.frame.setAttribute("style", "border: 0; background-color: none;");
   }
 
-  _loadEvent(sqh) {
+  protected _loadEvent(sqh) {
     if (sqh) {
       this.analyticsApi
         .pushAnalyticsLoadEvent({
@@ -54,7 +56,7 @@ export default class Widget {
     }
   }
 
-  _shareEvent(sqh, medium) {
+ protected _shareEvent(sqh, medium) {
     if (sqh) {
       this.analyticsApi
         .pushAnalyticsShareClickedEvent({
@@ -75,7 +77,7 @@ export default class Widget {
     }
   }
 
-  _inviteContacts(sqh, emailList) {
+  protected _inviteContacts(sqh, emailList) {
     if (sqh) {
       this.widgetApi
         .invite({
@@ -93,7 +95,7 @@ export default class Widget {
     }
   }
 
-  _error(rs, mode = "modal", style = "") {
+  protected _error(rs, mode = "modal", style = "") {
     const errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
@@ -129,7 +131,7 @@ export default class Widget {
     return errorTemplate;
   }
 
-  _findInnerContainer() {
+  protected _findInnerContainer() {
     const { contentWindow } = this.frame;
     if (!contentWindow)
       throw new Error("Squatch.hs frame inner frame is empty");

@@ -33,7 +33,7 @@ export function doRequest(url, jwt = "") {
     );
 }
 /**
- * @private
+ * @hidden
  *
  * @param {string} url The requested url
  * @param {string} data Stringified json object

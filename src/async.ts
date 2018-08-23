@@ -7,7 +7,7 @@ declare global {
     squatch: any;
   }
 }
-
+/** @hidden */
 export default function asyncLoad() {
   const loaded = window.squatch || null;
   const cached = window._squatch || null;

@@ -1,12 +1,13 @@
 // @ts-check
 import { doPost } from "../utils/io";
+import { EngagementMedium, ShareMedium } from "..";
 
 /**
  *
  * The AnalyticsApi class is a wrapper around the Analytics Endpoints of
  * the SaaSquatch REST API. Used to record Widget events.
  *
- * @private
+ * @hidden
  */
 export default class AnalyticsApi {
   domain: string;

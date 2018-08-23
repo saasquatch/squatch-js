@@ -1,7 +1,0 @@
-{
-  "type": "object",
-  "properties": {
-    "widgetType": { "type": "string", "default": "" },
-    "engagementMedium": { "type": "string", "default": "" }
-  }
-}

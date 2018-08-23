@@ -1,6 +1,7 @@
 import "string.prototype.includes"; // Polyfill
 
 import { doPut } from "../utils/io";
+import { ConfigOptions, JWT } from "..";
 
 /**
  *

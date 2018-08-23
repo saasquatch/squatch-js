@@ -5,6 +5,7 @@ import EmbedWidget from "./EmbedWidget";
 import PopupWidget from "./PopupWidget";
 import CtaWidget from "./CtaWidget";
 import Widget from "./Widget";
+import { WidgetResult } from "..";
 // import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
@@ -186,7 +187,7 @@ export default class Widgets {
   }
 
   /**
-   * @private
+   * @hidden
    * @param {Object} response The json object return from the WidgetApi
    * @param {Object} config Config details
    * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
@@ -289,7 +290,7 @@ export default class Widgets {
   }
 
   /**
-   * @private
+   * @hidden
    * @param {Object} error The json object containing the error details
    * @param {string} em The engagementMedium
    * @returns {void}
@@ -314,7 +315,7 @@ export default class Widgets {
   }
 
   /**
-   * @private
+   * @hidden
    * @param {string} rule A regular expression
    * @returns {boolean} true if rule matches Url, false otherwise
    */
@@ -324,7 +325,7 @@ export default class Widgets {
   }
 
   /**
-   * @private
+   * @hidden
    * @param {Object} target Object containing the target DOM element
    * @param {Widget} widget A widget (EmbedWidget, PopupWidget, CtaWidget)
    * @param {Object} params An object with valid parameters
