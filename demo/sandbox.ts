@@ -112,11 +112,15 @@ export function fromURL() {
 }
 
 export function toURL(sandbox: Sandbox) {
+  window.location.href = href(sandbox);
+}
+
+export function href(sandbox: Sandbox) {
   const param = window.btoa(JSON.stringify(sandbox));
   var url = window.location.href;
   if (url.indexOf("?") > 0) {
     url = url.substring(0, url.indexOf("?"));
   }
   url += `?sandbox=${encodeURIComponent(param)}`;
-  window.location.replace(url);
+  return url;
 }

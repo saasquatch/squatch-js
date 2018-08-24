@@ -18,7 +18,8 @@ import {
   popupReferred,
   script,
   toURL,
-  users
+  users,
+  href
 } from "./sandbox";
 import { getVersions } from "./versions";
 import { delay } from "./util";
@@ -47,25 +48,22 @@ class App extends Component {
     return (
       <div>
         <ButtonToolbar>
-          <Button bsStyle="primary" onClick={() => toURL(popup)}>
+          <Button bsStyle="primary" href={href(popup)}>
             Popup (classic)
           </Button>
-          <Button bsStyle="primary" onClick={() => toURL(embed)}>
+          <Button bsStyle="primary" href={href(embed)}>
             Embed (classic)
           </Button>
-          <Button bsStyle="primary" onClick={() => toURL(popupNew)}>
+          <Button bsStyle="primary" href={href(popupNew)}>
             Popup (new program)
           </Button>
-          <Button bsStyle="primary" onClick={() => toURL(embedNew)}>
+          <Button bsStyle="primary" href={href(embedNew)}>
             Embed (new program)
           </Button>
-          <Button bsStyle="primary" onClick={() => toURL(popupReferred)}>
+          <Button bsStyle="primary" href={href(popupReferred)}>
             Popup (classic referred widget)
           </Button>
-          <Button bsStyle="primary" onClick={() => toURL(embedReferred)}>
-            Embed (classic referred widget)
-          </Button>
-          <Button bsStyle="primary" onClick={() => toURL(embedReferred)}>
+          <Button bsStyle="primary" href={href(embedReferred)}>
             Embed (classic referred widget)
           </Button>
         </ButtonToolbar>
@@ -164,16 +162,13 @@ function WidgetType(props) {
       {widgetTypes.map((widgetType, i) => (
         <MenuItem
           key={i}
-          eventKey={i}
-          onClick={() =>
-            toURL({
-              ...window["sandbox"],
-              initObj: {
-                ...window["sandbox"].initObj,
-                widgetType: widgetType
-              }
-            })
-          }
+          href={href({
+            ...window["sandbox"],
+            initObj: {
+              ...window["sandbox"].initObj,
+              widgetType: widgetType
+            }
+          })}
         >
           {widgetType}
         </MenuItem>
@@ -191,16 +186,13 @@ function ModeList(props) {
       {modes.map((mode, i) => (
         <MenuItem
           key={i}
-          eventKey={i}
-          onClick={() =>
-            toURL({
-              ...window["sandbox"],
-              initObj: {
-                ...window["sandbox"].initObj,
-                engagementMedium: mode
-              }
-            })
-          }
+          href={href({
+            ...window["sandbox"],
+            initObj: {
+              ...window["sandbox"].initObj,
+              engagementMedium: mode
+            }
+          })}
         >
           {mode}
         </MenuItem>
@@ -218,16 +210,13 @@ function UserList(props) {
       {users.map((user, i) => (
         <MenuItem
           key={i}
-          eventKey={i}
-          onClick={() =>
-            toURL({
-              ...window["sandbox"],
-              initObj: {
-                ...window["sandbox"].initObj,
-                user: user
-              }
-            })
-          }
+          href={href({
+            ...window["sandbox"],
+            initObj: {
+              ...window["sandbox"].initObj,
+              user: user
+            }
+          })}
         >
           {user["firstName"] || "Empty"}
         </MenuItem>
@@ -246,22 +235,14 @@ function VersionList(props) {
       {versions.map((v, i) => (
         <MenuItem
           key={i}
-          eventKey={i}
-          onClick={() => {
-            if (v.toLocaleLowerCase() == "head") {
-              toURL({
-                ...window["sandbox"],
-                version: v,
-                script: script
-              });
-            } else {
-              toURL({
-                ...window["sandbox"],
-                version: v,
-                script: `https://unpkg.com/@saasquatch/squatch-js@${v}`
-              });
-            }
-          }}
+          href={href({
+            ...window["sandbox"],
+            version: v,
+            script:
+              v.toLocaleLowerCase() == "head"
+                ? script
+                : `https://unpkg.com/@saasquatch/squatch-js@${v}`
+          })}
         >
           {v}
         </MenuItem>
