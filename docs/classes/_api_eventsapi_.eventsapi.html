@@ -104,7 +104,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_api_eventsapi_.eventsapi.html#logevent" class="tsd-kind-icon">log<wbr>Event</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_api_eventsapi_.eventsapi.html#track" class="tsd-kind-icon">track</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,13 +116,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Events<wbr>Api<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_api_eventsapi_.eventsapi.html" class="tsd-signature-type">EventsApi</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Events<wbr>Api<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="../interfaces/_types_.configoptions.html" class="tsd-signature-type">ConfigOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_api_eventsapi_.eventsapi.html" class="tsd-signature-type">EventsApi</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/19ba862/src/api/EventsApi.ts#L13">api/EventsApi.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/ffc76e8/src/api/EventsApi.ts#L35">api/EventsApi.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -149,15 +149,12 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5>domain<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
-										</li>
-										<li class="tsd-parameter">
-											<h5>tenant<wbr>Alias<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-										</li>
-									</ul>
+									<h5>config: <a href="../interfaces/_types_.configoptions.html" class="tsd-signature-type">ConfigOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>Config details</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_api_eventsapi_.eventsapi.html" class="tsd-signature-type">EventsApi</a></h4>
@@ -173,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/19ba862/src/api/EventsApi.ts#L13">api/EventsApi.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/ffc76e8/src/api/EventsApi.ts#L35">api/EventsApi.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -183,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">tenant<wbr>Alias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/19ba862/src/api/EventsApi.ts#L12">api/EventsApi.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/ffc76e8/src/api/EventsApi.ts#L34">api/EventsApi.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -191,50 +188,33 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="logevent" class="tsd-anchor"></a>
-					<h3>log<wbr>Event</h3>
+					<a name="track" class="tsd-anchor"></a>
+					<h3>track</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">log<wbr>Event<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">track<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/_api_eventsapi_.usereventinput.html" class="tsd-signature-type">UserEventInput</a>, options<span class="tsd-signature-symbol">?: </span><a href="../modules/_api_eventsapi_.html#trackoptions" class="tsd-signature-type">TrackOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/19ba862/src/api/EventsApi.ts#L46">api/EventsApi.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/ffc76e8/src/api/EventsApi.ts#L67">api/EventsApi.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Logs an event for a user</p>
+									<p>Track an event for a user</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>params: <span class="tsd-signature-type">object</span></h5>
+									<h5>params: <a href="../interfaces/_api_eventsapi_.usereventinput.html" class="tsd-signature-type">UserEventInput</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Parameters for request</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> fields<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span></h5>
-											<div class="tsd-comment tsd-typography">
-												<p>The fields for the event</p>
-											</div>
-										</li>
-										<li class="tsd-parameter">
-											<h5><span class="tsd-flag ts-flagOptional">Optional</span> jwt<span class="tsd-signature-symbol">?: </span><a href="../modules/_types_.html#jwt" class="tsd-signature-type">JWT</a></h5>
-											<div class="tsd-comment tsd-typography">
-												<p>the JSON Web Token (JWT) that is used to authenticate the user</p>
-											</div>
-										</li>
-										<li class="tsd-parameter">
-											<h5>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
-											<div class="tsd-comment tsd-typography">
-												<p>The type of event to log</p>
-											</div>
-										</li>
-									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a href="../modules/_api_eventsapi_.html#trackoptions" class="tsd-signature-type">TrackOptions</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -275,6 +255,9 @@
 						<a href="../modules/_utils_io_.html">"utils/io"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utils_validate_.html">"utils/validate"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_widgets_ctawidget_.html">"widgets/<wbr>Cta<wbr>Widget"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -308,12 +291,27 @@
 								<a href="_api_eventsapi_.eventsapi.html#tenantalias" class="tsd-kind-icon">tenant<wbr>Alias</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_api_eventsapi_.eventsapi.html#logevent" class="tsd-kind-icon">log<wbr>Event</a>
+								<a href="_api_eventsapi_.eventsapi.html#track" class="tsd-kind-icon">track</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_api_eventsapi_.usereventdatainput.html" class="tsd-kind-icon">User<wbr>Event<wbr>Data<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../interfaces/_api_eventsapi_.usereventinput.html" class="tsd-kind-icon">User<wbr>Event<wbr>Input</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_api_eventsapi_.html#trackoptions" class="tsd-kind-icon">Track<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_api_eventsapi_.html#_validateevent" class="tsd-kind-icon">_validate<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_api_eventsapi_.html#_validatetrackoptions" class="tsd-kind-icon">_validate<wbr>Track<wbr>Options</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
