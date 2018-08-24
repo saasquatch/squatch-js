@@ -2,7 +2,7 @@
 
 import debug from 'debug';
 import ResizeObserver from 'resize-observer-polyfill';
-import Widget from './Widget';
+import Widget, { Params } from './Widget';
 import { domready } from '../utils/domready';
 
 const _log = debug('squatch-js:EMBEDwidget');
@@ -16,7 +16,7 @@ const _log = debug('squatch-js:EMBEDwidget');
 export default class EmbedWidget extends Widget {
   element: Element;
   
-  constructor(params, selector = '#squatchembed') {
+  constructor(params:Params, selector = '#squatchembed') {
     super(params);
 
     const element = document.querySelector(selector) || document.querySelector('.squatchembed');
@@ -110,7 +110,7 @@ export default class EmbedWidget extends Widget {
     });
   }
 
-  _error(rs, mode = 'embed', style = '') {
+  protected _error(rs, mode = 'embed', style = '') {
     return super._error(rs, mode, style);
   }
 }

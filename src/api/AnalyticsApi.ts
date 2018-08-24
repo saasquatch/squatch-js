@@ -1,6 +1,7 @@
 // @ts-check
 import { doPost } from "../utils/io";
 import { EngagementMedium, ShareMedium } from "..";
+import { hasProps } from "../utils/validate";
 
 /**
  *
@@ -18,8 +19,13 @@ export default class AnalyticsApi {
    * @param {string} [config.domain='https://app.referralsaasquatch.com'] The server domain.
    *
    */
-  constructor({ domain }: { domain: string }) {
-    this.domain = domain || "https://app.referralsaasquatch.com";
+  constructor(config: { domain: string }) {
+    const raw = (config as unknown);
+    if(hasProps(raw, "domain")){
+      this.domain = raw.domain;
+    }else{
+      this.domain = "https://app.referralsaasquatch.com";
+    }
   }
 
   pushAnalyticsLoadEvent(params: {

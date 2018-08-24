@@ -16,12 +16,11 @@ import WidgetApi from './api/WidgetApi';
 import EventsApi from './api/EventsApi';
 import asyncLoad from './async';
 import { ConfigOptions } from './types';
+import { validateConfig } from './utils/validate';
 export * from "./types"
 export * from './docs';
 
-// import {ConfigOptions, WidgetResult} from './docs';
-
-//@ts-ignore
+// @ts-ignore
 debug.disable('squatch-js*');
 /** @hidden */
 const _log = debug('squatch-js');
@@ -86,20 +85,17 @@ export function events(): EventsApi | null {
  * @example
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
-export function init(config: ConfigOptions): void {
+export function init(configIn: ConfigOptions): void {
+  const raw = configIn as unknown;
+  const config = validateConfig(raw);
   if (config.tenantAlias.match('^test') || config.debug) {
     debug.enable('squatch-js*');
   }
   _log('initializing ...');
 
-  const initObj = {
-    tenantAlias: config.tenantAlias,
-    domain: config.domain,
-  };
-
-  _api = new WidgetApi(initObj);
-  _widgets = new Widgets(initObj);
-  _events = new EventsApi(initObj);
+  _api = new WidgetApi(config);
+  _widgets = new Widgets(config);
+  _events = new EventsApi(config);
 
   _log('Widget API instance', _api);
   _log('Widgets instance', _widgets);

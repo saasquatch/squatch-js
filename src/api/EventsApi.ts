@@ -2,7 +2,15 @@ import "string.prototype.includes"; // Polyfill
 
 import { doPost } from "../utils/io";
 import { ConfigOptions, JWT, User } from "..";
-import { hasProps, isObject, assertProp } from "../utils/validate";
+import {
+  hasProps,
+  isObject,
+  assertProp,
+  validateConfig
+} from "../utils/validate";
+import { func } from "prop-types";
+
+type TrackOptions = { jwt?: JWT };
 
 interface UserEventInput {
   userId: string;
@@ -11,10 +19,10 @@ interface UserEventInput {
 }
 
 interface UserEventDataInput {
-  id: string;
-  key: string;
-  fields?: any;
-  dateTriggered?: number;
+  key: string; // Require -- the name of the event
+  id?: string; // Optional -- a globally unique ID for the event
+  fields?: object; // Arbitrary JSON data
+  dateTriggered?: number; // The date triggered
 }
 
 /**
@@ -42,34 +50,42 @@ export default class EventsApi {
    * let squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(config: ConfigOptions) {
-    const raw = config as unknown;
-    if (!isObject(raw)) throw new Error("config must be an object");
-    if (!hasProps(raw, "tenantAlias"))
-      throw new Error("tenantAlias not provided");
-    this.tenantAlias = raw.tenantAlias;
-    this.domain =
-      (hasProps(raw, "domain") && raw.domain) ||
-      "https://app.referralsaasquatch.com";
+    const raw = config as unknown; // Flags that we need to validate anything we use from this type
+    const clean = validateConfig(raw);
+    this.tenantAlias = clean.tenantAlias;
+    this.domain = clean.domain;
   }
 
   /**
-   * Logs an event for a user
+   * Track an event for a user
    *
    * @param params Parameters for request
    * @param params.jwt the JSON Web Token (JWT) that is used to authenticate the user
    *
    * @return An ID to confirm the event has been accepted for asynchronous processing
    */
-  logEvent(params: UserEventInput & { jwt?: JWT }): Promise<any> {
+  track(params: UserEventInput, options?: TrackOptions): Promise<any> {
     const raw = params as unknown;
-    if (!assertProp(raw, "accountId", "events", "userId"))
-      throw new Error("Fields required");
-    const { events } = raw;
+    const rawOpts = options as unknown;
+    const body = _validateEvent(raw);
+    const {jwt} = _validateTrackOptions(rawOpts);
     const ta = encodeURIComponent(this.tenantAlias);
-    const userId = encodeURIComponent(raw.userId);
-    const accountId = encodeURIComponent(raw.accountId);
+    const userId = encodeURIComponent(body.userId);
+    const accountId = encodeURIComponent(body.accountId);
     const path = `/api/v1/${ta}/open/account/${accountId}/user/${userId}/events`;
     const url = this.domain + path;
-    return doPost(url, JSON.stringify(events), hasProps(raw, "jwt") && raw.jwt);
+    return doPost(url, JSON.stringify(body), jwt);
   }
+}
+
+function _validateEvent(raw: unknown): UserEventInput {
+  if (!assertProp(raw, "accountId", "events", "userId"))
+    throw new Error("Fields required");
+  if(!Array.isArray(raw.events)) throw new Error("'events' should be an array");
+  return raw;
+}
+
+function _validateTrackOptions(raw: unknown): TrackOptions{
+  if(!isObject(raw)) throw new Error("'options' should be an object")
+  return raw;
 }

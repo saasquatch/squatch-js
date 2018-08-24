@@ -1,7 +1,8 @@
 import "string.prototype.includes"; // Polyfill
 
 import { doPost, doPut, doGet } from "../utils/io";
-import { ConfigOptions, EngagementMedium, WidgetType, CookieUser, JWT, User } from "..";
+import { ConfigOptions, EngagementMedium, WidgetType, CookieUser, JWT, User, WidgetConfig } from "..";
+import { isObject, validateConfig, validateWidgetConfig } from "../utils/validate";
 
 
 /**
@@ -29,10 +30,11 @@ export default class WidgetApi {
    * import {WidgetApi} from '@saasquatch/squatch-js';
    * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    */
-  constructor({ tenantAlias, domain }: ConfigOptions) {
-    if (!tenantAlias) throw new Error("tenantAlias not provided");
-    this.tenantAlias = tenantAlias;
-    this.domain = domain || "https://app.referralsaasquatch.com";
+  constructor(config: ConfigOptions) {
+    const raw = config as unknown; // Flags that we need to validate anything we use from this type
+    const clean = validateConfig(raw);
+    this.tenantAlias = clean.tenantAlias;
+    this.domain = clean.domain;
   }
 
   /**
@@ -47,12 +49,7 @@ export default class WidgetApi {
    *
    * @return {Promise} json object if true, with the widget template, jsOptions and user details.
    */
-  cookieUser(params: {
-    widgetType: WidgetType;
-    engagementMedium: EngagementMedium;
-    user: CookieUser;
-    jwt: JWT;
-  }): Promise<any> {
+  cookieUser(params: CookieUser): Promise<any> {
     // validateInput(params, CookieUserSchema);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
     const tenantAlias = encodeURIComponent(this.tenantAlias);
@@ -77,14 +74,10 @@ export default class WidgetApi {
    *
    * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
-  upsertUser(params: {  
-    widgetType?: WidgetType;
-    engagementMedium?: EngagementMedium;
-    jwt?: JWT;
-    user: User;
-  }): Promise<any> {
-    // validateInput(params, UpsertUserSchema);
-    const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
+  upsertUser(params: WidgetConfig): Promise<any> {
+    const raw = params as unknown;
+    const clean = validateWidgetConfig(raw);
+    const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(user.accountId);
@@ -111,14 +104,10 @@ export default class WidgetApi {
    *                            to validate the data (can be disabled)
    * @return {Promise} template html if true.
    */
-  render(params: {
-    user: User;
-    widgetType?: WidgetType;
-    engagementMedium?: EngagementMedium;
-    jwt?: JWT;
-  }): Promise<any> {
-    // validateInput(params, UpsertUserSchema);
-    const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
+  render(params: WidgetConfig): Promise<any> {
+    const raw = params as unknown;
+    const clean = validateWidgetConfig(raw);
+    const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(user.accountId);

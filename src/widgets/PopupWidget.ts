@@ -3,7 +3,7 @@
 import debug from "debug";
 import ResizeObserver from "resize-observer-polyfill";
 
-import Widget from "./Widget";
+import Widget, { Params } from "./Widget";
 import { domready } from "../utils/domready";
 
 const _log = debug("squatch-js:POPUPwidget");
@@ -21,7 +21,7 @@ export default class PopupWidget extends Widget {
   popupdiv: HTMLElement;
   popupcontent: HTMLElement;
 
-  constructor(params, trigger = ".squatchpop") {
+  constructor(params:Params, trigger = ".squatchpop") {
     super(params);
 
     this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
@@ -126,7 +126,7 @@ export default class PopupWidget extends Widget {
       });
   }
 
-  _setupResizeHandler(){
+  protected _setupResizeHandler(){
     const popupdiv = this.popupdiv;
     const frame = this.frame;
     const frameWindow = frame.contentWindow;
@@ -212,13 +212,13 @@ export default class PopupWidget extends Widget {
     _log("Popup closed");
   }
 
-  _clickedOutside({ target }) {
+  protected _clickedOutside({ target }) {
     if (target === this.popupdiv) {
       this.close();
     }
   }
 
-  _error(rs, mode = "modal", style = "") {
+  protected _error(rs, mode = "modal", style = "") {
     const _style =
       "body { margin: 0; } .modal { box-shadow: none; border: 0; }";
 

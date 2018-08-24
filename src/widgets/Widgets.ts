@@ -6,6 +6,15 @@ import PopupWidget from "./PopupWidget";
 import CtaWidget from "./CtaWidget";
 import Widget from "./Widget";
 import { WidgetResult } from "..";
+import {
+  ConfigOptions,
+  User,
+  EngagementMedium,
+  WidgetType,
+  JWT,
+  WidgetConfig
+} from "../types";
+import { validateConfig, validateWidgetConfig } from "../utils/validate";
 // import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
@@ -37,12 +46,15 @@ export default class Widgets {
    * import {Widgets} from '@saasquatch/squatch-js';
    * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
    */
-  constructor(config) {
+  constructor(configin: ConfigOptions) {
+    const raw = configin as unknown;
+    const config = validateConfig(raw);
     this.tenantAlias = config.tenantAlias;
+    this.domain = config.domain;
+
     this.api = new WidgetApi(config);
-    this.domain = config.domain || "";
     // listens to a 'submit_email' event in the theme.
-    EventBus.addEventListener("submit_email", Widgets.cb);
+    EventBus.addEventListener("submit_email", Widgets._cb);
   }
 
   /**
@@ -62,13 +74,13 @@ export default class Widgets {
     try {
       const response = await this.api.cookieUser(config);
       return {
-        widget: this.renderWidget(response, config),
+        widget: this._renderWidget(response, config),
         user: response.user
       };
     } catch (err) {
       _log(err);
       if (err.apiErrorCode) {
-        Widgets.renderErrorWidget(err, config.engagementMedium);
+        this._renderErrorWidget(err, config.engagementMedium);
       }
       throw err;
     }
@@ -89,17 +101,19 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  async upsertUser(config) {
+  async upsertUser(config:WidgetConfig) {
+    const raw = config as unknown;
+    const clean = validateWidgetConfig(raw);
     try {
-      const response = await this.api.upsertUser(config);
+      const response = await this.api.upsertUser(clean);
       return {
-        widget: this.renderWidget(response, config),
+        widget: this._renderWidget(response, clean),
         user: response.user
       };
     } catch (err) {
       _log(err);
       if (err.apiErrorCode) {
-        Widgets.renderErrorWidget(err, config.engagementMedium);
+        this._renderErrorWidget(err, config.engagementMedium);
       }
       throw err;
     }
@@ -120,16 +134,18 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  async render(config): Promise<WidgetResult> {
+  async render(config:WidgetConfig): Promise<WidgetResult> {
+    const raw = config as unknown;
+    const clean = validateWidgetConfig(raw);
     try {
-      const response = await this.api.cookieUser(config);
+      const response = await this.api.cookieUser(clean);
       return {
-        widget: this.renderWidget({ template: response }, config),
+        widget: this._renderWidget({ template: response }, clean),
         user: response.user
       };
     } catch (err) {
       if (err.apiErrorCode) {
-        Widgets.renderErrorWidget(err, config.engagementMedium);
+        this._renderErrorWidget(err, clean.engagementMedium);
       }
       throw err;
     }
@@ -139,21 +155,25 @@ export default class Widgets {
    * Autofills a referral code into an element when someone has been referred.
    * Uses {@link WidgetApi.squatchReferralCookie} behind the scenes.
    *
-   * @param {string} selector Element class/id
-   * @returns {void}
+   * @param selector Element class/id selector, or a callback function
+   * @returns
    */
-  autofill(selector) {
-    if (typeof selector === "function") {
+  autofill(selector: string | Function): void {
+    const input = selector as unknown;
+    if (typeof input === "function") {
       this.api
         .squatchReferralCookie()
-        .then(selector)
+        .then((...args) => input(...args))
         .catch(ex => {
           _log("Autofill error", ex);
           throw ex;
         });
+      return;
     }
+    if (typeof input !== "string")
+      throw new Error("Autofill accepts a string or function");
 
-    let elems = document.querySelectorAll(selector);
+    let elems = document.querySelectorAll(input);
     let elem;
     if (elems.length > 0) {
       // Only use the first element found
@@ -182,7 +202,7 @@ export default class Widgets {
    * @returns {void}
    */
   submitEmail(fn) {
-    EventBus.removeEventListener("submit_email", Widgets.cb);
+    EventBus.removeEventListener("submit_email", Widgets._cb);
     EventBus.addEventListener("submit_email", fn);
   }
 
@@ -194,7 +214,10 @@ export default class Widgets {
    * @param {string} config.engagementMedium (POPUP, EMBED)
    * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
    */
-  renderWidget(response, config = { widgetType: "", engagementMedium: "" }) {
+  private _renderWidget(
+    response: any,
+    config: WidgetConfig
+  ) {
     _log("Rendering Widget...");
     if (!response) throw new Error("Unable to get a response");
     if (!response.jsOptions) throw new Error("Missing jsOptions in response");
@@ -213,7 +236,7 @@ export default class Widgets {
 
     if (opts.widgetUrlMappings) {
       opts.widgetUrlMappings.forEach(rule => {
-        if (Widgets.matchesUrl(rule.url)) {
+        if (Widgets._matchesUrl(rule.url)) {
           if (
             rule.widgetType !== "CONVERSION_WIDGET" ||
             (response.user.referredBy && response.user.referredBy.code)
@@ -234,7 +257,7 @@ export default class Widgets {
 
     if (opts.conversionUrls) {
       opts.conversionUrls.forEach(rule => {
-        if (response.user.referredBy && Widgets.matchesUrl(rule)) {
+        if (response.user.referredBy && Widgets._matchesUrl(rule)) {
           _log("This is a conversion URL", rule);
         }
       });
@@ -244,7 +267,7 @@ export default class Widgets {
       _log("We found a fuel tank autofill!");
 
       opts.fuelTankAutofillUrls.forEach(({ url, formSelector }) => {
-        if (Widgets.matchesUrl(url)) {
+        if (Widgets._matchesUrl(url)) {
           _log("Fuel Tank URL matches");
           if (response.user.referredBy && response.user.referredBy.code) {
             const formAutofill = document.querySelector(formSelector);
@@ -295,23 +318,29 @@ export default class Widgets {
    * @param {string} em The engagementMedium
    * @returns {void}
    */
-  static renderErrorWidget({ apiErrorCode, rsCode, message }, em = "POPUP") {
+  private _renderErrorWidget(
+    props: { apiErrorCode: string; rsCode: string; message: string },
+    em:EngagementMedium = "POPUP"
+  ) {
+    const { apiErrorCode, rsCode, message } = props;
     _log(new Error(`${apiErrorCode} (${rsCode}) ${message}`));
 
-    let widget;
     const params = {
       content: "error",
       rsCode,
+      api: this.api,
+      domain: this.domain,
       type: "ERROR_WIDGET"
     };
 
+    let widget: Widget;
     if (em === "EMBED") {
       widget = new EmbedWidget(params);
+      widget.load();
     } else if (em === "POPUP") {
       widget = new PopupWidget(params);
+      widget.load();
     }
-
-    widget.load();
   }
 
   /**
@@ -319,7 +348,7 @@ export default class Widgets {
    * @param {string} rule A regular expression
    * @returns {boolean} true if rule matches Url, false otherwise
    */
-  static matchesUrl(rule) {
+  private static _matchesUrl(rule) {
     // If there were no matches, null is returned.
     return window.location.href.match(new RegExp(rule)) ? true : false;
   }
@@ -332,7 +361,7 @@ export default class Widgets {
    *                        (e.g) {email:'email', firstName:'firstName'}
    * @returns {void}
    */
-  static cb(target, widget, params) {
+  private static _cb(target, widget, params) {
     let paramsObj;
 
     // If params is a string, then it should be an email

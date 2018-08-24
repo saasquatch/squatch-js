@@ -8,6 +8,13 @@ import { WidgetType } from "..";
 /** @hidden */
 const _log = debug("squatch-js:widget");
 
+export interface Params{
+  type: WidgetType;
+  domain: string;
+  content: string;
+  api: WidgetApi;
+  rsCode?: string;
+}
 /*
  *
  * The Widget class is the base class for the different widget types available
@@ -24,12 +31,12 @@ export default abstract class Widget {
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
 
-  protected constructor(params) {
+  protected constructor(params:Params) {
     _log("widget initializing ...");
     this.content =
       params.content === "error" ? this._error(params.rsCode) : params.content;
     this.type = params.type;
-    this.widgetApi = params.api || null;
+    this.widgetApi = params.api;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
     this.frame = document.createElement("iframe");
     this.frame["squatchJsApi"] = this;
@@ -37,6 +44,8 @@ export default abstract class Widget {
     this.frame.scrolling = "no";
     this.frame.setAttribute("style", "border: 0; background-color: none;");
   }
+
+  abstract load();
 
   protected _loadEvent(sqh) {
     if (sqh) {
@@ -108,7 +117,7 @@ export default abstract class Widget {
     </head>
     <body>
 
-      <div class="squatch-container ${mode}">
+      <div class="squatch-container ${mode}" style="width:100%">
         <div class="errorheader">
           <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>
           <p class="errortitle">Error</p>

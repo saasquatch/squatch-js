@@ -17,9 +17,11 @@ import {
   popupNew,
   popupReferred,
   script,
-  toURL
+  toURL,
+  users
 } from "./sandbox";
 import { getVersions } from "./versions";
+import { delay } from "./util";
 
 const modes = ["POPUP", "EMBED"];
 const widgetTypes = [
@@ -27,7 +29,7 @@ const widgetTypes = [
   "CONVERSION_WIDGET",
   "p/jorge3/w/referrerWidget"
 ];
-const staticVersions = ["HEAD","latest","alpha"];
+const staticVersions = ["HEAD", "latest", "alpha"];
 
 /**
  * Use the addUrlProps higher-order component to hook-in react-url-query.
@@ -63,11 +65,15 @@ class App extends Component {
           <Button bsStyle="primary" onClick={() => toURL(embedReferred)}>
             Embed (classic referred widget)
           </Button>
+          <Button bsStyle="primary" onClick={() => toURL(embedReferred)}>
+            Embed (classic referred widget)
+          </Button>
         </ButtonToolbar>
         <ButtonToolbar>
           <WidgetType />
           <ModeList />
-          {this.state.versions && <VersionList {...this.state} />}
+          <UserList />
+          <VersionList {...this.state} />
           <OverlayTrigger
             trigger="click"
             placement="bottom"
@@ -76,16 +82,78 @@ class App extends Component {
             <Button>Sandbox Props</Button>
           </OverlayTrigger>
         </ButtonToolbar>
+        <Button bsStyle="success" onClick={() => recordPurchase()}>
+          Record Purchase
+        </Button>
+        <Button bsStyle="danger" onClick={() => runEventBomb()}>
+          Event Bomb
+        </Button>
       </div>
     );
   }
 }
 
 const popoverBottom = (
-  <Popover id="popover-positioned-bottom" title="Popover bottom">
-    <pre>{JSON.stringify(window["sandbox"], null, 2)}</pre>
+  <Popover
+    id="popover-positioned-bottom"
+    title="Popover bottom"
+    style={{ maxWidth: 600 }}
+  >
+    <textarea id="area1" rows={15} cols={80}>
+      {JSON.stringify(window["sandbox"], null, 2)}
+    </textarea>
+    <Button
+      onClick={() => {
+        //@ts-ignore
+        let json: Sandbox = JSON.parse(document.getElementById("area1").value);
+        toURL(json);
+      }}
+    >
+      Reload
+    </Button>
   </Popover>
 );
+async function recordPurchase() {
+  //@ts-ignore
+  const { squatch, sandbox } = window;
+  const {
+    jwt,
+    user: { id, accountId }
+  } = sandbox.initObj;
+  const fields = {
+    // Optional
+    total: 10.0,
+    revenue: 10.0,
+    tax: 5.0,
+    currency: "USD"
+  };
+
+  await squatch.events().track(
+    {
+      userId: id,
+      accountId: accountId,
+      events: [
+        {
+          key: "purchase",
+          fields: fields // Optional
+          // id: "kjv12kbwktb13t3", // Optional id
+          // dateTriggered: 1535136384753  // Optional date
+        }
+      ]
+    },
+    {
+      jwt
+    }
+  );
+  // TODO: Eventually we'd like an API like this:
+  // squatch.events().track("purchase", { ...fields });
+}
+async function runEventBomb() {
+  while (true) {
+    await recordPurchase();
+    await delay(100);
+  }
+}
 function WidgetType(props) {
   return (
     <DropdownButton
@@ -140,11 +208,38 @@ function ModeList(props) {
     </DropdownButton>
   );
 }
+function UserList(props) {
+  return (
+    <DropdownButton
+      title={"User: " + window["sandbox"].initObj.user.firstName}
+      key={0}
+      id={`dropdown-basic-1`}
+    >
+      {users.map((user, i) => (
+        <MenuItem
+          key={i}
+          eventKey={i}
+          onClick={() =>
+            toURL({
+              ...window["sandbox"],
+              initObj: {
+                ...window["sandbox"].initObj,
+                user: user
+              }
+            })
+          }
+        >
+          {user["firstName"] || "Empty"}
+        </MenuItem>
+      ))}
+    </DropdownButton>
+  );
+}
 function VersionList(props) {
   const { versions } = props;
   return (
     <DropdownButton
-      title={window["sandbox"].version || "Head"}
+      title={"Version: " + window["sandbox"].version || "Head"}
       key={0}
       id={`dropdown-basic-1`}
     >
@@ -152,22 +247,21 @@ function VersionList(props) {
         <MenuItem
           key={i}
           eventKey={i}
-          onClick={() =>{
-            if(v.toLocaleLowerCase() =="head"){
+          onClick={() => {
+            if (v.toLocaleLowerCase() == "head") {
               toURL({
                 ...window["sandbox"],
                 version: v,
                 script: script
-              })
-            }else{
+              });
+            } else {
               toURL({
                 ...window["sandbox"],
                 version: v,
                 script: `https://unpkg.com/@saasquatch/squatch-js@${v}`
-              })
+              });
             }
-          }
-          }
+          }}
         >
           {v}
         </MenuItem>

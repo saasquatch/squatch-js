@@ -13,6 +13,21 @@ export interface ConfigOptions {
   debug?: boolean;
 }
 
+
+export interface WidgetConfig {
+  user: User; // The user details
+  widgetType?: WidgetType; // The content of the widget.
+  engagementMedium?: EngagementMedium; // How to display the widget.
+  jwt?: JWT; // the JSON Web Token (JWT) that is used
+}
+
+export interface CookieWidgetConfig {
+  user?: CookieUser;
+  widgetType?: WidgetType; // The content of the widget.
+  engagementMedium?: EngagementMedium; // How to display the widget.
+  jwt?: JWT; // the JSON Web Token (JWT) that is used}
+}
+
 /**
  * When a widget is loaded using {@link Widgets} you'll get both the `user` data and the `widget` object back.
  *

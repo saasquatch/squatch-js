@@ -3,6 +3,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 
 import PopupWidget from './PopupWidget';
 import { domready } from '../utils/domready';
+import { Params } from './Widget';
 
 const _log = debug('squatch-js:CTAwidget');
 
@@ -19,7 +20,7 @@ export default class CtaWidget extends PopupWidget {
   positionClass: string;
   ctaFrame: HTMLIFrameElement;
 
-  constructor(params, opts) {
+  constructor(params:Params, opts) {
     _log('CTA constructor');
     const ctaElement = document.createElement('div');
     ctaElement.id = 'cta';

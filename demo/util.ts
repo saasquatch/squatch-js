@@ -11,3 +11,11 @@ export function getQueryStringParams(query) {
         }, {})
     : {};
 }
+
+
+export function delay (duration) {
+		return new Promise(function(resolve, reject){
+			setTimeout(function(){
+				resolve();
+			}, duration)
+}
