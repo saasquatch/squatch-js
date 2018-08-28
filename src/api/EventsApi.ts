@@ -8,7 +8,6 @@ import {
   assertProp,
   validateConfig
 } from "../utils/validate";
-import { func } from "prop-types";
 
 type TrackOptions = { jwt?: JWT };
 
