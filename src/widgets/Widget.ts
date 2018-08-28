@@ -140,24 +140,44 @@ export default abstract class Widget {
     return errorTemplate;
   }
 
-  protected _findInnerContainer() {
+  protected async _findInnerContainer():Promise<Element> {
     const { contentWindow } = this.frame;
     if (!contentWindow)
       throw new Error("Squatch.hs frame inner frame is empty");
     const frameDoc = contentWindow.document;
-    const containers = frameDoc.getElementsByTagName("sqh-global-container");
-    const legacyContainers = frameDoc.getElementsByClassName(
-      "squatch-container"
-    );
-    const fallback =
-      containers.length > 0
-        ? containers[0]
-        : legacyContainers.length > 0
-          ? legacyContainers[0]
-          : null;
-    if (!fallback){
+
+    function search(){
+      const containers = frameDoc.getElementsByTagName("sqh-global-container");
+      const legacyContainers = frameDoc.getElementsByClassName(
+        "squatch-container"
+      );
+      const fallback =
+        containers.length > 0
+          ? containers[0]
+          : legacyContainers.length > 0
+            ? legacyContainers[0]
+            : null;
+      return fallback;
+    }
+
+    let found:Element|null = null;
+    for (let i = 0; i < 50; i++){
+      found = search();
+      if(found) break;
+      await delay(100);
+    }
+    if (!found){
       return frameDoc.body;
     } 
-    return fallback;
+    return found;
   }
+}
+
+
+function delay (duration) {
+  return new Promise(function(resolve, reject){
+    setTimeout(function(){
+      resolve();
+    }, duration)
+  })
 }

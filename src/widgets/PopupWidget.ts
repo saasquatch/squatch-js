@@ -134,7 +134,7 @@ export default class PopupWidget extends Widget {
     const frameDoc = frameWindow.document;
 
     // Adjust frame height when size of body changes
-    domready(frameDoc, () => {
+    domready(frameDoc, async () => {
 
       frameDoc.body.style.overflowY = "hidden";
       popupdiv.style.visibility = "hidden";
@@ -180,7 +180,7 @@ export default class PopupWidget extends Widget {
           target.style.height = `${finalHeight}px`; 
         }
       });
-      ro.observe(this._findInnerContainer());
+      ro.observe(await this._findInnerContainer());
     });
   }
 

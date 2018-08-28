@@ -25,7 +25,7 @@ export default class EmbedWidget extends Widget {
     this.element = element;
   }
 
-  load() {
+  async load() {
 
     if (!this.element.firstChild || this.element.firstChild.nodeName === '#text') {
       this.element.appendChild(this.frame);
@@ -39,7 +39,7 @@ export default class EmbedWidget extends Widget {
     frameDoc.write(this.content);
     frameDoc.close();
 
-    domready(frameDoc, () => {
+    domready(frameDoc, async () => {
       const _sqh = contentWindow.squatch;
       const ctaElement = frameDoc.getElementById('cta');
 
@@ -62,7 +62,7 @@ export default class EmbedWidget extends Widget {
         }
       });
 
-      ro.observe(this._findInnerContainer());
+      ro.observe(await this._findInnerContainer());
 
       this._loadEvent(_sqh);
       _log('loaded');
