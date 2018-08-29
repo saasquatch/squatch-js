@@ -68,7 +68,6 @@
     "eventbusjs": "^0.1.0",
     "jsonschema": "^1.1.0",
     "promise-polyfill": "^8.1.0",
-    "resize-observer-polyfill": "^1.5.0",
     "string.prototype.includes": "^1.0.0"
   }
 }
