@@ -149,6 +149,7 @@ export default abstract class Widget {
     const legacyContainers = frameDoc.getElementsByClassName(
       "squatch-container"
     );
+
     const fallback =
       containers.length > 0
         ? containers[0]

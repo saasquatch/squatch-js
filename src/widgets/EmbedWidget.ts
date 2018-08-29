@@ -1,7 +1,6 @@
 // @ts-check
 
 import debug from 'debug';
-import ResizeObserver from 'resize-observer-polyfill';
 import Widget, { Params } from './Widget';
 import { domready } from '../utils/domready';
 
@@ -34,9 +33,11 @@ export default class EmbedWidget extends Widget {
     if(!contentWindow){
       throw new Error("Frame needs a content window");
     }
+
     const frameDoc = contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
+    frameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill"></script>`);
     frameDoc.close();
 
     domready(frameDoc, () => {
@@ -54,13 +55,15 @@ export default class EmbedWidget extends Widget {
       this.frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
-      const ro = new ResizeObserver((entries) => {
+      // @ts-ignore
+      const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
           const { height } = entry.contentRect;
           // @ts-ignore -- number will be cast to string by browsers
           this.frame.height = height;
         }
       });
+
 
       ro.observe(this._findInnerContainer());
 

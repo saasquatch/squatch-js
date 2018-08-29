@@ -1,6 +1,4 @@
 import * as debug from 'debug';
-import ResizeObserver from 'resize-observer-polyfill';
-
 import PopupWidget from './PopupWidget';
 import { domready } from '../utils/domready';
 import { Params } from './Widget';
@@ -73,12 +71,15 @@ export default class CtaWidget extends PopupWidget {
         }
         ctaElement.parentNode.removeChild(ctaElement);
 
-        if(!ctaFrame.contentWindow){
+        const ctaFrameWindow = ctaFrame.contentWindow;
+
+        if(!ctaFrameWindow){
           throw new Error("ctaFrame requires a contentWindow");
         }
-        const ctaFrameDoc = ctaFrame.contentWindow.document;
+        const ctaFrameDoc = ctaFrameWindow.document;
         ctaFrameDoc.open();
         ctaFrameDoc.write(ctaElement.innerHTML);
+        ctaFrameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill"></script>`);
         ctaFrameDoc.close();
 
         // Figure out size of CTA as well
@@ -98,7 +99,7 @@ export default class CtaWidget extends PopupWidget {
           }
 
           // Adjust frame height when size of body changes
-          const ro = new ResizeObserver((entries) => {
+          const ro = new ctaFrameWindow["ResizeObserver"]((entries) => {
             for (const entry of entries) {
               const { height, width } = entry.contentRect;
               // @ts-ignore - Browser will cast from number to string (we hope)

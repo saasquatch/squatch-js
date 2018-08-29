@@ -1,8 +1,6 @@
 // @ts-check
 
 import debug from "debug";
-import ResizeObserver from "resize-observer-polyfill";
-
 import Widget, { Params } from "./Widget";
 import { domready } from "../utils/domready";
 
@@ -72,6 +70,7 @@ export default class PopupWidget extends Widget {
     const frameDoc = this.frame.contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
+    frameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill"></script>`);
     frameDoc.close();
     _log("Popup template loaded into iframe");
     this._setupResizeHandler();
@@ -129,41 +128,28 @@ export default class PopupWidget extends Widget {
   protected _setupResizeHandler(){
     const popupdiv = this.popupdiv;
     const frame = this.frame;
-    const frameWindow = frame.contentWindow;
-    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-    const frameDoc = frameWindow.document;
+    const {contentWindow} = frame;
+
+    if(!contentWindow){
+      throw new Error("Frame needs a content window");
+    }
+
+    const frameDoc = contentWindow.document;
 
     // Adjust frame height when size of body changes
     domready(frameDoc, () => {
-
       frameDoc.body.style.overflowY = "hidden";
       popupdiv.style.visibility = "hidden";
       popupdiv.style.display = "block";
       popupdiv.style.top = "0";
       frame.height = `${frameDoc.body.offsetHeight}px`;
       // Adjust frame height when size of body changes
-      const ro = new ResizeObserver(entries => {
+      const ro = new contentWindow["ResizeObserver"](entries => {
         for (const entry of entries) {
-          const { target } = entry;
           const { height } = entry.contentRect;
-          const referralsEls = frameDoc.getElementsByClassName('squatch-referrals');
-          let referralsHeight = 0;
-          if(!referralsEls || referralsEls.length === 0){
-            _log("Can't find element .squatch-referrals")
-          }else{
-            const referrals = referralsEls[0];
-            if(!(referrals instanceof HTMLElement)){
-              _log("Referrals element has no offset height")
-            }else{
-              referralsHeight = referrals.offsetHeight;
-            }
-          }
-          const finalHeight = height - referralsHeight;
-  
-          if (finalHeight > 0){
-            frame.height = finalHeight + "";
-          }
-  
+
+          frame.height = height + "";
+
           // @ts-ignore - number vs string comparison, should fail...
           if (window.innerHeight > frame.height) {
             // @ts-ignore - number vs string comparison, should fail...
@@ -171,13 +157,6 @@ export default class PopupWidget extends Widget {
           } else {
             popupdiv.style.paddingTop = '5px';
           }
-          
-          if(!(target instanceof HTMLElement)){
-            _log("Popup target can't be styled")
-            break;
-          }
-          target.style.width = '100%';
-          target.style.height = `${finalHeight}px`; 
         }
       });
       ro.observe(this._findInnerContainer());
