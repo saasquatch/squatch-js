@@ -3,12 +3,12 @@
   *
   */
 export function domready(targetDoc, fn) {
-  let fns = [];
-  let listener;
-  let doc = targetDoc;
-  let hack = doc.documentElement.doScroll;
-  let domContentLoaded = 'DOMContentLoaded';
-  let loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+  var fns = [];
+  var listener;
+  var doc = targetDoc;
+  var hack = doc.documentElement.doScroll;
+  var domContentLoaded = 'DOMContentLoaded';
+  var loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
 
   if (!loaded)
   doc.addEventListener(domContentLoaded, listener = () => {
