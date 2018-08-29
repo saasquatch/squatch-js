@@ -3,19 +3,20 @@
   *
   */
 export function domready(targetDoc, fn) {
-  var fns = [];
-  var listener;
-  var doc = targetDoc;
-  var hack = doc.documentElement.doScroll;
-  var domContentLoaded = 'DOMContentLoaded';
-  var loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
+  let fns = [];
+  let listener;
+  let doc = targetDoc;
+  let hack = doc.documentElement.doScroll;
+  let domContentLoaded = 'DOMContentLoaded';
+  let loaded = (hack ? /^loaded|^c/ : /^loaded|^i|^c/).test(doc.readyState);
 
   if (!loaded)
-  doc.addEventListener(domContentLoaded, listener = function () {
+  doc.addEventListener(domContentLoaded, listener = () => {
     doc.removeEventListener(domContentLoaded, listener)
     loaded = true
     while (listener = fns.shift()) listener()
   })
 
+  // @ts-ignore
   return loaded ? setTimeout(fn, 0) : fns.push(fn)
 }
