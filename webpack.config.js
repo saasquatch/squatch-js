@@ -25,19 +25,25 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-typescript'],
+            plugins: [require('@babel/plugin-transform-runtime')]
+          }
+        },
         exclude: /node_modules/,
-      }
+      },
     ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: ['.tsx', '.ts', '.js']
   },
   plugins: PROD
     ? [
-        new MinifyPlugin({}, {}),
-        new Visualizer()
-      ]
+      new MinifyPlugin({}, {}),
+      new Visualizer()
+    ]
     : [
       new Visualizer()
     ],

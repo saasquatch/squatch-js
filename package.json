@@ -31,12 +31,18 @@
     "parcel:deploy": "surge demo/dist -d squathjs-demo.surge.sh"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-typescript": "^7.0.0",
+    "@babel/runtime-corejs2": "^7.0.0",
     "@types/debug": "0.0.30",
     "@types/es6-promise": "^3.3.0",
     "@types/promise-polyfill": "^6.0.0",
     "@types/react": "^16.4.11",
     "@types/superagent": "^3.8.3",
     "babel-core": "^6.0.20",
+    "babel-loader": "^8.0.0",
     "babel-minify-webpack-plugin": "^0.3.1",
     "babel-preset-es2015": "^6.0.15",
     "babel-runtime": "^6.26.0",
@@ -64,6 +70,7 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0",
     "debug": "^2.2.0",
     "eventbusjs": "^0.1.0",
     "jsonschema": "^1.1.0",
