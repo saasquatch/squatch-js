@@ -1,5 +1,5 @@
 import * as superagent from "superagent";
-import { JWT } from "..";
+import { JWT } from "../types";
 
 export function doGet(url, jwt = "") {
   const headers = {
@@ -9,19 +9,20 @@ export function doGet(url, jwt = "") {
 
   if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
-  return superagent
+  const request = superagent
     .get(url)
     .withCredentials()
     .set(headers)
+
+  return thenableSuperagent(request)
     .then(
       response => {
         if (
           //@ts-ignore -- superagent types might just be outdated?
           response.headers["content-type"] &&
           //@ts-ignore -- superagent types might just be outdated?
-          response.headers["content-type"]
-            .toLowerCase()
-            .includes("application/json")
+          includes(response.headers["content-type"]
+            .toLowerCase(), "application/json")
         ) {
           return JSON.parse(response.text);
         }
@@ -48,24 +49,25 @@ export function doPost(url: string, data: any, jwt?: JWT) {
   };
   if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
-  return superagent
+  const request = superagent
     .post(url)
     .send(data)
     .set(headers)
-    .then(
-      ({ text }) => JSON.parse(text),
-      error => {
-        let json;
 
-        try {
-          json = JSON.parse(error.response.text);
-        } catch (e) {
-          const out = error || e;
-          throw out;
-        }
-        throw json;
+  return thenableSuperagent(request).then(
+    ({ text }) => JSON.parse(text),
+    error => {
+      let json;
+
+      try {
+        json = JSON.parse(error.response.text);
+      } catch (e) {
+        const out = error || e;
+        throw out;
       }
-    );
+      throw json;
+    }
+  );
 }
 
 export function doPut(url: string, data: any, jwt?: JWT) {
@@ -77,23 +79,52 @@ export function doPut(url: string, data: any, jwt?: JWT) {
 
   if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
-  return superagent
+  const request = superagent
     .put(url)
     .withCredentials()
     .send(data)
-    .set(headers)
-    .then(
-      ({ text }) => JSON.parse(text),
-      error => {
-        let json;
+    .set(headers);
 
-        try {
-          json = JSON.parse(error.response.text);
-        } catch (e) {
-          const out = error || e;
-          throw out;
-        }
-        throw json;
+  return thenableSuperagent(request).then(
+    ({ text }) => JSON.parse(text),
+    error => {
+      let json;
+
+      try {
+        json = JSON.parse(error.response.text);
+      } catch (e) {
+        const out = error || e;
+        throw out;
       }
-    );
+      throw json;
+    }
+  );
+}
+
+/**
+ * Avoids using superagent's built in `then` method because that relies on a global promise object being valid.
+ * 
+ * Instead, thanks to babel the promise used in this function should be our custom sandboxed polyfill
+ */
+function thenableSuperagent(request: superagent.Request): Promise<any> {
+  return new Promise((innerResolve, innerReject) => {
+    request.on('error', innerReject);
+    request.end((err, res) => {
+      if (err) innerReject(err);
+      else innerResolve(res);
+    });
+  });
+}
+function includes(string:string, search:string, start?:number) {
+  'use strict';
+  if (typeof start !== 'number') {
+    start = 0;
+  }
+  
+  if (start + search.length > string.length) {
+    return false;
+  } else {
+    return string.indexOf(search, start) !== -1;
+  }
+
 }

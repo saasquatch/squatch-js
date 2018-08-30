@@ -2,9 +2,10 @@ var path = require("path");
 var webpack = require("webpack");
 var Visualizer = require("webpack-visualizer-plugin");
 // webpack.config.js
-const MinifyPlugin = require("babel-minify-webpack-plugin");
+// const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 var PROD = process.env.NODE_ENV === "production";
+var mode = PROD ? "production" : "development";
 
 module.exports = {
   entry: {
@@ -20,45 +21,37 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.json$/,
-        use: 'json-loader',
-      },
-      {
         test: /\.tsx?$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-typescript'],
-            plugins: [require('@babel/plugin-transform-runtime')]
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-typescript'],
+              plugins: [
+                ["@babel/plugin-transform-runtime",
+                  {
+                    "corejs": 2,
+                  }
+                ]
+              ]
+            }
           }
-        },
+        ],
         exclude: /node_modules/,
-      },
-      {
-        test: /\.js?$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            plugins: [require('@babel/plugin-transform-runtime')]
-          }
-        }
-      },
+      }
     ]
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
-  plugins: PROD
-    ? [
-      new MinifyPlugin({}, {}),
-      new Visualizer()
-    ]
-    : [
+  plugins:
+    [
+      // new MinifyPlugin({}, {}),
       new Visualizer()
     ],
   stats: {
     // Nice colored output
     colors: true
   },
-  mode: "production"
+  mode
 };

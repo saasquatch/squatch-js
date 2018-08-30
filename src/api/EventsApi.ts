@@ -1,7 +1,5 @@
-import "string.prototype.includes"; // Polyfill
-
 import { doPost } from "../utils/io";
-import { ConfigOptions, JWT, User } from "..";
+import { ConfigOptions, JWT, User } from "../types";
 import {
   hasProps,
   isObject,

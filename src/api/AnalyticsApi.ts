@@ -1,6 +1,6 @@
 // @ts-check
 import { doPost } from "../utils/io";
-import { EngagementMedium, ShareMedium } from "..";
+import { EngagementMedium, ShareMedium } from "../types";
 import { hasProps } from "../utils/validate";
 
 /**

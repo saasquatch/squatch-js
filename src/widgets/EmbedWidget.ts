@@ -37,7 +37,7 @@ export default class EmbedWidget extends Widget {
     const frameDoc = contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
-    frameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill"></script>`);
+    frameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.x"></script>`);
     frameDoc.close();
 
     domready(frameDoc, async () => {

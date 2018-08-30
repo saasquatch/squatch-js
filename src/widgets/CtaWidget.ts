@@ -79,7 +79,7 @@ export default class CtaWidget extends PopupWidget {
         const ctaFrameDoc = ctaFrameWindow.document;
         ctaFrameDoc.open();
         ctaFrameDoc.write(ctaElement.innerHTML);
-        ctaFrameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill"></script>`);
+        ctaFrameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.x"></script>`);
         ctaFrameDoc.close();
 
         // Figure out size of CTA as well

@@ -1,11 +1,12 @@
 import debug from "debug";
+//@ts-ignore
 import * as EventBus from "eventbusjs";
 import WidgetApi from "../api/WidgetApi";
 import EmbedWidget from "./EmbedWidget";
 import PopupWidget from "./PopupWidget";
 import CtaWidget from "./CtaWidget";
 import Widget from "./Widget";
-import { WidgetResult } from "..";
+import { WidgetResult } from "../types";
 import {
   ConfigOptions,
   User,

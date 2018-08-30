@@ -3,7 +3,7 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
-import { WidgetType } from "..";
+import { WidgetType } from "../types";
 
 /** @hidden */
 const _log = debug("squatch-js:widget");

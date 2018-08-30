@@ -70,7 +70,7 @@ export default class PopupWidget extends Widget {
     const frameDoc = this.frame.contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
-    frameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill"></script>`);
+    frameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.x"></script>`);
     frameDoc.close();
     _log("Popup template loaded into iframe");
     this._setupResizeHandler();

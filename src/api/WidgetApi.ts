@@ -1,7 +1,5 @@
-import "string.prototype.includes"; // Polyfill
-
 import { doPost, doPut, doGet } from "../utils/io";
-import { ConfigOptions, EngagementMedium, WidgetType, CookieUser, JWT, User, WidgetConfig } from "..";
+import { ConfigOptions, EngagementMedium, WidgetType, CookieUser, JWT, User, WidgetConfig } from "../types";
 import { isObject, validateConfig, validateWidgetConfig } from "../utils/validate";
 
 
