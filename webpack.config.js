@@ -34,6 +34,15 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      {
+        test: /\.js?$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: [require('@babel/plugin-transform-runtime')]
+          }
+        }
+      },
     ]
   },
   resolve: {
