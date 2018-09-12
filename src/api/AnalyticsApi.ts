@@ -33,13 +33,15 @@ export default class AnalyticsApi {
     externalAccountId: string;
     externalUserId: string;
     engagementMedium: EngagementMedium;
+    programId: string;
   }) {
     const tenantAlias = encodeURIComponent(params.tenantAlias);
     const accountId = encodeURIComponent(params.externalAccountId);
     const userId = encodeURIComponent(params.externalUserId);
     const engagementMedium = encodeURIComponent(params.engagementMedium);
+    const programId = params.programId ? `&programId=${encodeURIComponent(params.programId)}` : ``;
 
-    const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}`;
+    const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}${programId}`;
     const url = this.domain + path;
 
     return doPost(url, JSON.stringify({}));

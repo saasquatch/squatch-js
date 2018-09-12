@@ -28,7 +28,7 @@ const modes = ["POPUP", "EMBED"];
 const widgetTypes = [
   "REFERRER_WIDGET",
   "CONVERSION_WIDGET",
-  "p/jorge3/w/referrerWidget"
+  "p/tuesday-test/w/referrerWidget"
 ];
 const staticVersions = ["HEAD", "latest", "alpha"];
 

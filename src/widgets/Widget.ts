@@ -49,15 +49,19 @@ export default abstract class Widget {
 
   protected _loadEvent(sqh) {
     if (sqh) {
+      const hasProgramId = sqh.programId
+      const params = {
+        tenantAlias: hasProgramId ? sqh.tenantAlias : sqh.analytics.attributes.tenant,
+        externalAccountId: hasProgramId ? sqh.accountId : sqh.analytics.attributes.accountId,
+        externalUserId: hasProgramId ? sqh.userId : sqh.analytics.attributes.userId,
+        engagementMedium: hasProgramId ? sqh.engagementMedium : sqh.mode.widgetMode,
+        programId: sqh.programId || ''
+      }
+    
       this.analyticsApi
-        .pushAnalyticsLoadEvent({
-          tenantAlias: sqh.analytics.attributes.tenant,
-          externalAccountId: sqh.analytics.attributes.accountId,
-          externalUserId: sqh.analytics.attributes.userId,
-          engagementMedium: sqh.mode.widgetMode,
-        })
+        .pushAnalyticsLoadEvent(params)
         .then(response => {
-          _log(`${sqh.mode.widgetMode} loaded event recorded. ${response}`);
+          _log(`${params.engagementMedium} loaded event recorded.`);
         })
         .catch(ex => {
           _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));

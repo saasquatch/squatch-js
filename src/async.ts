@@ -5,6 +5,7 @@ declare global {
       ready: any[];
     };
     squatch: any;
+    widgetIdent: any;
   }
 }
 /** @hidden */

@@ -172,7 +172,7 @@ export default class PopupWidget extends Widget {
 
     // Adjust frame height when size of body changes
     domready(frameDoc, () => {
-      const _sqh = contentWindow.squatch;
+      const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
       const ctaElement = frameDoc.getElementById("cta");
 
       if (ctaElement) {

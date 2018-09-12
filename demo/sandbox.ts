@@ -1,15 +1,13 @@
 import { getQueryStringParams } from "./util";
 
-export const tenantAlias = "test_ahq6tdmfclzwx";
+export const tenantAlias = "test_aojsrf4r06zi0";
 export const domain = "https://staging.referralsaasquatch.com";
 export const script = "http://localhost:5000/squatch.min.js";
 
 export const user = {
-  id: "abc_123",
-  accountId: "abc_123",
-  email: "john@example.com",
-  firstName: "John",
-  lastName: "Doe"
+  "id":"5b980d34e4b0cabee07f2cb0",
+  "accountId":"AZJZSVG0LS1LB19R",
+  "email":"chesterscott.uexwltgh@mailosaur.io"
 };
 export const badJwtUser = {
   ...user,
@@ -39,7 +37,7 @@ export const popup: Sandbox = {
     engagementMedium: "POPUP",
     user: user,
     jwt:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiYWJjXzEyMyIsImFjY291bnRJZCI6ImFiY18xMjMiLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJmaXJzdE5hbWUiOiJKb2huIiwibGFzdE5hbWUiOiJEb2UifX0.8UIafGkjo8pnqh_7BG57QXhTZNRnJ2IKTPzejWFL1iA"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo"
   }
 };
 
@@ -51,14 +49,12 @@ export const embed: Sandbox = {
     widgetType: "REFERRER_WIDGET",
     engagementMedium: "EMBED",
     user: {
-      id: "abc_123",
-      accountId: "abc_123",
-      email: "john@example.com",
-      firstName: "John",
-      lastName: "Doe"
+      "id":"5b980d34e4b0cabee07f2cb0",
+      "accountId":"AZJZSVG0LS1LB19R",
+      "email":"chesterscott.uexwltgh@mailosaur.io"
     },
     jwt:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiYWJjXzEyMyIsImFjY291bnRJZCI6ImFiY18xMjMiLCJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJmaXJzdE5hbWUiOiJKb2huIiwibGFzdE5hbWUiOiJEb2UifX0.8UIafGkjo8pnqh_7BG57QXhTZNRnJ2IKTPzejWFL1iA"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo"
   }
 };
 
@@ -66,7 +62,7 @@ export const embedNew: Sandbox = {
   ...embed,
   initObj: {
     ...embed.initObj,
-    widgetType: "p/jorge3/w/referrerWidget"
+    widgetType: "p/tuesday-text/w/referrerWidget"
   }
 };
 
@@ -90,7 +86,7 @@ export const popupNew: Sandbox = {
   ...popup,
   initObj: {
     ...popup.initObj,
-    widgetType: "p/jorge3/w/referrerWidget"
+    widgetType: "p/tuesday-test/w/referrerWidget"
   }
 };
 

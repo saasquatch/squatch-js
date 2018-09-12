@@ -41,7 +41,7 @@ export default class EmbedWidget extends Widget {
     frameDoc.close();
 
     domready(frameDoc, async () => {
-      const _sqh = contentWindow.squatch;
+      const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
       const ctaElement = frameDoc.getElementById('cta');
 
       if (ctaElement) {
