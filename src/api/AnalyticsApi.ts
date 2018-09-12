@@ -28,13 +28,7 @@ export default class AnalyticsApi {
     }
   }
 
-  pushAnalyticsLoadEvent(params: {
-    tenantAlias: string;
-    externalAccountId: string;
-    externalUserId: string;
-    engagementMedium: EngagementMedium;
-    programId: string;
-  }) {
+  pushAnalyticsLoadEvent(params: SQHDetails) {
     const tenantAlias = encodeURIComponent(params.tenantAlias);
     const accountId = encodeURIComponent(params.externalAccountId);
     const userId = encodeURIComponent(params.externalUserId);
@@ -47,13 +41,7 @@ export default class AnalyticsApi {
     return doPost(url, JSON.stringify({}));
   }
 
-  pushAnalyticsShareClickedEvent(params:{
-    tenantAlias: string;
-    externalAccountId: string;
-    externalUserId: string;
-    engagementMedium: EngagementMedium;
-    shareMedium: ShareMedium;
-  }) {
+  pushAnalyticsShareClickedEvent(params:SQHDetails & { shareMedium: string}) {
     const tenantAlias = encodeURIComponent(params.tenantAlias);
     const accountId = encodeURIComponent(params.externalAccountId);
     const userId = encodeURIComponent(params.externalUserId);
@@ -65,4 +53,12 @@ export default class AnalyticsApi {
 
     return doPost(url, JSON.stringify({}));
   }
+}
+
+export type SQHDetails = {
+  tenantAlias: string;
+  externalAccountId: string;
+  externalUserId: string;
+  engagementMedium: EngagementMedium;
+  programId?: string;
 }

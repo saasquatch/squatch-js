@@ -55,7 +55,7 @@ export function doPost(url: string, data: any, jwt?: JWT) {
     .set(headers)
 
   return thenableSuperagent(request).then(
-    ({ text }) => JSON.parse(text || '{}'),
+    ({ text }) => text ? JSON.parse(text) : text,
     error => {
       let json;
 
@@ -86,7 +86,7 @@ export function doPut(url: string, data: any, jwt?: JWT) {
     .set(headers);
 
   return thenableSuperagent(request).then(
-    ({ text }) => JSON.parse(text),
+    ({ text }) => text ? JSON.parse(text) : text,
     error => {
       let json;
 

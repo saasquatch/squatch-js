@@ -1,9 +1,10 @@
 // @ts-check
 
 import debug from "debug";
-import AnalyticsApi from "../api/AnalyticsApi";
+import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
 import { WidgetType } from "../types";
+import { isObject, hasProps } from "../utils/validate";
 
 /** @hidden */
 const _log = debug("squatch-js:widget");
@@ -47,26 +48,43 @@ export default abstract class Widget {
 
   abstract load();
 
-  protected _loadEvent(sqh) {
-    if (sqh) {
-      const hasProgramId = sqh.programId
-      const params = {
-        tenantAlias: hasProgramId ? sqh.tenantAlias : sqh.analytics.attributes.tenant,
-        externalAccountId: hasProgramId ? sqh.accountId : sqh.analytics.attributes.accountId,
-        externalUserId: hasProgramId ? sqh.userId : sqh.analytics.attributes.userId,
-        engagementMedium: hasProgramId ? sqh.engagementMedium : sqh.mode.widgetMode,
-        programId: sqh.programId || ''
+  protected _loadEvent(sqh:unknown) {
+
+    if(!sqh) return; // No non-truthy value
+    if(!isObject(sqh)){
+      throw new Error("Widget Load event identity property is not an object")
+    }  
+
+    let params:SQHDetails;
+    if(hasProps(sqh, "programId")){
+      if(!hasProps(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])){
+        throw new Error("Widget Load event missing required properties")
       }
-    
-      this.analyticsApi
-        .pushAnalyticsLoadEvent(params)
-        .then(response => {
-          _log(`${params.engagementMedium} loaded event recorded.`);
-        })
-        .catch(ex => {
-          _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
-        });
+      params = {
+        tenantAlias: sqh.tenantAlias,
+        externalAccountId: sqh.accountId,
+        externalUserId: sqh.userId,
+        engagementMedium: sqh.engagementMedium,
+        programId: sqh.programId
+      }
+    }else{
+      const {analytics, mode} = (sqh as any);
+      params = {
+        tenantAlias: analytics.attributes.tenant,
+        externalAccountId: analytics.attributes.accountId,
+        externalUserId: analytics.attributes.userId,
+        engagementMedium: mode.widgetMode,
+      }
     }
+
+    this.analyticsApi
+      .pushAnalyticsLoadEvent(params)
+      .then(response => {
+        _log(`${params.engagementMedium} loaded event recorded.`);
+      })
+      .catch(ex => {
+        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+      });
   }
 
  protected _shareEvent(sqh, medium) {
