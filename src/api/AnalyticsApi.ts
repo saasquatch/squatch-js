@@ -21,9 +21,9 @@ export default class AnalyticsApi {
    */
   constructor(config: { domain: string }) {
     const raw = (config as unknown);
-    if(hasProps(raw, "domain")){
+    if(hasProps(raw, "domain")) {
       this.domain = raw.domain;
-    }else{
+    } else {
       this.domain = "https://app.referralsaasquatch.com";
     }
   }

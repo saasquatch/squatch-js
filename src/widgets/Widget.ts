@@ -54,7 +54,7 @@ export default abstract class Widget {
           tenantAlias: sqh.analytics.attributes.tenant,
           externalAccountId: sqh.analytics.attributes.accountId,
           externalUserId: sqh.analytics.attributes.userId,
-          engagementMedium: sqh.mode.widgetMode
+          engagementMedium: sqh.mode.widgetMode,
         })
         .then(response => {
           _log(`${sqh.mode.widgetMode} loaded event recorded. ${response}`);

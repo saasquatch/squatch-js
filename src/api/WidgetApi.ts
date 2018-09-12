@@ -173,7 +173,7 @@ function _buildParams({
 }) {
   const widgetTypeP = widgetType
     ? `?widgetType=${encodeURIComponent(widgetType)}`
-    : null;
+    : ``;
   const engagementMediumP = `${
     widgetType ? "&" : "?"
   }engagementMedium=${encodeURIComponent(engagementMedium)}`;
