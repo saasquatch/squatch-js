@@ -146,9 +146,16 @@ export default class PopupWidget extends Widget {
       // Adjust frame height when size of body changes
       const ro = new contentWindow["ResizeObserver"](entries => {
         for (const entry of entries) {
-          const { height } = entry.contentRect;
+          const { height, top, bottom } = entry.contentRect;
 
-          frame.height = height + "";
+          console.log('entry  ', entry);
+          console.log('target ', entry.target)
+
+          const computedHeight = bottom + top;
+          frame.height = computedHeight + "";
+
+          // Don't let anything else set the height of this element
+          entry.target.style = ``;
 
           // @ts-ignore - number vs string comparison, should fail...
           if (window.innerHeight > frame.height) {
