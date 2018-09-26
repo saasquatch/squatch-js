@@ -148,9 +148,6 @@ export default class PopupWidget extends Widget {
         for (const entry of entries) {
           const { height, top, bottom } = entry.contentRect;
 
-          console.log('entry  ', entry);
-          console.log('target ', entry.target)
-
           const computedHeight = bottom + top;
           frame.height = computedHeight + "";
 
