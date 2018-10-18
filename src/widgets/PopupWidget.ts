@@ -185,6 +185,8 @@ export default class PopupWidget extends Widget {
       }
 
       popupdiv.style.visibility = "visible";
+      popupdiv.style.top = "0px";
+
       this._loadEvent(_sqh);
       _log("Popup opened");
     });
@@ -192,6 +194,8 @@ export default class PopupWidget extends Widget {
 
   close() {
     this.popupdiv.style.visibility = "hidden";
+    this.popupdiv.style.top = "-2000px";
+
     _log("Popup closed");
   }
 
