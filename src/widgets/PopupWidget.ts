@@ -141,7 +141,6 @@ export default class PopupWidget extends Widget {
       frameDoc.body.style.overflowY = "hidden";
       popupdiv.style.visibility = "hidden";
       popupdiv.style.display = "block";
-      popupdiv.style.top = "0";
       frame.height = `${frameDoc.body.offsetHeight}px`;
       // Adjust frame height when size of body changes
       const ro = new contentWindow["ResizeObserver"](entries => {
