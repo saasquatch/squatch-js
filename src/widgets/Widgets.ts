@@ -30,6 +30,8 @@ export default class Widgets {
   api: WidgetApi;
   tenantAlias: string;
   domain: string;
+  // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
+  eventBus: any;
 
   /**
    * Initialize a new {@link Widgets} instance.
@@ -52,7 +54,8 @@ export default class Widgets {
     const config = validateConfig(raw);
     this.tenantAlias = config.tenantAlias;
     this.domain = config.domain;
-
+    // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
+    this.eventBus = EventBus;
     this.api = new WidgetApi(config);
     // listens to a 'submit_email' event in the theme.
     EventBus.addEventListener("submit_email", Widgets._cb);
