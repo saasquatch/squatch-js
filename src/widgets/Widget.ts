@@ -43,7 +43,7 @@ export default abstract class Widget {
     this.frame["squatchJsApi"] = this;
     this.frame.width = "100%";
     this.frame.scrolling = "no";
-    this.frame.setAttribute("style", "border: 0; background-color: none;");
+    this.frame.setAttribute("style", "border: 0; background-color: none; width: 1px; min-width: 100%;");
   }
 
   abstract load();
