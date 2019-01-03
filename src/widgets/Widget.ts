@@ -17,7 +17,6 @@ export interface Params{
   rsCode?: string;
 }
 /*
- *
  * The Widget class is the base class for the different widget types available
  *
  * Creates an `iframe` in which the html content of the widget gets embedded.
