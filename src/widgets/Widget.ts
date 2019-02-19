@@ -131,7 +131,7 @@ export default abstract class Widget {
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
     <head>
-      <link rel="stylesheet" media="all" href="https://d2rcp9ak152ke1.cloudfront.net/assets/css/widget/errorpage.min.css">
+      <link rel="stylesheet" media="all" href="https://d2rcp9ak152ke1.cloudfront.net/assets/css/widget/errorpage.css">
       <style>
         ${style}
       </style>
