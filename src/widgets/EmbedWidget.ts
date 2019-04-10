@@ -147,7 +147,6 @@ export default class EmbedWidget extends Widget {
     }).catch(({message}) => {
       _log(`${message}`);
     });
-
   }
 
   protected _error(rs, mode = 'embed', style = '') {
