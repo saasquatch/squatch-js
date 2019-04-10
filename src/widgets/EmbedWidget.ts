@@ -132,7 +132,6 @@ export default class EmbedWidget extends Widget {
           showStatsBtn.className = 'btn btn-primary';
           showStatsBtn.id = 'show-stats-btn';
           showStatsBtn.textContent = (this.type === 'REFERRER_WIDGET') ? 'Show Stats' : 'Show Reward';
-
           showStatsBtn.setAttribute('style', 'margin-top: 10px; max-width: 130px; width: 100%;');
           showStatsBtn.onclick = () => {
             this.load();
