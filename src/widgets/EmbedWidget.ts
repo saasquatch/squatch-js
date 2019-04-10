@@ -69,21 +69,57 @@ export default class EmbedWidget extends Widget {
       this._loadEvent(_sqh);
       _log('loaded');
     });
+
   }
 
   reload({email, firstName, lastName}, jwt) {
-    if(!this.frame.contentWindow){
+    const frameWindow = this.frame.contentWindow;
+
+    if (!frameWindow) {
       throw new Error("Frame needs a content window");
     }
-    const frameDoc = this.frame.contentWindow.document;
 
-    this.widgetApi.cookieUser({
-      user: {
+    const userType = this.context;
+
+    if (!userType) {
+      throw new Error("I don't know how this user was created, I can't process this form correctly");
+    }
+
+    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+    const squatchObj = frameWindow.squatch;
+    const hasAnalyticsData = squatchObj && squatchObj.analytics;
+
+    _log(`Widget ${hasAnalyticsData ? "v1" : "v2"} reloading...`)
+
+    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+    const frameDoc = frameWindow.document;
+
+    let userObj = {}
+
+    if (userType === 'upsert') {
+      userObj = {
         email: email || null,
         firstName: firstName || null,
         lastName: lastName || null,
-      },
-      engagementMedium: 'EMBED',
+        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+        id: hasAnalyticsData ? squatchObj.analytics.attributes.userId : null,
+        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+        accountId: hasAnalyticsData ? squatchObj.analytics.attributes.accountId : null
+      }
+    } else if (userType === 'cookie') {
+      userObj = {
+        email: email || null,
+        firstName: firstName || null,
+        lastName: lastName || null
+      }
+    }
+
+    const fn = userType === 'upsert' ? "upsertUser" : "cookieUser";
+
+    this.widgetApi[fn]({
+      // @ts-ignore this will never be called with upsertUser without having id and account id in the userObj
+      user: userObj,
+      engagementMedium: "EMBED",
       widgetType: this.type,
       jwt,
     }).then(({template}) => {

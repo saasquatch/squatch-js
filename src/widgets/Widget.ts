@@ -15,6 +15,7 @@ export interface Params{
   content: string;
   api: WidgetApi;
   rsCode?: string;
+  context: string;
 }
 /*
  * The Widget class is the base class for the different widget types available
@@ -30,6 +31,7 @@ export default abstract class Widget {
   content: string;
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
+  context: string;
 
   protected constructor(params:Params) {
     _log("widget initializing ...");
@@ -43,6 +45,7 @@ export default abstract class Widget {
     this.frame.width = "100%";
     this.frame.scrolling = "no";
     this.frame.setAttribute("style", "border: 0; background-color: none; width: 1px; min-width: 100%;");
+    this.context = params.context || "";
   }
 
   abstract load();
