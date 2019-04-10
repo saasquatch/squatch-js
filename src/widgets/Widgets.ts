@@ -78,7 +78,7 @@ export default class Widgets {
     try {
       const response = await this.api.cookieUser(config);
       return {
-        widget: this._renderWidget(response, config),
+        widget: this._renderWidget(response, config, "cookie"),
         user: response.user
       };
     } catch (err) {
@@ -111,7 +111,7 @@ export default class Widgets {
     try {
       const response = await this.api.upsertUser(clean);
       return {
-        widget: this._renderWidget(response, clean),
+        widget: this._renderWidget(response, clean, "upsert"),
         user: response.user
       };
     } catch (err) {
@@ -144,7 +144,7 @@ export default class Widgets {
     try {
       const response = await this.api.cookieUser(clean);
       return {
-        widget: this._renderWidget({ template: response }, clean),
+        widget: this._renderWidget({ template: response }, clean, 'cookie'),
         user: response.user
       };
     } catch (err) {
@@ -220,7 +220,8 @@ export default class Widgets {
    */
   private _renderWidget(
     response: any,
-    config: WidgetConfig
+    config: WidgetConfig,
+    context: string = ''
   ) {
     _log("Rendering Widget...");
     if (!response) throw new Error("Unable to get a response");
@@ -235,7 +236,8 @@ export default class Widgets {
       content: response.template,
       type: config.widgetType || opts.widget.defaultWidgetType,
       api: this.api,
-      domain: this.domain
+      domain: this.domain,
+      context: context
     };
 
     if (opts.widgetUrlMappings) {

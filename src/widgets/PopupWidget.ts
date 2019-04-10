@@ -19,7 +19,7 @@ export default class PopupWidget extends Widget {
   popupdiv: HTMLElement;
   popupcontent: HTMLElement;
 
-  constructor(params:Params, trigger = ".squatchpop") {
+  constructor(params: Params, trigger = ".squatchpop") {
     super(params);
 
     this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
@@ -77,60 +77,95 @@ export default class PopupWidget extends Widget {
   }
 
   reload({ email, firstName, lastName }, jwt) {
+    const frameWindow = this.frame.contentWindow;
+
+    if (!frameWindow) {
+      throw new Error("Frame needs a content window");
+    }
+
+    const userType = this.context;
+
+    if (!userType) {
+      throw new Error("I don't know how this user was created, I can't process this form correctly");
+    }
+
     //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-    const frameDoc = this.frame.contentWindow.document;
+    const squatchObj = frameWindow.squatch;
+    const hasAnalyticsData = squatchObj && squatchObj.analytics;
 
-    this.widgetApi
-      .cookieUser({
-        user: {
-          email: email || null,
-          firstName: firstName || null,
-          lastName: lastName || null
-        },
-        engagementMedium: "POPUP",
-        widgetType: this.type,
-        jwt
-      })
-      .then(({ template }) => {
-        if (template) {
-          this.content = template;
-          const showStatsBtn = frameDoc.createElement("button");
-          const registerForm = frameDoc.getElementsByClassName(
-            "squatch-register"
-          )[0];
+    _log(`Widget ${hasAnalyticsData ? "v1" : "v2"} reloading...`)
 
-          if (registerForm) {
-            showStatsBtn.className = "btn btn-primary";
-            showStatsBtn.id = "show-stats-btn";
-            showStatsBtn.textContent =
-              this.type === "REFERRER_WIDGET" ? "Show Stats" : "Show Reward";
-            showStatsBtn.setAttribute(
-              "style",
-              "margin-top: 10px; max-width: 130px; width: 100%;"
-            );
-            showStatsBtn.onclick = () => {
-              this.load();
-              this.open();
-            };
+    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+    const frameDoc = frameWindow.document;
 
-            //@ts-ignore -- we assume this is an element that can be styled
-            registerForm.style.paddingTop = "30px";
-            registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
-            registerForm.appendChild(showStatsBtn);
-          }
+    let userObj = {}
+
+    if (userType === 'upsert') {
+      userObj = {
+        email: email || null,
+        firstName: firstName || null,
+        lastName: lastName || null,
+        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+        id: hasAnalyticsData ? squatchObj.analytics.attributes.userId : null,
+        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+        accountId: hasAnalyticsData ? squatchObj.analytics.attributes.accountId : null
+      }
+    } else if (userType === 'cookie') {
+      userObj = {
+        email: email || null,
+        firstName: firstName || null,
+        lastName: lastName || null
+      }
+    }
+
+    const fn = userType === 'upsert' ? "upsertUser" : "cookieUser";
+
+    this.widgetApi[fn]({
+      // @ts-ignore this will never be called with upsertUser without having id and account id in the userObj
+      user: userObj,
+      engagementMedium: "POPUP",
+      widgetType: this.type,
+      jwt
+    }).then(({ template }) => {
+      if (template) {
+        this.content = template;
+        const showStatsBtn = frameDoc.createElement("button");
+        const registerForm = frameDoc.getElementsByClassName(
+          "squatch-register"
+        )[0];
+
+        if (registerForm) {
+          showStatsBtn.className = "btn btn-primary";
+          showStatsBtn.id = "show-stats-btn";
+          showStatsBtn.textContent =
+            this.type === "REFERRER_WIDGET" ? "Show Stats" : "Show Reward";
+          showStatsBtn.setAttribute(
+            "style",
+            "margin-top: 10px; max-width: 130px; width: 100%;"
+          );
+          showStatsBtn.onclick = () => {
+            this.load();
+            this.open();
+          };
+
+          //@ts-ignore -- we assume this is an element that can be styled
+          registerForm.style.paddingTop = "30px";
+          registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
+          registerForm.appendChild(showStatsBtn);
         }
-      })
+      }
+    })
       .catch(({ message }) => {
         _log(`${message}`);
       });
   }
 
-  protected _setupResizeHandler(){
+  protected _setupResizeHandler() {
     const popupdiv = this.popupdiv;
     const frame = this.frame;
-    const {contentWindow} = frame;
+    const { contentWindow } = frame;
 
-    if(!contentWindow){
+    if (!contentWindow) {
       throw new Error("Frame needs a content window");
     }
 
@@ -169,8 +204,8 @@ export default class PopupWidget extends Widget {
   open() {
     const popupdiv = this.popupdiv;
     const frame = this.frame;
-    const {contentWindow} = frame;
-    if(!contentWindow) throw new Error("Squatch.js has an empty iframe");
+    const { contentWindow } = frame;
+    if (!contentWindow) throw new Error("Squatch.js has an empty iframe");
     const frameDoc = contentWindow.document;
 
     // Adjust frame height when size of body changes

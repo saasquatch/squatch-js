@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>simplified JS</title>
+    <script>
+    !function(a,b){
+      a("squatch","./dist/squatch.min.js",b)
+    }(function(a,b,c){
+      // a = context
+      // b = file
+      // c = context
+      // console.log(a,b,c === window);
+
+      var d,e,f;
+      c["_" + a] = {},
+      c[a] = {},
+      c[a].ready = function(b){
+        c["_" + a].ready =  c["_" + a].ready || [];
+        c["_" + a].ready.push(b);
+      }
+
+
+      e=document.createElement("script"),
+      e.async=1,
+      e.src=b,
+      f=document.getElementsByTagName("script")[0],
+      f.parentNode.insertBefore(e,f)
+    },this);
+    </script>
+</head>
+<body>
+  <script>
+
+  squatch.ready(function(){
+    squatch.init({
+      domain: 'https://app.referralsaasquatch.com',
+      tenantAlias: 'test_a9d58f5qxxhp9'
+    });
+
+    var initObj = {
+      widgetType: "CONVERSION_WIDGET",
+      engagementMedium: 'EMBED',
+      user: {
+        id: 'abc_129',
+        accountId: 'abc_129'
+      }
+    }
+
+
+    squatch.widgets().upsertUser(initObj).then(function(res){
+      console.log(res);
+    }).catch(function(err) {
+      console.log(err);
+    });
+
+    // squatch.widgets().createCookieUser({
+    //   engagementMedium: 'EMBED',  // String (optional: POPUP, EMBED)
+    //   widgetType: 'CONVERSION_WIDGET'
+    // });
+
+
+
+
+
+  });
+
+  </script>
+
+  <input type="text" name="Coupon" class="testClass" value="" />
+  <div id="squatchembed"></div>
+  <div class="squatchpop">click here</div>
+</body>
+</html>
