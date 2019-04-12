@@ -3,7 +3,7 @@
 import debug from "debug";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
-import { WidgetType } from "../types";
+import { WidgetType, WidgetContext } from "../types";
 import { isObject, hasProps } from "../utils/validate";
 
 /** @hidden */
@@ -15,7 +15,7 @@ export interface Params{
   content: string;
   api: WidgetApi;
   rsCode?: string;
-  context: string;
+  context: WidgetContext;
 }
 /*
  * The Widget class is the base class for the different widget types available
@@ -31,7 +31,7 @@ export default abstract class Widget {
   content: string;
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
-  context: string;
+  context: WidgetContext;
 
   protected constructor(params:Params) {
     _log("widget initializing ...");
@@ -45,7 +45,7 @@ export default abstract class Widget {
     this.frame.width = "100%";
     this.frame.scrolling = "no";
     this.frame.setAttribute("style", "border: 0; background-color: none; width: 1px; min-width: 100%;");
-    this.context = params.context || "";
+    this.context = params.context;
   }
 
   abstract load();
@@ -89,7 +89,7 @@ export default abstract class Widget {
       });
   }
 
- protected _shareEvent(sqh, medium) {
+  protected _shareEvent(sqh, medium) {
     if (sqh) {
       this.analyticsApi
         .pushAnalyticsShareClickedEvent({
@@ -195,6 +195,93 @@ export default abstract class Widget {
     } 
     return found;
   }
+
+
+  reload({email, firstName, lastName}, jwt) {
+    const frameWindow = this.frame.contentWindow;
+
+    console.log('context', this.context)
+
+    const engagementMedium = this.context.engagementMedium || "POPUP"
+
+    if (!frameWindow) {
+      throw new Error("Frame needs a content window");
+    }
+
+    const frameDoc = frameWindow.document;
+
+    let response;
+
+    if (this.context.type === "upsert") {
+      let userObj = {
+        email: email || null,
+        firstName: firstName || null,
+        lastName: lastName || null,
+        id: this.context.user.id,
+        accountId: this.context.user.accountId
+      }
+
+      response = this.widgetApi.upsertUser({
+        user: userObj,
+        engagementMedium,
+        widgetType: this.type,
+        jwt
+      })
+
+    } else if (this.context.type === 'cookie') {
+      let userObj = {
+        email: email || null,
+        firstName: firstName || null,
+        lastName: lastName || null
+      }
+
+      response = this.widgetApi.cookieUser({
+        user: userObj,
+        engagementMedium,
+        widgetType: this.type,
+        jwt
+      })
+      
+    } else {
+      throw new Error("can't reload an error widget")
+    }
+
+    response.then(({template}) => {
+      if (template) {
+        this.content = template;
+        const showStatsBtn = frameDoc.createElement('button');
+        const registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
+
+        if (registerForm) {
+          showStatsBtn.className = 'btn btn-primary';
+          showStatsBtn.id = 'show-stats-btn';
+
+          showStatsBtn.textContent = this.type === 'REFERRER_WIDGET' ? 'Show Stats' : 'Show Reward';
+
+          const widgetStyle = engagementMedium === "POPUP" ? "margin-top: 10px; max-width: 130px; width: 100%;" : "margin-top: 10px;"
+
+          showStatsBtn.setAttribute('style', widgetStyle);
+          showStatsBtn.onclick = () => {
+            this.load();
+            
+            // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
+            engagementMedium === "POPUP" && this.open();
+          };
+
+          // @ts-ignore -- expect register form to be a stylable element
+          registerForm.style.paddingTop = '30px';
+          registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
+          registerForm.appendChild(showStatsBtn);
+        }
+      }
+    }).catch(({message}) => {
+      _log(`${message}`);
+    });
+
+  }
+
+
+
 }
 
 
