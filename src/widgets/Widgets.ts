@@ -5,8 +5,8 @@ import WidgetApi from "../api/WidgetApi";
 import EmbedWidget from "./EmbedWidget";
 import PopupWidget from "./PopupWidget";
 import CtaWidget from "./CtaWidget";
-import Widget from "./Widget";
-import { WidgetResult } from "../types";
+import Widget, { Params } from "./Widget";
+import { WidgetResult, WidgetContext } from "../types";
 import {
   ConfigOptions,
   User,
@@ -16,6 +16,7 @@ import {
   WidgetConfig
 } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
+import { type } from "os";
 // import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
@@ -78,7 +79,7 @@ export default class Widgets {
     try {
       const response = await this.api.cookieUser(config);
       return {
-        widget: this._renderWidget(response, config, "cookie"),
+        widget: this._renderWidget(response, config, {type:"cookie", engagementMedium: config.engagementMedium}),
         user: response.user
       };
     } catch (err) {
@@ -111,7 +112,7 @@ export default class Widgets {
     try {
       const response = await this.api.upsertUser(clean);
       return {
-        widget: this._renderWidget(response, clean, "upsert"),
+        widget: this._renderWidget(response, clean, {type:"upsert", user: clean.user, engagementMedium: config.engagementMedium}),
         user: response.user
       };
     } catch (err) {
@@ -144,7 +145,7 @@ export default class Widgets {
     try {
       const response = await this.api.cookieUser(clean);
       return {
-        widget: this._renderWidget({ template: response }, clean, 'cookie'),
+        widget: this._renderWidget({ template: response }, clean, {type:'cookie', engagementMedium: clean.engagementMedium}),
         user: response.user
       };
     } catch (err) {
@@ -221,7 +222,7 @@ export default class Widgets {
   private _renderWidget(
     response: any,
     config: WidgetConfig,
-    context: string = ''
+    context: WidgetContext
   ) {
     _log("Rendering Widget...");
     if (!response) throw new Error("Unable to get a response");
@@ -331,12 +332,13 @@ export default class Widgets {
     const { apiErrorCode, rsCode, message } = props;
     _log(new Error(`${apiErrorCode} (${rsCode}) ${message}`));
 
-    const params = {
+    const params:Params = {
       content: "error",
       rsCode,
       api: this.api,
       domain: this.domain,
-      type: "ERROR_WIDGET"
+      type: "ERROR_WIDGET",
+      context: {type: "error"}
     };
 
     let widget: Widget;

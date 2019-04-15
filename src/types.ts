@@ -61,6 +61,22 @@ export type EngagementMedium =
   /**  Displays the widget embedded in the page. Create an {@link EmbedWidget} */
   | "EMBED";
 
+export type WidgetContext = {
+  type: "cookie" | "error",
+  engagementMedium?: EngagementMedium
+} | {
+  type: "upsert",
+  user: User,
+  engagementMedium?: EngagementMedium
+} 
+
+
+
+export type WidgetContextType = 
+  "upsert" |
+  "cookie" |
+  "error";
+
 /**
  * WidgetType is an enum for types of ways a Widget can be displayed.
  */
