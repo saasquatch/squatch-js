@@ -2,11 +2,6 @@
 
 ## Install the library
 
-```ssh
-# via npm
-$ npm install @saasquatch/squatch-js
-```
-
 To integrate our referral program to your website or web app, copy/paste this snippet of JavaScript above the `</head>` tag of your page:
 
 ```html
@@ -37,12 +32,19 @@ Note: `engagementMedium` is required in the `squatch.widgets()` functions if you
     squatch.init({
       tenantAlias: "YOUR_TENANT_ALIAS",     // String (required)
     });
-
-    squatch.widgets().createCookieUser({
+  
+    squatch.widgets().upsertUser({
+      user: {                               // Object (required)
+        id: 'USER_ID',                      // String (required)
+        accountId: 'USER_ACCOUNT_ID',       // String (required)
+        email: 'USER_EMAIL',                // String (optional)
+        firstName: 'USER_FIRST_NAME',       // String (optional)
+        lastName: 'USER_LAST_NAME',         // String (optional)
+        ...
+      },
       engagementMedium: 'DEFAULT_IS_POPUP',  // String (optional: POPUP, EMBED)
       widgetType: 'WIDGET_TYPE',             // String (optional: REFERRER_WIDGET, CONVERSION_WIDGET)
       jwt: 'TOKEN'                           // String (required by default, or disable Security in the portal)
-    });
 
   });
 </script>
@@ -115,6 +117,29 @@ You can also use the `api()` function to call the WidgetApi methods directly.
 ```
 
 Want more control? Visit our [guide](https://github.com/saasquatch/squatch-js/blob/master/docs/docs.md).
+
+
+## Install via NPM and Webpack (advanced)
+
+Squatch.js can also be installed via NPM and bundled into your application with Webpack.
+
+```ssh
+# via npm
+$ npm install @saasquatch/squatch-js
+```
+
+```js
+import * as squatch from "@saasquatch/squatch-js";
+
+// Always call init
+squatch.init({
+  tenantAlias: "YOUR_TENANT_ALIAS"      // String (required)
+});
+
+// Don't need to wait for .ready when importing via NPM/Webpack
+squatch.api().upsertUser({
+
+```
 
 ## Contributing
 This is an open source project! If you are interested in contributing please look at [contributing guidelines](CONTRIBUTING.md) first.
