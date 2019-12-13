@@ -65,7 +65,7 @@ export default class EventsApi {
     const raw = params as unknown;
     const rawOpts = options as unknown;
     const body = _validateEvent(raw);
-    const {jwt} = _validateTrackOptions(rawOpts);
+    const { jwt } = _validateTrackOptions(rawOpts);
     const ta = encodeURIComponent(this.tenantAlias);
     const userId = encodeURIComponent(body.userId);
     const accountId = encodeURIComponent(body.accountId);
@@ -78,11 +78,13 @@ export default class EventsApi {
 function _validateEvent(raw: unknown): UserEventInput {
   if (!assertProp(raw, "accountId", "events", "userId"))
     throw new Error("Fields required");
-  if(!Array.isArray(raw.events)) throw new Error("'events' should be an array");
-  return raw;
+  if (!Array.isArray(raw.events))
+    throw new Error("'events' should be an array");
+  // This cast is safe because the fields of UserEventInput were previously validated
+  return (raw as any) as UserEventInput;
 }
 
-function _validateTrackOptions(raw: unknown): TrackOptions{
-  if(!isObject(raw)) throw new Error("'options' should be an object")
+function _validateTrackOptions(raw: unknown): TrackOptions {
+  if (!isObject(raw)) throw new Error("'options' should be an object");
   return raw;
 }

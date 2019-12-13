@@ -45,18 +45,19 @@ export function validateConfig(raw: unknown): Required<ConfigOptions> {
     (hasProps(raw, "domain") && raw.domain) ||
     "https://app.referralsaasquatch.com";
   const debug = (hasProps(raw, "debug") && raw.debug) || false;
+
+  // These casts are safe after variables have been validated by the above code
   return {
-    tenantAlias,
-    domain,
-    debug
+    tenantAlias: tenantAlias as string,
+    domain: domain as string,
+    debug: debug as boolean
   };
 }
 
-
-
 export function validateWidgetConfig(raw: unknown): WidgetConfig {
   if (!isObject(raw)) throw new Error("Widget properties must be an object");
-  if(!assertProp(raw, "user")) throw new Error("Required properties missing.");
-  return raw;
-}
+  if (!assertProp(raw, "user")) throw new Error("Required properties missing.");
 
+  // This cast is safe because "raw" was verified by the above code
+  return (raw as any) as WidgetConfig;
+}

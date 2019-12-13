@@ -1,6 +1,6 @@
 // @ts-check
 import { doPost } from "../utils/io";
-import { EngagementMedium, ShareMedium } from "../types";
+import { EngagementMedium } from "../types";
 import { hasProps } from "../utils/validate";
 
 /**
@@ -20,9 +20,10 @@ export default class AnalyticsApi {
    *
    */
   constructor(config: { domain: string }) {
-    const raw = (config as unknown);
-    if(hasProps(raw, "domain")) {
-      this.domain = raw.domain;
+    if (hasProps(config as unknown, "domain")) {
+      // This case is safe after the hasProps validation passes
+      const validatedConfig = config as { domain: string };
+      this.domain = validatedConfig.domain;
     } else {
       this.domain = "https://app.referralsaasquatch.com";
     }
@@ -33,7 +34,9 @@ export default class AnalyticsApi {
     const accountId = encodeURIComponent(params.externalAccountId);
     const userId = encodeURIComponent(params.externalUserId);
     const engagementMedium = encodeURIComponent(params.engagementMedium);
-    const programId = params.programId ? `&programId=${encodeURIComponent(params.programId)}` : ``;
+    const programId = params.programId
+      ? `&programId=${encodeURIComponent(params.programId)}`
+      : ``;
 
     const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}${programId}`;
     const url = this.domain + path;
@@ -41,7 +44,7 @@ export default class AnalyticsApi {
     return doPost(url, JSON.stringify({}));
   }
 
-  pushAnalyticsShareClickedEvent(params:SQHDetails & { shareMedium: string}) {
+  pushAnalyticsShareClickedEvent(params: SQHDetails & { shareMedium: string }) {
     const tenantAlias = encodeURIComponent(params.tenantAlias);
     const accountId = encodeURIComponent(params.externalAccountId);
     const userId = encodeURIComponent(params.externalUserId);
@@ -61,4 +64,4 @@ export type SQHDetails = {
   externalUserId: string;
   engagementMedium: EngagementMedium;
   programId?: string;
-}
+};

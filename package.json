@@ -16,8 +16,11 @@
   "sideEffects": false,
   "scripts": {
     "watch": "cross-env NODE_ENV=production webpack --watch",
-    "build": "webpack",
-    "build:production": "cross-env NODE_ENV=production webpack",
+    "declaration": "tsc --emitDeclarationOnly",
+    "webpack": "webpack",
+    "webpack:production": "cross-env NODE_ENV=production webpack",
+    "build": "npm run webpack && npm run declaration",
+    "build:production": "npm run webpack:production && npm run declaration",
     "test": "echo \"No tests defined\"",
     "build:docs": "typedoc --out docs/ src/ ",
     "deploy": "np --no-cleanup",

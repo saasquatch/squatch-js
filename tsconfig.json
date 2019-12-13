@@ -7,11 +7,14 @@
     "strictNullChecks": true,
     "module": "es6",
     "target": "es6",
-    "lib": ["dom", "es5", "scripthost", "es2015"]
+    "lib": ["dom", "es5", "scripthost", "es2015"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "dist"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"],
-  "typedocOptions":{
+  "typedocOptions": {
     "out": "docs",
     "json": "docs/docs.json",
     "excludePrivate": true,
