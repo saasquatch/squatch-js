@@ -1,4 +1,5 @@
 # Referral SaaSquatch Javascript SDK
+### For the most up-to-date documentation, refer to our online [Help Center](https://docs.referralsaasquatch.com/).
 
 ## Install the library
 
