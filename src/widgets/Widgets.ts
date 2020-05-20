@@ -13,7 +13,7 @@ import {
   EngagementMedium,
   WidgetType,
   JWT,
-  WidgetConfig
+  WidgetConfig,
 } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
 import { type } from "os";
@@ -31,6 +31,7 @@ export default class Widgets {
   api: WidgetApi;
   tenantAlias: string;
   domain: string;
+  npmCdn: string;
   // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
   eventBus: any;
 
@@ -55,6 +56,7 @@ export default class Widgets {
     const config = validateConfig(raw);
     this.tenantAlias = config.tenantAlias;
     this.domain = config.domain;
+    this.npmCdn = config.npmCdn;
     // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
     this.eventBus = EventBus;
     this.api = new WidgetApi(config);
@@ -79,8 +81,11 @@ export default class Widgets {
     try {
       const response = await this.api.cookieUser(config);
       return {
-        widget: this._renderWidget(response, config, {type:"cookie", engagementMedium: config.engagementMedium}),
-        user: response.user
+        widget: this._renderWidget(response, config, {
+          type: "cookie",
+          engagementMedium: config.engagementMedium,
+        }),
+        user: response.user,
       };
     } catch (err) {
       _log(err);
@@ -106,14 +111,18 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  async upsertUser(config:WidgetConfig) {
+  async upsertUser(config: WidgetConfig) {
     const raw = config as unknown;
     const clean = validateWidgetConfig(raw);
     try {
       const response = await this.api.upsertUser(clean);
       return {
-        widget: this._renderWidget(response, clean, {type:"upsert", user: clean.user, engagementMedium: config.engagementMedium}),
-        user: response.user
+        widget: this._renderWidget(response, clean, {
+          type: "upsert",
+          user: clean.user,
+          engagementMedium: config.engagementMedium,
+        }),
+        user: response.user,
       };
     } catch (err) {
       _log(err);
@@ -139,14 +148,17 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  async render(config:WidgetConfig): Promise<WidgetResult> {
+  async render(config: WidgetConfig): Promise<WidgetResult> {
     const raw = config as unknown;
     const clean = validateWidgetConfig(raw);
     try {
       const response = await this.api.cookieUser(clean);
       return {
-        widget: this._renderWidget({ template: response }, clean, {type:'cookie', engagementMedium: clean.engagementMedium}),
-        user: response.user
+        widget: this._renderWidget({ template: response }, clean, {
+          type: "cookie",
+          engagementMedium: clean.engagementMedium,
+        }),
+        user: response.user,
       };
     } catch (err) {
       if (err.apiErrorCode) {
@@ -169,7 +181,7 @@ export default class Widgets {
       this.api
         .squatchReferralCookie()
         .then((...args) => input(...args))
-        .catch(ex => {
+        .catch((ex) => {
           _log("Autofill error", ex);
           throw ex;
         });
@@ -194,7 +206,7 @@ export default class Widgets {
       .then(({ code }) => {
         elem.value = code;
       })
-      .catch(ex => {
+      .catch((ex) => {
         throw ex;
       });
   }
@@ -238,11 +250,12 @@ export default class Widgets {
       type: config.widgetType || opts.widget.defaultWidgetType,
       api: this.api,
       domain: this.domain,
-      context: context
+      npmCdn: this.npmCdn,
+      context: context,
     };
 
     if (opts.widgetUrlMappings) {
-      opts.widgetUrlMappings.forEach(rule => {
+      opts.widgetUrlMappings.forEach((rule) => {
         if (Widgets._matchesUrl(rule.url)) {
           if (
             rule.widgetType !== "CONVERSION_WIDGET" ||
@@ -253,9 +266,7 @@ export default class Widgets {
             _log(`Display ${rule.widgetType} on ${rule.url}`);
           } else {
             _log(
-              `Don't display ${
-                rule.widgetType
-              } when no referral on widget rule match ${rule.url}`
+              `Don't display ${rule.widgetType} when no referral on widget rule match ${rule.url}`
             );
           }
         }
@@ -263,7 +274,7 @@ export default class Widgets {
     }
 
     if (opts.conversionUrls) {
-      opts.conversionUrls.forEach(rule => {
+      opts.conversionUrls.forEach((rule) => {
         if (response.user.referredBy && Widgets._matchesUrl(rule)) {
           _log("This is a conversion URL", rule);
         }
@@ -327,18 +338,18 @@ export default class Widgets {
    */
   private _renderErrorWidget(
     props: { apiErrorCode: string; rsCode: string; message: string },
-    em:EngagementMedium = "POPUP"
+    em: EngagementMedium = "POPUP"
   ) {
     const { apiErrorCode, rsCode, message } = props;
     _log(new Error(`${apiErrorCode} (${rsCode}) ${message}`));
 
-    const params:Params = {
+    const params: Params = {
       content: "error",
       rsCode,
       api: this.api,
       domain: this.domain,
       type: "ERROR_WIDGET",
-      context: {type: "error"}
+      context: { type: "error" },
     };
 
     let widget: Widget;
