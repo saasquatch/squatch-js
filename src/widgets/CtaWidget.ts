@@ -22,7 +22,9 @@ export default class CtaWidget extends PopupWidget {
     _log('CTA constructor');
     const ctaElement = document.createElement('div');
     ctaElement.id = 'cta';
-    document.body.appendChild(ctaElement);
+
+    const element = params.element || document.body;
+    element.appendChild(ctaElement);
 
     super(params, '#cta');
 
@@ -47,7 +49,7 @@ export default class CtaWidget extends PopupWidget {
     this.ctaFrame.scrolling = 'no';
     this.ctaFrame.setAttribute('style', `border:0; background-color:transparent; position:fixed; display:none;${this.side}${this.position}`);
 
-    document.body.appendChild(this.ctaFrame);
+    element.appendChild(this.ctaFrame);
     _log('ctaframe appended to body');
   }
 

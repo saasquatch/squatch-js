@@ -13,6 +13,8 @@ export interface Params{
   type: WidgetType;
   domain: string;
   content: string;
+  // The element where the widget div and iframe will be rendered
+  element?: HTMLElement;
   api: WidgetApi;
   rsCode?: string;
   context: WidgetContext;

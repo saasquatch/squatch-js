@@ -18,9 +18,11 @@ export default class PopupWidget extends Widget {
   triggerWhenCTA: HTMLElement | null;
   popupdiv: HTMLElement;
   popupcontent: HTMLElement;
+  element: HTMLElement;
 
   constructor(params: Params, trigger = ".squatchpop") {
     super(params);
+    this.element = params.element || document.body;
 
     this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
 
@@ -63,7 +65,7 @@ export default class PopupWidget extends Widget {
 
   load() {
     this.popupdiv.appendChild(this.popupcontent);
-    document.body.appendChild(this.popupdiv);
+    this.element.appendChild(this.popupdiv);
     this.popupcontent.appendChild(this.frame);
 
     //@ts-ignore -- will occasionally throw a null pointer exception at runtime

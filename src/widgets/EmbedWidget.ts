@@ -19,7 +19,7 @@ export default class EmbedWidget extends Widget {
   constructor(params:Params, selector = '#squatchembed') {
     super(params);
 
-    const element = document.querySelector(selector) || document.querySelector('.squatchembed');
+    const element = params.element || document.querySelector(selector) || document.querySelector('.squatchembed');
 
     if (!element) throw new Error(`element with selector '${selector}' not found.'`);
     this.element = element;

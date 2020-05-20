@@ -99,6 +99,7 @@ export default class Widgets {
    * @param {Object} config.user The user details
    * @param {string} config.user.id The user id
    * @param {string} config.user.accountId The user account id
+   * @param {HTMLElement} config.element The container where the widget should attach
    * @param {WidgetType} config.widgetType The content of the widget.
    * @param {EngagementMedium} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
@@ -235,6 +236,7 @@ export default class Widgets {
 
     const params = {
       content: response.template,
+      element: config.element,
       type: config.widgetType || opts.widget.defaultWidgetType,
       api: this.api,
       domain: this.domain,
