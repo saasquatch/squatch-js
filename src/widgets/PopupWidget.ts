@@ -56,7 +56,7 @@ export default class PopupWidget extends Widget {
       "margin: auto; width: 80%; max-width: 500px; position: relative;"
     );
 
-    this.popupdiv.onclick = event => {
+    this.popupdiv.onclick = (event) => {
       this._clickedOutside(event);
     };
   }
@@ -70,7 +70,9 @@ export default class PopupWidget extends Widget {
     const frameDoc = this.frame.contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
-    frameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.x"></script>`);
+    frameDoc.write(
+      `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
+    );
     frameDoc.close();
     _log("Popup template loaded into iframe");
     this._setupResizeHandler();
@@ -94,7 +96,7 @@ export default class PopupWidget extends Widget {
       popupdiv.style.display = "block";
       frame.height = `${frameDoc.body.offsetHeight}px`;
       // Adjust frame height when size of body changes
-      const ro = new contentWindow["ResizeObserver"](entries => {
+      const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
           const { height, top, bottom } = entry.contentRect;
 
@@ -107,9 +109,11 @@ export default class PopupWidget extends Widget {
           // @ts-ignore - number vs string comparison, should fail...
           if (window.innerHeight > frame.height) {
             // @ts-ignore - number vs string comparison, should fail...
-            popupdiv.style.paddingTop = `${((window.innerHeight - frame.height) / 2)}px`;
+            popupdiv.style.paddingTop = `${
+              (window.innerHeight - frame.height) / 2
+            }px`;
           } else {
-            popupdiv.style.paddingTop = '5px';
+            popupdiv.style.paddingTop = "5px";
           }
         }
       });

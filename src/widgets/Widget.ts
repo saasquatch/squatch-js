@@ -9,9 +9,10 @@ import { isObject, hasProps } from "../utils/validate";
 /** @hidden */
 const _log = debug("squatch-js:widget");
 
-export interface Params{
+export interface Params {
   type: WidgetType;
   domain: string;
+  npmCdn: string;
   content: string;
   api: WidgetApi;
   rsCode?: string;
@@ -32,59 +33,70 @@ export default abstract class Widget {
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
   context: WidgetContext;
+  npmCdn: string;
 
-  protected constructor(params:Params) {
+  protected constructor(params: Params) {
     _log("widget initializing ...");
     this.content =
       params.content === "error" ? this._error(params.rsCode) : params.content;
     this.type = params.type;
     this.widgetApi = params.api;
+    this.npmCdn = params.npmCdn;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
     this.frame = document.createElement("iframe");
     this.frame["squatchJsApi"] = this;
     this.frame.width = "100%";
     this.frame.scrolling = "no";
-    this.frame.setAttribute("style", "border: 0; background-color: none; width: 1px; min-width: 100%;");
+    this.frame.setAttribute(
+      "style",
+      "border: 0; background-color: none; width: 1px; min-width: 100%;"
+    );
     this.context = params.context;
   }
 
   abstract load();
 
-  protected _loadEvent(sqh:unknown) {
+  protected _loadEvent(sqh: unknown) {
+    if (!sqh) return; // No non-truthy value
+    if (!isObject(sqh)) {
+      throw new Error("Widget Load event identity property is not an object");
+    }
 
-    if(!sqh) return; // No non-truthy value
-    if(!isObject(sqh)){
-      throw new Error("Widget Load event identity property is not an object")
-    }  
-
-    let params:SQHDetails;
-    if(hasProps(sqh, "programId")){
-      if(!hasProps(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])){
-        throw new Error("Widget Load event missing required properties")
+    let params: SQHDetails;
+    if (hasProps(sqh, "programId")) {
+      if (
+        !hasProps(sqh, [
+          "tenantAlias",
+          "accountId",
+          "userId",
+          "engagementMedium",
+        ])
+      ) {
+        throw new Error("Widget Load event missing required properties");
       }
       params = {
         tenantAlias: sqh.tenantAlias,
         externalAccountId: sqh.accountId,
         externalUserId: sqh.userId,
         engagementMedium: sqh.engagementMedium,
-        programId: sqh.programId
-      }
-    }else{
-      const {analytics, mode} = (sqh as any);
+        programId: sqh.programId,
+      };
+    } else {
+      const { analytics, mode } = sqh as any;
       params = {
         tenantAlias: analytics.attributes.tenant,
         externalAccountId: analytics.attributes.accountId,
         externalUserId: analytics.attributes.userId,
         engagementMedium: mode.widgetMode,
-      }
+      };
     }
 
     this.analyticsApi
       .pushAnalyticsLoadEvent(params)
-      .then(response => {
+      .then((response) => {
         _log(`${params.engagementMedium} loaded event recorded.`);
       })
-      .catch(ex => {
+      .catch((ex) => {
         _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
       });
   }
@@ -97,14 +109,14 @@ export default abstract class Widget {
           externalAccountId: sqh.analytics.attributes.accountId,
           externalUserId: sqh.analytics.attributes.userId,
           engagementMedium: sqh.mode.widgetMode,
-          shareMedium: medium
+          shareMedium: medium,
         })
-        .then(response => {
+        .then((response) => {
           _log(
             `${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`
           );
         })
-        .catch(ex => {
+        .catch((ex) => {
           _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
         });
     }
@@ -117,12 +129,12 @@ export default abstract class Widget {
           tenantAlias: sqh.analytics.attributes.tenant,
           accountId: sqh.analytics.attributes.accountId,
           userId: sqh.analytics.attributes.userId,
-          emailList
+          emailList,
         })
-        .then(response => {
+        .then((response) => {
           _log(`Sent email invites to share ${emailList}. ${response}`);
         })
-        .catch(ex => {
+        .catch((ex) => {
           _log(new Error(`invite() ${ex}`));
         });
     }
@@ -164,13 +176,13 @@ export default abstract class Widget {
     return errorTemplate;
   }
 
-  protected async _findInnerContainer():Promise<Element> {
+  protected async _findInnerContainer(): Promise<Element> {
     const { contentWindow } = this.frame;
     if (!contentWindow)
       throw new Error("Squatch.hs frame inner frame is empty");
     const frameDoc = contentWindow.document;
 
-    function search(){
+    function search() {
       const containers = frameDoc.getElementsByTagName("sqh-global-container");
       const legacyContainers = frameDoc.getElementsByClassName(
         "squatch-container"
@@ -179,30 +191,29 @@ export default abstract class Widget {
         containers.length > 0
           ? containers[0]
           : legacyContainers.length > 0
-            ? legacyContainers[0]
-            : null;
+          ? legacyContainers[0]
+          : null;
       return fallback;
     }
 
-    let found:Element|null = null;
-    for (let i = 0; i < 50; i++){
+    let found: Element | null = null;
+    for (let i = 0; i < 50; i++) {
       found = search();
-      if(found) break;
+      if (found) break;
       await delay(100);
     }
-    if (!found){
+    if (!found) {
       return frameDoc.body;
-    } 
+    }
     return found;
   }
 
-
-  reload({email, firstName, lastName}, jwt) {
+  reload({ email, firstName, lastName }, jwt) {
     const frameWindow = this.frame.contentWindow;
 
-    console.log('context', this.context)
+    console.log("context", this.context);
 
-    const engagementMedium = this.context.engagementMedium || "POPUP"
+    const engagementMedium = this.context.engagementMedium || "POPUP";
 
     if (!frameWindow) {
       throw new Error("Frame needs a content window");
@@ -218,77 +229,78 @@ export default abstract class Widget {
         firstName: firstName || null,
         lastName: lastName || null,
         id: this.context.user.id,
-        accountId: this.context.user.accountId
-      }
+        accountId: this.context.user.accountId,
+      };
 
       response = this.widgetApi.upsertUser({
         user: userObj,
         engagementMedium,
         widgetType: this.type,
-        jwt
-      })
-
-    } else if (this.context.type === 'cookie') {
+        jwt,
+      });
+    } else if (this.context.type === "cookie") {
       let userObj = {
         email: email || null,
         firstName: firstName || null,
-        lastName: lastName || null
-      }
+        lastName: lastName || null,
+      };
 
       response = this.widgetApi.cookieUser({
         user: userObj,
         engagementMedium,
         widgetType: this.type,
-        jwt
-      })
-      
+        jwt,
+      });
     } else {
-      throw new Error("can't reload an error widget")
+      throw new Error("can't reload an error widget");
     }
 
-    response.then(({template}) => {
-      if (template) {
-        this.content = template;
-        const showStatsBtn = frameDoc.createElement('button');
-        const registerForm = frameDoc.getElementsByClassName('squatch-register')[0];
+    response
+      .then(({ template }) => {
+        if (template) {
+          this.content = template;
+          const showStatsBtn = frameDoc.createElement("button");
+          const registerForm = frameDoc.getElementsByClassName(
+            "squatch-register"
+          )[0];
 
-        if (registerForm) {
-          showStatsBtn.className = 'btn btn-primary';
-          showStatsBtn.id = 'show-stats-btn';
+          if (registerForm) {
+            showStatsBtn.className = "btn btn-primary";
+            showStatsBtn.id = "show-stats-btn";
 
-          showStatsBtn.textContent = this.type === 'REFERRER_WIDGET' ? 'Show Stats' : 'Show Reward';
+            showStatsBtn.textContent =
+              this.type === "REFERRER_WIDGET" ? "Show Stats" : "Show Reward";
 
-          const widgetStyle = engagementMedium === "POPUP" ? "margin-top: 10px; max-width: 130px; width: 100%;" : "margin-top: 10px;"
+            const widgetStyle =
+              engagementMedium === "POPUP"
+                ? "margin-top: 10px; max-width: 130px; width: 100%;"
+                : "margin-top: 10px;";
 
-          showStatsBtn.setAttribute('style', widgetStyle);
-          showStatsBtn.onclick = () => {
-            this.load();
-            
-            // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
-            engagementMedium === "POPUP" && this.open();
-          };
+            showStatsBtn.setAttribute("style", widgetStyle);
+            showStatsBtn.onclick = () => {
+              this.load();
 
-          // @ts-ignore -- expect register form to be a stylable element
-          registerForm.style.paddingTop = '30px';
-          registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
-          registerForm.appendChild(showStatsBtn);
+              // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
+              engagementMedium === "POPUP" && this.open();
+            };
+
+            // @ts-ignore -- expect register form to be a stylable element
+            registerForm.style.paddingTop = "30px";
+            registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
+            registerForm.appendChild(showStatsBtn);
+          }
         }
-      }
-    }).catch(({message}) => {
-      _log(`${message}`);
-    });
-
+      })
+      .catch(({ message }) => {
+        _log(`${message}`);
+      });
   }
-
-
-
 }
 
-
-function delay (duration) {
-  return new Promise(function(resolve, reject){
-    setTimeout(function(){
+function delay(duration) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
       resolve();
-    }, duration)
-  })
+    }, duration);
+  });
 }

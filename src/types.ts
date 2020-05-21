@@ -10,9 +10,9 @@ import Widget from "./widgets/Widget";
 export interface ConfigOptions {
   tenantAlias: string;
   domain?: string;
+  npmCdn?: string;
   debug?: boolean;
 }
-
 
 export interface WidgetConfig {
   user: User; // The user details
@@ -36,8 +36,8 @@ export interface CookieWidgetConfig {
  *
  */
 export interface WidgetResult {
-  widget: Widget,
-  user: User
+  widget: Widget;
+  user: User;
 }
 
 export type User = {
@@ -61,21 +61,18 @@ export type EngagementMedium =
   /**  Displays the widget embedded in the page. Create an {@link EmbedWidget} */
   | "EMBED";
 
-export type WidgetContext = {
-  type: "cookie" | "error",
-  engagementMedium?: EngagementMedium
-} | {
-  type: "upsert",
-  user: User,
-  engagementMedium?: EngagementMedium
-} 
+export type WidgetContext =
+  | {
+      type: "cookie" | "error";
+      engagementMedium?: EngagementMedium;
+    }
+  | {
+      type: "upsert";
+      user: User;
+      engagementMedium?: EngagementMedium;
+    };
 
-
-
-export type WidgetContextType = 
-  "upsert" |
-  "cookie" |
-  "error";
+export type WidgetContextType = "upsert" | "cookie" | "error";
 
 /**
  * WidgetType is an enum for types of ways a Widget can be displayed.
@@ -86,7 +83,6 @@ export type WidgetType =
   /** Widget content that shows that someone has been referred */
   | "CONVERSION_WIDGET"
   | string;
-
 
 export type ShareMedium = string;
 export type JWT = string;
