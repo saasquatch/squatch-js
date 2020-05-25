@@ -62,8 +62,9 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
-    "debug": "^4.1.1",
+    "debug": "^3.2.6",
     "eventbusjs": "^0.2.0",
     "superagent": "^5.2.2"
-  }
+  },
+  "browserslist": "> 0.25%, not dead"
 }
