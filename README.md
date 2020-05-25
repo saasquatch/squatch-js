@@ -6,14 +6,14 @@ To integrate our referral program to your website or web app, copy/paste this sn
 
 ```html
 <script type="text/javascript">
-!function(a,b){a("squatch","https://d2rcp9ak152ke1.cloudfront.net/assets/javascripts/v2/squatch.min.js",b)}(function(a,b,c){var d,e,f;c["_"+a]={},c[a]={},c[a].ready=function(b){c["_" + a].ready =  c["_" + a].ready || [];c["_" + a].ready.push(b);},e=document.createElement("script"),e.async=1,e.src=b,f=document.getElementsByTagName("script")[0],f.parentNode.insertBefore(e,f)},this);
+!function(a,b){a("squatch","https://fast.ssqt.io/squatch-js@2",b)}(function(a,b,c){var d,e,f;c["_"+a]={},c[a]={},c[a].ready=function(b){c["_" + a].ready =  c["_" + a].ready || [];c["_" + a].ready.push(b);},e=document.createElement("script"),e.async=1,e.src=b,f=document.getElementsByTagName("script")[0],f.parentNode.insertBefore(e,f)},this);
 </script>
 ```
 
 Or load the library synchronously from our CDN:
 
 ```html
-<script src="https://d2rcp9ak152ke1.cloudfront.net/assets/javascripts/v2/squatch.min.js" type="text/javascript"></script>
+<script src="https://fast.ssqt.io/squatch-js@2" type="text/javascript"></script>
 ```
 
 
