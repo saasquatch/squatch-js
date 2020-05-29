@@ -7,37 +7,31 @@
  *
  * @module squatch
  */
-import debug from 'debug';
-import Widgets from './widgets/Widgets';
-import EmbedWidget from './widgets/EmbedWidget';
-import PopupWidget from './widgets/PopupWidget';
-import CtaWidget from './widgets/CtaWidget';
-import WidgetApi from './api/WidgetApi';
-import EventsApi from './api/EventsApi';
-import asyncLoad from './async';
-import { ConfigOptions } from './types';
-import { validateConfig } from './utils/validate';
-export * from "./types"
-export * from './docs';
+import debug from "debug";
+import Widgets from "./widgets/Widgets";
+import EmbedWidget from "./widgets/EmbedWidget";
+import PopupWidget from "./widgets/PopupWidget";
+import CtaWidget from "./widgets/CtaWidget";
+import WidgetApi from "./api/WidgetApi";
+import EventsApi from "./api/EventsApi";
+import asyncLoad from "./async";
+import { ConfigOptions } from "./types";
+import { validateConfig } from "./utils/validate";
+export * from "./types";
+export * from "./docs";
 
 // @ts-ignore
-debug.disable('squatch-js*');
+debug.disable("squatch-js*");
 /** @hidden */
-const _log = debug('squatch-js');
+const _log = debug("squatch-js");
 
-export {
-  Widgets,
-  EmbedWidget,
-  PopupWidget,
-  CtaWidget,
-  WidgetApi,
-};
+export { Widgets, EmbedWidget, PopupWidget, CtaWidget, WidgetApi };
 /** @hidden */
-let _api:WidgetApi|null = null;
+let _api: WidgetApi | null = null;
 /** @hidden */
-let _widgets:Widgets|null = null;
+let _widgets: Widgets | null = null;
 /** @hidden */
-let _events:EventsApi|null = null;
+let _events: EventsApi | null = null;
 
 /**
  * A static instance of the {@link WidgetApi} created when you call {@link #init init}.
@@ -72,7 +66,6 @@ export function events(): EventsApi | null {
   return _events;
 }
 
-
 /**
  * Initializes the static `squatch` global. This sets up:
  *
@@ -88,18 +81,18 @@ export function events(): EventsApi | null {
 export function init(configIn: ConfigOptions): void {
   const raw = configIn as unknown;
   const config = validateConfig(raw);
-  if (config.tenantAlias.match('^test') || config.debug) {
-    debug.enable('squatch-js*');
+  if (config.tenantAlias.match("^test") || config.debug) {
+    debug.enable("squatch-js*");
   }
-  _log('initializing ...');
+  _log("initializing ...");
 
   _api = new WidgetApi(config);
   _widgets = new Widgets(config);
   _events = new EventsApi(config);
 
-  _log('Widget API instance', _api);
-  _log('Widgets instance', _widgets);
-  _log('Events API instance', _events);
+  _log("Widget API instance", _api);
+  _log("Widgets instance", _widgets);
+  _log("Events API instance", _events);
 }
 
 /**
@@ -114,7 +107,7 @@ export function init(configIn: ConfigOptions): void {
  *   squatch.api().cookieUser();
  * });
  */
-export function ready(fn: ()=>any): void {
+export function ready(fn: () => any): void {
   fn();
 }
 
@@ -144,7 +137,7 @@ export function autofill(selector: string): void {
  *   widget.reload(email, jwt);
  * });
  */
-export function submitEmail(fn: (target, widget, email)=>any): void {
+export function submitEmail(fn: (target, widget, email) => any): void {
   // @ts-ignore -- will throw occasionally throw a null pointer exception at runtime
   widgets().submitEmail(fn);
 }

@@ -1,6 +1,5 @@
-
 declare global {
-  interface Window { 
+  interface Window {
     _squatch: {
       ready: any[];
     };
@@ -16,7 +15,7 @@ export default function asyncLoad() {
   if (loaded && cached) {
     const ready = cached.ready || [];
 
-    ready.forEach(cb => setTimeout(() => cb(), 0));
+    ready.forEach((cb) => setTimeout(() => cb(), 0));
 
     // @ts-ignore -- intetionally deletes `_squatch` to cleanup initialization
     window._squatch = undefined;

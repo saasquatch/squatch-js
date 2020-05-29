@@ -1,9 +1,9 @@
-import * as debug from 'debug';
-import PopupWidget from './PopupWidget';
-import { domready } from '../utils/domready';
-import { Params } from './Widget';
+import * as debug from "debug";
+import PopupWidget from "./PopupWidget";
+import { domready } from "../utils/domready";
+import { Params } from "./Widget";
 
-const _log = debug('squatch-js:CTAwidget');
+const _log = debug("squatch-js:CTAwidget");
 
 /**
  * A CtaWidget is displayed on top of your page
@@ -12,7 +12,6 @@ const _log = debug('squatch-js:CTAwidget');
  *
  */
 export default class CtaWidget extends PopupWidget {
-
   position: string;
   side: string;
   positionClass: string;
@@ -22,41 +21,45 @@ export default class CtaWidget extends PopupWidget {
     _log('CTA constructor');
     const ctaElement = document.createElement('div');
     ctaElement.id = 'cta';
-
     const element = params.element || document.body;
     element.appendChild(ctaElement);
 
-    super(params, '#cta');
+    super(params, "#cta");
 
     if (!opts.side && !opts.position) {
-      opts.position = 'bottom';
-      opts.side = 'right';
+      opts.position = "bottom";
+      opts.side = "right";
     }
 
-    if (opts.position === 'middle') {
-      this.position = 'top: 45%;';
-      this.side = (opts.side === 'center') ? 'right: 45%;' : `${opts.side}: -10px;`;
+    if (opts.position === "middle") {
+      this.position = "top: 45%;";
+      this.side =
+        opts.side === "center" ? "right: 45%;" : `${opts.side}: -10px;`;
     } else {
       this.position = `${opts.position}: -10px;`;
-      this.side = (opts.side === 'center') ? 'right: 45%;' : `${opts.side}: 20px;`;
+      this.side =
+        opts.side === "center" ? "right: 45%;" : `${opts.side}: 20px;`;
     }
 
     this.positionClass = opts.position;
 
-    this.ctaFrame = document.createElement('iframe');
+    this.ctaFrame = document.createElement("iframe");
     // @ts-ignore - we are creating this pass-through
     this.ctaFrame.squatchJsApi = this;
-    this.ctaFrame.scrolling = 'no';
-    this.ctaFrame.setAttribute('style', `border:0; background-color:transparent; position:fixed; display:none;${this.side}${this.position}`);
+    this.ctaFrame.scrolling = "no";
+    this.ctaFrame.setAttribute(
+      "style",
+      `border:0; background-color:transparent; position:fixed; display:none;${this.side}${this.position}`
+    );
 
     element.appendChild(this.ctaFrame);
-    _log('ctaframe appended to body');
+    _log('ctaframe appended to element');
   }
 
   load() {
     super.load();
 
-    if(!this.frame.contentWindow){
+    if (!this.frame.contentWindow) {
       throw new Error("frame requires a contentWindow");
     }
     const widgetFrameDoc = this.frame.contentWindow.document;
@@ -65,36 +68,40 @@ export default class CtaWidget extends PopupWidget {
 
     // Wait for widget doc to be ready to grab the cta HTML
     domready(widgetFrameDoc, () => {
-      const ctaElement = widgetFrameDoc.getElementById('cta');
+      const ctaElement = widgetFrameDoc.getElementById("cta");
 
       if (ctaElement) {
-        if(!ctaElement.parentNode){
+        if (!ctaElement.parentNode) {
           throw new Error("ctaElement requires a parentNode");
         }
         ctaElement.parentNode.removeChild(ctaElement);
 
         const ctaFrameWindow = ctaFrame.contentWindow;
 
-        if(!ctaFrameWindow){
+        if (!ctaFrameWindow) {
           throw new Error("ctaFrame requires a contentWindow");
         }
         const ctaFrameDoc = ctaFrameWindow.document;
         ctaFrameDoc.open();
         ctaFrameDoc.write(ctaElement.innerHTML);
-        ctaFrameDoc.write(`<script src="https://cdn.jsdelivr.net/npm/resize-observer-polyfill@1.5.x"></script>`);
+        ctaFrameDoc.write(
+          `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
+        );
         ctaFrameDoc.close();
 
         // Figure out size of CTA as well
         domready(ctaFrameDoc, () => {
-          const ctaContainer = ctaFrameDoc.getElementsByClassName('cta-container')[0];
+          const ctaContainer = ctaFrameDoc.getElementsByClassName(
+            "cta-container"
+          )[0];
           // @ts-ignore - Assume it's a stylable element, die otherwise
-          ctaContainer.style.position = 'fixed';
+          ctaContainer.style.position = "fixed";
           // @ts-ignore - Assume it's an element with offsetHeight
           ctaFrame.height = ctaContainer.offsetHeight;
           // @ts-ignore - Browser will cast from number to string (we hope)
           ctaFrame.width = ctaContainer.scrollWidth;
 
-          ctaFrame.style.display = 'block';
+          ctaFrame.style.display = "block";
 
           if (!ctaContainer.classList.contains(positionClass)) {
             ctaContainer.className += ` ${positionClass}`;
@@ -113,10 +120,10 @@ export default class CtaWidget extends PopupWidget {
 
           ro.observe(ctaContainer);
 
-          _log('CTA template loaded into iframe');
+          _log("CTA template loaded into iframe");
         });
       } else {
-        _log(new Error('CTA element not found in theme'));
+        _log(new Error("CTA element not found in theme"));
       }
     });
   }

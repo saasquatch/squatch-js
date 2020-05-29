@@ -1,7 +1,18 @@
 import { doPost, doPut, doGet } from "../utils/io";
-import { ConfigOptions, EngagementMedium, WidgetType, CookieUser, JWT, User, WidgetConfig } from "../types";
-import { isObject, validateConfig, validateWidgetConfig } from "../utils/validate";
-
+import {
+  ConfigOptions,
+  EngagementMedium,
+  WidgetType,
+  CookieUser,
+  JWT,
+  User,
+  WidgetConfig,
+} from "../types";
+import {
+  isObject,
+  validateConfig,
+  validateWidgetConfig,
+} from "../utils/validate";
 
 /**
  *
@@ -11,6 +22,7 @@ import { isObject, validateConfig, validateWidgetConfig } from "../utils/validat
 export default class WidgetApi {
   tenantAlias: string;
   domain: string;
+  npmCdn: string;
 
   /**
    * Initialize a new {@link WidgetApi} instance.
@@ -33,6 +45,7 @@ export default class WidgetApi {
     const clean = validateConfig(raw);
     this.tenantAlias = clean.tenantAlias;
     this.domain = clean.domain;
+    this.npmCdn = clean.npmCdn;
   }
 
   /**
@@ -132,7 +145,7 @@ export default class WidgetApi {
     emailList = [],
     userId,
     accountId,
-    tenantAlias
+    tenantAlias,
   }: {
     emailList: string[];
     userId: string;
@@ -146,7 +159,7 @@ export default class WidgetApi {
     const request = {
       sendingAccountId: accountId,
       sendingUserId: userId,
-      recipients: emailList
+      recipients: emailList,
     };
     return doPost(url, JSON.stringify(request));
   }
@@ -166,7 +179,7 @@ export default class WidgetApi {
 // builds a param string for widgets
 function _buildParams({
   widgetType,
-  engagementMedium
+  engagementMedium,
 }: {
   widgetType?: WidgetType;
   engagementMedium: EngagementMedium;

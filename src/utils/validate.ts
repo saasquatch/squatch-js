@@ -26,7 +26,7 @@ export function assertProp<T extends SimpleObject & {}>(
   object: unknown,
   ...props: KeysOf<T>[]
 ): object is T {
-  props.forEach(p => {
+  props.forEach((p) => {
     if (!hasProps(object, props)) throw new Error(p + " is required");
   });
   return true;
@@ -45,18 +45,18 @@ export function validateConfig(raw: unknown): Required<ConfigOptions> {
     (hasProps(raw, "domain") && raw.domain) ||
     "https://app.referralsaasquatch.com";
   const debug = (hasProps(raw, "debug") && raw.debug) || false;
+  const npmCdn =
+    (hasProps(raw, "npmCdn") && raw.npmCdn) || "https://fast.ssqt.io/npm";
   return {
     tenantAlias,
     domain,
-    debug
+    debug,
+    npmCdn,
   };
 }
 
-
-
 export function validateWidgetConfig(raw: unknown): WidgetConfig {
   if (!isObject(raw)) throw new Error("Widget properties must be an object");
-  if(!assertProp(raw, "user")) throw new Error("Required properties missing.");
+  if (!assertProp(raw, "user")) throw new Error("Required properties missing.");
   return raw;
 }
-
