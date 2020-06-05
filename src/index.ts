@@ -94,7 +94,7 @@ export function init(configIn: ConfigOptions): void {
   console.log("queryString", queryString)
   const urlParams = new URLSearchParams(queryString);
   console.log("urlParams", urlParams)
-  const refParam = urlParams.get('referralParam');
+  const refParam = urlParams.get('_saasquatch');
   console.log("refParam", refParam)
 
   storeCookie("saasquatchCookie",refParam, 60);
