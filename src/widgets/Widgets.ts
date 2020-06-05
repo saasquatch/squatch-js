@@ -114,6 +114,7 @@ export default class Widgets {
   async upsertUser(config: WidgetConfig) {
     const raw = config as unknown;
     const clean = validateWidgetConfig(raw);
+    clean.user.cookie = readCookie()
     try {
       const response = await this.api.upsertUser(clean);
       return {

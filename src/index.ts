@@ -90,9 +90,30 @@ export function init(configIn: ConfigOptions): void {
   _widgets = new Widgets(config);
   _events = new EventsApi(config);
 
+  const queryString = window.location.search;
+  console.log("queryString", queryString)
+  const urlParams = new URLSearchParams(queryString);
+  console.log("urlParams", urlParams)
+  const refParam = urlParams.get('referralParam');
+  console.log("refParam", refParam)
+
+  storeCookie("saasquatchCookie",refParam, 60);
+  
+
   _log("Widget API instance", _api);
   _log("Widgets instance", _widgets);
   _log("Events API instance", _events);
+}
+
+function storeCookie(name, value, expiryInDays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (expiryInDays*24*60*60*1000));
+  var expires = "expires="+ d.toUTCString();
+  console.log("We have a cookie", document.cookie);
+
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+
+  console.log("We have set the cookie to ", document.cookie);
 }
 
 /**

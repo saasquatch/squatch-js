@@ -6,6 +6,22 @@ import WidgetApi from "../api/WidgetApi";
 import { WidgetType, WidgetContext } from "../types";
 import { isObject, hasProps } from "../utils/validate";
 
+function readCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 /** @hidden */
 const _log = debug("squatch-js:widget");
 
@@ -30,6 +46,7 @@ export default abstract class Widget {
   frame: HTMLIFrameElement;
   type: WidgetType;
   content: string;
+  squatchCookie: string;
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
   context: WidgetContext;
@@ -40,6 +57,7 @@ export default abstract class Widget {
     this.content =
       params.content === "error" ? this._error(params.rsCode) : params.content;
     this.type = params.type;
+    this.squatchCookie = readCookie("refParam");
     this.widgetApi = params.api;
     this.npmCdn = params.npmCdn;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
@@ -230,12 +248,14 @@ export default abstract class Widget {
         lastName: lastName || null,
         id: this.context.user.id,
         accountId: this.context.user.accountId,
+        cookie: this.squatchCookie
       };
 
       response = this.widgetApi.upsertUser({
         user: userObj,
         engagementMedium,
         widgetType: this.type,
+        cookie: this.squatchCookie,
         jwt,
       });
     } else if (this.context.type === "cookie") {
