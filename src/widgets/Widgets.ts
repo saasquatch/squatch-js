@@ -17,6 +17,7 @@ import {
 } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
 import { type } from "os";
+import readCookie from "../utils/readCookie";
 // import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
@@ -114,7 +115,10 @@ export default class Widgets {
   async upsertUser(config: WidgetConfig) {
     const raw = config as unknown;
     const clean = validateWidgetConfig(raw);
-    clean.user.cookie = readCookie()
+    // clean.user.cookie = readCookie("saasquatchCookie");
+
+    console.log("about to pass cookie to user upsert", readCookie("saasquatchCookie"))
+
     try {
       const response = await this.api.upsertUser(clean);
       return {
