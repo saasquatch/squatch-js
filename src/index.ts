@@ -97,17 +97,33 @@ export function init(configIn: ConfigOptions): void {
   console.log("urlParams", urlParams)
   const refParam = urlParams.get('_saasquatch') || "";
   console.log("refParam", refParam)
-  
-  const decodedParams = atob(refParam.replace(/_/g, '/').replace(/-/g, '+'))
-  const existingCookie = readCookie('_saasquatch');
-  const existingCookieJSON = atob(existingCookie.replace(/_/g, '/').replace(/-/g, '+'))
-  const newCookie = {
-    ...existingCookieJSON && JSON.parse(existingCookieJSON),
-    ...JSON.parse(decodedParams)
+
+  function b64decode(input){
+    return atob(input.replace(/_/g, '/').replace(/-/g, '+'))
   }
-  btoa(newCookie.replace(/_/g, '+').replace(/-/g, '/'));
-  storeCookie("_saasquatch",newCookie, 60);
   
+  function b64encode(input){
+    return btoa(input).replace(/=/g, "")
+          .replace(/\+/g, "-")
+          .replace(/\//g, "_")		
+  }
+  
+  const decodedParams = b64decode(refParam)
+  console.log("decoded params", decodedParams)
+   const existingCookie = readCookie('_saasquatch');
+   console.log("Existing cookie", JSON.stringify(existingCookie), existingCookie)
+   const existingCookieJSON = existingCookie 
+   ? b64decode(existingCookie)
+   : "";
+   
+   console.log("existingCookieJSON", JSON.stringify(existingCookieJSON), existingCookieJSON)
+   const newCookie = {
+     ...existingCookieJSON && JSON.parse(existingCookieJSON),
+     ...JSON.parse(decodedParams)
+   }
+   console.log("new cookie!", JSON.stringify(newCookie), newCookie)
+   const reEncodedCookie = b64encode(JSON.stringify(newCookie));
+   storeCookie("_saasquatch", reEncodedCookie, 60);
 
   _log("Widget API instance", _api);
   _log("Widgets instance", _widgets);
