@@ -17,6 +17,7 @@ import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
+import readCookie from "./utils/readCookie";
 export * from "./types";
 export * from "./docs";
 
@@ -94,10 +95,18 @@ export function init(configIn: ConfigOptions): void {
   console.log("queryString", queryString)
   const urlParams = new URLSearchParams(queryString);
   console.log("urlParams", urlParams)
-  const refParam = urlParams.get('_saasquatch');
+  const refParam = urlParams.get('_saasquatch') || "";
   console.log("refParam", refParam)
-
-  storeCookie("saasquatchCookie",refParam, 60);
+  
+  const decodedParams = atob(refParam.replace(/_/g, '/').replace(/-/g, '+'))
+  const existingCookie = readCookie('_saasquatch');
+  const existingCookieJSON = atob(existingCookie.replace(/_/g, '/').replace(/-/g, '+'))
+  const newCookie = {
+    ...existingCookieJSON && JSON.parse(existingCookieJSON),
+    ...JSON.parse(decodedParams)
+  }
+  btoa(newCookie.replace(/_/g, '+').replace(/-/g, '/'));
+  storeCookie("_saasquatch",newCookie, 60);
   
 
   _log("Widget API instance", _api);

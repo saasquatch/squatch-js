@@ -231,14 +231,14 @@ export default abstract class Widget {
         lastName: lastName || null,
         id: this.context.user.id,
         accountId: this.context.user.accountId,
-        cookie: readCookie("saasquatchCookie")
+        cookie: readCookie("_saasquatch")
       };
 
       response = this.widgetApi.upsertUser({
         user: userObj,
         engagementMedium,
         widgetType: this.type,
-        cookie: readCookie("saasquatchCookie"),
+        cookie: readCookie("_saasquatch"),
         jwt,
       });
     } else if (this.context.type === "cookie") {
