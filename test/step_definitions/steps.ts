@@ -6,12 +6,12 @@ import {
   setWorldConstructor,
   Given,
 } from "cucumber";
-import { promisify } from "util";
 
 import { assert } from "chai";
 import jsGlobal from "jsdom-global";
 import jsdom from "jsdom";
 import { Cookie, MemoryCookieStore } from "tough-cookie";
+import Cookies from "js-cookie";
 
 class World {
   cookies = new MemoryCookieStore();
@@ -22,7 +22,12 @@ setWorldConstructor(World);
 
 const domain = "https://example.com";
 
-Before(function (this: World) {});
+Before(function (this: World) {
+  this.jsdom = jsGlobal(`<html></html>`, {
+    cookieJar: new jsdom.CookieJar(this.cookies),
+    url: this.url,
+  });
+});
 
 After(function (this: World) {
   this.jsdom && this.jsdom();
@@ -33,31 +38,23 @@ Given("a {string} cookie exists with value {string}", async function (
   cookieName: string,
   cookieValue: string
 ) {
-  const cookie = new Cookie({
-    key: cookieName,
-    value: cookieValue,
-  });
-  await promisify(this.cookies.putCookie).bind(this.cookies)(cookie);
+  Cookies.set(cookieName, cookieValue);
 });
 Given("the url is {string}", function (this: World, url: string) {
-  this.url = url;
+  // TODO: Figure out how to implement with jsdom-global
 });
 
 When("Squatch.js loads", async function (this: World) {
-  this.jsdom = jsGlobal(`<html></html>`, {
-    cookieJar: new jsdom.CookieJar(this.cookies),
-    url: this.url,
-  });
   // @ts-ignore
   window.squatch = "foo";
+  assert.exists(document.cookie, "Cookie should exist on load");
+  // @ts-ignore
+  //   document.cookie = "";
   const onLoad = await import("../../src/onLoad");
-  onLoad();
+  onLoad.default();
 });
 Then("it always reads the _saasquatch parameter", function (this: World) {
-  // Write code here that turns the phrase above into concrete actions
-  //   return "pending";
   // @ts-ignore
-
   assert.equal(window.squatch, "foo");
 });
 
@@ -66,11 +63,8 @@ Then("the {string} cookie is set to {string}", async function (
   cookieName: string,
   cookieValue: string
 ) {
-  const cookies = await promisify(this.cookies.getAllCookies).bind(
-    this.cookies
-  )();
+  const cookie = Cookies.get(cookieName);
 
-  const cookie = cookies.find((c) => c.key === cookieName);
   assert.exists(cookie, "Didn't find at least one cookie");
   assert.equal(cookie.value, cookieValue, "Invalid cookie value set");
 });
