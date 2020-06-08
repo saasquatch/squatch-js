@@ -163,14 +163,14 @@ if (window && !window.SaaSquatchDoNotAutoDrop) {
     try {
       paramsJSON = JSON.parse(b64decode(refParam));
     } catch (error) {
-      _log("unable to decode params", error);
+      _log("Unable to decode params", error);
     }
 
     try {
       const existingCookie = JSON.parse(b64decode(Cookies.get("_saasquatch")));
       _log("existing cookie", existingCookie);
     } catch (error) {
-      _log("unable to retrieve cookie", error);
+      _log("Unable to retrieve cookie", error);
     }
 
     // don't merge if there's no existing object
@@ -193,7 +193,7 @@ if (window && !window.SaaSquatchDoNotAutoDrop) {
         path: "/",
       });
     } catch (error) {
-      _log("unable to set cookie", error);
+      _log("Unable to set cookie", error);
     }
   }
 }
