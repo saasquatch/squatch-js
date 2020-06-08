@@ -18,6 +18,7 @@ import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
 import readCookie from "./utils/readCookie";
+import { deepMerge } from "./utils/deepMerge";
 export * from "./types";
 export * from "./docs";
 
@@ -115,12 +116,9 @@ export function init(configIn: ConfigOptions): void {
    const existingCookieJSON = existingCookie 
    ? b64decode(existingCookie)
    : "";
-   
+
    console.log("existingCookieJSON", JSON.stringify(existingCookieJSON), existingCookieJSON)
-   const newCookie = {
-     ...existingCookieJSON && JSON.parse(existingCookieJSON),
-     ...JSON.parse(decodedParams)
-   }
+   const newCookie = deepMerge(existingCookieJSON ? JSON.parse(existingCookieJSON):{}, JSON.parse(decodedParams))
    console.log("new cookie!", JSON.stringify(newCookie), newCookie)
    const reEncodedCookie = b64encode(JSON.stringify(newCookie));
    storeCookie("_saasquatch", reEncodedCookie, 60);
