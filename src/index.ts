@@ -17,8 +17,7 @@ import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
-import { deepMerge } from "./utils/deepMerge";
-import { b64encode, b64decode } from "./utils/cookieUtils";
+import { b64encode, b64decode, deepMerge } from "./utils/cookieUtils";
 import Cookies from 'js-cookie'
 export * from "./types";
 export * from "./docs";
@@ -151,6 +150,24 @@ if (window) asyncLoad();
 if(window && !window.SaaSquatchDoNotAutoDrop){
   //valid query strings should be ignored
   const queryString = window.location.search;
+
+  /* URLSearchParams polyfill */
+  (function (w) {
+    w.URLSearchParams = w.URLSearchParams || function (searchString) {
+        var self = this;
+        self.searchString = searchString;
+        self.get = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(self.searchString);
+            if (results == null) {
+                return null;
+            }
+            else {
+                return decodeURIComponent(results[1]) || 0;
+            }
+        };
+    }
+  })(window)
+
   // needs polyfill
   const urlParams = new URLSearchParams(queryString);
   const refParam = urlParams.get('_saasquatch') || "";
