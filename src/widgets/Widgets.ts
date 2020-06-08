@@ -17,7 +17,6 @@ import {
 } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
 import { type } from "os";
-import Cookies from 'js-cookie'
 // import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
