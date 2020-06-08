@@ -17,8 +17,9 @@ import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
-import readCookie from "./utils/readCookie";
 import { deepMerge } from "./utils/deepMerge";
+import { b64encode, b64decode } from "./utils/cookieUtils";
+import Cookies from 'js-cookie'
 export * from "./types";
 export * from "./docs";
 
@@ -91,45 +92,12 @@ export function init(configIn: ConfigOptions): void {
   _api = new WidgetApi(config);
   _widgets = new Widgets(config);
   _events = new EventsApi(config);
-
-  if(window.SaaSquatchDoNotAutoDrop){
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const refParam = urlParams.get('_saasquatch') || "";
-    const decodedParams = b64decode(refParam)
-    const existingCookie = readCookie('_saasquatch');
-    const existingCookieJSON = existingCookie 
-      ? b64decode(existingCookie)
-      : "";
   
-    const newCookie = deepMerge(existingCookieJSON ? JSON.parse(existingCookieJSON):{}, JSON.parse(decodedParams))
-    const reEncodedCookie = b64encode(JSON.stringify(newCookie));
-    storeCookie("_saasquatch", reEncodedCookie, 60);
-  
-    _log("Widget API instance", _api);
-    _log("Widgets instance", _widgets);
-    _log("Events API instance", _events);
-  }
+  _log("Widget API instance", _api);
+  _log("Widgets instance", _widgets);
+  _log("Events API instance", _events);
 }
 
-function b64decode(input){
-  return atob(input.replace(/_/g, '/').replace(/-/g, '+'))
-}
-
-function b64encode(input){
-  return btoa(input).replace(/=/g, "")
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")		
-}
-
-function storeCookie(name, value, expiryInDays) {
-  var d = new Date();
-  d.setTime(d.getTime() + (expiryInDays*24*60*60*1000));
-  var expires = "expires="+ d.toUTCString();
-  console.log("We have a cookie", document.cookie);
-  document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  console.log("We have set the cookie to ", document.cookie);
-}
 
 /**
  * Squatch.js can't start safely making operations until it's "ready". This
@@ -179,3 +147,46 @@ export function submitEmail(fn: (target, widget, email) => any): void {
 }
 
 if (window) asyncLoad();
+
+if(window && !window.SaaSquatchDoNotAutoDrop){
+  //valid query strings should be ignored
+  const queryString = window.location.search;
+  // needs polyfill
+  const urlParams = new URLSearchParams(queryString);
+  const refParam = urlParams.get('_saasquatch') || "";
+
+  // return if no params
+
+  if(refParam){
+    let decodedParams = "";
+    try {
+      decodedParams = b64decode(refParam)
+    } catch(error){
+      throw Error("invalid query parameter");
+    }
+
+    const existingCookie = Cookies.get('_saasquatch');
+    let existingCookieJSON = "";
+    console.log("existing cookie", existingCookie)
+    if(existingCookie){
+      try {
+        existingCookieJSON = b64decode(existingCookie)
+      } catch(error){
+        throw Error("invalid cookie stored");
+      }
+    }
+
+    // don't merge if there's no existing object
+    if(existingCookieJSON)  {
+      const newCookie = deepMerge(JSON.parse(existingCookieJSON), JSON.parse(decodedParams))
+      const reEncodedCookie = b64encode(JSON.stringify(newCookie));
+      console.log("cookie to store:", newCookie)
+      Cookies.set("_saasquatch", reEncodedCookie, { expires: 60, secure:true, sameSite:"lax" });
+    } else {
+      const paramsJSON = JSON.parse(decodedParams)
+      const reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
+      console.log("cookie to store:", decodedParams)
+      Cookies.set("_saasquatch", reEncodedCookie, { expires: 60, secure:true, sameSite:"lax" });
+    }
+  }
+}

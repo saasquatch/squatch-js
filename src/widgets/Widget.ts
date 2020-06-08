@@ -5,7 +5,7 @@ import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
 import { WidgetType, WidgetContext } from "../types";
 import { isObject, hasProps } from "../utils/validate";
-import readCookie from "../utils/readCookie";
+import Cookies from 'js-cookie'
 
 /** @hidden */
 const _log = debug("squatch-js:widget");
@@ -231,14 +231,14 @@ export default abstract class Widget {
         lastName: lastName || null,
         id: this.context.user.id,
         accountId: this.context.user.accountId,
-        cookie: readCookie("_saasquatch")
+        cookie: Cookies.get("_saasquatch")
       };
 
       response = this.widgetApi.upsertUser({
         user: userObj,
         engagementMedium,
         widgetType: this.type,
-        cookie: readCookie("_saasquatch"),
+        cookie: Cookies.get("_saasquatch"),
         jwt,
       });
     } else if (this.context.type === "cookie") {
