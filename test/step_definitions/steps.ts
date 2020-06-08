@@ -50,7 +50,8 @@ When("Squatch.js loads", async function (this: World) {
   });
   // @ts-ignore
   window.squatch = "foo";
-  const squatch = await import("../../src/utils/readCookie");
+  const onLoad = await import("../../src/onLoad");
+  onLoad();
 });
 Then("it always reads the _saasquatch parameter", function (this: World) {
   // Write code here that turns the phrase above into concrete actions
