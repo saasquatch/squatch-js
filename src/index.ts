@@ -193,7 +193,7 @@ if (window && !window.SaaSquatchDoNotAutoDrop) {
         path: "/",
       });
     } catch (error) {
-      _log(error);
+      _log("unable to set cookie", error);
     }
   }
 }
