@@ -9,11 +9,12 @@ import {
 
 import {
   chromium,
-  firefox,
-  webkit,
+  // firefox,
+  // webkit,
   ChromiumBrowser,
   ChromiumBrowserContext,
   Cookie,
+  BrowserContext,
 } from "playwright";
 
 import { assert } from "chai";
@@ -22,10 +23,34 @@ class World {
   url?: string;
   browser: ChromiumBrowser;
   context: ChromiumBrowserContext;
+
+  async cookieExists(cookieName: string, cookieValue: string) {
+    const cookies = await this.context.cookies();
+    const filtered = cookies.filter((c) => c.name == cookieName);
+    assert.equal(
+      filtered.length,
+      1,
+      `Should find exactly one cookie based on name in cookies ${JSON.stringify(
+        cookies
+      )}`
+    );
+    const cookie = filtered[0];
+    assert.exists(
+      cookie,
+      `Didn't find at least one cookie in cookies ${JSON.stringify(cookies)}`
+    );
+    assert.equal(
+      cookie.value,
+      cookieValue,
+      `Invalid cookie value set in cookie ${JSON.stringify(cookie)}`
+    );
+  }
 }
 setWorldConstructor(World);
 
 Before(async function (this: World) {
+  if (this.browser || this.context)
+    throw new Error("Shouldn't overwrite browser context this way.");
   this.browser = await chromium.launch(); // Or 'firefox' or 'webkit'.
   this.context = await this.browser.newContext();
 });
@@ -39,23 +64,27 @@ Given("a {string} cookie exists with value {string}", async function (
   cookieName: string,
   cookieValue: string
 ) {
-  type AddCookie = typeof this.context.addCookies;
-  type Cookies = Parameters<AddCookie>[0];
+  const cookie: Cookie = {
+    name: cookieName,
+    value: cookieValue,
+    domain: "ssqt.io",
+    path: "/",
+    expires: new Date().getTime(),
+    httpOnly: false,
+    secure: false,
+    sameSite: "Lax",
+  };
+  this.context.addCookies([cookie]);
 
-  const cookies: Cookies = [
-    {
-      name: cookieName,
-      value: cookieValue,
-    },
-  ];
-  this.context.addCookies(cookies);
+  await this.cookieExists(cookieName, cookieValue);
 });
 Given("the url is {string}", function (this: World, url: string) {
   this.url = url;
 });
 
 When("Squatch.js loads", async function (this: World) {
-  const page = await this.browser.newPage();
+  await this.cookieExists("_saasquatch", "GARBAGE");
+  const page = await this.context.newPage();
   await page.goto(this.url);
 });
 
@@ -69,16 +98,5 @@ Then("the {string} cookie is set to {string}", async function (
   cookieName: string,
   cookieValue: string
 ) {
-  const cookies = await this.context.cookies(this.url);
-
-  const filtered = cookies.filter((c) => c.name == cookieName);
-  assert.equal(
-    filtered.length,
-    1,
-    "Should find exactly one cookie based on name"
-  );
-
-  const cookie = filtered[0];
-  assert.exists(cookie, "Didn't find at least one cookie");
-  assert.equal(cookie.value, cookieValue, "Invalid cookie value set");
+  await this.cookieExists(cookieName, cookieValue);
 });
