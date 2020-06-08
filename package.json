@@ -48,6 +48,7 @@
     "@types/jsdom-global": "^3.0.2",
     "@types/react": "^16.9.35",
     "@types/superagent": "^4.1.7",
+    "@ungap/url-search-params": "^0.2.0",
     "babel-loader": "^8.1.0",
     "base64-url": "^2.3.3",
     "chai": "^4.2.0",

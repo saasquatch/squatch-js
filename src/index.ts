@@ -17,13 +17,15 @@ import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
-import { b64encode, b64decode, deepMerge } from "./utils/cookieUtils";
+import { b64encode, b64decode, deepMerge, getTopDomain } from "./utils/cookieUtils";
 import Cookies from 'js-cookie'
+//@ts-ignore
+import URLSearchParams from '@ungap/url-search-params'
 export * from "./types";
 export * from "./docs";
 
 // @ts-ignore
-debug.disable("squatch-js*");
+// debug.disable("squatch-js*");
 /** @hidden */
 const _log = debug("squatch-js");
 
@@ -151,59 +153,59 @@ if(window && !window.SaaSquatchDoNotAutoDrop){
   //valid query strings should be ignored
   const queryString = window.location.search;
 
-  /* URLSearchParams polyfill */
-  (function (w) {
-    w.URLSearchParams = w.URLSearchParams || function (searchString) {
-        var self = this;
-        self.searchString = searchString;
-        self.get = function (name) {
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(self.searchString);
-            if (results == null) {
-                return null;
-            }
-            else {
-                return decodeURIComponent(results[1]) || 0;
-            }
-        };
-    }
-  })(window)
-
-  // needs polyfill
   const urlParams = new URLSearchParams(queryString);
   const refParam = urlParams.get('_saasquatch') || "";
 
-  // return if no params
-
+  // do nothing if no params
   if(refParam){
     let decodedParams = "";
     try {
       decodedParams = b64decode(refParam)
     } catch(error){
-      throw Error("invalid query parameter");
+      _log(error)
     }
 
     const existingCookie = Cookies.get('_saasquatch');
     let existingCookieJSON = "";
-    console.log("existing cookie", existingCookie)
+    _log("existing cookie", existingCookie)
     if(existingCookie){
       try {
         existingCookieJSON = b64decode(existingCookie)
       } catch(error){
-        throw Error("invalid cookie stored");
+        _log(error)
       }
     }
 
+
     // don't merge if there's no existing object
-    if(existingCookieJSON)  {
-      const newCookie = deepMerge(JSON.parse(existingCookieJSON), JSON.parse(decodedParams))
-      const reEncodedCookie = b64encode(JSON.stringify(newCookie));
-      console.log("cookie to store:", newCookie)
-      Cookies.set("_saasquatch", reEncodedCookie, { expires: 60, secure:true, sameSite:"lax" });
-    } else {
-      const paramsJSON = JSON.parse(decodedParams)
-      const reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
-      console.log("cookie to store:", decodedParams)
-      Cookies.set("_saasquatch", reEncodedCookie, { expires: 60, secure:true, sameSite:"lax" });
+    try {
+      const domain = getTopDomain();
+      _log("domain retrieved:", domain)
+      if(existingCookieJSON) {
+        const newCookie = deepMerge(JSON.parse(existingCookieJSON), JSON.parse(decodedParams))
+        const reEncodedCookie = b64encode(JSON.stringify(newCookie));
+        _log("cookie to store:", newCookie)
+        Cookies.set("_saasquatch", reEncodedCookie, { 
+          expires: 365, 
+          secure:false, 
+          sameSite:"lax",
+          domain,
+          path:"/"
+        });
+      } else {
+        const paramsJSON = JSON.parse(decodedParams)
+        const reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
+        _log("cookie to store:", decodedParams)
+        Cookies.set("_saasquatch", reEncodedCookie, { 
+          expires: 365, 
+          secure:true, 
+          sameSite:"lax",
+          domain,
+          path:"/"
+        });
+      }
+    } catch (error){
+      _log(error)
     }
   }
 }
