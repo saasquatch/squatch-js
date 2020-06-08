@@ -18,6 +18,7 @@ import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
 import readCookie from "./utils/readCookie";
+import { deepMerge } from "./utils/deepMerge";
 export * from "./types";
 export * from "./docs";
 
@@ -91,43 +92,34 @@ export function init(configIn: ConfigOptions): void {
   _widgets = new Widgets(config);
   _events = new EventsApi(config);
 
-  const queryString = window.location.search;
-  console.log("queryString", queryString)
-  const urlParams = new URLSearchParams(queryString);
-  console.log("urlParams", urlParams)
-  const refParam = urlParams.get('_saasquatch') || "";
-  console.log("refParam", refParam)
-
-  function b64decode(input){
-    return atob(input.replace(/_/g, '/').replace(/-/g, '+'))
-  }
+  if(window.SaaSquatchDoNotAutoDrop){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const refParam = urlParams.get('_saasquatch') || "";
+    const decodedParams = b64decode(refParam)
+    const existingCookie = readCookie('_saasquatch');
+    const existingCookieJSON = existingCookie 
+      ? b64decode(existingCookie)
+      : "";
   
-  function b64encode(input){
-    return btoa(input).replace(/=/g, "")
-          .replace(/\+/g, "-")
-          .replace(/\//g, "_")		
-  }
+    const newCookie = deepMerge(existingCookieJSON ? JSON.parse(existingCookieJSON):{}, JSON.parse(decodedParams))
+    const reEncodedCookie = b64encode(JSON.stringify(newCookie));
+    storeCookie("_saasquatch", reEncodedCookie, 60);
   
-  const decodedParams = b64decode(refParam)
-  console.log("decoded params", decodedParams)
-   const existingCookie = readCookie('_saasquatch');
-   console.log("Existing cookie", JSON.stringify(existingCookie), existingCookie)
-   const existingCookieJSON = existingCookie 
-   ? b64decode(existingCookie)
-   : "";
-   
-   console.log("existingCookieJSON", JSON.stringify(existingCookieJSON), existingCookieJSON)
-   const newCookie = {
-     ...existingCookieJSON && JSON.parse(existingCookieJSON),
-     ...JSON.parse(decodedParams)
-   }
-   console.log("new cookie!", JSON.stringify(newCookie), newCookie)
-   const reEncodedCookie = b64encode(JSON.stringify(newCookie));
-   storeCookie("_saasquatch", reEncodedCookie, 60);
+    _log("Widget API instance", _api);
+    _log("Widgets instance", _widgets);
+    _log("Events API instance", _events);
+  }
+}
 
-  _log("Widget API instance", _api);
-  _log("Widgets instance", _widgets);
-  _log("Events API instance", _events);
+function b64decode(input){
+  return atob(input.replace(/_/g, '/').replace(/-/g, '+'))
+}
+
+function b64encode(input){
+  return btoa(input).replace(/=/g, "")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")		
 }
 
 function storeCookie(name, value, expiryInDays) {
@@ -135,9 +127,7 @@ function storeCookie(name, value, expiryInDays) {
   d.setTime(d.getTime() + (expiryInDays*24*60*60*1000));
   var expires = "expires="+ d.toUTCString();
   console.log("We have a cookie", document.cookie);
-
   document.cookie = name + "=" + value + ";" + expires + ";path=/";
-
   console.log("We have set the cookie to ", document.cookie);
 }
 
