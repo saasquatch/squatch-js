@@ -7,30 +7,31 @@ import {
   Given,
 } from "cucumber";
 
+import {
+  chromium,
+  firefox,
+  webkit,
+  ChromiumBrowser,
+  ChromiumBrowserContext,
+  Cookie,
+} from "playwright";
+
 import { assert } from "chai";
-import jsGlobal from "jsdom-global";
-import jsdom from "jsdom";
-import { Cookie, MemoryCookieStore } from "tough-cookie";
-import Cookies from "js-cookie";
 
 class World {
-  cookies = new MemoryCookieStore();
   url?: string;
-  jsdom?: () => void;
+  browser: ChromiumBrowser;
+  context: ChromiumBrowserContext;
 }
 setWorldConstructor(World);
 
-const domain = "https://example.com";
-
-Before(function (this: World) {
-  this.jsdom = jsGlobal(`<html></html>`, {
-    cookieJar: new jsdom.CookieJar(this.cookies),
-    url: this.url,
-  });
+Before(async function (this: World) {
+  this.browser = await chromium.launch(); // Or 'firefox' or 'webkit'.
+  this.context = await this.browser.newContext();
 });
 
-After(function (this: World) {
-  this.jsdom && this.jsdom();
+After(async function (this: World) {
+  if (this.browser) await this.browser.close();
 });
 
 Given("a {string} cookie exists with value {string}", async function (
@@ -38,21 +39,26 @@ Given("a {string} cookie exists with value {string}", async function (
   cookieName: string,
   cookieValue: string
 ) {
-  Cookies.set(cookieName, cookieValue);
+  type AddCookie = typeof this.context.addCookies;
+  type Cookies = Parameters<AddCookie>[0];
+
+  const cookies: Cookies = [
+    {
+      name: cookieName,
+      value: cookieValue,
+    },
+  ];
+  this.context.addCookies(cookies);
 });
 Given("the url is {string}", function (this: World, url: string) {
-  // TODO: Figure out how to implement with jsdom-global
+  this.url = url;
 });
 
 When("Squatch.js loads", async function (this: World) {
-  // @ts-ignore
-  window.squatch = "foo";
-  assert.exists(document.cookie, "Cookie should exist on load");
-  // @ts-ignore
-  //   document.cookie = "";
-  const onLoad = await import("../../src/onLoad");
-  onLoad.default();
+  const page = await this.browser.newPage();
+  await page.goto(this.url);
 });
+
 Then("it always reads the _saasquatch parameter", function (this: World) {
   // @ts-ignore
   assert.equal(window.squatch, "foo");
@@ -63,8 +69,16 @@ Then("the {string} cookie is set to {string}", async function (
   cookieName: string,
   cookieValue: string
 ) {
-  const cookie = Cookies.get(cookieName);
+  const cookies = await this.context.cookies(this.url);
 
+  const filtered = cookies.filter((c) => c.name == cookieName);
+  assert.equal(
+    filtered.length,
+    1,
+    "Should find exactly one cookie based on name"
+  );
+
+  const cookie = filtered[0];
   assert.exists(cookie, "Didn't find at least one cookie");
   assert.equal(cookie.value, cookieValue, "Invalid cookie value set");
 });
