@@ -17,7 +17,7 @@ import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
-import {  _dropCookie } from "./utils/cookieUtils";
+import {  _pushCookie } from "./utils/cookieUtils";
 export * from "./types";
 export * from "./docs";
 
@@ -143,12 +143,12 @@ export function submitEmail(fn: (target, widget, email) => any): void {
   widgets().submitEmail(fn);
 }
 
-export function dropCookie():void {
-  _dropCookie();
+export function pushCookie():void {
+  _pushCookie();
 }
 
 if (typeof document !== "undefined") asyncLoad();
 
 if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
-  dropCookie();
+  pushCookie();
 }

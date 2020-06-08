@@ -45,7 +45,7 @@ function getTopDomain() {
   }
 }
 
-export function _dropCookie() {
+export function _pushCookie() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const refParam = urlParams.get("_saasquatch") || "";
