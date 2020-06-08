@@ -151,57 +151,47 @@ if (window) asyncLoad();
 if (window && !window.SaaSquatchDoNotAutoDrop) {
   //valid query strings should be ignored
   const queryString = window.location.search;
-
   const urlParams = new URLSearchParams(queryString);
   const refParam = urlParams.get("_saasquatch") || "";
 
   // do nothing if no params
   if (refParam) {
-    let decodedParams = "";
+    let paramsJSON = "",
+      existingCookie = "",
+      reEncodedCookie = "";
+
     try {
-      decodedParams = b64decode(refParam);
+      paramsJSON = JSON.parse(b64decode(refParam));
     } catch (error) {
-      _log(error);
+      _log("unable to decode params", error);
     }
 
-    const existingCookie = Cookies.get("_saasquatch");
-    let existingCookieJSON = "";
-    _log("existing cookie", existingCookie);
-    if (existingCookie) {
-      try {
-        existingCookieJSON = b64decode(existingCookie);
-      } catch (error) {
-        _log(error);
-      }
+    try {
+      const existingCookie = JSON.parse(b64decode(Cookies.get("_saasquatch")));
+      _log("existing cookie", existingCookie);
+    } catch (error) {
+      _log("unable to retrieve cookie", error);
     }
 
     // don't merge if there's no existing object
     try {
       const domain = getTopDomain();
       _log("domain retrieved:", domain);
-      if (existingCookieJSON) {
-        const newCookie = deepMerge(JSON.parse(existingCookieJSON), JSON.parse(decodedParams));
-        const reEncodedCookie = b64encode(JSON.stringify(newCookie));
+      if (existingCookie) {
+        const newCookie = deepMerge(existingCookie, paramsJSON);
+        reEncodedCookie = b64encode(JSON.stringify(newCookie));
         _log("cookie to store:", newCookie);
-        Cookies.set("_saasquatch", reEncodedCookie, {
-          expires: 365,
-          secure: false,
-          sameSite: "lax",
-          domain,
-          path: "/",
-        });
       } else {
-        const paramsJSON = JSON.parse(decodedParams);
-        const reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
-        _log("cookie to store:", decodedParams);
-        Cookies.set("_saasquatch", reEncodedCookie, {
-          expires: 365,
-          secure: true,
-          sameSite: "lax",
-          domain,
-          path: "/",
-        });
+        reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
+        _log("cookie to store:", paramsJSON);
       }
+      Cookies.set("_saasquatch", reEncodedCookie, {
+        expires: 365,
+        secure: true,
+        sameSite: "lax",
+        domain,
+        path: "/",
+      });
     } catch (error) {
       _log(error);
     }
