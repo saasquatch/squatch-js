@@ -238,7 +238,6 @@ export default abstract class Widget {
         user: userObj,
         engagementMedium,
         widgetType: this.type,
-        cookie: Cookies.get("_saasquatch"),
         jwt,
       });
     } else if (this.context.type === "cookie") {
