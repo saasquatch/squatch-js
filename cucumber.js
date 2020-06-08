@@ -23,8 +23,8 @@ exports.default = [
   `--format ${FORMAT}`,
   `--parallel ${CPU_COUNT}`,
 
-  "test/**/*.feature",
-  //   "../../../blackbox-testing/features/**/*.feature",
+  // "test/**/*.feature",
+  "../blackbox-testing/features/**/*.feature",
 
   `--tags "@testsuite:squatch-js and not @skip"`,
 
