@@ -5,7 +5,7 @@ import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
 import { WidgetType, WidgetContext } from "../types";
 import { isObject, hasProps } from "../utils/validate";
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
 
 /** @hidden */
 const _log = debug("squatch-js:widget");
