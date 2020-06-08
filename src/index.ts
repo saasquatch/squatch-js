@@ -18,9 +18,9 @@ import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
 import { b64encode, b64decode, deepMerge, getTopDomain } from "./utils/cookieUtils";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 //@ts-ignore
-import URLSearchParams from '@ungap/url-search-params'
+import URLSearchParams from "@ungap/url-search-params";
 export * from "./types";
 export * from "./docs";
 
@@ -93,12 +93,11 @@ export function init(configIn: ConfigOptions): void {
   _api = new WidgetApi(config);
   _widgets = new Widgets(config);
   _events = new EventsApi(config);
-  
+
   _log("Widget API instance", _api);
   _log("Widgets instance", _widgets);
   _log("Events API instance", _events);
 }
-
 
 /**
  * Squatch.js can't start safely making operations until it's "ready". This
@@ -149,63 +148,62 @@ export function submitEmail(fn: (target, widget, email) => any): void {
 
 if (window) asyncLoad();
 
-if(window && !window.SaaSquatchDoNotAutoDrop){
+if (window && !window.SaaSquatchDoNotAutoDrop) {
   //valid query strings should be ignored
   const queryString = window.location.search;
 
   const urlParams = new URLSearchParams(queryString);
-  const refParam = urlParams.get('_saasquatch') || "";
+  const refParam = urlParams.get("_saasquatch") || "";
 
   // do nothing if no params
-  if(refParam){
+  if (refParam) {
     let decodedParams = "";
     try {
-      decodedParams = b64decode(refParam)
-    } catch(error){
-      _log(error)
+      decodedParams = b64decode(refParam);
+    } catch (error) {
+      _log(error);
     }
 
-    const existingCookie = Cookies.get('_saasquatch');
+    const existingCookie = Cookies.get("_saasquatch");
     let existingCookieJSON = "";
-    _log("existing cookie", existingCookie)
-    if(existingCookie){
+    _log("existing cookie", existingCookie);
+    if (existingCookie) {
       try {
-        existingCookieJSON = b64decode(existingCookie)
-      } catch(error){
-        _log(error)
+        existingCookieJSON = b64decode(existingCookie);
+      } catch (error) {
+        _log(error);
       }
     }
-
 
     // don't merge if there's no existing object
     try {
       const domain = getTopDomain();
-      _log("domain retrieved:", domain)
-      if(existingCookieJSON) {
-        const newCookie = deepMerge(JSON.parse(existingCookieJSON), JSON.parse(decodedParams))
+      _log("domain retrieved:", domain);
+      if (existingCookieJSON) {
+        const newCookie = deepMerge(JSON.parse(existingCookieJSON), JSON.parse(decodedParams));
         const reEncodedCookie = b64encode(JSON.stringify(newCookie));
-        _log("cookie to store:", newCookie)
-        Cookies.set("_saasquatch", reEncodedCookie, { 
-          expires: 365, 
-          secure:false, 
-          sameSite:"lax",
+        _log("cookie to store:", newCookie);
+        Cookies.set("_saasquatch", reEncodedCookie, {
+          expires: 365,
+          secure: false,
+          sameSite: "lax",
           domain,
-          path:"/"
+          path: "/",
         });
       } else {
-        const paramsJSON = JSON.parse(decodedParams)
+        const paramsJSON = JSON.parse(decodedParams);
         const reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
-        _log("cookie to store:", decodedParams)
-        Cookies.set("_saasquatch", reEncodedCookie, { 
-          expires: 365, 
-          secure:true, 
-          sameSite:"lax",
+        _log("cookie to store:", decodedParams);
+        Cookies.set("_saasquatch", reEncodedCookie, {
+          expires: 365,
+          secure: true,
+          sameSite: "lax",
           domain,
-          path:"/"
+          path: "/",
         });
       }
-    } catch (error){
-      _log(error)
+    } catch (error) {
+      _log(error);
     }
   }
 }
