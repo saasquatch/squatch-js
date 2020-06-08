@@ -1,7 +1,8 @@
 const express = require("express");
+const httpShutdown = require("http-shutdown");
 const path = require("path");
-const port = process.env.PORT || 8080;
-export const app = express();
+const port = process.env.PORT || 5000;
+const app = express();
 
 // serve static assets normally
 app.use(express.static(__dirname + "/dist"));
@@ -12,4 +13,11 @@ app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "index.html"));
 });
 
-app.listen(port);
+const server = httpShutdown(
+  app.listen(port, () => {
+    console.log(`Web is listening on port ${port}`);
+  })
+);
+
+server.host = `http://localhost:${port}`;
+module.exports = server;
