@@ -76,6 +76,7 @@
   "dependencies": {
     "debug": "^3.2.6",
     "eventbusjs": "^0.2.0",
+    "express": "^4.17.1",
     "superagent": "^5.2.2"
   },
   "browserslist": "> 0.25%, not dead"
