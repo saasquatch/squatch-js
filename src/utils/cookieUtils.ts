@@ -23,6 +23,7 @@ export function b64encode(input){
         .replace(/\//g, "_")		
 }
 
+// https://stackoverflow.com/a/11319865
 export function getTopDomain(){
   var i,h,
     weird_cookie='weird_get_top_level_domain=cookie',

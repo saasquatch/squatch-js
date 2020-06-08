@@ -146,7 +146,7 @@ export function submitEmail(fn: (target, widget, email) => any): void {
   widgets().submitEmail(fn);
 }
 
-if (window) asyncLoad();
+if (typeof document !== "undefined") asyncLoad();
 
 if (window && !window.SaaSquatchDoNotAutoDrop) {
   //valid query strings should be ignored
@@ -187,7 +187,7 @@ if (window && !window.SaaSquatchDoNotAutoDrop) {
       }
       Cookies.set("_saasquatch", reEncodedCookie, {
         expires: 365,
-        secure: true,
+        secure: document.location.protocol === "https:" ? true : false,
         sameSite: "lax",
         domain,
         path: "/",

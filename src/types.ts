@@ -18,7 +18,6 @@ export interface WidgetConfig {
   user: User; // The user details
   widgetType?: WidgetType; // The content of the widget.
   engagementMedium?: EngagementMedium; // How to display the widget.
-  cookie?: string;
   jwt?: JWT; // the JSON Web Token (JWT) that is used
 }
 
