@@ -63,7 +63,7 @@ export function _pushCookie() {
     }
 
     try {
-      const existingCookie = JSON.parse(b64decode(Cookies.get("_saasquatch")));
+      existingCookie = JSON.parse(b64decode(Cookies.get("_saasquatch")));
       _log("existing cookie", existingCookie);
     } catch (error) {
       _log("Unable to retrieve cookie", error);
