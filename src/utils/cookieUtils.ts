@@ -60,6 +60,8 @@ export function _pushCookie() {
       paramsJSON = JSON.parse(b64decode(refParam));
     } catch (error) {
       _log("Unable to decode params", error);
+      // don't merge invalid params
+      return;
     }
 
     try {
