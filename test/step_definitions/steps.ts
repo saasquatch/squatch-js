@@ -25,12 +25,12 @@ class World {
   url?: string;
   browser: ChromiumBrowser;
   context: ChromiumBrowserContext;
-  domain: string;
   program: string;
-  host = server;
+  server = server;
+  domain = "localhost:" + server.address().port;
 
   async cookieDoesNotExist(cookieName: string, domain: string = this.domain) {
-    const cookies = await this.context.cookies("https://" + domain);
+    const cookies = await this.context.cookies("http://" + domain);
     const filtered = cookies.filter((c) => c.name == cookieName);
     assert.isEmpty(filtered, `Should not find any cookies on ${this.domain}`);
   }
@@ -39,7 +39,9 @@ class World {
     cookieValue: string,
     domain: string = this.domain
   ) {
-    const cookies = await this.context.cookies("https://" + domain);
+    // const cookies = await this.context.cookies("https://" + domain);
+    const cookies = await this.context.cookies("http://" + this.domain);
+    console.log("Cookies Found: ", cookies);
     const filtered = cookies.filter((c) => c.name == cookieName);
     assert.equal(
       filtered.length,
@@ -77,7 +79,7 @@ Given("I am using squatchjs", function () {
   // Nothing to do here except setup?
 });
 Given("it is being loaded on {word}", function (this: World, domain: string) {
-  this.domain = domain;
+  return "pass";
 });
 
 Given("I have an active referral program {string}", function (
@@ -87,8 +89,11 @@ Given("I have an active referral program {string}", function (
   this.program = programName;
 });
 
-Given("the url is {string}", function (this: World, url: string) {
-  this.url = url;
+Given("the _saasquatch parameter for the url is {string}", function (
+  this: World,
+  param: string
+) {
+  this.url = this.domain + "?_saasquatch=" + param;
 });
 When("squatchjs loads", load);
 When("Squatch.js loads", load);
@@ -96,6 +101,9 @@ When("Squatch.js loads", load);
 async function load(this: World) {
   // TODO: Need a page that will actually load Squatch.js
   const page = await this.context.newPage();
+  page.on("console", (msg) => {
+    console.log(`DEBUG: "${msg.text()}"`);
+  });
   await page.goto(this.url);
 }
 
@@ -117,7 +125,8 @@ Then("the {word} cookie will not be set for {string}", async function (
   cookieName: string,
   domain: string
 ) {
-  await this.cookieDoesNotExist(cookieName, domain);
+  console.log("domain: ", this.domain);
+  await this.cookieDoesNotExist(cookieName, this.domain);
 });
 
 Given("a {word} cookie exists on {string}", async function (
@@ -129,7 +138,7 @@ Given("a {word} cookie exists on {string}", async function (
   const cookie: Cookie = {
     name: cookieName,
     value: encode(jsoncontent),
-    domain: "https://" + domain,
+    domain: "http://" + this.domain,
     path: "/",
     expires: new Date().getTime(),
     httpOnly: false,
@@ -147,7 +156,11 @@ Then("the {word} cookie will be set for {string} with value", async function (
   domain: string,
   jsoncontent: string
 ) {
-  await this.cookieExists(cookieName, encode(jsoncontent), domain);
+  await this.cookieExists(
+    cookieName,
+    encode(jsoncontent.replace(/\s|\n/g, "")),
+    this.domain
+  );
 });
 
 function encode(value: string) {
