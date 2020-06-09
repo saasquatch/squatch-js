@@ -13,6 +13,7 @@ import {
   validateConfig,
   validateWidgetConfig,
 } from "../utils/validate";
+import Cookies from "js-cookie";
 
 /**
  *
@@ -171,7 +172,10 @@ export default class WidgetApi {
    */
   squatchReferralCookie(): Promise<object> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson`;
+    const _saasquatch = Cookies.get("_saasquatch");
+    const cookie = _saasquatch ? `?cookies=${encodeURIComponent(_saasquatch)}` : ``;
+
+    const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson${cookie}`;
     return doGet(url);
   }
 }

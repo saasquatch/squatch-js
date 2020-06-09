@@ -115,9 +115,9 @@ export default class Widgets {
   async upsertUser(config: WidgetConfig) {
     const cookieConfig = {
       ...config,
-      user:{
+      user: {
         ...config.user,
-        cookie:Cookies.get("_saasquatch")
+        cookie: Cookies.get("_saasquatch")
       }
     }
     const raw = cookieConfig as unknown;

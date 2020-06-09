@@ -147,8 +147,10 @@ export function pushCookie():void {
   _pushCookie();
 }
 
-if (typeof document !== "undefined") asyncLoad();
-
 if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
   pushCookie();
 }
+
+if (typeof document !== "undefined") asyncLoad();
+
+
