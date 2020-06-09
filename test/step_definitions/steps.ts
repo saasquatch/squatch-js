@@ -19,11 +19,14 @@ import base64url from "base64-url";
 
 import { assert } from "chai";
 
+import { web } from "../spApp";
+
 class World {
   url?: string;
   browser: ChromiumBrowser;
   context: ChromiumBrowserContext;
   domain: string;
+  host = web;
 
   async cookieDoesNotExist(cookieName: string, domain: string = this.domain) {
     const cookies = await this.context.cookies("https://" + domain);

@@ -17,13 +17,12 @@ import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
-import { b64encode, b64decode, deepMerge } from "./utils/cookieUtils";
-import Cookies from 'js-cookie'
+import {  _pushCookie } from "./utils/cookieUtils";
 export * from "./types";
 export * from "./docs";
 
 // @ts-ignore
-debug.disable("squatch-js*");
+// debug.disable("squatch-js*");
 /** @hidden */
 const _log = debug("squatch-js");
 
@@ -91,12 +90,11 @@ export function init(configIn: ConfigOptions): void {
   _api = new WidgetApi(config);
   _widgets = new Widgets(config);
   _events = new EventsApi(config);
-  
+
   _log("Widget API instance", _api);
   _log("Widgets instance", _widgets);
   _log("Events API instance", _events);
 }
-
 
 /**
  * Squatch.js can't start safely making operations until it's "ready". This
@@ -145,65 +143,12 @@ export function submitEmail(fn: (target, widget, email) => any): void {
   widgets().submitEmail(fn);
 }
 
-if (window) asyncLoad();
+export function pushCookie():void {
+  _pushCookie();
+}
 
-if(window && !window.SaaSquatchDoNotAutoDrop){
-  //valid query strings should be ignored
-  const queryString = window.location.search;
+if (typeof document !== "undefined") asyncLoad();
 
-  /* URLSearchParams polyfill */
-  (function (w) {
-    w.URLSearchParams = w.URLSearchParams || function (searchString) {
-        var self = this;
-        self.searchString = searchString;
-        self.get = function (name) {
-            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(self.searchString);
-            if (results == null) {
-                return null;
-            }
-            else {
-                return decodeURIComponent(results[1]) || 0;
-            }
-        };
-    }
-  })(window)
-
-  // needs polyfill
-  const urlParams = new URLSearchParams(queryString);
-  const refParam = urlParams.get('_saasquatch') || "";
-
-  // return if no params
-
-  if(refParam){
-    let decodedParams = "";
-    try {
-      decodedParams = b64decode(refParam)
-    } catch(error){
-      throw Error("invalid query parameter");
-    }
-
-    const existingCookie = Cookies.get('_saasquatch');
-    let existingCookieJSON = "";
-    console.log("existing cookie", existingCookie)
-    if(existingCookie){
-      try {
-        existingCookieJSON = b64decode(existingCookie)
-      } catch(error){
-        throw Error("invalid cookie stored");
-      }
-    }
-
-    // don't merge if there's no existing object
-    if(existingCookieJSON)  {
-      const newCookie = deepMerge(JSON.parse(existingCookieJSON), JSON.parse(decodedParams))
-      const reEncodedCookie = b64encode(JSON.stringify(newCookie));
-      console.log("cookie to store:", newCookie)
-      Cookies.set("_saasquatch", reEncodedCookie, { expires: 60, secure:true, sameSite:"lax" });
-    } else {
-      const paramsJSON = JSON.parse(decodedParams)
-      const reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
-      console.log("cookie to store:", decodedParams)
-      Cookies.set("_saasquatch", reEncodedCookie, { expires: 60, secure:true, sameSite:"lax" });
-    }
-  }
+if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
+  pushCookie();
 }
