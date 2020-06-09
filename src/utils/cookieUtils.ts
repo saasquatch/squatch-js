@@ -86,7 +86,7 @@ export function _pushCookie() {
       Cookies.set("_saasquatch", reEncodedCookie, {
         expires: 365,
         secure: false,
-        sameSite: "lax",
+        sameSite: "Lax",
         domain,
         path: "/",
       });

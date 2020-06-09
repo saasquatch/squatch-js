@@ -5,7 +5,6 @@ import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
 import { WidgetType, WidgetContext } from "../types";
 import { isObject, hasProps } from "../utils/validate";
-import Cookies from 'js-cookie';
 
 /** @hidden */
 const _log = debug("squatch-js:widget");
@@ -230,8 +229,7 @@ export default abstract class Widget {
         firstName: firstName || null,
         lastName: lastName || null,
         id: this.context.user.id,
-        accountId: this.context.user.accountId,
-        cookies: Cookies.get("_saasquatch")
+        accountId: this.context.user.accountId
       };
 
       response = this.widgetApi.upsertUser({
