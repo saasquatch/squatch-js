@@ -6,13 +6,12 @@ export function doGet(url, jwt = "") {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
-    "Cookie": "_saasquatch=" + Cookies.get('_saasquatch')
   };
 
   if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
   const request = superagent.get(url).withCredentials().set(headers);
-
+  request.set('cookie', '_saasquatch=' + Cookies.get('_saasquatch'));
   return thenableSuperagent(request).then(
     (response) => {
       if (

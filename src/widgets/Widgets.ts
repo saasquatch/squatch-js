@@ -17,6 +17,7 @@ import {
 } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
 import { type } from "os";
+import Cookies from "js-cookie";
 // import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
@@ -112,7 +113,14 @@ export default class Widgets {
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
   async upsertUser(config: WidgetConfig) {
-    const raw = config as unknown;
+    const cookieConfig = {
+      ...config,
+      user:{
+        ...config.user,
+        cookie:Cookies.get("_saasquatch")
+      }
+    }
+    const raw = cookieConfig as unknown;
     const clean = validateWidgetConfig(raw);
     try {
       const response = await this.api.upsertUser(clean);
