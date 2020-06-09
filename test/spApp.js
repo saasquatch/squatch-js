@@ -14,10 +14,10 @@ app.get("*", function (request, response) {
 });
 
 const server = httpShutdown(
-  app.listen(port, () => {
-    console.log(`Web is listening on port ${port}`);
+  app.listen(0, () => {
+    console.log(`Web is listening on port ${server.address().port}`);
   })
 );
 
-server.host = `http://localhost:${port}`;
+server.host = `http://localhost:${server.address.port}`;
 module.exports = server;
