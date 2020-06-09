@@ -85,7 +85,7 @@ export function _pushCookie() {
       }
       Cookies.set("_saasquatch", reEncodedCookie, {
         expires: 365,
-        secure: document.location.protocol === "https:" ? true : false,
+        secure: false,
         sameSite: "lax",
         domain,
         path: "/",
