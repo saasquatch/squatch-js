@@ -61,7 +61,11 @@ class World {
       `Invalid cookie value set in cookie ${JSON.stringify(cookie)}`
     );
   }
+  removeWhitespace(str: string) {
+    return str.replace(/\s|\n/g, "");
+  }
 }
+
 setWorldConstructor(World);
 
 Before(async function (this: World) {
@@ -137,7 +141,7 @@ Given("a {word} cookie exists on {string}", async function (
 ) {
   const cookie: Cookie = {
     name: cookieName,
-    value: encode(jsoncontent),
+    value: encode(this.removeWhitespace(jsoncontent)),
     domain: "http://" + this.domain,
     path: "/",
     expires: new Date().getTime(),
@@ -147,7 +151,11 @@ Given("a {word} cookie exists on {string}", async function (
   };
   await this.context.addCookies([cookie]);
 
-  // await this.cookieExists(cookieName, encode(jsoncontent), "https://" + domain);
+  await this.cookieExists(
+    cookieName,
+    encode(this.removeWhitespace(jsoncontent)),
+    "http://" + this.domain
+  );
 });
 
 Then("the {word} cookie will be set for {string} with value", async function (
