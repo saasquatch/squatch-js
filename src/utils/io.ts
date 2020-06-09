@@ -1,10 +1,12 @@
 import * as superagent from "superagent";
 import { JWT } from "../types";
+import Cookies from "js-cookie";
 
 export function doGet(url, jwt = "") {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
+    "Cookie": "_saasquatch=" + Cookies.get('_saasquatch')
   };
 
   if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
