@@ -117,7 +117,7 @@ export default class Widgets {
       ...config,
       user: {
         ...config.user,
-        cookie: Cookies.get("_saasquatch")
+        cookies: Cookies.get("_saasquatch")
       }
     }
     const raw = cookieConfig as unknown;
