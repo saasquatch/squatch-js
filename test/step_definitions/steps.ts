@@ -19,14 +19,15 @@ import base64url from "base64-url";
 
 import { assert } from "chai";
 
-import { web } from "../spApp";
+const server = require("../spApp");
 
 class World {
   url?: string;
   browser: ChromiumBrowser;
   context: ChromiumBrowserContext;
   domain: string;
-  host = web;
+  program: string;
+  host = server;
 
   async cookieDoesNotExist(cookieName: string, domain: string = this.domain) {
     const cookies = await this.context.cookies("https://" + domain);
@@ -77,6 +78,13 @@ Given("I am using squatchjs", function () {
 });
 Given("it is being loaded on {word}", function (this: World, domain: string) {
   this.domain = domain;
+});
+
+Given("I have an active referral program {string}", function (
+  this: World,
+  programName: string
+) {
+  this.program = programName;
 });
 
 Given("the url is {string}", function (this: World, url: string) {
