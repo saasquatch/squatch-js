@@ -231,7 +231,7 @@ export default abstract class Widget {
         lastName: lastName || null,
         id: this.context.user.id,
         accountId: this.context.user.accountId,
-        cookie: Cookies.get("_saasquatch")
+        cookies: Cookies.get("_saasquatch")
       };
 
       response = this.widgetApi.upsertUser({
