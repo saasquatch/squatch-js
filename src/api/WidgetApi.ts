@@ -99,7 +99,8 @@ export default class WidgetApi {
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
-
+    const cookies = Cookies.get("_saasquatch");
+    if(cookies) user["cookies"] = cookies;
     return doPut(url, JSON.stringify(user), jwt);
   }
 

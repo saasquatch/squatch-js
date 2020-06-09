@@ -143,6 +143,15 @@ export function submitEmail(fn: (target, widget, email) => any): void {
   widgets().submitEmail(fn);
 }
 
+/**
+ * Manually sets the _saasquatch cookie if available as a param. if you have
+ * window.SaaSquatchDoNotAutoDrop as a falsy value, this will run automatically.
+ *
+ * @returns {void}
+ *
+ * @example
+ * squatch.pushCookie();
+ */
 export function pushCookie():void {
   _pushCookie();
 }
