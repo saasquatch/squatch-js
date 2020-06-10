@@ -8,9 +8,6 @@ import {
 } from "cucumber";
 
 import playwright, {
-  ChromiumBrowser,
-  WebKitBrowser,
-  ChromiumBrowserContext,
   Cookie,
   BrowserContext,
   Browser,
