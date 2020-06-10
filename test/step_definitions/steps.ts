@@ -74,7 +74,7 @@ Before(async function (this: World) {
   if (this.browser || this.context)
     throw new Error("Shouldn't overwrite browser context this way.");
   this.browser = await playwright[process.env.BROWSER || 'chromium'].launch(); // Or 'firefox' or 'webkit'.
-  this.context = await this.browser.newContext().then(context => context);
+  this.context = await this.browser.newContext();
 });
 
 After(async function (this: World) {
