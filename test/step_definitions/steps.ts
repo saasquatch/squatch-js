@@ -7,6 +7,8 @@ import {
   Given,
 } from "cucumber";
 
+// Note: playwright's webkit is not supported on MacOS 10.13
+// See https://github.com/microsoft/playwright/issues/1941
 import playwright, {
   Cookie,
   BrowserContext,
