@@ -7,11 +7,13 @@ import {
   Given,
 } from "cucumber";
 
-import {
-  chromium,
+import playwright, {
   ChromiumBrowser,
+  WebKitBrowser,
   ChromiumBrowserContext,
   Cookie,
+  BrowserContext,
+  Browser,
 } from "playwright";
 
 // Note: This library is intentionally different than the one used for hte brwoser.
@@ -23,8 +25,8 @@ const server = require("../spApp");
 
 class World {
   url?: string;
-  browser: ChromiumBrowser;
-  context: ChromiumBrowserContext;
+  browser: Browser;
+  context: BrowserContext;
   program: string;
   server = server;
   domain = "localhost:" + server.address().port;
@@ -71,8 +73,8 @@ setWorldConstructor(World);
 Before(async function (this: World) {
   if (this.browser || this.context)
     throw new Error("Shouldn't overwrite browser context this way.");
-  this.browser = await chromium.launch(); // Or 'firefox' or 'webkit'.
-  this.context = await this.browser.newContext();
+  this.browser = await playwright[process.env.BROWSER || 'chromium'].launch(); // Or 'firefox' or 'webkit'.
+  this.context = await this.browser.newContext().then(context => context);
 });
 
 After(async function (this: World) {
