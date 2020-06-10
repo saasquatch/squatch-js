@@ -41,7 +41,7 @@ class World {
   ) {
     // const cookies = await this.context.cookies("https://" + domain);
     const cookies = await this.context.cookies("http://" + this.domain);
-    console.log("Cookies Found: ", cookies);
+    console.log(`Cookies Found for ${"http://" + this.domain}: `, cookies);
     const filtered = cookies.filter((c) => c.name == cookieName);
     assert.equal(
       filtered.length,
@@ -142,9 +142,9 @@ Given("a {word} cookie exists on {string}", async function (
   const cookie: Cookie = {
     name: cookieName,
     value: encode(this.removeWhitespace(jsoncontent)),
-    domain: "http://" + this.domain,
+    domain: this.domain,
     path: "/",
-    expires: new Date().getTime(),
+    expires: Math.trunc(new Date().getTime() / 1000 + 3600),
     httpOnly: false,
     secure: false,
     sameSite: "Lax",
