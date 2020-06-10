@@ -144,8 +144,12 @@ export function submitEmail(fn: (target, widget, email) => any): void {
 }
 
 /**
- * Manually sets the _saasquatch cookie if available as a param. if you have
- * window.SaaSquatchDoNotAutoDrop as a falsy value, this will run automatically.
+ * Manually set the _saasquatch cookie as a 1st party cookie if available as a URL parameter on the current page.
+ * This runs automatically immediately when squatch-js is loaded, except when window.SaaSquatchDoNotAutoDrop is true.
+ * Use this function manually if you have a single page application or custom routing that causes the `_saasquatch` URL parameter to not be set when Squatch.js loads.
+ 
+ * It is safe to run this function multiple times. If the `_saasquatch` URL parameter is invalid or missing it will not clear the 1st party cookie.
+ 
  *
  * @returns {void}
  *
@@ -161,5 +165,4 @@ if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
 }
 
 if (typeof document !== "undefined") asyncLoad();
-
 
