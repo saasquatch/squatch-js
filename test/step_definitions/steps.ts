@@ -41,7 +41,7 @@ class World {
   ) {
     // const cookies = await this.context.cookies("https://" + domain);
     const cookies = await this.context.cookies("http://" + this.domain);
-    console.log(`Cookies Found for ${"http://" + this.domain}: `, cookies);
+    // console.log(`Cookies Found for ${"http://" + this.domain}: `, cookies);
     const filtered = cookies.filter((c) => c.name == cookieName);
     assert.equal(
       filtered.length,
@@ -185,5 +185,5 @@ Given("a new saasquatch url value", function (
   this: World,
   jsonContent: string
 ) {
-  this.url = `https://example.com?_saasquatch=${encode(jsonContent)}`;
+  this.url = "http://" + this.domain + `?_saasquatch=${encode(jsonContent)}`;
 });
