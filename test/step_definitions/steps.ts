@@ -80,15 +80,15 @@ BeforeAll(async function () {
   await server.start();
 });
 AfterAll(async function () {
-  console.log("Shuting down web server...");
+  console.log("Shutting down web server...");
   await server.stop();
-  console.log("Shuting down web server...done");
+  console.log("Shutting down web server...done");
 });
 After(async function (this: World) {
   if (this.browser) {
-    console.log("Shuting down browser...");
+    console.log("Shutting down browser...");
     await this.browser.close();
-    console.log("Shuting down browser...done");
+    console.log("Shutting down browser...done");
   }
 });
 
