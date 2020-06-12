@@ -2,7 +2,6 @@ import {
   When,
   Then,
   Before,
-  After,
   setWorldConstructor,
   Given,
   AfterAll,
@@ -20,9 +19,10 @@ import { assert } from "chai";
 
 import server from "../spApp";
 
+let browser: Browser = undefined;
+
 class World {
   url?: string;
-  browser: Browser;
   context: BrowserContext;
   program: string;
   server = server;
@@ -69,11 +69,13 @@ class World {
 
 setWorldConstructor(World);
 
+BeforeAll(async function () {
+  browser = await playwright[process.env.BROWSER || "chromium"].launch(); // Or 'firefox' or 'webkit'.
+});
 Before(async function (this: World) {
-  if (this.browser || this.context)
+  if (this.context)
     throw new Error("Shouldn't overwrite browser context this way.");
-  this.browser = await playwright[process.env.BROWSER || "chromium"].launch(); // Or 'firefox' or 'webkit'.
-  this.context = await this.browser.newContext();
+  this.context = await browser.newContext();
 });
 
 BeforeAll(async function () {
@@ -84,10 +86,10 @@ AfterAll(async function () {
   await server.stop();
   console.log("Shutting down web server...done");
 });
-After(async function (this: World) {
-  if (this.browser) {
+AfterAll(async function (this: World) {
+  if (browser) {
     console.log("Shutting down browser...");
-    await this.browser.close();
+    await browser.close();
     console.log("Shutting down browser...done");
   }
 });
