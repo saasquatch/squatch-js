@@ -28,10 +28,17 @@ let server: http.Server;
 
 export default {
   async start() {
-    server = app.listen(0, () => {
-      console.log(`Web is listening on port ${server.address().port}`);
+    return new Promise((resolve, reject) => {
+      server = app.listen(0, (err: Error) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        console.log(`Web is listening on port ${server.address().port}`);
+        return resolve();
+      });
+      server.host = `http://localhost:${server.address().port}`;
     });
-    server.host = `http://localhost:${server.address().port}`;
   },
   async stop() {
     return new Promise((resolve, reject) => {
