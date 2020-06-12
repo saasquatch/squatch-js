@@ -17,11 +17,12 @@ import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
 import { ConfigOptions } from "./types";
 import { validateConfig } from "./utils/validate";
+import {  _pushCookie } from "./utils/cookieUtils";
 export * from "./types";
 export * from "./docs";
 
 // @ts-ignore
-debug.disable("squatch-js*");
+// debug.disable("squatch-js*");
 /** @hidden */
 const _log = debug("squatch-js");
 
@@ -142,4 +143,26 @@ export function submitEmail(fn: (target, widget, email) => any): void {
   widgets().submitEmail(fn);
 }
 
-if (window) asyncLoad();
+/**
+ * Manually set the _saasquatch cookie as a 1st party cookie if available as a URL parameter on the current page.
+ * This runs automatically immediately when squatch-js is loaded, except when window.SaaSquatchDoNotAutoDrop is true.
+ * Use this function manually if you have a single page application or custom routing that causes the `_saasquatch` URL parameter to not be set when Squatch.js loads.
+ 
+ * It is safe to run this function multiple times. If the `_saasquatch` URL parameter is invalid or missing it will not clear the 1st party cookie.
+ 
+ *
+ * @returns {void}
+ *
+ * @example
+ * squatch.pushCookie();
+ */
+export function pushCookie():void {
+  _pushCookie();
+}
+
+if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
+  pushCookie();
+}
+
+if (typeof document !== "undefined") asyncLoad();
+

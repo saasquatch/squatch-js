@@ -1,5 +1,6 @@
 import * as superagent from "superagent";
 import { JWT } from "../types";
+import Cookies from "js-cookie";
 
 export function doGet(url, jwt = "") {
   const headers = {
@@ -10,7 +11,6 @@ export function doGet(url, jwt = "") {
   if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
   const request = superagent.get(url).withCredentials().set(headers);
-
   return thenableSuperagent(request).then(
     (response) => {
       if (

@@ -229,7 +229,7 @@ export default abstract class Widget {
         firstName: firstName || null,
         lastName: lastName || null,
         id: this.context.user.id,
-        accountId: this.context.user.accountId,
+        accountId: this.context.user.accountId
       };
 
       response = this.widgetApi.upsertUser({
