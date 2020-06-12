@@ -1,6 +1,6 @@
-const express = require("express");
-const httpShutdown = require("http-shutdown");
-const path = require("path");
+import express from "express";
+import * as http from "http";
+
 const app = express();
 
 // serve static assets normally
@@ -24,11 +24,34 @@ app.get("/", function (req, res) {
   `);
 });
 
-const server = httpShutdown(
-  app.listen(0, () => {
-    console.log(`Web is listening on port ${server.address().port}`);
-  })
-);
+let server: http.Server;
 
-server.host = `http://localhost:${server.address().port}`;
-module.exports = server;
+export default {
+  async start() {
+    return new Promise((resolve, reject) => {
+      server = app.listen(0, (err: Error) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        console.log(`Web is listening on port ${server.address().port}`);
+        return resolve();
+      });
+      server.host = `http://localhost:${server.address().port}`;
+    });
+  },
+  async stop() {
+    return new Promise((resolve, reject) => {
+      server.close((err?: Error) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve();
+      });
+    });
+  },
+  domain() {
+    return "localhost:" + server.address().port;
+  },
+};

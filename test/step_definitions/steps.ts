@@ -5,22 +5,20 @@ import {
   After,
   setWorldConstructor,
   Given,
+  AfterAll,
+  BeforeAll,
 } from "cucumber";
 
 // Note: playwright's webkit is not supported on MacOS 10.13
 // See https://github.com/microsoft/playwright/issues/1941
-import playwright, {
-  Cookie,
-  BrowserContext,
-  Browser,
-} from "playwright";
+import playwright, { Cookie, BrowserContext, Browser } from "playwright";
 
 // Note: This library is intentionally different than the one used for hte brwoser.
 import base64url from "base64-url";
 
 import { assert } from "chai";
 
-const server = require("../spApp");
+import server from "../spApp";
 
 class World {
   url?: string;
@@ -28,8 +26,10 @@ class World {
   context: BrowserContext;
   program: string;
   server = server;
-  domain = "localhost:" + server.address().port;
 
+  get domain() {
+    return this.server.domain();
+  }
   async cookieDoesNotExist(cookieName: string, domain: string = this.domain) {
     const cookies = await this.context.cookies("http://" + domain);
     const filtered = cookies.filter((c) => c.name == cookieName);
@@ -72,12 +72,24 @@ setWorldConstructor(World);
 Before(async function (this: World) {
   if (this.browser || this.context)
     throw new Error("Shouldn't overwrite browser context this way.");
-  this.browser = await playwright[process.env.BROWSER || 'chromium'].launch(); // Or 'firefox' or 'webkit'.
+  this.browser = await playwright[process.env.BROWSER || "chromium"].launch(); // Or 'firefox' or 'webkit'.
   this.context = await this.browser.newContext();
 });
 
+BeforeAll(async function () {
+  await server.start();
+});
+AfterAll(async function () {
+  console.log("Shutting down web server...");
+  await server.stop();
+  console.log("Shutting down web server...done");
+});
 After(async function (this: World) {
-  if (this.browser) await this.browser.close();
+  if (this.browser) {
+    console.log("Shutting down browser...");
+    await this.browser.close();
+    console.log("Shutting down browser...done");
+  }
 });
 
 Given("I am using squatchjs", function () {
