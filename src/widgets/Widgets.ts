@@ -238,7 +238,7 @@ export default class Widgets {
   ) {
     _log("Rendering Widget...");
     if (!response) throw new Error("Unable to get a response");
-    if (!response.jsOptions) throw new Error("Missing jsOptions in response");
+    // if (!response.jsOptions) throw new Error("Missing jsOptions in response");
 
     let widget;
     let displayOnLoad = false;
