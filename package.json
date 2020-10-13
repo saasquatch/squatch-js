@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "dist/squatch.js",
   "browser": "dist/squatch.js",
+  "types": "dist/squatch.d.ts",
   "bugs": {
     "url": "https://github.com/saasquatch/squatch-js/issues",
     "email": "support@referralsaasquatch.com"
@@ -16,12 +17,20 @@
     "type": "git",
     "url": "https://github.com/saasquatch/squatch-js.git"
   },
+  "tsd":{
+    "directory": "test/tsd"
+  },
   "sideEffects": false,
   "scripts": {
     "watch": "cross-env NODE_ENV=production webpack --watch",
-    "build": "webpack",
-    "build:production": "cross-env NODE_ENV=production webpack",
-    "test": "cucumber-js",
+    "declaration": "tsc --emitDeclarationOnly",
+    "webpack": "webpack",
+    "webpack:production": "cross-env NODE_ENV=production webpack",
+    "build": "run-p webpack declaration",
+    "build:production": "run-p webpack:production declaration",
+    "test": "run-s test:types test:browser",
+    "test:browser": "cucumber-js",
+    "test:types": "tsd",
     "test:webkit": "cross-env BROWSER=webkit cucumber-js",
     "test:firefox": "cross-env BROWSER=firefox cucumber-js",
     "build:docs": "typedoc --out docs/ src/ ",
@@ -70,6 +79,7 @@
     "serve": "^11.3.0",
     "ts-loader": "^7.0.4",
     "ts-node": "^8.10.2",
+    "tsd": "^0.13.1",
     "typedoc": "^0.17.7",
     "typescript": "^3.9.3",
     "webpack": "^4.43.0",

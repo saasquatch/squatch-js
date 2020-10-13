@@ -10,7 +10,7 @@ var mode = PROD ? "production" : "development";
 module.exports = {
   entry: {
     "squatch.WidgetApi": ["./src/api/WidgetApi.ts"],
-    squatch: ["./src/index.ts"]
+    squatch: ["./src/squatch.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),
