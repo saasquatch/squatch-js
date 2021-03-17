@@ -100,16 +100,13 @@ You can also use the `api()` function to call the WidgetApi methods directly.
     squatch.init({tenantAlias: 'YOUR_TENANT_ALIAS'});
 
 
-    // Example 1 -- use the api
-    var code;
     var element = document.getElementById('my_coupon');
 
     squatch.api().squatchReferralCookie().then(function(response) {
-      element.value = response.code;
+      /* `response.codes` looks like `{"program_id":"NEWCO", "friend_program":"BOB"}` */
+      
+      element.value = response.codes["program-id"];
     });
-
-    // Example 2 -- use a selector
-    squatch.autofill('#my_coupon');
 
   });
 </script>
