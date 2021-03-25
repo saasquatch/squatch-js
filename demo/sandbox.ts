@@ -2,27 +2,27 @@ import { getQueryStringParams } from "./util";
 
 export const tenantAlias = "test_aojsrf4r06zi0";
 export const domain = "https://staging.referralsaasquatch.com";
-export const script = "http://localhost:5000/squatch.min.js";
+export const script = "https://fast.ssqt.io/squatch-js@2";
 
 export const user = {
-  "id":"5b980d34e4b0cabee07f2cb0",
-  "accountId":"AZJZSVG0LS1LB19R",
-  "email":"chesterscott.uexwltgh@mailosaur.io"
+  id: "5b980d34e4b0cabee07f2cb0",
+  accountId: "AZJZSVG0LS1LB19R",
+  email: "chesterscott.uexwltgh@mailosaur.io",
 };
 export const badJwtUser = {
   ...user,
-  firstName: "Bad JWT"
+  firstName: "Bad JWT",
 };
 export const noIds = {
-  firstName: "No IDs"
+  firstName: "No IDs",
 };
 export const noUserId = {
   accountId: "abc_123",
-  firstName: "No UserID"
+  firstName: "No UserID",
 };
 export const noAccountId = {
   id: "abc_123",
-  firstName: "No AccountID"
+  firstName: "No AccountID",
 };
 
 export const users = [user, badJwtUser, noIds, noUserId, noAccountId, {}];
@@ -37,8 +37,8 @@ export const popup: Sandbox = {
     engagementMedium: "POPUP",
     user: user,
     jwt:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo"
-  }
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo",
+  },
 };
 
 export const embed: Sandbox = {
@@ -49,45 +49,45 @@ export const embed: Sandbox = {
     widgetType: "REFERRER_WIDGET",
     engagementMedium: "EMBED",
     user: {
-      "id":"5b980d34e4b0cabee07f2cb0",
-      "accountId":"AZJZSVG0LS1LB19R",
-      "email":"chesterscott.uexwltgh@mailosaur.io"
+      id: "5b980d34e4b0cabee07f2cb0",
+      accountId: "AZJZSVG0LS1LB19R",
+      email: "chesterscott.uexwltgh@mailosaur.io",
     },
     jwt:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo"
-  }
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo",
+  },
 };
 
 export const embedNew: Sandbox = {
   ...embed,
   initObj: {
     ...embed.initObj,
-    widgetType: "p/tuesday-text/w/referrerWidget"
-  }
+    widgetType: "p/tuesday-text/w/referrerWidget",
+  },
 };
 
 export const embedReferred: Sandbox = {
   ...embed,
   initObj: {
     ...embed.initObj,
-    widgetType: "CONVERSION_WIDGET"
-  }
+    widgetType: "CONVERSION_WIDGET",
+  },
 };
 
 export const popupReferred: Sandbox = {
   ...popup,
   initObj: {
     ...popup.initObj,
-    widgetType: "CONVERSION_WIDGET"
-  }
+    widgetType: "CONVERSION_WIDGET",
+  },
 };
 
 export const popupNew: Sandbox = {
   ...popup,
   initObj: {
     ...popup.initObj,
-    widgetType: "p/tuesday-test/w/referrerWidget"
-  }
+    widgetType: "p/tuesday-test/w/referrerWidget",
+  },
 };
 
 export function fromURL() {
@@ -102,7 +102,7 @@ export function fromURL() {
 
   const sandbox = {
     ...popup,
-    ...urlSandbox
+    ...urlSandbox,
   };
   return sandbox;
 }
