@@ -98,7 +98,7 @@ export default class PopupWidget extends Widget {
       // Adjust frame height when size of body changes
       const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
-          const { height, top, bottom } = entry.contentRect;
+          const { top, bottom } = entry.contentRect;
 
           const computedHeight = bottom + top;
           frame.height = computedHeight + "";
@@ -107,14 +107,14 @@ export default class PopupWidget extends Widget {
           entry.target.style = ``;
 
           // @ts-ignore - number vs string comparison, should fail...
-          if (window.innerHeight > frame.height) {
-            // @ts-ignore - number vs string comparison, should fail...
-            popupdiv.style.paddingTop = `${
-              (window.innerHeight - frame.height) / 2
-            }px`;
-          } else {
+          // if (window.innerHeight > frame.height) {
+          //   // @ts-ignore - number vs string comparison, should fail...
+          //   popupdiv.style.paddingTop = `${
+          //     (window.innerHeight - frame.height) / 2
+          //   }px`;
+          // } else {
             popupdiv.style.paddingTop = "5px";
-          }
+          // }
         }
       });
       ro.observe(await this._findInnerContainer());

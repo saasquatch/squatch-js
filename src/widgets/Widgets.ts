@@ -9,15 +9,10 @@ import Widget, { Params } from "./Widget";
 import { WidgetResult, WidgetContext } from "../types";
 import {
   ConfigOptions,
-  User,
   EngagementMedium,
-  WidgetType,
-  JWT,
   WidgetConfig,
 } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
-import { type } from "os";
-// import { Promise } from "es6-promise";
 
 const _log = debug("squatch-js:widgets");
 
@@ -77,7 +72,7 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  async createCookieUser(config): Promise<WidgetResult> {
+  async createCookieUser(config: WidgetConfig): Promise<WidgetResult> {
     try {
       const response = await this.api.cookieUser(config);
       return {
@@ -347,6 +342,7 @@ export default class Widgets {
       rsCode,
       api: this.api,
       domain: this.domain,
+      npmCdn: this.npmCdn,
       type: "ERROR_WIDGET",
       context: { type: "error" },
     };
