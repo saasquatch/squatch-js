@@ -1,7 +1,6 @@
 import { doPost } from "../utils/io";
-import { ConfigOptions, JWT, User } from "../types";
+import { ConfigOptions, JWT} from "../types";
 import {
-  hasProps,
   isObject,
   assertProp,
   validateConfig,
@@ -80,7 +79,8 @@ function _validateEvent(raw: unknown): UserEventInput {
     throw new Error("Fields required");
   if (!Array.isArray(raw.events))
     throw new Error("'events' should be an array");
-  return raw;
+  // TODO: Better type checking
+  return raw as unknown as UserEventInput;
 }
 
 function _validateTrackOptions(raw: unknown): TrackOptions {

@@ -3,7 +3,7 @@
 import debug from "debug";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
-import { WidgetType, WidgetContext } from "../types";
+import { WidgetType, WidgetContext, EngagementMedium } from "../types";
 import { isObject, hasProps } from "../utils/validate";
 
 /** @hidden */
@@ -63,9 +63,14 @@ export default abstract class Widget {
     }
 
     let params: SQHDetails;
-    if (hasProps(sqh, "programId")) {
+    if (hasProps<{programId: string}>(sqh, "programId")) {
       if (
-        !hasProps(sqh, [
+        !hasProps<{ 
+          tenantAlias: string; 
+          accountId: string; 
+          userId: string; 
+          engagementMedium: EngagementMedium 
+        }>(sqh, [
           "tenantAlias",
           "accountId",
           "userId",
