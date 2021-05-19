@@ -146,7 +146,7 @@ export default abstract class Widget {
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
     <head>
-      <link rel="stylesheet" media="all" href="https://d2rcp9ak152ke1.cloudfront.net/assets/css/widget/errorpage.css">
+      <link rel="stylesheet" media="all" href="https://fast.ssqt.io/assets/css/widget/errorpage.css">
       <style>
         ${style}
       </style>
@@ -159,7 +159,7 @@ export default abstract class Widget {
           <p class="errortitle">Error</p>
         </div>
         <div class="errorbody">
-          <div class="sadface"><img src="https://d2rcp9ak152ke1.cloudfront.net/assets/images/face.png"></div>
+          <div class="sadface"><img src="https://fast.ssqt.io/assets/images/face.png"></div>
           <h4>Our referral program is temporarily unavailable.</h4><br>
           <p>Please reload the page or check back later.</p>
           <p>If the persists please contact our support team.</p>
