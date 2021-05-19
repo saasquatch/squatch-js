@@ -1,20 +1,14 @@
 var path = require("path");
 var webpack = require("webpack");
 var Visualizer = require("webpack-visualizer-plugin");
-// webpack.config.js
-// const MinifyPlugin = require("babel-minify-webpack-plugin");
-
-var PROD = process.env.NODE_ENV === "production";
-var mode = PROD ? "production" : "development";
 
 module.exports = {
   entry: {
-    "squatch.WidgetApi": ["./src/api/WidgetApi.ts"],
     squatch: ["./src/squatch.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),
-    filename: PROD ? "[name].min.js" : "[name].js",
+    filename: "[name].min.js",
     library: "squatch",
     libraryTarget: "umd"
   },
@@ -53,5 +47,5 @@ module.exports = {
     // Nice colored output
     colors: true
   },
-  mode
+  mode: "production"
 };

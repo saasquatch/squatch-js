@@ -4,12 +4,9 @@ import {
   EngagementMedium,
   WidgetType,
   CookieUser,
-  JWT,
-  User,
   WidgetConfig,
 } from "../types";
 import {
-  isObject,
   validateConfig,
   validateWidgetConfig,
 } from "../utils/validate";

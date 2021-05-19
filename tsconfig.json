@@ -6,8 +6,8 @@
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
-    "module": "es6",
-    "target": "es6",
+    "module": "ESNext",
+    "target": "ESNext",
     "lib": ["dom", "es5", "scripthost", "es2015"],
     "moduleResolution": "node"
   },
