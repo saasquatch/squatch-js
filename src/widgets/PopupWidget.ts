@@ -106,15 +106,13 @@ export default class PopupWidget extends Widget {
           // Don't let anything else set the height of this element
           entry.target.style = ``;
 
-          // @ts-ignore - number vs string comparison, should fail...
-          // if (window.innerHeight > frame.height) {
-          //   // @ts-ignore - number vs string comparison, should fail...
-          //   popupdiv.style.paddingTop = `${
-          //     (window.innerHeight - frame.height) / 2
-          //   }px`;
-          // } else {
+          if (window.innerHeight > Number(frame.height)) {
+            popupdiv.style.paddingTop = `${
+              (window.innerHeight - Number(frame.height)) / 2
+            }px`;
+          } else {
             popupdiv.style.paddingTop = "5px";
-          // }
+          }
         }
       });
       ro.observe(await this._findInnerContainer());
