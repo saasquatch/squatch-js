@@ -10,8 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Typescript definitions
 - CommonJS/ES modules build for smaller bundle sizes when using squatch-js from NPM
+
 ### Changed
  - `main` is now a CommonJS build instead of a UMD build
+
 ## [2.2.1] - 2020-06-17
 ### Changed
 - Remove the need to have JS Options, so that older clients can upgrade to squatch.js v2 easily.
