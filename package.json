@@ -5,9 +5,10 @@
   "license": "MIT",
   "types": "dist/squatch.d.ts",
   "source": "src/squatch.ts",
-  "main": "./dist/squatch.js",
-  "module": "./dist/squatch.esm.js",
-  "umd:main": "./dist/squatch.min.js",
+  "main": "dist/squatch.js",
+  "module": "dist/squatch.esm.js",
+  "umd:main": "dist/squatch.min.js",
+  "browser": "dist/squatch.min.js",
   "bugs": {
     "url": "https://github.com/saasquatch/squatch-js/issues",
     "email": "support@referralsaasquatch.com"
