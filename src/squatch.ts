@@ -160,6 +160,12 @@ export function pushCookie():void {
   _pushCookie();
 }
 
+declare global {
+  interface Window {
+    SaaSquatchDoNotAutoDrop?: boolean;
+  }
+}
+
 if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
   pushCookie();
 }

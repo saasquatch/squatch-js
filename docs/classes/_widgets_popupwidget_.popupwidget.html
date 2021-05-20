@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>PopupWidget | @saasquatch/squatch-js</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for @saasquatch/squatch-js">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -103,7 +103,7 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_widgets_popupwidget_.popupwidget.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_widgets_popupwidget_.popupwidget.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -111,7 +111,9 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_widgets_popupwidget_.popupwidget.html#analyticsapi" class="tsd-kind-icon">analytics<wbr>Api</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_widgets_popupwidget_.popupwidget.html#content" class="tsd-kind-icon">content</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_widgets_popupwidget_.popupwidget.html#context" class="tsd-kind-icon">context</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_widgets_popupwidget_.popupwidget.html#frame" class="tsd-kind-icon">frame</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_widgets_popupwidget_.popupwidget.html#npmcdn" class="tsd-kind-icon">npm<wbr>Cdn</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_widgets_popupwidget_.popupwidget.html#popupcontent" class="tsd-kind-icon">popupcontent</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_widgets_popupwidget_.popupwidget.html#popupdiv" class="tsd-kind-icon">popupdiv</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_widgets_popupwidget_.popupwidget.html#triggerelement" class="tsd-kind-icon">trigger<wbr>Element</a></li>
@@ -126,7 +128,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_widgets_popupwidget_.popupwidget.html#close" class="tsd-kind-icon">close</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_widgets_popupwidget_.popupwidget.html#load" class="tsd-kind-icon">load</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_widgets_popupwidget_.popupwidget.html#open" class="tsd-kind-icon">open</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_widgets_popupwidget_.popupwidget.html#reload" class="tsd-kind-icon">reload</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_widgets_popupwidget_.popupwidget.html#reload" class="tsd-kind-icon">reload</a></li>
 							</ul>
 						</section>
 					</div>
@@ -134,17 +136,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">new <wbr>Popup<wbr>Widget<span class="tsd-signature-symbol">(</span>params<span class="tsd-signature-symbol">: </span><a href="../interfaces/_widgets_widget_.params.html" class="tsd-signature-type">Params</a>, trigger<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_widgets_popupwidget_.popupwidget.html" class="tsd-signature-type">PopupWidget</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Overrides Widget.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L20">widgets/PopupWidget.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L20">widgets/PopupWidget.ts:20</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -153,7 +156,7 @@
 									<h5>params: <a href="../interfaces/_widgets_widget_.params.html" class="tsd-signature-type">Params</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> trigger: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;.squatchpop&quot;</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> trigger: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &quot;.squatchpop&quot;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_widgets_popupwidget_.popupwidget.html" class="tsd-signature-type">PopupWidget</a></h4>
@@ -170,7 +173,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#analyticsapi">analyticsApi</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/Widget.ts#L31">widgets/Widget.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L33">widgets/Widget.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -181,7 +184,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#content">content</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/Widget.ts#L30">widgets/Widget.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L32">widgets/Widget.ts:32</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="context" class="tsd-anchor"></a>
+					<h3>context</h3>
+					<div class="tsd-signature tsd-kind-icon">context<span class="tsd-signature-symbol">:</span> <a href="../modules/_types_.html#widgetcontext" class="tsd-signature-type">WidgetContext</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#context">context</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L35">widgets/Widget.ts:35</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -192,7 +206,18 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#frame">frame</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/Widget.ts#L28">widgets/Widget.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L30">widgets/Widget.ts:30</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="npmcdn" class="tsd-anchor"></a>
+					<h3>npm<wbr>Cdn</h3>
+					<div class="tsd-signature tsd-kind-icon">npm<wbr>Cdn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#npmcdn">npmCdn</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L36">widgets/Widget.ts:36</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,7 +227,7 @@
 					<div class="tsd-signature tsd-kind-icon">popupcontent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L20">widgets/PopupWidget.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L20">widgets/PopupWidget.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -212,7 +237,7 @@
 					<div class="tsd-signature tsd-kind-icon">popupdiv<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L19">widgets/PopupWidget.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L19">widgets/PopupWidget.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -222,7 +247,7 @@
 					<div class="tsd-signature tsd-kind-icon">trigger<wbr>Element<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L17">widgets/PopupWidget.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L17">widgets/PopupWidget.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -232,7 +257,7 @@
 					<div class="tsd-signature tsd-kind-icon">trigger<wbr>WhenCTA<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L18">widgets/PopupWidget.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L18">widgets/PopupWidget.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -243,7 +268,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/Widget.ts#L29">widgets/Widget.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L31">widgets/Widget.ts:31</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -254,7 +279,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#widgetapi">widgetApi</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/Widget.ts#L32">widgets/Widget.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L34">widgets/Widget.ts:34</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -271,7 +296,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L189">widgets/PopupWidget.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L147">widgets/PopupWidget.ts:147</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -289,7 +314,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#load">load</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L64">widgets/PopupWidget.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L64">widgets/PopupWidget.ts:64</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -306,30 +331,31 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L166">widgets/PopupWidget.ts:166</a></li>
+									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/PopupWidget.ts#L122">widgets/PopupWidget.ts:122</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="reload" class="tsd-anchor"></a>
 					<h3>reload</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">reload<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span>, jwt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">reload<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>email<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>firstName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>lastName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span>, jwt<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Inherited from <a href="_widgets_widget_.widget.html">Widget</a>.<a href="_widgets_widget_.widget.html#reload">reload</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/8fd071a/src/widgets/PopupWidget.ts#L79">widgets/PopupWidget.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/widgets/Widget.ts#L216">widgets/Widget.ts:216</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>__namedParameters: <span class="tsd-signature-type">object</span></h5>
+									<h5>__namedParameters: <span class="tsd-signature-symbol">{ </span>email<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>firstName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">; </span>lastName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> }</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter">
 											<h5>email<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></h5>
@@ -358,50 +384,53 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_api_analyticsapi_.html">"api/<wbr>Analytics<wbr>Api"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_api_analyticsapi_.html">&quot;api/<wbr>Analytics<wbr>Api&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_api_eventsapi_.html">"api/<wbr>Events<wbr>Api"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_api_eventsapi_.html">&quot;api/<wbr>Events<wbr>Api&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_api_widgetapi_.html">"api/<wbr>Widget<wbr>Api"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_api_widgetapi_.html">&quot;api/<wbr>Widget<wbr>Api&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_async_.html">"async"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_async_.html">&quot;async&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_docs_.html">"docs"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_docs_.html">&quot;docs&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_squatch_.html">&quot;squatch&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_types_.html">"types"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_types_.html">&quot;types&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utils_domready_.html">"utils/domready"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_utils_cookieutils_.html">&quot;utils/cookie<wbr>Utils&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utils_io_.html">"utils/io"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_utils_domready_.html">&quot;utils/domready&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_utils_validate_.html">"utils/validate"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_utils_io_.html">&quot;utils/io&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_widgets_ctawidget_.html">"widgets/<wbr>Cta<wbr>Widget"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_utils_validate_.html">&quot;utils/validate&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_widgets_embedwidget_.html">"widgets/<wbr>Embed<wbr>Widget"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_widgets_ctawidget_.html">&quot;widgets/<wbr>Cta<wbr>Widget&quot;</a>
 					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_widgets_popupwidget_.html">"widgets/<wbr>Popup<wbr>Widget"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_widgets_embedwidget_.html">&quot;widgets/<wbr>Embed<wbr>Widget&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_widgets_widget_.html">"widgets/<wbr>Widget"</a>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_widgets_popupwidget_.html">&quot;widgets/<wbr>Popup<wbr>Widget&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_widgets_widgets_.html">"widgets/<wbr>Widgets"</a>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_widgets_widget_.html">&quot;widgets/<wbr>Widget&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_widgets_widgets_.html">&quot;widgets/<wbr>Widgets&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -409,10 +438,10 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="_widgets_popupwidget_.popupwidget.html" class="tsd-kind-icon">Popup<wbr>Widget</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
 								<a href="_widgets_popupwidget_.popupwidget.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
@@ -422,7 +451,13 @@
 								<a href="_widgets_popupwidget_.popupwidget.html#content" class="tsd-kind-icon">content</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_widgets_popupwidget_.popupwidget.html#context" class="tsd-kind-icon">context</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_widgets_popupwidget_.popupwidget.html#frame" class="tsd-kind-icon">frame</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_widgets_popupwidget_.popupwidget.html#npmcdn" class="tsd-kind-icon">npm<wbr>Cdn</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_widgets_popupwidget_.popupwidget.html#popupcontent" class="tsd-kind-icon">popupcontent</a>
@@ -451,14 +486,14 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_widgets_popupwidget_.popupwidget.html#open" class="tsd-kind-icon">open</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_widgets_popupwidget_.popupwidget.html#reload" class="tsd-kind-icon">reload</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+					<li class=" tsd-kind-variable tsd-parent-kind-module tsd-is-not-exported">
 						<a href="../modules/_widgets_popupwidget_.html#_log" class="tsd-kind-icon">_log</a>
 					</li>
 				</ul>
@@ -471,62 +506,31 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 		</div>
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>

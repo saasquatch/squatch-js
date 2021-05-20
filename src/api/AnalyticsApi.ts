@@ -1,6 +1,6 @@
 // @ts-check
 import { doPost } from "../utils/io";
-import { EngagementMedium, ShareMedium } from "../types";
+import { EngagementMedium } from "../types";
 import { hasProps } from "../utils/validate";
 
 /**
@@ -21,7 +21,7 @@ export default class AnalyticsApi {
    */
   constructor(config: { domain: string }) {
     const raw = config as unknown;
-    if (hasProps(raw, "domain")) {
+    if (hasProps(raw, "domain") && typeof raw.domain === "string") {
       this.domain = raw.domain;
     } else {
       this.domain = "https://app.referralsaasquatch.com";
