@@ -91,8 +91,8 @@
   "dependencies": {
     "debug": "^3.2.6",
     "eventbusjs": "^0.2.0",
-    "js-cookie": "^2.2.1",
-    "superagent": "^5.2.2"
+    "fetch-ponyfill": "^7.1.0",
+    "js-cookie": "^2.2.1"
   },
   "browserslist": "> 0.25%, not dead"
 }
