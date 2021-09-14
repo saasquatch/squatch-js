@@ -41,12 +41,7 @@ export default class EmbedWidget extends Widget {
     }
 
     const frameDoc = contentWindow.document;
-    frameDoc.open();
-    frameDoc.write(this.content);
-    frameDoc.write(
-      `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-    );
-    frameDoc.close();
+    this.frame.srcdoc = `${this.content}<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`;
 
     domready(frameDoc, async () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;

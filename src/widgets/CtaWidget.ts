@@ -81,12 +81,8 @@ export default class CtaWidget extends PopupWidget {
           throw new Error("ctaFrame requires a contentWindow");
         }
         const ctaFrameDoc = ctaFrameWindow.document;
-        ctaFrameDoc.open();
-        ctaFrameDoc.write(ctaElement.innerHTML);
-        ctaFrameDoc.write(
-          `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-        );
-        ctaFrameDoc.close();
+
+        ctaFrame.srcdoc = `${ctaElement.innerHTML}<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`;
 
         // Figure out size of CTA as well
         domready(ctaFrameDoc, () => {

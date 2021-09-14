@@ -66,15 +66,9 @@ export default class PopupWidget extends Widget {
     document.body.appendChild(this.popupdiv);
     this.popupcontent.appendChild(this.frame);
 
-    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-    const frameDoc = this.frame.contentWindow.document;
-    frameDoc.open();
-    frameDoc.write(this.content);
-    frameDoc.write(
-      `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-    );
-    frameDoc.close();
+    this.frame.srcdoc = `${this.content}<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`;
     _log("Popup template loaded into iframe");
+
     this._setupResizeHandler();
   }
 
