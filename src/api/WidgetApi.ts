@@ -6,11 +6,11 @@ import {
   CookieUser,
   WidgetConfig,
 } from "../types";
-import {
-  validateConfig,
-  validateWidgetConfig,
-} from "../utils/validate";
+import { validateConfig, validateWidgetConfig } from "../utils/validate";
 import Cookies from "js-cookie";
+import debug from "debug";
+
+const _log = debug("squatch-js");
 
 /**
  *
@@ -96,8 +96,12 @@ export default class WidgetApi {
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
-    const cookies = Cookies.get("_saasquatch");
-    if(cookies) user["cookies"] = cookies;
+    try {
+      const cookies = Cookies.get("_saasquatch");
+      if (cookies) user["cookies"] = cookies;
+    } catch (e) {
+      _log("Unable to retrieve cookie", e);
+    }
     return doPut(url, JSON.stringify(user), jwt);
   }
 
@@ -170,8 +174,15 @@ export default class WidgetApi {
    */
   squatchReferralCookie(): Promise<object> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const _saasquatch = Cookies.get("_saasquatch");
-    const cookie = _saasquatch ? `?cookies=${encodeURIComponent(_saasquatch)}` : ``;
+    let cookie = "";
+    try {
+      const _saasquatch = Cookies.get("_saasquatch");
+      if (_saasquatch) {
+        cookie = `?cookies=${encodeURIComponent(_saasquatch)}`;
+      }
+    } catch (e) {
+      _log("Unable to retrieve cookie", e);
+    }
 
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson${cookie}`;
     return doGet(url);
