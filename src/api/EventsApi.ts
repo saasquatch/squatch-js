@@ -56,7 +56,7 @@ export default class EventsApi {
    * Track an event for a user
    *
    * @param params Parameters for request
-   * @param params.jwt the JSON Web Token (JWT) that is used to authenticate the user
+   * @param options.jwt the JSON Web Token (JWT) that is used to authenticate the user
    *
    * @return An ID to confirm the event has been accepted for asynchronous processing
    */
