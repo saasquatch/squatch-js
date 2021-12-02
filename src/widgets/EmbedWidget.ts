@@ -47,7 +47,6 @@ export default class EmbedWidget extends Widget {
       `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
     );
     frameDoc.close();
-
     domready(frameDoc, async () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
       const ctaElement = frameDoc.getElementById("cta");
@@ -72,6 +71,9 @@ export default class EmbedWidget extends Widget {
         }
       });
 
+      // observe height right away
+      ro.observe(frameDoc.body)
+      // observe any changes afterwards
       ro.observe(await this._findInnerContainer());
 
       this._loadEvent(_sqh);

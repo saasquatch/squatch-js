@@ -202,7 +202,7 @@ export default abstract class Widget {
     }
 
     let found: Element | null = null;
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 5; i++) {
       found = search();
       if (found) break;
       await delay(100);
@@ -215,8 +215,6 @@ export default abstract class Widget {
 
   reload({ email, firstName, lastName }, jwt) {
     const frameWindow = this.frame.contentWindow;
-
-    console.log("context", this.context);
 
     const engagementMedium = this.context.engagementMedium || "POPUP";
 
