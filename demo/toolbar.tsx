@@ -15,6 +15,17 @@ import {
 } from "./sandbox";
 import { getVersions } from "./versions";
 import { delay } from "./util";
+import { widgets, worker } from "./generate";
+import { rest } from "msw";
+import classic from "./templates/classic";
+import MintGA from "./templates/MintGA";
+import VanillaGA from "./templates/VanillaGA";
+
+console.log("me old sandbox", window["sandbox"]);
+
+console.log("my worker", { worker });
+
+// 2. Define request handlers and response resolvers.
 
 const modes = ["POPUP", "EMBED"];
 const widgetTypes = [
@@ -22,12 +33,26 @@ const widgetTypes = [
   "CONVERSION_WIDGET",
   "p/tuesday-test/w/referrerWidget",
 ];
-const staticVersions = ["HEAD", "latest", "alpha"];
+const staticVersions = ["HEAD", "latest", "alpha", "next"];
 
 /**
  * Use the addUrlProps higher-order component to hook-in react-url-query.
  */
 class App extends Component {
+  constructor(props) {
+    super(props);
+    worker.start({
+      findWorker: (scriptURL, _mockServiceWorkerUrl) =>
+        scriptURL.includes("mockServiceWorker"),
+      onUnhandledRequest(req) {
+        console.error(
+          "Found an unhandled %s request to %s",
+          req.method,
+          req.url.href
+        );
+      },
+    });
+  }
   state = {
     versions: staticVersions,
   };
@@ -46,17 +71,36 @@ class App extends Component {
           <h2>Quick pick variables</h2>
           <details>
             <summary>Tenant / Program</summary>
-            <a href={href(popup)}>Popup (classic)</a>
-            <a href={href(embed)}>Embed (classic)</a>
-            <a href={href(popupNew)}>Popup (new program)</a>
-            <a href={href(embedNew)}>Embed (new program)</a>
-            <a href={href(popupReferred)}>Popup (classic referred widget)</a>
-            <a href={href(embedReferred)}>Embed (classic referred widget)</a>
+            <ul>
+              <li>
+                <a href={href(popup)}>Popup (classic)</a>
+              </li>
+              <li>
+                <a href={href(embed)}>Embed (classic)</a>
+              </li>
+              <li>
+                <a href={href(popupNew)}>Popup (new program)</a>
+              </li>
+              <li>
+                <a href={href(embedNew)}>Embed (new program)</a>
+              </li>
+              <li>
+                <a href={href(popupReferred)}>
+                  Popup (classic referred widget)
+                </a>
+              </li>
+              <li>
+                <a href={href(embedReferred)}>
+                  Embed (classic referred widget)
+                </a>
+              </li>
+            </ul>
           </details>
           <WidgetType />
           <ModeList />
           <UserList />
           <VersionList {...this.state} />
+          <MockedWidgets />
         </div>
         <hr />
 
@@ -74,7 +118,7 @@ function ParamArea() {
     <div>
       <h2>Squatch.js Config</h2>
       <div>
-        <textarea id="area1" rows={15} cols={80}>
+        <textarea id="area1" rows={15} cols={70}>
           {JSON.stringify(window["sandbox"], null, 2)}
         </textarea>
       </div>
@@ -244,6 +288,48 @@ function VersionList(props) {
     </details>
   );
 }
+
+function MockedWidgets(props) {
+  const { versions } = props;
+
+  async function getMockWidget(widget) {
+    console.log("fetch");
+    // window["squatch"].render()
+    window["mockWidget"] = widget;
+
+    worker.use(
+      rest.put(
+        "https://staging.referralsaasquatch.com/api/*",
+        (req, res, ctx) => {
+          return res(
+            ctx.delay(500),
+            ctx.status(202, "Mocked status"),
+            ctx.json(widgets[window["mockWidget"]])
+          );
+        }
+      )
+    );
+    document.getElementById("squatchembed").innerHTML = "";
+    window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
+    // window.location.href = `/?widgetType=${widget}`;
+  }
+  return (
+    <details
+      title={"Version: " + window["sandbox"].version || "Head"}
+      key={0}
+      id={`dropdown-basic-1`}
+    >
+      <summary>Mocked Widgets</summary>
+      <button onClick={() => getMockWidget("QuirksVanillaGA")}>Quirks mode - Vanilla</button>
+      <button onClick={() => getMockWidget("QuirksMintGA")}>Quirks mode - Mint</button>
+      <button onClick={() => getMockWidget("classic")}>Classic</button>
+      <button onClick={() => getMockWidget("MintGA")}>GA - Mint</button>
+      <button onClick={() => getMockWidget("VanillaGA")}>GA - Vanilla</button>
+      <button><s>squatch-container</s></button>
+      <button><s>no squatch container</s></button>
+    </details>
+  );
+}
 const root = document.getElementById("app");
-console.log("mount to", root);
+
 render(<App />, root);

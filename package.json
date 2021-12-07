@@ -39,7 +39,7 @@
     "deploy": "np --no-cleanup",
     "deploy:docs": "surge ./ -d squathjsv2.surge.sh",
     "preversion": "run-s build",
-    "demo": "run-p static parcel",
+    "demo": "msw init demo/dist/ --save && run-p static parcel",
     "demo:deploy": "run-s parcel:build parcel:deploy",
     "static": "serve dist",
     "parcel": "cd demo && parcel index.html",
@@ -92,7 +92,12 @@
     "debug": "^3.2.6",
     "eventbusjs": "^0.2.0",
     "js-cookie": "^2.2.1",
+    "msw": "^0.36.0",
+    "parcel": "^1.12.3",
     "superagent": "^5.2.2"
   },
-  "browserslist": "> 0.25%, not dead"
+  "browserslist": "> 0.25%, not dead",
+  "msw": {
+    "workerDirectory": "demo\\dist"
+  }
 }
