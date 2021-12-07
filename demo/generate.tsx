@@ -6,7 +6,8 @@ import VanillaGA from "./templates/VanillaGA";
 import { getQueryStringParams } from "./util";
 import QuirksVanillaGA from "./templates/QuirksVanillaGA";
 import QuirksMintGA from "./templates/QuirksMintGA";
-
+import MintGAContainer from "./templates/MintGAContainer";
+import VanillaGANoContainer from "./templates/VanillaGANoContainer";
 // const params = getQueryStringParams(window.location.search);
 export const widgets = {
   classic,
@@ -14,6 +15,8 @@ export const widgets = {
   VanillaGA,
   QuirksVanillaGA,
   QuirksMintGA,
+  MintGAContainer,
+  VanillaGANoContainer
 };
 // console.log(params, window.location.search)
 export const handlers = window["mockWidget"] && [

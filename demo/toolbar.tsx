@@ -55,6 +55,7 @@ class App extends Component {
   }
   state = {
     versions: staticVersions,
+    toolbarOpen: true,
   };
   async componentWillMount() {
     const apiVersions = await getVersions();
@@ -64,50 +65,60 @@ class App extends Component {
   render() {
     return (
       <div>
-        <hr />
-        <div>
-          <ParamArea />
+        <button
+          onClick={() =>
+            this.setState({ toolbarOpen: !this.state.toolbarOpen })
+          }
+          style={{ float: "right" }}
+        >
+          {this.state.toolbarOpen ? `<` : `>`}
+        </button>
+        <div style={{ display: this.state.toolbarOpen ? "block" : "none" }}>
           <hr />
-          <h2>Quick pick variables</h2>
-          <details>
-            <summary>Tenant / Program</summary>
-            <ul>
-              <li>
-                <a href={href(popup)}>Popup (classic)</a>
-              </li>
-              <li>
-                <a href={href(embed)}>Embed (classic)</a>
-              </li>
-              <li>
-                <a href={href(popupNew)}>Popup (new program)</a>
-              </li>
-              <li>
-                <a href={href(embedNew)}>Embed (new program)</a>
-              </li>
-              <li>
-                <a href={href(popupReferred)}>
-                  Popup (classic referred widget)
-                </a>
-              </li>
-              <li>
-                <a href={href(embedReferred)}>
-                  Embed (classic referred widget)
-                </a>
-              </li>
-            </ul>
-          </details>
-          <WidgetType />
-          <ModeList />
-          <UserList />
-          <VersionList {...this.state} />
-          <MockedWidgets />
+          <div>
+            <ParamArea />
+            <hr />
+            <h2>Quick pick variables</h2>
+            <details>
+              <summary>Tenant / Program</summary>
+              <ul>
+                <li>
+                  <a href={href(popup)}>Popup (classic)</a>
+                </li>
+                <li>
+                  <a href={href(embed)}>Embed (classic)</a>
+                </li>
+                <li>
+                  <a href={href(popupNew)}>Popup (new program)</a>
+                </li>
+                <li>
+                  <a href={href(embedNew)}>Embed (new program)</a>
+                </li>
+                <li>
+                  <a href={href(popupReferred)}>
+                    Popup (classic referred widget)
+                  </a>
+                </li>
+                <li>
+                  <a href={href(embedReferred)}>
+                    Embed (classic referred widget)
+                  </a>
+                </li>
+              </ul>
+            </details>
+            <WidgetType />
+            <ModeList />
+            <UserList />
+            <VersionList {...this.state} />
+            <MockedWidgets />
+          </div>
+          <hr />
+
+          <button onClick={() => recordPurchase()}>Record Purchase</button>
+          <hr />
+
+          <button onClick={() => runEventBomb()}>Event Bomb</button>
         </div>
-        <hr />
-
-        <button onClick={() => recordPurchase()}>Record Purchase</button>
-        <hr />
-
-        <button onClick={() => runEventBomb()}>Event Bomb</button>
       </div>
     );
   }
@@ -118,7 +129,7 @@ function ParamArea() {
     <div>
       <h2>Squatch.js Config</h2>
       <div>
-        <textarea id="area1" rows={15} cols={70}>
+        <textarea id="area1" rows={15} cols={70} style={{ maxWidth: "100%" }}>
           {JSON.stringify(window["sandbox"], null, 2)}
         </textarea>
       </div>
@@ -296,6 +307,10 @@ function MockedWidgets(props) {
     console.log("fetch");
     // window["squatch"].render()
     window["mockWidget"] = widget;
+    window["sandbox"].initObj = {
+      ...window["sandbox"].initObj,
+      engagementMedium: "EMBED",
+    };
 
     worker.use(
       rest.put(
@@ -320,13 +335,21 @@ function MockedWidgets(props) {
       id={`dropdown-basic-1`}
     >
       <summary>Mocked Widgets</summary>
-      <button onClick={() => getMockWidget("QuirksVanillaGA")}>Quirks mode - Vanilla</button>
-      <button onClick={() => getMockWidget("QuirksMintGA")}>Quirks mode - Mint</button>
+      <button onClick={() => getMockWidget("QuirksVanillaGA")}>
+        Quirks mode - Vanilla
+      </button>
+      <button onClick={() => getMockWidget("QuirksMintGA")}>
+        Quirks mode - Mint
+      </button>
       <button onClick={() => getMockWidget("classic")}>Classic</button>
       <button onClick={() => getMockWidget("MintGA")}>GA - Mint</button>
       <button onClick={() => getMockWidget("VanillaGA")}>GA - Vanilla</button>
-      <button><s>squatch-container</s></button>
-      <button><s>no squatch container</s></button>
+      <button onClick={() => getMockWidget("MintGAContainer")}>
+        Mint - With Container
+      </button>
+      <button onClick={() => getMockWidget("VanillaGANoContainer")}>
+        Vanilla - No Container
+      </button>
     </details>
   );
 }

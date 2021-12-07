@@ -72,6 +72,7 @@
     "microbundle": "^0.13.0",
     "np": "^6.2.3",
     "npm-run-all": "^4.1.5",
+    "parcel": "^1.12.3",
     "parcel-bundler": "^1.12.4",
     "playwright": "^1.0.2",
     "react": "^16.13.1",
@@ -93,7 +94,6 @@
     "eventbusjs": "^0.2.0",
     "js-cookie": "^2.2.1",
     "msw": "^0.36.0",
-    "parcel": "^1.12.3",
     "superagent": "^5.2.2"
   },
   "browserslist": "> 0.25%, not dead",
