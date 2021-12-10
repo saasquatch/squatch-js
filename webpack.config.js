@@ -4,13 +4,14 @@ var Visualizer = require("webpack-visualizer-plugin");
 
 module.exports = {
   entry: {
-    squatch: ["./src/squatch.ts"]
+    squatch: ["./src/squatch.ts"],
+    '../demo/dist/squatchjs': ["./src/squatch.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].min.js",
     library: "squatch",
-    libraryTarget: "umd"
+    libraryTarget: "umd",
   },
   module: {
     rules: [

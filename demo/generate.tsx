@@ -8,6 +8,7 @@ import QuirksVanillaGA from "./templates/QuirksVanillaGA";
 import QuirksMintGA from "./templates/QuirksMintGA";
 import MintGAContainer from "./templates/MintGAContainer";
 import VanillaGANoContainer from "./templates/VanillaGANoContainer";
+
 // const params = getQueryStringParams(window.location.search);
 export const widgets = {
   classic,

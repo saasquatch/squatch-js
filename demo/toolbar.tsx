@@ -1,5 +1,6 @@
 import React, { Component, version } from "react";
 import { render } from "react-dom";
+import squatch from "../dist/squatch";
 
 import {
   popup,
@@ -33,7 +34,7 @@ const widgetTypes = [
   "CONVERSION_WIDGET",
   "p/tuesday-test/w/referrerWidget",
 ];
-const staticVersions = ["HEAD", "latest", "alpha", "next"];
+const staticVersions = ["HEAD", "latest", "alpha", "next", "local"];
 
 /**
  * Use the addUrlProps higher-order component to hook-in react-url-query.
@@ -274,6 +275,7 @@ function UserList(props) {
 }
 function VersionList(props) {
   const { versions } = props;
+  
   return (
     <details
       title={"Version: " + window["sandbox"].version || "Head"}
@@ -290,7 +292,7 @@ function VersionList(props) {
             script:
               v.toLocaleLowerCase() == "head"
                 ? script
-                : `https://unpkg.com/@saasquatch/squatch-js@${v}`,
+                : v == "local" ? `./squatchjs.min.js` : `https://unpkg.com/@saasquatch/squatch-js@${v}`,
           })}
         >
           {v}

@@ -71,8 +71,6 @@ export default class EmbedWidget extends Widget {
         }
       });
 
-      // observe height right away
-      ro.observe(frameDoc.body)
       // observe any changes afterwards
       ro.observe(await this._findInnerContainer());
 
