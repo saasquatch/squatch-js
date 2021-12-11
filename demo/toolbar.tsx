@@ -1,4 +1,4 @@
-import React, { Component, version } from "react";
+import React, { Component, useState, version } from "react";
 import { render } from "react-dom";
 import squatch from "../dist/squatch";
 
@@ -18,13 +18,6 @@ import { getVersions } from "./versions";
 import { delay } from "./util";
 import { widgets, worker } from "./generate";
 import { rest } from "msw";
-import classic from "./templates/classic";
-import MintGA from "./templates/MintGA";
-import VanillaGA from "./templates/VanillaGA";
-
-console.log("me old sandbox", window["sandbox"]);
-
-console.log("my worker", { worker });
 
 // 2. Define request handlers and response resolvers.
 
@@ -112,6 +105,7 @@ class App extends Component {
             <UserList />
             <VersionList {...this.state} />
             <MockedWidgets />
+            <CustomMockedWidget />
           </div>
           <hr />
 
@@ -275,7 +269,7 @@ function UserList(props) {
 }
 function VersionList(props) {
   const { versions } = props;
-  
+
   return (
     <details
       title={"Version: " + window["sandbox"].version || "Head"}
@@ -292,7 +286,9 @@ function VersionList(props) {
             script:
               v.toLocaleLowerCase() == "head"
                 ? script
-                : v == "local" ? `./squatchjs.min.js` : `https://unpkg.com/@saasquatch/squatch-js@${v}`,
+                : v == "local"
+                ? `./squatchjs.min.js`
+                : `https://unpkg.com/@saasquatch/squatch-js@${v}`,
           })}
         >
           {v}
@@ -302,34 +298,57 @@ function VersionList(props) {
   );
 }
 
+async function getMockWidget(widget) {
+  window["mockWidget"] = widget;
+  window["sandbox"].initObj = {
+    ...window["sandbox"].initObj,
+    engagementMedium: "EMBED",
+  };
+
+  worker.use(
+    rest.put(
+      "https://staging.referralsaasquatch.com/api/*",
+      (req, res, ctx) => {
+        return res(
+          ctx.delay(500),
+          ctx.status(202, "Mocked status"),
+          ctx.json(widgets[window["mockWidget"]])
+        );
+      }
+    )
+  );
+  document.getElementById("squatchembed").innerHTML = "";
+  window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
+  // window.location.href = `/?widgetType=${widget}`;
+}
+
+async function getCustomWidget() {
+  window["sandbox"].initObj = {
+    ...window["sandbox"].initObj,
+    engagementMedium: "EMBED",
+  };
+
+  const value = document.getElementById("custom-widget")?.value;
+  worker.use(
+    rest.put(
+      "https://staging.referralsaasquatch.com/api/*",
+      (req, res, ctx) => {
+        return res(
+          ctx.delay(500),
+          ctx.status(202, "Mocked status"),
+          ctx.json({ jsOptions: {}, user: {}, template: value })
+        );
+      }
+    )
+  );
+  document.getElementById("squatchembed").innerHTML = "";
+  window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
+  // window.location.href = `/?widgetType=${widget}`;
+}
+
 function MockedWidgets(props) {
   const { versions } = props;
 
-  async function getMockWidget(widget) {
-    console.log("fetch");
-    // window["squatch"].render()
-    window["mockWidget"] = widget;
-    window["sandbox"].initObj = {
-      ...window["sandbox"].initObj,
-      engagementMedium: "EMBED",
-    };
-
-    worker.use(
-      rest.put(
-        "https://staging.referralsaasquatch.com/api/*",
-        (req, res, ctx) => {
-          return res(
-            ctx.delay(500),
-            ctx.status(202, "Mocked status"),
-            ctx.json(widgets[window["mockWidget"]])
-          );
-        }
-      )
-    );
-    document.getElementById("squatchembed").innerHTML = "";
-    window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
-    // window.location.href = `/?widgetType=${widget}`;
-  }
   return (
     <details
       title={"Version: " + window["sandbox"].version || "Head"}
@@ -352,6 +371,29 @@ function MockedWidgets(props) {
       <button onClick={() => getMockWidget("VanillaGANoContainer")}>
         Vanilla - No Container
       </button>
+    </details>
+  );
+}
+
+function CustomMockedWidget(props) {
+  const { versions } = props;
+
+  return (
+    <details
+      title={"Version: " + window["sandbox"].version || "Head"}
+      key={0}
+      id={`dropdown-basic-1`}
+    >
+      <summary>Custom Mocked Widget</summary>
+      <textarea
+        id="custom-widget"
+        rows={15}
+        cols={70}
+        style={{ maxWidth: "100%" }}
+      ></textarea>
+      <div>
+        <button onClick={() => getCustomWidget()}>Load Widget</button>
+      </div>
     </details>
   );
 }
