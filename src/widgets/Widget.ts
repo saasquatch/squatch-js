@@ -196,9 +196,10 @@ export default abstract class Widget {
     }
 
     if (frameDoc.compatMode === "CSS1Compat") {
+      _log("Standards mode");
       return frameDoc.body;
     }
-
+    _log("Quirks mode");
     let found: Element | null = null;
     for (let i = 0; i < 5; i++) {
       found = search();
