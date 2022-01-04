@@ -291,7 +291,7 @@ function VersionList(props) {
                 : `https://unpkg.com/@saasquatch/squatch-js@${v}`,
           })}
         >
-          {v}
+          <button>{v}</button>
         </a>
       ))}
     </details>
