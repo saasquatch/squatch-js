@@ -9,6 +9,8 @@ import QuirksMintGA from "./templates/QuirksMintGA";
 import MintGAContainer from "./templates/MintGAContainer";
 import VanillaGANoContainer from "./templates/VanillaGANoContainer";
 import MintGAContainerDisplayBlock from "./templates/MintGAContainerDisplayBlock";
+import QuirksMintGAContainerDisplayBlock from "./templates/QuirksMintGAContainerDisplayBlock";
+import QuirksMintGAContainer from "./templates/QuirksMintGAContainer";
 
 // const params = getQueryStringParams(window.location.search);
 export const widgets = {
@@ -19,6 +21,8 @@ export const widgets = {
   QuirksMintGA,
   MintGAContainer,
   MintGAContainerDisplayBlock,
+  QuirksMintGAContainerDisplayBlock,
+  QuirksMintGAContainer,
   VanillaGANoContainer
 };
 // console.log(params, window.location.search)

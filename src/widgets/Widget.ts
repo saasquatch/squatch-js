@@ -195,7 +195,8 @@ export default abstract class Widget {
       return fallback;
     }
 
-    if (document.compatMode === "CSS1Compat") {
+    console.log(frameDoc.compatMode)
+    if (frameDoc.compatMode === "CSS1Compat") {
       return frameDoc.body;
     }
 
