@@ -71,7 +71,6 @@ export default class EmbedWidget extends Widget {
         }
       });
 
-      // observe any changes afterwards
       ro.observe(await this._findInnerContainer());
 
       this._loadEvent(_sqh);

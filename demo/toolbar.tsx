@@ -368,6 +368,9 @@ function MockedWidgets(props) {
       <button onClick={() => getMockWidget("MintGAContainer")}>
         Mint - With Container
       </button>
+      <button onClick={() => getMockWidget("MintGAContainerDisplayBlock")}>
+        Mint - With Container + Display Block
+      </button>
       <button onClick={() => getMockWidget("VanillaGANoContainer")}>
         Vanilla - No Container
       </button>

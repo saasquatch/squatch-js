@@ -63,19 +63,14 @@ export default abstract class Widget {
     }
 
     let params: SQHDetails;
-    if (hasProps<{programId: string}>(sqh, "programId")) {
+    if (hasProps<{ programId: string }>(sqh, "programId")) {
       if (
-        !hasProps<{ 
-          tenantAlias: string; 
-          accountId: string; 
-          userId: string; 
-          engagementMedium: EngagementMedium 
-        }>(sqh, [
-          "tenantAlias",
-          "accountId",
-          "userId",
-          "engagementMedium",
-        ])
+        !hasProps<{
+          tenantAlias: string;
+          accountId: string;
+          userId: string;
+          engagementMedium: EngagementMedium;
+        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
       ) {
         throw new Error("Widget Load event missing required properties");
       }
@@ -189,9 +184,8 @@ export default abstract class Widget {
 
     function search() {
       const containers = frameDoc.getElementsByTagName("sqh-global-container");
-      const legacyContainers = frameDoc.getElementsByClassName(
-        "squatch-container"
-      );
+      const legacyContainers =
+        frameDoc.getElementsByClassName("squatch-container");
       const fallback =
         containers.length > 0
           ? containers[0]
@@ -199,6 +193,10 @@ export default abstract class Widget {
           ? legacyContainers[0]
           : null;
       return fallback;
+    }
+
+    if (document.compatMode === "CSS1Compat") {
+      return frameDoc.body;
     }
 
     let found: Element | null = null;
@@ -232,7 +230,7 @@ export default abstract class Widget {
         firstName: firstName || null,
         lastName: lastName || null,
         id: this.context.user.id,
-        accountId: this.context.user.accountId
+        accountId: this.context.user.accountId,
       };
 
       response = this.widgetApi.upsertUser({
@@ -263,9 +261,8 @@ export default abstract class Widget {
         if (template) {
           this.content = template;
           const showStatsBtn = frameDoc.createElement("button");
-          const registerForm = frameDoc.getElementsByClassName(
-            "squatch-register"
-          )[0];
+          const registerForm =
+            frameDoc.getElementsByClassName("squatch-register")[0];
 
           if (registerForm) {
             showStatsBtn.className = "btn btn-primary";
