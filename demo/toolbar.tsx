@@ -322,10 +322,10 @@ async function getMockWidget(widget, engagementMedium) {
   // window.location.href = `/?widgetType=${widget}`;
 }
 
-async function getCustomWidget() {
+async function getCustomWidget(engagementMedium) {
   window["sandbox"].initObj = {
     ...window["sandbox"].initObj,
-    engagementMedium: "EMBED",
+    engagementMedium,
   };
 
   const value = document.getElementById("custom-widget")?.value;
@@ -425,7 +425,7 @@ function MockedWidgets(props) {
 
 function CustomMockedWidget(props) {
   const { versions } = props;
-
+  const [engagementMedium, setEngagementMedium] = useState("EMBED");
   return (
     <details
       title={"Version: " + window["sandbox"].version || "Head"}
@@ -433,6 +433,22 @@ function CustomMockedWidget(props) {
       id={`dropdown-basic-1`}
     >
       <summary>Custom Mocked Widget</summary>
+      <label>Embed</label>
+      <input
+        type="radio"
+        name="embed"
+        checked={engagementMedium === "EMBED"}
+        onClick={() => setEngagementMedium("EMBED")}
+      ></input>
+
+      <label>Popup</label>
+      <input
+        type="radio"
+        name="popup"
+        checked={engagementMedium === "POPUP"}
+        onClick={() => setEngagementMedium("POPUP")}
+      ></input>
+      <br />
       <textarea
         id="custom-widget"
         rows={15}
@@ -440,7 +456,9 @@ function CustomMockedWidget(props) {
         style={{ maxWidth: "100%" }}
       ></textarea>
       <div>
-        <button onClick={() => getCustomWidget()}>Load Widget</button>
+        <button onClick={() => getCustomWidget(engagementMedium)}>
+          Load Widget
+        </button>
       </div>
     </details>
   );
