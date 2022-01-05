@@ -179,7 +179,7 @@ export default abstract class Widget {
   protected async _findInnerContainer(): Promise<Element> {
     const { contentWindow } = this.frame;
     if (!contentWindow)
-      throw new Error("Squatch.hs frame inner frame is empty");
+      throw new Error("Squatch.js frame inner frame is empty");
     const frameDoc = contentWindow.document;
 
     function search() {
@@ -195,11 +195,6 @@ export default abstract class Widget {
       return fallback;
     }
 
-    if (frameDoc.compatMode === "CSS1Compat") {
-      _log("Standards mode");
-      return frameDoc.body;
-    }
-    _log("Quirks mode");
     let found: Element | null = null;
     for (let i = 0; i < 5; i++) {
       found = search();
