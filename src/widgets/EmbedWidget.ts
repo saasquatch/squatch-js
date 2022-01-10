@@ -70,8 +70,7 @@ export default class EmbedWidget extends Widget {
           this.frame.height = height;
         }
       });
-      ro.observe(frameDoc.body);
-      ro.unobserve(frameDoc.body);
+
       ro.observe(await this._findInnerContainer());
 
       this._loadEvent(_sqh);
