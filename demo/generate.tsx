@@ -12,7 +12,6 @@ import MintGAContainerDisplayBlock from "./templates/MintGAContainerDisplayBlock
 import QuirksMintGAContainerDisplayBlock from "./templates/QuirksMintGAContainerDisplayBlock";
 import QuirksMintGAContainer from "./templates/QuirksMintGAContainer";
 
-// const params = getQueryStringParams(window.location.search);
 export const widgets = {
   classic,
   MintGA,
@@ -23,13 +22,12 @@ export const widgets = {
   MintGAContainerDisplayBlock,
   QuirksMintGAContainerDisplayBlock,
   QuirksMintGAContainer,
-  VanillaGANoContainer
+  VanillaGANoContainer,
 };
-// console.log(params, window.location.search)
+
 export const handlers = window["mockWidget"] && [
   rest.put("https://staging.referralsaasquatch.com/api/*", (req, res, ctx) => {
     return res(
-      // ctx.delay(500),
       ctx.status(202, "Mocked status"),
       ctx.json(widgets[window["mockWidget"]])
     );
@@ -38,6 +36,4 @@ export const handlers = window["mockWidget"] && [
 // Setup requests interception using the given handlers.
 
 export const worker = setupWorker(...handlers);
-// worker.start();
-
 window["sandbox"] = fromURL();

@@ -319,7 +319,6 @@ async function getMockWidget(widget, engagementMedium) {
   );
   document.getElementById("squatchembed").innerHTML = "";
   window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
-  // window.location.href = `/?widgetType=${widget}`;
 }
 
 async function getCustomWidget(engagementMedium) {
@@ -343,7 +342,6 @@ async function getCustomWidget(engagementMedium) {
   );
   document.getElementById("squatchembed").innerHTML = "";
   window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
-  // window.location.href = `/?widgetType=${widget}`;
 }
 
 function MockedWidgets(props) {

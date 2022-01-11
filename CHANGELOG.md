@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.1] - 2022-01-11
+### Changed
+- Reduced resize timeout to 500ms from 5000ms
+
 ## [2.3.0] - 2021-05-19
 ### Added
 - Typescript definitions
@@ -129,7 +133,8 @@ No release notes.
 ## [2.0.0] - 2016-11-25
 No release notes.
 
-[Unreleased]: https://github.com/saasquatch/squatch-js/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/saasquatch/squatch-js/compare/v2.3.1...HEAD
+[2.3.1]: https://github.com/saasquatch/squatch-js/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/saasquatch/squatch-js/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/saasquatch/squatch-js/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/saasquatch/squatch-js/compare/v2.1.8...v2.2.0
