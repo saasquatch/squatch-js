@@ -63,19 +63,14 @@ export default abstract class Widget {
     }
 
     let params: SQHDetails;
-    if (hasProps<{programId: string}>(sqh, "programId")) {
+    if (hasProps<{ programId: string }>(sqh, "programId")) {
       if (
-        !hasProps<{ 
-          tenantAlias: string; 
-          accountId: string; 
-          userId: string; 
-          engagementMedium: EngagementMedium 
-        }>(sqh, [
-          "tenantAlias",
-          "accountId",
-          "userId",
-          "engagementMedium",
-        ])
+        !hasProps<{
+          tenantAlias: string;
+          accountId: string;
+          userId: string;
+          engagementMedium: EngagementMedium;
+        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
       ) {
         throw new Error("Widget Load event missing required properties");
       }
@@ -184,14 +179,13 @@ export default abstract class Widget {
   protected async _findInnerContainer(): Promise<Element> {
     const { contentWindow } = this.frame;
     if (!contentWindow)
-      throw new Error("Squatch.hs frame inner frame is empty");
+      throw new Error("Squatch.js frame inner frame is empty");
     const frameDoc = contentWindow.document;
 
     function search() {
       const containers = frameDoc.getElementsByTagName("sqh-global-container");
-      const legacyContainers = frameDoc.getElementsByClassName(
-        "squatch-container"
-      );
+      const legacyContainers =
+        frameDoc.getElementsByClassName("squatch-container");
       const fallback =
         containers.length > 0
           ? containers[0]
@@ -202,7 +196,7 @@ export default abstract class Widget {
     }
 
     let found: Element | null = null;
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 5; i++) {
       found = search();
       if (found) break;
       await delay(100);
@@ -215,8 +209,6 @@ export default abstract class Widget {
 
   reload({ email, firstName, lastName }, jwt) {
     const frameWindow = this.frame.contentWindow;
-
-    console.log("context", this.context);
 
     const engagementMedium = this.context.engagementMedium || "POPUP";
 
@@ -234,7 +226,7 @@ export default abstract class Widget {
         firstName: firstName || null,
         lastName: lastName || null,
         id: this.context.user.id,
-        accountId: this.context.user.accountId
+        accountId: this.context.user.accountId,
       };
 
       response = this.widgetApi.upsertUser({
@@ -265,9 +257,8 @@ export default abstract class Widget {
         if (template) {
           this.content = template;
           const showStatsBtn = frameDoc.createElement("button");
-          const registerForm = frameDoc.getElementsByClassName(
-            "squatch-register"
-          )[0];
+          const registerForm =
+            frameDoc.getElementsByClassName("squatch-register")[0];
 
           if (registerForm) {
             showStatsBtn.className = "btn btn-primary";

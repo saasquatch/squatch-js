@@ -47,7 +47,6 @@ export default class EmbedWidget extends Widget {
       `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
     );
     frameDoc.close();
-
     domready(frameDoc, async () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
       const ctaElement = frameDoc.getElementById("cta");

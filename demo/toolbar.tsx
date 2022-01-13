@@ -1,5 +1,6 @@
-import React, { Component, version } from "react";
+import React, { Component, useState, version } from "react";
 import { render } from "react-dom";
+import squatch from "../dist/squatch";
 
 import {
   popup,
@@ -15,6 +16,10 @@ import {
 } from "./sandbox";
 import { getVersions } from "./versions";
 import { delay } from "./util";
+import { widgets, worker } from "./generate";
+import { rest } from "msw";
+
+// 2. Define request handlers and response resolvers.
 
 const modes = ["POPUP", "EMBED"];
 const widgetTypes = [
@@ -22,14 +27,29 @@ const widgetTypes = [
   "CONVERSION_WIDGET",
   "p/tuesday-test/w/referrerWidget",
 ];
-const staticVersions = ["HEAD", "latest", "alpha"];
+const staticVersions = ["HEAD", "latest", "alpha", "next", "local"];
 
 /**
  * Use the addUrlProps higher-order component to hook-in react-url-query.
  */
 class App extends Component {
+  constructor(props) {
+    super(props);
+    worker.start({
+      findWorker: (scriptURL, _mockServiceWorkerUrl) =>
+        scriptURL.includes("mockServiceWorker"),
+      onUnhandledRequest(req) {
+        console.error(
+          "Found an unhandled %s request to %s",
+          req.method,
+          req.url.href
+        );
+      },
+    });
+  }
   state = {
     versions: staticVersions,
+    toolbarOpen: true,
   };
   async componentWillMount() {
     const apiVersions = await getVersions();
@@ -39,31 +59,61 @@ class App extends Component {
   render() {
     return (
       <div>
-        <hr />
-        <div>
-          <ParamArea />
+        <button
+          onClick={() =>
+            this.setState({ toolbarOpen: !this.state.toolbarOpen })
+          }
+          style={{ float: "right" }}
+        >
+          {this.state.toolbarOpen ? `<` : `>`}
+        </button>
+        <div style={{ display: this.state.toolbarOpen ? "block" : "none" }}>
           <hr />
-          <h2>Quick pick variables</h2>
-          <details>
-            <summary>Tenant / Program</summary>
-            <a href={href(popup)}>Popup (classic)</a>
-            <a href={href(embed)}>Embed (classic)</a>
-            <a href={href(popupNew)}>Popup (new program)</a>
-            <a href={href(embedNew)}>Embed (new program)</a>
-            <a href={href(popupReferred)}>Popup (classic referred widget)</a>
-            <a href={href(embedReferred)}>Embed (classic referred widget)</a>
-          </details>
-          <WidgetType />
-          <ModeList />
-          <UserList />
-          <VersionList {...this.state} />
+          <div>
+            <ParamArea />
+            <hr />
+            <h2>Quick pick variables</h2>
+            <details>
+              <summary>Tenant / Program</summary>
+              <ul>
+                <li>
+                  <a href={href(popup)}>Popup (classic)</a>
+                </li>
+                <li>
+                  <a href={href(embed)}>Embed (classic)</a>
+                </li>
+                <li>
+                  <a href={href(popupNew)}>Popup (new program)</a>
+                </li>
+                <li>
+                  <a href={href(embedNew)}>Embed (new program)</a>
+                </li>
+                <li>
+                  <a href={href(popupReferred)}>
+                    Popup (classic referred widget)
+                  </a>
+                </li>
+                <li>
+                  <a href={href(embedReferred)}>
+                    Embed (classic referred widget)
+                  </a>
+                </li>
+              </ul>
+            </details>
+            <WidgetType />
+            <ModeList />
+            <UserList />
+            <VersionList {...this.state} />
+            <MockedWidgets />
+            <CustomMockedWidget />
+          </div>
+          <hr />
+
+          <button onClick={() => recordPurchase()}>Record Purchase</button>
+          <hr />
+
+          <button onClick={() => runEventBomb()}>Event Bomb</button>
         </div>
-        <hr />
-
-        <button onClick={() => recordPurchase()}>Record Purchase</button>
-        <hr />
-
-        <button onClick={() => runEventBomb()}>Event Bomb</button>
       </div>
     );
   }
@@ -74,7 +124,7 @@ function ParamArea() {
     <div>
       <h2>Squatch.js Config</h2>
       <div>
-        <textarea id="area1" rows={15} cols={80}>
+        <textarea id="area1" rows={15} cols={70} style={{ maxWidth: "100%" }}>
           {JSON.stringify(window["sandbox"], null, 2)}
         </textarea>
       </div>
@@ -219,6 +269,7 @@ function UserList(props) {
 }
 function VersionList(props) {
   const { versions } = props;
+
   return (
     <details
       title={"Version: " + window["sandbox"].version || "Head"}
@@ -235,15 +286,181 @@ function VersionList(props) {
             script:
               v.toLocaleLowerCase() == "head"
                 ? script
+                : v == "local"
+                ? `./squatchjs.min.js`
                 : `https://unpkg.com/@saasquatch/squatch-js@${v}`,
           })}
         >
-          {v}
+          <button>{v}</button>
         </a>
       ))}
     </details>
   );
 }
+
+async function getMockWidget(widget, engagementMedium) {
+  window["mockWidget"] = widget;
+  window["sandbox"].initObj = {
+    ...window["sandbox"].initObj,
+    engagementMedium,
+  };
+
+  worker.use(
+    rest.put(
+      "https://staging.referralsaasquatch.com/api/*",
+      (req, res, ctx) => {
+        return res(
+          ctx.delay(500),
+          ctx.status(202, "Mocked status"),
+          ctx.json(widgets[window["mockWidget"]])
+        );
+      }
+    )
+  );
+  document.getElementById("squatchembed").innerHTML = "";
+  window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
+}
+
+async function getCustomWidget(engagementMedium) {
+  window["sandbox"].initObj = {
+    ...window["sandbox"].initObj,
+    engagementMedium,
+  };
+
+  const value = document.getElementById("custom-widget")?.value;
+  worker.use(
+    rest.put(
+      "https://staging.referralsaasquatch.com/api/*",
+      (req, res, ctx) => {
+        return res(
+          ctx.delay(500),
+          ctx.status(202, "Mocked status"),
+          ctx.json({ jsOptions: {}, user: {}, template: value })
+        );
+      }
+    )
+  );
+  document.getElementById("squatchembed").innerHTML = "";
+  window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
+}
+
+function MockedWidgets(props) {
+  const { versions } = props;
+
+  const [engagementMedium, setEngagementMedium] = useState("EMBED");
+  return (
+    <details
+      title={"Version: " + window["sandbox"].version || "Head"}
+      key={0}
+      id={`dropdown-basic-1`}
+    >
+      <summary>Mocked Widgets</summary>
+      <label>Embed</label>
+      <input
+        type="radio"
+        name="embed"
+        checked={engagementMedium === "EMBED"}
+        onClick={() => setEngagementMedium("EMBED")}
+      ></input>
+
+      <label>Popup</label>
+      <input
+        type="radio"
+        name="popup"
+        checked={engagementMedium === "POPUP"}
+        onClick={() => setEngagementMedium("POPUP")}
+      ></input>
+      <br />
+      <button
+        onClick={() => getMockWidget("QuirksVanillaGA", engagementMedium)}
+      >
+        Quirks mode - Vanilla
+      </button>
+      <button onClick={() => getMockWidget("QuirksMintGA", engagementMedium)}>
+        Quirks mode - Mint
+      </button>
+      <button onClick={() => getMockWidget("classic", engagementMedium)}>
+        Classic
+      </button>
+      <button onClick={() => getMockWidget("MintGA", engagementMedium)}>
+        GA - Mint
+      </button>
+      <button onClick={() => getMockWidget("VanillaGA", engagementMedium)}>
+        GA - Vanilla
+      </button>
+      <button
+        onClick={() => getMockWidget("MintGAContainer", engagementMedium)}
+      >
+        Mint - With Container
+      </button>
+      <button
+        onClick={() => getMockWidget("QuirksMintGAContainer", engagementMedium)}
+      >
+        Quirks mode - Mint - With Container
+      </button>
+      <button
+        onClick={() =>
+          getMockWidget("MintGAContainerDisplayBlock", engagementMedium)
+        }
+      >
+        Mint - With Container + Display Block
+      </button>
+      <button
+        onClick={() =>
+          getMockWidget("QuirksMintGAContainerDisplayBlock", engagementMedium)
+        }
+      >
+        Quirks mode - Mint - With Container + Display Block
+      </button>
+      <button
+        onClick={() => getMockWidget("VanillaGANoContainer", engagementMedium)}
+      >
+        Vanilla - No Container
+      </button>
+    </details>
+  );
+}
+
+function CustomMockedWidget(props) {
+  const { versions } = props;
+  const [engagementMedium, setEngagementMedium] = useState("EMBED");
+  return (
+    <details
+      title={"Version: " + window["sandbox"].version || "Head"}
+      key={0}
+      id={`dropdown-basic-1`}
+    >
+      <summary>Custom Mocked Widget</summary>
+      <label>Embed</label>
+      <input
+        type="radio"
+        name="embed"
+        checked={engagementMedium === "EMBED"}
+        onClick={() => setEngagementMedium("EMBED")}
+      ></input>
+
+      <label>Popup</label>
+      <input
+        type="radio"
+        name="popup"
+        checked={engagementMedium === "POPUP"}
+        onClick={() => setEngagementMedium("POPUP")}
+      ></input>
+      <br />
+      <textarea
+        id="custom-widget"
+        rows={15}
+        cols={70}
+        style={{ maxWidth: "100%" }}
+      ></textarea>
+      <div>
+        <button onClick={() => getCustomWidget(engagementMedium)}>
+          Load Widget
+        </button>
+      </div>
+    </details>
+  );
+}
 const root = document.getElementById("app");
-console.log("mount to", root);
+
 render(<App />, root);

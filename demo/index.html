@@ -87,10 +87,13 @@
     </script>
 
     <div style="display: flex">
-      <div style="width: 50%; background: #ccc; padding: 20px">
+      <div
+        style="max-width: 40%; height: 50%; background: #ccc; padding: 20px"
+        class="toolbar"
+      >
         <div id="app"></div>
       </div>
-      <div style="width: 50%; padding: 20px">
+      <div style="width: 60%; padding: 20px">
         <ul class="list-group" id="statuslist">
           <li class="list-group-item">
             <div class="lds-dual-ring" id="spinner"></div>
@@ -102,7 +105,7 @@
         <h2>Popup Widget:</h2>
         <button class="squatchpop">Click to Open</button>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <h2>Embed Widget:</h2>
             <div id="squatchembed">Loading....</div>
           </div>
