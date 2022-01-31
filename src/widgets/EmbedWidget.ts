@@ -48,6 +48,10 @@ export default class EmbedWidget extends Widget {
         frame: this.frame,
       });
       this.element = this.targetElement;
+
+      this.targetElement.open = this.open;
+      this.targetElement.close = this.close;
+      this.targetElement.frame = this.frame;
     } else if (
       !this.element.firstChild ||
       this.element.firstChild.nodeName === "#text"
@@ -99,10 +103,6 @@ export default class EmbedWidget extends Widget {
       if (!this.targetElement) {
         this._loadEvent(_sqh);
         _log("loaded");
-      } else {
-        this.targetElement.open = this.open;
-        this.targetElement.close = this.close;
-        this.targetElement.frame = this.frame;
       }
     });
   }
