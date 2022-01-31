@@ -70,8 +70,8 @@ export type WidgetContext =
       type: "upsert";
       user: User;
       engagementMedium?: EngagementMedium;
+      element?: HTMLElement;
     };
-
 export type WidgetContextType = "upsert" | "cookie" | "error";
 
 /**

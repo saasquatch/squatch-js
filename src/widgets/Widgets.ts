@@ -105,6 +105,8 @@ export default class Widgets {
   async upsertUser(config: WidgetConfig) {
     const raw = config as unknown;
     const clean = validateWidgetConfig(raw);
+
+    console.log("params config", config);
     try {
       const response = await this.api.upsertUser(clean);
       return {
@@ -112,6 +114,7 @@ export default class Widgets {
           type: "upsert",
           user: clean.user,
           engagementMedium: config.engagementMedium,
+          element: config.element,
         }),
         user: response.user,
       };
@@ -270,6 +273,7 @@ export default class Widgets {
     let displayCTA = false;
     const opts = response.jsOptions || "";
 
+    console.log("params config??", { context });
     const params = {
       content: response.template,
       type: config.widgetType || opts.widget.defaultWidgetType,
