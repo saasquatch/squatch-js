@@ -404,8 +404,10 @@ function MockedWidgets(props) {
         onClick={() => {
           if (showWidget) {
             setShowWidget(false);
+            element?.close();
           } else {
             console.log("element?", element);
+            setShowWidget(true);
             element?.open();
           }
         }}

@@ -38,20 +38,16 @@ export default class EmbedWidget extends Widget {
     console.log("my element", { element: this.element, frame: this.frame });
 
     if (this.targetElement) {
-      const placeholder = document.createElement("div");
-      placeholder.style.visibility = "hidden";
-      // placeholder.style.display = "none";
-      placeholder.style.height = "0";
-      placeholder.style["overflow-y"] = "hidden";
-      document.body.appendChild(placeholder);
-      placeholder.appendChild(this.frame);
+      this.targetElement.style.visibility = "hidden";
+      this.targetElement.style.height = "0";
+      this.targetElement.style["overflow-y"] = "hidden";
+      this.targetElement.appendChild(this.frame);
 
       console.log({
-        placeholder,
         targetElement: this.targetElement,
         frame: this.frame,
       });
-      this.element = placeholder;
+      this.element = this.targetElement;
     } else if (
       !this.element.firstChild ||
       this.element.firstChild.nodeName === "#text"
@@ -105,7 +101,7 @@ export default class EmbedWidget extends Widget {
         _log("loaded");
       } else {
         this.targetElement.open = this.open;
-        this.targetElement.loadedElement = this.element;
+        this.targetElement.close = this.close;
         this.targetElement.frame = this.frame;
       }
     });
@@ -113,89 +109,23 @@ export default class EmbedWidget extends Widget {
 
   // Open when element is available
   open() {
-    if (!this.appendChild) return;
+    if (!this.firstChild) return;
 
-    console.log(
-      this,
-      this.frame,
-      this.frame?.contentWindow?.document
-      // this.frame.contentWindow?.document?.documentElement?.outerHTML
-    );
-
-    // this.appendChild(this.frame);
-
-    console.log(this.frame.loaded, "skipping new frame");
-    if (!this.frame.loaded) {
-      // Creates the new iframe, add the iframe where you want
-      var newFrame = document.createElement("iframe");
-
-      newFrame.width = this.frame.width;
-      newFrame.scrolling = this.frame.scrolling;
-      newFrame.style.border = "0";
-      newFrame.style["background-color"] = "none";
-      newFrame.style.width = "1px";
-      newFrame.style["min-width"] = "100%";
-      newFrame.height = this.frame.height;
-      this.appendChild(newFrame);
-      var frameDocument = newFrame.document;
-      frameDocument = newFrame.contentDocument;
-      frameDocument.open();
-      frameDocument.write(
-        this.frame.contentDocument.doctype ? "<!DOCTYPE html>" : ""
-      );
-      frameDocument.write(
-        this.frame.contentDocument?.documentElement?.outerHTML
-      );
-      frameDocument.close();
-      newFrame.height = this.frame.contentWindow?.document?.body?.scrollHeight;
-      this.frame.loaded = true;
-      return;
-    }
-
-    console.log("element", this.loadedElement);
-    // this.appendChild(this.frame);
-    console.log(
-      "frame / window / document",
-      this.frame,
-      this.frame?.contentWindow?.document,
-      this.frame?.contentDocument
-    );
+    console.log(this, this.frame, this.frame?.contentWindow?.document);
+    console.log("first child", this.firstChild);
+    this.style.visibility = "unset";
+    this.style.height = "auto";
+    this.style["overflow-y"] = "auto";
 
     this.firstChild?.contentDocument?.dispatchEvent(
       new CustomEvent("sq:refresh")
     );
   }
-  // open() {
-  //   const element = this.element;
-  //   const frame = this.frame;
-  //   console.log("the goods", this.element, this.frame, this.targetElement);
-  //   const { contentWindow } = frame;
-  //   if (!contentWindow) throw new Error("Squatch.js has an empty iframe");
-  //   const frameDoc = contentWindow.document;
-
-  //   // Adjust frame height when size of body changes
-  //   domready(frameDoc, () => {
-  //     const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-  //     const ctaElement = frameDoc.getElementById("cta");
-  //     if (this.targetElement) this.targetElement.innerHTML = element.innerHTML;
-
-  //     if (ctaElement) {
-  //       //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-  //       ctaElement.parentNode.removeChild(ctaElement);
-  //     }
-  //     // element.style.visibility = "visible";
-  //     // element.style.top = "0px";
-  //     console.log("open content window", contentWindow);
-  //     frameDoc.dispatchEvent(new CustomEvent("sq:refresh"));
-  //     this._loadEvent(_sqh);
-  //     _log("Embed widget opened");
-  //   });
-  // }
 
   close() {
-    this.element.style.visibility = "hidden";
-    this.element.style.top = "-2000px";
-
+    this.style.visibility = "hidden";
+    this.style.height = "0";
+    this.style["overflow-y"] = "hidden";
     _log("Embed widget closed");
   }
 
