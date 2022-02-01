@@ -91,6 +91,7 @@ export default abstract class Widget {
       };
     }
 
+    console.log("SAM LOOK", this, this.analyticsApi);
     this.analyticsApi
       .pushAnalyticsLoadEvent(params)
       .then((response) => {

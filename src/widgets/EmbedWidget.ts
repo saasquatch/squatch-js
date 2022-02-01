@@ -14,15 +14,18 @@ const _log = debug("squatch-js:EMBEDwidget");
  */
 export default class EmbedWidget extends Widget {
   element: HTMLElement;
-  targetElement: HTMLElement;
+  targetElement: HTMLElement & EmbedWidget;
 
   constructor(params: Params, selector = "#squatchembed") {
     super(params);
-
-    console.log("params!", params);
-
+    // Add required functions and data to target element
     if (params.context.element) {
       this.targetElement = params.context.element;
+      this.targetElement.open = this.open;
+      this.targetElement.close = this.close;
+      this.targetElement.frame = this.frame;
+      this.targetElement._loadEvent = this._loadEvent;
+      this.targetElement.analyticsApi = this.analyticsApi;
     }
     const element =
       document.querySelector(selector) ||
@@ -31,27 +34,25 @@ export default class EmbedWidget extends Widget {
     if (element === undefined)
       throw new Error(`element with selector '${selector}' not found.'`);
     this.element = element as HTMLElement;
-    // }
   }
 
   async load() {
-    console.log("my element", { element: this.element, frame: this.frame });
-
     if (this.targetElement) {
       this.targetElement.style.visibility = "hidden";
       this.targetElement.style.height = "0";
       this.targetElement.style["overflow-y"] = "hidden";
-      this.targetElement.appendChild(this.frame);
 
-      console.log({
-        targetElement: this.targetElement,
-        frame: this.frame,
-      });
+      // Widget reloaded - replace existing element
+      if (this.targetElement.firstChild) {
+        this.targetElement.replaceChild(
+          this.frame,
+          this.targetElement.firstChild
+        );
+        // Add iframe for the first time
+      } else {
+        this.targetElement.appendChild(this.frame);
+      }
       this.element = this.targetElement;
-
-      this.targetElement.open = this.open;
-      this.targetElement.close = this.close;
-      this.targetElement.frame = this.frame;
     } else if (
       !this.element.firstChild ||
       this.element.firstChild.nodeName === "#text"
@@ -96,8 +97,6 @@ export default class EmbedWidget extends Widget {
 
       ro.observe(await this._findInnerContainer());
 
-      console.log("element after observe", this.element);
-
       // Regular load - trigger event
       // @ts-ignore
       if (!this.targetElement) {
@@ -107,12 +106,9 @@ export default class EmbedWidget extends Widget {
     });
   }
 
-  // Open when element is available
+  // Un-hide if element is available and refresh data
   open() {
-    if (!this.firstChild) return;
-
-    console.log(this, this.frame, this.frame?.contentWindow?.document);
-    console.log("first child", this.firstChild);
+    if (!this.firstChild) return _log("no target element to open");
     this.style.visibility = "unset";
     this.style.height = "auto";
     this.style["overflow-y"] = "auto";
@@ -120,9 +116,15 @@ export default class EmbedWidget extends Widget {
     this.firstChild?.contentDocument?.dispatchEvent(
       new CustomEvent("sq:refresh")
     );
+    const _sqh =
+      this.frame?.contentWindow?.squatch ||
+      this.frame?.contentWindow?.widgetIdent;
+    this._loadEvent(_sqh);
+    _log("loaded");
   }
 
   close() {
+    if (!this.firstChild) return _log("no target element to close");
     this.style.visibility = "hidden";
     this.style.height = "0";
     this.style["overflow-y"] = "hidden";

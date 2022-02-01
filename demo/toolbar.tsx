@@ -298,7 +298,12 @@ function VersionList(props) {
   );
 }
 
-async function getMockWidget(widget, engagementMedium, element?: HTMLElement) {
+async function getMockWidget(
+  widget,
+  engagementMedium,
+  element?: HTMLElement,
+  showWidget?: boolean
+) {
   window["mockWidget"] = widget;
   window["sandbox"].initObj = {
     ...window["sandbox"].initObj,
@@ -318,10 +323,12 @@ async function getMockWidget(widget, engagementMedium, element?: HTMLElement) {
     )
   );
   document.getElementById("squatchembed").innerHTML = "";
-  window["squatch"].widgets().upsertUser({
+  await window["squatch"].widgets().upsertUser({
     ...window["sandbox"].initObj,
     element,
   });
+
+  if (showWidget) element.open();
 }
 
 async function getCustomWidget(engagementMedium) {
@@ -417,41 +424,64 @@ function MockedWidgets(props) {
       <br />
       <button
         onClick={() =>
-          getMockWidget("QuirksVanillaGA", engagementMedium, element)
+          getMockWidget(
+            "QuirksVanillaGA",
+            engagementMedium,
+            element,
+            showWidget
+          )
         }
       >
         Quirks mode - Vanilla
       </button>
       <button
-        onClick={() => getMockWidget("QuirksMintGA", engagementMedium, element)}
+        onClick={() =>
+          getMockWidget("QuirksMintGA", engagementMedium, element, showWidget)
+        }
       >
         Quirks mode - Mint
       </button>
       <button
-        onClick={() => getMockWidget("classic", engagementMedium, element)}
+        onClick={() =>
+          getMockWidget("classic", engagementMedium, element, showWidget)
+        }
       >
         Classic
       </button>
       <button
-        onClick={() => getMockWidget("MintGA", engagementMedium, element)}
+        onClick={() =>
+          getMockWidget("MintGA", engagementMedium, element, showWidget)
+        }
       >
         GA - Mint
       </button>
       <button
-        onClick={() => getMockWidget("VanillaGA", engagementMedium, element)}
+        onClick={() =>
+          getMockWidget("VanillaGA", engagementMedium, element, showWidget)
+        }
       >
         GA - Vanilla
       </button>
       <button
         onClick={() =>
-          getMockWidget("MintGAContainer", engagementMedium, element)
+          getMockWidget(
+            "MintGAContainer",
+            engagementMedium,
+            element,
+            showWidget
+          )
         }
       >
         Mint - With Container
       </button>
       <button
         onClick={() =>
-          getMockWidget("QuirksMintGAContainer", engagementMedium, element)
+          getMockWidget(
+            "QuirksMintGAContainer",
+            engagementMedium,
+            element,
+            showWidget
+          )
         }
       >
         Quirks mode - Mint - With Container
@@ -461,7 +491,8 @@ function MockedWidgets(props) {
           getMockWidget(
             "MintGAContainerDisplayBlock",
             engagementMedium,
-            element
+            element,
+            showWidget
           )
         }
       >
@@ -472,7 +503,8 @@ function MockedWidgets(props) {
           getMockWidget(
             "QuirksMintGAContainerDisplayBlock",
             engagementMedium,
-            element
+            element,
+            showWidget
           )
         }
       >
@@ -480,7 +512,12 @@ function MockedWidgets(props) {
       </button>
       <button
         onClick={() =>
-          getMockWidget("VanillaGANoContainer", engagementMedium, element)
+          getMockWidget(
+            "VanillaGANoContainer",
+            engagementMedium,
+            element,
+            showWidget
+          )
         }
       >
         Vanilla - No Container
