@@ -99,14 +99,13 @@ export default class Widgets {
    * @param {EngagementMedium} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
+    @param {HTMLElement} config.element Element to load the widget into
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
   async upsertUser(config: WidgetConfig) {
     const raw = config as unknown;
     const clean = validateWidgetConfig(raw);
-
-    console.log("params config", config);
     try {
       const response = await this.api.upsertUser(clean);
       return {
@@ -147,41 +146,6 @@ export default class Widgets {
     const clean = validateWidgetConfig(raw);
     try {
       const response = await this.api.cookieUser(clean);
-      return {
-        widget: this._renderWidget({ template: response }, clean, {
-          type: "cookie",
-          engagementMedium: clean.engagementMedium,
-        }),
-        user: response.user,
-      };
-    } catch (err) {
-      if (err.apiErrorCode) {
-        this._renderErrorWidget(err, clean.engagementMedium);
-      }
-      throw err;
-    }
-  }
-
-  /**
-   * This function calls the {@link WidgetApi.render} method, and it renders
-   * the widget if it is successful. Otherwise it shows the "error" widget.
-   *
-   * @param {Object} config Config details
-   * @param {Object} config.user The user details
-   * @param {string} config.user.id The user id
-   * @param {string} config.user.accountId The user account id
-   * @param {WidgetType} config.widgetType The content of the widget.
-   * @param {EngagementMedium} config.engagementMedium How to display the widget.
-   * @param {string} config.jwt the JSON Web Token (JWT) that is used
-   *                            to validate the data (can be disabled)
-   *
-   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-   */
-  async renderGA(config: WidgetConfig): Promise<WidgetResult> {
-    const raw = config as unknown;
-    const clean = validateWidgetConfig(raw);
-    try {
-      const response = await this.api.render(clean);
       return {
         widget: this._renderWidget({ template: response }, clean, {
           type: "cookie",

@@ -108,26 +108,31 @@ export default class EmbedWidget extends Widget {
 
   // Un-hide if element is available and refresh data
   open() {
-    if (!this.firstChild) return _log("no target element to open");
-    this.style.visibility = "unset";
-    this.style.height = "auto";
-    this.style["overflow-y"] = "auto";
+    //@ts-ignore
+    const element = this as EmbedWidget & HTMLElement;
+    if (!element.frame) return _log("no target element to open");
 
-    this.firstChild?.contentDocument?.dispatchEvent(
+    element.style.visibility = "unset";
+    element.style.height = "auto";
+    element.style["overflow-y"] = "auto";
+
+    element.frame?.contentDocument?.dispatchEvent(
       new CustomEvent("sq:refresh")
     );
     const _sqh =
-      this.frame?.contentWindow?.squatch ||
-      this.frame?.contentWindow?.widgetIdent;
-    this._loadEvent(_sqh);
+      element.frame?.contentWindow?.squatch ||
+      element.frame?.contentWindow?.widgetIdent;
+    element._loadEvent(_sqh);
     _log("loaded");
   }
 
   close() {
-    if (!this.firstChild) return _log("no target element to close");
-    this.style.visibility = "hidden";
-    this.style.height = "0";
-    this.style["overflow-y"] = "hidden";
+    //@ts-ignore
+    const element = this as EmbedWidget & HTMLElement;
+    if (!element.frame) return _log("no target element to close");
+    element.style.visibility = "hidden";
+    element.style.height = "0";
+    element.style["overflow-y"] = "hidden";
     _log("Embed widget closed");
   }
 
