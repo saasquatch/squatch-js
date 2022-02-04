@@ -323,6 +323,7 @@ async function getMockWidget(
     )
   );
   document.getElementById("squatchembed").innerHTML = "";
+
   await window["squatch"].widgets().upsertUser({
     ...window["sandbox"].initObj,
     element,
@@ -353,7 +354,6 @@ async function getCustomWidget(engagementMedium) {
   document.getElementById("squatchembed").innerHTML = "";
   window["squatch"].widgets().upsertUser({
     ...window["sandbox"].initObj,
-    element: <div className="sam"></div>,
   });
 }
 
@@ -365,7 +365,6 @@ function MockedWidgets(props) {
   // const [element, setElement] = useState(false);
   const element = usePreload && document.getElementById("squatchembed");
 
-  console.log("engagement medium?", engagementMedium);
   return (
     <details
       title={"Version: " + window["sandbox"].version || "Head"}
@@ -374,38 +373,41 @@ function MockedWidgets(props) {
     >
       <summary>Mocked Widgets</summary>
       <h4>Engagement Medium</h4>
-      <label>Embed</label>
-      <input
-        type="radio"
-        name="embed"
-        checked={engagementMedium === "EMBED"}
-        onClick={() => setEngagementMedium("EMBED")}
-      ></input>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <label>Embed</label>
 
-      <label>Popup</label>
-      <input
-        type="radio"
-        name="popup"
-        checked={engagementMedium === "POPUP"}
-        onClick={() => setEngagementMedium("POPUP")}
-      ></input>
-      <br />
-      <h4>Preload</h4>
-      <label>true</label>
-      <input
-        type="radio"
-        name="preload"
-        checked={usePreload === true}
-        onClick={() => setUsePreload(true)}
-      ></input>
+        <input
+          type="radio"
+          name="embed"
+          checked={engagementMedium === "EMBED"}
+          onClick={() => setEngagementMedium("EMBED")}
+        ></input>
 
-      <label>false</label>
-      <input
-        type="radio"
-        name="noPreload"
-        checked={usePreload === false}
-        onClick={() => setUsePreload(false)}
-      ></input>
+        <label>Popup</label>
+        <input
+          type="radio"
+          name="popup"
+          checked={engagementMedium === "POPUP"}
+          onClick={() => setEngagementMedium("POPUP")}
+        ></input>
+        <br />
+        <h4>Preload</h4>
+        <label>true</label>
+        <input
+          type="radio"
+          name="preload"
+          checked={usePreload === true}
+          onClick={() => setUsePreload(true)}
+        ></input>
+
+        <label>false</label>
+        <input
+          type="radio"
+          name="noPreload"
+          checked={usePreload === false}
+          onClick={() => setUsePreload(false)}
+        ></input>
+      </form>
       <br />
       <button
         onClick={() => {
@@ -413,7 +415,6 @@ function MockedWidgets(props) {
             setShowWidget(false);
             element?.close();
           } else {
-            console.log("element?", element);
             setShowWidget(true);
             element?.open();
           }

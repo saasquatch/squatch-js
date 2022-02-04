@@ -1,6 +1,6 @@
 {
   "name": "@saasquatch/squatch-js",
-  "version": "2.3.2-20",
+  "version": "2.3.2-23",
   "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "types": "dist/squatch.d.ts",
@@ -44,7 +44,7 @@
     "static": "serve dist",
     "parcel": "cd demo && parcel index.html",
     "parcel:build": "cd demo && parcel build index.html",
-    "parcel:deploy": "surge demo/dist -d squathjs-demo.surge.sh"
+    "parcel:deploy": "surge demo/dist -d squathjs-demo-qa.surge.sh"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

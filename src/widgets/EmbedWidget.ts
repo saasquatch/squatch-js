@@ -14,7 +14,7 @@ const _log = debug("squatch-js:EMBEDwidget");
  */
 export default class EmbedWidget extends Widget {
   element: HTMLElement;
-  targetElement: HTMLElement & EmbedWidget;
+  targetElement: HTMLElement & EmbedWidget | undefined;
 
   constructor(params: Params, selector = "#squatchembed") {
     super(params);
@@ -98,7 +98,6 @@ export default class EmbedWidget extends Widget {
       ro.observe(await this._findInnerContainer());
 
       // Regular load - trigger event
-      // @ts-ignore
       if (!this.targetElement) {
         this._loadEvent(_sqh);
         _log("loaded");
@@ -108,7 +107,7 @@ export default class EmbedWidget extends Widget {
 
   // Un-hide if element is available and refresh data
   open() {
-    //@ts-ignore
+    //@ts-ignore type is set in constructor
     const element = this as EmbedWidget & HTMLElement;
     if (!element.frame) return _log("no target element to open");
 
@@ -127,7 +126,7 @@ export default class EmbedWidget extends Widget {
   }
 
   close() {
-    //@ts-ignore
+    //@ts-ignore type is set in constructor
     const element = this as EmbedWidget & HTMLElement;
     if (!element.frame) return _log("no target element to close");
     element.style.visibility = "hidden";

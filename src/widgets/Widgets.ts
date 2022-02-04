@@ -113,7 +113,7 @@ export default class Widgets {
           type: "upsert",
           user: clean.user,
           engagementMedium: config.engagementMedium,
-          element: config.element,
+          element: config.element as HTMLElement & EmbedWidget | undefined,
         }),
         user: response.user,
       };

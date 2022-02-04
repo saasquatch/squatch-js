@@ -1,3 +1,4 @@
+import { EmbedWidget } from "./squatch";
 import Widget from "./widgets/Widget";
 
 /**
@@ -66,12 +67,13 @@ export type WidgetContext =
   | {
       type: "cookie" | "error";
       engagementMedium?: EngagementMedium;
+      element?: HTMLElement & EmbedWidget;
     }
   | {
       type: "upsert";
       user: User;
       engagementMedium?: EngagementMedium;
-      element?: HTMLElement;
+      element?: HTMLElement & EmbedWidget;
     };
 export type WidgetContextType = "upsert" | "cookie" | "error";
 
