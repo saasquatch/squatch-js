@@ -362,7 +362,6 @@ function MockedWidgets(props) {
   const [engagementMedium, setEngagementMedium] = useState("EMBED");
   const [usePreload, setUsePreload] = useState(false);
   const [showWidget, setShowWidget] = useState(false);
-  // const [element, setElement] = useState(false);
   const element = usePreload && document.getElementById("squatchembed");
 
   return (
