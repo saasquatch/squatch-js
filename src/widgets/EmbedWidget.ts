@@ -31,7 +31,7 @@ export default class EmbedWidget extends Widget {
       document.querySelector(selector) ||
       document.querySelector(".squatchembed");
 
-    if (element === undefined)
+    if (!element)
       throw new Error(`element with selector '${selector}' not found.'`);
     this.element = element as HTMLElement;
   }
