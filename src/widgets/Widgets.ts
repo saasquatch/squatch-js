@@ -237,7 +237,6 @@ export default class Widgets {
     let displayCTA = false;
     const opts = response.jsOptions || "";
 
-    console.log("params config??", { context });
     const params = {
       content: response.template,
       type: config.widgetType || opts.widget.defaultWidgetType,
