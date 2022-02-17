@@ -100,7 +100,6 @@ export default class EmbedWidget extends Widget {
 
   // Un-hide if element is available and refresh data
   open() {
-    //@ts-ignore type is set in constructor
     if (!this.frame || !this.hasContainer)
       return _log("no target element to open");
     this.element.style.visibility = "unset";
