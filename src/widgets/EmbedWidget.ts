@@ -14,17 +14,19 @@ const _log = debug("squatch-js:EMBEDwidget");
  */
 export default class EmbedWidget extends Widget {
   element: HTMLElement;
-  targetElement: (HTMLElement & EmbedWidget) | undefined;
+  hasContainer: boolean;
 
   constructor(params: Params, selector = "#squatchembed") {
     super(params);
 
-    if (params.context.element) {
-      this.targetElement = params.context.element;
+    if (params.context.container) {
+      this.hasContainer = true;
     }
+
     const element =
       document.querySelector(selector) ||
-      document.querySelector(".squatchembed");
+      document.querySelector(".squatchembed") ||
+      params.context.container;
 
     if (!element)
       throw new Error(`element with selector '${selector}' not found.'`);
@@ -32,7 +34,7 @@ export default class EmbedWidget extends Widget {
   }
 
   async load() {
-    if (this.targetElement) {
+    if (this.hasContainer) {
       this.element.style.visibility = "hidden";
       this.element.style.height = "0";
       this.element.style["overflow-y"] = "hidden";
@@ -89,7 +91,7 @@ export default class EmbedWidget extends Widget {
       ro.observe(await this._findInnerContainer());
 
       // Regular load - trigger event
-      if (!this.targetElement) {
+      if (!this.hasContainer) {
         this._loadEvent(_sqh);
         _log("loaded");
       }

@@ -99,7 +99,7 @@ export default class Widgets {
    * @param {EngagementMedium} config.engagementMedium How to display the widget.
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
-    @param {HTMLElement} config.element Element to load the widget into
+    @param {HTMLElement} config.container Element to load the widget into
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
@@ -113,7 +113,7 @@ export default class Widgets {
           type: "upsert",
           user: clean.user,
           engagementMedium: config.engagementMedium,
-          element: config.element as HTMLElement & EmbedWidget | undefined,
+          container: config.container as HTMLElement | undefined,
         }),
         user: response.user,
       };
