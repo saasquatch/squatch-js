@@ -14,19 +14,14 @@ const _log = debug("squatch-js:EMBEDwidget");
  */
 export default class EmbedWidget extends Widget {
   element: HTMLElement;
-  hasContainer: boolean;
 
   constructor(params: Params, selector = "#squatchembed") {
     super(params);
 
-    if (params.context.container) {
-      this.hasContainer = true;
-    }
-
     const element =
+      params.context.container ||
       document.querySelector(selector) ||
-      document.querySelector(".squatchembed") ||
-      params.context.container;
+      document.querySelector(".squatchembed");
 
     if (!element)
       throw new Error(`element with selector '${selector}' not found.'`);
@@ -34,7 +29,7 @@ export default class EmbedWidget extends Widget {
   }
 
   async load() {
-    if (this.hasContainer) {
+    if (this.context.container) {
       this.element.style.visibility = "hidden";
       this.element.style.height = "0";
       this.element.style["overflow-y"] = "hidden";
@@ -91,7 +86,7 @@ export default class EmbedWidget extends Widget {
       ro.observe(await this._findInnerContainer());
 
       // Regular load - trigger event
-      if (!this.hasContainer) {
+      if (!this.context.container) {
         this._loadEvent(_sqh);
         _log("loaded");
       }
@@ -100,7 +95,7 @@ export default class EmbedWidget extends Widget {
 
   // Un-hide if element is available and refresh data
   open() {
-    if (!this.frame || !this.hasContainer)
+    if (!this.frame || !this.context.container)
       return _log("no target element to open");
     this.element.style.visibility = "unset";
     this.element.style.height = "auto";
@@ -115,7 +110,7 @@ export default class EmbedWidget extends Widget {
   }
 
   close() {
-    if (!this.frame || !this.hasContainer)
+    if (!this.frame || !this.context.container)
       return _log("no target element to close");
     this.element.style.visibility = "hidden";
     this.element.style.height = "0";
