@@ -14,45 +14,36 @@ const _log = debug("squatch-js:EMBEDwidget");
  */
 export default class EmbedWidget extends Widget {
   element: HTMLElement;
-  targetElement: HTMLElement & EmbedWidget | undefined;
+  targetElement: (HTMLElement & EmbedWidget) | undefined;
 
   constructor(params: Params, selector = "#squatchembed") {
     super(params);
-    // Add required functions and data to target element
+
     if (params.context.element) {
       this.targetElement = params.context.element;
-      this.targetElement.open = this.open;
-      this.targetElement.close = this.close;
-      this.targetElement.frame = this.frame;
-      this.targetElement._loadEvent = this._loadEvent;
-      this.targetElement.analyticsApi = this.analyticsApi;
     }
     const element =
       document.querySelector(selector) ||
       document.querySelector(".squatchembed");
 
-    if (element === undefined)
+    if (!element)
       throw new Error(`element with selector '${selector}' not found.'`);
     this.element = element as HTMLElement;
   }
 
   async load() {
     if (this.targetElement) {
-      this.targetElement.style.visibility = "hidden";
-      this.targetElement.style.height = "0";
-      this.targetElement.style["overflow-y"] = "hidden";
+      this.element.style.visibility = "hidden";
+      this.element.style.height = "0";
+      this.element.style["overflow-y"] = "hidden";
 
       // Widget reloaded - replace existing element
-      if (this.targetElement.firstChild) {
-        this.targetElement.replaceChild(
-          this.frame,
-          this.targetElement.firstChild
-        );
+      if (this.element.firstChild) {
+        this.element.replaceChild(this.frame, this.element.firstChild);
         // Add iframe for the first time
       } else {
-        this.targetElement.appendChild(this.frame);
+        this.element.appendChild(this.frame);
       }
-      this.element = this.targetElement;
     } else if (
       !this.element.firstChild ||
       this.element.firstChild.nodeName === "#text"
@@ -108,30 +99,24 @@ export default class EmbedWidget extends Widget {
   // Un-hide if element is available and refresh data
   open() {
     //@ts-ignore type is set in constructor
-    const element = this as EmbedWidget & HTMLElement;
-    if (!element.frame) return _log("no target element to open");
+    if (!this.frame) return _log("no target element to open");
+    this.element.style.visibility = "unset";
+    this.element.style.height = "auto";
+    this.element.style["overflow-y"] = "auto";
 
-    element.style.visibility = "unset";
-    element.style.height = "auto";
-    element.style["overflow-y"] = "auto";
-
-    element.frame?.contentDocument?.dispatchEvent(
-      new CustomEvent("sq:refresh")
-    );
+    this.frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
     const _sqh =
-      element.frame?.contentWindow?.squatch ||
-      element.frame?.contentWindow?.widgetIdent;
-    element._loadEvent(_sqh);
+      this.frame?.contentWindow?.squatch ||
+      this.frame?.contentWindow?.widgetIdent;
+    this._loadEvent(_sqh);
     _log("loaded");
   }
 
   close() {
-    //@ts-ignore type is set in constructor
-    const element = this as EmbedWidget & HTMLElement;
-    if (!element.frame) return _log("no target element to close");
-    element.style.visibility = "hidden";
-    element.style.height = "0";
-    element.style["overflow-y"] = "hidden";
+    if (!this.frame) return _log("no target element to close");
+    this.element.style.visibility = "hidden";
+    this.element.style.height = "0";
+    this.element.style["overflow-y"] = "hidden";
     _log("Embed widget closed");
   }
 
