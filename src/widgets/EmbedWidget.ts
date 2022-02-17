@@ -101,7 +101,8 @@ export default class EmbedWidget extends Widget {
   // Un-hide if element is available and refresh data
   open() {
     //@ts-ignore type is set in constructor
-    if (!this.frame) return _log("no target element to open");
+    if (!this.frame || !this.hasContainer)
+      return _log("no target element to open");
     this.element.style.visibility = "unset";
     this.element.style.height = "auto";
     this.element.style["overflow-y"] = "auto";
@@ -115,7 +116,8 @@ export default class EmbedWidget extends Widget {
   }
 
   close() {
-    if (!this.frame) return _log("no target element to close");
+    if (!this.frame || !this.hasContainer)
+      return _log("no target element to close");
     this.element.style.visibility = "hidden";
     this.element.style.height = "0";
     this.element.style["overflow-y"] = "hidden";

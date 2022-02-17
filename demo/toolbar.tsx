@@ -329,7 +329,7 @@ function MockedWidgets(props) {
   const [usePreload, setUsePreload] = useState(false);
   const [showWidget, setShowWidget] = useState(false);
   const [widget, setWidget] = useState(undefined);
-  const element = usePreload && document.getElementById("squatchembed");
+  const container = usePreload && document.getElementById("squatchembed");
 
   async function getMockWidget(widget) {
     window["mockWidget"] = widget;
@@ -356,7 +356,7 @@ function MockedWidgets(props) {
       .widgets()
       .upsertUser({
         ...window["sandbox"].initObj,
-        element,
+        container,
       });
 
     if (showWidget) embedWidget.open();
