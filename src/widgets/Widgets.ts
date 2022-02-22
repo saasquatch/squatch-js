@@ -298,7 +298,7 @@ export default class Widgets {
     }
 
     if (!displayCTA && config.engagementMedium === "EMBED") {
-      widget = new EmbedWidget(params);
+      widget = new EmbedWidget(params, params.context.container);
       widget.load();
     } else if (!displayCTA && config.engagementMedium === "POPUP") {
       widget = new PopupWidget(params);

@@ -15,16 +15,28 @@ const _log = debug("squatch-js:EMBEDwidget");
 export default class EmbedWidget extends Widget {
   element: HTMLElement;
 
-  constructor(params: Params, selector = "#squatchembed") {
+  constructor(params: Params, container: string | HTMLElement | undefined) {
     super(params);
 
-    const element =
-      params.context.container ||
-      document.querySelector(selector) ||
-      document.querySelector(".squatchembed");
+    let element;
+
+    const selector = typeof container === "string" ? container : false;
+
+    // selector is a string
+    if (selector) {
+      element = document.querySelector(selector);
+      // selector is an HTML element
+    } else if (container) {
+      element = container;
+      // find element on page
+    } else {
+      element =
+        document.querySelector("#squatchembed") ||
+        document.querySelector(".squatchembed");
+    }
 
     if (!element)
-      throw new Error(`element with selector '${selector}' not found.'`);
+      throw new Error(`element with selector '${container}' not found.'`);
     this.element = element as HTMLElement;
   }
 

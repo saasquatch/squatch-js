@@ -331,7 +331,7 @@ function MockedWidgets(props) {
   const [widget, setWidget] = useState(undefined);
   const container = usePreload && document.getElementById("squatchembed");
 
-  async function getMockWidget(widget) {
+  async function getMockWidget(widget, containerOverride? = undefined) {
     window["mockWidget"] = widget;
     window["sandbox"].initObj = {
       ...window["sandbox"].initObj,
@@ -356,7 +356,7 @@ function MockedWidgets(props) {
       .widgets()
       .upsertUser({
         ...window["sandbox"].initObj,
-        container,
+        container: containerOverride || container,
       });
 
     if (showWidget) embedWidget.open();
@@ -446,6 +446,9 @@ function MockedWidgets(props) {
       </button>
       <button onClick={() => getMockWidget("VanillaGANoContainer")}>
         Vanilla - No Container
+      </button>
+      <button onClick={() => getMockWidget("MintGA", "#squatchembed")}>
+        Mint - Selector
       </button>
     </details>
   );
