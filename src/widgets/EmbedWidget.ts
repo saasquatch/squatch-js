@@ -25,14 +25,17 @@ export default class EmbedWidget extends Widget {
     // selector is a string
     if (selector) {
       element = document.querySelector(selector);
+      _log("loading widget with selector", element);
       // selector is an HTML element
     } else if (container) {
       element = container;
+      _log("loading widget with container", container);
       // find element on page
     } else {
       element =
         document.querySelector("#squatchembed") ||
         document.querySelector(".squatchembed");
+      _log("loading widget with default selector", element);
     }
 
     if (!element)

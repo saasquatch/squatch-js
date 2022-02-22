@@ -354,10 +354,13 @@ function MockedWidgets(props) {
         }
       )
     );
-    
-    document.getElementById("squatchembed").innerHTML = "";
+    const defaultElement = document.getElementById(
+      "squatchembed"
+    ) as HTMLElement;
+    defaultElement.innerHTML = "";
     document.getElementById("test-selector").innerHTML = "";
 
+    if (!usePreload) defaultElement.setAttribute("style", "");
     const { widget: embedWidget } = await window["squatch"]
       .widgets()
       .upsertUser({
