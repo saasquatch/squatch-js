@@ -110,7 +110,7 @@ export default class EmbedWidget extends Widget {
 
   // Un-hide if element is available and refresh data
   open() {
-    if (!this.frame || !this.context.container)
+    if (!this.frame)
       return _log("no target element to open");
     this.element.style.visibility = "unset";
     this.element.style.height = "auto";
@@ -125,7 +125,7 @@ export default class EmbedWidget extends Widget {
   }
 
   close() {
-    if (!this.frame || !this.context.container)
+    if (!this.frame)
       return _log("no target element to close");
     this.element.style.visibility = "hidden";
     this.element.style.height = "0";

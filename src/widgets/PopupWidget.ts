@@ -30,6 +30,8 @@ export default class PopupWidget extends Widget {
       this.triggerElement.onclick = () => {
         this.open();
       };
+    } else {
+      _log("No element found with trigger selector", trigger);
     }
 
     // If widget is loaded with CTA, look for a 'squatchpop' element to use
