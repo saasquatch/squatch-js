@@ -20,6 +20,7 @@ export interface WidgetConfig {
   widgetType?: WidgetType; // The content of the widget.
   engagementMedium?: EngagementMedium; // How to display the widget.
   container?: HTMLElement; // Element to load the widget into.
+  trigger?: string; // Trigger element for opening the popup widget
   jwt?: JWT; // the JSON Web Token (JWT) that is used
 }
 
@@ -67,13 +68,15 @@ export type WidgetContext =
   | {
       type: "cookie" | "error";
       engagementMedium?: EngagementMedium;
-      container?: HTMLElement;
+      container?: HTMLElement | string;
+      trigger?: string;
     }
   | {
       type: "upsert";
       user: User;
       engagementMedium?: EngagementMedium;
-      container?: HTMLElement;
+      container?: HTMLElement | string;
+      trigger?: string;
     };
 export type WidgetContextType = "upsert" | "cookie" | "error";
 

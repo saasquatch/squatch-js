@@ -330,8 +330,12 @@ function MockedWidgets(props) {
   const [showWidget, setShowWidget] = useState(false);
   const [widget, setWidget] = useState(undefined);
   const container = usePreload && document.getElementById("squatchembed");
+  const [popupTrigger, setPopupTrigger] = useState(".squatchpop");
 
-  async function getMockWidget(widget, containerOverride? = undefined) {
+  async function getMockWidget(
+    widget,
+    containerOverride: string | undefined = undefined
+  ) {
     window["mockWidget"] = widget;
     window["sandbox"].initObj = {
       ...window["sandbox"].initObj,
@@ -350,13 +354,16 @@ function MockedWidgets(props) {
         }
       )
     );
+    
     document.getElementById("squatchembed").innerHTML = "";
+    document.getElementById("test-selector").innerHTML = "";
 
     const { widget: embedWidget } = await window["squatch"]
       .widgets()
       .upsertUser({
         ...window["sandbox"].initObj,
-        container: containerOverride || container,
+        container: (usePreload && containerOverride) || container,
+        trigger: popupTrigger,
       });
 
     if (showWidget) embedWidget.open();
@@ -405,6 +412,12 @@ function MockedWidgets(props) {
           checked={usePreload === false}
           onClick={() => setUsePreload(false)}
         ></input>
+        <br />
+        <label>squatch popup trigger</label>
+        <input
+          value={popupTrigger}
+          onChange={(e) => setPopupTrigger(e.target.value)}
+        ></input>
       </form>
       <br />
       <button
@@ -420,7 +433,17 @@ function MockedWidgets(props) {
       >
         {showWidget ? "hide widget" : "show widget"}
       </button>
-      <br />
+      {engagementMedium === "POPUP" ? (
+        <button
+          id={popupTrigger.substring(1)}
+          className={popupTrigger.substring(1)}
+        >
+          Open popup
+        </button>
+      ) : (
+        ""
+      )}
+      <hr />
       <button onClick={() => getMockWidget("QuirksVanillaGA")}>
         Quirks mode - Vanilla
       </button>
@@ -447,9 +470,10 @@ function MockedWidgets(props) {
       <button onClick={() => getMockWidget("VanillaGANoContainer")}>
         Vanilla - No Container
       </button>
-      <button onClick={() => getMockWidget("MintGA", "#squatchembed")}>
+      <button onClick={() => getMockWidget("MintGA", "#test-selector")}>
         Mint - Selector
       </button>
+      <hr />
     </details>
   );
 }

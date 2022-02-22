@@ -97,9 +97,9 @@ export default class Widgets {
    * @param {string} config.user.accountId The user account id
    * @param {WidgetType} config.widgetType The content of the widget.
    * @param {EngagementMedium} config.engagementMedium How to display the widget.
-   * @param {string} config.jwt the JSON Web Token (JWT) that is used
-   *                            to validate the data (can be disabled)
-    @param {HTMLElement} config.container Element to load the widget into
+   * @param {string} config.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+   * @param {HTMLElement | string | undefined} config.container Element to load the widget into
+   * @param {string | undefined} config.trigger Trigger element for opening the popup widget
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
@@ -113,7 +113,8 @@ export default class Widgets {
           type: "upsert",
           user: clean.user,
           engagementMedium: config.engagementMedium,
-          container: config.container as HTMLElement | undefined,
+          container: config.container,
+          trigger: config.trigger,
         }),
         user: response.user,
       };
@@ -301,7 +302,7 @@ export default class Widgets {
       widget = new EmbedWidget(params, params.context.container);
       widget.load();
     } else if (!displayCTA && config.engagementMedium === "POPUP") {
-      widget = new PopupWidget(params);
+      widget = new PopupWidget(params, params.context.trigger);
       widget.load();
       if (displayOnLoad) widget.open();
     } else if (displayCTA) {
@@ -347,10 +348,10 @@ export default class Widgets {
 
     let widget: Widget;
     if (em === "EMBED") {
-      widget = new EmbedWidget(params);
+      widget = new EmbedWidget(params, undefined);
       widget.load();
     } else if (em === "POPUP") {
-      widget = new PopupWidget(params);
+      widget = new PopupWidget(params, undefined);
       widget.load();
     }
   }

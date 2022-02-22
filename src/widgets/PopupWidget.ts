@@ -138,7 +138,7 @@ export default class PopupWidget extends Widget {
 
       popupdiv.style.visibility = "visible";
       popupdiv.style.top = "0px";
-
+      frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
       this._loadEvent(_sqh);
       _log("Popup opened");
     });
