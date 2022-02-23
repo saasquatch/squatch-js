@@ -22,7 +22,11 @@ export default class PopupWidget extends Widget {
   constructor(params: Params, trigger = ".squatchpop") {
     super(params);
 
-    this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
+    try {
+      this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
+    } catch {
+      _log("No element found with trigger selector", trigger);
+    }
 
     // Trigger is optional
     if (this.triggerElement) {
@@ -30,8 +34,6 @@ export default class PopupWidget extends Widget {
       this.triggerElement.onclick = () => {
         this.open();
       };
-    } else {
-      _log("No element found with trigger selector", trigger);
     }
 
     // If widget is loaded with CTA, look for a 'squatchpop' element to use
