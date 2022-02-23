@@ -18,7 +18,7 @@ export default class EmbedWidget extends Widget {
   constructor(params: Params, container: string | HTMLElement | undefined) {
     super(params);
 
-    let element;
+    let element: Element | null;
 
     const selector = typeof container === "string" ? container : false;
 
@@ -28,7 +28,7 @@ export default class EmbedWidget extends Widget {
       _log("loading widget with selector", element);
       // selector is an HTML element
     } else if (container) {
-      element = container;
+      element = container as HTMLElement;
       _log("loading widget with container", container);
       // find element on page
     } else {
@@ -110,8 +110,7 @@ export default class EmbedWidget extends Widget {
 
   // Un-hide if element is available and refresh data
   open() {
-    if (!this.frame)
-      return _log("no target element to open");
+    if (!this.frame) return _log("no target element to open");
     this.element.style.visibility = "unset";
     this.element.style.height = "auto";
     this.element.style["overflow-y"] = "auto";
@@ -125,8 +124,7 @@ export default class EmbedWidget extends Widget {
   }
 
   close() {
-    if (!this.frame)
-      return _log("no target element to close");
+    if (!this.frame) return _log("no target element to close");
     this.element.style.visibility = "hidden";
     this.element.style.height = "0";
     this.element.style["overflow-y"] = "hidden";
