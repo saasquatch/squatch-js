@@ -20,11 +20,9 @@ export default class EmbedWidget extends Widget {
 
     let element: Element | null;
 
-    const selector = typeof container === "string" ? container : false;
-
     // selector is a string
-    if (selector) {
-      element = document.querySelector(selector);
+    if (typeof container === "string") {
+      element = document.querySelector(container);
       _log("loading widget with selector", element);
       // selector is an HTML element
     } else if (container) {
