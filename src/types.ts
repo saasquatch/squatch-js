@@ -20,7 +20,7 @@ export interface WidgetConfig {
   widgetType?: WidgetType; // The content of the widget.
   engagementMedium?: EngagementMedium; // How to display the widget.
   container?: HTMLElement; // Element to load the widget into.
-  trigger?: string; // Trigger element selector for opening the popup widget
+  trigger?: string; // Trigger element's selector for opening the popup widget
   jwt?: JWT; // the JSON Web Token (JWT) that is used
 }
 
