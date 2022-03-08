@@ -348,10 +348,10 @@ export default class Widgets {
 
     let widget: Widget;
     if (em === "EMBED") {
-      widget = new EmbedWidget(params, undefined);
+      widget = new EmbedWidget(params);
       widget.load();
     } else if (em === "POPUP") {
-      widget = new PopupWidget(params, undefined);
+      widget = new PopupWidget(params);
       widget.load();
     }
   }
