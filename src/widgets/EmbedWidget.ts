@@ -15,7 +15,7 @@ const _log = debug("squatch-js:EMBEDwidget");
 export default class EmbedWidget extends Widget {
   element: HTMLElement;
 
-  constructor(params: Params, container?: string | HTMLElement | undefined) {
+  constructor(params: Params, container?: string | HTMLElement) {
     super(params);
 
     let element: Element | null;
