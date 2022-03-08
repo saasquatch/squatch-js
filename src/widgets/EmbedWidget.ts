@@ -27,7 +27,7 @@ export default class EmbedWidget extends Widget {
       // selector is an HTML element
     } else if (container) {
       element = container as HTMLElement;
-      _log("loading widget with container", container);
+      _log("loading widget with container", element);
       // find element on page
     } else {
       element =
