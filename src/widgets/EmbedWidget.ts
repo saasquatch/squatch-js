@@ -25,8 +25,8 @@ export default class EmbedWidget extends Widget {
       element = document.querySelector(container);
       _log("loading widget with selector", element);
       // selector is an HTML element
-    } else if (container) {
-      element = container as HTMLElement;
+    } else if (container instanceof HTMLElement) {
+      element = container;
       _log("loading widget with container", element);
       // find element on page
     } else {
@@ -36,9 +36,9 @@ export default class EmbedWidget extends Widget {
       _log("loading widget with default selector", element);
     }
 
-    if (!element)
+    if (!(element instanceof HTMLElement))
       throw new Error(`element with selector '${container}' not found.'`);
-    this.element = element as HTMLElement;
+    this.element = element;
   }
 
   async load() {

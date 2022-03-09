@@ -30,7 +30,6 @@ export default class PopupWidget extends Widget {
 
     // Trigger is optional
     if (this.triggerElement) {
-      //@ts-ignore -- we assume this is an element that can have click events
       this.triggerElement.onclick = () => {
         this.open();
       };
@@ -41,7 +40,6 @@ export default class PopupWidget extends Widget {
     this.triggerWhenCTA = document.querySelector(".squatchpop");
 
     if (trigger === "#cta" && this.triggerWhenCTA) {
-      //@ts-ignore -- we assume this is an element that can have click events
       this.triggerWhenCTA.onclick = () => {
         this.open();
       };
