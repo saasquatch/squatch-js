@@ -1,4 +1,3 @@
-import { EmbedWidget } from "./squatch";
 import Widget from "./widgets/Widget";
 
 /**
@@ -15,20 +14,34 @@ export interface ConfigOptions {
   debug?: boolean;
 }
 
+/**
+ * @param user The user details
+ * @param widgetType The content of the widget.
+ * @param engagementMedium  How to display the widget.
+ * @param container  Element to load the widget into.
+ * @param trigger Trigger element's selector for opening the popup widget
+ * @param jwt the JSON Web Token (JWT) that is used
+ */
 export interface WidgetConfig {
-  user: User; // The user details
-  widgetType?: WidgetType; // The content of the widget.
-  engagementMedium?: EngagementMedium; // How to display the widget.
-  container?: HTMLElement | string; // Element to load the widget into.
-  trigger?: string; // Trigger element's selector for opening the popup widget
-  jwt?: JWT; // the JSON Web Token (JWT) that is used
+  user: User;
+  widgetType?: WidgetType;
+  engagementMedium?: EngagementMedium;
+  container?: HTMLElement | string;
+  trigger?: string;
+  jwt?: JWT;
 }
 
+/**
+ * @param user The user details
+ * @param widgetType The content of the widget.
+ * @param engagementMedium  How to display the widget.
+ * @param jwt the JSON Web Token (JWT) that is used
+ */
 export interface CookieWidgetConfig {
   user?: CookieUser;
-  widgetType?: WidgetType; // The content of the widget.
-  engagementMedium?: EngagementMedium; // How to display the widget.
-  jwt?: JWT; // the JSON Web Token (JWT) that is used}
+  widgetType?: WidgetType;
+  engagementMedium?: EngagementMedium;
+  jwt?: JWT;
 }
 
 /**
