@@ -15,6 +15,8 @@ export interface ConfigOptions {
 }
 
 /**
+ * Config options for loading a widget
+ *
  * @param user The user details
  * @param widgetType The content of the widget.
  * @param engagementMedium  How to display the widget.
