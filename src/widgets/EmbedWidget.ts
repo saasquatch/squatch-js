@@ -31,7 +31,7 @@ export default class EmbedWidget extends Widget {
       // garbage container found
     } else if (container) {
       element = null;
-      _log("container must be an HTMLElement", container);
+      _log("container must be an HTMLElement or string", container);
       // find element on page
     } else {
       element =

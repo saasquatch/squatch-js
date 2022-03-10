@@ -24,8 +24,10 @@ export default class PopupWidget extends Widget {
 
     try {
       this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
+      if (trigger && !this.triggerElement)
+        _log("No element found with trigger selector", trigger);
     } catch {
-      _log("No element found with trigger selector", trigger);
+      _log("Not a valid selector", trigger);
     }
 
     // Trigger is optional
