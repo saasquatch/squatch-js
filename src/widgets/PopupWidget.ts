@@ -22,11 +22,16 @@ export default class PopupWidget extends Widget {
   constructor(params: Params, trigger = ".squatchpop") {
     super(params);
 
-    this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
+    try {
+      this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
+      if (trigger && !this.triggerElement)
+        _log("No element found with trigger selector", trigger);
+    } catch {
+      _log("Not a valid selector", trigger);
+    }
 
     // Trigger is optional
     if (this.triggerElement) {
-      //@ts-ignore -- we assume this is an element that can have click events
       this.triggerElement.onclick = () => {
         this.open();
       };
@@ -37,7 +42,6 @@ export default class PopupWidget extends Widget {
     this.triggerWhenCTA = document.querySelector(".squatchpop");
 
     if (trigger === "#cta" && this.triggerWhenCTA) {
-      //@ts-ignore -- we assume this is an element that can have click events
       this.triggerWhenCTA.onclick = () => {
         this.open();
       };
@@ -138,7 +142,7 @@ export default class PopupWidget extends Widget {
 
       popupdiv.style.visibility = "visible";
       popupdiv.style.top = "0px";
-
+      frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
       this._loadEvent(_sqh);
       _log("Popup opened");
     });

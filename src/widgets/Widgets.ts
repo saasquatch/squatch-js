@@ -7,11 +7,7 @@ import PopupWidget from "./PopupWidget";
 import CtaWidget from "./CtaWidget";
 import Widget, { Params } from "./Widget";
 import { WidgetResult, WidgetContext } from "../types";
-import {
-  ConfigOptions,
-  EngagementMedium,
-  WidgetConfig,
-} from "../types";
+import { ConfigOptions, EngagementMedium, WidgetConfig } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
 
 const _log = debug("squatch-js:widgets");
@@ -101,8 +97,9 @@ export default class Widgets {
    * @param {string} config.user.accountId The user account id
    * @param {WidgetType} config.widgetType The content of the widget.
    * @param {EngagementMedium} config.engagementMedium How to display the widget.
-   * @param {string} config.jwt the JSON Web Token (JWT) that is used
-   *                            to validate the data (can be disabled)
+   * @param {string} config.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
+   * @param {HTMLElement | string | undefined} config.container Element to load the widget into
+   * @param {string | undefined} config.trigger Trigger element for opening the popup widget
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
@@ -116,6 +113,8 @@ export default class Widgets {
           type: "upsert",
           user: clean.user,
           engagementMedium: config.engagementMedium,
+          container: config.container,
+          trigger: config.trigger,
         }),
         user: response.user,
       };
@@ -300,10 +299,10 @@ export default class Widgets {
     }
 
     if (!displayCTA && config.engagementMedium === "EMBED") {
-      widget = new EmbedWidget(params);
+      widget = new EmbedWidget(params, params.context.container);
       widget.load();
     } else if (!displayCTA && config.engagementMedium === "POPUP") {
-      widget = new PopupWidget(params);
+      widget = new PopupWidget(params, params.context.trigger);
       widget.load();
       if (displayOnLoad) widget.open();
     } else if (displayCTA) {

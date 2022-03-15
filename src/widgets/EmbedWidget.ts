@@ -3,7 +3,6 @@
 import debug from "debug";
 import Widget, { Params } from "./Widget";
 import { domready } from "../utils/domready";
-import { User, CookieUser } from "../types";
 
 const _log = debug("squatch-js:EMBEDwidget");
 
@@ -14,22 +13,52 @@ const _log = debug("squatch-js:EMBEDwidget");
  *
  */
 export default class EmbedWidget extends Widget {
-  element: Element;
+  element: HTMLElement;
 
-  constructor(params: Params, selector = "#squatchembed") {
+  constructor(params: Params, container?: HTMLElement | string) {
     super(params);
 
-    const element =
-      document.querySelector(selector) ||
-      document.querySelector(".squatchembed");
+    let element: Element | null;
 
-    if (!element)
-      throw new Error(`element with selector '${selector}' not found.'`);
+    if (typeof container === "string") {
+      // selector is a string
+      element = document.querySelector(container);
+      _log("loading widget with selector", element);
+      // selector is an HTML element
+    } else if (container instanceof HTMLElement) {
+      element = container;
+      _log("loading widget with container", element);
+      // garbage container found
+    } else if (container) {
+      element = null;
+      _log("container must be an HTMLElement or string", container);
+      // find element on page
+    } else {
+      element =
+        document.querySelector("#squatchembed") ||
+        document.querySelector(".squatchembed");
+      _log("loading widget with default selector", element);
+    }
+
+    if (!(element instanceof HTMLElement))
+      throw new Error(`element with selector '${container}' not found.'`);
     this.element = element;
   }
 
   async load() {
-    if (
+    if (this.context.container) {
+      this.element.style.visibility = "hidden";
+      this.element.style.height = "0";
+      this.element.style["overflow-y"] = "hidden";
+
+      // Widget reloaded - replace existing element
+      if (this.element.firstChild) {
+        this.element.replaceChild(this.frame, this.element.firstChild);
+        // Add iframe for the first time
+      } else {
+        this.element.appendChild(this.frame);
+      }
+    } else if (
       !this.element.firstChild ||
       this.element.firstChild.nodeName === "#text"
     ) {
@@ -73,9 +102,35 @@ export default class EmbedWidget extends Widget {
 
       ro.observe(await this._findInnerContainer());
 
-      this._loadEvent(_sqh);
-      _log("loaded");
+      // Regular load - trigger event
+      if (!this.context.container) {
+        this._loadEvent(_sqh);
+        _log("loaded");
+      }
     });
+  }
+
+  // Un-hide if element is available and refresh data
+  open() {
+    if (!this.frame) return _log("no target element to open");
+    this.element.style.visibility = "unset";
+    this.element.style.height = "auto";
+    this.element.style["overflow-y"] = "auto";
+
+    this.frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
+    const _sqh =
+      this.frame?.contentWindow?.squatch ||
+      this.frame?.contentWindow?.widgetIdent;
+    this._loadEvent(_sqh);
+    _log("loaded");
+  }
+
+  close() {
+    if (!this.frame) return _log("no target element to close");
+    this.element.style.visibility = "hidden";
+    this.element.style.height = "0";
+    this.element.style["overflow-y"] = "hidden";
+    _log("Embed widget closed");
   }
 
   protected _error(rs, mode = "embed", style = "") {

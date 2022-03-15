@@ -1,4 +1,4 @@
-import React, { Component, useState, version } from "react";
+import React, { Component, useRef, useState, version } from "react";
 import { render } from "react-dom";
 import squatch from "../dist/squatch";
 
@@ -298,29 +298,6 @@ function VersionList(props) {
   );
 }
 
-async function getMockWidget(widget, engagementMedium) {
-  window["mockWidget"] = widget;
-  window["sandbox"].initObj = {
-    ...window["sandbox"].initObj,
-    engagementMedium,
-  };
-
-  worker.use(
-    rest.put(
-      "https://staging.referralsaasquatch.com/api/*",
-      (req, res, ctx) => {
-        return res(
-          ctx.delay(500),
-          ctx.status(202, "Mocked status"),
-          ctx.json(widgets[window["mockWidget"]])
-        );
-      }
-    )
-  );
-  document.getElementById("squatchembed").innerHTML = "";
-  window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
-}
-
 async function getCustomWidget(engagementMedium) {
   window["sandbox"].initObj = {
     ...window["sandbox"].initObj,
@@ -341,13 +318,61 @@ async function getCustomWidget(engagementMedium) {
     )
   );
   document.getElementById("squatchembed").innerHTML = "";
-  window["squatch"].widgets().upsertUser(window["sandbox"].initObj);
+  window["squatch"].widgets().upsertUser({
+    ...window["sandbox"].initObj,
+  });
 }
 
 function MockedWidgets(props) {
   const { versions } = props;
-
   const [engagementMedium, setEngagementMedium] = useState("EMBED");
+  const [usePreload, setUsePreload] = useState(false);
+  const [showWidget, setShowWidget] = useState(false);
+  const [widget, setWidget] = useState(undefined);
+  const container = usePreload && document.getElementById("squatchembed");
+  const [popupTrigger, setPopupTrigger] = useState(".squatchpop");
+
+  async function getMockWidget(
+    widget,
+    containerOverride: string | undefined = undefined
+  ) {
+    window["mockWidget"] = widget;
+    window["sandbox"].initObj = {
+      ...window["sandbox"].initObj,
+      engagementMedium,
+    };
+
+    worker.use(
+      rest.put(
+        "https://staging.referralsaasquatch.com/api/*",
+        (req, res, ctx) => {
+          return res(
+            ctx.delay(500),
+            ctx.status(202, "Mocked status"),
+            ctx.json(widgets[window["mockWidget"]])
+          );
+        }
+      )
+    );
+    const defaultElement = document.getElementById(
+      "squatchembed"
+    ) as HTMLElement;
+    defaultElement.innerHTML = "";
+    document.getElementById("test-selector").innerHTML = "";
+
+    if (!usePreload) defaultElement.setAttribute("style", "");
+    const { widget: embedWidget } = await window["squatch"]
+      .widgets()
+      .upsertUser({
+        ...window["sandbox"].initObj,
+        container: (usePreload && containerOverride) || container,
+        trigger: popupTrigger,
+      });
+
+    if (showWidget) embedWidget.open();
+    setWidget(embedWidget);
+  }
+
   return (
     <details
       title={"Version: " + window["sandbox"].version || "Head"}
@@ -355,68 +380,103 @@ function MockedWidgets(props) {
       id={`dropdown-basic-1`}
     >
       <summary>Mocked Widgets</summary>
-      <label>Embed</label>
-      <input
-        type="radio"
-        name="embed"
-        checked={engagementMedium === "EMBED"}
-        onClick={() => setEngagementMedium("EMBED")}
-      ></input>
+      <h4>Engagement Medium</h4>
+      <form onSubmit={(e) => e.preventDefault()}>
+        <label>Embed</label>
 
-      <label>Popup</label>
-      <input
-        type="radio"
-        name="popup"
-        checked={engagementMedium === "POPUP"}
-        onClick={() => setEngagementMedium("POPUP")}
-      ></input>
+        <input
+          type="radio"
+          name="embed"
+          checked={engagementMedium === "EMBED"}
+          onClick={() => setEngagementMedium("EMBED")}
+        ></input>
+
+        <label>Popup</label>
+        <input
+          type="radio"
+          name="popup"
+          checked={engagementMedium === "POPUP"}
+          onClick={() => setEngagementMedium("POPUP")}
+        ></input>
+        <br />
+        <h4>Preload</h4>
+        <label>true</label>
+        <input
+          type="radio"
+          name="preload"
+          checked={usePreload === true}
+          onClick={() => setUsePreload(true)}
+        ></input>
+
+        <label>false</label>
+        <input
+          type="radio"
+          name="noPreload"
+          checked={usePreload === false}
+          onClick={() => setUsePreload(false)}
+        ></input>
+        <br />
+        <label>squatch popup trigger</label>
+        <input
+          value={popupTrigger}
+          onChange={(e) => setPopupTrigger(e.target.value)}
+        ></input>
+      </form>
       <br />
       <button
-        onClick={() => getMockWidget("QuirksVanillaGA", engagementMedium)}
+        onClick={() => {
+          if (showWidget) {
+            setShowWidget(false);
+            widget?.close();
+          } else {
+            setShowWidget(true);
+            widget?.open();
+          }
+        }}
       >
+        {showWidget ? "hide widget" : "show widget"}
+      </button>
+      {engagementMedium === "POPUP" ? (
+        <button
+          id={popupTrigger.substring(1)}
+          className={popupTrigger.substring(1)}
+        >
+          Open popup
+        </button>
+      ) : (
+        ""
+      )}
+      <hr />
+      <button onClick={() => getMockWidget("QuirksVanillaGA")}>
         Quirks mode - Vanilla
       </button>
-      <button onClick={() => getMockWidget("QuirksMintGA", engagementMedium)}>
+      <button onClick={() => getMockWidget("QuirksMintGA")}>
         Quirks mode - Mint
       </button>
-      <button onClick={() => getMockWidget("classic", engagementMedium)}>
-        Classic
-      </button>
-      <button onClick={() => getMockWidget("MintGA", engagementMedium)}>
-        GA - Mint
-      </button>
-      <button onClick={() => getMockWidget("VanillaGA", engagementMedium)}>
-        GA - Vanilla
-      </button>
-      <button
-        onClick={() => getMockWidget("MintGAContainer", engagementMedium)}
-      >
+      <button onClick={() => getMockWidget("classic")}>Classic</button>
+      <button onClick={() => getMockWidget("MintGA")}>GA - Mint</button>
+      <button onClick={() => getMockWidget("VanillaGA")}>GA - Vanilla</button>
+      <button onClick={() => getMockWidget("MintGAContainer")}>
         Mint - With Container
       </button>
-      <button
-        onClick={() => getMockWidget("QuirksMintGAContainer", engagementMedium)}
-      >
+      <button onClick={() => getMockWidget("QuirksMintGAContainer")}>
         Quirks mode - Mint - With Container
       </button>
-      <button
-        onClick={() =>
-          getMockWidget("MintGAContainerDisplayBlock", engagementMedium)
-        }
-      >
+      <button onClick={() => getMockWidget("MintGAContainerDisplayBlock")}>
         Mint - With Container + Display Block
       </button>
       <button
-        onClick={() =>
-          getMockWidget("QuirksMintGAContainerDisplayBlock", engagementMedium)
-        }
+        onClick={() => getMockWidget("QuirksMintGAContainerDisplayBlock")}
       >
         Quirks mode - Mint - With Container + Display Block
       </button>
-      <button
-        onClick={() => getMockWidget("VanillaGANoContainer", engagementMedium)}
-      >
+      <button onClick={() => getMockWidget("VanillaGANoContainer")}>
         Vanilla - No Container
       </button>
+      <button onClick={() => getMockWidget("MintGA", "#test-selector")}>
+        Mint - Selector
+      </button>
+      <hr />
     </details>
   );
 }
