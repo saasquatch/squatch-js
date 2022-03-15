@@ -12,7 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - EmbedWidget now supports a `container` as either a selector or an HTMLElement as a parameter
-- Widget contents will be loaded in a hidden widget and can be opened and closed with `widget.open()` and `widget.close()`
+
+  - Widget contents will be loaded in a hidden widget and can be opened and closed with `widget.open()` and `widget.close()`
+
 - Example:
 
 ```js
@@ -42,6 +44,8 @@ squatch
 ```
 
 - PopupWidget now supports a `trigger` as a selector
+
+  - provides the ability to use a class other than `.squatchpop` for opening the widget
 
 - `sq:refresh` event is sent when `.open()` is called on EmbedWidget and PopupWidget
 
