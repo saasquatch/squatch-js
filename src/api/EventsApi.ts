@@ -1,16 +1,13 @@
 import { doPost } from "../utils/io";
-import { ConfigOptions, JWT} from "../types";
-import {
-  isObject,
-  assertProp,
-  validateConfig,
-} from "../utils/validate";
+import { ConfigOptions, JWT } from "../types";
+import { isObject, assertProp, validateConfig } from "../utils/validate";
 
 type TrackOptions = { jwt?: JWT };
 
 interface UserEventInput {
   userId: string;
   accountId: string;
+  idempotencyKey?: string;
   events: UserEventDataInput[];
 }
 

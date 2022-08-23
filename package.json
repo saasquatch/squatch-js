@@ -90,6 +90,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-visualizer-plugin": "^0.1.11"
   },
+  "prettier": {},
   "dependencies": {
     "debug": "^3.2.6",
     "eventbusjs": "^0.2.0",
