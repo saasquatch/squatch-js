@@ -1,6 +1,6 @@
 {
   "name": "@saasquatch/squatch-js",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "types": "dist/squatch.d.ts",
@@ -90,6 +90,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-visualizer-plugin": "^0.1.11"
   },
+  "prettier": {},
   "dependencies": {
     "debug": "^3.2.6",
     "eventbusjs": "^0.2.0",
