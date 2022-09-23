@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.1] - 2022-09-23
+
+### Added
+
+- Added event idempotencyKey to types
+
 ## [2.4.0] - 2022-03-15
 
 ### Changed
@@ -225,8 +231,9 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/v2.4.0...HEAD
-[2.4.0]: https://github.com/saasquatch/squatch-js/compare/v2.3.1...v2.4.0
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...HEAD
+[2.4.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.0...@saasquatch%2Fsquatch-js@2.4.1
+[2.4.0]: https://github.com/saasquatch/squatch-js/compare/v2.3.1...@saasquatch%2Fsquatch-js@2.4.0
 [2.3.1]: https://github.com/saasquatch/squatch-js/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/saasquatch/squatch-js/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/saasquatch/squatch-js/compare/v2.2.0...v2.2.1
