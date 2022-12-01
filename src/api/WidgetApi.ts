@@ -47,29 +47,6 @@ export default class WidgetApi {
   }
 
   /**
-   * Creates/upserts an anonymous user.
-   *
-   * @param {Object} params Parameters for request
-   * @param {WidgetType} params.widgetType The content of the widget.
-   * @param {EngagementMedium} params.engagementMedium How to display the widget.
-   * @param {CookieUser} params.user An optional user object
-   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
-   *                            validate the data (can be disabled)
-   *
-   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-   */
-  cookieUser(params: CookieUser): Promise<any> {
-    // validateInput(params, CookieUserSchema);
-    const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
-    const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const optionalParams = _buildParams({ widgetType, engagementMedium });
-    const path = `/api/v1/${tenantAlias}/widget/user/cookie_user${optionalParams}`;
-    const url = this.domain + path;
-
-    return doPut(url, JSON.stringify(user ? user : {}), jwt);
-  }
-
-  /**
    * Creates/upserts user.
    *
    * @param {Object} params Parameters for request
