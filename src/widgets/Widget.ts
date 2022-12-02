@@ -235,19 +235,6 @@ export default abstract class Widget {
         widgetType: this.type,
         jwt,
       });
-    } else if (this.context.type === "cookie") {
-      let userObj = {
-        email: email || null,
-        firstName: firstName || null,
-        lastName: lastName || null,
-      };
-
-      response = this.widgetApi.cookieUser({
-        user: userObj,
-        engagementMedium,
-        widgetType: this.type,
-        jwt,
-      });
     } else {
       throw new Error("can't reload an error widget");
     }

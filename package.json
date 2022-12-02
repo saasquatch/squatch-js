@@ -35,7 +35,7 @@
     "test:firefox": "cross-env BROWSER=firefox cucumber-js",
     "test:types": "tsd",
     "test": "run-s test:types test:browser",
-    "build:docs": "typedoc --out docs/ src/ ",
+    "build:docs": "typedoc --entryPointStrategy expand --out docs/ src/ ",
     "deploy": "np --no-cleanup",
     "deploy:docs": "surge ./ -d squathjsv2.surge.sh",
     "preversion": "run-s build",
