@@ -171,6 +171,7 @@ export default class WidgetApi {
     const _saasquatch = Cookies.get("_saasquatch") || "";
 
     if (returnEncodedCookie) return Promise.resolve(_saasquatch);
+
     const cookie = _saasquatch
       ? `?cookies=${encodeURIComponent(_saasquatch)}`
       : ``;

@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.2] - 2023-03-06
+
+### Added
+
+- Added option to return encoded _saasquatch cookie as a string from `squatchReferralCookie`
+
+- Example:
+
+```js
+squatch
+  .api()
+  .squatchReferralCookie(true)
+  .then(function (response) {
+    element.value = response.codes["program-id"];
+  });
+```
+
 ## [2.4.1] - 2022-09-23
 
 ### Added
@@ -231,7 +248,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.2...HEAD
+[2.4.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.4.2
 [2.4.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.0...@saasquatch%2Fsquatch-js@2.4.1
 [2.4.0]: https://github.com/saasquatch/squatch-js/compare/v2.3.1...@saasquatch%2Fsquatch-js@2.4.0
 [2.3.1]: https://github.com/saasquatch/squatch-js/compare/v2.3.0...v2.3.1
