@@ -1,8 +1,7 @@
 import * as superagent from "superagent";
 import { JWT } from "../types";
-import Cookies from "js-cookie";
 
-export function doGet(url, jwt = "") {
+export function doGet<T>(url, jwt = ""): Promise<T> {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",

@@ -6,10 +6,7 @@ import {
   CookieUser,
   WidgetConfig,
 } from "../types";
-import {
-  validateConfig,
-  validateWidgetConfig,
-} from "../utils/validate";
+import { validateConfig, validateWidgetConfig } from "../utils/validate";
 import Cookies from "js-cookie";
 
 /**
@@ -97,7 +94,7 @@ export default class WidgetApi {
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
     const cookies = Cookies.get("_saasquatch");
-    if(cookies) user["cookies"] = cookies;
+    if (cookies) user["cookies"] = cookies;
     return doPut(url, JSON.stringify(user), jwt);
   }
 
@@ -166,15 +163,21 @@ export default class WidgetApi {
   /**
    * Looks up the referral code of the current user, if there is any.
    *
+   * @param {boolean} returnEncodedCookie Return the encoded cookie as a string
    * @return {Promise<Object>} code referral code if true.
    */
-  squatchReferralCookie(): Promise<object> {
+  squatchReferralCookie(returnEncodedCookie = false): Promise<Object> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const _saasquatch = Cookies.get("_saasquatch");
-    const cookie = _saasquatch ? `?cookies=${encodeURIComponent(_saasquatch)}` : ``;
+    const _saasquatch = Cookies.get("_saasquatch") || "";
+
+    if (returnEncodedCookie) return Promise.resolve(_saasquatch);
+    const cookie = _saasquatch
+      ? `?cookies=${encodeURIComponent(_saasquatch)}`
+      : ``;
 
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson${cookie}`;
-    return doGet(url);
+
+    return doGet<Object>(url);
   }
 }
 
