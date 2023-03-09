@@ -5,6 +5,7 @@ import {
   WidgetType,
   CookieUser,
   WidgetConfig,
+  ReferralCookieOptions,
 } from "../types";
 import { validateConfig, validateWidgetConfig } from "../utils/validate";
 import Cookies from "js-cookie";
@@ -163,14 +164,15 @@ export default class WidgetApi {
   /**
    * Looks up the referral code of the current user, if there is any.
    *
-   * @param {boolean} returnEncodedCookie Return the encoded cookie as a string
+   * @param {Object} options Parameters for request
+   * @param {boolean} options.returnEncodedCookie Return the encoded cookie as a string
    * @return {Promise<Object>} code referral code if true.
    */
-  squatchReferralCookie(returnEncodedCookie = false): Promise<Object> {
+  squatchReferralCookie(options?: ReferralCookieOptions): Promise<Object> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const _saasquatch = Cookies.get("_saasquatch") || "";
 
-    if (returnEncodedCookie) return Promise.resolve(_saasquatch);
+    if (options?.returnEncodedCookie) return Promise.resolve({ _saasquatch });
 
     const cookie = _saasquatch
       ? `?cookies=${encodeURIComponent(_saasquatch)}`
