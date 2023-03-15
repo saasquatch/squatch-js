@@ -108,12 +108,7 @@ export type WidgetType =
 export type ShareMedium = string;
 export type JWT = string;
 
-/**
- * Looks up the referral code of the current user, if there is any.
- *
- * @param {Object} options Parameters for request
- * @param {boolean} options.returnEncodedCookie Return the encoded cookie as a string
- **/
-export type ReferralCookieOptions = {
-  returnEncodedCookie: boolean;
+export type ReferralCookie = {
+  codes: string[];
+  encodedCookie: string;
 };

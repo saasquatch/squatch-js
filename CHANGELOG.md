@@ -11,16 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added option to return encoded _saasquatch cookie as a string from `squatchReferralCookie`
+- Added value to return data `squatchReferralCookie` to retrieve the encoded cookie
 
 - Example:
 
 ```js
 squatch
   .api()
-  .squatchReferralCookie(true)
+  .squatchReferralCookie()
   .then(function (response) {
-    element.value = response.codes["program-id"];
+    const cookie = response.encodedCookie;
   });
 ```
 
