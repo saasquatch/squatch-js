@@ -166,7 +166,7 @@ export default class WidgetApi {
    *
    * @return {Promise<ReferralCookie>} code referral code if true.
    */
-  squatchReferralCookie(): Promise<ReferralCookie> {
+  async squatchReferralCookie(): Promise<ReferralCookie> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const _saasquatch = Cookies.get("_saasquatch") || "";
 
@@ -176,9 +176,12 @@ export default class WidgetApi {
 
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson${cookie}`;
 
-    const response = doGet<ReferralCookie>(url);
+    const response = await doGet<ReferralCookie>(url);
 
-    return Promise.resolve({ ...response, encodedCookie: _saasquatch });
+    return Promise.resolve({
+      ...response,
+      encodedCookie: _saasquatch,
+    });
   }
 }
 
