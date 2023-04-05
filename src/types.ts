@@ -1,5 +1,7 @@
 import Widget from "./widgets/Widget";
 
+export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
+
 /**
  * When you load Squatch.js you need to provide these configuration options.
  *
@@ -25,7 +27,7 @@ export interface ConfigOptions {
  * @param jwt the JSON Web Token (JWT) that is used
  */
 export interface WidgetConfig {
-  user: User;
+  user?: User;
   widgetType?: WidgetType;
   engagementMedium?: EngagementMedium;
   container?: HTMLElement | string;
@@ -81,19 +83,19 @@ export type EngagementMedium =
 
 export type WidgetContext =
   | {
-      type: "cookie" | "error";
+      type: "cookie" | "error" | "passwordless";
       engagementMedium?: EngagementMedium;
       container?: HTMLElement | string;
       trigger?: string;
     }
   | {
       type: "upsert";
-      user: User;
+      user?: User | null;
       engagementMedium?: EngagementMedium;
       container?: HTMLElement | string;
       trigger?: string;
     };
-export type WidgetContextType = "upsert" | "cookie" | "error";
+export type WidgetContextType = "upsert" | "cookie" | "error" | "passwordless";
 
 /**
  * WidgetType is an enum for types of ways a Widget can be displayed.

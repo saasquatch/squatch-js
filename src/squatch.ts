@@ -15,9 +15,10 @@ import CtaWidget from "./widgets/CtaWidget";
 import WidgetApi from "./api/WidgetApi";
 import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
-import { ConfigOptions } from "./types";
+import { ConfigOptions, WidgetConfig, WidgetResult } from "./types";
 import { validateConfig } from "./utils/validate";
-import {  _pushCookie } from "./utils/cookieUtils";
+import { _pushCookie } from "./utils/cookieUtils";
+import Widget from "./widgets/Widget";
 export * from "./types";
 export * from "./docs";
 
@@ -31,6 +32,8 @@ export { Widgets, EmbedWidget, PopupWidget, CtaWidget, WidgetApi };
 let _api: WidgetApi | null = null;
 /** @hidden */
 let _widgets: Widgets | null = null;
+/** @hidden */
+let _widget: Widget | null = null;
 /** @hidden */
 let _events: EventsApi | null = null;
 
@@ -65,6 +68,15 @@ export function widgets(): Widgets | null {
  */
 export function events(): EventsApi | null {
   return _events;
+}
+
+/**
+ * Entry-point for high level API to render a widget using the instance of {@link Widgets} created when you call {@link #init init}.
+ */
+export function widget(
+  widgetConfig: WidgetConfig
+): Promise<WidgetResult> | undefined {
+  return widgets()?.render(widgetConfig);
 }
 
 /**
@@ -156,7 +168,7 @@ export function submitEmail(fn: (target, widget, email) => any): void {
  * @example
  * squatch.pushCookie();
  */
-export function pushCookie():void {
+export function pushCookie(): void {
   _pushCookie();
 }
 
@@ -171,4 +183,3 @@ if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
 }
 
 if (typeof document !== "undefined") asyncLoad();
-

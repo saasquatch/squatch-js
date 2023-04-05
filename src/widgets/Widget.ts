@@ -225,8 +225,10 @@ export default abstract class Widget {
         email: email || null,
         firstName: firstName || null,
         lastName: lastName || null,
-        id: this.context.user.id,
-        accountId: this.context.user.accountId,
+
+        // FIXME: Double check this
+        id: this.context.user!.id,
+        accountId: this.context.user!.accountId,
       };
 
       response = this.widgetApi.upsertUser({
@@ -247,6 +249,13 @@ export default abstract class Widget {
         engagementMedium,
         widgetType: this.type,
         jwt,
+      });
+    } else if (this.context.type === "passwordless") {
+      response = this.widgetApi.render({
+        user: undefined,
+        engagementMedium,
+        widgetType: this.type,
+        jwt: undefined,
       });
     } else {
       throw new Error("can't reload an error widget");

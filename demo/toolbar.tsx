@@ -245,7 +245,7 @@ function ModeList(props) {
 function UserList(props) {
   return (
     <details
-      title={"User: " + window["sandbox"].initObj.user.firstName}
+      title={"User: " + window["sandbox"].initObj.user?.firstName}
       key={0}
       id={`dropdown-basic-1`}
     >

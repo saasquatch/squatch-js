@@ -44,9 +44,12 @@ export function validateConfig(raw: unknown): Required<ConfigOptions> {
   const domain =
     (hasProps(raw, "domain") && typeof raw.domain === "string" && raw.domain) ||
     "https://app.referralsaasquatch.com";
-  const debug = (hasProps(raw, "debug") && typeof raw.debug === "boolean" && raw.debug) || false;
+  const debug =
+    (hasProps(raw, "debug") && typeof raw.debug === "boolean" && raw.debug) ||
+    false;
   const npmCdn =
-    (hasProps(raw, "npmCdn") && typeof raw.npmCdn === "string" && raw.npmCdn) || "https://fast.ssqt.io/npm";
+    (hasProps(raw, "npmCdn") && typeof raw.npmCdn === "string" && raw.npmCdn) ||
+    "https://fast.ssqt.io/npm";
   return {
     tenantAlias,
     domain,
@@ -59,5 +62,10 @@ export function validateWidgetConfig(raw: unknown): WidgetConfig {
   if (!isObject(raw)) throw new Error("Widget properties must be an object");
   if (!assertProp(raw, "user")) throw new Error("Required properties missing.");
   // TODO: This should be better type checked
+  return raw as unknown as WidgetConfig;
+}
+
+export function validatePasswordlessConfig(raw: unknown): WidgetConfig {
+  if (!isObject(raw)) throw new Error("Widget properties must be an object");
   return raw as unknown as WidgetConfig;
 }

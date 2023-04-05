@@ -28,7 +28,7 @@
     "build:es": "microbundle --target node --format cjs,es",
     "build:umd": "webpack",
     "build": "run-s build:es build:umd",
-    "watch": "microbundle watch",
+    "watch": "webpack --watch",
     "declaration": "tsc --emitDeclarationOnly",
     "test:browser": "cucumber-js",
     "test:webkit": "cross-env BROWSER=webkit cucumber-js",
@@ -75,7 +75,7 @@
     "npm-run-all": "^4.1.5",
     "parcel": "^1.12.3",
     "parcel-bundler": "^1.12.4",
-    "playwright": "^1.0.2",
+    "playwright": "^1.33.0-alpha-mar-29-2023",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
@@ -99,6 +99,6 @@
   },
   "browserslist": "> 0.25%, not dead",
   "msw": {
-    "workerDirectory": "demo\\dist"
+    "workerDirectory": "demo/dist"
   }
 }

@@ -1,74 +1,86 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>simplified JS</title>
     <script>
-    !function(a,b){
-      a("squatch","./dist/squatch.min.js",b)
-    }(function(a,b,c){
-      // a = context
-      // b = file
-      // c = context
-      // console.log(a,b,c === window);
-
-      var d,e,f;
-      c["_" + a] = {},
-      c[a] = {},
-      c[a].ready = function(b){
-        c["_" + a].ready =  c["_" + a].ready || [];
-        c["_" + a].ready.push(b);
-      }
-
-
-      e=document.createElement("script"),
-      e.async=1,
-      e.src=b,
-      f=document.getElementsByTagName("script")[0],
-      f.parentNode.insertBefore(e,f)
-    },this);
+      !(function (a, b) {
+        a("squatch", "./dist/squatch.min.js", b);
+      })(function (a, b, c) {
+        var d, e, f;
+        (c["_" + a] = {}),
+          (c[a] = {}),
+          (c[a].ready = function (b) {
+            c["_" + a].ready = c["_" + a].ready || [];
+            c["_" + a].ready.push(b);
+          }),
+          (e = document.createElement("script")),
+          (e.async = 1),
+          (e.src = b),
+          (f = document.getElementsByTagName("script")[0]),
+          f.parentNode.insertBefore(e, f);
+      }, this);
     </script>
-</head>
-<body>
-  <script>
+  </head>
+  <body>
+    <script>
+      // 1. When squatch.js is ready, run the following function.
+      squatch.ready(function () {
+        // 2. Configure squatch.js for the tenant you are using.
+        squatch.init({
+          // Your tenant alias can be found at "/general" within our admin portal at https://app.referralsaasquatch.com
+          tenantAlias: "test_axbgtatw1tccp",
+          domain: "https://staging.referralsaasquatch.com",
+        });
 
-  squatch.ready(function(){
-    squatch.init({
-      domain: 'https://app.referralsaasquatch.com',
-      tenantAlias: 'test_a9d58f5qxxhp9'
-    });
+        // 3. Configure squatch-js for your user and widget.
+        //  The information provided here is used to upsert and render the widget for your user
+        //  This request is authenticated via JWT
+        //  A note about generating JWTs:
+        //    JWT's are tokens that are signed with your tenant API key. They must be generated server-side.
+        //    To ensure the security of your tenant and program, do not expose your tenant API key to your frontend
+        //    For more information see https://docs.saasquatch.com/topics/json-web-tokens/
+        const widgetConfig = {
+          // 3a. Select how you want your user to engage with the widget, the two options are:
+          //  POPUP - Display the widget as a popup modal. Popups widgets are rendered on top of other elements in a page. See https://docs.saasquatch.com/developer/squatchjs/v2#popup-widget
+          //  EMBED - Display the widget embedded in the page. An embedded widget is displayed inline as part of your page. See https://docs.saasquatch.com/developer/squatchjs/v2#embedded-widget
+          engagementMedium: "EMBED",
 
-    var initObj = {
-      widgetType: "REFERRER_WIDGET",
-      engagementMedium: 'POPUP',
-      user: {
-        id: 'abc_137',
-        accountId: 'abc_137'
-      }
-    }
+          // 3b. Select what widget you would like to display
+          //  The format for program widgets is "p/{program-id}/w/{widget-id}"
+          //  The format for global widgets is "w/{widget-id}"
+          widgetType: "p/passwordless-referral/w/referrerWidget",
 
+          // 3c. Add details about your user
+          //  This must include id and account id but other fields such as email, first name, locale or even custom fields can be included
+          //  For more details and a list of user fields see https://docs.saasquatch.com/developer/squatchjs/v2/reference#upsertuser
+          user: {
+            id: "abc_123",
+            accountId: "abc_123",
+            email: "john@example.com",
+          },
 
-    squatch.widgets().upsertUser(initObj).then(function(res){
-      console.log(res);
-    }).catch(function(err) {
-      console.log(err);
-    });
+          // 3d. Add your generated JWT here to authenticate your request
+          jwt: "INSERT_JWT_HERE",
+        };
 
-    // squatch.widgets().createCookieUser({
-    //   engagementMedium: 'EMBED',  // String (optional: POPUP, EMBED)
-    //   widgetType: 'CONVERSION_WIDGET'
-    // });
-
-
-
-
-
-  });
-
-  </script>
-
-  <input type="text" name="Coupon" class="testClass" value="" />
-  <div id="squatchembed"></div>
-  <div class="squatchpop">click here</div>
-</body>
+        // 4. Make the request to upsert your user and render your widget.
+        //  Full Reference on this method and the squatch.js API can be found at https://docs.saasquatch.com/developer/squatchjs/v2/reference/#widgetapi
+        squatch
+          .widgets()
+          .upsertUser(widgetConfig)
+          .then(function (response) {
+            // The widget API automatically inserts the HTML for your widget into your page via an iFrame
+            // However if needed, you can retrieve details about the upserted user and the widget HTML through this function response
+            const user = response.user;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+    </script>
+    <input type="text" name="Coupon" class="testClass" value="" />
+    <div id="squatchembed"></div>
+    <div class="squatchpop">click here</div>
+  </body>
 </html>

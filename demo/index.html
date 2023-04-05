@@ -70,10 +70,8 @@
           debug: true,
         });
         squatch
-          .widgets()
-          .upsertUser(window.sandbox.initObj)
+          .widget(window.sandbox.initObj)
           .then(function (res) {
-            console.log("Upsert done", res);
             setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
             hideSpineer();
             if (res.widget.open) res.widget.open();
@@ -84,6 +82,21 @@
             hideSpineer();
           });
       });
+      //   squatch
+      //     .widgets()
+      //     .upsertUser(window.sandbox.initObj)
+      //     .then(function (res) {
+      //       console.log("Upsert done", res);
+      //       setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
+      //       hideSpineer();
+      //       if (res.widget.open) res.widget.open();
+      //     })
+      //     .catch(function (err) {
+      //       console.log("Upsert error", err);
+      //       setStatus("Error" + JSON.stringify(err));
+      //       hideSpineer();
+      //     });
+      // });
     </script>
 
     <div style="display: flex">

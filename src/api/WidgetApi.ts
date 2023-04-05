@@ -1,13 +1,16 @@
-import { doPost, doPut, doGet } from "../utils/io";
+import { doPost, doPut, doGet, doQuery } from "../utils/io";
 import {
   ConfigOptions,
   EngagementMedium,
   WidgetType,
   CookieUser,
   WidgetConfig,
+  WithRequired,
+  User,
 } from "../types";
 import {
   validateConfig,
+  validatePasswordlessConfig,
   validateWidgetConfig,
 } from "../utils/validate";
 import Cookies from "js-cookie";
@@ -83,10 +86,15 @@ export default class WidgetApi {
    *
    * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
-  upsertUser(params: WidgetConfig): Promise<any> {
+  upsertUser(params: WithRequired<WidgetConfig, "user">): Promise<any> {
     const raw = params as unknown;
     const clean = validateWidgetConfig(raw);
-    const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
+    const {
+      widgetType,
+      engagementMedium = "POPUP",
+      jwt,
+      user,
+    } = clean as WithRequired<WidgetConfig, "user">;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(user.accountId);
@@ -97,7 +105,7 @@ export default class WidgetApi {
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
     const cookies = Cookies.get("_saasquatch");
-    if(cookies) user["cookies"] = cookies;
+    if (cookies) user["cookies"] = cookies;
     return doPut(url, JSON.stringify(user), jwt);
   }
 
@@ -116,17 +124,48 @@ export default class WidgetApi {
    */
   render(params: WidgetConfig): Promise<any> {
     const raw = params as unknown;
-    const clean = validateWidgetConfig(raw);
+    const clean = validatePasswordlessConfig(raw);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const accountId = encodeURIComponent(user.accountId);
-    const userId = encodeURIComponent(user.id);
-    const optionalParams = _buildParams({ widgetType, engagementMedium });
+    const accountId = user ? encodeURIComponent(user.accountId) : null;
+    const userId = user ? encodeURIComponent(user.id) : null;
 
-    const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/render${optionalParams}`;
+    const query = `
+      query renderWidget ($user: UserIdInput, $engagementMedium: UserEngagementMedium, $widgetType: WidgetType) {
+        renderWidget(user: $user, engagementMedium: $engagementMedium, widgetType: $widgetType) {
+          template
+          user {
+            id
+            accountId
+          }
+          jsOptions
+          widgetConfig {
+            values
+          }
+        }
+      }
+    `;
+
+    const path = `/api/v1/${tenantAlias}/graphql`;
     const url = this.domain + path;
-    return doGet(url, jwt);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await doQuery(
+          url,
+          query,
+          {
+            user: userId && accountId ? { id: userId, accountId } : null,
+            engagementMedium,
+            widgetType,
+          },
+          jwt
+        );
+        resolve(res?.body?.data?.renderWidget);
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 
   /**
@@ -171,7 +210,9 @@ export default class WidgetApi {
   squatchReferralCookie(): Promise<object> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const _saasquatch = Cookies.get("_saasquatch");
-    const cookie = _saasquatch ? `?cookies=${encodeURIComponent(_saasquatch)}` : ``;
+    const cookie = _saasquatch
+      ? `?cookies=${encodeURIComponent(_saasquatch)}`
+      : ``;
 
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson${cookie}`;
     return doGet(url);

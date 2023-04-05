@@ -6,9 +6,13 @@ import EmbedWidget from "./EmbedWidget";
 import PopupWidget from "./PopupWidget";
 import CtaWidget from "./CtaWidget";
 import Widget, { Params } from "./Widget";
-import { WidgetResult, WidgetContext } from "../types";
+import { WidgetResult, WidgetContext, WithRequired } from "../types";
 import { ConfigOptions, EngagementMedium, WidgetConfig } from "../types";
-import { validateConfig, validateWidgetConfig } from "../utils/validate";
+import {
+  validateConfig,
+  validatePasswordlessConfig,
+  validateWidgetConfig,
+} from "../utils/validate";
 
 const _log = debug("squatch-js:widgets");
 
@@ -103,15 +107,18 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  async upsertUser(config: WidgetConfig) {
+  async upsertUser(config: WithRequired<WidgetConfig, "user">) {
     const raw = config as unknown;
-    const clean = validateWidgetConfig(raw);
+    const clean = validateWidgetConfig(raw) as WithRequired<
+      WidgetConfig,
+      "user"
+    >;
     try {
       const response = await this.api.upsertUser(clean);
       return {
         widget: this._renderWidget(response, clean, {
           type: "upsert",
-          user: clean.user,
+          user: clean.user || null,
           engagementMedium: config.engagementMedium,
           container: config.container,
           trigger: config.trigger,
@@ -144,12 +151,17 @@ export default class Widgets {
    */
   async render(config: WidgetConfig): Promise<WidgetResult> {
     const raw = config as unknown;
-    const clean = validateWidgetConfig(raw);
+    const clean = validatePasswordlessConfig(raw);
     try {
-      const response = await this.api.cookieUser(clean);
+      // TODO: Flagging default behaviour change
+      // cookieUser returns a deprecated error from the API on the latest squatchJs version
+      // More suitable for no auth render?
+
+      const response = await this.api.render(clean);
+
       return {
-        widget: this._renderWidget({ template: response }, clean, {
-          type: "cookie",
+        widget: this._renderWidget(response, clean, {
+          type: "passwordless",
           engagementMedium: clean.engagementMedium,
         }),
         user: response.user,
