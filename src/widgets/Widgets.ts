@@ -149,7 +149,7 @@ export default class Widgets {
    *
    * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
    */
-  async render(config: WidgetConfig): Promise<WidgetResult> {
+  async render(config: WidgetConfig): Promise<WidgetResult | undefined> {
     const raw = config as unknown;
     const clean = validatePasswordlessConfig(raw);
     try {
@@ -157,15 +157,21 @@ export default class Widgets {
       // cookieUser returns a deprecated error from the API on the latest squatchJs version
       // More suitable for no auth render?
 
-      const response = await this.api.render(clean);
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const refParam = urlParams.get("_saasquatch") || "";
 
-      return {
-        widget: this._renderWidget(response, clean, {
-          type: "passwordless",
-          engagementMedium: clean.engagementMedium,
-        }),
-        user: response.user,
-      };
+      if (!config.showOnReferral || refParam) {
+        const response = await this.api.render(clean);
+
+        return {
+          widget: this._renderWidget(response, clean, {
+            type: "passwordless",
+            engagementMedium: clean.engagementMedium,
+          }),
+          user: response.user,
+        };
+      }
     } catch (err) {
       if (err.apiErrorCode) {
         this._renderErrorWidget(err, clean.engagementMedium);

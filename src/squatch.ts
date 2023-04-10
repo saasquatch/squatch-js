@@ -75,7 +75,7 @@ export function events(): EventsApi | null {
  */
 export function widget(
   widgetConfig: WidgetConfig
-): Promise<WidgetResult> | undefined {
+): Promise<WidgetResult | undefined> | undefined {
   return widgets()?.render(widgetConfig);
 }
 

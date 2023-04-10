@@ -74,7 +74,7 @@
           .then(function (res) {
             setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
             hideSpineer();
-            if (res.widget.open) res.widget.open();
+            // if (res.widget.open) res.widget.open();
           })
           .catch(function (err) {
             console.log("Upsert error", err);
