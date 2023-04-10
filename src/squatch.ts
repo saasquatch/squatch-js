@@ -19,6 +19,7 @@ import { ConfigOptions, WidgetConfig, WidgetResult } from "./types";
 import { validateConfig } from "./utils/validate";
 import { _pushCookie } from "./utils/cookieUtils";
 import Widget from "./widgets/Widget";
+import { _getWidgetConfig } from "./utils/utmUtils";
 export * from "./types";
 export * from "./docs";
 
@@ -77,6 +78,18 @@ export function widget(
   widgetConfig: WidgetConfig
 ): Promise<WidgetResult | undefined> | undefined {
   return widgets()?.render(widgetConfig);
+}
+
+/**
+ * Initial concept for automatic widget rendering
+ *
+ * - `saasquatchExtra` utm param carries widgetIdent
+ */
+export function auto(configIn: ConfigOptions): void {
+  init(configIn);
+
+  const widgetConfig = _getWidgetConfig();
+  widgetConfig && widgets()?.render(widgetConfig);
 }
 
 /**

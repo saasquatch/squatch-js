@@ -6,12 +6,23 @@ import URLSearchParams from "@ungap/url-search-params";
 /** @hidden */
 const _log = debug("squatch-js");
 
-const isObject = (item: any) => typeof item === "object" && !Array.isArray(item);
+const isObject = (item: any) =>
+  typeof item === "object" && !Array.isArray(item);
 
-const deepMerge = <A = Object, B = Object>(target: Object, source: Object): A & B => {
-  const isDeep = (prop: string) => isObject(source[prop]) && target.hasOwnProperty(prop) && isObject(target[prop]);
+const deepMerge = <A = Object, B = Object>(
+  target: Object,
+  source: Object
+): A & B => {
+  const isDeep = (prop: string) =>
+    isObject(source[prop]) &&
+    target.hasOwnProperty(prop) &&
+    isObject(target[prop]);
   const replaced = Object.getOwnPropertyNames(source)
-    .map((prop) => ({ [prop]: isDeep(prop) ? deepMerge(target[prop], source[prop]) : source[prop] }))
+    .map((prop) => ({
+      [prop]: isDeep(prop)
+        ? deepMerge(target[prop], source[prop])
+        : source[prop],
+    }))
     .reduce((a, b) => ({ ...a, ...b }), {});
 
   return {
@@ -20,7 +31,7 @@ const deepMerge = <A = Object, B = Object>(target: Object, source: Object): A & 
   } as A & B;
 };
 
-function b64decode(input) {
+export function b64decode(input) {
   return atob(input.replace(/_/g, "/").replace(/-/g, "+"));
 }
 
@@ -39,7 +50,11 @@ function getTopDomain() {
     document.cookie = weird_cookie + ";domain=." + h + ";";
     if (document.cookie.indexOf(weird_cookie) > -1) {
       // We were able to store a cookie! This must be it
-      document.cookie = weird_cookie.split("=")[0] + "=;domain=." + h + ";expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+      document.cookie =
+        weird_cookie.split("=")[0] +
+        "=;domain=." +
+        h +
+        ";expires=Thu, 01 Jan 1970 00:00:01 GMT;";
       return h;
     }
   }
