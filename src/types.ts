@@ -107,3 +107,8 @@ export type WidgetType =
 
 export type ShareMedium = string;
 export type JWT = string;
+
+export type ReferralCookie = {
+  codes: string[];
+  encodedCookie: string;
+};

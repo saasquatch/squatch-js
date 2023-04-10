@@ -45,6 +45,7 @@ Note: `engagementMedium` is required in the `squatch.widgets()` functions if you
       widgetType: 'p/PROGRAM-ID/w/referrerWidget',  // Update PROGRAM-ID
       jwt: 'TOKEN'                                  // String (required by default, or disable Security in the portal)
 
+    });
   });
 </script>
 ```
