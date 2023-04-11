@@ -88,7 +88,7 @@ export function widget(
 export function auto(configIn: ConfigOptions): void {
   init(configIn);
 
-  const widgetConfig = _getWidgetConfig();
+  const widgetConfig = _getWidgetConfig(configIn);
   widgetConfig && widgets()?.render(widgetConfig);
 }
 
