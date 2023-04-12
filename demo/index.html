@@ -64,11 +64,12 @@
       squatch.ready(function () {
         setStatus("Rendering widget");
         console.log("Squatch.js is ready", squatch);
+
+        // squatch.auto();
         squatch.auto({
-          domain: window.sandbox.domain,
-          tenantAlias: window.sandbox.tenantAlias,
           debug: true,
         });
+
         // squatch.init({
         //   domain: window.sandbox.domain,
         //   tenantAlias: window.sandbox.tenantAlias,

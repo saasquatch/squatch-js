@@ -18,8 +18,7 @@ import asyncLoad from "./async";
 import { ConfigOptions, WidgetConfig, WidgetResult } from "./types";
 import { validateConfig } from "./utils/validate";
 import { _pushCookie } from "./utils/cookieUtils";
-import Widget from "./widgets/Widget";
-import { _getWidgetConfig } from "./utils/utmUtils";
+import { _getConfig } from "./utils/utmUtils";
 export * from "./types";
 export * from "./docs";
 
@@ -33,8 +32,6 @@ export { Widgets, EmbedWidget, PopupWidget, CtaWidget, WidgetApi };
 let _api: WidgetApi | null = null;
 /** @hidden */
 let _widgets: Widgets | null = null;
-/** @hidden */
-let _widget: Widget | null = null;
 /** @hidden */
 let _events: EventsApi | null = null;
 
@@ -85,11 +82,16 @@ export function widget(
  *
  * - `saasquatchExtra` utm param carries widgetIdent
  */
-export function auto(configIn: ConfigOptions): void {
-  init(configIn);
+export function auto(
+  configIn: ConfigOptions
+): Promise<WidgetResult | undefined> | undefined {
+  const configs = _getConfig(configIn);
 
-  const widgetConfig = _getWidgetConfig(configIn);
-  widgetConfig && widgets()?.render(widgetConfig);
+  if (configs) {
+    const { squatchConfig, widgetConfig } = configs;
+    init(squatchConfig);
+    return widgetConfig && widgets()?.render(widgetConfig);
+  }
 }
 
 /**
