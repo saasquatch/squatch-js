@@ -18,7 +18,7 @@ import asyncLoad from "./async";
 import { ConfigOptions, WidgetConfig, WidgetResult } from "./types";
 import { validateConfig } from "./utils/validate";
 import { _pushCookie } from "./utils/cookieUtils";
-import { _getConfig } from "./utils/utmUtils";
+import { _getAutoConfig } from "./utils/utmUtils";
 export * from "./types";
 export * from "./docs";
 
@@ -85,12 +85,12 @@ export function widget(
 export function auto(
   configIn: ConfigOptions
 ): Promise<WidgetResult | undefined> | undefined {
-  const configs = _getConfig(configIn);
+  const configs = _getAutoConfig(configIn);
 
   if (configs) {
     const { squatchConfig, widgetConfig } = configs;
     init(squatchConfig);
-    return widgetConfig && widgets()?.render(widgetConfig);
+    return widgets()?.render({ showOnReferral: true, ...widgetConfig });
   }
 }
 

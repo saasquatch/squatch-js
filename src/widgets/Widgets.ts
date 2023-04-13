@@ -241,6 +241,7 @@ export default class Widgets {
    * @param {Object} config Config details
    * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
    * @param {string} config.engagementMedium (POPUP, EMBED)
+   * @param {string} config.showOnReferral Whether to show
    * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
    */
   private _renderWidget(
@@ -252,7 +253,7 @@ export default class Widgets {
     if (!response) throw new Error("Unable to get a response");
 
     let widget;
-    let displayOnLoad = false;
+    let displayOnLoad = !!config.showOnReferral;
     let displayCTA = false;
     const opts = response.jsOptions || "";
 

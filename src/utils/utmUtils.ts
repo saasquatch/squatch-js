@@ -6,7 +6,7 @@ import { validatePasswordlessConfig } from "./validate";
 /** @hidden */
 const _log = debug("squatch-js");
 
-export function _getConfig(
+export function _getAutoConfig(
   configIn: ConfigOptions
 ): { widgetConfig: WidgetConfig; squatchConfig: ConfigOptions } | undefined {
   const queryString = window.location.search;
@@ -53,9 +53,12 @@ export function _getConfig(
  * @param obj
  */
 export function convertExtraToConfig(obj: Record<string, any>) {
-  const domain = Object.keys(obj || {})[0];
-  const tenantAlias = Object.keys(obj?.[domain] || {})[0];
-  const widgetConfig = obj?.[domain]?.[tenantAlias];
+  const _domain = Object.keys(obj || {})[0];
+  const tenantAlias = Object.keys(obj?.[_domain] || {})[0];
+  const widgetConfig = obj?.[_domain]?.[tenantAlias];
+
+  // domain in _saasquatchExtra doesn't contain "https://"
+  const domain = _domain ? `https://${_domain}` : undefined;
 
   return { domain, tenantAlias, widgetConfig };
 }
