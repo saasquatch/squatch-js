@@ -93,7 +93,7 @@ export default abstract class Widget {
 
     this.analyticsApi
       .pushAnalyticsLoadEvent(params)
-      .then((response) => {
+      ?.then((response) => {
         _log(`${params.engagementMedium} loaded event recorded.`);
       })
       .catch((ex) => {

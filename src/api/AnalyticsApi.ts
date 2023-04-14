@@ -37,6 +37,8 @@ export default class AnalyticsApi {
       ? `&programId=${encodeURIComponent(params.programId)}`
       : ``;
 
+    if (!userId || !accountId) return;
+
     const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}${programId}`;
     const url = this.domain + path;
 
