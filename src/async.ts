@@ -16,6 +16,7 @@ export default function asyncLoad() {
     const ready = cached.ready || [];
 
     ready.forEach((cb) => setTimeout(() => cb(), 0));
+    setTimeout(() => window.squatch.auto(), 0);
 
     // @ts-ignore -- intetionally deletes `_squatch` to cleanup initialization
     window._squatch = undefined;

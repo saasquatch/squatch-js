@@ -131,6 +131,8 @@ export default class WidgetApi {
     const accountId = user ? encodeURIComponent(user.accountId) : null;
     const userId = user ? encodeURIComponent(user.id) : null;
 
+    // TODO: Add locale as parameter to renderWidget
+
     const query = `
       query renderWidget ($user: UserIdInput, $engagementMedium: UserEngagementMedium, $widgetType: WidgetType) {
         renderWidget(user: $user, engagementMedium: $engagementMedium, widgetType: $widgetType) {

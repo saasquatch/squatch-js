@@ -61,45 +61,46 @@
       localStorage.debug = "*";
       console.log("Loading Squatch.js using sandbox", window.sandbox);
       setStatus("Loading squatch.js");
-      squatch.ready(function () {
-        setStatus("Rendering widget");
-        console.log("Squatch.js is ready", squatch);
 
-        // squatch.auto();
+      // squatch.ready(function () {
+      //   setStatus("Rendering widget");
+      //   console.log("Squatch.js is ready", squatch);
 
-        squatch.init({
-          domain: window.sandbox.domain,
-          tenantAlias: window.sandbox.tenantAlias,
-          debug: true,
-        });
-        // squatch
-        //   .widget(window.sandbox.initObj)
-        //   .then(function (res) {
-        //     setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
-        //     hideSpineer();
-        //     // if (res.widget.open) res.widget.open();
-        //   })
-        //   .catch(function (err) {
-        //     console.log("Upsert error", err);
-        //     setStatus("Error" + JSON.stringify(err));
-        //     hideSpineer();
-        //   });
-        // });
-        squatch
-          .widgets()
-          .upsertUser(window.sandbox.initObj)
-          .then(function (res) {
-            console.log("Upsert done", res);
-            setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
-            hideSpineer();
-            if (res.widget.open) res.widget.open();
-          })
-          .catch(function (err) {
-            console.log("Upsert error", err);
-            setStatus("Error" + JSON.stringify(err));
-            hideSpineer();
-          });
-      });
+      //   // squatch.auto();
+
+      //   squatch.init({
+      //     domain: window.sandbox.domain,
+      //     tenantAlias: window.sandbox.tenantAlias,
+      //     debug: true,
+      //   });
+      //   squatch
+      //     .widget(window.sandbox.initObj)
+      //     .then(function (res) {
+      //       setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
+      //       hideSpineer();
+      //       // if (res.widget.open) res.widget.open();
+      //     })
+      //     .catch(function (err) {
+      //       console.log("Upsert error", err);
+      //       setStatus("Error" + JSON.stringify(err));
+      //       hideSpineer();
+      //     });
+      // });
+      // squatch
+      //   .widgets()
+      //   .upsertUser(window.sandbox.initObj)
+      //   .then(function (res) {
+      //     console.log("Upsert done", res);
+      //     setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
+      //     hideSpineer();
+      //     if (res.widget.open) res.widget.open();
+      //   })
+      //   .catch(function (err) {
+      //     console.log("Upsert error", err);
+      //     setStatus("Error" + JSON.stringify(err));
+      //     hideSpineer();
+      //   });
+      // });
     </script>
 
     <div style="display: flex">

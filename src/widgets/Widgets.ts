@@ -157,21 +157,15 @@ export default class Widgets {
       // cookieUser returns a deprecated error from the API on the latest squatchJs version
       // More suitable for no auth render?
 
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const refParam = urlParams.get("_saasquatch") || "";
+      const response = await this.api.render(clean);
 
-      if (!config.showOnReferral || refParam) {
-        const response = await this.api.render(clean);
-
-        return {
-          widget: this._renderWidget(response, clean, {
-            type: "passwordless",
-            engagementMedium: clean.engagementMedium,
-          }),
-          user: response.user,
-        };
-      }
+      return {
+        widget: this._renderWidget(response, clean, {
+          type: "passwordless",
+          engagementMedium: clean.engagementMedium,
+        }),
+        user: response.user,
+      };
     } catch (err) {
       if (err.apiErrorCode) {
         this._renderErrorWidget(err, clean.engagementMedium);
@@ -241,7 +235,6 @@ export default class Widgets {
    * @param {Object} config Config details
    * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
    * @param {string} config.engagementMedium (POPUP, EMBED)
-   * @param {string} config.showOnReferral Whether to show
    * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
    */
   private _renderWidget(
@@ -253,7 +246,7 @@ export default class Widgets {
     if (!response) throw new Error("Unable to get a response");
 
     let widget;
-    let displayOnLoad = !!config.showOnReferral;
+    let displayOnLoad = false;
     let displayCTA = false;
     const opts = response.jsOptions || "";
 

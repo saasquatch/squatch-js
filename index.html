@@ -54,21 +54,20 @@
           // 3c. Add details about your user
           //  This must include id and account id but other fields such as email, first name, locale or even custom fields can be included
           //  For more details and a list of user fields see https://docs.saasquatch.com/developer/squatchjs/v2/reference#upsertuser
-          user: {
-            id: "abc_123",
-            accountId: "abc_123",
-            email: "john@example.com",
-          },
+          // user: {
+          //   id: "abc_123",
+          //   accountId: "abc_123",
+          //   email: "john@example.com",
+          // },
 
-          // 3d. Add your generated JWT here to authenticate your request
-          jwt: "INSERT_JWT_HERE",
+          // // 3d. Add your generated JWT here to authenticate your request
+          // jwt: "INSERT_JWT_HERE",
         };
 
         // 4. Make the request to upsert your user and render your widget.
         //  Full Reference on this method and the squatch.js API can be found at https://docs.saasquatch.com/developer/squatchjs/v2/reference/#widgetapi
         squatch
-          .widgets()
-          .upsertUser(widgetConfig)
+          .widget(widgetConfig)
           .then(function (response) {
             // The widget API automatically inserts the HTML for your widget into your page via an iFrame
             // However if needed, you can retrieve details about the upserted user and the widget HTML through this function response

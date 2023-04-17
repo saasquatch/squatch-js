@@ -90,7 +90,7 @@ export function auto(
   if (configs) {
     const { squatchConfig, widgetConfig } = configs;
     init(squatchConfig);
-    return widgets()?.render({ showOnReferral: true, ...widgetConfig });
+    return widgets()?.render(widgetConfig);
   }
 }
 
