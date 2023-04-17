@@ -60,38 +60,6 @@ export default class Widgets {
   }
 
   /**
-   * This function calls the {@link WidgetApi.cookieUser} method, and it renders
-   * the widget if it is successful. Otherwise it shows the "error" widget.
-   *
-   * @param {Object} config Config details
-   * @param {WidgetType} config.widgetType The content of the widget.
-   * @param {EngagementMedium} config.engagementMedium How to display the widget.
-   * @param {User} config.user An optional user to include
-   * @param {string} config.jwt the JSON Web Token (JWT) that is used to
-   *                            validate the data (can be disabled)
-   *
-   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
-   */
-  async createCookieUser(config: WidgetConfig): Promise<WidgetResult> {
-    try {
-      const response = await this.api.cookieUser(config);
-      return {
-        widget: this._renderWidget(response, config, {
-          type: "cookie",
-          engagementMedium: config.engagementMedium,
-        }),
-        user: response.user,
-      };
-    } catch (err) {
-      _log(err);
-      if (err.apiErrorCode) {
-        this._renderErrorWidget(err, config.engagementMedium);
-      }
-      throw err;
-    }
-  }
-
-  /**
    * This function calls the {@link WidgetApi.upsertUser} method, and it renders
    * the widget if it is successful. Otherwise it shows the "error" widget.
    *
