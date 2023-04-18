@@ -38,6 +38,7 @@ export function _getAutoConfig(
   return {
     widgetConfig: {
       widgetType: autoPopupWidgetType,
+      displayOnLoad: true,
       ...rest,
     },
     squatchConfig: {

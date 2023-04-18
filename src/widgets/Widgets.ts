@@ -120,11 +120,8 @@ export default class Widgets {
   async render(config: WidgetConfig): Promise<WidgetResult | undefined> {
     const raw = config as unknown;
     const clean = validatePasswordlessConfig(raw);
-    try {
-      // TODO: Flagging default behaviour change
-      // cookieUser returns a deprecated error from the API on the latest squatchJs version
-      // More suitable for no auth render?
 
+    try {
       const response = await this.api.render(clean);
 
       return {
@@ -214,7 +211,7 @@ export default class Widgets {
     if (!response) throw new Error("Unable to get a response");
 
     let widget;
-    let displayOnLoad = false;
+    let displayOnLoad = !!config.displayOnLoad;
     let displayCTA = false;
     const opts = response.jsOptions || "";
 

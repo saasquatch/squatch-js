@@ -33,6 +33,7 @@ export interface WidgetConfig {
   container?: HTMLElement | string;
   trigger?: string;
   jwt?: JWT;
+  displayOnLoad?: boolean;
 }
 
 /**
@@ -87,6 +88,7 @@ export type WidgetContext =
       engagementMedium?: EngagementMedium;
       container?: HTMLElement | string;
       trigger?: string;
+      displayOnLoad?: boolean;
     }
   | {
       type: "upsert";

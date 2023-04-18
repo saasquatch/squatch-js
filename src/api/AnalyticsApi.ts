@@ -29,6 +29,8 @@ export default class AnalyticsApi {
   }
 
   pushAnalyticsLoadEvent(params: SQHDetails) {
+    if (!params.externalUserId || !params.externalAccountId) return;
+
     const tenantAlias = encodeURIComponent(params.tenantAlias);
     const accountId = encodeURIComponent(params.externalAccountId);
     const userId = encodeURIComponent(params.externalUserId);
@@ -36,8 +38,6 @@ export default class AnalyticsApi {
     const programId = params.programId
       ? `&programId=${encodeURIComponent(params.programId)}`
       : ``;
-
-    if (!userId || !accountId) return;
 
     const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}${programId}`;
     const url = this.domain + path;
