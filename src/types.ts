@@ -33,6 +33,7 @@ export interface WidgetConfig {
   container?: HTMLElement | string;
   trigger?: string;
   jwt?: JWT;
+  locale?: string;
   displayOnLoad?: boolean;
 }
 
