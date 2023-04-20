@@ -62,11 +62,6 @@ html {
   font-family: sans-serif;
 }
 
-/* Hide iframe scrollbar scrollbar */
-#squatchModal::-webkit-scrollbar {
-  display: none;
-}
-
 /**
  * * Address `font-family` inconsistency between `textarea` and other form
  * * elements. */
