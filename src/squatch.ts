@@ -132,7 +132,7 @@ export function init(configIn: ConfigOptions): void {
  * @example
  * squatch.ready(function() {
  *   console.log("ready!");
- *   squatch.api().cookieUser();
+ *   squatch.api().upsertUser();
  * });
  */
 export function ready(fn: () => any): void {

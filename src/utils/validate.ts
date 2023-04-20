@@ -58,6 +58,12 @@ export function validateConfig(raw: unknown): Required<ConfigOptions> {
   };
 }
 
+export function validateLocale(locale?: string) {
+  if (locale && /^[a-z]{2}_(?:[A-Z]{2}|[0-9]{3})$/.test(locale)) {
+    return locale;
+  }
+}
+
 export function validateWidgetConfig(raw: unknown): WidgetConfig {
   if (!isObject(raw)) throw new Error("Widget properties must be an object");
   if (!assertProp(raw, "user")) throw new Error("Required properties missing.");

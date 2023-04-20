@@ -10,6 +10,7 @@ import {
 } from "../types";
 import {
   validateConfig,
+  validateLocale,
   validatePasswordlessConfig,
   validateWidgetConfig,
 } from "../utils/validate";
@@ -108,11 +109,11 @@ export default class WidgetApi {
     const accountId = user ? encodeURIComponent(user.accountId) : null;
     const userId = user ? encodeURIComponent(user.id) : null;
 
-    // TODO: Add locale as parameter to renderWidget
+    const locale = clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));
 
     const query = `
-      query renderWidget ($user: UserIdInput, $engagementMedium: UserEngagementMedium, $widgetType: WidgetType) {
-        renderWidget(user: $user, engagementMedium: $engagementMedium, widgetType: $widgetType) {
+      query renderWidget ($user: UserIdInput, $engagementMedium: UserEngagementMedium, $widgetType: WidgetType, $locale: RSLocale) {
+        renderWidget(user: $user, engagementMedium: $engagementMedium, widgetType: $widgetType, locale: $locale) {
           template
           user {
             id
@@ -137,6 +138,7 @@ export default class WidgetApi {
             user: userId && accountId ? { id: userId, accountId } : null,
             engagementMedium,
             widgetType,
+            locale
           },
           jwt
         );
