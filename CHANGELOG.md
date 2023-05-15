@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.5.0] - 2022-12-01
+## [2.5.0] - 2023-05-15
 
 ### Removed
 
@@ -15,7 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Widgets.render now calls upsertUser rather than cookieUser api method
+- Widgets.render now queries renderWidget rather than cookieUser api method
+- Added squatch.widget function to render a widget without user upsert
+- Added auto-popup widget support:
+  - Reads `_saasquatchExtra` from the URL on load
+  - Renders the encoded widget from `_saasquatchExtra` parameter as a Popup Widget on load
 
 ## [2.4.1] - 2022-09-23
 

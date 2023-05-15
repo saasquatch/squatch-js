@@ -78,11 +78,9 @@ export function widget(
 }
 
 /**
- * Initial concept for automatic widget rendering
- *
- * - `saasquatchExtra` utm param carries widgetIdent
+ * Extracts widget configuration from `_saasquatchExtra` UTM parameter. Initialises `squatch` and renders the widget as a {@link PopupWidget} via static instanct of {@link Widgets}.
  */
-export function auto(
+export function _auto(
   configIn: ConfigOptions
 ): Promise<WidgetResult | undefined> | undefined {
   const configs = _getAutoConfig(configIn);

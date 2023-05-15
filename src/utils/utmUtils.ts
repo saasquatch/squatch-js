@@ -50,8 +50,8 @@ export function _getAutoConfig(
 }
 
 /**
- * Converts _saasquatchExtra into
- * @param obj
+ * Deconstructs _saasquatchExtra into domain, tenantAlias, and widgetConfig
+ * @param obj {Record<string, any>} Expected to be of the form `{ [appDomain]: { [tenantAlias]: { autoPopupWidgetType: [widgetType], [rest]?: ... } } }`
  */
 export function convertExtraToConfig(obj: Record<string, any>) {
   const _domain = Object.keys(obj || {})[0];

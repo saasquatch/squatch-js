@@ -1,20 +1,19 @@
-import { doPost, doPut, doGet, doQuery } from "../utils/io";
+import Cookies from "js-cookie";
 import {
   ConfigOptions,
   EngagementMedium,
-  WidgetType,
-  CookieUser,
   WidgetConfig,
+  WidgetType,
   WithRequired,
-  User,
 } from "../types";
+import { doGet, doPost, doPut, doQuery } from "../utils/io";
 import {
   validateConfig,
   validateLocale,
   validatePasswordlessConfig,
   validateWidgetConfig,
 } from "../utils/validate";
-import Cookies from "js-cookie";
+import { RENDER_WIDGET_QUERY } from "./graphql";
 
 /**
  *
@@ -109,23 +108,8 @@ export default class WidgetApi {
     const accountId = user ? encodeURIComponent(user.accountId) : null;
     const userId = user ? encodeURIComponent(user.id) : null;
 
-    const locale = clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));
-
-    const query = `
-      query renderWidget ($user: UserIdInput, $engagementMedium: UserEngagementMedium, $widgetType: WidgetType, $locale: RSLocale) {
-        renderWidget(user: $user, engagementMedium: $engagementMedium, widgetType: $widgetType, locale: $locale) {
-          template
-          user {
-            id
-            accountId
-          }
-          jsOptions
-          widgetConfig {
-            values
-          }
-        }
-      }
-    `;
+    const locale =
+      clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));
 
     const path = `/api/v1/${tenantAlias}/graphql`;
     const url = this.domain + path;
@@ -133,12 +117,12 @@ export default class WidgetApi {
       try {
         const res = await doQuery(
           url,
-          query,
+          RENDER_WIDGET_QUERY,
           {
             user: userId && accountId ? { id: userId, accountId } : null,
             engagementMedium,
             widgetType,
-            locale
+            locale,
           },
           jwt
         );
