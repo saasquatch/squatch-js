@@ -17,9 +17,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Widgets.render now queries renderWidget rather than cookieUser api method
 - Added squatch.widget function to render a widget without user upsert
+
+- Example:
+
+```js
+var initObj = {
+  widgetType: "<MY_WIDGET>",
+  engagementMedium: "EMBED",
+  container: ".myContainer",
+};
+
+squatch
+  .widget(initObj)
+  .then(function (response) {
+    const widget = response.widget
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+```
+
 - Added auto-popup widget support:
   - Reads `_saasquatchExtra` from the URL on load
   - Renders the encoded widget from `_saasquatchExtra` parameter as a Popup Widget on load
+
+## [2.4.3] - 2023-04-20
+
+### Changed
+- Updated license copyright to be in line with SaaSquatch open-source policy.
+
+## [2.4.2] - 2023-04-10
+
+### Added
+
+- Added value to return data `squatchReferralCookie` to retrieve the encoded cookie
+
+- Example:
+
+```js
+squatch
+  .api()
+  .squatchReferralCookie()
+  .then(function (response) {
+    const cookie = response.encodedCookie;
+  });
+```
 
 ## [2.4.1] - 2022-09-23
 
@@ -247,6 +289,8 @@ No release notes.
 
 [unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...HEAD
 [2.5.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.5.0
+[2.4.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.2...@saasquatch%2Fsquatch-js@2.4.3
+[2.4.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.4.2
 [2.4.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.0...@saasquatch%2Fsquatch-js@2.4.1
 [2.4.0]: https://github.com/saasquatch/squatch-js/compare/v2.3.1...@saasquatch%2Fsquatch-js@2.4.0
 [2.3.1]: https://github.com/saasquatch/squatch-js/compare/v2.3.0...v2.3.1

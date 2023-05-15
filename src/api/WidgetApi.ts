@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import {
   ConfigOptions,
   EngagementMedium,
+  ReferralCookie,
   WidgetConfig,
   WidgetType,
   WithRequired,
@@ -170,17 +171,24 @@ export default class WidgetApi {
   /**
    * Looks up the referral code of the current user, if there is any.
    *
-   * @return {Promise<Object>} code referral code if true.
+   * @return {Promise<ReferralCookie>} code referral code if true.
    */
-  squatchReferralCookie(): Promise<object> {
+  async squatchReferralCookie(): Promise<ReferralCookie> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const _saasquatch = Cookies.get("_saasquatch");
+    const _saasquatch = Cookies.get("_saasquatch") || "";
+
     const cookie = _saasquatch
       ? `?cookies=${encodeURIComponent(_saasquatch)}`
       : ``;
 
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson${cookie}`;
-    return doGet(url);
+
+    const response = await doGet<ReferralCookie>(url);
+
+    return Promise.resolve({
+      ...response,
+      encodedCookie: _saasquatch,
+    });
   }
 }
 
