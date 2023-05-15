@@ -1,20 +1,19 @@
-import { doPost, doPut, doGet, doQuery } from "../utils/io";
+import Cookies from "js-cookie";
 import {
   ConfigOptions,
   EngagementMedium,
-  WidgetType,
-  CookieUser,
+  ReferralCookie,
   WidgetConfig,
+  WidgetType,
   WithRequired,
-  User,
 } from "../types";
+import { doGet, doPost, doPut, doQuery } from "../utils/io";
 import {
   validateConfig,
   validateLocale,
   validatePasswordlessConfig,
   validateWidgetConfig,
 } from "../utils/validate";
-import Cookies from "js-cookie";
 
 /**
  *
@@ -109,7 +108,8 @@ export default class WidgetApi {
     const accountId = user ? encodeURIComponent(user.accountId) : null;
     const userId = user ? encodeURIComponent(user.id) : null;
 
-    const locale = clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));
+    const locale =
+      clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));
 
     const query = `
       query renderWidget ($user: UserIdInput, $engagementMedium: UserEngagementMedium, $widgetType: WidgetType, $locale: RSLocale) {
@@ -138,7 +138,7 @@ export default class WidgetApi {
             user: userId && accountId ? { id: userId, accountId } : null,
             engagementMedium,
             widgetType,
-            locale
+            locale,
           },
           jwt
         );
@@ -186,17 +186,24 @@ export default class WidgetApi {
   /**
    * Looks up the referral code of the current user, if there is any.
    *
-   * @return {Promise<Object>} code referral code if true.
+   * @return {Promise<ReferralCookie>} code referral code if true.
    */
-  squatchReferralCookie(): Promise<object> {
+  async squatchReferralCookie(): Promise<ReferralCookie> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const _saasquatch = Cookies.get("_saasquatch");
+    const _saasquatch = Cookies.get("_saasquatch") || "";
+
     const cookie = _saasquatch
       ? `?cookies=${encodeURIComponent(_saasquatch)}`
       : ``;
 
     const url = `${this.domain}/a/${tenantAlias}/widgets/squatchcookiejson${cookie}`;
-    return doGet(url);
+
+    const response = await doGet<ReferralCookie>(url);
+
+    return Promise.resolve({
+      ...response,
+      encodedCookie: _saasquatch,
+    });
   }
 }
 
