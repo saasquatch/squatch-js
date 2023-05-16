@@ -15,9 +15,10 @@ import CtaWidget from "./widgets/CtaWidget";
 import WidgetApi from "./api/WidgetApi";
 import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
-import { ConfigOptions } from "./types";
+import { ConfigOptions, WidgetConfig, WidgetResult } from "./types";
 import { validateConfig } from "./utils/validate";
-import {  _pushCookie } from "./utils/cookieUtils";
+import { _pushCookie } from "./utils/cookieUtils";
+import { _getAutoConfig } from "./utils/utmUtils";
 export * from "./types";
 export * from "./docs";
 
@@ -68,6 +69,30 @@ export function events(): EventsApi | null {
 }
 
 /**
+ * Entry-point for high level API to render a widget using the instance of {@link Widgets} created when you call {@link #init init}.
+ */
+export function widget(
+  widgetConfig: WidgetConfig
+): Promise<WidgetResult | undefined> | undefined {
+  return widgets()?.render(widgetConfig);
+}
+
+/**
+ * Extracts widget configuration from `_saasquatchExtra` UTM parameter. Initialises `squatch` and renders the widget as a {@link PopupWidget} via static instanct of {@link Widgets}.
+ */
+export function _auto(
+  configIn: ConfigOptions
+): Promise<WidgetResult | undefined> | undefined {
+  const configs = _getAutoConfig(configIn);
+
+  if (configs) {
+    const { squatchConfig, widgetConfig } = configs;
+    init(squatchConfig);
+    return widgets()?.render(widgetConfig);
+  }
+}
+
+/**
  * Initializes the static `squatch` global. This sets up:
  *
  *  - `squatch.api()` a static instance of the {@link WidgetApi}
@@ -105,7 +130,7 @@ export function init(configIn: ConfigOptions): void {
  * @example
  * squatch.ready(function() {
  *   console.log("ready!");
- *   squatch.api().cookieUser();
+ *   squatch.api().upsertUser();
  * });
  */
 export function ready(fn: () => any): void {
@@ -156,7 +181,7 @@ export function submitEmail(fn: (target, widget, email) => any): void {
  * @example
  * squatch.pushCookie();
  */
-export function pushCookie():void {
+export function pushCookie(): void {
   _pushCookie();
 }
 
@@ -171,4 +196,3 @@ if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
 }
 
 if (typeof document !== "undefined") asyncLoad();
-

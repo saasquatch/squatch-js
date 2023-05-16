@@ -69,6 +69,33 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Config options for loading a widget</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>param</dt>
+						<dd><p>The user details</p>
+						</dd>
+						<dt>param</dt>
+						<dd><p>The content of the widget.</p>
+						</dd>
+						<dt>param</dt>
+						<dd><p>How to display the widget.</p>
+						</dd>
+						<dt>param</dt>
+						<dd><p>Element to load the widget into.</p>
+						</dd>
+						<dt>param</dt>
+						<dd><p>Trigger element&#39;s selector for opening the popup widget</p>
+						</dd>
+						<dt>param</dt>
+						<dd><p>the JSON Web Token (JWT) that is used</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -84,8 +111,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_.widgetconfig.html#container" class="tsd-kind-icon">container</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_.widgetconfig.html#engagementmedium" class="tsd-kind-icon">engagement<wbr>Medium</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_.widgetconfig.html#jwt" class="tsd-kind-icon">jwt</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_.widgetconfig.html#trigger" class="tsd-kind-icon">trigger</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_.widgetconfig.html#user" class="tsd-kind-icon">user</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_types_.widgetconfig.html#widgettype" class="tsd-kind-icon">widget<wbr>Type</a></li>
 							</ul>
@@ -96,12 +125,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="container" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> container</h3>
+					<div class="tsd-signature tsd-kind-icon">container<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/40dfe22/src/types.ts#L31">types.ts:31</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="engagementmedium" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> engagement<wbr>Medium</h3>
 					<div class="tsd-signature tsd-kind-icon">engagement<wbr>Medium<span class="tsd-signature-symbol">:</span> <a href="../modules/_types_.html#engagementmedium" class="tsd-signature-type">EngagementMedium</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/types.ts#L20">types.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/40dfe22/src/types.ts#L30">types.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -111,7 +150,17 @@
 					<div class="tsd-signature tsd-kind-icon">jwt<span class="tsd-signature-symbol">:</span> <a href="../modules/_types_.html#jwt" class="tsd-signature-type">JWT</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/types.ts#L21">types.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/40dfe22/src/types.ts#L33">types.ts:33</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="trigger" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> trigger</h3>
+					<div class="tsd-signature tsd-kind-icon">trigger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/40dfe22/src/types.ts#L32">types.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -121,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <a href="../modules/_types_.html#user" class="tsd-signature-type">User</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/types.ts#L18">types.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/40dfe22/src/types.ts#L28">types.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -131,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">widget<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../modules/_types_.html#widgettype" class="tsd-signature-type">WidgetType</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/4c784c9/src/types.ts#L19">types.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/40dfe22/src/types.ts#L29">types.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -207,10 +256,16 @@
 						<a href="_types_.widgetconfig.html" class="tsd-kind-icon">Widget<wbr>Config</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_types_.widgetconfig.html#container" class="tsd-kind-icon">container</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_types_.widgetconfig.html#engagementmedium" class="tsd-kind-icon">engagement<wbr>Medium</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_types_.widgetconfig.html#jwt" class="tsd-kind-icon">jwt</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_types_.widgetconfig.html#trigger" class="tsd-kind-icon">trigger</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_types_.widgetconfig.html#user" class="tsd-kind-icon">user</a>

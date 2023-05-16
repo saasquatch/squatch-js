@@ -54,6 +54,11 @@ export default class PopupWidget extends Widget {
       "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);"
     );
 
+    document.head.insertAdjacentHTML(
+      "beforeend",
+      `<style>#squatchModal::-webkit-scrollbar { display: none; }</style>`
+    );
+
     this.popupcontent = document.createElement("div");
     this.popupcontent.setAttribute(
       "style",

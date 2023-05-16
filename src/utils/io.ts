@@ -1,6 +1,35 @@
 import * as superagent from "superagent";
 import { JWT } from "../types";
 
+export function doQuery(
+  url: string,
+  query: string,
+  variables,
+  token: string | undefined
+) {
+  const headers = {
+    Accept: "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    "X-SaaSquatch-Referrer": window ? window.location.href : "",
+  };
+
+  const request = superagent.post(url).send({ query, variables }).set(headers);
+
+  return thenableSuperagent(request).then(
+    (response) => response,
+    (error) => {
+      let json;
+
+      try {
+        json = JSON.parse(error.response.text);
+      } catch (e) {
+        const out = error || e;
+      }
+      throw json;
+    }
+  );
+}
+
 export function doGet<T>(url, jwt = ""): Promise<T> {
   const headers = {
     Accept: "application/json",

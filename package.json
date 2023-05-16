@@ -1,6 +1,6 @@
 {
   "name": "@saasquatch/squatch-js",
-  "version": "2.4.3",
+  "version": "2.5.0",
   "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "author": "ReferralSaaSquatch.com, Inc.",
@@ -29,7 +29,7 @@
     "build:es": "microbundle --target node --format cjs,es",
     "build:umd": "webpack",
     "build": "run-s build:es build:umd",
-    "watch": "microbundle watch",
+    "watch": "webpack --watch",
     "declaration": "tsc --emitDeclarationOnly",
     "test:browser": "cucumber-js",
     "test:webkit": "cross-env BROWSER=webkit cucumber-js",
@@ -42,7 +42,7 @@
     "preversion": "run-s build",
     "demo": "msw init demo/dist/ --save && run-p static parcel",
     "demo:deploy": "run-s parcel:build parcel:deploy",
-    "static": "serve dist",
+    "static": "serve -l 3333 -s dist",
     "parcel": "cd demo && parcel index.html",
     "parcel:build": "cd demo && parcel build index.html",
     "parcel:deploy": "surge demo/dist -d squathjs-demo.surge.sh"
@@ -76,7 +76,7 @@
     "npm-run-all": "^4.1.5",
     "parcel": "^1.12.3",
     "parcel-bundler": "^1.12.4",
-    "playwright": "^1.0.2",
+    "playwright": "^1.33.0-alpha-mar-29-2023",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
@@ -100,6 +100,6 @@
   },
   "browserslist": "> 0.25%, not dead",
   "msw": {
-    "workerDirectory": "demo\\dist"
+    "workerDirectory": "demo/dist"
   }
 }

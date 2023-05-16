@@ -61,14 +61,17 @@
       localStorage.debug = "*";
       console.log("Loading Squatch.js using sandbox", window.sandbox);
       setStatus("Loading squatch.js");
+
       squatch.ready(function () {
         setStatus("Rendering widget");
         console.log("Squatch.js is ready", squatch);
+
         squatch.init({
           domain: window.sandbox.domain,
           tenantAlias: window.sandbox.tenantAlias,
           debug: true,
         });
+
         squatch
           .widgets()
           .upsertUser(window.sandbox.initObj)

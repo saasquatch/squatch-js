@@ -36,8 +36,7 @@ export const popup: Sandbox = {
     widgetType: "REFERRER_WIDGET",
     engagementMedium: "POPUP",
     user: user,
-    jwt:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo",
+    jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo",
   },
 };
 
@@ -53,8 +52,7 @@ export const embed: Sandbox = {
       accountId: "AZJZSVG0LS1LB19R",
       email: "chesterscott.uexwltgh@mailosaur.io",
     },
-    jwt:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo",
+    jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWI5ODBkMzRlNGIwY2FiZWUwN2YyY2IwIiwiYWNjb3VudElkIjoiQVpKWlNWRzBMUzFMQjE5UiIsImVtYWlsIjoiY2hlc3RlcnNjb3R0LnVleHdsdGdoQG1haWxvc2F1ci5pbyJ9fQ.MkrO7-980M7NRJcOUcdqCO1JftqmynLMK8bTEB3WObo",
   },
 };
 
@@ -112,11 +110,15 @@ export function toURL(sandbox: Sandbox) {
 }
 
 export function href(sandbox: Sandbox) {
+  const urlParams = new URLSearchParams(window.location.search);
   const param = window.btoa(JSON.stringify(sandbox));
   var url = window.location.href;
   if (url.indexOf("?") > 0) {
     url = url.substring(0, url.indexOf("?"));
   }
-  url += `?sandbox=${encodeURIComponent(param)}`;
+
+  urlParams.delete("sandbox");
+
+  url += `?sandbox=${encodeURIComponent(param)}&${urlParams.toString()}`;
   return url;
 }

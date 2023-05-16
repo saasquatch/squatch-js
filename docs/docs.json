@@ -6,17 +6,17 @@
 	"originalName": "",
 	"children": [
 		{
-			"id": 183,
+			"id": 186,
 			"name": "\"api/AnalyticsApi\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/api/AnalyticsApi.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/api/AnalyticsApi.ts",
 			"children": [
 				{
-					"id": 199,
+					"id": 202,
 					"name": "SQHDetails",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -33,7 +33,7 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 200,
+							"id": 203,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -42,7 +42,7 @@
 							},
 							"children": [
 								{
-									"id": 204,
+									"id": 207,
 									"name": "engagementMedium",
 									"kind": 32,
 									"kindString": "Variable",
@@ -58,12 +58,12 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 147,
+										"id": 146,
 										"name": "EngagementMedium"
 									}
 								},
 								{
-									"id": 202,
+									"id": 205,
 									"name": "externalAccountId",
 									"kind": 32,
 									"kindString": "Variable",
@@ -83,7 +83,7 @@
 									}
 								},
 								{
-									"id": 203,
+									"id": 206,
 									"name": "externalUserId",
 									"kind": 32,
 									"kindString": "Variable",
@@ -103,7 +103,7 @@
 									}
 								},
 								{
-									"id": 205,
+									"id": 208,
 									"name": "programId",
 									"kind": 32,
 									"kindString": "Variable",
@@ -133,7 +133,7 @@
 									}
 								},
 								{
-									"id": 201,
+									"id": 204,
 									"name": "tenantAlias",
 									"kind": 32,
 									"kindString": "Variable",
@@ -158,11 +158,11 @@
 									"title": "Variables",
 									"kind": 32,
 									"children": [
-										204,
-										202,
-										203,
+										207,
 										205,
-										201
+										206,
+										208,
+										204
 									]
 								}
 							],
@@ -182,7 +182,7 @@
 					"title": "Type aliases",
 					"kind": 4194304,
 					"children": [
-						199
+						202
 					]
 				}
 			],
@@ -195,17 +195,17 @@
 			]
 		},
 		{
-			"id": 206,
+			"id": 209,
 			"name": "\"api/EventsApi\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/api/EventsApi.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/api/EventsApi.ts",
 			"children": [
 				{
-					"id": 216,
+					"id": 220,
 					"name": "EventsApi",
 					"kind": 128,
 					"kindString": "Class",
@@ -217,7 +217,7 @@
 					},
 					"children": [
 						{
-							"id": 219,
+							"id": 223,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -243,7 +243,7 @@
 							},
 							"signatures": [
 								{
-									"id": 220,
+									"id": 224,
 									"name": "new EventsApi",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -269,7 +269,7 @@
 									},
 									"parameters": [
 										{
-											"id": 221,
+											"id": 225,
 											"name": "config",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -281,14 +281,14 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 119,
+												"id": 116,
 												"name": "ConfigOptions"
 											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 216,
+										"id": 220,
 										"name": "EventsApi"
 									}
 								}
@@ -296,13 +296,13 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 31,
+									"line": 28,
 									"character": 17
 								}
 							]
 						},
 						{
-							"id": 218,
+							"id": 222,
 							"name": "domain",
 							"kind": 1024,
 							"kindString": "Property",
@@ -312,7 +312,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 31,
+									"line": 28,
 									"character": 8
 								}
 							],
@@ -322,7 +322,7 @@
 							}
 						},
 						{
-							"id": 217,
+							"id": 221,
 							"name": "tenantAlias",
 							"kind": 1024,
 							"kindString": "Property",
@@ -332,7 +332,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 30,
+									"line": 27,
 									"character": 13
 								}
 							],
@@ -342,7 +342,7 @@
 							}
 						},
 						{
-							"id": 222,
+							"id": 226,
 							"name": "track",
 							"kind": 2048,
 							"kindString": "Method",
@@ -351,7 +351,7 @@
 							},
 							"signatures": [
 								{
-									"id": 223,
+									"id": 227,
 									"name": "track",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -364,7 +364,7 @@
 									},
 									"parameters": [
 										{
-											"id": 224,
+											"id": 228,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -376,12 +376,12 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 207,
+												"id": 210,
 												"name": "UserEventInput"
 											}
 										},
 										{
-											"id": 225,
+											"id": 229,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -391,7 +391,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 226,
+												"id": 230,
 												"name": "TrackOptions"
 											}
 										}
@@ -411,7 +411,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 63,
+									"line": 60,
 									"character": 7
 								}
 							]
@@ -422,42 +422,42 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								219
+								223
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								218,
-								217
+								222,
+								221
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								222
+								226
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "api/EventsApi.ts",
-							"line": 29,
+							"line": 26,
 							"character": 30
 						}
 					]
 				},
 				{
-					"id": 211,
+					"id": 215,
 					"name": "UserEventDataInput",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 215,
+							"id": 219,
 							"name": "dateTriggered",
 							"kind": 1024,
 							"kindString": "Property",
@@ -467,7 +467,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 21,
+									"line": 18,
 									"character": 15
 								}
 							],
@@ -486,7 +486,7 @@
 							}
 						},
 						{
-							"id": 214,
+							"id": 218,
 							"name": "fields",
 							"kind": 1024,
 							"kindString": "Property",
@@ -496,7 +496,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 20,
+									"line": 17,
 									"character": 8
 								}
 							],
@@ -515,7 +515,7 @@
 							}
 						},
 						{
-							"id": 213,
+							"id": 217,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -525,7 +525,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 19,
+									"line": 16,
 									"character": 4
 								}
 							],
@@ -544,7 +544,7 @@
 							}
 						},
 						{
-							"id": 212,
+							"id": 216,
 							"name": "key",
 							"kind": 1024,
 							"kindString": "Property",
@@ -552,7 +552,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 18,
+									"line": 15,
 									"character": 5
 								}
 							],
@@ -567,30 +567,30 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								215,
-								214,
-								213,
-								212
+								219,
+								218,
+								217,
+								216
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "api/EventsApi.ts",
-							"line": 17,
+							"line": 14,
 							"character": 28
 						}
 					]
 				},
 				{
-					"id": 207,
+					"id": 210,
 					"name": "UserEventInput",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 209,
+							"id": 212,
 							"name": "accountId",
 							"kind": 1024,
 							"kindString": "Property",
@@ -598,7 +598,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 13,
+									"line": 9,
 									"character": 11
 								}
 							],
@@ -608,7 +608,7 @@
 							}
 						},
 						{
-							"id": 210,
+							"id": 214,
 							"name": "events",
 							"kind": 1024,
 							"kindString": "Property",
@@ -616,7 +616,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 14,
+									"line": 11,
 									"character": 8
 								}
 							],
@@ -624,13 +624,42 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 211,
+									"id": 215,
 									"name": "UserEventDataInput"
 								}
 							}
 						},
 						{
-							"id": 208,
+							"id": 213,
+							"name": "idempotencyKey",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "api/EventsApi.ts",
+									"line": 10,
+									"character": 16
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						},
+						{
+							"id": 211,
 							"name": "userId",
 							"kind": 1024,
 							"kindString": "Property",
@@ -638,7 +667,7 @@
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 12,
+									"line": 8,
 									"character": 8
 								}
 							],
@@ -653,22 +682,23 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								209,
-								210,
-								208
+								212,
+								214,
+								213,
+								211
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "api/EventsApi.ts",
-							"line": 11,
+							"line": 7,
 							"character": 24
 						}
 					]
 				},
 				{
-					"id": 226,
+					"id": 230,
 					"name": "TrackOptions",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -676,21 +706,21 @@
 					"sources": [
 						{
 							"fileName": "api/EventsApi.ts",
-							"line": 9,
+							"line": 5,
 							"character": 17
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 227,
+							"id": 231,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
 							"children": [
 								{
-									"id": 228,
+									"id": 232,
 									"name": "jwt",
 									"kind": 32,
 									"kindString": "Variable",
@@ -700,13 +730,13 @@
 									"sources": [
 										{
 											"fileName": "api/EventsApi.ts",
-											"line": 9,
+											"line": 5,
 											"character": 25
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 159,
+										"id": 162,
 										"name": "JWT"
 									}
 								}
@@ -716,14 +746,14 @@
 									"title": "Variables",
 									"kind": 32,
 									"children": [
-										228
+										232
 									]
 								}
 							],
 							"sources": [
 								{
 									"fileName": "api/EventsApi.ts",
-									"line": 9,
+									"line": 5,
 									"character": 19
 								}
 							]
@@ -731,21 +761,21 @@
 					}
 				},
 				{
-					"id": 229,
+					"id": 233,
 					"name": "_validateEvent",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 230,
+							"id": 234,
 							"name": "_validateEvent",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 231,
+									"id": 235,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -758,7 +788,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 207,
+								"id": 210,
 								"name": "UserEventInput"
 							}
 						}
@@ -766,27 +796,27 @@
 					"sources": [
 						{
 							"fileName": "api/EventsApi.ts",
-							"line": 77,
+							"line": 74,
 							"character": 23
 						}
 					]
 				},
 				{
-					"id": 232,
+					"id": 236,
 					"name": "_validateTrackOptions",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 233,
+							"id": 237,
 							"name": "_validateTrackOptions",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 234,
+									"id": 238,
 									"name": "raw",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -799,7 +829,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 226,
+								"id": 230,
 								"name": "TrackOptions"
 							}
 						}
@@ -807,7 +837,7 @@
 					"sources": [
 						{
 							"fileName": "api/EventsApi.ts",
-							"line": 86,
+							"line": 83,
 							"character": 30
 						}
 					]
@@ -818,30 +848,30 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						216
+						220
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						211,
-						207
+						215,
+						210
 					]
 				},
 				{
 					"title": "Type aliases",
 					"kind": 4194304,
 					"children": [
-						226
+						230
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						229,
-						232
+						233,
+						236
 					]
 				}
 			],
@@ -861,7 +891,7 @@
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/api/WidgetApi.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/api/WidgetApi.ts",
 			"children": [
 				{
 					"id": 34,
@@ -940,7 +970,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 119,
+												"id": 116,
 												"name": "ConfigOptions"
 											}
 										}
@@ -955,7 +985,7 @@
 							"sources": [
 								{
 									"fileName": "api/WidgetApi.ts",
-									"line": 26,
+									"line": 23,
 									"character": 17
 								}
 							]
@@ -971,7 +1001,7 @@
 							"sources": [
 								{
 									"fileName": "api/WidgetApi.ts",
-									"line": 25,
+									"line": 22,
 									"character": 8
 								}
 							],
@@ -991,7 +1021,7 @@
 							"sources": [
 								{
 									"fileName": "api/WidgetApi.ts",
-									"line": 26,
+									"line": 23,
 									"character": 8
 								}
 							],
@@ -1011,7 +1041,7 @@
 							"sources": [
 								{
 									"fileName": "api/WidgetApi.ts",
-									"line": 24,
+									"line": 21,
 									"character": 13
 								}
 							],
@@ -1021,67 +1051,7 @@
 							}
 						},
 						{
-							"id": 41,
-							"name": "cookieUser",
-							"kind": 2048,
-							"kindString": "Method",
-							"flags": {
-								"isExported": true
-							},
-							"signatures": [
-								{
-									"id": 42,
-									"name": "cookieUser",
-									"kind": 4096,
-									"kindString": "Call signature",
-									"flags": {
-										"isExported": true
-									},
-									"comment": {
-										"shortText": "Creates/upserts an anonymous user.",
-										"returns": "json object if true, with the widget template, jsOptions and user details.\n"
-									},
-									"parameters": [
-										{
-											"id": 43,
-											"name": "params",
-											"kind": 32768,
-											"kindString": "Parameter",
-											"flags": {
-												"isExported": true
-											},
-											"comment": {
-												"text": "Parameters for request"
-											},
-											"type": {
-												"type": "reference",
-												"id": 143,
-												"name": "CookieUser"
-											}
-										}
-									],
-									"type": {
-										"type": "reference",
-										"typeArguments": [
-											{
-												"type": "intrinsic",
-												"name": "any"
-											}
-										],
-										"name": "Promise"
-									}
-								}
-							],
-							"sources": [
-								{
-									"fileName": "api/WidgetApi.ts",
-									"line": 64,
-									"character": 12
-								}
-							]
-						},
-						{
-							"id": 50,
+							"id": 47,
 							"name": "invite",
 							"kind": 2048,
 							"kindString": "Method",
@@ -1090,7 +1060,7 @@
 							},
 							"signatures": [
 								{
-									"id": 51,
+									"id": 48,
 									"name": "invite",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -1103,7 +1073,7 @@
 									},
 									"parameters": [
 										{
-											"id": 52,
+											"id": 49,
 											"name": "__namedParameters",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -1114,7 +1084,7 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 53,
+													"id": 50,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
@@ -1123,7 +1093,7 @@
 													},
 													"children": [
 														{
-															"id": 56,
+															"id": 53,
 															"name": "accountId",
 															"kind": 32,
 															"kindString": "Variable",
@@ -1133,7 +1103,7 @@
 															"sources": [
 																{
 																	"fileName": "api/WidgetApi.ts",
-																	"line": 149,
+																	"line": 123,
 																	"character": 13
 																}
 															],
@@ -1143,7 +1113,7 @@
 															}
 														},
 														{
-															"id": 54,
+															"id": 51,
 															"name": "emailList",
 															"kind": 32,
 															"kindString": "Variable",
@@ -1153,7 +1123,7 @@
 															"sources": [
 																{
 																	"fileName": "api/WidgetApi.ts",
-																	"line": 147,
+																	"line": 121,
 																	"character": 13
 																}
 															],
@@ -1167,7 +1137,7 @@
 															"defaultValue": "[]"
 														},
 														{
-															"id": 57,
+															"id": 54,
 															"name": "tenantAlias",
 															"kind": 32,
 															"kindString": "Variable",
@@ -1177,7 +1147,7 @@
 															"sources": [
 																{
 																	"fileName": "api/WidgetApi.ts",
-																	"line": 150,
+																	"line": 124,
 																	"character": 15
 																}
 															],
@@ -1187,7 +1157,7 @@
 															}
 														},
 														{
-															"id": 55,
+															"id": 52,
 															"name": "userId",
 															"kind": 32,
 															"kindString": "Variable",
@@ -1197,7 +1167,7 @@
 															"sources": [
 																{
 																	"fileName": "api/WidgetApi.ts",
-																	"line": 148,
+																	"line": 122,
 																	"character": 10
 																}
 															],
@@ -1212,81 +1182,21 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																56,
+																53,
+																51,
 																54,
-																57,
-																55
+																52
 															]
 														}
 													],
 													"sources": [
 														{
 															"fileName": "api/WidgetApi.ts",
-															"line": 146,
+															"line": 120,
 															"character": 9
 														}
 													]
 												}
-											}
-										}
-									],
-									"type": {
-										"type": "reference",
-										"typeArguments": [
-											{
-												"type": "intrinsic",
-												"name": "any"
-											}
-										],
-										"name": "Promise"
-									}
-								}
-							],
-							"sources": [
-								{
-									"fileName": "api/WidgetApi.ts",
-									"line": 146,
-									"character": 8
-								}
-							]
-						},
-						{
-							"id": 47,
-							"name": "render",
-							"kind": 2048,
-							"kindString": "Method",
-							"flags": {
-								"isExported": true
-							},
-							"signatures": [
-								{
-									"id": 48,
-									"name": "render",
-									"kind": 4096,
-									"kindString": "Call signature",
-									"flags": {
-										"isExported": true
-									},
-									"comment": {
-										"shortText": "Description here.",
-										"returns": "template html if true.\n"
-									},
-									"parameters": [
-										{
-											"id": 49,
-											"name": "params",
-											"kind": 32768,
-											"kindString": "Parameter",
-											"flags": {
-												"isExported": true
-											},
-											"comment": {
-												"text": "Parameters for request"
-											},
-											"type": {
-												"type": "reference",
-												"id": 124,
-												"name": "WidgetConfig"
 											}
 										}
 									],
@@ -1311,7 +1221,67 @@
 							]
 						},
 						{
-							"id": 58,
+							"id": 44,
+							"name": "render",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 45,
+									"name": "render",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExported": true
+									},
+									"comment": {
+										"shortText": "Description here.",
+										"returns": "template html if true.\n"
+									},
+									"parameters": [
+										{
+											"id": 46,
+											"name": "params",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExported": true
+											},
+											"comment": {
+												"text": "Parameters for request"
+											},
+											"type": {
+												"type": "reference",
+												"id": 121,
+												"name": "WidgetConfig"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "any"
+											}
+										],
+										"name": "Promise"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "api/WidgetApi.ts",
+									"line": 94,
+									"character": 8
+								}
+							]
+						},
+						{
+							"id": 55,
 							"name": "squatchReferralCookie",
 							"kind": 2048,
 							"kindString": "Method",
@@ -1320,7 +1290,7 @@
 							},
 							"signatures": [
 								{
-									"id": 59,
+									"id": 56,
 									"name": "squatchReferralCookie",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -1346,13 +1316,13 @@
 							"sources": [
 								{
 									"fileName": "api/WidgetApi.ts",
-									"line": 174,
+									"line": 148,
 									"character": 23
 								}
 							]
 						},
 						{
-							"id": 44,
+							"id": 41,
 							"name": "upsertUser",
 							"kind": 2048,
 							"kindString": "Method",
@@ -1361,7 +1331,7 @@
 							},
 							"signatures": [
 								{
-									"id": 45,
+									"id": 42,
 									"name": "upsertUser",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -1374,7 +1344,7 @@
 									},
 									"parameters": [
 										{
-											"id": 46,
+											"id": 43,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -1386,7 +1356,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 124,
+												"id": 121,
 												"name": "WidgetConfig"
 											}
 										}
@@ -1406,7 +1376,7 @@
 							"sources": [
 								{
 									"fileName": "api/WidgetApi.ts",
-									"line": 89,
+									"line": 63,
 									"character": 12
 								}
 							]
@@ -1433,38 +1403,37 @@
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								41,
-								50,
 								47,
-								58,
-								44
+								44,
+								55,
+								41
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "api/WidgetApi.ts",
-							"line": 23,
+							"line": 20,
 							"character": 30
 						}
 					]
 				},
 				{
-					"id": 60,
+					"id": 57,
 					"name": "_buildParams",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 61,
+							"id": 58,
 							"name": "_buildParams",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 62,
+									"id": 59,
 									"name": "__namedParameters",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -1473,14 +1442,14 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 63,
+											"id": 60,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"children": [
 												{
-													"id": 65,
+													"id": 62,
 													"name": "engagementMedium",
 													"kind": 32,
 													"kindString": "Variable",
@@ -1488,7 +1457,7 @@
 													"sources": [
 														{
 															"fileName": "api/WidgetApi.ts",
-															"line": 187,
+															"line": 161,
 															"character": 18
 														}
 													],
@@ -1507,7 +1476,7 @@
 													}
 												},
 												{
-													"id": 64,
+													"id": 61,
 													"name": "widgetType",
 													"kind": 32,
 													"kindString": "Variable",
@@ -1515,7 +1484,7 @@
 													"sources": [
 														{
 															"fileName": "api/WidgetApi.ts",
-															"line": 186,
+															"line": 160,
 															"character": 12
 														}
 													],
@@ -1539,15 +1508,15 @@
 													"title": "Variables",
 													"kind": 32,
 													"children": [
-														65,
-														64
+														62,
+														61
 													]
 												}
 											],
 											"sources": [
 												{
 													"fileName": "api/WidgetApi.ts",
-													"line": 185,
+													"line": 159,
 													"character": 22
 												}
 											]
@@ -1564,7 +1533,7 @@
 					"sources": [
 						{
 							"fileName": "api/WidgetApi.ts",
-							"line": 185,
+							"line": 159,
 							"character": 21
 						}
 					]
@@ -1582,7 +1551,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						60
+						57
 					]
 				}
 			],
@@ -1595,24 +1564,24 @@
 			]
 		},
 		{
-			"id": 235,
+			"id": 239,
 			"name": "\"async\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/async.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/async.ts",
 			"children": [
 				{
-					"id": 236,
+					"id": 240,
 					"name": "__global",
 					"kind": 2,
 					"kindString": "Namespace",
 					"flags": {},
 					"children": [
 						{
-							"id": 237,
+							"id": 241,
 							"name": "Window",
 							"kind": 256,
 							"kindString": "Interface",
@@ -1621,7 +1590,7 @@
 							},
 							"children": [
 								{
-									"id": 238,
+									"id": 242,
 									"name": "_squatch",
 									"kind": 1024,
 									"kindString": "Property",
@@ -1638,7 +1607,7 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 239,
+											"id": 243,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
@@ -1647,7 +1616,7 @@
 											},
 											"children": [
 												{
-													"id": 240,
+													"id": 244,
 													"name": "ready",
 													"kind": 32,
 													"kindString": "Variable",
@@ -1675,7 +1644,7 @@
 													"title": "Variables",
 													"kind": 32,
 													"children": [
-														240
+														244
 													]
 												}
 											],
@@ -1690,7 +1659,7 @@
 									}
 								},
 								{
-									"id": 241,
+									"id": 245,
 									"name": "squatch",
 									"kind": 1024,
 									"kindString": "Property",
@@ -1710,7 +1679,7 @@
 									}
 								},
 								{
-									"id": 242,
+									"id": 246,
 									"name": "widgetIdent",
 									"kind": 1024,
 									"kindString": "Property",
@@ -1735,9 +1704,9 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										238,
-										241,
-										242
+										242,
+										245,
+										246
 									]
 								}
 							],
@@ -1755,7 +1724,7 @@
 							"title": "Interfaces",
 							"kind": 256,
 							"children": [
-								237
+								241
 							]
 						}
 					],
@@ -1773,7 +1742,7 @@
 					"title": "Namespaces",
 					"kind": 2,
 					"children": [
-						236
+						240
 					]
 				}
 			],
@@ -1786,17 +1755,17 @@
 			]
 		},
 		{
-			"id": 245,
+			"id": 249,
 			"name": "\"docs\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/docs.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/docs.ts",
 			"children": [
 				{
-					"id": 246,
+					"id": 250,
 					"name": "help",
 					"kind": 64,
 					"kindString": "Function",
@@ -1805,7 +1774,7 @@
 					},
 					"signatures": [
 						{
-							"id": 247,
+							"id": 251,
 							"name": "help",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -1832,7 +1801,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						246
+						250
 					]
 				}
 			],
@@ -1845,48 +1814,98 @@
 			]
 		},
 		{
-			"id": 485,
+			"id": 490,
 			"name": "\"squatch\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/squatch.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/squatch.ts",
 			"children": [
 				{
-					"id": 486,
+					"id": 491,
 					"name": "ConfigOptions",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 119
+					"target": 116
 				},
 				{
-					"id": 491,
+					"id": 496,
 					"name": "CookieUser",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 143
+					"target": 142
 				},
 				{
-					"id": 488,
+					"id": 493,
 					"name": "CookieWidgetConfig",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 129
+					"target": 128
+				},
+				{
+					"id": 497,
+					"name": "EngagementMedium",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 146
+				},
+				{
+					"id": 502,
+					"name": "JWT",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 162
+				},
+				{
+					"id": 501,
+					"name": "ShareMedium",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 161
+				},
+				{
+					"id": 495,
+					"name": "User",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 136
 				},
 				{
 					"id": 492,
-					"name": "EngagementMedium",
+					"name": "WidgetConfig",
+					"kind": 16777216,
+					"kindString": "Reference",
+					"flags": {
+						"isExported": true
+					},
+					"target": 121
+				},
+				{
+					"id": 498,
+					"name": "WidgetContext",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
@@ -1895,8 +1914,8 @@
 					"target": 147
 				},
 				{
-					"id": 497,
-					"name": "JWT",
+					"id": 499,
+					"name": "WidgetContextType",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
@@ -1905,94 +1924,44 @@
 					"target": 159
 				},
 				{
-					"id": 496,
-					"name": "ShareMedium",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 158
-				},
-				{
-					"id": 490,
-					"name": "User",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 137
-				},
-				{
-					"id": 487,
-					"name": "WidgetConfig",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 124
-				},
-				{
-					"id": 493,
-					"name": "WidgetContext",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 148
-				},
-				{
 					"id": 494,
-					"name": "WidgetContextType",
-					"kind": 16777216,
-					"kindString": "Reference",
-					"flags": {
-						"isExported": true
-					},
-					"target": 156
-				},
-				{
-					"id": 489,
 					"name": "WidgetResult",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 134
+					"target": 133
 				},
 				{
-					"id": 495,
+					"id": 500,
 					"name": "WidgetType",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 157
+					"target": 160
 				},
 				{
-					"id": 498,
+					"id": 503,
 					"name": "help",
 					"kind": 16777216,
 					"kindString": "Reference",
 					"flags": {
 						"isExported": true
 					},
-					"target": 246
+					"target": 250
 				},
 				{
-					"id": 530,
+					"id": 535,
 					"name": "__global",
 					"kind": 2,
 					"kindString": "Namespace",
 					"flags": {},
 					"children": [
 						{
-							"id": 531,
+							"id": 536,
 							"name": "Window",
 							"kind": 256,
 							"kindString": "Interface",
@@ -2001,7 +1970,7 @@
 							},
 							"children": [
 								{
-									"id": 532,
+									"id": 537,
 									"name": "SaaSquatchDoNotAutoDrop",
 									"kind": 1024,
 									"kindString": "Property",
@@ -2040,7 +2009,7 @@
 									"title": "Properties",
 									"kind": 1024,
 									"children": [
-										532
+										537
 									]
 								}
 							],
@@ -2058,7 +2027,7 @@
 							"title": "Interfaces",
 							"kind": 256,
 							"children": [
-								531
+								536
 							]
 						}
 					],
@@ -2071,7 +2040,7 @@
 					]
 				},
 				{
-					"id": 503,
+					"id": 508,
 					"name": "api",
 					"kind": 64,
 					"kindString": "Function",
@@ -2080,7 +2049,7 @@
 					},
 					"signatures": [
 						{
-							"id": 504,
+							"id": 509,
 							"name": "api",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2117,7 +2086,7 @@
 					]
 				},
 				{
-					"id": 517,
+					"id": 522,
 					"name": "autofill",
 					"kind": 64,
 					"kindString": "Function",
@@ -2126,7 +2095,7 @@
 					},
 					"signatures": [
 						{
-							"id": 518,
+							"id": 523,
 							"name": "autofill",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2139,7 +2108,7 @@
 							},
 							"parameters": [
 								{
-									"id": 519,
+									"id": 524,
 									"name": "selector",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2170,7 +2139,7 @@
 					]
 				},
 				{
-					"id": 507,
+					"id": 512,
 					"name": "events",
 					"kind": 64,
 					"kindString": "Function",
@@ -2179,7 +2148,7 @@
 					},
 					"signatures": [
 						{
-							"id": 508,
+							"id": 513,
 							"name": "events",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2196,7 +2165,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 216,
+										"id": 220,
 										"name": "EventsApi"
 									},
 									{
@@ -2216,7 +2185,7 @@
 					]
 				},
 				{
-					"id": 509,
+					"id": 514,
 					"name": "init",
 					"kind": 64,
 					"kindString": "Function",
@@ -2225,7 +2194,7 @@
 					},
 					"signatures": [
 						{
-							"id": 510,
+							"id": 515,
 							"name": "init",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2244,7 +2213,7 @@
 							},
 							"parameters": [
 								{
-									"id": 511,
+									"id": 516,
 									"name": "configIn",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2253,7 +2222,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 119,
+										"id": 116,
 										"name": "ConfigOptions"
 									}
 								}
@@ -2273,7 +2242,7 @@
 					]
 				},
 				{
-					"id": 528,
+					"id": 533,
 					"name": "pushCookie",
 					"kind": 64,
 					"kindString": "Function",
@@ -2282,7 +2251,7 @@
 					},
 					"signatures": [
 						{
-							"id": 529,
+							"id": 534,
 							"name": "pushCookie",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2315,7 +2284,7 @@
 					]
 				},
 				{
-					"id": 512,
+					"id": 517,
 					"name": "ready",
 					"kind": 64,
 					"kindString": "Function",
@@ -2324,7 +2293,7 @@
 					},
 					"signatures": [
 						{
-							"id": 513,
+							"id": 518,
 							"name": "ready",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2342,7 +2311,7 @@
 							},
 							"parameters": [
 								{
-									"id": 514,
+									"id": 519,
 									"name": "fn",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2355,7 +2324,7 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 515,
+											"id": 520,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
@@ -2364,7 +2333,7 @@
 											},
 											"signatures": [
 												{
-													"id": 516,
+													"id": 521,
 													"name": "__call",
 													"kind": 4096,
 													"kindString": "Call signature",
@@ -2403,7 +2372,7 @@
 					]
 				},
 				{
-					"id": 520,
+					"id": 525,
 					"name": "submitEmail",
 					"kind": 64,
 					"kindString": "Function",
@@ -2412,7 +2381,7 @@
 					},
 					"signatures": [
 						{
-							"id": 521,
+							"id": 526,
 							"name": "submitEmail",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2431,7 +2400,7 @@
 							},
 							"parameters": [
 								{
-									"id": 522,
+									"id": 527,
 									"name": "fn",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -2444,7 +2413,7 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 523,
+											"id": 528,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
@@ -2453,7 +2422,7 @@
 											},
 											"signatures": [
 												{
-													"id": 524,
+													"id": 529,
 													"name": "__call",
 													"kind": 4096,
 													"kindString": "Call signature",
@@ -2462,7 +2431,7 @@
 													},
 													"parameters": [
 														{
-															"id": 525,
+															"id": 530,
 															"name": "target",
 															"kind": 32768,
 															"kindString": "Parameter",
@@ -2475,7 +2444,7 @@
 															}
 														},
 														{
-															"id": 526,
+															"id": 531,
 															"name": "widget",
 															"kind": 32768,
 															"kindString": "Parameter",
@@ -2488,7 +2457,7 @@
 															}
 														},
 														{
-															"id": 527,
+															"id": 532,
 															"name": "email",
 															"kind": 32768,
 															"kindString": "Parameter",
@@ -2533,7 +2502,7 @@
 					]
 				},
 				{
-					"id": 505,
+					"id": 510,
 					"name": "widgets",
 					"kind": 64,
 					"kindString": "Function",
@@ -2542,7 +2511,7 @@
 					},
 					"signatures": [
 						{
-							"id": 506,
+							"id": 511,
 							"name": "widgets",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -2559,7 +2528,7 @@
 								"types": [
 									{
 										"type": "reference",
-										"id": 415,
+										"id": 423,
 										"name": "Widgets"
 									},
 									{
@@ -2584,40 +2553,40 @@
 					"title": "References",
 					"kind": 16777216,
 					"children": [
-						486,
 						491,
-						488,
-						492,
-						497,
 						496,
-						490,
-						487,
 						493,
-						494,
-						489,
+						497,
+						502,
+						501,
 						495,
-						498
+						492,
+						498,
+						499,
+						494,
+						500,
+						503
 					]
 				},
 				{
 					"title": "Namespaces",
 					"kind": 2,
 					"children": [
-						530
+						535
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						503,
-						517,
-						507,
-						509,
-						528,
+						508,
+						522,
 						512,
-						520,
-						505
+						514,
+						533,
+						517,
+						525,
+						510
 					]
 				}
 			],
@@ -2630,17 +2599,17 @@
 			]
 		},
 		{
-			"id": 118,
+			"id": 115,
 			"name": "\"types\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/types.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/types.ts",
 			"children": [
 				{
-					"id": 119,
+					"id": 116,
 					"name": "ConfigOptions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -2669,7 +2638,7 @@
 					},
 					"children": [
 						{
-							"id": 123,
+							"id": 120,
 							"name": "debug",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2703,7 +2672,7 @@
 							}
 						},
 						{
-							"id": 121,
+							"id": 118,
 							"name": "domain",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2733,7 +2702,7 @@
 							}
 						},
 						{
-							"id": 122,
+							"id": 119,
 							"name": "npmCdn",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2763,7 +2732,7 @@
 							}
 						},
 						{
-							"id": 120,
+							"id": 117,
 							"name": "tenantAlias",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2788,10 +2757,10 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								123,
-								121,
-								122,
-								120
+								120,
+								118,
+								119,
+								117
 							]
 						}
 					],
@@ -2804,16 +2773,40 @@
 					]
 				},
 				{
-					"id": 129,
+					"id": 128,
 					"name": "CookieWidgetConfig",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {
 						"isExported": true
 					},
+					"comment": {
+						"tags": [
+							{
+								"tag": "param",
+								"text": "The user details",
+								"param": "user"
+							},
+							{
+								"tag": "param",
+								"text": "The content of the widget.",
+								"param": "widgetType"
+							},
+							{
+								"tag": "param",
+								"text": "How to display the widget.",
+								"param": "engagementMedium"
+							},
+							{
+								"tag": "param",
+								"text": "the JSON Web Token (JWT) that is used\n",
+								"param": "jwt"
+							}
+						]
+					},
 					"children": [
 						{
-							"id": 132,
+							"id": 131,
 							"name": "engagementMedium",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2824,18 +2817,18 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 27,
+									"line": 45,
 									"character": 18
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 147,
+								"id": 146,
 								"name": "EngagementMedium"
 							}
 						},
 						{
-							"id": 133,
+							"id": 132,
 							"name": "jwt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2846,18 +2839,18 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 28,
+									"line": 46,
 									"character": 5
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 159,
+								"id": 162,
 								"name": "JWT"
 							}
 						},
 						{
-							"id": 130,
+							"id": 129,
 							"name": "user",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2868,18 +2861,18 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 25,
+									"line": 43,
 									"character": 6
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 143,
+								"id": 142,
 								"name": "CookieUser"
 							}
 						},
 						{
-							"id": 131,
+							"id": 130,
 							"name": "widgetType",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2890,13 +2883,13 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 26,
+									"line": 44,
 									"character": 12
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 157,
+								"id": 160,
 								"name": "WidgetType"
 							}
 						}
@@ -2906,32 +2899,97 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								131,
 								132,
-								133,
-								130,
-								131
+								129,
+								130
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 24,
+							"line": 42,
 							"character": 35
 						}
 					]
 				},
 				{
-					"id": 124,
+					"id": 121,
 					"name": "WidgetConfig",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {
 						"isExported": true
 					},
+					"comment": {
+						"shortText": "Config options for loading a widget",
+						"tags": [
+							{
+								"tag": "param",
+								"text": "The user details",
+								"param": "user"
+							},
+							{
+								"tag": "param",
+								"text": "The content of the widget.",
+								"param": "widgetType"
+							},
+							{
+								"tag": "param",
+								"text": "How to display the widget.",
+								"param": "engagementMedium"
+							},
+							{
+								"tag": "param",
+								"text": "Element to load the widget into.",
+								"param": "container"
+							},
+							{
+								"tag": "param",
+								"text": "Trigger element's selector for opening the popup widget",
+								"param": "trigger"
+							},
+							{
+								"tag": "param",
+								"text": "the JSON Web Token (JWT) that is used\n",
+								"param": "jwt"
+							}
+						]
+					},
 					"children": [
 						{
-							"id": 127,
+							"id": 125,
+							"name": "container",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 31,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"name": "HTMLElement"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						},
+						{
+							"id": 124,
 							"name": "engagementMedium",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2942,18 +3000,18 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 20,
+									"line": 30,
 									"character": 18
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 147,
+								"id": 146,
 								"name": "EngagementMedium"
 							}
 						},
 						{
-							"id": 128,
+							"id": 127,
 							"name": "jwt",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2964,18 +3022,48 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 21,
+									"line": 33,
 									"character": 5
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 159,
+								"id": 162,
 								"name": "JWT"
 							}
 						},
 						{
-							"id": 125,
+							"id": 126,
+							"name": "trigger",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExported": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "types.ts",
+									"line": 32,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "undefined"
+									},
+									{
+										"type": "intrinsic",
+										"name": "string"
+									}
+								]
+							}
+						},
+						{
+							"id": 122,
 							"name": "user",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2985,18 +3073,18 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 18,
+									"line": 28,
 									"character": 6
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 137,
+								"id": 136,
 								"name": "User"
 							}
 						},
 						{
-							"id": 126,
+							"id": 123,
 							"name": "widgetType",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3007,13 +3095,13 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 19,
+									"line": 29,
 									"character": 12
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 157,
+								"id": 160,
 								"name": "WidgetType"
 							}
 						}
@@ -3023,23 +3111,25 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								127,
-								128,
 								125,
-								126
+								124,
+								127,
+								126,
+								122,
+								123
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 17,
+							"line": 27,
 							"character": 29
 						}
 					]
 				},
 				{
-					"id": 134,
+					"id": 133,
 					"name": "WidgetResult",
 					"kind": 256,
 					"kindString": "Interface",
@@ -3063,7 +3153,7 @@
 					},
 					"children": [
 						{
-							"id": 136,
+							"id": 135,
 							"name": "user",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3073,18 +3163,18 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 40,
+									"line": 58,
 									"character": 6
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 137,
+								"id": 136,
 								"name": "User"
 							}
 						},
 						{
-							"id": 135,
+							"id": 134,
 							"name": "widget",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3094,13 +3184,13 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 39,
+									"line": 57,
 									"character": 8
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 75,
+								"id": 72,
 								"name": "Widget"
 							}
 						}
@@ -3110,21 +3200,21 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								136,
-								135
+								135,
+								134
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 38,
+							"line": 56,
 							"character": 29
 						}
 					]
 				},
 				{
-					"id": 143,
+					"id": 142,
 					"name": "CookieUser",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3134,14 +3224,14 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 49,
+							"line": 67,
 							"character": 22
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 144,
+							"id": 143,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -3150,7 +3240,7 @@
 							},
 							"indexSignature": [
 								{
-									"id": 145,
+									"id": 144,
 									"name": "__index",
 									"kind": 8192,
 									"kindString": "Index signature",
@@ -3159,7 +3249,7 @@
 									},
 									"parameters": [
 										{
-											"id": 146,
+											"id": 145,
 											"name": "key",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -3181,7 +3271,7 @@
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 49,
+									"line": 67,
 									"character": 24
 								}
 							]
@@ -3189,7 +3279,7 @@
 					}
 				},
 				{
-					"id": 147,
+					"id": 146,
 					"name": "EngagementMedium",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3208,7 +3298,7 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 58,
+							"line": 76,
 							"character": 28
 						}
 					],
@@ -3227,7 +3317,7 @@
 					}
 				},
 				{
-					"id": 159,
+					"id": 162,
 					"name": "JWT",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3237,7 +3327,7 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 88,
+							"line": 109,
 							"character": 15
 						}
 					],
@@ -3247,7 +3337,7 @@
 					}
 				},
 				{
-					"id": 158,
+					"id": 161,
 					"name": "ShareMedium",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3257,7 +3347,7 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 87,
+							"line": 108,
 							"character": 23
 						}
 					],
@@ -3267,7 +3357,7 @@
 					}
 				},
 				{
-					"id": 137,
+					"id": 136,
 					"name": "User",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3277,14 +3367,14 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 43,
+							"line": 61,
 							"character": 16
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 138,
+							"id": 137,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -3293,7 +3383,7 @@
 							},
 							"indexSignature": [
 								{
-									"id": 141,
+									"id": 140,
 									"name": "__index",
 									"kind": 8192,
 									"kindString": "Index signature",
@@ -3302,7 +3392,7 @@
 									},
 									"parameters": [
 										{
-											"id": 142,
+											"id": 141,
 											"name": "key",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -3323,7 +3413,7 @@
 							],
 							"children": [
 								{
-									"id": 140,
+									"id": 139,
 									"name": "accountId",
 									"kind": 32,
 									"kindString": "Variable",
@@ -3333,7 +3423,7 @@
 									"sources": [
 										{
 											"fileName": "types.ts",
-											"line": 45,
+											"line": 63,
 											"character": 11
 										}
 									],
@@ -3343,7 +3433,7 @@
 									}
 								},
 								{
-									"id": 139,
+									"id": 138,
 									"name": "id",
 									"kind": 32,
 									"kindString": "Variable",
@@ -3353,7 +3443,7 @@
 									"sources": [
 										{
 											"fileName": "types.ts",
-											"line": 44,
+											"line": 62,
 											"character": 4
 										}
 									],
@@ -3368,15 +3458,15 @@
 									"title": "Variables",
 									"kind": 32,
 									"children": [
-										140,
-										139
+										139,
+										138
 									]
 								}
 							],
 							"sources": [
 								{
 									"fileName": "types.ts",
-									"line": 43,
+									"line": 61,
 									"character": 18
 								}
 							]
@@ -3384,7 +3474,7 @@
 					}
 				},
 				{
-					"id": 148,
+					"id": 147,
 					"name": "WidgetContext",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3394,7 +3484,7 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 64,
+							"line": 82,
 							"character": 25
 						}
 					],
@@ -3404,7 +3494,7 @@
 							{
 								"type": "reflection",
 								"declaration": {
-									"id": 149,
+									"id": 148,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
@@ -3414,6 +3504,36 @@
 									"children": [
 										{
 											"id": 151,
+											"name": "container",
+											"kind": 32,
+											"kindString": "Variable",
+											"flags": {
+												"isExported": true,
+												"isOptional": true
+											},
+											"sources": [
+												{
+													"fileName": "types.ts",
+													"line": 86,
+													"character": 15
+												}
+											],
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "reference",
+														"name": "HTMLElement"
+													},
+													{
+														"type": "intrinsic",
+														"name": "string"
+													}
+												]
+											}
+										},
+										{
+											"id": 150,
 											"name": "engagementMedium",
 											"kind": 32,
 											"kindString": "Variable",
@@ -3424,18 +3544,48 @@
 											"sources": [
 												{
 													"fileName": "types.ts",
-													"line": 67,
+													"line": 85,
 													"character": 22
 												}
 											],
 											"type": {
 												"type": "reference",
-												"id": 147,
+												"id": 146,
 												"name": "EngagementMedium"
 											}
 										},
 										{
-											"id": 150,
+											"id": 152,
+											"name": "trigger",
+											"kind": 32,
+											"kindString": "Variable",
+											"flags": {
+												"isExported": true,
+												"isOptional": true
+											},
+											"sources": [
+												{
+													"fileName": "types.ts",
+													"line": 87,
+													"character": 13
+												}
+											],
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "intrinsic",
+														"name": "undefined"
+													},
+													{
+														"type": "intrinsic",
+														"name": "string"
+													}
+												]
+											}
+										},
+										{
+											"id": 149,
 											"name": "type",
 											"kind": 32,
 											"kindString": "Variable",
@@ -3445,7 +3595,7 @@
 											"sources": [
 												{
 													"fileName": "types.ts",
-													"line": 66,
+													"line": 84,
 													"character": 10
 												}
 											],
@@ -3470,14 +3620,16 @@
 											"kind": 32,
 											"children": [
 												151,
-												150
+												150,
+												152,
+												149
 											]
 										}
 									],
 									"sources": [
 										{
 											"fileName": "types.ts",
-											"line": 65,
+											"line": 83,
 											"character": 3
 										}
 									]
@@ -3486,7 +3638,7 @@
 							{
 								"type": "reflection",
 								"declaration": {
-									"id": 152,
+									"id": 153,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
@@ -3495,7 +3647,37 @@
 									},
 									"children": [
 										{
-											"id": 155,
+											"id": 157,
+											"name": "container",
+											"kind": 32,
+											"kindString": "Variable",
+											"flags": {
+												"isExported": true,
+												"isOptional": true
+											},
+											"sources": [
+												{
+													"fileName": "types.ts",
+													"line": 93,
+													"character": 15
+												}
+											],
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "reference",
+														"name": "HTMLElement"
+													},
+													{
+														"type": "intrinsic",
+														"name": "string"
+													}
+												]
+											}
+										},
+										{
+											"id": 156,
 											"name": "engagementMedium",
 											"kind": 32,
 											"kindString": "Variable",
@@ -3506,18 +3688,48 @@
 											"sources": [
 												{
 													"fileName": "types.ts",
-													"line": 72,
+													"line": 92,
 													"character": 22
 												}
 											],
 											"type": {
 												"type": "reference",
-												"id": 147,
+												"id": 146,
 												"name": "EngagementMedium"
 											}
 										},
 										{
-											"id": 153,
+											"id": 158,
+											"name": "trigger",
+											"kind": 32,
+											"kindString": "Variable",
+											"flags": {
+												"isExported": true,
+												"isOptional": true
+											},
+											"sources": [
+												{
+													"fileName": "types.ts",
+													"line": 94,
+													"character": 13
+												}
+											],
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "intrinsic",
+														"name": "undefined"
+													},
+													{
+														"type": "intrinsic",
+														"name": "string"
+													}
+												]
+											}
+										},
+										{
+											"id": 154,
 											"name": "type",
 											"kind": 32,
 											"kindString": "Variable",
@@ -3527,7 +3739,7 @@
 											"sources": [
 												{
 													"fileName": "types.ts",
-													"line": 70,
+													"line": 90,
 													"character": 10
 												}
 											],
@@ -3537,7 +3749,7 @@
 											}
 										},
 										{
-											"id": 154,
+											"id": 155,
 											"name": "user",
 											"kind": 32,
 											"kindString": "Variable",
@@ -3547,13 +3759,13 @@
 											"sources": [
 												{
 													"fileName": "types.ts",
-													"line": 71,
+													"line": 91,
 													"character": 10
 												}
 											],
 											"type": {
 												"type": "reference",
-												"id": 137,
+												"id": 136,
 												"name": "User"
 											}
 										}
@@ -3563,16 +3775,18 @@
 											"title": "Variables",
 											"kind": 32,
 											"children": [
-												155,
-												153,
-												154
+												157,
+												156,
+												158,
+												154,
+												155
 											]
 										}
 									],
 									"sources": [
 										{
 											"fileName": "types.ts",
-											"line": 69,
+											"line": 89,
 											"character": 3
 										}
 									]
@@ -3582,7 +3796,7 @@
 					}
 				},
 				{
-					"id": 156,
+					"id": 159,
 					"name": "WidgetContextType",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3592,7 +3806,7 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 75,
+							"line": 96,
 							"character": 29
 						}
 					],
@@ -3615,7 +3829,7 @@
 					}
 				},
 				{
-					"id": 157,
+					"id": 160,
 					"name": "WidgetType",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -3628,7 +3842,7 @@
 					"sources": [
 						{
 							"fileName": "types.ts",
-							"line": 80,
+							"line": 101,
 							"character": 22
 						}
 					],
@@ -3656,24 +3870,24 @@
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						119,
-						129,
-						124,
-						134
+						116,
+						128,
+						121,
+						133
 					]
 				},
 				{
 					"title": "Type aliases",
 					"kind": 4194304,
 					"children": [
-						143,
+						142,
+						146,
+						162,
+						161,
+						136,
 						147,
 						159,
-						158,
-						137,
-						148,
-						156,
-						157
+						160
 					]
 				}
 			],
@@ -3686,17 +3900,17 @@
 			]
 		},
 		{
-			"id": 464,
+			"id": 469,
 			"name": "\"utils/cookieUtils\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/utils/cookieUtils.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/utils/cookieUtils.ts",
 			"children": [
 				{
-					"id": 483,
+					"id": 488,
 					"name": "_pushCookie",
 					"kind": 64,
 					"kindString": "Function",
@@ -3705,7 +3919,7 @@
 					},
 					"signatures": [
 						{
-							"id": 484,
+							"id": 489,
 							"name": "_pushCookie",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3727,21 +3941,21 @@
 					]
 				},
 				{
-					"id": 475,
+					"id": 480,
 					"name": "b64decode",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 476,
+							"id": 481,
 							"name": "b64decode",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 477,
+									"id": 482,
 									"name": "input",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3767,21 +3981,21 @@
 					]
 				},
 				{
-					"id": 478,
+					"id": 483,
 					"name": "b64encode",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 479,
+							"id": 484,
 							"name": "b64encode",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 480,
+									"id": 485,
 									"name": "input",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3807,7 +4021,7 @@
 					]
 				},
 				{
-					"id": 469,
+					"id": 474,
 					"name": "deepMerge",
 					"kind": 64,
 					"kindString": "Function",
@@ -3816,21 +4030,21 @@
 					},
 					"signatures": [
 						{
-							"id": 470,
+							"id": 475,
 							"name": "deepMerge",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"typeParameter": [
 								{
-									"id": 471,
+									"id": 476,
 									"name": "A",
 									"kind": 131072,
 									"kindString": "Type parameter",
 									"flags": {}
 								},
 								{
-									"id": 472,
+									"id": 477,
 									"name": "B",
 									"kind": 131072,
 									"kindString": "Type parameter",
@@ -3839,7 +4053,7 @@
 							],
 							"parameters": [
 								{
-									"id": 473,
+									"id": 478,
 									"name": "target",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3850,7 +4064,7 @@
 									}
 								},
 								{
-									"id": 474,
+									"id": 479,
 									"name": "source",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3885,14 +4099,14 @@
 					]
 				},
 				{
-					"id": 481,
+					"id": 486,
 					"name": "getTopDomain",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 482,
+							"id": 487,
 							"name": "getTopDomain",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -3912,7 +4126,7 @@
 					]
 				},
 				{
-					"id": 466,
+					"id": 471,
 					"name": "isObject",
 					"kind": 64,
 					"kindString": "Function",
@@ -3921,14 +4135,14 @@
 					},
 					"signatures": [
 						{
-							"id": 467,
+							"id": 472,
 							"name": "isObject",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 468,
+									"id": 473,
 									"name": "item",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -3959,12 +4173,12 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
+						488,
+						480,
 						483,
-						475,
-						478,
-						469,
-						481,
-						466
+						474,
+						486,
+						471
 					]
 				}
 			],
@@ -3977,17 +4191,17 @@
 			]
 		},
 		{
-			"id": 248,
+			"id": 252,
 			"name": "\"utils/domready\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/utils/domready.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/utils/domready.ts",
 			"children": [
 				{
-					"id": 249,
+					"id": 253,
 					"name": "domready",
 					"kind": 64,
 					"kindString": "Function",
@@ -3996,7 +4210,7 @@
 					},
 					"signatures": [
 						{
-							"id": 250,
+							"id": 254,
 							"name": "domready",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4005,7 +4219,7 @@
 							},
 							"parameters": [
 								{
-									"id": 251,
+									"id": 255,
 									"name": "targetDoc",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4018,7 +4232,7 @@
 									}
 								},
 								{
-									"id": 252,
+									"id": 256,
 									"name": "fn",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4060,7 +4274,7 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						249
+						253
 					]
 				}
 			],
@@ -4073,17 +4287,17 @@
 			]
 		},
 		{
-			"id": 160,
+			"id": 163,
 			"name": "\"utils/io\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/utils/io.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/utils/io.ts",
 			"children": [
 				{
-					"id": 161,
+					"id": 164,
 					"name": "doGet",
 					"kind": 64,
 					"kindString": "Function",
@@ -4092,7 +4306,7 @@
 					},
 					"signatures": [
 						{
-							"id": 162,
+							"id": 165,
 							"name": "doGet",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4101,7 +4315,7 @@
 							},
 							"parameters": [
 								{
-									"id": 163,
+									"id": 166,
 									"name": "url",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4114,7 +4328,7 @@
 									}
 								},
 								{
-									"id": 164,
+									"id": 167,
 									"name": "jwt",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4149,7 +4363,7 @@
 					]
 				},
 				{
-					"id": 170,
+					"id": 173,
 					"name": "doPut",
 					"kind": 64,
 					"kindString": "Function",
@@ -4158,7 +4372,7 @@
 					},
 					"signatures": [
 						{
-							"id": 171,
+							"id": 174,
 							"name": "doPut",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4167,7 +4381,7 @@
 							},
 							"parameters": [
 								{
-									"id": 172,
+									"id": 175,
 									"name": "url",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4180,7 +4394,7 @@
 									}
 								},
 								{
-									"id": 173,
+									"id": 176,
 									"name": "data",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4193,7 +4407,7 @@
 									}
 								},
 								{
-									"id": 174,
+									"id": 177,
 									"name": "jwt",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4203,7 +4417,7 @@
 									},
 									"type": {
 										"type": "reference",
-										"id": 159,
+										"id": 162,
 										"name": "JWT"
 									}
 								}
@@ -4229,21 +4443,21 @@
 					]
 				},
 				{
-					"id": 178,
+					"id": 181,
 					"name": "includes",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 179,
+							"id": 182,
 							"name": "includes",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 180,
+									"id": 183,
 									"name": "string",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4254,7 +4468,7 @@
 									}
 								},
 								{
-									"id": 181,
+									"id": 184,
 									"name": "search",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4265,7 +4479,7 @@
 									}
 								},
 								{
-									"id": 182,
+									"id": 185,
 									"name": "start",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4302,14 +4516,14 @@
 					]
 				},
 				{
-					"id": 175,
+					"id": 178,
 					"name": "thenableSuperagent",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 176,
+							"id": 179,
 							"name": "thenableSuperagent",
 							"kind": 4096,
 							"kindString": "Call signature",
@@ -4320,7 +4534,7 @@
 							},
 							"parameters": [
 								{
-									"id": 177,
+									"id": 180,
 									"name": "request",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4357,10 +4571,10 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						161,
-						170,
-						178,
-						175
+						164,
+						173,
+						181,
+						178
 					]
 				}
 			],
@@ -4380,7 +4594,7 @@
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/utils/validate.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/utils/validate.ts",
 			"children": [
 				{
 					"id": 2,
@@ -5019,7 +5233,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 119,
+										"id": 116,
 										"name": "ConfigOptions"
 									}
 								],
@@ -5069,7 +5283,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 124,
+								"id": 121,
 								"name": "WidgetConfig"
 							}
 						}
@@ -5114,17 +5328,17 @@
 			]
 		},
 		{
-			"id": 353,
+			"id": 361,
 			"name": "\"widgets/CtaWidget\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/widgets/CtaWidget.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/widgets/CtaWidget.ts",
 			"children": [
 				{
-					"id": 354,
+					"id": 362,
 					"name": "CtaWidget",
 					"kind": 128,
 					"kindString": "Class",
@@ -5137,7 +5351,7 @@
 					},
 					"children": [
 						{
-							"id": 359,
+							"id": 367,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -5146,7 +5360,7 @@
 							},
 							"signatures": [
 								{
-									"id": 360,
+									"id": 368,
 									"name": "new CtaWidget",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -5155,7 +5369,7 @@
 									},
 									"parameters": [
 										{
-											"id": 361,
+											"id": 369,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5164,12 +5378,12 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 67,
+												"id": 64,
 												"name": "Params"
 											}
 										},
 										{
-											"id": 362,
+											"id": 370,
 											"name": "opts",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5184,12 +5398,12 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 354,
+										"id": 362,
 										"name": "CtaWidget"
 									},
 									"overwrites": {
 										"type": "reference",
-										"id": 302,
+										"id": 310,
 										"name": "PopupWidget.__constructor"
 									}
 								}
@@ -5203,12 +5417,12 @@
 							],
 							"overwrites": {
 								"type": "reference",
-								"id": 302,
+								"id": 310,
 								"name": "PopupWidget.__constructor"
 							}
 						},
 						{
-							"id": 388,
+							"id": 396,
 							"name": "analyticsApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5228,12 +5442,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 79,
+								"id": 76,
 								"name": "Widget.analyticsApi"
 							}
 						},
 						{
-							"id": 387,
+							"id": 395,
 							"name": "content",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5253,12 +5467,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 78,
+								"id": 75,
 								"name": "Widget.content"
 							}
 						},
 						{
-							"id": 390,
+							"id": 398,
 							"name": "context",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5274,17 +5488,17 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 148,
+								"id": 147,
 								"name": "WidgetContext"
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 81,
+								"id": 78,
 								"name": "Widget.context"
 							}
 						},
 						{
-							"id": 358,
+							"id": 366,
 							"name": "ctaFrame",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5304,7 +5518,7 @@
 							}
 						},
 						{
-							"id": 385,
+							"id": 393,
 							"name": "frame",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5324,12 +5538,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 76,
+								"id": 73,
 								"name": "Widget.frame"
 							}
 						},
 						{
-							"id": 391,
+							"id": 399,
 							"name": "npmCdn",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5349,12 +5563,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 82,
+								"id": 79,
 								"name": "Widget.npmCdn"
 							}
 						},
 						{
-							"id": 372,
+							"id": 380,
 							"name": "popupcontent",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5374,12 +5588,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 301,
+								"id": 309,
 								"name": "PopupWidget.popupcontent"
 							}
 						},
 						{
-							"id": 371,
+							"id": 379,
 							"name": "popupdiv",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5399,12 +5613,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 300,
+								"id": 308,
 								"name": "PopupWidget.popupdiv"
 							}
 						},
 						{
-							"id": 355,
+							"id": 363,
 							"name": "position",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5424,7 +5638,7 @@
 							}
 						},
 						{
-							"id": 357,
+							"id": 365,
 							"name": "positionClass",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5444,7 +5658,7 @@
 							}
 						},
 						{
-							"id": 356,
+							"id": 364,
 							"name": "side",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5464,7 +5678,7 @@
 							}
 						},
 						{
-							"id": 369,
+							"id": 377,
 							"name": "triggerElement",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5493,12 +5707,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 298,
+								"id": 306,
 								"name": "PopupWidget.triggerElement"
 							}
 						},
 						{
-							"id": 370,
+							"id": 378,
 							"name": "triggerWhenCTA",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5527,12 +5741,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 299,
+								"id": 307,
 								"name": "PopupWidget.triggerWhenCTA"
 							}
 						},
 						{
-							"id": 386,
+							"id": 394,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5548,17 +5762,17 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 157,
+								"id": 160,
 								"name": "WidgetType"
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 77,
+								"id": 74,
 								"name": "Widget.type"
 							}
 						},
 						{
-							"id": 389,
+							"id": 397,
 							"name": "widgetApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5579,12 +5793,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 80,
+								"id": 77,
 								"name": "Widget.widgetApi"
 							}
 						},
 						{
-							"id": 367,
+							"id": 375,
 							"name": "close",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5593,7 +5807,7 @@
 							},
 							"signatures": [
 								{
-									"id": 368,
+									"id": 376,
 									"name": "close",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5614,7 +5828,7 @@
 									},
 									"overwrites": {
 										"type": "reference",
-										"id": 312,
+										"id": 320,
 										"name": "PopupWidget.close"
 									}
 								}
@@ -5628,12 +5842,12 @@
 							],
 							"overwrites": {
 								"type": "reference",
-								"id": 312,
+								"id": 320,
 								"name": "PopupWidget.close"
 							}
 						},
 						{
-							"id": 363,
+							"id": 371,
 							"name": "load",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5642,7 +5856,7 @@
 							},
 							"signatures": [
 								{
-									"id": 364,
+									"id": 372,
 									"name": "load",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5655,7 +5869,7 @@
 									},
 									"overwrites": {
 										"type": "reference",
-										"id": 306,
+										"id": 314,
 										"name": "PopupWidget.load"
 									}
 								}
@@ -5669,12 +5883,12 @@
 							],
 							"overwrites": {
 								"type": "reference",
-								"id": 306,
+								"id": 314,
 								"name": "PopupWidget.load"
 							}
 						},
 						{
-							"id": 365,
+							"id": 373,
 							"name": "open",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5683,7 +5897,7 @@
 							},
 							"signatures": [
 								{
-									"id": 366,
+									"id": 374,
 									"name": "open",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5704,7 +5918,7 @@
 									},
 									"overwrites": {
 										"type": "reference",
-										"id": 310,
+										"id": 318,
 										"name": "PopupWidget.open"
 									}
 								}
@@ -5718,12 +5932,12 @@
 							],
 							"overwrites": {
 								"type": "reference",
-								"id": 310,
+								"id": 318,
 								"name": "PopupWidget.open"
 							}
 						},
 						{
-							"id": 405,
+							"id": 413,
 							"name": "reload",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5732,7 +5946,7 @@
 							},
 							"signatures": [
 								{
-									"id": 406,
+									"id": 414,
 									"name": "reload",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5741,7 +5955,7 @@
 									},
 									"parameters": [
 										{
-											"id": 407,
+											"id": 415,
 											"name": "__namedParameters",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5752,7 +5966,7 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 408,
+													"id": 416,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
@@ -5761,7 +5975,7 @@
 													},
 													"children": [
 														{
-															"id": 409,
+															"id": 417,
 															"name": "email",
 															"kind": 32,
 															"kindString": "Variable",
@@ -5771,7 +5985,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 16
 																}
 															],
@@ -5781,7 +5995,7 @@
 															}
 														},
 														{
-															"id": 410,
+															"id": 418,
 															"name": "firstName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -5791,7 +6005,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 27
 																}
 															],
@@ -5801,7 +6015,7 @@
 															}
 														},
 														{
-															"id": 411,
+															"id": 419,
 															"name": "lastName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -5811,7 +6025,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 37
 																}
 															],
@@ -5826,16 +6040,16 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																409,
-																410,
-																411
+																417,
+																418,
+																419
 															]
 														}
 													],
 													"sources": [
 														{
 															"fileName": "widgets/Widget.ts",
-															"line": 216,
+															"line": 210,
 															"character": 9
 														}
 													]
@@ -5843,7 +6057,7 @@
 											}
 										},
 										{
-											"id": 412,
+											"id": 420,
 											"name": "jwt",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5862,7 +6076,7 @@
 									},
 									"inheritedFrom": {
 										"type": "reference",
-										"id": 106,
+										"id": 103,
 										"name": "Widget.reload"
 									}
 								}
@@ -5870,13 +6084,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widget.ts",
-									"line": 216,
+									"line": 210,
 									"character": 8
 								}
 							],
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 106,
+								"id": 103,
 								"name": "Widget.reload"
 							}
 						}
@@ -5886,38 +6100,38 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								359
+								367
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								388,
-								387,
-								390,
-								358,
-								385,
-								391,
-								372,
-								371,
-								355,
-								357,
-								356,
-								369,
-								370,
-								386,
-								389
+								396,
+								395,
+								398,
+								366,
+								393,
+								399,
+								380,
+								379,
+								363,
+								365,
+								364,
+								377,
+								378,
+								394,
+								397
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								367,
-								363,
-								365,
-								405
+								375,
+								371,
+								373,
+								413
 							]
 						}
 					],
@@ -5931,13 +6145,13 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 297,
+							"id": 305,
 							"name": "PopupWidget"
 						}
 					]
 				},
 				{
-					"id": 413,
+					"id": 421,
 					"name": "_log",
 					"kind": 32,
 					"kindString": "Variable",
@@ -5963,14 +6177,14 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						354
+						362
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						413
+						421
 					]
 				}
 			],
@@ -5983,17 +6197,17 @@
 			]
 		},
 		{
-			"id": 253,
+			"id": 257,
 			"name": "\"widgets/EmbedWidget\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/widgets/EmbedWidget.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/widgets/EmbedWidget.ts",
 			"children": [
 				{
-					"id": 254,
+					"id": 258,
 					"name": "EmbedWidget",
 					"kind": 128,
 					"kindString": "Class",
@@ -6006,7 +6220,7 @@
 					},
 					"children": [
 						{
-							"id": 256,
+							"id": 260,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -6015,7 +6229,7 @@
 							},
 							"signatures": [
 								{
-									"id": 257,
+									"id": 261,
 									"name": "new EmbedWidget",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -6024,7 +6238,7 @@
 									},
 									"parameters": [
 										{
-											"id": 258,
+											"id": 262,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6033,28 +6247,37 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 67,
+												"id": 64,
 												"name": "Params"
 											}
 										},
 										{
-											"id": 259,
-											"name": "selector",
+											"id": 263,
+											"name": "container",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {
-												"isExported": true
+												"isExported": true,
+												"isOptional": true
 											},
 											"type": {
-												"type": "intrinsic",
-												"name": "string"
-											},
-											"defaultValue": "\"#squatchembed\""
+												"type": "union",
+												"types": [
+													{
+														"type": "reference",
+														"name": "HTMLElement"
+													},
+													{
+														"type": "intrinsic",
+														"name": "string"
+													}
+												]
+											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 254,
+										"id": 258,
 										"name": "EmbedWidget"
 									},
 									"overwrites": {
@@ -6066,8 +6289,8 @@
 							"sources": [
 								{
 									"fileName": "widgets/EmbedWidget.ts",
-									"line": 17,
-									"character": 19
+									"line": 16,
+									"character": 23
 								}
 							],
 							"overwrites": {
@@ -6076,7 +6299,7 @@
 							}
 						},
 						{
-							"id": 270,
+							"id": 278,
 							"name": "analyticsApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6096,12 +6319,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 79,
+								"id": 76,
 								"name": "Widget.analyticsApi"
 							}
 						},
 						{
-							"id": 269,
+							"id": 277,
 							"name": "content",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6121,12 +6344,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 78,
+								"id": 75,
 								"name": "Widget.content"
 							}
 						},
 						{
-							"id": 272,
+							"id": 280,
 							"name": "context",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6142,17 +6365,17 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 148,
+								"id": 147,
 								"name": "WidgetContext"
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 81,
+								"id": 78,
 								"name": "Widget.context"
 							}
 						},
 						{
-							"id": 255,
+							"id": 259,
 							"name": "element",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6162,17 +6385,17 @@
 							"sources": [
 								{
 									"fileName": "widgets/EmbedWidget.ts",
-									"line": 17,
+									"line": 16,
 									"character": 9
 								}
 							],
 							"type": {
 								"type": "reference",
-								"name": "Element"
+								"name": "HTMLElement"
 							}
 						},
 						{
-							"id": 267,
+							"id": 275,
 							"name": "frame",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6192,12 +6415,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 76,
+								"id": 73,
 								"name": "Widget.frame"
 							}
 						},
 						{
-							"id": 273,
+							"id": 281,
 							"name": "npmCdn",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6217,12 +6440,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 82,
+								"id": 79,
 								"name": "Widget.npmCdn"
 							}
 						},
 						{
-							"id": 268,
+							"id": 276,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6238,17 +6461,17 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 157,
+								"id": 160,
 								"name": "WidgetType"
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 77,
+								"id": 74,
 								"name": "Widget.type"
 							}
 						},
 						{
-							"id": 271,
+							"id": 279,
 							"name": "widgetApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6269,12 +6492,43 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 80,
+								"id": 77,
 								"name": "Widget.widgetApi"
 							}
 						},
 						{
-							"id": 260,
+							"id": 268,
+							"name": "close",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 269,
+									"name": "close",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExported": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/EmbedWidget.ts",
+									"line": 128,
+									"character": 7
+								}
+							]
+						},
+						{
+							"id": 264,
 							"name": "load",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6283,7 +6537,7 @@
 							},
 							"signatures": [
 								{
-									"id": 261,
+									"id": 265,
 									"name": "load",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6302,7 +6556,7 @@
 									},
 									"overwrites": {
 										"type": "reference",
-										"id": 86,
+										"id": 83,
 										"name": "Widget.load"
 									}
 								}
@@ -6310,18 +6564,49 @@
 							"sources": [
 								{
 									"fileName": "widgets/EmbedWidget.ts",
-									"line": 31,
+									"line": 48,
 									"character": 12
 								}
 							],
 							"overwrites": {
 								"type": "reference",
-								"id": 86,
+								"id": 83,
 								"name": "Widget.load"
 							}
 						},
 						{
-							"id": 287,
+							"id": 266,
+							"name": "open",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExported": true
+							},
+							"signatures": [
+								{
+									"id": 267,
+									"name": "open",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExported": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							],
+							"sources": [
+								{
+									"fileName": "widgets/EmbedWidget.ts",
+									"line": 114,
+									"character": 6
+								}
+							]
+						},
+						{
+							"id": 295,
 							"name": "reload",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6330,7 +6615,7 @@
 							},
 							"signatures": [
 								{
-									"id": 288,
+									"id": 296,
 									"name": "reload",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6339,7 +6624,7 @@
 									},
 									"parameters": [
 										{
-											"id": 289,
+											"id": 297,
 											"name": "__namedParameters",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6350,7 +6635,7 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 290,
+													"id": 298,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
@@ -6359,7 +6644,7 @@
 													},
 													"children": [
 														{
-															"id": 291,
+															"id": 299,
 															"name": "email",
 															"kind": 32,
 															"kindString": "Variable",
@@ -6369,7 +6654,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 16
 																}
 															],
@@ -6379,7 +6664,7 @@
 															}
 														},
 														{
-															"id": 292,
+															"id": 300,
 															"name": "firstName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -6389,7 +6674,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 27
 																}
 															],
@@ -6399,7 +6684,7 @@
 															}
 														},
 														{
-															"id": 293,
+															"id": 301,
 															"name": "lastName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -6409,7 +6694,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 37
 																}
 															],
@@ -6424,16 +6709,16 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																291,
-																292,
-																293
+																299,
+																300,
+																301
 															]
 														}
 													],
 													"sources": [
 														{
 															"fileName": "widgets/Widget.ts",
-															"line": 216,
+															"line": 210,
 															"character": 9
 														}
 													]
@@ -6441,7 +6726,7 @@
 											}
 										},
 										{
-											"id": 294,
+											"id": 302,
 											"name": "jwt",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6460,7 +6745,7 @@
 									},
 									"inheritedFrom": {
 										"type": "reference",
-										"id": 106,
+										"id": 103,
 										"name": "Widget.reload"
 									}
 								}
@@ -6468,13 +6753,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widget.ts",
-									"line": 216,
+									"line": 210,
 									"character": 8
 								}
 							],
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 106,
+								"id": 103,
 								"name": "Widget.reload"
 							}
 						}
@@ -6484,49 +6769,51 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								256
+								260
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								270,
-								269,
-								272,
-								255,
-								267,
-								273,
-								268,
-								271
+								278,
+								277,
+								280,
+								259,
+								275,
+								281,
+								276,
+								279
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								260,
-								287
+								268,
+								264,
+								266,
+								295
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "widgets/EmbedWidget.ts",
-							"line": 16,
+							"line": 15,
 							"character": 32
 						}
 					],
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 75,
+							"id": 72,
 							"name": "Widget"
 						}
 					]
 				},
 				{
-					"id": 295,
+					"id": 303,
 					"name": "_log",
 					"kind": 32,
 					"kindString": "Variable",
@@ -6536,7 +6823,7 @@
 					"sources": [
 						{
 							"fileName": "widgets/EmbedWidget.ts",
-							"line": 8,
+							"line": 7,
 							"character": 10
 						}
 					],
@@ -6552,14 +6839,14 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						254
+						258
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						295
+						303
 					]
 				}
 			],
@@ -6572,17 +6859,17 @@
 			]
 		},
 		{
-			"id": 296,
+			"id": 304,
 			"name": "\"widgets/PopupWidget\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/widgets/PopupWidget.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/widgets/PopupWidget.ts",
 			"children": [
 				{
-					"id": 297,
+					"id": 305,
 					"name": "PopupWidget",
 					"kind": 128,
 					"kindString": "Class",
@@ -6595,7 +6882,7 @@
 					},
 					"children": [
 						{
-							"id": 302,
+							"id": 310,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -6604,7 +6891,7 @@
 							},
 							"signatures": [
 								{
-									"id": 303,
+									"id": 311,
 									"name": "new PopupWidget",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -6613,7 +6900,7 @@
 									},
 									"parameters": [
 										{
-											"id": 304,
+											"id": 312,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6622,12 +6909,12 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 67,
+												"id": 64,
 												"name": "Params"
 											}
 										},
 										{
-											"id": 305,
+											"id": 313,
 											"name": "trigger",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6643,7 +6930,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 297,
+										"id": 305,
 										"name": "PopupWidget"
 									},
 									"overwrites": {
@@ -6665,7 +6952,7 @@
 							}
 						},
 						{
-							"id": 327,
+							"id": 335,
 							"name": "analyticsApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6685,12 +6972,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 79,
+								"id": 76,
 								"name": "Widget.analyticsApi"
 							}
 						},
 						{
-							"id": 326,
+							"id": 334,
 							"name": "content",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6710,12 +6997,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 78,
+								"id": 75,
 								"name": "Widget.content"
 							}
 						},
 						{
-							"id": 329,
+							"id": 337,
 							"name": "context",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6731,17 +7018,17 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 148,
+								"id": 147,
 								"name": "WidgetContext"
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 81,
+								"id": 78,
 								"name": "Widget.context"
 							}
 						},
 						{
-							"id": 324,
+							"id": 332,
 							"name": "frame",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6761,12 +7048,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 76,
+								"id": 73,
 								"name": "Widget.frame"
 							}
 						},
 						{
-							"id": 330,
+							"id": 338,
 							"name": "npmCdn",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6786,12 +7073,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 82,
+								"id": 79,
 								"name": "Widget.npmCdn"
 							}
 						},
 						{
-							"id": 301,
+							"id": 309,
 							"name": "popupcontent",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6811,7 +7098,7 @@
 							}
 						},
 						{
-							"id": 300,
+							"id": 308,
 							"name": "popupdiv",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6831,7 +7118,7 @@
 							}
 						},
 						{
-							"id": 298,
+							"id": 306,
 							"name": "triggerElement",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6860,7 +7147,7 @@
 							}
 						},
 						{
-							"id": 299,
+							"id": 307,
 							"name": "triggerWhenCTA",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6889,7 +7176,7 @@
 							}
 						},
 						{
-							"id": 325,
+							"id": 333,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6905,17 +7192,17 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 157,
+								"id": 160,
 								"name": "WidgetType"
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 77,
+								"id": 74,
 								"name": "Widget.type"
 							}
 						},
 						{
-							"id": 328,
+							"id": 336,
 							"name": "widgetApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6936,12 +7223,12 @@
 							},
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 80,
+								"id": 77,
 								"name": "Widget.widgetApi"
 							}
 						},
 						{
-							"id": 312,
+							"id": 320,
 							"name": "close",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6950,7 +7237,7 @@
 							},
 							"signatures": [
 								{
-									"id": 313,
+									"id": 321,
 									"name": "close",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6966,13 +7253,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/PopupWidget.ts",
-									"line": 147,
+									"line": 151,
 									"character": 7
 								}
 							]
 						},
 						{
-							"id": 306,
+							"id": 314,
 							"name": "load",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6981,7 +7268,7 @@
 							},
 							"signatures": [
 								{
-									"id": 307,
+									"id": 315,
 									"name": "load",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6994,7 +7281,7 @@
 									},
 									"overwrites": {
 										"type": "reference",
-										"id": 86,
+										"id": 83,
 										"name": "Widget.load"
 									}
 								}
@@ -7002,18 +7289,18 @@
 							"sources": [
 								{
 									"fileName": "widgets/PopupWidget.ts",
-									"line": 64,
+									"line": 68,
 									"character": 6
 								}
 							],
 							"overwrites": {
 								"type": "reference",
-								"id": 86,
+								"id": 83,
 								"name": "Widget.load"
 							}
 						},
 						{
-							"id": 310,
+							"id": 318,
 							"name": "open",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7022,7 +7309,7 @@
 							},
 							"signatures": [
 								{
-									"id": 311,
+									"id": 319,
 									"name": "open",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7038,13 +7325,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/PopupWidget.ts",
-									"line": 122,
+									"line": 126,
 									"character": 6
 								}
 							]
 						},
 						{
-							"id": 344,
+							"id": 352,
 							"name": "reload",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7053,7 +7340,7 @@
 							},
 							"signatures": [
 								{
-									"id": 345,
+									"id": 353,
 									"name": "reload",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7062,7 +7349,7 @@
 									},
 									"parameters": [
 										{
-											"id": 346,
+											"id": 354,
 											"name": "__namedParameters",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7073,7 +7360,7 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 347,
+													"id": 355,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
@@ -7082,7 +7369,7 @@
 													},
 													"children": [
 														{
-															"id": 348,
+															"id": 356,
 															"name": "email",
 															"kind": 32,
 															"kindString": "Variable",
@@ -7092,7 +7379,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 16
 																}
 															],
@@ -7102,7 +7389,7 @@
 															}
 														},
 														{
-															"id": 349,
+															"id": 357,
 															"name": "firstName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -7112,7 +7399,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 27
 																}
 															],
@@ -7122,7 +7409,7 @@
 															}
 														},
 														{
-															"id": 350,
+															"id": 358,
 															"name": "lastName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -7132,7 +7419,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 37
 																}
 															],
@@ -7147,16 +7434,16 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																348,
-																349,
-																350
+																356,
+																357,
+																358
 															]
 														}
 													],
 													"sources": [
 														{
 															"fileName": "widgets/Widget.ts",
-															"line": 216,
+															"line": 210,
 															"character": 9
 														}
 													]
@@ -7164,7 +7451,7 @@
 											}
 										},
 										{
-											"id": 351,
+											"id": 359,
 											"name": "jwt",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7183,7 +7470,7 @@
 									},
 									"inheritedFrom": {
 										"type": "reference",
-										"id": 106,
+										"id": 103,
 										"name": "Widget.reload"
 									}
 								}
@@ -7191,13 +7478,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widget.ts",
-									"line": 216,
+									"line": 210,
 									"character": 8
 								}
 							],
 							"inheritedFrom": {
 								"type": "reference",
-								"id": 106,
+								"id": 103,
 								"name": "Widget.reload"
 							}
 						}
@@ -7207,34 +7494,34 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								302
+								310
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								327,
-								326,
-								329,
-								324,
-								330,
-								301,
-								300,
-								298,
-								299,
-								325,
-								328
+								335,
+								334,
+								337,
+								332,
+								338,
+								309,
+								308,
+								306,
+								307,
+								333,
+								336
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								312,
-								306,
-								310,
-								344
+								320,
+								314,
+								318,
+								352
 							]
 						}
 					],
@@ -7248,20 +7535,20 @@
 					"extendedTypes": [
 						{
 							"type": "reference",
-							"id": 75,
+							"id": 72,
 							"name": "Widget"
 						}
 					],
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 354,
+							"id": 362,
 							"name": "CtaWidget"
 						}
 					]
 				},
 				{
-					"id": 352,
+					"id": 360,
 					"name": "_log",
 					"kind": 32,
 					"kindString": "Variable",
@@ -7287,14 +7574,14 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						297
+						305
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						352
+						360
 					]
 				}
 			],
@@ -7307,17 +7594,17 @@
 			]
 		},
 		{
-			"id": 66,
+			"id": 63,
 			"name": "\"widgets/Widget\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/widgets/Widget.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/widgets/Widget.ts",
 			"children": [
 				{
-					"id": 75,
+					"id": 72,
 					"name": "Widget",
 					"kind": 128,
 					"kindString": "Class",
@@ -7327,7 +7614,7 @@
 					},
 					"children": [
 						{
-							"id": 79,
+							"id": 76,
 							"name": "analyticsApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7347,7 +7634,7 @@
 							}
 						},
 						{
-							"id": 78,
+							"id": 75,
 							"name": "content",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7367,7 +7654,7 @@
 							}
 						},
 						{
-							"id": 81,
+							"id": 78,
 							"name": "context",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7383,12 +7670,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 148,
+								"id": 147,
 								"name": "WidgetContext"
 							}
 						},
 						{
-							"id": 76,
+							"id": 73,
 							"name": "frame",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7408,7 +7695,7 @@
 							}
 						},
 						{
-							"id": 82,
+							"id": 79,
 							"name": "npmCdn",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7428,7 +7715,7 @@
 							}
 						},
 						{
-							"id": 77,
+							"id": 74,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7444,12 +7731,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 157,
+								"id": 160,
 								"name": "WidgetType"
 							}
 						},
 						{
-							"id": 80,
+							"id": 77,
 							"name": "widgetApi",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7470,7 +7757,7 @@
 							}
 						},
 						{
-							"id": 86,
+							"id": 83,
 							"name": "load",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7480,7 +7767,7 @@
 							},
 							"signatures": [
 								{
-									"id": 87,
+									"id": 84,
 									"name": "load",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7502,7 +7789,7 @@
 							]
 						},
 						{
-							"id": 106,
+							"id": 103,
 							"name": "reload",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7511,7 +7798,7 @@
 							},
 							"signatures": [
 								{
-									"id": 107,
+									"id": 104,
 									"name": "reload",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7520,7 +7807,7 @@
 									},
 									"parameters": [
 										{
-											"id": 108,
+											"id": 105,
 											"name": "__namedParameters",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7531,7 +7818,7 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 109,
+													"id": 106,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
@@ -7540,7 +7827,7 @@
 													},
 													"children": [
 														{
-															"id": 110,
+															"id": 107,
 															"name": "email",
 															"kind": 32,
 															"kindString": "Variable",
@@ -7550,7 +7837,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 16
 																}
 															],
@@ -7560,7 +7847,7 @@
 															}
 														},
 														{
-															"id": 111,
+															"id": 108,
 															"name": "firstName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -7570,7 +7857,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 27
 																}
 															],
@@ -7580,7 +7867,7 @@
 															}
 														},
 														{
-															"id": 112,
+															"id": 109,
 															"name": "lastName",
 															"kind": 32,
 															"kindString": "Variable",
@@ -7590,7 +7877,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widget.ts",
-																	"line": 216,
+																	"line": 210,
 																	"character": 37
 																}
 															],
@@ -7605,16 +7892,16 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																110,
-																111,
-																112
+																107,
+																108,
+																109
 															]
 														}
 													],
 													"sources": [
 														{
 															"fileName": "widgets/Widget.ts",
-															"line": 216,
+															"line": 210,
 															"character": 9
 														}
 													]
@@ -7622,7 +7909,7 @@
 											}
 										},
 										{
-											"id": 113,
+											"id": 110,
 											"name": "jwt",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7644,7 +7931,7 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widget.ts",
-									"line": 216,
+									"line": 210,
 									"character": 8
 								}
 							]
@@ -7655,21 +7942,21 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								79,
-								78,
-								81,
 								76,
-								82,
-								77,
-								80
+								75,
+								78,
+								73,
+								79,
+								74,
+								77
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								86,
-								106
+								83,
+								103
 							]
 						}
 					],
@@ -7683,18 +7970,18 @@
 					"extendedBy": [
 						{
 							"type": "reference",
-							"id": 254,
+							"id": 258,
 							"name": "EmbedWidget"
 						},
 						{
 							"type": "reference",
-							"id": 297,
+							"id": 305,
 							"name": "PopupWidget"
 						}
 					]
 				},
 				{
-					"id": 67,
+					"id": 64,
 					"name": "Params",
 					"kind": 256,
 					"kindString": "Interface",
@@ -7703,7 +7990,7 @@
 					},
 					"children": [
 						{
-							"id": 72,
+							"id": 69,
 							"name": "api",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7724,7 +8011,7 @@
 							}
 						},
 						{
-							"id": 71,
+							"id": 68,
 							"name": "content",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7744,7 +8031,7 @@
 							}
 						},
 						{
-							"id": 74,
+							"id": 71,
 							"name": "context",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7760,12 +8047,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 148,
+								"id": 147,
 								"name": "WidgetContext"
 							}
 						},
 						{
-							"id": 69,
+							"id": 66,
 							"name": "domain",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7785,7 +8072,7 @@
 							}
 						},
 						{
-							"id": 70,
+							"id": 67,
 							"name": "npmCdn",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7805,7 +8092,7 @@
 							}
 						},
 						{
-							"id": 73,
+							"id": 70,
 							"name": "rsCode",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7835,7 +8122,7 @@
 							}
 						},
 						{
-							"id": 68,
+							"id": 65,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7851,7 +8138,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 157,
+								"id": 160,
 								"name": "WidgetType"
 							}
 						}
@@ -7861,13 +8148,13 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								72,
-								71,
-								74,
 								69,
+								68,
+								71,
+								66,
+								67,
 								70,
-								73,
-								68
+								65
 							]
 						}
 					],
@@ -7880,21 +8167,21 @@
 					]
 				},
 				{
-					"id": 115,
+					"id": 112,
 					"name": "delay",
 					"kind": 64,
 					"kindString": "Function",
 					"flags": {},
 					"signatures": [
 						{
-							"id": 116,
+							"id": 113,
 							"name": "delay",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 117,
+									"id": 114,
 									"name": "duration",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -7920,7 +8207,7 @@
 					"sources": [
 						{
 							"fileName": "widgets/Widget.ts",
-							"line": 305,
+							"line": 283,
 							"character": 14
 						}
 					]
@@ -7931,21 +8218,21 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						75
+						72
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						67
+						64
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						115
+						112
 					]
 				}
 			],
@@ -7958,17 +8245,17 @@
 			]
 		},
 		{
-			"id": 414,
+			"id": 422,
 			"name": "\"widgets/Widgets\"",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {
 				"isExported": true
 			},
-			"originalName": "/home/johan/dev/squatch-js/src/widgets/Widgets.ts",
+			"originalName": "/Users/Ian/dev/squatch-js/src/widgets/Widgets.ts",
 			"children": [
 				{
-					"id": 415,
+					"id": 423,
 					"name": "Widgets",
 					"kind": 128,
 					"kindString": "Class",
@@ -7980,7 +8267,7 @@
 					},
 					"children": [
 						{
-							"id": 421,
+							"id": 429,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
@@ -8006,7 +8293,7 @@
 							},
 							"signatures": [
 								{
-									"id": 422,
+									"id": 430,
 									"name": "new Widgets",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -8032,7 +8319,7 @@
 									},
 									"parameters": [
 										{
-											"id": 423,
+											"id": 431,
 											"name": "configin",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8041,14 +8328,14 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 119,
+												"id": 116,
 												"name": "ConfigOptions"
 											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 415,
+										"id": 423,
 										"name": "Widgets"
 									}
 								}
@@ -8056,13 +8343,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 31,
+									"line": 27,
 									"character": 16
 								}
 							]
 						},
 						{
-							"id": 416,
+							"id": 424,
 							"name": "api",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8072,7 +8359,7 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 26,
+									"line": 22,
 									"character": 5
 								}
 							],
@@ -8083,7 +8370,7 @@
 							}
 						},
 						{
-							"id": 418,
+							"id": 426,
 							"name": "domain",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8093,7 +8380,7 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 28,
+									"line": 24,
 									"character": 8
 								}
 							],
@@ -8103,7 +8390,7 @@
 							}
 						},
 						{
-							"id": 420,
+							"id": 428,
 							"name": "eventBus",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8113,7 +8400,7 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 31,
+									"line": 27,
 									"character": 10
 								}
 							],
@@ -8123,7 +8410,7 @@
 							}
 						},
 						{
-							"id": 419,
+							"id": 427,
 							"name": "npmCdn",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8133,7 +8420,7 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 29,
+									"line": 25,
 									"character": 8
 								}
 							],
@@ -8143,7 +8430,7 @@
 							}
 						},
 						{
-							"id": 417,
+							"id": 425,
 							"name": "tenantAlias",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8153,7 +8440,7 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 27,
+									"line": 23,
 									"character": 13
 								}
 							],
@@ -8163,7 +8450,7 @@
 							}
 						},
 						{
-							"id": 436,
+							"id": 441,
 							"name": "autofill",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8172,7 +8459,7 @@
 							},
 							"signatures": [
 								{
-									"id": 437,
+									"id": 442,
 									"name": "autofill",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -8185,7 +8472,7 @@
 									},
 									"parameters": [
 										{
-											"id": 438,
+											"id": 443,
 											"name": "selector",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8219,74 +8506,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 173,
+									"line": 140,
 									"character": 10
 								}
 							]
 						},
 						{
-							"id": 424,
-							"name": "createCookieUser",
-							"kind": 2048,
-							"kindString": "Method",
-							"flags": {
-								"isExported": true
-							},
-							"signatures": [
-								{
-									"id": 425,
-									"name": "createCookieUser",
-									"kind": 4096,
-									"kindString": "Call signature",
-									"flags": {
-										"isExported": true
-									},
-									"comment": {
-										"shortText": "This function calls the {@link WidgetApi.cookieUser} method, and it renders\nthe widget if it is successful. Otherwise it shows the \"error\" widget.",
-										"returns": "json object if true, with a Widget and user details.\n"
-									},
-									"parameters": [
-										{
-											"id": 426,
-											"name": "config",
-											"kind": 32768,
-											"kindString": "Parameter",
-											"flags": {
-												"isExported": true
-											},
-											"comment": {
-												"text": "Config details"
-											},
-											"type": {
-												"type": "reference",
-												"id": 124,
-												"name": "WidgetConfig"
-											}
-										}
-									],
-									"type": {
-										"type": "reference",
-										"typeArguments": [
-											{
-												"type": "reference",
-												"id": 134,
-												"name": "WidgetResult"
-											}
-										],
-										"name": "Promise"
-									}
-								}
-							],
-							"sources": [
-								{
-									"fileName": "widgets/Widgets.ts",
-									"line": 75,
-									"character": 24
-								}
-							]
-						},
-						{
-							"id": 433,
+							"id": 438,
 							"name": "render",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8295,7 +8521,7 @@
 							},
 							"signatures": [
 								{
-									"id": 434,
+									"id": 439,
 									"name": "render",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -8308,7 +8534,7 @@
 									},
 									"parameters": [
 										{
-											"id": 435,
+											"id": 440,
 											"name": "config",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8320,7 +8546,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 124,
+												"id": 121,
 												"name": "WidgetConfig"
 											}
 										}
@@ -8330,7 +8556,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 134,
+												"id": 133,
 												"name": "WidgetResult"
 											}
 										],
@@ -8341,13 +8567,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 146,
+									"line": 113,
 									"character": 14
 								}
 							]
 						},
 						{
-							"id": 439,
+							"id": 444,
 							"name": "submitEmail",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8356,7 +8582,7 @@
 							},
 							"signatures": [
 								{
-									"id": 440,
+									"id": 445,
 									"name": "submitEmail",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -8369,7 +8595,7 @@
 									},
 									"parameters": [
 										{
-											"id": 441,
+											"id": 446,
 											"name": "fn",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8394,13 +8620,13 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 216,
+									"line": 183,
 									"character": 13
 								}
 							]
 						},
 						{
-							"id": 427,
+							"id": 432,
 							"name": "upsertUser",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8409,7 +8635,7 @@
 							},
 							"signatures": [
 								{
-									"id": 428,
+									"id": 433,
 									"name": "upsertUser",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -8422,7 +8648,7 @@
 									},
 									"parameters": [
 										{
-											"id": 429,
+											"id": 434,
 											"name": "config",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8434,7 +8660,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 124,
+												"id": 121,
 												"name": "WidgetConfig"
 											}
 										}
@@ -8445,7 +8671,7 @@
 											{
 												"type": "reflection",
 												"declaration": {
-													"id": 430,
+													"id": 435,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
@@ -8454,7 +8680,7 @@
 													},
 													"children": [
 														{
-															"id": 432,
+															"id": 437,
 															"name": "user",
 															"kind": 32,
 															"kindString": "Variable",
@@ -8464,7 +8690,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widgets.ts",
-																	"line": 120,
+																	"line": 87,
 																	"character": 12
 																}
 															],
@@ -8475,7 +8701,7 @@
 															"defaultValue": "response.user"
 														},
 														{
-															"id": 431,
+															"id": 436,
 															"name": "widget",
 															"kind": 32,
 															"kindString": "Variable",
@@ -8485,7 +8711,7 @@
 															"sources": [
 																{
 																	"fileName": "widgets/Widgets.ts",
-																	"line": 115,
+																	"line": 80,
 																	"character": 14
 																}
 															],
@@ -8493,7 +8719,7 @@
 																"type": "intrinsic",
 																"name": "any"
 															},
-															"defaultValue": "this._renderWidget(response, clean, {\n          type: \"upsert\",\n          user: clean.user,\n          engagementMedium: config.engagementMedium,\n        })"
+															"defaultValue": "this._renderWidget(response, clean, {\n          type: \"upsert\",\n          user: clean.user,\n          engagementMedium: config.engagementMedium,\n          container: config.container,\n          trigger: config.trigger,\n        })"
 														}
 													],
 													"groups": [
@@ -8501,8 +8727,8 @@
 															"title": "Variables",
 															"kind": 32,
 															"children": [
-																432,
-																431
+																437,
+																436
 															]
 														}
 													]
@@ -8516,7 +8742,7 @@
 							"sources": [
 								{
 									"fileName": "widgets/Widgets.ts",
-									"line": 109,
+									"line": 74,
 									"character": 18
 								}
 							]
@@ -8527,42 +8753,41 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								421
+								429
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								416,
-								418,
-								420,
-								419,
-								417
+								424,
+								426,
+								428,
+								427,
+								425
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								436,
-								424,
-								433,
-								439,
-								427
+								441,
+								438,
+								444,
+								432
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "widgets/Widgets.ts",
-							"line": 25,
+							"line": 21,
 							"character": 28
 						}
 					]
 				},
 				{
-					"id": 463,
+					"id": 468,
 					"name": "_log",
 					"kind": 32,
 					"kindString": "Variable",
@@ -8572,7 +8797,7 @@
 					"sources": [
 						{
 							"fileName": "widgets/Widgets.ts",
-							"line": 17,
+							"line": 13,
 							"character": 10
 						}
 					],
@@ -8588,14 +8813,14 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						415
+						423
 					]
 				},
 				{
 					"title": "Variables",
 					"kind": 32,
 					"children": [
-						463
+						468
 					]
 				}
 			],
@@ -8613,22 +8838,22 @@
 			"title": "Modules",
 			"kind": 1,
 			"children": [
-				183,
-				206,
+				186,
+				209,
 				33,
-				235,
-				245,
-				485,
-				118,
-				464,
-				248,
-				160,
+				239,
+				249,
+				490,
+				115,
+				469,
+				252,
+				163,
 				1,
-				353,
-				253,
-				296,
-				66,
-				414
+				361,
+				257,
+				304,
+				63,
+				422
 			]
 		}
 	]

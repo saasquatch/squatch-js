@@ -1,14 +1,20 @@
-import { doPost, doPut, doGet } from "../utils/io";
+import Cookies from "js-cookie";
 import {
   ConfigOptions,
   EngagementMedium,
-  WidgetType,
-  CookieUser,
-  WidgetConfig,
   ReferralCookie,
+  WidgetConfig,
+  WidgetType,
+  WithRequired,
 } from "../types";
-import { validateConfig, validateWidgetConfig } from "../utils/validate";
-import Cookies from "js-cookie";
+import { doGet, doPost, doPut, doQuery } from "../utils/io";
+import {
+  validateConfig,
+  validateLocale,
+  validatePasswordlessConfig,
+  validateWidgetConfig,
+} from "../utils/validate";
+import { RENDER_WIDGET_QUERY } from "./graphql";
 
 /**
  *
@@ -45,29 +51,6 @@ export default class WidgetApi {
   }
 
   /**
-   * Creates/upserts an anonymous user.
-   *
-   * @param {Object} params Parameters for request
-   * @param {WidgetType} params.widgetType The content of the widget.
-   * @param {EngagementMedium} params.engagementMedium How to display the widget.
-   * @param {CookieUser} params.user An optional user object
-   * @param {string} params.jwt the JSON Web Token (JWT) that is used to
-   *                            validate the data (can be disabled)
-   *
-   * @return {Promise} json object if true, with the widget template, jsOptions and user details.
-   */
-  cookieUser(params: CookieUser): Promise<any> {
-    // validateInput(params, CookieUserSchema);
-    const { widgetType, engagementMedium = "POPUP", jwt, user } = params;
-    const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const optionalParams = _buildParams({ widgetType, engagementMedium });
-    const path = `/api/v1/${tenantAlias}/widget/user/cookie_user${optionalParams}`;
-    const url = this.domain + path;
-
-    return doPut(url, JSON.stringify(user ? user : {}), jwt);
-  }
-
-  /**
    * Creates/upserts user.
    *
    * @param {Object} params Parameters for request
@@ -81,10 +64,15 @@ export default class WidgetApi {
    *
    * @return {Promise} string if true, with the widget template, jsOptions and user details.
    */
-  upsertUser(params: WidgetConfig): Promise<any> {
+  upsertUser(params: WithRequired<WidgetConfig, "user">): Promise<any> {
     const raw = params as unknown;
     const clean = validateWidgetConfig(raw);
-    const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
+    const {
+      widgetType,
+      engagementMedium = "POPUP",
+      jwt,
+      user,
+    } = clean as WithRequired<WidgetConfig, "user">;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = encodeURIComponent(user.accountId);
@@ -114,17 +102,36 @@ export default class WidgetApi {
    */
   render(params: WidgetConfig): Promise<any> {
     const raw = params as unknown;
-    const clean = validateWidgetConfig(raw);
+    const clean = validatePasswordlessConfig(raw);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const accountId = encodeURIComponent(user.accountId);
-    const userId = encodeURIComponent(user.id);
-    const optionalParams = _buildParams({ widgetType, engagementMedium });
+    const accountId = user ? encodeURIComponent(user.accountId) : null;
+    const userId = user ? encodeURIComponent(user.id) : null;
 
-    const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/render${optionalParams}`;
+    const locale =
+      clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));
+
+    const path = `/api/v1/${tenantAlias}/graphql`;
     const url = this.domain + path;
-    return doGet(url, jwt);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await doQuery(
+          url,
+          RENDER_WIDGET_QUERY,
+          {
+            user: userId && accountId ? { id: userId, accountId } : null,
+            engagementMedium,
+            widgetType,
+            locale,
+          },
+          jwt
+        );
+        resolve(res?.body?.data?.renderWidget);
+      } catch (e) {
+        reject(e);
+      }
+    });
   }
 
   /**
