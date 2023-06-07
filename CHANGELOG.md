@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.1] - 2023-06-07
+
+### Fixed
+
+- Race condition with auto-popup fixed when using the squatch-js package from NPM or on Safari
+
 ## [2.5.0] - 2023-05-16
 
 ### Removed
@@ -30,7 +36,7 @@ var initObj = {
 squatch
   .widget(initObj)
   .then(function (response) {
-    const widget = response.widget
+    const widget = response.widget;
   })
   .catch(function (error) {
     console.log(error);
@@ -44,6 +50,7 @@ squatch
 ## [2.4.3] - 2023-04-20
 
 ### Changed
+
 - Updated license copyright to be in line with SaaSquatch open-source policy.
 
 ## [2.4.2] - 2023-04-10
@@ -287,8 +294,9 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...HEAD
-[2.5.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.5.0
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.1...HEAD
+[2.5.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.5.1
+[2.5.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.3...@saasquatch%2Fsquatch-js@2.5.0
 [2.4.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.2...@saasquatch%2Fsquatch-js@2.4.3
 [2.4.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.4.2
 [2.4.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.0...@saasquatch%2Fsquatch-js@2.4.1
