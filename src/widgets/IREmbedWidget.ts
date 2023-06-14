@@ -44,6 +44,10 @@ export default class IREmbedWidget extends HTMLElement {
 
     if (!config) return console.error("could not decode jwt");
 
+    if (!config.user) return console.error("could not decode user from jwt");
+
+    if (!config.env) return console.error("could not decode env from jwt");
+
     this.analyticsApi = new AnalyticsApi({
       domain: config?.env?.domain,
     });
