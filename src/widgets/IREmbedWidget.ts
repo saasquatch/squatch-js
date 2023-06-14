@@ -3,6 +3,7 @@ import AnalyticsApi from "../api/AnalyticsApi";
 import { WidgetApi } from "../squatch";
 import { domready } from "../utils/domready";
 import { delay } from "q";
+import { decodeJwt } from "../utils/decodeJwt";
 const _log = debug("squatch-js:IREmbedWidget");
 
 export default class IREmbedWidget extends HTMLElement {
@@ -13,7 +14,7 @@ export default class IREmbedWidget extends HTMLElement {
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
 
-  constructor(props) {
+  constructor() {
     super();
   }
 
@@ -21,7 +22,7 @@ export default class IREmbedWidget extends HTMLElement {
     return ["widget-type"];
   }
 
-  attributeChangedCallback(attr, oldVal: string, newVal: string) {
+  attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
     if (oldVal === newVal || !oldVal) return; // nothing to do
 
     console.log({ attr, oldVal, newVal, content: this.content });
@@ -35,27 +36,31 @@ export default class IREmbedWidget extends HTMLElement {
 
   connectedCallback() {
     this.widgetType = this.getAttribute("widget-type");
+
+    const jwt =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA";
+
+    const config = decodeJwt(jwt);
+
+    if (!config) return console.error("could not decode jwt");
+
     this.analyticsApi = new AnalyticsApi({
-      domain: "https://staging.referralsaasquatch.com",
+      domain: config?.env?.domain,
     });
     this.widgetApi = new WidgetApi({
-      tenantAlias: "test_a8b41jotf8a1v",
-      domain: "https://staging.referralsaasquatch.com",
+      ...config.env,
     });
 
     _log("widget initializing ...");
 
-    const userObj = {
-      id: "irtest",
-      accountId: "irtest",
-    };
+    const userObj = config?.user;
 
     const response = this.widgetApi
       .upsertUser({
         user: userObj,
         engagementMedium: "EMBED",
         widgetType: this.widgetType!,
-        jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In19.1G5Si9ManYUBCkG2QO3mByfiVYw0w7niBDS9wN4TEAE",
+        jwt,
       })
       .then((res) => {
         this.frame = document.createElement("iframe");
