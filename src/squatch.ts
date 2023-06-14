@@ -11,6 +11,8 @@ import debug from "debug";
 import Widgets from "./widgets/Widgets";
 import EmbedWidget from "./widgets/EmbedWidget";
 import PopupWidget from "./widgets/PopupWidget";
+import IREmbedWidget from "./widgets/IREmbedWidget";
+import IRPopupWidget from "./widgets/IRPopupWidget";
 import CtaWidget from "./widgets/CtaWidget";
 import WidgetApi from "./api/WidgetApi";
 import EventsApi from "./api/EventsApi";
@@ -27,7 +29,15 @@ export * from "./docs";
 /** @hidden */
 const _log = debug("squatch-js");
 
-export { Widgets, EmbedWidget, PopupWidget, CtaWidget, WidgetApi };
+export {
+  Widgets,
+  EmbedWidget,
+  PopupWidget,
+  IREmbedWidget,
+  IRPopupWidget,
+  CtaWidget,
+  WidgetApi,
+};
 /** @hidden */
 let _api: WidgetApi | null = null;
 /** @hidden */
