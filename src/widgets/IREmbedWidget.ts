@@ -13,6 +13,10 @@ export default class IREmbedWidget extends HTMLElement {
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
 
+  constructor(props) {
+    super();
+  }
+
   static get observedAttributes() {
     return ["widget-type"];
   }
@@ -29,17 +33,7 @@ export default class IREmbedWidget extends HTMLElement {
     }
   }
 
-  constructor(props) {
-    super();
-  }
-
   connectedCallback() {
-    console.log({
-      this: this,
-      widgetType: this.getAttribute("widget-type"),
-      attributes: this.getAttributeNames(),
-    });
-
     this.widgetType = this.getAttribute("widget-type");
     this.analyticsApi = new AnalyticsApi({
       domain: "https://staging.referralsaasquatch.com",
@@ -64,7 +58,6 @@ export default class IREmbedWidget extends HTMLElement {
         jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In19.1G5Si9ManYUBCkG2QO3mByfiVYw0w7niBDS9wN4TEAE",
       })
       .then((res) => {
-
         this.frame = document.createElement("iframe");
         this.frame["squatchJsApi"] = this;
         this.frame.width = "100%";
@@ -77,7 +70,7 @@ export default class IREmbedWidget extends HTMLElement {
         if (this.firstChild) {
           this.replaceChild(this.frame, this.firstChild);
           // Add iframe for the first time
-        //   @ts-ignore
+          //   @ts-ignore
         } else if (!this.firstChild || this.firstChild!.nodeName === "#text") {
           this.appendChild(this.frame);
         }
@@ -89,20 +82,14 @@ export default class IREmbedWidget extends HTMLElement {
           throw new Error("Frame needs a content window");
         }
 
+        // TODO: figure out the best way to do this
         const frameDoc = contentWindow.document;
         frameDoc.open();
         frameDoc.write(this.content);
         frameDoc.close();
+
         domready(frameDoc, async () => {
           const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-          const ctaElement = frameDoc.getElementById("cta");
-
-          if (ctaElement) {
-            if (!ctaElement.parentNode) {
-              throw new Error("ctaElement needs a parentNode");
-            }
-            ctaElement.parentNode.removeChild(ctaElement);
-          }
 
           // @ts-ignore -- number will be cast to string by browsers
           this.frame.height = frameDoc.body.scrollHeight;
