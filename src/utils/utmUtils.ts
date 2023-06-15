@@ -7,7 +7,7 @@ import { validatePasswordlessConfig } from "./validate";
 const _log = debug("squatch-js");
 
 export function _getAutoConfig(
-  configIn: ConfigOptions
+  configIn?: ConfigOptions
 ): { widgetConfig: WidgetConfig; squatchConfig: ConfigOptions } | undefined {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);

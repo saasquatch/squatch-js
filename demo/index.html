@@ -11,16 +11,17 @@
         tenantAlias: "test_a8b41jotf8a1v",
         jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA",
       };
-      window.irPopup = {
-        domain: "https://staging.referralsaasquatch.com",
-        tenantAlias: "test_a8b41jotf8a1v",
-        jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA",
-      };
+      // window.irPopup = {
+      //   domain: "https://staging.referralsaasquatch.com",
+      //   tenantAlias: "test_a8b41jotf8a1v",
+      //   // jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA",
+      // };
     </script>
   </head>
 
   <body>
-    <button onclick="javascript:document.getElementById('ir-popup').open()">
+    <!-- Authorized Widgets -->
+    <!-- <button onclick="javascript:document.getElementById('ir-popup').open()">
       Open me!
     </button>
     <button onclick="javascript:document.getElementById('ir-popup-2').open()">
@@ -39,12 +40,25 @@
       id="ir-embed"
       container="#widget-container"
     ></ir-embed>
+
     <ir-popup widget-type="w/ir-tester" id="ir-popup"></ir-popup>
-    <ir-popup widget-type="w/mint-tester" id="ir-popup-2"></ir-popup>
+    <ir-popup widget-type="w/mint-tester" id="ir-popup-2"></ir-popup> --
 
     <div
       id="widget-container"
       style="position: absolute; width: 500px; height: 500px; right: 0; top: 0"
-    ></div>
+    ></div> -->
+
+    <!-- /Authorized Widgets  -->
+
+    <!-- Passwordless widget -->
+    <button onclick="javascript:document.getElementById('ir-friend').open()">
+      Open passwordless widget
+    </button>
+    <ir-popup
+      widget-type="p/jayden-qa-obj/w/friendWidget"
+      id="ir-friend"
+    ></ir-popup>
+    <!-- /Passwordless widget -->
   </body>
 </html>

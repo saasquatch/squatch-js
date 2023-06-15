@@ -1,8 +1,9 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
-import { WidgetApi } from "../squatch";
+import { WidgetApi, init } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
+import { _getAutoConfig } from "../utils/utmUtils";
 const _log = debug("squatch-js:IRPopupWidget");
 
 export default class IRPopupWidget extends HTMLElement {
@@ -34,21 +35,6 @@ export default class IRPopupWidget extends HTMLElement {
   }
 
   _createFrame() {
-    try {
-      this.triggerElement /* HTMLButton */ = document.querySelector(this.id);
-      if (this.id && !this.triggerElement)
-        _log("No element found with trigger selector", this.id);
-    } catch {
-      _log("Not a valid selector", this.id);
-    }
-
-    // Trigger is optional
-    if (this.triggerElement) {
-      this.triggerElement.onclick = () => {
-        this.open();
-      };
-    }
-
     // First time load
     if (!this.popupdiv) {
       this.frame = document.createElement("iframe");
@@ -84,11 +70,67 @@ export default class IRPopupWidget extends HTMLElement {
     }
   }
 
+  _setFrameContents(res) {
+    if (this.popupdiv.firstChild) {
+      this.popupdiv.replaceChild(this.frame, this.popupdiv.firstChild);
+      // Add iframe for the first time
+    } else if (
+      !this.popupdiv.firstChild ||
+      //   @ts-ignore
+      this.popupdiv.firstChild!.nodeName === "#text"
+    ) {
+      this.popupdiv.appendChild(this.frame);
+    }
+
+    this.content = res.template;
+
+    this.popupdiv.appendChild(this.popupcontent);
+    document.body.appendChild(this.popupdiv);
+    this.popupcontent.appendChild(this.frame);
+
+    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+    const frameDoc = this.frame.contentWindow.document;
+    frameDoc.open();
+    frameDoc.write(this.content);
+    frameDoc.close();
+  }
+
   connectedCallback() {
     this.widgetType = this.getAttribute("widget-type");
 
-    const jwt = window.irPopup.jwt;
+    const jwt = window.irPopup?.jwt;
 
+    _log("widget initializing ...");
+
+    if (!jwt) return this._loadPasswordlessWidget();
+
+    this._loadUserWidget(jwt);
+  }
+
+  _loadPasswordlessWidget() {
+    this._createFrame();
+    const configs = _getAutoConfig();
+
+    if (configs) {
+      const { squatchConfig, widgetConfig } = configs;
+
+      this.analyticsApi = new AnalyticsApi({
+        domain: squatchConfig.domain!,
+      });
+      this.widgetApi = new WidgetApi({
+        tenantAlias: squatchConfig.tenantAlias,
+        domain: squatchConfig.domain,
+      });
+      this.widgetApi.render(widgetConfig).then((res) => {
+        _log("Popup template loaded into iframe");
+        this._setFrameContents(res);
+        this._setupResizeHandler();
+        this.open();
+      });
+    }
+  }
+
+  _loadUserWidget(jwt: string) {
     const userObj = decodeUserJwt(jwt);
 
     if (!userObj) return _log("could not decode user from jwt");
@@ -101,10 +143,7 @@ export default class IRPopupWidget extends HTMLElement {
       domain: window.irPopup.domain,
     });
 
-    _log("widget initializing ...");
-
     this._createFrame();
-
     this.widgetApi
       .upsertUser({
         user: userObj,
@@ -113,29 +152,8 @@ export default class IRPopupWidget extends HTMLElement {
         jwt,
       })
       .then((res) => {
-        if (this.popupdiv.firstChild) {
-          this.popupdiv.replaceChild(this.frame, this.popupdiv.firstChild);
-          // Add iframe for the first time
-        } else if (
-          !this.popupdiv.firstChild ||
-          //   @ts-ignore
-          this.popupdiv.firstChild!.nodeName === "#text"
-        ) {
-          this.popupdiv.appendChild(this.frame);
-        }
-
-        this.content = res.template;
-
-        this.popupdiv.appendChild(this.popupcontent);
-        document.body.appendChild(this.popupdiv);
-        this.popupcontent.appendChild(this.frame);
-
-        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-        const frameDoc = this.frame.contentWindow.document;
-        frameDoc.open();
-        frameDoc.write(this.content);
-        frameDoc.close();
         _log("Popup template loaded into iframe");
+        this._setFrameContents(res);
         this._setupResizeHandler();
       });
   }
