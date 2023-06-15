@@ -1,14 +1,14 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
 import { WidgetApi } from "../squatch";
+import { decodeUserJwt } from "../utils/decodeJwt";
 import { domready } from "../utils/domready";
-import { delay } from "q";
-import { decodeJwt } from "../utils/decodeJwt";
 const _log = debug("squatch-js:IREmbedWidget");
 
 export default class IREmbedWidget extends HTMLElement {
-  element: HTMLElement;
   widgetType: string | null;
+  container: string | null;
+  element: HTMLElement;
   frame: HTMLIFrameElement;
   content: string;
   analyticsApi: AnalyticsApi;
@@ -19,47 +19,82 @@ export default class IREmbedWidget extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["widget-type"];
+    return ["widget-type", "container"];
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
-    if (oldVal === newVal || !oldVal) return; // nothing to do
-
-    console.log({ attr, oldVal, newVal, content: this.content });
-
+    if (oldVal === newVal || !this.frame) return; // nothing to do
     switch (attr) {
+      case "container":
+        if (this.element) this.close();
+        this.connectedCallback();
+        break;
       case "widget-type":
         this.connectedCallback();
         break;
     }
   }
 
+  _createFrame() {
+    if (typeof this.container === "string") {
+      this.element = document.querySelector(this.container) as HTMLElement;
+      _log("loading widget with selector", this.element);
+    } else if (this.container) {
+      _log("container must be an HTMLElement or string", this.container);
+    }
+
+    this.frame = document.createElement("iframe");
+    this.frame["squatchJsApi"] = this;
+    this.frame.width = "100%";
+    this.frame.scrolling = "no";
+    this.frame.setAttribute(
+      "style",
+      "border: 0; background-color: none; width: 1px; min-width: 100%;"
+    );
+
+    // Custom container to load widget
+    if (this.container) {
+      this.element.style.visibility = "hidden";
+      this.element.style.height = "0";
+      this.element.style["overflow-y"] = "hidden";
+
+      // Widget reloaded - replace existing element
+      if (this.element.firstChild) {
+        this.element.replaceChild(this.frame, this.element.firstChild);
+        // Add iframe for the first time
+      } else {
+        this.element.appendChild(this.frame);
+      }
+    } else if (this.firstChild) {
+      this.replaceChild(this.frame, this.firstChild);
+      // Add iframe for the first time
+      //   @ts-ignore
+    } else if (!this.firstChild || this.firstChild!.nodeName === "#text") {
+      this.appendChild(this.frame);
+    }
+  }
+
   connectedCallback() {
     this.widgetType = this.getAttribute("widget-type");
+    this.container = this.getAttribute("container");
 
-    const jwt =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA";
+    const jwt = window.irEmbed.jwt;
 
-    const config = decodeJwt(jwt);
+    const userObj = decodeUserJwt(jwt);
 
-    if (!config) return _log("could not decode jwt");
-
-    if (!config.user) return _log("could not decode user from jwt");
-
-    if (!config.env) return _log("could not decode env from jwt");
+    if (!userObj) return _log("could not decode user from jwt");
 
     this.analyticsApi = new AnalyticsApi({
-      domain: config?.env?.domain,
+      domain: window.irEmbed.domain,
     });
     this.widgetApi = new WidgetApi({
-      ...config.env,
+      tenantAlias: window.irEmbed.tenantAlias,
+      domain: window.irEmbed.domain,
     });
 
     _log("widget initializing ...");
 
-    const userObj = config?.user;
-
-    const response = this.widgetApi
+    this.widgetApi
       .upsertUser({
         user: userObj,
         engagementMedium: "EMBED",
@@ -67,22 +102,7 @@ export default class IREmbedWidget extends HTMLElement {
         jwt,
       })
       .then((res) => {
-        this.frame = document.createElement("iframe");
-        this.frame["squatchJsApi"] = this;
-        this.frame.width = "100%";
-        this.frame.scrolling = "no";
-        this.frame.setAttribute(
-          "style",
-          "border: 0; background-color: none; width: 1px; min-width: 100%;"
-        );
-
-        if (this.firstChild) {
-          this.replaceChild(this.frame, this.firstChild);
-          // Add iframe for the first time
-          //   @ts-ignore
-        } else if (!this.firstChild || this.firstChild!.nodeName === "#text") {
-          this.appendChild(this.frame);
-        }
+        this._createFrame();
 
         this.content = res.template;
 
@@ -122,27 +142,26 @@ export default class IREmbedWidget extends HTMLElement {
       });
   }
 
-  /*** existing preloading embedded widget functionality */
   // Un-hide if element is available and refresh data
   open() {
-    // if (!this.frame) return _log("no target element to open");
-    // this.element.style.visibility = "unset";
-    // this.element.style.height = "auto";
-    // this.element.style["overflow-y"] = "auto";
-    // this.frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
-    // const _sqh =
-    //   this.frame?.contentWindow?.squatch ||
-    //   this.frame?.contentWindow?.widgetIdent;
+    if (!this.frame) return _log("no target element to open");
+    this.element.style.visibility = "unset";
+    this.element.style.height = "auto";
+    this.element.style["overflow-y"] = "auto";
+    this.frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
+    const _sqh =
+      this.frame?.contentWindow?.squatch ||
+      this.frame?.contentWindow?.widgetIdent;
     // this._loadEvent(_sqh);
-    // _log("loaded");
+    _log("loaded");
   }
 
   close() {
-    // if (!this.frame) return _log("no target element to close");
-    // this.element.style.visibility = "hidden";
-    // this.element.style.height = "0";
-    // this.element.style["overflow-y"] = "hidden";
-    // _log("Embed widget closed");
+    if (!this.frame) return _log("no target element to close");
+    this.element.style.visibility = "hidden";
+    this.element.style.height = "0";
+    this.element.style["overflow-y"] = "hidden";
+    _log("Embed widget closed");
   }
 }
 

@@ -1,9 +1,8 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
 import { WidgetApi } from "../squatch";
+import { decodeUserJwt } from "../utils/decodeJwt";
 import { domready } from "../utils/domready";
-import { delay } from "q";
-import { decodeJwt } from "../utils/decodeJwt";
 const _log = debug("squatch-js:IRPopupWidget");
 
 export default class IRPopupWidget extends HTMLElement {
@@ -27,8 +26,6 @@ export default class IRPopupWidget extends HTMLElement {
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
     if (oldVal === newVal || !oldVal) return; // nothing to do
 
-    console.log({ attr, oldVal, newVal, content: this.popupcontent });
-
     switch (attr) {
       case "widget-type":
         this.connectedCallback();
@@ -36,31 +33,7 @@ export default class IRPopupWidget extends HTMLElement {
     }
   }
 
-  connectedCallback() {
-    this.widgetType = this.getAttribute("widget-type");
-
-    const jwt =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA";
-
-    const config = decodeJwt(jwt);
-
-    if (!config) return console.error("could not decode jwt");
-
-    if (!config.user) return console.error("could not decode user from jwt");
-
-    if (!config.env) return console.error("could not decode env from jwt");
-
-    this.analyticsApi = new AnalyticsApi({
-      domain: config?.env?.domain,
-    });
-    this.widgetApi = new WidgetApi({
-      ...config.env,
-    });
-
-    _log("widget initializing ...");
-
-    const userObj = config.user;
-
+  _createFrame() {
     try {
       this.triggerElement /* HTMLButton */ = document.querySelector(this.id);
       if (this.id && !this.triggerElement)
@@ -109,8 +82,30 @@ export default class IRPopupWidget extends HTMLElement {
         this._clickedOutside(event);
       };
     }
+  }
 
-    const response = this.widgetApi
+  connectedCallback() {
+    this.widgetType = this.getAttribute("widget-type");
+
+    const jwt = window.irPopup.jwt;
+
+    const userObj = decodeUserJwt(jwt);
+
+    if (!userObj) return _log("could not decode user from jwt");
+
+    this.analyticsApi = new AnalyticsApi({
+      domain: window.irPopup.domain,
+    });
+    this.widgetApi = new WidgetApi({
+      tenantAlias: window.irPopup.tenantAlias,
+      domain: window.irPopup.domain,
+    });
+
+    _log("widget initializing ...");
+
+    this._createFrame();
+
+    this.widgetApi
       .upsertUser({
         user: userObj,
         engagementMedium: "EMBED",
@@ -143,37 +138,6 @@ export default class IRPopupWidget extends HTMLElement {
         _log("Popup template loaded into iframe");
         this._setupResizeHandler();
       });
-  }
-
-  protected async _findInnerContainer(): Promise<Element> {
-    const { contentWindow } = this.frame;
-    if (!contentWindow)
-      throw new Error("Squatch.js frame inner frame is empty");
-    const frameDoc = contentWindow.document;
-
-    function search() {
-      const containers = frameDoc.getElementsByTagName("sqh-global-container");
-      const legacyContainers =
-        frameDoc.getElementsByClassName("squatch-container");
-      const fallback =
-        containers.length > 0
-          ? containers[0]
-          : legacyContainers.length > 0
-          ? legacyContainers[0]
-          : null;
-      return fallback;
-    }
-
-    let found: Element | null = null;
-    for (let i = 0; i < 5; i++) {
-      found = search();
-      if (found) break;
-      await delay(100);
-    }
-    if (!found) {
-      return frameDoc.body;
-    }
-    return found;
   }
 
   protected _setupResizeHandler() {
@@ -213,7 +177,13 @@ export default class IRPopupWidget extends HTMLElement {
           }
         }
       });
-      ro.observe(await this._findInnerContainer());
+      const widget = frameDoc.body.firstElementChild;
+      const wrapper = document.createElement("div");
+
+      frameDoc.body.appendChild(wrapper);
+      wrapper.appendChild(widget!);
+
+      ro.observe(wrapper);
     });
   }
 

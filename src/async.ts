@@ -5,6 +5,16 @@ declare global {
     };
     squatch: any;
     widgetIdent: any;
+    irEmbed: {
+      tenantAlias: string;
+      domain: string;
+      jwt: string;
+    };
+    irPopup: {
+      tenantAlias: string;
+      domain: string;
+      jwt: string;
+    };
   }
 }
 /** @hidden */
