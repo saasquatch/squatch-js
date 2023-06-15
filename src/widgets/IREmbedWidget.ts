@@ -1,7 +1,7 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
 import { WidgetApi } from "../squatch";
-import { decodeUserJwt } from "../utils/decodeJwt";
+import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
 const _log = debug("squatch-js:IREmbedWidget");
 
