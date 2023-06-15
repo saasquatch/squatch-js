@@ -42,11 +42,11 @@ export default class IREmbedWidget extends HTMLElement {
 
     const config = decodeJwt(jwt);
 
-    if (!config) return console.error("could not decode jwt");
+    if (!config) return _log("could not decode jwt");
 
-    if (!config.user) return console.error("could not decode user from jwt");
+    if (!config.user) return _log("could not decode user from jwt");
 
-    if (!config.env) return console.error("could not decode env from jwt");
+    if (!config.env) return _log("could not decode env from jwt");
 
     this.analyticsApi = new AnalyticsApi({
       domain: config?.env?.domain,
@@ -98,8 +98,6 @@ export default class IREmbedWidget extends HTMLElement {
         frameDoc.close();
 
         domready(frameDoc, async () => {
-          const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-
           // @ts-ignore -- number will be cast to string by browsers
           this.frame.height = frameDoc.body.scrollHeight;
 
@@ -113,40 +111,15 @@ export default class IREmbedWidget extends HTMLElement {
             }
           });
 
-          ro.observe(await this._findInnerContainer());
+          const widget = frameDoc.body.firstElementChild;
+          const wrapper = document.createElement("div");
+
+          frameDoc.body.appendChild(wrapper);
+          wrapper.appendChild(widget!);
+
+          ro.observe(wrapper);
         });
       });
-  }
-
-  protected async _findInnerContainer(): Promise<Element> {
-    const { contentWindow } = this.frame;
-    if (!contentWindow)
-      throw new Error("Squatch.js frame inner frame is empty");
-    const frameDoc = contentWindow.document;
-
-    function search() {
-      const containers = frameDoc.getElementsByTagName("sqh-global-container");
-      const legacyContainers =
-        frameDoc.getElementsByClassName("squatch-container");
-      const fallback =
-        containers.length > 0
-          ? containers[0]
-          : legacyContainers.length > 0
-          ? legacyContainers[0]
-          : null;
-      return fallback;
-    }
-
-    let found: Element | null = null;
-    for (let i = 0; i < 5; i++) {
-      found = search();
-      if (found) break;
-      await delay(100);
-    }
-    if (!found) {
-      return frameDoc.body;
-    }
-    return found;
   }
 
   /*** existing preloading embedded widget functionality */
