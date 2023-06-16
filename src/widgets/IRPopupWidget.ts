@@ -1,9 +1,10 @@
 import debug from "debug";
-import AnalyticsApi from "../api/AnalyticsApi";
-import { WidgetApi, init } from "../squatch";
+import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
+import { EngagementMedium, WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
 import { _getAutoConfig } from "../utils/utmUtils";
+import { hasProps, isObject } from "../utils/validate";
 const _log = debug("squatch-js:IRPopupWidget");
 
 export default class IRPopupWidget extends HTMLElement {
@@ -32,6 +33,18 @@ export default class IRPopupWidget extends HTMLElement {
         this.connectedCallback();
         break;
     }
+  }
+
+  connectedCallback() {
+    this.widgetType = this.getAttribute("widget-type");
+
+    const jwt = window.irPopup?.jwt;
+
+    _log("widget initializing ...");
+
+    if (!jwt) return this._loadPasswordlessWidget();
+
+    this._loadUserWidget(jwt);
   }
 
   _createFrame() {
@@ -95,22 +108,11 @@ export default class IRPopupWidget extends HTMLElement {
     frameDoc.close();
   }
 
-  connectedCallback() {
-    this.widgetType = this.getAttribute("widget-type");
-
-    const jwt = window.irPopup?.jwt;
-
-    _log("widget initializing ...");
-
-    if (!jwt) return this._loadPasswordlessWidget();
-
-    this._loadUserWidget(jwt);
-  }
-
   _loadPasswordlessWidget() {
     this._createFrame();
     const configs = _getAutoConfig();
 
+    // Has _saasquatchExtra
     if (configs) {
       const { squatchConfig, widgetConfig } = configs;
 
@@ -127,6 +129,25 @@ export default class IRPopupWidget extends HTMLElement {
         this._setupResizeHandler();
         this.open();
       });
+      // No _saasquatchExtra
+    } else {
+      this.analyticsApi = new AnalyticsApi({
+        domain: window.irPopup.domain!,
+      });
+      this.widgetApi = new WidgetApi({
+        tenantAlias: window.irPopup.tenantAlias,
+        domain: window.irPopup.domain,
+      });
+      this.widgetApi
+        .render({
+          engagementMedium: "POPUP",
+          widgetType: this.widgetType!,
+        })
+        .then((res) => {
+          _log("Popup template loaded into iframe");
+          this._setFrameContents(res);
+          this._setupResizeHandler();
+        });
     }
   }
 
@@ -211,6 +232,52 @@ export default class IRPopupWidget extends HTMLElement {
     }
   }
 
+  _loadEvent(sqh: unknown) {
+    console.log({ sqh });
+    if (!sqh) return; // No non-truthy value
+    if (!isObject(sqh)) {
+      throw new Error("Widget Load event identity property is not an object");
+    }
+
+    let params: SQHDetails;
+    if (hasProps<{ programId: string }>(sqh, "programId")) {
+      if (
+        !hasProps<{
+          tenantAlias: string;
+          accountId: string;
+          userId: string;
+          engagementMedium: EngagementMedium;
+        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
+      ) {
+        throw new Error("Widget Load event missing required properties");
+      }
+      params = {
+        tenantAlias: sqh.tenantAlias,
+        externalAccountId: sqh.accountId,
+        externalUserId: sqh.userId,
+        engagementMedium: sqh.engagementMedium,
+        programId: sqh.programId,
+      };
+    } else {
+      const { analytics, mode } = sqh as any;
+      params = {
+        tenantAlias: analytics.attributes.tenant,
+        externalAccountId: analytics.attributes.accountId,
+        externalUserId: analytics.attributes.userId,
+        engagementMedium: mode.widgetMode,
+      };
+    }
+
+    this.analyticsApi
+      .pushAnalyticsLoadEvent(params)
+      ?.then((response) => {
+        _log(`${params.engagementMedium} loaded event recorded.`);
+      })
+      .catch((ex) => {
+        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+      });
+  }
+
   open() {
     const popupdiv = this.popupdiv;
     const frame = this.frame;
@@ -231,8 +298,7 @@ export default class IRPopupWidget extends HTMLElement {
       popupdiv.style.visibility = "visible";
       popupdiv.style.top = "0px";
       frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
-      // TODO: port this over
-      //   this._loadEvent(_sqh);
+      this._loadEvent(_sqh);
       _log("Popup opened");
     });
   }

@@ -6,7 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="./dist/squatchjs.min.js"></script>
     <script>
-      if (window.location.pathname.includes("passwordless")) {
+      if (
+        window.location.pathname.includes("passwordless") &&
+        !window.location.search.length <= 1
+      ) {
+        window.irPopup = {
+          domain: "https://staging.referralsaasquatch.com",
+          tenantAlias: "test_a8b41jotf8a1v",
+        };
+        document.addEventListener("DOMContentLoaded", function (event) {
+          const element = document.getElementById("unauthed-stuff");
+          document.getElementById("authed-stuff").innerHTML = "";
+
+          element.innerHTML = `<button onclick="javascript:document.getElementById('ir-friend').open()">
+        Open passwordless widget
+      </button>
+      <ir-popup
+        widget-type="p/jayden-qa-obj/w/websiteReferralWidget"
+        id="ir-friend"
+      ></ir-popup>`;
+        });
+      } else if (window.location.pathname.includes("passwordless")) {
         document.addEventListener("DOMContentLoaded", function (event) {
           const element = document.getElementById("unauthed-stuff");
           document.getElementById("authed-stuff").innerHTML = "";

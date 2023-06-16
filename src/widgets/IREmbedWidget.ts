@@ -1,8 +1,9 @@
 import debug from "debug";
-import AnalyticsApi from "../api/AnalyticsApi";
-import { WidgetApi } from "../squatch";
+import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
+import { EngagementMedium, WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
+import { hasProps, isObject } from "../utils/validate";
 const _log = debug("squatch-js:IREmbedWidget");
 
 export default class IREmbedWidget extends HTMLElement {
@@ -118,6 +119,7 @@ export default class IREmbedWidget extends HTMLElement {
         frameDoc.close();
 
         domready(frameDoc, async () => {
+          const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
           // @ts-ignore -- number will be cast to string by browsers
           this.frame.height = frameDoc.body.scrollHeight;
 
@@ -138,7 +140,60 @@ export default class IREmbedWidget extends HTMLElement {
           wrapper.appendChild(widget!);
 
           ro.observe(wrapper);
+
+          // Regular load - trigger event
+          if (!this.container) {
+            this._loadEvent(_sqh);
+            _log("loaded");
+          }
         });
+      });
+  }
+
+  _loadEvent(sqh: unknown) {
+    console.log({ sqh });
+
+    if (!sqh) return; // No non-truthy value
+    if (!isObject(sqh)) {
+      throw new Error("Widget Load event identity property is not an object");
+    }
+
+    let params: SQHDetails;
+    if (hasProps<{ programId: string }>(sqh, "programId")) {
+      if (
+        !hasProps<{
+          tenantAlias: string;
+          accountId: string;
+          userId: string;
+          engagementMedium: EngagementMedium;
+        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
+      ) {
+        throw new Error("Widget Load event missing required properties");
+      }
+      params = {
+        tenantAlias: sqh.tenantAlias,
+        externalAccountId: sqh.accountId,
+        externalUserId: sqh.userId,
+        engagementMedium: sqh.engagementMedium,
+        programId: sqh.programId,
+      };
+    } else {
+      const { analytics, mode } = sqh as any;
+      params = {
+        tenantAlias: analytics.attributes.tenant,
+        externalAccountId: analytics.attributes.accountId,
+        externalUserId: analytics.attributes.userId,
+        engagementMedium: mode.widgetMode,
+      };
+    }
+
+    this.analyticsApi
+      .pushAnalyticsLoadEvent(params)
+      ?.then((response) => {
+        _log(`${params.engagementMedium} loaded event recorded.`);
+      })
+      .catch((ex) => {
+        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
       });
   }
 
@@ -152,7 +207,7 @@ export default class IREmbedWidget extends HTMLElement {
     const _sqh =
       this.frame?.contentWindow?.squatch ||
       this.frame?.contentWindow?.widgetIdent;
-    // this._loadEvent(_sqh);
+    this._loadEvent(_sqh);
     _log("loaded");
   }
 
