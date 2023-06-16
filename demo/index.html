@@ -8,7 +8,7 @@
     <script>
       if (window.location.pathname.includes("passwordless")) {
         document.addEventListener("DOMContentLoaded", function (event) {
-          const element = document.getElementById("authed-stuff");
+          const element = document.getElementById("unauthed-stuff");
           document.getElementById("authed-stuff").innerHTML = "";
 
           element.innerHTML = `<button onclick="javascript:document.getElementById('ir-friend').open()">
@@ -23,7 +23,7 @@
         if (window.location.search) window.location.search = "";
 
         document.addEventListener("DOMContentLoaded", function (event) {
-          const element = document.getElementById("unauthed-stuff");
+          const element = document.getElementById("authed-stuff");
 
           document.getElementById("unauthed-stuff").innerHTML = "";
           document.cookie = "_saasquatch=";
