@@ -226,7 +226,6 @@ export default abstract class Widget {
         firstName: firstName || null,
         lastName: lastName || null,
 
-        // FIXME: Double check this
         id: this.context.user!.id,
         accountId: this.context.user!.accountId,
       };
