@@ -4,6 +4,7 @@ import { EngagementMedium, WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
 import { hasProps, isObject } from "../utils/validate";
+import { loadEvent } from "../utils/loadEvent";
 const _log = debug("squatch-js:IREmbedWidget");
 
 export default class IREmbedWidget extends HTMLElement {
@@ -143,57 +144,10 @@ export default class IREmbedWidget extends HTMLElement {
 
           // Regular load - trigger event
           if (!this.container) {
-            this._loadEvent(_sqh);
+            loadEvent(_sqh, this.analyticsApi);
             _log("loaded");
           }
         });
-      });
-  }
-
-  _loadEvent(sqh: unknown) {
-    console.log({ sqh });
-
-    if (!sqh) return; // No non-truthy value
-    if (!isObject(sqh)) {
-      throw new Error("Widget Load event identity property is not an object");
-    }
-
-    let params: SQHDetails;
-    if (hasProps<{ programId: string }>(sqh, "programId")) {
-      if (
-        !hasProps<{
-          tenantAlias: string;
-          accountId: string;
-          userId: string;
-          engagementMedium: EngagementMedium;
-        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
-      ) {
-        throw new Error("Widget Load event missing required properties");
-      }
-      params = {
-        tenantAlias: sqh.tenantAlias,
-        externalAccountId: sqh.accountId,
-        externalUserId: sqh.userId,
-        engagementMedium: sqh.engagementMedium,
-        programId: sqh.programId,
-      };
-    } else {
-      const { analytics, mode } = sqh as any;
-      params = {
-        tenantAlias: analytics.attributes.tenant,
-        externalAccountId: analytics.attributes.accountId,
-        externalUserId: analytics.attributes.userId,
-        engagementMedium: mode.widgetMode,
-      };
-    }
-
-    this.analyticsApi
-      .pushAnalyticsLoadEvent(params)
-      ?.then((response) => {
-        _log(`${params.engagementMedium} loaded event recorded.`);
-      })
-      .catch((ex) => {
-        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
       });
   }
 
@@ -207,7 +161,7 @@ export default class IREmbedWidget extends HTMLElement {
     const _sqh =
       this.frame?.contentWindow?.squatch ||
       this.frame?.contentWindow?.widgetIdent;
-    this._loadEvent(_sqh);
+    loadEvent(_sqh, this.analyticsApi);
     _log("loaded");
   }
 

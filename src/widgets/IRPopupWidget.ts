@@ -5,6 +5,7 @@ import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
 import { _getAutoConfig } from "../utils/utmUtils";
 import { hasProps, isObject } from "../utils/validate";
+import { loadEvent } from "../utils/loadEvent";
 const _log = debug("squatch-js:IRPopupWidget");
 
 export default class IRPopupWidget extends HTMLElement {
@@ -45,6 +46,16 @@ export default class IRPopupWidget extends HTMLElement {
     if (!jwt) return this._loadPasswordlessWidget();
 
     this._loadUserWidget(jwt);
+  }
+
+  _setupApi({ domain, tenantAlias }: { domain: string; tenantAlias: string }) {
+    this.analyticsApi = new AnalyticsApi({
+      domain,
+    });
+    this.widgetApi = new WidgetApi({
+      tenantAlias,
+      domain,
+    });
   }
 
   _createFrame() {
@@ -115,13 +126,9 @@ export default class IRPopupWidget extends HTMLElement {
     // Has _saasquatchExtra
     if (configs) {
       const { squatchConfig, widgetConfig } = configs;
-
-      this.analyticsApi = new AnalyticsApi({
+      this._setupApi({
         domain: squatchConfig.domain!,
-      });
-      this.widgetApi = new WidgetApi({
         tenantAlias: squatchConfig.tenantAlias,
-        domain: squatchConfig.domain,
       });
       this.widgetApi.render(widgetConfig).then((res) => {
         _log("Popup template loaded into iframe");
@@ -131,12 +138,9 @@ export default class IRPopupWidget extends HTMLElement {
       });
       // No _saasquatchExtra
     } else {
-      this.analyticsApi = new AnalyticsApi({
+      this._setupApi({
         domain: window.irPopup.domain!,
-      });
-      this.widgetApi = new WidgetApi({
         tenantAlias: window.irPopup.tenantAlias,
-        domain: window.irPopup.domain,
       });
       this.widgetApi
         .render({
@@ -156,12 +160,9 @@ export default class IRPopupWidget extends HTMLElement {
 
     if (!userObj) return _log("could not decode user from jwt");
 
-    this.analyticsApi = new AnalyticsApi({
-      domain: window.irPopup.domain,
-    });
-    this.widgetApi = new WidgetApi({
+    this._setupApi({
+      domain: window.irPopup.domain!,
       tenantAlias: window.irPopup.tenantAlias,
-      domain: window.irPopup.domain,
     });
 
     this._createFrame();
@@ -232,52 +233,6 @@ export default class IRPopupWidget extends HTMLElement {
     }
   }
 
-  _loadEvent(sqh: unknown) {
-    console.log({ sqh });
-    if (!sqh) return; // No non-truthy value
-    if (!isObject(sqh)) {
-      throw new Error("Widget Load event identity property is not an object");
-    }
-
-    let params: SQHDetails;
-    if (hasProps<{ programId: string }>(sqh, "programId")) {
-      if (
-        !hasProps<{
-          tenantAlias: string;
-          accountId: string;
-          userId: string;
-          engagementMedium: EngagementMedium;
-        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
-      ) {
-        throw new Error("Widget Load event missing required properties");
-      }
-      params = {
-        tenantAlias: sqh.tenantAlias,
-        externalAccountId: sqh.accountId,
-        externalUserId: sqh.userId,
-        engagementMedium: sqh.engagementMedium,
-        programId: sqh.programId,
-      };
-    } else {
-      const { analytics, mode } = sqh as any;
-      params = {
-        tenantAlias: analytics.attributes.tenant,
-        externalAccountId: analytics.attributes.accountId,
-        externalUserId: analytics.attributes.userId,
-        engagementMedium: mode.widgetMode,
-      };
-    }
-
-    this.analyticsApi
-      .pushAnalyticsLoadEvent(params)
-      ?.then((response) => {
-        _log(`${params.engagementMedium} loaded event recorded.`);
-      })
-      .catch((ex) => {
-        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
-      });
-  }
-
   open() {
     const popupdiv = this.popupdiv;
     const frame = this.frame;
@@ -298,7 +253,7 @@ export default class IRPopupWidget extends HTMLElement {
       popupdiv.style.visibility = "visible";
       popupdiv.style.top = "0px";
       frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
-      this._loadEvent(_sqh);
+      loadEvent(_sqh, this.analyticsApi);
       _log("Popup opened");
     });
   }
