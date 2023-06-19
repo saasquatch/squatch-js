@@ -1,15 +1,14 @@
 import debug from "debug";
-import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
-import { EngagementMedium, WidgetApi } from "../squatch";
+import AnalyticsApi from "../api/AnalyticsApi";
+import { WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
-import { hasProps, isObject } from "../utils/validate";
 import { loadEvent } from "../utils/loadEvent";
 const _log = debug("squatch-js:IREmbedWidget");
 
 export default class IREmbedWidget extends HTMLElement {
   widgetType: string | null;
-  container: string | null;
+  container: string | HTMLElement | null;
   element: HTMLElement;
   frame: HTMLIFrameElement;
   content: string;
@@ -38,12 +37,21 @@ export default class IREmbedWidget extends HTMLElement {
   }
 
   _createFrame() {
+    // selector is a string
     if (typeof this.container === "string") {
       this.element = document.querySelector(this.container) as HTMLElement;
       _log("loading widget with selector", this.element);
+      // selector is an HTML element
+    } else if (this.container instanceof HTMLElement) {
+      this.element = this.container;
+      _log("loading widget with container", this.element);
+      // garbage container found
     } else if (this.container) {
       _log("container must be an HTMLElement or string", this.container);
     }
+
+    if (this.container && !(this.element instanceof HTMLElement))
+      throw new Error(`element with selector '${this.container}' not found.'`);
 
     this.frame = document.createElement("iframe");
     this.frame["squatchJsApi"] = this;
