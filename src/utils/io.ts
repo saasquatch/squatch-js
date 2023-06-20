@@ -22,9 +22,8 @@ export async function doQuery(
       headers,
     });
     if (!res.ok) throw new Error(await res.text());
-    return JSON.parse(await res.json());
+    return await res.json();
   } catch (e) {
-    _log(e);
     throw e;
   }
 }
@@ -43,10 +42,11 @@ export async function doGet<T>(url, jwt = ""): Promise<T> {
       credentials: "include",
       headers,
     });
-    if (!res.ok) throw new Error(await res.text());
-    return JSON.parse(await res.json());
+    const reply = await res.text();
+    if (!res.ok) throw new Error(reply);
+
+    return reply ? JSON.parse(await res.json()) : reply;
   } catch (e) {
-    _log(e);
     throw e;
   }
 }
@@ -60,13 +60,15 @@ export async function doPost(url: string, data: any, jwt?: JWT) {
   try {
     const res = await fetch(url, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: data,
       headers,
     });
-    if (!res.ok) throw new Error(await res.text());
-    return JSON.parse(await res.json());
+
+    const reply = await res.text();
+    if (!res.ok) throw new Error(reply);
+
+    return reply ? JSON.parse(await res.json()) : reply;
   } catch (e) {
-    _log(e);
     throw e;
   }
 }
@@ -85,12 +87,13 @@ export async function doPut(url: string, data: any, jwt?: JWT) {
       headers,
       method: "PUT",
       credentials: "include",
-      body: JSON.stringify(data),
+      body: data,
     });
-    if (!res.ok) throw new Error(await res.text());
-    return JSON.parse(await res.json());
+    const reply = await res.text();
+    if (!res.ok) throw new Error(reply);
+
+    return reply ? JSON.parse(await res.json()) : reply;
   } catch (e) {
-    _log(e);
     throw e;
   }
 }
