@@ -1,11 +1,10 @@
 import debug from "debug";
-import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
-import { EngagementMedium, WidgetApi } from "../squatch";
+import AnalyticsApi from "../api/AnalyticsApi";
+import { WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
-import { _getAutoConfig } from "../utils/utmUtils";
-import { hasProps, isObject } from "../utils/validate";
 import { loadEvent } from "../utils/loadEvent";
+import { _getAutoConfig } from "../utils/utmUtils";
 const _log = debug("squatch-js:IRPopupWidget");
 
 export default class IRPopupWidget extends HTMLElement {

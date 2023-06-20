@@ -4,6 +4,7 @@ import { WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
 import { loadEvent } from "../utils/loadEvent";
+import { _getAutoConfig } from "../utils/utmUtils";
 const _log = debug("squatch-js:IREmbedWidget");
 
 export default class IREmbedWidget extends HTMLElement {
@@ -84,25 +85,51 @@ export default class IREmbedWidget extends HTMLElement {
     }
   }
 
-  connectedCallback() {
-    this.widgetType = this.getAttribute("widget-type");
-    this.container = this.getAttribute("container");
+  _setupApi({ domain, tenantAlias }: { domain: string; tenantAlias: string }) {
+    this.analyticsApi = new AnalyticsApi({
+      domain,
+    });
+    this.widgetApi = new WidgetApi({
+      tenantAlias,
+      domain,
+    });
+  }
 
-    const jwt = window.irEmbed.jwt;
+  _loadPasswordlessWidget() {
+    const configs = _getAutoConfig();
 
+    // Has _saasquatchExtra
+    if (configs) {
+      const { squatchConfig, widgetConfig } = configs;
+      this._setupApi({
+        domain: squatchConfig.domain!,
+        tenantAlias: squatchConfig.tenantAlias,
+      });
+      this.widgetApi.render(widgetConfig).then(this._renderWidget);
+      // No _saasquatchExtra
+    } else {
+      this._setupApi({
+        domain: window.irEmbed.domain!,
+        tenantAlias: window.irEmbed.tenantAlias,
+      });
+      this.widgetApi
+        .render({
+          engagementMedium: "EMBED",
+          widgetType: this.widgetType!,
+        })
+        .then(this._renderWidget);
+    }
+  }
+
+  _loadUserWidget(jwt: string) {
     const userObj = decodeUserJwt(jwt);
 
     if (!userObj) return _log("could not decode user from jwt");
 
-    this.analyticsApi = new AnalyticsApi({
-      domain: window.irEmbed.domain,
-    });
-    this.widgetApi = new WidgetApi({
+    this._setupApi({
+      domain: window.irEmbed.domain!,
       tenantAlias: window.irEmbed.tenantAlias,
-      domain: window.irEmbed.domain,
     });
-
-    _log("widget initializing ...");
 
     this.widgetApi
       .upsertUser({
@@ -111,52 +138,67 @@ export default class IREmbedWidget extends HTMLElement {
         widgetType: this.widgetType!,
         jwt,
       })
-      .then((res) => {
-        this._createFrame();
+      .then(this._renderWidget);
+  }
 
-        this.content = res.template;
+  _renderWidget = (res) => {
+    this.content = res.template;
 
-        const { contentWindow } = this.frame;
-        if (!contentWindow) {
-          throw new Error("Frame needs a content window");
-        }
+    const { contentWindow } = this.frame;
+    if (!contentWindow) {
+      throw new Error("Frame needs a content window");
+    }
 
-        // TODO: figure out the best way to do this
-        const frameDoc = contentWindow.document;
-        frameDoc.open();
-        frameDoc.write(this.content);
-        frameDoc.close();
+    // TODO: figure out the best way to do this
+    const frameDoc = contentWindow.document;
+    frameDoc.open();
+    frameDoc.write(this.content);
+    frameDoc.close();
 
-        domready(frameDoc, async () => {
-          const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
+    domready(frameDoc, async () => {
+      const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
+      // @ts-ignore -- number will be cast to string by browsers
+      this.frame.height = frameDoc.body.scrollHeight;
+
+      // Adjust frame height when size of body changes
+      // @ts-ignore
+      const ro = new contentWindow["ResizeObserver"]((entries) => {
+        for (const entry of entries) {
+          const { height } = entry.contentRect;
           // @ts-ignore -- number will be cast to string by browsers
-          this.frame.height = frameDoc.body.scrollHeight;
-
-          // Adjust frame height when size of body changes
-          // @ts-ignore
-          const ro = new contentWindow["ResizeObserver"]((entries) => {
-            for (const entry of entries) {
-              const { height } = entry.contentRect;
-              // @ts-ignore -- number will be cast to string by browsers
-              this.frame.height = height;
-            }
-          });
-
-          const widget = frameDoc.body.firstElementChild;
-          const wrapper = document.createElement("div");
-
-          frameDoc.body.appendChild(wrapper);
-          wrapper.appendChild(widget!);
-
-          ro.observe(wrapper);
-
-          // Regular load - trigger event
-          if (!this.container) {
-            loadEvent(_sqh, this.analyticsApi);
-            _log("loaded");
-          }
-        });
+          this.frame.height = height;
+        }
       });
+
+      const widget = frameDoc.body.firstElementChild;
+      const wrapper = document.createElement("div");
+
+      frameDoc.body.appendChild(wrapper);
+      wrapper.appendChild(widget!);
+
+      ro.observe(wrapper);
+
+      // Regular load - trigger event
+      if (!this.container) {
+        loadEvent(_sqh, this.analyticsApi);
+        _log("loaded");
+      }
+    });
+  };
+
+  connectedCallback() {
+    this.widgetType = this.getAttribute("widget-type");
+    this.container = this.getAttribute("container");
+
+    const jwt = window.irEmbed?.jwt;
+
+    _log("widget initializing ...");
+
+    this._createFrame();
+
+    if (!jwt) return this._loadPasswordlessWidget();
+
+    this._loadUserWidget(jwt);
   }
 
   // Un-hide if element is available and refresh data

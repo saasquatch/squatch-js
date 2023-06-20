@@ -14,6 +14,10 @@
           domain: "https://staging.referralsaasquatch.com",
           tenantAlias: "test_a8b41jotf8a1v",
         };
+        window.irEmbed = {
+          domain: "https://staging.referralsaasquatch.com",
+          tenantAlias: "test_a8b41jotf8a1v",
+        };
         document.addEventListener("DOMContentLoaded", function (event) {
           const element = document.getElementById("unauthed-stuff");
           document.getElementById("authed-stuff").innerHTML = "";
@@ -103,6 +107,7 @@
     <div id="authed-stuff"></div>
     <!-- /Authorized Widgets  -->
 
+    <ir-embed widget-type="p/jayden-qa-obj/w/friendWidget"></ir-embed>
     <!-- Passwordless widget -->
     <div id="unauthed-stuff"></div>
     <!-- /Passwordless widget -->
