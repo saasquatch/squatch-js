@@ -45,7 +45,7 @@ export async function doGet<T>(url, jwt = ""): Promise<T> {
     const reply = await res.text();
     if (!res.ok) throw new Error(reply);
 
-    return reply ? JSON.parse(await res.json()) : reply;
+    return reply ? JSON.parse(reply) : reply;
   } catch (e) {
     throw e;
   }
@@ -67,7 +67,7 @@ export async function doPost(url: string, data: any, jwt?: JWT) {
     const reply = await res.text();
     if (!res.ok) throw new Error(reply);
 
-    return reply ? JSON.parse(await res.json()) : reply;
+    return reply ? JSON.parse(reply) : reply;
   } catch (e) {
     throw e;
   }
@@ -92,7 +92,7 @@ export async function doPut(url: string, data: any, jwt?: JWT) {
     const reply = await res.text();
     if (!res.ok) throw new Error(reply);
 
-    return reply ? JSON.parse(await res.json()) : reply;
+    return reply ? JSON.parse(reply) : reply;
   } catch (e) {
     throw e;
   }
