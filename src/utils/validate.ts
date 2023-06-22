@@ -1,5 +1,8 @@
 import { ConfigOptions, WidgetConfig } from "../types";
 
+export const DEFAULT_DOMAIN = "https://app.referralsaasquatch.com";
+export const DEFAULT_NPM_CDN = "https://fast.ssqt.io/npm";
+
 type KeysOf<T> = keyof T;
 type SimpleObject = {
   [key: string]: unknown;
@@ -43,13 +46,13 @@ export function validateConfig(raw: unknown): Required<ConfigOptions> {
   const tenantAlias = raw.tenantAlias;
   const domain =
     (hasProps(raw, "domain") && typeof raw.domain === "string" && raw.domain) ||
-    "https://app.referralsaasquatch.com";
+    DEFAULT_DOMAIN;
   const debug =
     (hasProps(raw, "debug") && typeof raw.debug === "boolean" && raw.debug) ||
     false;
   const npmCdn =
     (hasProps(raw, "npmCdn") && typeof raw.npmCdn === "string" && raw.npmCdn) ||
-    "https://fast.ssqt.io/npm";
+    DEFAULT_NPM_CDN;
   return {
     tenantAlias,
     domain,

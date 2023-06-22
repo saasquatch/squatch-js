@@ -127,45 +127,11 @@ export default class WidgetApi {
           },
           jwt
         );
-        resolve(res?.body?.data?.renderWidget);
+        resolve(res?.data?.renderWidget);
       } catch (e) {
         reject(e);
       }
     });
-  }
-
-  /**
-   * An API call to send out referral invites to contacts
-   *
-   * @param {Object} params Parameters for request
-   * @param {Array} params.emailList The list of recipients to send to
-   * @param {string} params.userId The user id
-   * @param {string} params.accountId The user account id
-   * @param {string} params.tenantAlias The tenant alias
-   *
-   * @return {Promise} an object containing total accepted / rejected emails send or error
-   */
-  invite({
-    emailList = [],
-    userId,
-    accountId,
-    tenantAlias,
-  }: {
-    emailList: string[];
-    userId: string;
-    accountId: string;
-    tenantAlias: string;
-  }): Promise<any> {
-    const tenantAliasP = encodeURIComponent(tenantAlias);
-
-    const path = `/api/v1/${tenantAliasP}/mail/referralinvite`;
-    const url = this.domain + path;
-    const request = {
-      sendingAccountId: accountId,
-      sendingUserId: userId,
-      recipients: emailList,
-    };
-    return doPost(url, JSON.stringify(request));
   }
 
   /**

@@ -13,25 +13,25 @@ const _log = debug("squatch-js:EMBEDwidget");
  *
  */
 export default class EmbedWidget extends Widget {
-  element: HTMLElement;
-
   constructor(params: Params, container?: HTMLElement | string) {
     super(params);
+  }
 
+  _findElement(): HTMLElement {
     let element: Element | null;
 
-    if (typeof container === "string") {
+    if (typeof this.container === "string") {
       // selector is a string
-      element = document.querySelector(container);
+      element = document.querySelector(this.container);
       _log("loading widget with selector", element);
       // selector is an HTML element
-    } else if (container instanceof HTMLElement) {
-      element = container;
+    } else if (this.container instanceof HTMLElement) {
+      element = this.container;
       _log("loading widget with container", element);
       // garbage container found
-    } else if (container) {
+    } else if (this.container) {
       element = null;
-      _log("container must be an HTMLElement or string", container);
+      _log("container must be an HTMLElement or string", this.container);
       // find element on page
     } else {
       element =
@@ -39,32 +39,31 @@ export default class EmbedWidget extends Widget {
         document.querySelector(".squatchembed");
       _log("loading widget with default selector", element);
     }
-
     if (!(element instanceof HTMLElement))
-      throw new Error(`element with selector '${container}' not found.'`);
-    this.element = element;
+      throw new Error(`element with selector '${this.container}' not found.'`);
+
+    return element;
   }
 
-  async load() {
+  async load(frame: HTMLIFrameElement) {
+    const element = this._findElement();
+
     if (this.context.container) {
-      this.element.style.visibility = "hidden";
-      this.element.style.height = "0";
-      this.element.style["overflow-y"] = "hidden";
+      element.style.visibility = "hidden";
+      element.style.height = "0";
+      element.style["overflow-y"] = "hidden";
 
       // Widget reloaded - replace existing element
-      if (this.element.firstChild) {
-        this.element.replaceChild(this.frame, this.element.firstChild);
+      if (element.firstChild) {
+        element.replaceChild(frame, element.firstChild);
         // Add iframe for the first time
       } else {
-        this.element.appendChild(this.frame);
+        element.appendChild(frame);
       }
-    } else if (
-      !this.element.firstChild ||
-      this.element.firstChild.nodeName === "#text"
-    ) {
-      this.element.appendChild(this.frame);
+    } else if (!element.firstChild || element.firstChild.nodeName === "#text") {
+      element.appendChild(frame);
     }
-    const { contentWindow } = this.frame;
+    const { contentWindow } = frame;
     if (!contentWindow) {
       throw new Error("Frame needs a content window");
     }
@@ -88,7 +87,7 @@ export default class EmbedWidget extends Widget {
       }
 
       // @ts-ignore -- number will be cast to string by browsers
-      this.frame.height = frameDoc.body.scrollHeight;
+      frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
       // @ts-ignore
@@ -96,11 +95,11 @@ export default class EmbedWidget extends Widget {
         for (const entry of entries) {
           const { height } = entry.contentRect;
           // @ts-ignore -- number will be cast to string by browsers
-          this.frame.height = height;
+          frame.height = height;
         }
       });
 
-      ro.observe(await this._findInnerContainer());
+      ro.observe(await this._findInnerContainer(frame));
 
       // Regular load - trigger event
       if (!this.context.container) {
@@ -111,25 +110,30 @@ export default class EmbedWidget extends Widget {
   }
 
   // Un-hide if element is available and refresh data
-  open() {
-    if (!this.frame) return _log("no target element to open");
-    this.element.style.visibility = "unset";
-    this.element.style.height = "auto";
-    this.element.style["overflow-y"] = "auto";
+  open(frame: HTMLIFrameElement) {
+    if (!frame) return _log("no target element to open");
 
-    this.frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
+    const element = this._findElement();
+
+    element.style.visibility = "unset";
+    element.style.height = "auto";
+    element.style["overflow-y"] = "auto";
+
+    frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
     const _sqh =
-      this.frame?.contentWindow?.squatch ||
-      this.frame?.contentWindow?.widgetIdent;
+      frame?.contentWindow?.squatch || frame?.contentWindow?.widgetIdent;
     this._loadEvent(_sqh);
     _log("loaded");
   }
 
-  close() {
-    if (!this.frame) return _log("no target element to close");
-    this.element.style.visibility = "hidden";
-    this.element.style.height = "0";
-    this.element.style["overflow-y"] = "hidden";
+  close(frame: HTMLIFrameElement) {
+    if (!frame) return _log("no target element to close");
+
+    const element = this._findElement();
+
+    element.style.visibility = "hidden";
+    element.style.height = "0";
+    element.style["overflow-y"] = "hidden";
     _log("Embed widget closed");
   }
 

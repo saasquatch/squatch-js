@@ -275,20 +275,18 @@ export default class Widgets {
       });
     }
 
-    if (!displayCTA && config.engagementMedium === "EMBED") {
-      widget = new EmbedWidget(params, params.context.container);
-      widget.load();
-    } else if (!displayCTA && config.engagementMedium === "POPUP") {
-      widget = new PopupWidget(params, params.context.trigger);
-      widget.load();
-      if (displayOnLoad) widget.open();
-    } else if (displayCTA) {
+    if (displayCTA) {
       _log("display CTA");
       const side = opts.cta.content.buttonSide;
       const position = opts.cta.content.buttonPosition;
 
       widget = new CtaWidget(params, { side, position });
       widget.load();
+      if (displayOnLoad) widget.open();
+    } else if (config.engagementMedium === "EMBED") {
+      this._renderEmbedWidget(params, params.context.container);
+    } else if (config.engagementMedium === "POPUP") {
+      widget = this._renderPopupWidget(params);
       if (displayOnLoad) widget.open();
     } else {
       _log("display popup on load");
@@ -298,6 +296,20 @@ export default class Widgets {
     }
 
     return widget;
+  }
+
+  private _renderPopupWidget(params: Params) {
+    const widget = new PopupWidget(params, params.context.trigger);
+    const frame = widget._createFrame();
+    widget.load(frame);
+
+    return widget;
+  }
+
+  private _renderEmbedWidget(params, container) {
+    const widget = new EmbedWidget(params);
+    const frame = widget._createFrame();
+    widget.load(frame);
   }
 
   /**
@@ -324,12 +336,15 @@ export default class Widgets {
     };
 
     let widget: Widget;
+
     if (em === "EMBED") {
       widget = new EmbedWidget(params);
-      widget.load();
+      const frame = widget._createFrame();
+      widget.load(frame);
     } else if (em === "POPUP") {
       widget = new PopupWidget(params);
-      widget.load();
+      const frame = widget._createFrame();
+      widget.load(frame);
     }
   }
 

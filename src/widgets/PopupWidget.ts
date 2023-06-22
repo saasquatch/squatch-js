@@ -6,6 +6,7 @@ import { domready } from "../utils/domready";
 
 const _log = debug("squatch-js:POPUPwidget");
 
+let popupId = 0;
 /**
  * The PopupWidget is used to display popups (also known as "Modals").
  * Popups widgets are rendered on top of other elements in a page.
@@ -14,69 +15,93 @@ const _log = debug("squatch-js:POPUPwidget");
  *
  */
 export default class PopupWidget extends Widget {
-  triggerElement: HTMLElement | null;
-  triggerWhenCTA: HTMLElement | null;
-  popupdiv: HTMLElement;
-  popupcontent: HTMLElement;
+  trigger: string;
+  id: string;
 
   constructor(params: Params, trigger = ".squatchpop") {
     super(params);
 
-    try {
-      this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
-      if (trigger && !this.triggerElement)
-        _log("No element found with trigger selector", trigger);
-    } catch {
-      _log("Not a valid selector", trigger);
-    }
-
-    // Trigger is optional
-    if (this.triggerElement) {
-      this.triggerElement.onclick = () => {
-        this.open();
-      };
-    }
-
-    // If widget is loaded with CTA, look for a 'squatchpop' element to use
-    // that element as a trigger as well.
-    this.triggerWhenCTA = document.querySelector(".squatchpop");
-
-    if (trigger === "#cta" && this.triggerWhenCTA) {
-      this.triggerWhenCTA.onclick = () => {
-        this.open();
-      };
-    }
-
-    this.popupdiv = document.createElement("div");
-    this.popupdiv.id = "squatchModal";
-    this.popupdiv.setAttribute(
-      "style",
-      "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);"
-    );
+    this.trigger = trigger;
+    this.id = popupId === 0 ? `squatchModal` : `squatchModal__${popupId}`;
+    popupId = popupId + 1;
 
     document.head.insertAdjacentHTML(
       "beforeend",
       `<style>#squatchModal::-webkit-scrollbar { display: none; }</style>`
     );
+  }
 
-    this.popupcontent = document.createElement("div");
-    this.popupcontent.setAttribute(
+  _initialiseCTA(frame: HTMLIFrameElement) {
+    let triggerElement;
+    try {
+      triggerElement /* HTMLButton */ = document.querySelector(this.trigger);
+      if (this.trigger && !triggerElement)
+        _log("No element found with trigger selector", this.trigger);
+    } catch {
+      _log("Not a valid selector", this.trigger);
+    }
+
+    // Trigger is optional
+    if (triggerElement) {
+      triggerElement.onclick = () => {
+        this.open(frame);
+      };
+    }
+
+    // If widget is loaded with CTA, look for a 'squatchpop' element to use
+    // that element as a trigger as well.
+    const triggerWhenCTA = document.querySelector(".squatchpop") as HTMLElement;
+
+    if (this.trigger === "#cta" && triggerWhenCTA) {
+      triggerWhenCTA.onclick = () => {
+        this.open(frame);
+      };
+    }
+  }
+
+  _createPopupDiv(): HTMLDivElement {
+    const popupdiv = document.createElement("div");
+
+    popupdiv.id = this.id;
+    popupdiv.setAttribute(
+      "style",
+      "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);"
+    );
+    popupdiv.onclick = (event) => {
+      if (event.target === popupdiv) {
+        this.close();
+      }
+    };
+
+    return popupdiv;
+  }
+
+  _createPopupContent(): HTMLDivElement {
+    const popupcontent = document.createElement("div");
+    popupcontent.id = "squatchModal__content";
+    popupcontent.setAttribute(
       "style",
       "margin: auto; width: 80%; max-width: 500px; position: relative;"
     );
 
-    this.popupdiv.onclick = (event) => {
-      this._clickedOutside(event);
-    };
+    return popupcontent;
   }
 
-  load() {
-    this.popupdiv.appendChild(this.popupcontent);
-    document.body.appendChild(this.popupdiv);
-    this.popupcontent.appendChild(this.frame);
+  load(frame: HTMLIFrameElement) {
+    this._initialiseCTA(frame);
+    const popupcontent = this._createPopupContent();
+    const popupdiv = this._createPopupDiv();
 
-    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-    const frameDoc = this.frame.contentWindow.document;
+    popupdiv.appendChild(popupcontent);
+    document.body.appendChild(popupdiv);
+    popupcontent.appendChild(frame);
+
+    const { contentWindow } = frame;
+    if (!contentWindow) {
+      throw new Error("Frame needs a content window");
+    }
+
+    const frameDoc = contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
     frameDoc.write(
@@ -84,12 +109,13 @@ export default class PopupWidget extends Widget {
     );
     frameDoc.close();
     _log("Popup template loaded into iframe");
-    this._setupResizeHandler();
+    this._setupResizeHandler(frame, popupdiv);
   }
 
-  protected _setupResizeHandler() {
-    const popupdiv = this.popupdiv;
-    const frame = this.frame;
+  protected _setupResizeHandler(
+    frame: HTMLIFrameElement,
+    popupdiv: HTMLDivElement
+  ) {
     const { contentWindow } = frame;
 
     if (!contentWindow) {
@@ -124,13 +150,14 @@ export default class PopupWidget extends Widget {
           }
         }
       });
-      ro.observe(await this._findInnerContainer());
+      ro.observe(await this._findInnerContainer(frame));
     });
   }
 
-  open() {
-    const popupdiv = this.popupdiv;
-    const frame = this.frame;
+  open(frame: HTMLIFrameElement) {
+    const popupdiv = document.getElementById(this.id) as HTMLDivElement;
+    if (!popupdiv) throw new Error("Could not determine container div");
+
     const { contentWindow } = frame;
     if (!contentWindow) throw new Error("Squatch.js has an empty iframe");
     const frameDoc = contentWindow.document;
@@ -154,17 +181,16 @@ export default class PopupWidget extends Widget {
   }
 
   close() {
-    this.popupdiv.style.visibility = "hidden";
-    this.popupdiv.style.top = "-2000px";
+    const popupdiv = document.getElementById(this.id) as HTMLDivElement;
+    if (!popupdiv) throw new Error("Could not determine container div");
+
+    popupdiv.style.visibility = "hidden";
+    popupdiv.style.top = "-2000px";
 
     _log("Popup closed");
   }
 
-  protected _clickedOutside({ target }) {
-    if (target === this.popupdiv) {
-      this.close();
-    }
-  }
+  protected _clickedOutside({ target }) {}
 
   protected _error(rs, mode = "modal", style = "") {
     const _style =

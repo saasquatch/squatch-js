@@ -11,6 +11,7 @@ export async function doQuery(
 ) {
   const headers = {
     Accept: "application/json",
+    "Content-Type": "application/json",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     "X-SaaSquatch-Referrer": window ? window.location.href : "",
   };

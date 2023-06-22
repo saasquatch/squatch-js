@@ -1,6 +1,13 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
-import { WidgetApi } from "../squatch";
+import {
+  PopupWidget,
+  WidgetApi,
+  WidgetContext,
+  WidgetContextType,
+  WidgetType,
+  Widgets,
+} from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
 import { loadEvent } from "../utils/loadEvent";
@@ -16,6 +23,8 @@ export default class IRPopupWidget extends HTMLElement {
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
   content: string;
+
+  widget: PopupWidget;
 
   constructor() {
     super();
@@ -57,42 +66,6 @@ export default class IRPopupWidget extends HTMLElement {
     });
   }
 
-  _createFrame() {
-    // First time load
-    if (!this.popupdiv) {
-      this.frame = document.createElement("iframe");
-      this.frame["squatchJsApi"] = this;
-      this.frame.width = "100%";
-      this.frame.scrolling = "no";
-      this.frame.setAttribute(
-        "style",
-        "border: 0; background-color: none; width: 1px; min-width: 100%;"
-      );
-
-      this.popupdiv = document.createElement("div");
-      this.popupdiv.id = "squatchModal";
-      this.popupdiv.setAttribute(
-        "style",
-        "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);"
-      );
-
-      document.head.insertAdjacentHTML(
-        "beforeend",
-        `<style>#squatchModal::-webkit-scrollbar { display: none; }</style>`
-      );
-
-      this.popupcontent = document.createElement("div");
-      this.popupcontent.setAttribute(
-        "style",
-        "margin: auto; width: 80%; max-width: 500px; position: relative;"
-      );
-
-      this.popupdiv.onclick = (event) => {
-        this._clickedOutside(event);
-      };
-    }
-  }
-
   _setFrameContents(res) {
     if (this.popupdiv.firstChild) {
       this.popupdiv.replaceChild(this.frame, this.popupdiv.firstChild);
@@ -119,7 +92,6 @@ export default class IRPopupWidget extends HTMLElement {
   }
 
   _loadPasswordlessWidget() {
-    this._createFrame();
     const configs = _getAutoConfig();
 
     // Has _saasquatchExtra
@@ -148,8 +120,14 @@ export default class IRPopupWidget extends HTMLElement {
         })
         .then((res) => {
           _log("Popup template loaded into iframe");
-          this._setFrameContents(res);
-          this._setupResizeHandler();
+          this._renderWidget(res, {
+            type: "passwordless",
+            engagementMedium: "POPUP",
+          });
+        })
+        .catch((e) => {
+          _log("Could not access widget API");
+          this._renderErrorWidget();
         });
     }
   }
@@ -164,7 +142,6 @@ export default class IRPopupWidget extends HTMLElement {
       tenantAlias: window.irPopup.tenantAlias,
     });
 
-    this._createFrame();
     this.widgetApi
       .upsertUser({
         user: userObj,
@@ -174,9 +151,44 @@ export default class IRPopupWidget extends HTMLElement {
       })
       .then((res) => {
         _log("Popup template loaded into iframe");
-        this._setFrameContents(res);
-        this._setupResizeHandler();
+        this._renderWidget(res, {
+          ...userObj,
+          type: "upsert",
+          engagementMedium: "EMBED",
+        });
+      })
+      .catch((e) => {
+        _log("Could not upsert user successfully");
+        this._renderErrorWidget();
       });
+  }
+
+  _renderErrorWidget() {
+    this.widget = new PopupWidget({
+      api: this.widgetApi,
+      content: "error",
+      context: { type: "error" },
+      type: "ERROR_WIDGET",
+      npmCdn: "https://fast.ssqt.io/npm",
+      domain: window.irEmbed.domain,
+    });
+
+    this.frame = this.widget._createFrame();
+    this.widget.load(this.frame);
+  }
+
+  _renderWidget(res, context: WidgetContext) {
+    this.widget = new PopupWidget({
+      api: this.widgetApi,
+      content: res.template,
+      context,
+      type: this.widgetType as string,
+      npmCdn: "https://fast.ssqt.io/npm",
+      domain: window.irEmbed.domain,
+    });
+
+    this.frame = this.widget._createFrame();
+    this.widget.load(this.frame);
   }
 
   protected _setupResizeHandler() {
@@ -233,33 +245,11 @@ export default class IRPopupWidget extends HTMLElement {
   }
 
   open() {
-    const popupdiv = this.popupdiv;
-    const frame = this.frame;
-    const { contentWindow } = frame;
-    if (!contentWindow) throw new Error("Squatch.js has an empty iframe");
-    const frameDoc = contentWindow.document;
-
-    // Adjust frame height when size of body changes
-    domready(frameDoc, () => {
-      const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-      const ctaElement = frameDoc.getElementById("cta");
-
-      if (ctaElement) {
-        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-        ctaElement.parentNode.removeChild(ctaElement);
-      }
-
-      popupdiv.style.visibility = "visible";
-      popupdiv.style.top = "0px";
-      frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
-      loadEvent(_sqh, this.analyticsApi);
-      _log("Popup opened");
-    });
+    this.widget.open(this.frame);
   }
 
   close() {
-    this.popupdiv.style.visibility = "hidden";
-    this.popupdiv.style.top = "-2000px";
+    this.widget.close();
 
     _log("Popup closed");
   }

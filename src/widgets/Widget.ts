@@ -17,7 +17,21 @@ export interface Params {
   api: WidgetApi;
   rsCode?: string;
   context: WidgetContext;
+  container?: string | HTMLElement;
 }
+
+export type ProgramLoadEvent = {
+  programId: string;
+  tenantAlias?: string;
+  accountId?: string;
+  userId?: string;
+  engagementMedium?: EngagementMedium;
+};
+export type GenericLoadEvent = {
+  mode: any;
+  analytics: any;
+};
+
 /*
  * The Widget class is the base class for the different widget types available
  *
@@ -27,13 +41,13 @@ export interface Params {
  *
  */
 export default abstract class Widget {
-  frame: HTMLIFrameElement;
   type: WidgetType;
   content: string;
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
   context: WidgetContext;
   npmCdn: string;
+  container: string | HTMLElement | undefined;
 
   protected constructor(params: Params) {
     _log("widget initializing ...");
@@ -43,37 +57,40 @@ export default abstract class Widget {
     this.widgetApi = params.api;
     this.npmCdn = params.npmCdn;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
-    this.frame = document.createElement("iframe");
-    this.frame["squatchJsApi"] = this;
-    this.frame.width = "100%";
-    this.frame.scrolling = "no";
-    this.frame.setAttribute(
+    this.context = params.context;
+    this.container = params.container;
+  }
+
+  _createFrame() {
+    const frame = document.createElement("iframe");
+    frame["squatchJsApi"] = this;
+    frame.width = "100%";
+    frame.scrolling = "no";
+    frame.setAttribute(
       "style",
       "border: 0; background-color: none; width: 1px; min-width: 100%;"
     );
-    this.context = params.context;
+
+    return frame;
   }
 
-  abstract load();
-
-  protected _loadEvent(sqh: unknown) {
+  abstract load(frame: HTMLIFrameElement): void;
+  protected _loadEvent(sqh: ProgramLoadEvent | GenericLoadEvent) {
     if (!sqh) return; // No non-truthy value
     if (!isObject(sqh)) {
       throw new Error("Widget Load event identity property is not an object");
     }
 
     let params: SQHDetails;
-    if (hasProps<{ programId: string }>(sqh, "programId")) {
+    if ("programId" in sqh) {
       if (
-        !hasProps<{
-          tenantAlias: string;
-          accountId: string;
-          userId: string;
-          engagementMedium: EngagementMedium;
-        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
-      ) {
+        !sqh.tenantAlias ||
+        !sqh.accountId ||
+        !sqh.userId ||
+        !sqh.engagementMedium
+      )
         throw new Error("Widget Load event missing required properties");
-      }
+
       params = {
         tenantAlias: sqh.tenantAlias,
         externalAccountId: sqh.accountId,
@@ -82,7 +99,7 @@ export default abstract class Widget {
         programId: sqh.programId,
       };
     } else {
-      const { analytics, mode } = sqh as any;
+      const { analytics, mode } = sqh;
       params = {
         tenantAlias: analytics.attributes.tenant,
         externalAccountId: analytics.attributes.accountId,
@@ -122,24 +139,7 @@ export default abstract class Widget {
     }
   }
 
-  protected _inviteContacts(sqh, emailList) {
-    if (sqh) {
-      this.widgetApi
-        .invite({
-          tenantAlias: sqh.analytics.attributes.tenant,
-          accountId: sqh.analytics.attributes.accountId,
-          userId: sqh.analytics.attributes.userId,
-          emailList,
-        })
-        .then((response) => {
-          _log(`Sent email invites to share ${emailList}. ${response}`);
-        })
-        .catch((ex) => {
-          _log(new Error(`invite() ${ex}`));
-        });
-    }
-  }
-
+  // TODO: CA: Refactor how error templates are shown
   protected _error(rs, mode = "modal", style = "") {
     const errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
@@ -176,8 +176,10 @@ export default abstract class Widget {
     return errorTemplate;
   }
 
-  protected async _findInnerContainer(): Promise<Element> {
-    const { contentWindow } = this.frame;
+  protected async _findInnerContainer(
+    frame: HTMLIFrameElement
+  ): Promise<Element> {
+    const { contentWindow } = frame;
     if (!contentWindow)
       throw new Error("Squatch.js frame inner frame is empty");
     const frameDoc = contentWindow.document;
@@ -207,16 +209,21 @@ export default abstract class Widget {
     return found;
   }
 
-  reload({ email, firstName, lastName }, jwt) {
-    const frameWindow = this.frame.contentWindow;
+  // TODO: CA: Refactor reload
+  /**
+   * Reloads the current widget, makes updated request to API and renders result.
+   * Primarily for Classic widgets with registration
+   * @param param0 Form field values
+   * @param jwt JWT for API authentication
+   */
+  reload(frame: HTMLIFrameElement, { email, firstName, lastName }, jwt) {
+    const frameWindow = frame.contentWindow;
 
     const engagementMedium = this.context.engagementMedium || "POPUP";
 
     if (!frameWindow) {
       throw new Error("Frame needs a content window");
     }
-
-    const frameDoc = frameWindow.document;
 
     let response;
 
@@ -251,47 +258,58 @@ export default abstract class Widget {
       .then(({ template }) => {
         if (template) {
           this.content = template;
-          const showStatsBtn = frameDoc.createElement("button");
-          const registerForm =
-            frameDoc.getElementsByClassName("squatch-register")[0];
 
-          if (registerForm) {
-            showStatsBtn.className = "btn btn-primary";
-            showStatsBtn.id = "show-stats-btn";
-
-            showStatsBtn.textContent =
-              this.type === "REFERRER_WIDGET" ? "Show Stats" : "Show Reward";
-
-            const widgetStyle =
-              engagementMedium === "POPUP"
-                ? "margin-top: 10px; max-width: 130px; width: 100%;"
-                : "margin-top: 10px;";
-
-            showStatsBtn.setAttribute("style", widgetStyle);
-            showStatsBtn.onclick = () => {
-              this.load();
+          // Support for classic widget registration forms
+          this.__deprecated__register(
+            frame,
+            { email, engagementMedium },
+            () => {
+              this.load(frame);
 
               // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
-              engagementMedium === "POPUP" && this.open();
-            };
-
-            // @ts-ignore -- expect register form to be a stylable element
-            registerForm.style.paddingTop = "30px";
-            registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
-            registerForm.appendChild(showStatsBtn);
-          }
+              engagementMedium === "POPUP" && this.open(frame);
+            }
+          );
         }
       })
       .catch(({ message }) => {
         _log(`${message}`);
       });
   }
+
+  __deprecated__register(frame, params, onClick) {
+    const frameWindow = frame.contentWindow;
+    const frameDoc = frameWindow.document;
+    const showStatsBtn = frameDoc.createElement("button");
+    const registerForm = frameDoc.getElementsByClassName("squatch-register")[0];
+
+    if (registerForm) {
+      showStatsBtn.className = "btn btn-primary";
+      showStatsBtn.id = "show-stats-btn";
+
+      showStatsBtn.textContent =
+        this.type === "REFERRER_WIDGET" ? "Show Stats" : "Show Reward";
+
+      const widgetStyle =
+        params.engagementMedium === "POPUP"
+          ? "margin-top: 10px; max-width: 130px; width: 100%;"
+          : "margin-top: 10px;";
+
+      showStatsBtn.setAttribute("style", widgetStyle);
+      showStatsBtn.onclick = onClick;
+
+      // @ts-ignore -- expect register form to be a stylable element
+      registerForm.style.paddingTop = "30px";
+      registerForm.innerHTML = `<p><strong>${params.email}</strong><br>Has been successfully registered</p>`;
+      registerForm.appendChild(showStatsBtn);
+    }
+  }
 }
 
 function delay(duration) {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
-      resolve();
+      resolve(() => {});
     }, duration);
   });
 }
