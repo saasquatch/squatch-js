@@ -22,26 +22,30 @@
           const element = document.getElementById("unauthed-stuff");
           document.getElementById("authed-stuff").innerHTML = "";
 
-          element.innerHTML = `<button onclick="javascript:document.getElementById('ir-friend').open()">
-        Open passwordless widget
-      </button>
-      <ir-popup
-        widget-type="p/jayden-qa-obj/w/websiteReferralWidget"
-        id="ir-friend"
-      ></ir-popup>`;
+          element.innerHTML = /*html*/ `
+          <button onclick="javascript:document.getElementById('ir-friend').open()">
+            Open passwordless widget
+          </button>
+          <ir-popup
+            widget-type="p/jayden-qa-obj/w/websiteReferralWidget"
+            id="ir-friend"
+          ></ir-popup>
+          `;
         });
       } else if (window.location.pathname.includes("passwordless")) {
         document.addEventListener("DOMContentLoaded", function (event) {
           const element = document.getElementById("unauthed-stuff");
           document.getElementById("authed-stuff").innerHTML = "";
 
-          element.innerHTML = `<button onclick="javascript:document.getElementById('ir-friend').open()">
-        Open passwordless widget
-      </button>
-      <ir-popup
-        widget-type="p/jayden-qa-obj/w/friendWidget"
-        id="ir-friend"
-      ></ir-popup>`;
+          element.innerHTML = /*html*/ `
+          <button onclick="javascript:document.getElementById('ir-friend').open()">
+            Open passwordless widget
+          </button>
+          <ir-popup
+            widget-type="p/jayden-qa-obj/w/friendWidget"
+            id="ir-friend"
+          ></ir-popup>
+          `;
         });
       } else {
         if (window.location.search) window.location.search = "";
@@ -52,41 +56,41 @@
           document.getElementById("unauthed-stuff").innerHTML = "";
           document.cookie = "_saasquatch=";
 
-          element.innerHTML = `
-      <button onclick="javascript:document.getElementById('ir-popup').open()">
-        Open me!
-      </button>
-      <button onclick="javascript:document.getElementById('ir-popup-2').open()">
-        Or me!
-      </button>
-      <button onclick="javascript:document.getElementById('ir-embed').open()">
-        Open embedded widget
-      </button>
-      <button onclick="javascript:document.getElementById('ir-embed').close()">
-        Close embedded widget
-      </button>
+          element.innerHTML = /*html*/ `
+          <button onclick="javascript:document.getElementById('ir-popup').open()">
+            Open me!
+          </button>
+          <button onclick="javascript:document.getElementById('ir-popup-2').open()">
+            Or me!
+          </button>
+          <button onclick="javascript:document.getElementById('ir-embed').open()">
+            Open embedded widget
+          </button>
+          <button onclick="javascript:document.getElementById('ir-embed').close()">
+            Close embedded widget
+          </button>
 
-      <ir-embed widget-type="w/ir-tester"></ir-embed>
-      <ir-embed
-        widget-type="w/ir-tester"
-        id="ir-embed"
-        container="#widget-container"
-      ></ir-embed>
+          <ir-embed widget-type="w/ir-tester"></ir-embed>
+          <ir-embed
+            widget-type="w/ir-tester"
+            id="ir-embed"
+            container="#widget-container"
+          ></ir-embed>
 
-      <ir-popup widget-type="w/ir-tester" id="ir-popup"></ir-popup>
-      <ir-popup widget-type="w/mint-tester" id="ir-popup-2"></ir-popup>
+          <ir-popup widget-type="w/ir-tester" id="ir-popup"></ir-popup>
+          <ir-popup widget-type="w/mint-tester" id="ir-popup-2"></ir-popup>
 
-      <div
-        id="widget-container"
-        style="
-          position: absolute;
-          width: 500px;
-          height: 500px;
-          right: 0;
-          top: 0;
-        "
-      ></div>
-   `;
+          <div
+            id="widget-container"
+            style="
+              position: absolute;
+              width: 500px;
+              height: 500px;
+              right: 0;
+              top: 0;
+            "
+          ></div>
+        `;
         });
         window.irEmbed = {
           domain: "https://staging.referralsaasquatch.com",
