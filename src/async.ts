@@ -1,20 +1,15 @@
+import { ConfigOptions } from "./types";
+
 declare global {
   interface Window {
-    _squatch: {
+    _squatch?: {
       ready: any[];
     };
     squatch: any;
     widgetIdent: any;
-    irEmbed: {
-      tenantAlias: string;
-      domain: string;
-      jwt: string;
-    };
-    irPopup: {
-      tenantAlias: string;
-      domain: string;
-      jwt: string;
-    };
+    squatchTenant: string;
+    squatchToken: string;
+    squatchConfig: Omit<ConfigOptions, "tenantAlias">;
   }
 }
 /** @hidden */

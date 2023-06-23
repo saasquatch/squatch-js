@@ -16,6 +16,8 @@ export interface ConfigOptions {
   debug?: boolean;
 }
 
+export type DeclarativeConfigOptions = Omit<ConfigOptions, "tenantAlias">;
+
 /**
  * Config options for loading a widget
  *

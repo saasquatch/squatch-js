@@ -4,7 +4,6 @@ import * as EventBus from "eventbusjs";
 import WidgetApi from "../api/WidgetApi";
 import EmbedWidget from "./EmbedWidget";
 import PopupWidget from "./PopupWidget";
-import CtaWidget from "./CtaWidget";
 import Widget, { Params } from "./Widget";
 import { WidgetResult, WidgetContext, WithRequired } from "../types";
 import { ConfigOptions, EngagementMedium, WidgetConfig } from "../types";
@@ -200,7 +199,7 @@ export default class Widgets {
    * @param {Object} config Config details
    * @param {string} config.widgetType The widget type (REFERRER_WIDGET, CONVERSION_WIDGET)
    * @param {string} config.engagementMedium (POPUP, EMBED)
-   * @returns {Widget} widget (PopupWidget, EmbedWidget, or CtaWidget)
+   * @returns {Widget} widget (PopupWidget or EmbedWidget)
    */
   private _renderWidget(
     response: any,
@@ -280,8 +279,9 @@ export default class Widgets {
       const side = opts.cta.content.buttonSide;
       const position = opts.cta.content.buttonPosition;
 
-      widget = new CtaWidget(params, { side, position });
-      widget.load();
+      _log("CTA Widget has been deprecated");
+      // widget = new CtaWidget(params, { side, position });
+      // widget.load();
       if (displayOnLoad) widget.open();
     } else if (config.engagementMedium === "EMBED") {
       this._renderEmbedWidget(params, params.context.container);
@@ -361,7 +361,7 @@ export default class Widgets {
   /**
    * @hidden
    * @param {Object} target Object containing the target DOM element
-   * @param {Widget} widget A widget (EmbedWidget, PopupWidget, CtaWidget)
+   * @param {Widget} widget A widget (EmbedWidget, PopupWidget)
    * @param {Object} params An object with valid parameters
    *                        (e.g) {email:'email', firstName:'firstName'}
    * @returns {void}

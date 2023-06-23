@@ -11,9 +11,8 @@ import debug from "debug";
 import Widgets from "./widgets/Widgets";
 import EmbedWidget from "./widgets/EmbedWidget";
 import PopupWidget from "./widgets/PopupWidget";
-import IREmbedWidget from "./widgets/IREmbedWidget";
-import IRPopupWidget from "./widgets/IRPopupWidget";
-import CtaWidget from "./widgets/CtaWidget";
+// import IREmbedWidget from "./widgets/IREmbedWidget";
+// import IRPopupWidget from "./widgets/IRPopupWidget";
 import WidgetApi from "./api/WidgetApi";
 import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
@@ -21,6 +20,10 @@ import { ConfigOptions, WidgetConfig, WidgetResult } from "./types";
 import { validateConfig } from "./utils/validate";
 import { _pushCookie } from "./utils/cookieUtils";
 import { _getAutoConfig } from "./utils/utmUtils";
+import {
+  DeclarativeEmbedWidget,
+  DeclarativePopupWidget,
+} from "./widgets/declarative/DeclarativeEmbedWidget";
 export * from "./types";
 export * from "./docs";
 
@@ -33,9 +36,10 @@ export {
   Widgets,
   EmbedWidget,
   PopupWidget,
-  IREmbedWidget,
-  IRPopupWidget,
-  CtaWidget,
+  // IREmbedWidget,
+  // IRPopupWidget,
+  DeclarativeEmbedWidget,
+  DeclarativePopupWidget,
   WidgetApi,
 };
 /** @hidden */

@@ -10,41 +10,35 @@
         window.location.pathname.includes("passwordless") &&
         !window.location.search.length <= 1
       ) {
-        window.irPopup = {
+        window.squatchTenant = "test_a8b41jotf8a1v";
+        window.squatchConfig = {
           domain: "https://staging.referralsaasquatch.com",
-          tenantAlias: "test_a8b41jotf8a1v",
-        };
-        window.irEmbed = {
-          domain: "https://staging.referralsaasquatch.com",
-          tenantAlias: "test_a8b41jotf8a1v",
         };
         document.addEventListener("DOMContentLoaded", function (event) {
           const element = document.getElementById("unauthed-stuff");
           document.getElementById("authed-stuff").innerHTML = "";
-
           element.innerHTML = /*html*/ `
-          <button onclick="javascript:document.getElementById('ir-friend').open()">
+          <button onclick="javascript:document.getElementById('squatch-popup-friend').open()">
             Open passwordless widget
           </button>
-          <ir-popup
-            widget-type="p/jayden-qa-obj/w/websiteReferralWidget"
-            id="ir-friend"
-          ></ir-popup>
+          <squatch-popup
+            widget="p/jayden-qa-obj/w/websiteReferralWidget"
+            id="squatch-popup-friend"
+          ></squatch-popup>
           `;
         });
       } else if (window.location.pathname.includes("passwordless")) {
         document.addEventListener("DOMContentLoaded", function (event) {
           const element = document.getElementById("unauthed-stuff");
           document.getElementById("authed-stuff").innerHTML = "";
-
           element.innerHTML = /*html*/ `
-          <button onclick="javascript:document.getElementById('ir-friend').open()">
+          <button onclick="javascript:document.getElementById('squatch-popup-friend').open()">
             Open passwordless widget
           </button>
-          <ir-popup
-            widget-type="p/jayden-qa-obj/w/friendWidget"
-            id="ir-friend"
-          ></ir-popup>
+          <squatch-popup
+            widget="p/jayden-qa-obj/w/friendWidget"
+            id="squatch-popup-friend"
+          ></squatch-popup>
           `;
         });
       } else {
@@ -57,28 +51,28 @@
           document.cookie = "_saasquatch=";
 
           element.innerHTML = /*html*/ `
-          <button onclick="javascript:document.getElementById('ir-popup').open()">
+          <button onclick="javascript:document.getElementById('squatch-popup').open()">
             Open me!
           </button>
-          <button onclick="javascript:document.getElementById('ir-popup-2').open()">
-            Or me!
+          <button onclick="javascript:document.getElementById('squatch-popup-2').open()">
+            Click me!
           </button>
-          <button onclick="javascript:document.getElementById('ir-embed').open()">
+          <button onclick="javascript:document.getElementById('squatch-embed').open()">
             Open embedded widget
           </button>
-          <button onclick="javascript:document.getElementById('ir-embed').close()">
+          <button onclick="javascript:document.getElementById('squatch-embed').close()">
             Close embedded widget
           </button>
 
-          <ir-embed widget-type="w/ir-tester"></ir-embed>
-          <ir-embed
-            widget-type="w/ir-tester"
-            id="ir-embed"
+          <squatch-embed widget="w/ir-tester"></squatch-embed>
+          <squatch-embed
+            widget="w/ir-tester"
+            id="squatch-embed"
             container="#widget-container"
-          ></ir-embed>
+          ></squatch-embed>
 
-          <ir-popup widget-type="w/ir-tester" id="ir-popup"></ir-popup>
-          <ir-popup widget-type="w/mint-tester" id="ir-popup-2"></ir-popup>
+          <squatch-popup widget="w/ir-tester" id="squatch-popup"></squatch-popup>
+          <squatch-popup widget="w/mint-tester" id="squatch-popup-2"></squatch-popup>
 
           <div
             id="widget-container"
@@ -92,15 +86,11 @@
           ></div>
         `;
         });
-        window.irEmbed = {
+        window.squatchTenant = "test_a8b41jotf8a1v";
+        window.squatchToken =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA";
+        window.squatchConfig = {
           domain: "https://staging.referralsaasquatch.com",
-          tenantAlias: "test_a8b41jotf8a1v",
-          jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA",
-        };
-        window.irPopup = {
-          domain: "https://staging.referralsaasquatch.com",
-          tenantAlias: "test_a8b41jotf8a1v",
-          jwt: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA",
         };
       }
     </script>
@@ -111,7 +101,7 @@
     <div id="authed-stuff"></div>
     <!-- /Authorized Widgets  -->
 
-    <ir-embed widget-type="p/jayden-qa-obj/w/friendWidget"></ir-embed>
+    <squatch-embed widget="p/jayden-qa-obj/w/friendWidget"></squatch-embed>
     <!-- Passwordless widget -->
     <div id="unauthed-stuff"></div>
     <!-- /Passwordless widget -->

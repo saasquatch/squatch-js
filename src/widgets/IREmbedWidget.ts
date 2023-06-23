@@ -1,6 +1,6 @@
 import debug from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
-import { EmbedWidget, WidgetApi } from "../squatch";
+import { DeclarativeConfigOptions, EmbedWidget, WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
 import { loadEvent } from "../utils/loadEvent";
@@ -15,6 +15,10 @@ export default class IREmbedWidget extends HTMLElement {
   content: string;
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
+
+  config: DeclarativeConfigOptions;
+  tenantAlias: string;
+  token: string;
 
   widget: EmbedWidget;
 

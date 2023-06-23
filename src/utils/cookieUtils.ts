@@ -1,7 +1,5 @@
 import debug from "debug";
 import Cookies from "js-cookie";
-//@ts-ignore
-import URLSearchParams from "@ungap/url-search-params";
 
 /** @hidden */
 const _log = debug("squatch-js");
