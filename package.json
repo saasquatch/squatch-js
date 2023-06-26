@@ -91,7 +91,7 @@
     "typescript": "^3.9.3",
     "webpack": "^5.88.0",
     "webpack-bundle-analyzer": "^4.9.0",
-    "webpack-cli": "^3.3.12",
+    "webpack-cli": "^5.1.4",
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "prettier": {},
