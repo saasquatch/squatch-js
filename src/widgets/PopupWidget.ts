@@ -17,17 +17,27 @@ let popupId = 0;
 export default class PopupWidget extends Widget {
   trigger: string;
   id: string;
+  containerElement: HTMLElement | ShadowRoot;
 
   constructor(params: Params, trigger = ".squatchpop") {
     super(params);
 
     this.trigger = trigger;
-    this.id = popupId === 0 ? `squatchModal` : `squatchModal__${popupId}`;
-    popupId = popupId + 1;
+    this.containerElement =
+      this.container && typeof this.container !== "string"
+        ? this.container
+        : document.body;
+
+    if (this.container) {
+      this.id = "squatchModal";
+    } else {
+      this.id = popupId === 0 ? `squatchModal` : `squatchModal__${popupId}`;
+      popupId = popupId + 1;
+    }
 
     document.head.insertAdjacentHTML(
       "beforeend",
-      `<style>#squatchModal::-webkit-scrollbar { display: none; }</style>`
+      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`
     );
   }
 
@@ -59,42 +69,28 @@ export default class PopupWidget extends Widget {
     }
   }
 
-  _createPopupDiv(): HTMLDivElement {
-    const popupdiv = document.createElement("div");
-
-    popupdiv.id = this.id;
-    popupdiv.setAttribute(
+  _createPopupDialog(): HTMLDialogElement {
+    const dialog = document.createElement("dialog");
+    dialog.id = this.id;
+    dialog.setAttribute(
       "style",
-      "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);"
+      "width: 100%; max-width: 500px; border: none; padding: 0;"
     );
-    popupdiv.onclick = (event) => {
-      if (event.target === popupdiv) {
-        this.close();
-      }
+    const onClick = (e) => {
+      if (e.target === dialog) dialog.close();
     };
 
-    return popupdiv;
-  }
+    dialog.addEventListener("click", onClick);
 
-  _createPopupContent(): HTMLDivElement {
-    const popupcontent = document.createElement("div");
-    popupcontent.id = "squatchModal__content";
-    popupcontent.setAttribute(
-      "style",
-      "margin: auto; width: 80%; max-width: 500px; position: relative;"
-    );
-
-    return popupcontent;
+    return dialog;
   }
 
   load(frame: HTMLIFrameElement) {
     this._initialiseCTA(frame);
-    const popupcontent = this._createPopupContent();
-    const popupdiv = this._createPopupDiv();
+    const dialog = this._createPopupDialog();
+    dialog.appendChild(frame);
 
-    popupdiv.appendChild(popupcontent);
-    document.body.appendChild(popupdiv);
-    popupcontent.appendChild(frame);
+    this.containerElement.appendChild(dialog);
 
     const { contentWindow } = frame;
     if (!contentWindow) {
@@ -109,12 +105,12 @@ export default class PopupWidget extends Widget {
     );
     frameDoc.close();
     _log("Popup template loaded into iframe");
-    this._setupResizeHandler(frame, popupdiv);
+    this._setupResizeHandler(frame, dialog);
   }
 
   protected _setupResizeHandler(
     frame: HTMLIFrameElement,
-    popupdiv: HTMLDivElement
+    popupdiv: HTMLDialogElement
   ) {
     const { contentWindow } = frame;
 
@@ -127,8 +123,6 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, async () => {
       frameDoc.body.style.overflowY = "hidden";
-      popupdiv.style.visibility = "hidden";
-      popupdiv.style.display = "block";
       frame.height = `${frameDoc.body.offsetHeight}px`;
       // Adjust frame height when size of body changes
       const ro = new contentWindow["ResizeObserver"]((entries) => {
@@ -140,14 +134,6 @@ export default class PopupWidget extends Widget {
 
           // Don't let anything else set the height of this element
           entry.target.style = ``;
-
-          if (window.innerHeight > Number(frame.height)) {
-            popupdiv.style.paddingTop = `${
-              (window.innerHeight - Number(frame.height)) / 2
-            }px`;
-          } else {
-            popupdiv.style.paddingTop = "5px";
-          }
         }
       });
       ro.observe(await this._findInnerContainer(frame));
@@ -155,8 +141,12 @@ export default class PopupWidget extends Widget {
   }
 
   open(frame: HTMLIFrameElement) {
-    const popupdiv = document.getElementById(this.id) as HTMLDivElement;
-    if (!popupdiv) throw new Error("Could not determine container div");
+    const dialog = this.containerElement.querySelector(
+      `#${this.id}`
+    ) as HTMLDialogElement;
+    if (!dialog) throw new Error("Could not determine container div");
+
+    dialog.showModal();
 
     const { contentWindow } = frame;
     if (!contentWindow) throw new Error("Squatch.js has an empty iframe");
@@ -165,15 +155,13 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-      const ctaElement = frameDoc.getElementById("cta");
+      // const ctaElement = frameDoc.getElementById("cta");
 
-      if (ctaElement) {
-        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-        ctaElement.parentNode.removeChild(ctaElement);
-      }
+      // if (ctaElement) {
+      //   //@ts-ignore -- will occasionally throw a null pointer exception at runtime
+      //   ctaElement.parentNode.removeChild(ctaElement);
+      // }
 
-      popupdiv.style.visibility = "visible";
-      popupdiv.style.top = "0px";
       frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
       this._loadEvent(_sqh);
       _log("Popup opened");
@@ -181,11 +169,10 @@ export default class PopupWidget extends Widget {
   }
 
   close() {
-    const popupdiv = document.getElementById(this.id) as HTMLDivElement;
-    if (!popupdiv) throw new Error("Could not determine container div");
+    const dialog = document.getElementById(this.id) as HTMLDialogElement;
+    if (!dialog) throw new Error("Could not determine container div");
 
-    popupdiv.style.visibility = "hidden";
-    popupdiv.style.top = "-2000px";
+    dialog.close();
 
     _log("Popup closed");
   }

@@ -1,6 +1,6 @@
 import AnalyticsApi from "../../api/AnalyticsApi";
 import { EmbedWidget, PopupWidget, WidgetApi, widget } from "../../squatch";
-import { DeclarativeConfigOptions } from "../../types";
+import { ConfigOptions, DeclarativeConfigOptions } from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
 import { _getAutoConfig } from "../../utils/utmUtils";
 import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../utils/validate";
@@ -9,7 +9,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   config: DeclarativeConfigOptions;
   token: string;
   tenant: string;
-  widgetType: string | null;
+  widgetType: string | undefined;
 
   widgetApi: WidgetApi;
   analyticsApi: AnalyticsApi;
@@ -28,33 +28,26 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     this.config = window.squatchConfig;
     this.token = window.squatchToken;
     this.tenant = window.squatchTenant;
+  }
 
-    console.log(window.squatchTenant, this.config);
+  private _setupApis(config?: ConfigOptions) {
     this.widgetApi = new WidgetApi({
-      tenantAlias: this.tenant,
-      domain: this.config.domain || DEFAULT_DOMAIN,
+      tenantAlias: config?.tenantAlias || this.tenant,
+      domain: config?.domain || this.config.domain || DEFAULT_DOMAIN,
     });
     this.analyticsApi = new AnalyticsApi({
-      domain: this.config.domain || DEFAULT_DOMAIN,
+      domain: config?.domain || this.config.domain || DEFAULT_DOMAIN,
     });
   }
 
   renderPasswordlessVariant() {
     const configs = _getAutoConfig();
-
-    if (configs) {
-      // TODO: Do we use the config in _saasquatchExtra or the one set in window.squatch______?
-      const { squatchConfig, widgetConfig } = configs;
-      return this.widgetApi
-        .render(widgetConfig)
-        .then((res) => this._setWidget(res, { type: "passwordless" }))
-        .catch(this._setErrorWidget);
-    }
+    this._setupApis(configs?.squatchConfig);
 
     return this.widgetApi
       .render({
-        engagementMedium: this.type,
-        widgetType: this.widgetType || undefined, // FIXME: Type issue
+        engagementMedium: configs?.widgetConfig?.engagementMedium || this.type,
+        widgetType: configs?.widgetConfig?.widgetType || this.widgetType,
       })
       .then((res) => this._setWidget(res, { type: "passwordless" }))
       .catch(this._setErrorWidget);
@@ -62,11 +55,11 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   async renderUserUpsertVariant() {
     if (!this.widgetType) throw new Error("Widget must be specified");
+    this._setupApis();
 
     const userObj = decodeUserJwt(this.token);
     if (!userObj) throw new Error("Could not load user information from jwt");
 
-    console.log({ api: this.widgetApi });
     const widgetInstance = await this.widgetApi
       .upsertUser({
         user: userObj,
@@ -100,7 +93,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   _setErrorWidget = (e: Error) => {
-    console.log("ERROR");
     const Widget = this.type === "EMBED" ? EmbedWidget : PopupWidget;
 
     return new Widget({
@@ -110,12 +102,12 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       type: "ERROR_WIDGET",
       domain: this.config.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
-      container: this.container,
+      container: this.container || this,
     });
   };
 
   async connectedCallback() {
-    this.widgetType = this.getAttribute("widget");
+    this.widgetType = this.getAttribute("widget") || undefined;
     console.log({ widget: this.getAttribute("widget") });
     if (!this.widgetType) throw new Error("No widget has been specified");
 

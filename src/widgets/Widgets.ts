@@ -173,8 +173,8 @@ export default class Widgets {
     this.api
       .squatchReferralCookie()
       //@ts-ignore
-      .then(({ code }) => {
-        elem.value = code;
+      .then(({ codes }) => {
+        elem.value = codes[0];
       })
       .catch((ex) => {
         throw ex;
@@ -274,16 +274,7 @@ export default class Widgets {
       });
     }
 
-    if (displayCTA) {
-      _log("display CTA");
-      const side = opts.cta.content.buttonSide;
-      const position = opts.cta.content.buttonPosition;
-
-      _log("CTA Widget has been deprecated");
-      // widget = new CtaWidget(params, { side, position });
-      // widget.load();
-      if (displayOnLoad) widget.open();
-    } else if (config.engagementMedium === "EMBED") {
+    if (config.engagementMedium === "EMBED") {
       this._renderEmbedWidget(params, params.context.container);
     } else if (config.engagementMedium === "POPUP") {
       widget = this._renderPopupWidget(params);
