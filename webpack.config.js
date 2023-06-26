@@ -1,6 +1,5 @@
 var path = require("path");
 var webpack = require("webpack");
-var Visualizer = require("webpack-visualizer-plugin");
 
 module.exports = {
   entry: {
@@ -35,11 +34,6 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
-  plugins:
-    [
-      // new MinifyPlugin({}, {}),
-      new Visualizer()
-    ],
   stats: {
     // Nice colored output
     colors: true

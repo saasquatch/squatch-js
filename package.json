@@ -89,7 +89,7 @@
     "tsd": "^0.13.1",
     "typedoc": "^0.17.7",
     "typescript": "^3.9.3",
-    "webpack": "^4.46.0",
+    "webpack": "^5.88.0",
     "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^3.3.12",
     "webpack-visualizer-plugin": "^0.1.11"
