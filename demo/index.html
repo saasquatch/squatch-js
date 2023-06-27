@@ -51,12 +51,8 @@
           document.cookie = "_saasquatch=";
 
           element.innerHTML = /*html*/ `
-          <button onclick="javascript:document.getElementById('squatch-popup').open()">
-            Open me!
-          </button>
-          <button onclick="javascript:document.getElementById('squatch-popup-2').open()">
-            Click me!
-          </button>
+          <squatch-popup widget="w/ir-tester"><button>click me!</button></squatch-popup>
+          <squatch-popup widget="w/mint-tester"><button>click me too!</button></squatch-popup>
           <button onclick="javascript:document.getElementById('squatch-embed').open()">
             Open embedded widget
           </button>
@@ -64,15 +60,13 @@
             Close embedded widget
           </button>
 
-          <squatch-embed widget="w/ir-tester"></squatch-embed>
+          <squatch-embed widget="w/ir-tester">Loading...</squatch-embed>
           <squatch-embed
             widget="w/ir-tester"
             id="squatch-embed"
             container="#widget-container"
           ></squatch-embed>
 
-          <squatch-popup widget="w/ir-tester" id="squatch-popup"></squatch-popup>
-          <squatch-popup widget="w/mint-tester" id="squatch-popup-2"></squatch-popup>
 
           <div
             id="widget-container"

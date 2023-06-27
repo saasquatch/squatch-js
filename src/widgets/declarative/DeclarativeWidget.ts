@@ -24,6 +24,9 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   constructor() {
     super();
+    this.attachShadow({
+      mode: "open",
+    }).innerHTML = `<slot></slot>`;
 
     this.config = window.squatchConfig;
     this.token = window.squatchToken;
@@ -49,7 +52,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
         engagementMedium: configs?.widgetConfig?.engagementMedium || this.type,
         widgetType: configs?.widgetConfig?.widgetType || this.widgetType,
       })
-      .then((res) => this._setWidget(res, { type: "passwordless" }))
+      .then((res) => this._setWidget(res.template, { type: "passwordless" }))
       .catch(this._setErrorWidget);
   }
 
@@ -67,19 +70,19 @@ export default abstract class DeclarativeWidget extends HTMLElement {
         widgetType: this.widgetType,
         jwt: this.token,
       })
-      .then((res) => this._setWidget(res, { type: "upsert" }))
+      .then((res) => this._setWidget(res.template, { type: "upsert" }))
       .catch(this._setErrorWidget);
 
     return widgetInstance;
   }
 
-  _setWidget = (res: any, config: { type: "upsert" | "passwordless" }) => {
+  _setWidget = (template: any, config: { type: "upsert" | "passwordless" }) => {
     if (!this.widgetType) throw new Error("Widget was no specified");
     const Widget = this.type === "EMBED" ? EmbedWidget : PopupWidget;
 
     return new Widget({
       api: this.widgetApi,
-      content: res.template,
+      content: template,
       context: { type: config.type, engagementMedium: this.type },
       type: this.widgetType,
       domain: this.config.domain || DEFAULT_DOMAIN,

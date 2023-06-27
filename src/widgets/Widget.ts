@@ -61,6 +61,34 @@ export default abstract class Widget {
     this.container = params.container;
   }
 
+  _findElement(): HTMLElement {
+    let element: Element | null;
+
+    if (typeof this.container === "string") {
+      // selector is a string
+      element = document.querySelector(this.container);
+      _log("loading widget with selector", element);
+      // selector is an HTML element
+    } else if (this.container instanceof HTMLElement) {
+      element = this.container;
+      _log("loading widget with container", element);
+      // garbage container found
+    } else if (this.container) {
+      element = null;
+      _log("container must be an HTMLElement or string", this.container);
+      // find element on page
+    } else {
+      element =
+        document.querySelector("#squatchembed") ||
+        document.querySelector(".squatchembed");
+      _log("loading widget with default selector", element);
+    }
+    if (!(element instanceof HTMLElement))
+      throw new Error(`element with selector '${this.container}' not found.'`);
+
+    return element;
+  }
+
   _createFrame() {
     const frame = document.createElement("iframe");
     frame["squatchJsApi"] = this;

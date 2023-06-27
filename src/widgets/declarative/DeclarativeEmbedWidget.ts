@@ -39,6 +39,10 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     super();
 
     this.type = "POPUP";
+    this.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if ((e.target as HTMLElement).tagName !== "DIALOG") this.open();
+    });
   }
 
   static get observedAttributes() {

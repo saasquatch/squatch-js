@@ -17,16 +17,11 @@ let popupId = 0;
 export default class PopupWidget extends Widget {
   trigger: string;
   id: string;
-  containerElement: HTMLElement | ShadowRoot;
 
   constructor(params: Params, trigger = ".squatchpop") {
     super(params);
 
     this.trigger = trigger;
-    this.containerElement =
-      this.container && typeof this.container !== "string"
-        ? this.container
-        : document.body;
 
     if (this.container) {
       this.id = "squatchModal";
@@ -37,7 +32,7 @@ export default class PopupWidget extends Widget {
 
     document.head.insertAdjacentHTML(
       "beforeend",
-      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`
+      `<style>#${this.id}::-webkit-scrollbar { display: none; } squatch-popup { display: contents; }</style>`
     );
   }
 
@@ -58,9 +53,10 @@ export default class PopupWidget extends Widget {
       };
     }
 
+    const element = this._findElement();
     // If widget is loaded with CTA, look for a 'squatchpop' element to use
     // that element as a trigger as well.
-    const triggerWhenCTA = document.querySelector(".squatchpop") as HTMLElement;
+    const triggerWhenCTA = element.querySelector(".squatchpop") as HTMLElement;
 
     if (this.trigger === "#cta" && triggerWhenCTA) {
       triggerWhenCTA.onclick = () => {
@@ -87,10 +83,11 @@ export default class PopupWidget extends Widget {
 
   load(frame: HTMLIFrameElement) {
     this._initialiseCTA(frame);
+    const element = this._findElement();
     const dialog = this._createPopupDialog();
     dialog.appendChild(frame);
 
-    this.containerElement.appendChild(dialog);
+    element.appendChild(dialog);
 
     const { contentWindow } = frame;
     if (!contentWindow) {
@@ -141,9 +138,8 @@ export default class PopupWidget extends Widget {
   }
 
   open(frame: HTMLIFrameElement) {
-    const dialog = this.containerElement.querySelector(
-      `#${this.id}`
-    ) as HTMLDialogElement;
+    const element = this._findElement();
+    const dialog = element.querySelector(`#${this.id}`) as HTMLDialogElement;
     if (!dialog) throw new Error("Could not determine container div");
 
     dialog.showModal();

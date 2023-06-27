@@ -17,41 +17,13 @@ export default class EmbedWidget extends Widget {
     super(params);
   }
 
-  _findElement(): HTMLElement {
-    let element: Element | null;
-
-    if (typeof this.container === "string") {
-      // selector is a string
-      element = document.querySelector(this.container);
-      _log("loading widget with selector", element);
-      // selector is an HTML element
-    } else if (this.container instanceof HTMLElement) {
-      element = this.container;
-      _log("loading widget with container", element);
-      // garbage container found
-    } else if (this.container) {
-      element = null;
-      _log("container must be an HTMLElement or string", this.container);
-      // find element on page
-    } else {
-      element =
-        document.querySelector("#squatchembed") ||
-        document.querySelector(".squatchembed");
-      _log("loading widget with default selector", element);
-    }
-    if (!(element instanceof HTMLElement))
-      throw new Error(`element with selector '${this.container}' not found.'`);
-
-    return element;
-  }
-
   async load(frame: HTMLIFrameElement) {
     const element = this._findElement();
 
-    if (this.context.container) {
-      element.style.visibility = "hidden";
-      element.style.height = "0";
-      element.style["overflow-y"] = "hidden";
+    if (this.container) {
+      // element.style.visibility = "hidden";
+      // element.style.height = "0";
+      // element.style["overflow-y"] = "hidden";
 
       // Widget reloaded - replace existing element
       if (element.firstChild) {
@@ -102,7 +74,7 @@ export default class EmbedWidget extends Widget {
       ro.observe(await this._findInnerContainer(frame));
 
       // Regular load - trigger event
-      if (!this.context.container) {
+      if (!this.container) {
         this._loadEvent(_sqh);
         _log("loaded");
       }
