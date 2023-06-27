@@ -39,6 +39,8 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     super();
 
     this.type = "POPUP";
+
+    console.log({ open: this.getAttribute("open") });
     this.addEventListener("click", (e) => {
       e.stopPropagation();
       if ((e.target as HTMLElement).tagName !== "DIALOG") this.open();
@@ -46,13 +48,14 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   static get observedAttributes() {
-    return ["widget", "id"];
+    return ["widget", "id", "open"];
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
     if (oldVal === newVal || !oldVal) return; // nothing to do
 
     switch (attr) {
+      case "open":
       case "widget":
         this.connectedCallback();
         break;

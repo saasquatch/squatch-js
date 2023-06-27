@@ -111,7 +111,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   async connectedCallback() {
     this.widgetType = this.getAttribute("widget") || undefined;
-    console.log({ widget: this.getAttribute("widget") });
+
     if (!this.widgetType) throw new Error("No widget has been specified");
 
     if (!this.token) {
@@ -124,6 +124,8 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
     this.frame = this.widgetInstance._createFrame();
     this.renderWidget();
+
+    if (this.getAttribute("open") !== null) this.open();
   }
 
   open() {
