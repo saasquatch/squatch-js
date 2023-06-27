@@ -32,7 +32,7 @@ export default class PopupWidget extends Widget {
 
     document.head.insertAdjacentHTML(
       "beforeend",
-      `<style>#${this.id}::-webkit-scrollbar { display: none; } squatch-popup { display: contents; }</style>`
+      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`
     );
   }
 

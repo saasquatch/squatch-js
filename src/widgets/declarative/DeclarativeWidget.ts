@@ -26,7 +26,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     super();
     this.attachShadow({
       mode: "open",
-    }).innerHTML = `<slot></slot>`;
+    }).innerHTML = `<style>:host { display: contents; }</style><slot></slot>`;
 
     this.config = window.squatchConfig;
     this.token = window.squatchToken;
