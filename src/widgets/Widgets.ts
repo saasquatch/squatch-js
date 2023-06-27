@@ -1,6 +1,4 @@
 import debug from "debug";
-//@ts-ignore
-import * as EventBus from "eventbusjs";
 import WidgetApi from "../api/WidgetApi";
 import EmbedWidget from "./EmbedWidget";
 import PopupWidget from "./PopupWidget";
@@ -26,8 +24,6 @@ export default class Widgets {
   tenantAlias: string;
   domain: string;
   npmCdn: string;
-  // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
-  eventBus: any;
 
   /**
    * Initialize a new {@link Widgets} instance.
@@ -51,11 +47,8 @@ export default class Widgets {
     this.tenantAlias = config.tenantAlias;
     this.domain = config.domain;
     this.npmCdn = config.npmCdn;
-    // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
-    this.eventBus = EventBus;
     this.api = new WidgetApi(config);
     // listens to a 'submit_email' event in the theme.
-    EventBus.addEventListener("submit_email", Widgets._cb);
   }
 
   /**
@@ -179,18 +172,6 @@ export default class Widgets {
       .catch((ex) => {
         throw ex;
       });
-  }
-
-  /**
-   * Overrides the default function that submits the user email. If you have
-   * Security enabled, the email needs to be signed before it's submitted.
-   *
-   * @param {function} fn Callback function for the 'submit_email' event.
-   * @returns {void}
-   */
-  submitEmail(fn) {
-    EventBus.removeEventListener("submit_email", Widgets._cb);
-    EventBus.addEventListener("submit_email", fn);
   }
 
   /**

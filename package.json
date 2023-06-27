@@ -97,8 +97,7 @@
   "prettier": {},
   "dependencies": {
     "debug": "^3.2.6",
-    "eventbusjs": "^0.2.0",
-    "js-cookie": "^2.2.1"
+    "js-cookie": "^3.0.5"
   },
   "browserslist": "> 0.25%, not dead",
   "msw": {
