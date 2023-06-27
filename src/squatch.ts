@@ -11,8 +11,6 @@ import { debug } from "debug";
 import Widgets from "./widgets/Widgets";
 import EmbedWidget from "./widgets/EmbedWidget";
 import PopupWidget from "./widgets/PopupWidget";
-// import IREmbedWidget from "./widgets/IREmbedWidget";
-// import IRPopupWidget from "./widgets/IRPopupWidget";
 import WidgetApi from "./api/WidgetApi";
 import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
@@ -36,8 +34,6 @@ export {
   Widgets,
   EmbedWidget,
   PopupWidget,
-  // IREmbedWidget,
-  // IRPopupWidget,
   DeclarativeEmbedWidget,
   DeclarativePopupWidget,
   WidgetApi,

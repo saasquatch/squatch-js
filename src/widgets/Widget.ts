@@ -1,5 +1,4 @@
 // @ts-check
-
 import { debug } from "debug";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
