@@ -1,4 +1,4 @@
-import debug from "debug";
+import { debug } from "debug";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import { EngagementMedium } from "../squatch";
 import { hasProps, isObject } from "../utils/validate";

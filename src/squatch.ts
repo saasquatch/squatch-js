@@ -7,7 +7,7 @@
  *
  * @module squatch
  */
-import debug from "debug";
+import { debug } from "debug";
 import Widgets from "./widgets/Widgets";
 import EmbedWidget from "./widgets/EmbedWidget";
 import PopupWidget from "./widgets/PopupWidget";

@@ -1,9 +1,7 @@
-import debug from "debug";
+import { debug } from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
 import { DeclarativeConfigOptions, EmbedWidget, WidgetApi } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
-import { domready } from "../utils/domready";
-import { loadEvent } from "../utils/loadEvent";
 import { _getAutoConfig } from "../utils/utmUtils";
 const _log = debug("squatch-js:IREmbedWidget");
 

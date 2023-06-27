@@ -1,10 +1,10 @@
 // @ts-check
 
-import debug from "debug";
+import { debug } from "debug";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
-import { WidgetType, WidgetContext, EngagementMedium } from "../types";
-import { isObject, hasProps } from "../utils/validate";
+import { EngagementMedium, WidgetContext, WidgetType } from "../types";
+import { isObject } from "../utils/validate";
 
 /** @hidden */
 const _log = debug("squatch-js:widget");

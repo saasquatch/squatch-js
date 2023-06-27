@@ -1,16 +1,8 @@
-import debug from "debug";
+import { debug } from "debug";
 import AnalyticsApi from "../api/AnalyticsApi";
-import {
-  PopupWidget,
-  WidgetApi,
-  WidgetContext,
-  WidgetContextType,
-  WidgetType,
-  Widgets,
-} from "../squatch";
+import { PopupWidget, WidgetApi, WidgetContext } from "../squatch";
 import { decodeUserJwt } from "../utils/decodeUserJwt";
 import { domready } from "../utils/domready";
-import { loadEvent } from "../utils/loadEvent";
 import { _getAutoConfig } from "../utils/utmUtils";
 const _log = debug("squatch-js:IRPopupWidget");
 

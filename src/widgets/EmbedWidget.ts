@@ -1,6 +1,6 @@
 // @ts-check
 
-import debug from "debug";
+import { debug } from "debug";
 import Widget, { Params } from "./Widget";
 import { domready } from "../utils/domready";
 

@@ -1,15 +1,21 @@
-import debug from "debug";
+import { debug } from "debug";
 import WidgetApi from "../api/WidgetApi";
-import EmbedWidget from "./EmbedWidget";
-import PopupWidget from "./PopupWidget";
-import Widget, { Params } from "./Widget";
-import { WidgetResult, WidgetContext, WithRequired } from "../types";
-import { ConfigOptions, EngagementMedium, WidgetConfig } from "../types";
+import {
+  ConfigOptions,
+  EngagementMedium,
+  WidgetConfig,
+  WidgetContext,
+  WidgetResult,
+  WithRequired,
+} from "../types";
 import {
   validateConfig,
   validatePasswordlessConfig,
   validateWidgetConfig,
 } from "../utils/validate";
+import EmbedWidget from "./EmbedWidget";
+import PopupWidget from "./PopupWidget";
+import Widget, { Params } from "./Widget";
 
 const _log = debug("squatch-js:widgets");
 

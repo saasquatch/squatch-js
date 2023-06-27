@@ -1,8 +1,8 @@
 // @ts-check
 
-import debug from "debug";
-import Widget, { Params } from "./Widget";
+import { debug } from "debug";
 import { domready } from "../utils/domready";
+import Widget, { Params } from "./Widget";
 
 const _log = debug("squatch-js:POPUPwidget");
 
