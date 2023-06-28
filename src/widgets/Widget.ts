@@ -237,7 +237,6 @@ export default abstract class Widget {
     return found;
   }
 
-  // TODO: CA: Refactor reload
   /**
    * Reloads the current widget, makes updated request to API and renders result.
    * Primarily for Classic widgets with registration

@@ -1,5 +1,5 @@
 import AnalyticsApi from "../../api/AnalyticsApi";
-import { EmbedWidget, PopupWidget, WidgetApi, widget } from "../../squatch";
+import { EmbedWidget, PopupWidget, WidgetApi } from "../../squatch";
 import { ConfigOptions, DeclarativeConfigOptions } from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
 import { _getAutoConfig } from "../../utils/utmUtils";

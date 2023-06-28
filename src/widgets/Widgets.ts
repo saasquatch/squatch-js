@@ -172,7 +172,6 @@ export default class Widgets {
 
     this.api
       .squatchReferralCookie()
-      //@ts-ignore
       .then(({ codes }) => {
         elem.value = codes[0];
       })
@@ -238,14 +237,6 @@ export default class Widgets {
               `Don't display ${rule.widgetType} when no referral on widget rule match ${rule.url}`
             );
           }
-        }
-      });
-    }
-
-    if (opts.conversionUrls) {
-      opts.conversionUrls.forEach((rule) => {
-        if (response.user.referredBy && Widgets._matchesUrl(rule)) {
-          _log("This is a conversion URL", rule);
         }
       });
     }

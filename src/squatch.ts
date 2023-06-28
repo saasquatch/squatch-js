@@ -23,7 +23,7 @@ import { _getAutoConfig } from "./utils/utmUtils";
 import {
   DeclarativeEmbedWidget,
   DeclarativePopupWidget,
-} from "./widgets/declarative/DeclarativeEmbedWidget";
+} from "./widgets/declarative/DeclarativeWidgets";
 export * from "./types";
 export * from "./docs";
 
