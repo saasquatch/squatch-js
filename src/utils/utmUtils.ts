@@ -1,7 +1,6 @@
-import debug from "debug";
+import { debug } from "debug";
 import { ConfigOptions, WidgetConfig } from "../types";
 import { b64decode } from "./cookieUtils";
-import { validatePasswordlessConfig } from "./validate";
 
 /** @hidden */
 const _log = debug("squatch-js");

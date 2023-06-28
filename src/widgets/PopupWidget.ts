@@ -1,8 +1,8 @@
 // @ts-check
 
-import debug from "debug";
-import Widget, { Params } from "./Widget";
+import { debug } from "debug";
 import { domready } from "../utils/domready";
+import Widget, { Params } from "./Widget";
 
 const _log = debug("squatch-js:POPUPwidget");
 
@@ -151,13 +151,6 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-      // const ctaElement = frameDoc.getElementById("cta");
-
-      // if (ctaElement) {
-      //   //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-      //   ctaElement.parentNode.removeChild(ctaElement);
-      // }
-
       frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
       this._loadEvent(_sqh);
       _log("Popup opened");

@@ -1,17 +1,21 @@
-import debug from "debug";
-//@ts-ignore
-import * as EventBus from "eventbusjs";
+import { debug } from "debug";
 import WidgetApi from "../api/WidgetApi";
-import EmbedWidget from "./EmbedWidget";
-import PopupWidget from "./PopupWidget";
-import Widget, { Params } from "./Widget";
-import { WidgetResult, WidgetContext, WithRequired } from "../types";
-import { ConfigOptions, EngagementMedium, WidgetConfig } from "../types";
+import {
+  ConfigOptions,
+  EngagementMedium,
+  WidgetConfig,
+  WidgetContext,
+  WidgetResult,
+  WithRequired,
+} from "../types";
 import {
   validateConfig,
   validatePasswordlessConfig,
   validateWidgetConfig,
 } from "../utils/validate";
+import EmbedWidget from "./EmbedWidget";
+import PopupWidget from "./PopupWidget";
+import Widget, { Params } from "./Widget";
 
 const _log = debug("squatch-js:widgets");
 
@@ -26,8 +30,6 @@ export default class Widgets {
   tenantAlias: string;
   domain: string;
   npmCdn: string;
-  // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
-  eventBus: any;
 
   /**
    * Initialize a new {@link Widgets} instance.
@@ -51,11 +53,8 @@ export default class Widgets {
     this.tenantAlias = config.tenantAlias;
     this.domain = config.domain;
     this.npmCdn = config.npmCdn;
-    // for with locals custom theme, can be removed once with locals isnt' using eventBus anymore.
-    this.eventBus = EventBus;
     this.api = new WidgetApi(config);
     // listens to a 'submit_email' event in the theme.
-    EventBus.addEventListener("submit_email", Widgets._cb);
   }
 
   /**
@@ -178,18 +177,6 @@ export default class Widgets {
       .catch((ex) => {
         throw ex;
       });
-  }
-
-  /**
-   * Overrides the default function that submits the user email. If you have
-   * Security enabled, the email needs to be signed before it's submitted.
-   *
-   * @param {function} fn Callback function for the 'submit_email' event.
-   * @returns {void}
-   */
-  submitEmail(fn) {
-    EventBus.removeEventListener("submit_email", Widgets._cb);
-    EventBus.addEventListener("submit_email", fn);
   }
 
   /**

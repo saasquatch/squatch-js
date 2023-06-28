@@ -1,6 +1,6 @@
 // @ts-check
 
-import debug from "debug";
+import { debug } from "debug";
 import Widget, { Params } from "./Widget";
 import { domready } from "../utils/domready";
 
@@ -21,10 +21,6 @@ export default class EmbedWidget extends Widget {
     const element = this._findElement();
 
     if (this.container) {
-      // element.style.visibility = "hidden";
-      // element.style.height = "0";
-      // element.style["overflow-y"] = "hidden";
-
       // Widget reloaded - replace existing element
       if (element.firstChild) {
         element.replaceChild(frame, element.firstChild);

@@ -1,4 +1,4 @@
-import debug from "debug";
+import { debug } from "debug";
 import { JWT } from "../types";
 
 const _log = debug("squatch-js:io");
