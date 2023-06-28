@@ -18,8 +18,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   widgetInstance: EmbedWidget | PopupWidget;
   frame: HTMLIFrameElement;
 
-  // Embed specific:
-  container: string | HTMLElement | undefined;
+  container: string | HTMLElement | undefined | null;
   element: HTMLElement | undefined;
 
   constructor() {
@@ -31,6 +30,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     this.config = window.squatchConfig;
     this.token = window.squatchToken;
     this.tenant = window.squatchTenant;
+    this.container = this;
   }
 
   private _setupApis(config?: ConfigOptions) {
@@ -91,7 +91,21 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     });
   };
 
-  renderWidget() {
+  async renderWidget() {
+    this.widgetType = this.getAttribute("widget") || undefined;
+
+    if (!this.widgetType) throw new Error("No widget has been specified");
+
+    if (!this.token) {
+      this.widgetInstance = await this.renderPasswordlessVariant();
+    } else {
+      this.widgetInstance = await this.renderUserUpsertVariant();
+    }
+
+    if (!this.widgetInstance) throw new Error("Could not create widget.");
+
+    this.element = this.widgetInstance._findElement();
+    this.frame = this.widgetInstance._createFrame();
     this.widgetInstance.load(this.frame);
   }
 
@@ -108,25 +122,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       container: this.container || this,
     });
   };
-
-  async connectedCallback() {
-    this.widgetType = this.getAttribute("widget") || undefined;
-
-    if (!this.widgetType) throw new Error("No widget has been specified");
-
-    if (!this.token) {
-      this.widgetInstance = await this.renderPasswordlessVariant();
-    } else {
-      this.widgetInstance = await this.renderUserUpsertVariant();
-    }
-
-    if (!this.widgetInstance) throw new Error("Could not create widget.");
-
-    this.frame = this.widgetInstance._createFrame();
-    this.renderWidget();
-
-    if (this.getAttribute("open") !== null) this.open();
-  }
 
   open() {
     this.widgetInstance.open(this.frame);

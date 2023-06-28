@@ -21,8 +21,11 @@ export default class EmbedWidget extends Widget {
     const element = this._findElement();
 
     if (this.container) {
+      if (element.shadowRoot) {
+        element.shadowRoot.appendChild(frame);
+      }
       // Widget reloaded - replace existing element
-      if (element.firstChild) {
+      else if (element.firstChild) {
         element.replaceChild(frame, element.firstChild);
         // Add iframe for the first time
       } else {

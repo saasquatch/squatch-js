@@ -84,10 +84,12 @@ export default class PopupWidget extends Widget {
   load(frame: HTMLIFrameElement) {
     this._initialiseCTA(frame);
     const element = this._findElement();
+
+    const dialogParent = element.shadowRoot || element;
     const dialog = this._createPopupDialog();
     dialog.appendChild(frame);
 
-    element.appendChild(dialog);
+    dialogParent.appendChild(dialog);
 
     const { contentWindow } = frame;
     if (!contentWindow) {
@@ -102,13 +104,10 @@ export default class PopupWidget extends Widget {
     );
     frameDoc.close();
     _log("Popup template loaded into iframe");
-    this._setupResizeHandler(frame, dialog);
+    this._setupResizeHandler(frame);
   }
 
-  protected _setupResizeHandler(
-    frame: HTMLIFrameElement,
-    popupdiv: HTMLDialogElement
-  ) {
+  protected _setupResizeHandler(frame: HTMLIFrameElement) {
     const { contentWindow } = frame;
 
     if (!contentWindow) {
@@ -139,7 +138,8 @@ export default class PopupWidget extends Widget {
 
   open(frame: HTMLIFrameElement) {
     const element = this._findElement();
-    const dialog = element.querySelector(`#${this.id}`) as HTMLDialogElement;
+    const parent = element.shadowRoot || element;
+    const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
     if (!dialog) throw new Error("Could not determine container div");
 
     dialog.showModal();

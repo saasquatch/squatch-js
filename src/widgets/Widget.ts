@@ -16,7 +16,7 @@ export interface Params {
   api: WidgetApi;
   rsCode?: string;
   context: WidgetContext;
-  container?: string | HTMLElement | ShadowRoot | null | undefined;
+  container?: string | HTMLElement | null | undefined;
 }
 
 export type ProgramLoadEvent = {
@@ -46,7 +46,7 @@ export default abstract class Widget {
   widgetApi: WidgetApi;
   context: WidgetContext;
   npmCdn: string;
-  container: string | HTMLElement | ShadowRoot | undefined | null;
+  container: string | HTMLElement | undefined | null;
 
   protected constructor(params: Params) {
     _log("widget initializing ...");

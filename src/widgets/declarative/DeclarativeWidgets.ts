@@ -6,7 +6,7 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     super();
 
     this.type = "EMBED";
-    this.container = this.getAttribute("container") || undefined;
+    this.container = this.getAttribute("container") || this;
   }
 
   static get observedAttributes() {
@@ -28,9 +28,14 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     }
   }
 
-  renderWidget() {
-    this.element = (this.widgetInstance as EmbedWidget)._findElement();
-    this.widgetInstance.load(this.frame);
+  connectedCallback() {
+    this.renderWidget();
+
+    // Remove placeholder slot element
+    const slot = (
+      this.shadowRoot && Array.from(this.shadowRoot.children)
+    )?.find((c) => c.tagName === "SLOT") as Node;
+    this.shadowRoot?.removeChild(slot);
   }
 }
 
@@ -40,10 +45,11 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
 
     this.type = "POPUP";
 
-    console.log({ open: this.getAttribute("open") });
     this.addEventListener("click", (e) => {
       e.stopPropagation();
-      if ((e.target as HTMLElement).tagName !== "DIALOG") this.open();
+
+      // SQUATCH-POPUP target means something in the shadowDOM was clicked (i.e. the dialog element)
+      if ((e.target as HTMLElement).tagName !== "SQUATCH-POPUP") this.open();
     });
   }
 
@@ -60,6 +66,12 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
         this.connectedCallback();
         break;
     }
+  }
+
+  connectedCallback() {
+    this.renderWidget();
+
+    if (this.getAttribute("open") !== null) this.open();
   }
 }
 
