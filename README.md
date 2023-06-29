@@ -53,6 +53,8 @@ Note: `engagementMedium` is required in the `squatch.widgets()` functions if you
 ### Declarative method for rendering widgets
 As opposed to the above method which requires some manual javascript, squatchjs includes the custom Web Components: `squatch-embed` and `squatch-popup` that can render embedded and popup widgets respectively.
 
+TODO: `display: inline` until squatchjs loads
+
 ```html
 <script type="text/javascript">
   window.squatchToken = "TOKEN"
@@ -68,6 +70,21 @@ As opposed to the above method which requires some manual javascript, squatchjs 
 <squatch-popup widget="WIDGET_TYPE"><!-- Widget is rendered here --></squatch-popup>
 ```
 
+#### `squatch-embed`
+
+- `widget`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
+  - Required
+- `container`: A CSS selector for a container element to use as the parent of the widget's iframe. 
+  - Default: `null`
+  - Note, if no container is specified, the widget iframe will attach to the shadow DOM of `squatch-embed`.
+
+
+#### `squatch-popup`
+
+- `widget: string`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
+  - Required
+- `show: boolean`: Whether to show the popup dialog on page load or not.
+  - Default: `false`
 ## Data Only Operations
 You can create/upsert users without loading a widget.
 

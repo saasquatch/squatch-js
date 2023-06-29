@@ -111,4 +111,7 @@ export default class EmbedWidget extends Widget {
   protected _error(rs, mode = "embed", style = "") {
     return super._error(rs, mode, style);
   }
+
+  show = this.open;
+  hide = this.close;
 }

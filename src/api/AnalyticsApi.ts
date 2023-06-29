@@ -1,7 +1,7 @@
 // @ts-check
 import { doPost } from "../utils/io";
 import { EngagementMedium } from "../types";
-import { hasProps } from "../utils/validate";
+import { DEFAULT_DOMAIN, isObject } from "../utils/validate";
 
 /**
  *
@@ -20,12 +20,10 @@ export default class AnalyticsApi {
    *
    */
   constructor(config: { domain: string }) {
-    const raw = config as unknown;
-    if (hasProps(raw, "domain") && typeof raw.domain === "string") {
-      this.domain = raw.domain;
-    } else {
-      this.domain = "https://app.referralsaasquatch.com";
-    }
+    const raw = config as unknown | undefined;
+    const clean = _validateAnalyticsConfig(raw);
+    this.domain =
+      clean?.["domain"] || window.squatchConfig?.domain || DEFAULT_DOMAIN;
   }
 
   pushAnalyticsLoadEvent(params: SQHDetails) {
@@ -57,6 +55,13 @@ export default class AnalyticsApi {
 
     return doPost(url, JSON.stringify({}));
   }
+}
+
+function _validateAnalyticsConfig(raw: unknown | undefined): {
+  domain?: string;
+} {
+  if (!isObject(raw)) throw new Error("'options' should be an object");
+  return raw as { domain?: string };
 }
 
 export type SQHDetails = {

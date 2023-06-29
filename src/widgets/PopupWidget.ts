@@ -174,4 +174,7 @@ export default class PopupWidget extends Widget {
 
     return super._error(rs, mode, style || _style);
   }
+
+  show = this.open;
+  hide = this.close;
 }

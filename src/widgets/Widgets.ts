@@ -48,8 +48,7 @@ export default class Widgets {
    * let widgets = new Widgets({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(configin: ConfigOptions) {
-    const raw = configin as unknown;
-    const config = validateConfig(raw);
+    const config = validateConfig(configin);
     this.tenantAlias = config.tenantAlias;
     this.domain = config.domain;
     this.npmCdn = config.npmCdn;

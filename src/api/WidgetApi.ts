@@ -15,6 +15,8 @@ import {
   validateWidgetConfig,
 } from "../utils/validate";
 import { RENDER_WIDGET_QUERY } from "./graphql";
+import { DEFAULT_DOMAIN } from "../utils/validate";
+import { DEFAULT_NPM_CDN } from "../utils/validate";
 
 /**
  *
@@ -26,6 +28,7 @@ export default class WidgetApi {
   domain: string;
   npmCdn: string;
 
+  // TODO: Support using new window variables for initialisation
   /**
    * Initialize a new {@link WidgetApi} instance.
    *
@@ -42,9 +45,10 @@ export default class WidgetApi {
    * import {WidgetApi} from '@saasquatch/squatch-js';
    * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    */
-  constructor(config: ConfigOptions) {
-    const raw = config as unknown; // Flags that we need to validate anything we use from this type
+  constructor(config?: ConfigOptions) {
+    const raw = config as unknown;
     const clean = validateConfig(raw);
+
     this.tenantAlias = clean.tenantAlias;
     this.domain = clean.domain;
     this.npmCdn = clean.npmCdn;

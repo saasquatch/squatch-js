@@ -1,6 +1,6 @@
 import { doPost } from "../utils/io";
 import { ConfigOptions, JWT } from "../types";
-import { isObject, assertProp, validateConfig } from "../utils/validate";
+import { isObject, validateConfig } from "../utils/validate";
 
 type TrackOptions = { jwt?: JWT };
 
@@ -43,7 +43,7 @@ export default class EventsApi {
    * let squatchApi = new EventsApi({tenantAlias:'test_12b5bo1b25125'});
    */
   constructor(config: ConfigOptions) {
-    const raw = config as unknown; // Flags that we need to validate anything we use from this type
+    const raw = config as unknown | undefined; // Flags that we need to validate anything we use from this type
     const clean = validateConfig(raw);
     this.tenantAlias = clean.tenantAlias;
     this.domain = clean.domain;
@@ -71,16 +71,19 @@ export default class EventsApi {
   }
 }
 
-function _validateEvent(raw: unknown): UserEventInput {
-  if (!assertProp(raw, "accountId", "events", "userId"))
-    throw new Error("Fields required");
-  if (!Array.isArray(raw.events))
+function _validateEvent(raw: unknown | undefined): UserEventInput {
+  if (!isObject(raw)) throw new Error("tracking parameter must be an object");
+  if (!raw?.["accountId"]) throw new Error("accountId field is required");
+  if (!raw?.["events"]) throw new Error("events field is required");
+  if (!raw?.["userId"]) throw new Error("userId field is required");
+
+  const clean = raw as UserEventInput;
+  if (!Array.isArray(clean.events))
     throw new Error("'events' should be an array");
-  // TODO: Better type checking
-  return raw as unknown as UserEventInput;
+  return clean;
 }
 
 function _validateTrackOptions(raw: unknown): TrackOptions {
   if (!isObject(raw)) throw new Error("'options' should be an object");
-  return raw;
+  return raw as TrackOptions;
 }

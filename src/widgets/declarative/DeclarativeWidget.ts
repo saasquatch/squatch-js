@@ -130,4 +130,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   close() {
     this.widgetInstance.close(this.frame);
   }
+
+  show = this.open;
+  hide = this.close;
 }
