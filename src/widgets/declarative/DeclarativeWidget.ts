@@ -1,14 +1,19 @@
+import debug from "debug";
 import AnalyticsApi from "../../api/AnalyticsApi";
-import { EmbedWidget, PopupWidget, WidgetApi } from "../../squatch";
+import WidgetApi from "../../api/WidgetApi";
 import { ConfigOptions, DeclarativeConfigOptions } from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
 import { _getAutoConfig } from "../../utils/utmUtils";
 import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../utils/validate";
+import EmbedWidget from "../EmbedWidget";
+import PopupWidget from "../PopupWidget";
+
+const _log = debug("sqh:DeclarativeWidget");
 
 export default abstract class DeclarativeWidget extends HTMLElement {
-  config: DeclarativeConfigOptions;
-  token: string;
-  tenant: string;
+  config: DeclarativeConfigOptions | undefined;
+  token: string | undefined;
+  tenant: string | undefined;
   widgetType: string | undefined;
 
   widgetApi: WidgetApi;
@@ -34,12 +39,14 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   private _setupApis(config?: ConfigOptions) {
+    if (!this.tenant) throw new Error("Requires tenantAlias");
+
     this.widgetApi = new WidgetApi({
       tenantAlias: config?.tenantAlias || this.tenant,
-      domain: config?.domain || this.config.domain || DEFAULT_DOMAIN,
+      domain: config?.domain || this.config?.domain || DEFAULT_DOMAIN,
     });
     this.analyticsApi = new AnalyticsApi({
-      domain: config?.domain || this.config.domain || DEFAULT_DOMAIN,
+      domain: config?.domain || this.config?.domain || DEFAULT_DOMAIN,
     });
   }
 
@@ -60,7 +67,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     if (!this.widgetType) throw new Error("Widget must be specified");
     this._setupApis();
 
-    const userObj = decodeUserJwt(this.token);
+    const userObj = decodeUserJwt(this.token!);
     if (!userObj) throw new Error("Could not load user information from jwt");
 
     const widgetInstance = await this.widgetApi
@@ -85,28 +92,40 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       content: template,
       context: { type: config.type, engagementMedium: this.type },
       type: this.widgetType,
-      domain: this.config.domain || DEFAULT_DOMAIN,
+      domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this.container || this,
     });
   };
 
   async renderWidget() {
-    this.widgetType = this.getAttribute("widget") || undefined;
+    try {
+      this.widgetType = this.getAttribute("widget") || undefined;
 
-    if (!this.widgetType) throw new Error("No widget has been specified");
+      if (!this.widgetType) throw new Error("No widget has been specified");
 
-    if (!this.token) {
-      this.widgetInstance = await this.renderPasswordlessVariant();
-    } else {
-      this.widgetInstance = await this.renderUserUpsertVariant();
+      if (!this.token) {
+        this.widgetInstance = await this.renderPasswordlessVariant();
+      } else {
+        this.widgetInstance = await this.renderUserUpsertVariant();
+      }
+
+      if (!this.widgetInstance) throw new Error("Could not create widget.");
+
+      this.element = this.widgetInstance._findElement();
+      this.frame = this.widgetInstance._createFrame();
+      this.widgetInstance.load(this.frame);
+    } catch (e) {
+      _log("Could not render widget:", e);
+      this.renderErrorWidget(e);
     }
+  }
 
-    if (!this.widgetInstance) throw new Error("Could not create widget.");
-
-    this.element = this.widgetInstance._findElement();
-    this.frame = this.widgetInstance._createFrame();
-    this.widgetInstance.load(this.frame);
+  renderErrorWidget(e: Error) {
+    const widget = this._setErrorWidget(e);
+    this.element = widget._findElement();
+    this.frame = widget._createFrame();
+    widget.load(this.frame);
   }
 
   _setErrorWidget = (e: Error) => {
@@ -117,7 +136,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       content: "error",
       context: { type: "error" },
       type: "ERROR_WIDGET",
-      domain: this.config.domain || DEFAULT_DOMAIN,
+      domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this.container || this,
     });

@@ -36,7 +36,7 @@ export function validateConfig(
 }
 
 export function isObject(obj: unknown): obj is object {
-  return typeof obj === "object" && obj !== null;
+  return typeof obj === "object" && !Array.isArray(obj) && obj !== null;
 }
 
 export function validateLocale(locale?: string) {

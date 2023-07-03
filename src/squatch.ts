@@ -115,7 +115,8 @@ export function _auto(
  * squatch.init({tenantAlias:'test_basbtabstq51v'});
  */
 export function init(configIn: ConfigOptions): void {
-  const config = validateConfig(configIn);
+  const raw = configIn as unknown | undefined;
+  const config = validateConfig(raw);
   if (config.tenantAlias.match("^test") || config.debug) {
     debug.enable("squatch-js*");
   }

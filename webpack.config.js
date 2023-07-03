@@ -4,7 +4,7 @@ var webpack = require("webpack");
 module.exports = {
   entry: {
     squatch: ["./src/squatch.ts"],
-    '../demo/dist/squatchjs': ["./src/squatch.ts"]
+    "../demo/dist/squatchjs": ["./src/squatch.ts"],
   },
   output: {
     path: path.join(__dirname, "dist"),
@@ -18,25 +18,26 @@ module.exports = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              presets: [['@babel/preset-env', { targets: { esmodules: true }}], '@babel/preset-typescript'],
-              plugins: [
-                ["@babel/plugin-transform-runtime"]
-              ]
-            }
-          }
+              presets: [
+                ["@babel/preset-env", { targets: { esmodules: true }}],
+                "@babel/preset-typescript",
+              ],
+              plugins: [["@babel/plugin-transform-runtime"]],
+            },
+          },
         ],
         exclude: /node_modules/,
-      }
-    ]
+      },
+    ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: [".tsx", ".ts", ".js"],
   },
   stats: {
     // Nice colored output
-    colors: true
+    colors: true,
   },
-  mode: "production"
+  mode: "production",
 };

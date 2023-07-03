@@ -1,4 +1,3 @@
-import EmbedWidget from "../EmbedWidget";
 import DeclarativeWidget from "./DeclarativeWidget";
 
 export class DeclarativeEmbedWidget extends DeclarativeWidget {
@@ -69,8 +68,6 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   connectedCallback() {
-    this.renderWidget();
-
     if (this.getAttribute("open") !== null) this.open();
   }
 }
