@@ -60,7 +60,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
         widgetType: configs?.widgetConfig?.widgetType || this.widgetType,
       })
       .then((res) => this._setWidget(res.template, { type: "passwordless" }))
-      .catch(this._setErrorWidget);
+      .catch(this.setErrorWidget);
   }
 
   async renderUserUpsertVariant() {
@@ -78,7 +78,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
         jwt: this.token,
       })
       .then((res) => this._setWidget(res.template, { type: "upsert" }))
-      .catch(this._setErrorWidget);
+      .catch(this.setErrorWidget);
 
     return widgetInstance;
   }
@@ -98,37 +98,38 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     });
   };
 
-  async renderWidget() {
-    try {
-      this.widgetType = this.getAttribute("widget") || undefined;
+  async getWidgetInstance() {
+    let widgetInstance: EmbedWidget | PopupWidget;
 
-      if (!this.widgetType) throw new Error("No widget has been specified");
+    // try {
+    this.widgetType = this.getAttribute("widget") || undefined;
 
-      if (!this.token) {
-        this.widgetInstance = await this.renderPasswordlessVariant();
-      } else {
-        this.widgetInstance = await this.renderUserUpsertVariant();
-      }
+    if (!this.widgetType) throw new Error("No widget has been specified");
 
-      if (!this.widgetInstance) throw new Error("Could not create widget.");
-
-      this.element = this.widgetInstance._findElement();
-      this.frame = this.widgetInstance._createFrame();
-      this.widgetInstance.load(this.frame);
-    } catch (e) {
-      _log("Could not render widget:", e);
-      this.renderErrorWidget(e);
+    if (!this.token) {
+      widgetInstance = await this.renderPasswordlessVariant();
+    } else {
+      widgetInstance = await this.renderUserUpsertVariant();
     }
+
+    if (!widgetInstance) throw new Error("Could not create widget.");
+    // } catch (e) {
+    //   widgetInstance = this.setErrorWidget(e);
+    // }
+
+    this.widgetInstance = widgetInstance;
+    return widgetInstance;
   }
 
-  renderErrorWidget(e: Error) {
-    const widget = this._setErrorWidget(e);
-    this.element = widget._findElement();
-    this.frame = widget._createFrame();
-    widget.load(this.frame);
+  async renderWidget() {
+    await this.getWidgetInstance();
+
+    this.element = this.widgetInstance._findElement();
+    this.frame = this.widgetInstance._createFrame();
+    await this.widgetInstance.load(this.frame);
   }
 
-  _setErrorWidget = (e: Error) => {
+  setErrorWidget = (e: Error) => {
     const Widget = this.type === "EMBED" ? EmbedWidget : PopupWidget;
 
     return new Widget({

@@ -7,7 +7,7 @@ import {
   WidgetType,
   WithRequired,
 } from "../types";
-import { doGet, doPost, doPut, doQuery } from "../utils/io";
+import { doGet, doPut, doQuery } from "../utils/io";
 import {
   validateConfig,
   validateLocale,
@@ -15,8 +15,6 @@ import {
   validateWidgetConfig,
 } from "../utils/validate";
 import { RENDER_WIDGET_QUERY } from "./graphql";
-import { DEFAULT_DOMAIN } from "../utils/validate";
-import { DEFAULT_NPM_CDN } from "../utils/validate";
 
 /**
  *
@@ -86,7 +84,7 @@ export default class WidgetApi {
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
-    const cookies = Cookies.get("_saasquatch");
+    const cookies = (Cookies || window.Cookies).get("_saasquatch");
     if (cookies) user["cookies"] = cookies;
     return doPut(url, JSON.stringify(user), jwt);
   }
@@ -145,7 +143,7 @@ export default class WidgetApi {
    */
   async squatchReferralCookie(): Promise<ReferralCookie> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const _saasquatch = Cookies.get("_saasquatch") || "";
+    const _saasquatch = (Cookies || window.Cookies).get("_saasquatch") || "";
 
     const cookie = _saasquatch
       ? `?cookies=${encodeURIComponent(_saasquatch)}`

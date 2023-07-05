@@ -53,6 +53,7 @@ let _events: EventsApi | null = null;
  * @returns WidgetApi static instance
  */
 export function api(): WidgetApi | null {
+  if (!_api) this.init({});
   return _api;
 }
 
@@ -64,6 +65,7 @@ export function api(): WidgetApi | null {
  * @returns static instance
  */
 export function widgets(): Widgets | null {
+  if (!_widgets) this.init({});
   return _widgets;
 }
 
@@ -75,6 +77,7 @@ export function widgets(): Widgets | null {
  * @returns EventsApi static instance
  */
 export function events(): EventsApi | null {
+  if (!_events) this.init({});
   return _events;
 }
 

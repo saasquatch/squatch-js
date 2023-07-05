@@ -27,10 +27,9 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     }
   }
 
-  connectedCallback() {
-    this.renderWidget();
+  async connectedCallback() {
+    await this.renderWidget();
 
-    // Remove placeholder slot element
     const slot = (
       this.shadowRoot && Array.from(this.shadowRoot.children)
     )?.find((c) => c.tagName === "SLOT") as Node;

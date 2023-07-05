@@ -14,7 +14,7 @@ export default {
   // cacheDirectory: "/private/var/folders/zv/t83jrkg12jx3bqgq3vx_v29h0000gp/T/jest_dy",
 
   // Automatically clear mock calls, instances, contexts and results before every test
-  clearMocks: true,
+  clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
   // collectCoverage: false,
@@ -144,10 +144,12 @@ export default {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "jsdom",
+  testEnvironment: "@happy-dom/jest-environment",
 
   // Options that will be passed to the testEnvironment
-  // testEnvironmentOptions: {},
+  testEnvironmentOptions: {
+    resources: "usable",
+  },
 
   // Adds a location field to test results
   // testLocationInResults: false,

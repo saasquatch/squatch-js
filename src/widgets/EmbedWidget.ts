@@ -34,6 +34,7 @@ export default class EmbedWidget extends Widget {
     } else if (!element.firstChild || element.firstChild.nodeName === "#text") {
       element.appendChild(frame);
     }
+
     const { contentWindow } = frame;
     if (!contentWindow) {
       throw new Error("Frame needs a content window");
@@ -61,7 +62,6 @@ export default class EmbedWidget extends Widget {
       frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
-      // @ts-ignore
       const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
           const { height } = entry.contentRect;

@@ -1,34 +1,87 @@
-// describe("Initialising a DeclarativeWidget", () => {
-//   test("test", async () => {
-//     const el = (await fixture(
-//       html`<squatch-embed widget="widget"></squatch-embed>`
-//     )) as DeclarativeEmbedWidget;
+import { defineCE, fixtureCleanup, waitUntil } from "@open-wc/testing-helpers";
+import Cookies from "js-cookie";
+import { DeclarativeEmbedWidget } from "../src/squatch";
+import { PASSWORDLESS, VERIFIED } from "./mocks/handlers";
+import { server } from "./mocks/server";
 
-import { DeclarativeEmbedWidget } from "../src/widgets/declarative/DeclarativeWidgets";
-import { fixture, html, fixtureCleanup } from "@open-wc/testing-helpers";
-
-//     console.log(el.getAttribute("widget"));
-//     console.log(el.type);
-
-//     // const component = document.querySelector("squatch-embed");
-//     // expect(component).not.toBe(null);
-
-//     // // @ts-ignore
-//     // expect(component.type).toBe("EMBED");
-//   });
-// });
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: "bypass" });
+  window.Cookies = {
+    // @ts-ignore
+    get: (name: string) => "cookies",
+  };
+});
+beforeEach(() => {
+  window.squatchTenant = "TENANT_ALIAS";
+  window.squatchConfig = {
+    domain: "https://staging.referralsaasquatch.com",
+  };
+  // @ts-ignore
+  window.squatchToken = null;
+});
+afterEach(() => server.resetHandlers());
+afterAll(() => {
+  server.close();
+  jest.clearAllMocks();
+});
 
 describe("Embed", () => {
-  test("test", async () => {
-    try {
-      const el = (await fixture(
-        html`<squatch-embed></squatch-embed>`
-      )) as DeclarativeEmbedWidget;
+  test("Throws error on load without widget attribute", async () => {
+    const tag = defineCE(class Test extends DeclarativeEmbedWidget {});
+    const el = document.createElement(`${tag}`) as DeclarativeEmbedWidget;
+    expect(el).toBeInstanceOf(DeclarativeEmbedWidget);
 
-      expect(el).toBeInstanceOf(DeclarativeEmbedWidget);
-    } catch (e) {
-      console.error("ERROR");
-    }
+    expect(async () => await el.connectedCallback()).rejects.toThrowError(
+      "No widget has been specified"
+    );
+
+    const iframe = el.shadowRoot!.querySelector("iframe");
+    expect(iframe).toBe(null);
+  });
+  test("Verified widget load", async () => {
+    window.squatchTenant = "TENANT_ALIAS";
+    window.squatchToken =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19";
+    window.squatchConfig = {
+      domain: "https://staging.referralsaasquatch.com",
+    };
+
+    const tag = defineCE(class Test extends DeclarativeEmbedWidget {});
+    const el = document.createElement(`${tag}`) as DeclarativeEmbedWidget;
+    el.setAttribute("widget", "w/widget-type");
+    document.body.appendChild(el);
+
+    await waitUntil(
+      () => !!el.shadowRoot!.querySelector("iframe"),
+      "no iframe"
+    );
+
+    const frame = el.shadowRoot!.querySelector("iframe");
+    expect(frame).toBeDefined();
+    expect(frame).toBe(el.frame);
+
+    expect(frame?.contentDocument?.body.innerHTML).toContain(VERIFIED);
+    expect(frame?.contentDocument?.body.innerHTML).toContain("EMBED");
+  });
+
+  test("Passwordless widget load", async () => {
+    const tag = defineCE(class Test extends DeclarativeEmbedWidget {});
+    const el = document.createElement(`${tag}`) as DeclarativeEmbedWidget;
+    el.setAttribute("widget", "w/widget-type");
+    document.body.appendChild(el);
+
+    await waitUntil(
+      () => !!el.shadowRoot!.querySelector("iframe"),
+      "no iframe"
+    );
+
+    const frame = el.shadowRoot!.querySelector("iframe");
+    expect(frame).toBeDefined();
+    expect(frame).toBe(el.frame);
+
+    expect(frame?.contentDocument?.body.innerHTML).toContain(PASSWORDLESS);
+    expect(frame?.contentDocument?.body.innerHTML).toContain("EMBED");
+    expect(frame?.contentDocument?.body.innerHTML).toContain("w/widget-type");
   });
 
   afterEach(() => {

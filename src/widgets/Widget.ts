@@ -82,8 +82,13 @@ export default abstract class Widget {
         document.querySelector(".squatchembed");
       _log("loading widget with default selector", element);
     }
+
     if (!(element instanceof HTMLElement))
-      throw new Error(`element with selector '${this.container}' not found.'`);
+      throw new Error(
+        `element with selector '${
+          this.container || "#squatchembed or .squatchembed"
+        }' not found.'`
+      );
 
     return element;
   }
@@ -92,6 +97,7 @@ export default abstract class Widget {
     const frame = document.createElement("iframe");
     frame["squatchJsApi"] = this;
     frame.width = "100%";
+    frame.src = "about:blank";
     frame.scrolling = "no";
     frame.setAttribute(
       "style",
@@ -303,7 +309,7 @@ export default abstract class Widget {
       });
   }
 
-  __deprecated__register(frame, params, onClick) {
+  private __deprecated__register(frame, params, onClick) {
     const frameWindow = frame.contentWindow;
     const frameDoc = frameWindow.document;
     const showStatsBtn = frameDoc.createElement("button");
