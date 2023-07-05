@@ -100,8 +100,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   async getWidgetInstance() {
     let widgetInstance: EmbedWidget | PopupWidget;
-
-    // try {
     this.widgetType = this.getAttribute("widget") || undefined;
 
     if (!this.widgetType) throw new Error("No widget has been specified");
@@ -113,9 +111,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     }
 
     if (!widgetInstance) throw new Error("Could not create widget.");
-    // } catch (e) {
-    //   widgetInstance = this.setErrorWidget(e);
-    // }
 
     this.widgetInstance = widgetInstance;
     return widgetInstance;

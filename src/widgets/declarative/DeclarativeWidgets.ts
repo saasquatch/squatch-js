@@ -66,7 +66,8 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     }
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    await this.renderWidget();
     if (this.getAttribute("open") !== null) this.open();
   }
 }
