@@ -42,7 +42,7 @@ afterAll(() => {
   jest.clearAllMocks();
 });
 
-const background = (given) => {
+const Background = (given) => {
   given(
     /^the following squatchjs loader script is in the "(.*)" tag$/,
     (head, docString) => {}
@@ -79,15 +79,29 @@ const getTokenValueFromPrompt = (prompt: any) => {
   }
 };
 
+const SquatchTenantIs = (given) => {
+  given(/^window.squatchTenant is (.*)$/, (arg0) => {
+    if (arg0 === "invalid") window.squatchTenant = "INVALID_TENANT_ALIAS";
+    // @ts-ignore
+    else window.squatchTenant = convertValue(arg0);
+  });
+};
+
+const SquatchTokenIs = (and) => {
+  and(/^window.squatchToken is (.*)$/, (_tokenArg) => {
+    const tokenArg = convertValue(_tokenArg);
+    const tokenValue = getTokenValueFromPrompt(tokenArg);
+    window.squatchToken = tokenValue;
+  });
+};
+
 defineFeature(feature, (test) => {
   test("Missing or invalid tenant alias", ({ given, and, when, then }) => {
-    let el: DeclarativeEmbedWidget;
-    background(given);
+    let el!: DeclarativeEmbedWidget;
 
-    given(/^window.squatchTenant is (.*)$/, (tenantAlias) => {
-      // @ts-ignore
-      window.squatchTenant = convertValue(tenantAlias);
-    });
+    Background(given);
+
+    SquatchTenantIs(given);
 
     and("either web-component is included in the page's HTML", () => {
       el = eitherWebComponentIsIncluded();
@@ -115,11 +129,12 @@ defineFeature(feature, (test) => {
     and,
     then,
   }) => {
-    let el: DeclarativeEmbedWidget;
-    background(given);
+    let el!: DeclarativeEmbedWidget;
+
+    Background(given);
 
     given(
-      /^window.squatchToken does not include the (.*) field$/,
+      /^window.squatchToken does not include the user object (.*) field$/,
       (field) => {}
     );
 
@@ -141,8 +156,8 @@ defineFeature(feature, (test) => {
     and,
     then,
   }) => {
-    let el: DeclarativeEmbedWidget;
-    background(given);
+    let el!: DeclarativeEmbedWidget;
+    Background(given);
 
     given(
       "window.squatchToken is not a signed jwt with the API key as the signature",
@@ -164,11 +179,11 @@ defineFeature(feature, (test) => {
   });
 
   test("Missing widget attribute", ({ given, and, when, then }) => {
-    let el: DeclarativeEmbedWidget | DeclarativePopupWidget;
+    let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
     let component: string;
     let widgetType: any;
 
-    background(given);
+    Background(given);
 
     given(/^(.*) is included in the page's HTML$/, (arg0) => {
       component = arg0;
@@ -200,20 +215,17 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given(
-      /^the following squatchjs loader script is in the "(.*)" tag$/,
-      (arg0, docString) => {}
-    );
+    Background(given);
 
     given(/^"(.*)" is included in the page's HTML$/, (arg0) => {});
 
-    and(/^the "(.*)" attribute is been set to "(.*)"$/, (arg0, arg1) => {});
+    and(/^the (.*) attribute is been set to (.*)$/, (arg0, arg1) => {});
 
     when("the page loads", () => {});
 
     and("the widget loads correctly", () => {});
 
-    then("the widget is shown on the screen", () => {});
+    then(/^the widget (.*) displayed on the screen$/, (arg0) => {});
   });
 
   test.skip("squatch-popup can be opened via .squatchpop", ({
@@ -222,18 +234,13 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given(
-      /^the following squatchjs loader script is in the "(.*)" tag$/,
-      (arg0, docString) => {}
-    );
-
+    Background(given);
     given(/^a widget has been loaded correctly using "(.*)"$/, (arg0) => {});
 
-    and(/^an element with the "(.*)" class exists in the DOM$/, (arg0) => {});
+    and(/^an element with the (.*) class exists in the DOM$/, (arg0) => {});
+    when(/^the element with the class (.*) class is clicked$/, (arg0) => {});
 
-    when(/^the element with the class "(.*)" class is clicked$/, (arg0) => {});
-
-    then("the widget is shown on the screen", () => {});
+    then(/^the widget (.*) displayed on the screen$/, (arg0) => {});
   });
 
   test.skip("squatch-embed child elements are used as the loading state", ({
@@ -242,10 +249,7 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given(
-      /^the following squatchjs loader script is in the "(.*)" tag$/,
-      (arg0, docString) => {}
-    );
+    Background(given);
 
     given(/^"(.*)" is included in the page's HTML$/, (arg0) => {});
 
@@ -302,10 +306,7 @@ defineFeature(feature, (test) => {
     when,
     then,
   }) => {
-    given(
-      /^the following squatchjs loader script is in the "(.*)" tag$/,
-      (arg0, docString) => {}
-    );
+    Background(given);
 
     given(
       /^at least (\d+) "(.*)" elements in the page's HTML$/,
@@ -351,9 +352,9 @@ defineFeature(feature, (test) => {
     then(/^the element will be set to "(.*)"$/, (arg0) => {});
   });
   test("Rendering a passwordless widget", ({ given, and, when, then }) => {
-    let el: DeclarativeEmbedWidget;
+    let el!: DeclarativeEmbedWidget;
 
-    background(given);
+    Background(given);
 
     given(/^window.squatchToken is (.*)$/, (arg0) => {
       // @ts-ignore
@@ -379,7 +380,11 @@ defineFeature(feature, (test) => {
       expect(el.widgetInstance.context.type).toBe("passwordless");
     });
 
-    and("the widget is rendered as a passwordless widget", () => {
+    and("the widget is rendered as a passwordless widget", async () => {
+      await expect(
+        waitUntil(() => !!el.shadowRoot!.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+
       const frame = el.shadowRoot!.querySelector("iframe");
       expect(frame).toBeInstanceOf(HTMLIFrameElement);
       expect(frame?.contentDocument?.body.innerHTML).toContain(PASSWORDLESS);
@@ -405,20 +410,13 @@ defineFeature(feature, (test) => {
     );
   });
   test("Rendering a basic embedded widget", ({ given, and, when, then }) => {
-    background(given);
-    let el: DeclarativeEmbedWidget | DeclarativePopupWidget;
+    Background(given);
+    let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
     let frame: HTMLIFrameElement | null;
 
-    given(/^window.squatchTenant is (.*)$/, (arg) => {
-      if (arg === "invalid") window.squatchTenant = "INVALID_TENANT_ALIAS";
-      else window.squatchTenant = arg;
-    });
+    SquatchTenantIs(given);
 
-    and(/^window.squatchToken is set to (.*)$/, (_tokenArg) => {
-      const tokenArg = convertValue(_tokenArg);
-      const tokenValue = getTokenValueFromPrompt(tokenArg);
-      window.squatchToken = tokenValue;
-    });
+    SquatchTokenIs(and);
 
     and(/^the "(.*)" web-component is included in the page's HTML$/, (arg0) => {
       el = specificWebComponentIsIncluded(arg0);
@@ -452,36 +450,110 @@ defineFeature(feature, (test) => {
       }
     });
   });
-  test.skip("Rendering a basic popup widget", ({ given, and, when, then }) => {
-    given(
-      /^the following squatchjs loader script is in the "(.*)" tag$/,
-      (arg0, docString) => {}
-    );
+  test("Rendering a basic popup widget", ({ given, and, when, then }) => {
+    let el!: DeclarativePopupWidget;
+    let frame: HTMLIFrameElement | null;
+    Background(given);
 
-    given("squatchTenant is a valid value", () => {});
+    SquatchTenantIs(given);
 
-    and(/^squatchToken is set to (.*)$/, (arg0) => {});
+    SquatchTokenIs(and);
 
-    and(
-      /^the "(.*)" web-component is included in the page's HTML$/,
-      (arg0) => {}
-    );
+    and(/^the "(.*)" web-component is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
+    });
 
-    and(
-      "the widget attribute is set to a valid SaaSquatch widget type",
-      (arg0) => {}
-    );
+    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
+      el.setAttribute("widget", "w/widget-type");
+    });
 
-    when("the page loads", () => {});
+    when("the page loads", () => {
+      document.body.appendChild(el);
+    });
 
-    then("the appropriate widget loads", () => {});
+    then("the widget iframe is loaded into the DOM", async () => {
+      await expect(
+        waitUntil(() => !!el.shadowRoot!.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
 
-    and(/^a user upsert (.*) occur$/, (arg0) => {});
+      frame = el.shadowRoot!.querySelector("iframe");
+      expect(frame).toBeDefined();
+      expect(frame).toBeInstanceOf(HTMLIFrameElement);
+    });
 
-    and(
-      /^the widget iframe is loaded into the DOM inside a "(.*)" element$/,
-      (arg0) => {}
-    );
+    and(/^the widget iframe is the only child of a "dialog" element$/, () => {
+      const dialog = el.shadowRoot!.querySelector("dialog");
+      expect(dialog).toBeDefined();
+      expect(dialog).toBeInstanceOf(HTMLDialogElement);
+
+      expect(dialog?.children.item(0)).toBe(frame);
+    });
+
+    and(/^the widget is rendered as a (.*) widget$/, (type) => {
+      if (type === "verified") {
+        expect(frame?.contentDocument?.body.innerHTML).toContain(VERIFIED);
+      } else if (type === "passwordless") {
+        expect(frame?.contentDocument?.body.innerHTML).toContain(PASSWORDLESS);
+      } else {
+        expect(frame?.contentDocument?.body.innerHTML).toContain("Error");
+      }
+    });
+  });
+  test.skip("Rerender on widget attribute change", ({
+    given,
+    and,
+    when,
+    then,
+  }) => {
+    let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
+    let firstFrame!: HTMLIFrameElement;
+    let secondFrame!: HTMLIFrameElement;
+
+    Background(given);
+    SquatchTenantIs(given);
+    SquatchTokenIs(and);
+
+    and(/^the (.*) web-component is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
+    });
+
+    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
+      el.setAttribute("widget", "w/widget-type");
+    });
+
+    and("the widget iframe is loaded into the DOM", async () => {
+      document.body.appendChild(el);
+      await expect(
+        waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+
+      firstFrame = el.shadowRoot!.querySelector("iframe")!;
+      expect(firstFrame).toBeDefined();
+      expect(firstFrame).toBeInstanceOf(HTMLIFrameElement);
+
+      const html = firstFrame.contentDocument?.body.innerHTML;
+      expect(html).toContain("w/widget-type");
+    });
+
+    when("the widget attribute is changed", () => {
+      el.setAttribute("widget", "w/new-widget-type");
+    });
+
+    then("the widget re-renders", () => {});
+
+    and("the new widget iframe is loaded into the DOM", () => {
+      secondFrame = el.shadowRoot!.querySelector("iframe")!;
+      expect(secondFrame).toBeDefined();
+      expect(secondFrame).toBeInstanceOf(HTMLIFrameElement);
+
+      const html = secondFrame.contentDocument?.body.innerHTML;
+      expect(html).toContain("w/new-widget-type");
+    });
+
+    and("the new widget iframe replaces the previous one", () => {
+      const results = el.shadowRoot!.querySelectorAll("iframe");
+      expect(results.length).toBe(1);
+    });
   });
   test.skip("Openning squatch-popup web component dialog via children", ({
     given,
