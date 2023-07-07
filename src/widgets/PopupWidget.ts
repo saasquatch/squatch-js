@@ -89,7 +89,13 @@ export default class PopupWidget extends Widget {
     const dialog = this._createPopupDialog();
     dialog.appendChild(frame);
 
-    dialogParent.appendChild(dialog);
+    if (dialogParent.lastChild?.nodeName === "DIALOG") {
+      // Was reloaded
+      dialogParent.replaceChild(dialog, dialogParent.lastChild);
+    } else {
+      // First time rendering
+      dialogParent.appendChild(dialog);
+    }
 
     const { contentWindow } = frame;
     if (!contentWindow) {

@@ -77,8 +77,10 @@ export default class WidgetApi {
     } = clean as WithRequired<WidgetConfig, "user">;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const accountId = encodeURIComponent(user.accountId);
-    const userId = encodeURIComponent(user.id);
+    const accountId = user.accountId
+      ? encodeURIComponent(user.accountId)
+      : null;
+    const userId = user.id ? encodeURIComponent(user.id) : null;
 
     const optionalParams = _buildParams({ widgetType, engagementMedium });
 
@@ -108,8 +110,10 @@ export default class WidgetApi {
     const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const accountId = user ? encodeURIComponent(user.accountId) : null;
-    const userId = user ? encodeURIComponent(user.id) : null;
+    const accountId = user?.accountId
+      ? encodeURIComponent(user.accountId)
+      : null;
+    const userId = user?.id ? encodeURIComponent(user.id) : null;
 
     const locale =
       clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));

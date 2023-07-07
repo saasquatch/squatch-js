@@ -5,7 +5,6 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     super();
 
     this.type = "EMBED";
-    this.container = this.getAttribute("container") || this;
   }
 
   static get observedAttributes() {
@@ -28,12 +27,14 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   }
 
   async connectedCallback() {
+    this.container = this.getAttribute("container") || this;
+
     await this.renderWidget();
 
     const slot = (
       this.shadowRoot && Array.from(this.shadowRoot.children)
     )?.find((c) => c.tagName === "SLOT") as Node;
-    this.shadowRoot?.removeChild(slot);
+    if (slot) this.shadowRoot?.removeChild(slot);
   }
 }
 

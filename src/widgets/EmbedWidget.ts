@@ -22,7 +22,11 @@ export default class EmbedWidget extends Widget {
 
     if (this.container) {
       if (element.shadowRoot) {
-        element.shadowRoot.appendChild(frame);
+        if (element.shadowRoot.lastChild?.nodeName === "IFRAME")
+          element.shadowRoot.replaceChild(frame, element.shadowRoot.lastChild);
+        else {
+          element.shadowRoot.appendChild(frame);
+        }
       }
       // Widget reloaded - replace existing element
       else if (element.firstChild) {
@@ -49,14 +53,6 @@ export default class EmbedWidget extends Widget {
     frameDoc.close();
     domready(frameDoc, async () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-      const ctaElement = frameDoc.getElementById("cta");
-
-      if (ctaElement) {
-        if (!ctaElement.parentNode) {
-          throw new Error("ctaElement needs a parentNode");
-        }
-        ctaElement.parentNode.removeChild(ctaElement);
-      }
 
       // @ts-ignore -- number will be cast to string by browsers
       frame.height = frameDoc.body.scrollHeight;
