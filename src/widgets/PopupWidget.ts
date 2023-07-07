@@ -53,16 +53,16 @@ export default class PopupWidget extends Widget {
       };
     }
 
-    const element = this._findElement();
+    // const element = this._findElement();
     // If widget is loaded with CTA, look for a 'squatchpop' element to use
     // that element as a trigger as well.
-    const triggerWhenCTA = element.querySelector(".squatchpop") as HTMLElement;
+    // const triggerWhenCTA = element.querySelector(".squatchpop") as HTMLElement;
 
-    if (this.trigger === "#cta" && triggerWhenCTA) {
-      triggerWhenCTA.onclick = () => {
-        this.open(frame);
-      };
-    }
+    // if (this.trigger === "#cta" && triggerWhenCTA) {
+    //   triggerWhenCTA.onclick = () => {
+    //     this.open(frame);
+    //   };
+    // }
   }
 
   _createPopupDialog(): HTMLDialogElement {
@@ -164,7 +164,9 @@ export default class PopupWidget extends Widget {
   }
 
   close() {
-    const dialog = document.getElementById(this.id) as HTMLDialogElement;
+    const element = this._findElement();
+    const parent = element.shadowRoot || element;
+    const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
     if (!dialog) throw new Error("Could not determine container div");
 
     dialog.close();
