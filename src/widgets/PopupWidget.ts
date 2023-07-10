@@ -3,6 +3,7 @@
 import { debug } from "debug";
 import { domready } from "../utils/domready";
 import Widget, { Params } from "./Widget";
+import DeclarativeWidget from "./declarative/DeclarativeWidget";
 
 const _log = debug("squatch-js:POPUPwidget");
 
@@ -15,10 +16,10 @@ let popupId = 0;
  *
  */
 export default class PopupWidget extends Widget {
-  trigger: string;
+  trigger: string | null;
   id: string;
 
-  constructor(params: Params, trigger = ".squatchpop") {
+  constructor(params: Params, trigger: string | null = ".squatchpop") {
     super(params);
 
     this.trigger = trigger;
@@ -37,6 +38,8 @@ export default class PopupWidget extends Widget {
   }
 
   _initialiseCTA(frame: HTMLIFrameElement) {
+    if (!this.trigger) return;
+
     let triggerElement;
     try {
       triggerElement /* HTMLButton */ = document.querySelector(this.trigger);
@@ -83,6 +86,7 @@ export default class PopupWidget extends Widget {
 
   load(frame: HTMLIFrameElement) {
     this._initialiseCTA(frame);
+
     const element = this._findElement();
 
     const dialogParent = element.shadowRoot || element;

@@ -26,6 +26,8 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   container: string | HTMLElement | undefined | null;
   element: HTMLElement | undefined;
 
+  _hasChildren: boolean;
+
   constructor() {
     super();
     this.attachShadow({
@@ -85,9 +87,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   _setWidget = (template: any, config: { type: "upsert" | "passwordless" }) => {
     if (!this.widgetType) throw new Error("Widget was no specified");
-    const Widget = this.type === "EMBED" ? EmbedWidget : PopupWidget;
-
-    return new Widget({
+    const params = {
       api: this.widgetApi,
       content: template,
       context: { type: config.type, engagementMedium: this.type },
@@ -95,7 +95,12 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this.container || this,
-    });
+    };
+    if (this.type === "EMBED") {
+      return new EmbedWidget(params);
+    } else {
+      return new PopupWidget(params, this.firstChild ? null : undefined);
+    }
   };
 
   async getWidgetInstance() {
@@ -125,17 +130,20 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   setErrorWidget = (e: Error) => {
-    const Widget = this.type === "EMBED" ? EmbedWidget : PopupWidget;
-
-    return new Widget({
+    const params = {
       api: this.widgetApi,
       content: "error",
-      context: { type: "error" },
+      context: { type: "error" as const },
       type: "ERROR_WIDGET",
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this.container || this,
-    });
+    };
+    if (this.type === "EMBED") {
+      return new EmbedWidget(params);
+    } else {
+      return new PopupWidget(params, this.firstChild ? null : undefined);
+    }
   };
 
   open() {

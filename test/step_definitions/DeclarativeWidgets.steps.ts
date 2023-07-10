@@ -1,22 +1,16 @@
-import {
-  StepDefinitions,
-  autoBindSteps,
-  defineFeature,
-  loadFeature,
-  loadFeatures,
-} from "jest-cucumber";
-import { server } from "../mocks/server";
-import { defineCE, elementUpdated, waitUntil } from "@open-wc/testing-helpers";
+import { defineCE, waitUntil } from "@open-wc/testing-helpers";
+import { defineFeature, loadFeature } from "jest-cucumber";
 import {
   DeclarativeEmbedWidget,
   DeclarativePopupWidget,
 } from "../../src/squatch";
-import DeclarativeWidget from "../../src/widgets/declarative/DeclarativeWidget";
 import { sanitize } from "../helpers/sanitize";
 import { PASSWORDLESS, VERIFIED } from "../mocks/handlers";
+import { server } from "../mocks/server";
+
 const feature = loadFeature(
   "../blackbox-testing/features/squatchjs/DeclarativeWidgets.feature",
-  { tagFilter: "@automated" }
+  { tagFilter: "@automated and not @cant-be-tested" }
 );
 
 beforeAll(() => {
