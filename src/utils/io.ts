@@ -7,8 +7,9 @@ export async function doQuery(
   url: string,
   query: string,
   variables: Record<string, unknown>,
-  token: string | undefined
+  jwt: string | undefined
 ) {
+  const token = jwt || window.squatchToken;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -35,7 +36,8 @@ export async function doGet<T>(url, jwt = ""): Promise<T> {
     "Content-Type": "application/json",
   };
 
-  if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
+  const token = jwt || window.squatchToken;
+  if (token) headers["X-SaaSquatch-User-Token"] = token;
 
   try {
     const res = await fetch(url, {
@@ -56,7 +58,9 @@ export async function doPost(url: string, data: any, jwt?: JWT) {
     Accept: "application/json",
     "Content-Type": "application/json",
   };
-  if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
+
+  const token = jwt || window.squatchToken;
+  if (token) headers["X-SaaSquatch-User-Token"] = token;
 
   try {
     const res = await fetch(url, {
@@ -81,7 +85,8 @@ export async function doPut(url: string, data: any, jwt?: JWT) {
     "X-SaaSquatch-Referrer": window ? window.location.href : "",
   };
 
-  if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
+  const token = jwt || window.squatchToken;
+  if (token) headers["X-SaaSquatch-User-Token"] = token;
 
   try {
     const res = await fetch(url, {
