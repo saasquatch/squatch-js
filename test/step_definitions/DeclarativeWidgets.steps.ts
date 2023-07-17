@@ -511,7 +511,7 @@ defineFeature(feature, (test) => {
       }
     });
   });
-  test.only("Rerender on attribute change", ({ given, and, when, then }) => {
+  test("Rerender on attribute change", ({ given, and, when, then }) => {
     let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
     let firstFrame!: HTMLIFrameElement;
     let secondFrame!: HTMLIFrameElement;
@@ -536,6 +536,10 @@ defineFeature(feature, (test) => {
       const div = document.createElement("div");
       div.id = "test-container";
       document.body.appendChild(div);
+
+      const div2 = document.createElement("div");
+      div2.id = "new-test-container";
+      document.body.appendChild(div2);
     });
 
     and(/^the (.*) attribute is set to (.*)$/, (arg0, arg1) => {
@@ -553,7 +557,6 @@ defineFeature(feature, (test) => {
     });
 
     and("the widget is loaded into the DOM", async () => {
-      console.log("first render", document.body.innerHTML);
       document.body.appendChild(el);
       if (hasCustomContainer) {
         await expect(
@@ -589,19 +592,24 @@ defineFeature(feature, (test) => {
     });
 
     and("the new widget is loaded into the DOM", async () => {
-      await expect(
-        waitUntil(() =>
-          el.shadowRoot
-            ?.querySelector("iframe")
-            ?.contentDocument?.body.innerHTML.includes(widgetType)
-        )
-      ).resolves.toBeUndefined();
-      console.log("rerender", document.body.innerHTML);
-
-      // Making sure
       if (hasCustomContainer) {
+        await expect(
+          waitUntil(() =>
+            document.body
+              ?.querySelector("iframe")
+              ?.contentDocument?.body.innerHTML.includes(widgetType)
+          )
+        ).resolves.toBeUndefined();
+
         secondFrame = document.body!.querySelector("iframe")!;
       } else {
+        await expect(
+          waitUntil(() =>
+            el.shadowRoot
+              ?.querySelector("iframe")
+              ?.contentDocument?.body.innerHTML.includes(widgetType)
+          )
+        ).resolves.toBeUndefined();
         secondFrame = el.shadowRoot!.querySelector("iframe")!;
       }
       expect(secondFrame).toBeDefined();
@@ -612,8 +620,13 @@ defineFeature(feature, (test) => {
     });
 
     and("the new widget's iframe replaces the previous one", () => {
-      const results = el.shadowRoot!.querySelectorAll("iframe");
-      expect(results.length).toBe(1);
+      if (hasCustomContainer) {
+        const results = document.body.querySelectorAll("iframe");
+        expect(results.length).toBe(1);
+      } else {
+        const results = el.shadowRoot!.querySelectorAll("iframe");
+        expect(results.length).toBe(1);
+      }
     });
   });
   test("Opening squatch-popup web component dialog via children", ({

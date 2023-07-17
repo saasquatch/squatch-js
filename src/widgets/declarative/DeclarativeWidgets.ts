@@ -20,7 +20,7 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
         break;
       // Specific to embed widgets
       case "container":
-        if (this.element) this.close();
+        if (this.widgetInstance._findElement()) this.close();
         this.connectedCallback();
         break;
     }

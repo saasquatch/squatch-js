@@ -191,7 +191,6 @@ export default class Widgets {
     context: WidgetContext
   ) {
     _log("Rendering Widget...");
-    console.log({ response });
     if (!response) throw new Error("Unable to get a response");
 
     let widget;

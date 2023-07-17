@@ -444,7 +444,6 @@ describe("Widget methods", () => {
         expect(upsertMock).toBeCalledTimes(1);
         expect(widget.content).toBe("asdf");
 
-        console.log(iframe.contentDocument?.body.innerHTML);
         const button = iframe.contentDocument?.body.querySelector(
           "#show-stats-btn"
         ) as HTMLButtonElement;

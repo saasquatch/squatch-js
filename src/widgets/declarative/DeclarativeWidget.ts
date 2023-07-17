@@ -123,8 +123,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   async renderWidget() {
     await this.getWidgetInstance();
-
-    this.element = this.widgetInstance._findElement();
     await this.widgetInstance.load();
   }
 
