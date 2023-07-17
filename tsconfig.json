@@ -16,6 +16,7 @@
   "typedocOptions":{
     "out": "docs",
     "json": "docs/docs.json",
+    "entryPoints": ["src/squatch.ts"],
     "excludePrivate": true,
     "excludeProtected": true
   }
