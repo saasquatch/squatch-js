@@ -96,6 +96,7 @@ export default abstract class Widget {
   _createFrame() {
     const frame = document.createElement("iframe");
     frame["squatchJsApi"] = this;
+    frame.id = "squatchFrame";
     frame.width = "100%";
     frame.src = "about:blank";
     frame.scrolling = "no";
@@ -107,7 +108,15 @@ export default abstract class Widget {
     return frame;
   }
 
-  abstract load(frame: HTMLIFrameElement): void;
+  _findFrame() {
+    const element = this._findElement();
+    const parent = element.shadowRoot || element;
+    return parent.querySelector(
+      "iframe#squatchFrame"
+    ) as HTMLIFrameElement | null;
+  }
+
+  abstract load(): void;
   protected _loadEvent(sqh: ProgramLoadEvent | GenericLoadEvent) {
     if (!sqh) return; // No non-truthy value
     if (!isObject(sqh)) {
@@ -147,7 +156,7 @@ export default abstract class Widget {
         _log(`${params.engagementMedium} loaded event recorded.`);
       })
       .catch((ex) => {
-        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+        _log(`ERROR: pushAnalyticsLoadEvent() ${ex}`);
       });
   }
 
@@ -167,7 +176,7 @@ export default abstract class Widget {
           );
         })
         .catch((ex) => {
-          _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+          _log(`ERROR: pushAnalyticsShareClickedEvent() ${ex}`);
         });
     }
   }
@@ -248,7 +257,9 @@ export default abstract class Widget {
    * @param param0 Form field values
    * @param jwt JWT for API authentication
    */
-  reload(frame: HTMLIFrameElement, { email, firstName, lastName }, jwt) {
+  reload({ email, firstName, lastName }, jwt) {
+    const frame = this._findFrame();
+    if (!frame) throw new Error("Could not find widget iframe");
     const frameWindow = frame.contentWindow;
 
     const engagementMedium = this.context.engagementMedium || "POPUP";
@@ -260,6 +271,8 @@ export default abstract class Widget {
     let response;
 
     if (this.context.type === "upsert") {
+      if (!this.context.user) throw new Error("Can't reload without user ids");
+
       let userObj = {
         email: email || null,
         firstName: firstName || null,
@@ -296,10 +309,10 @@ export default abstract class Widget {
             frame,
             { email, engagementMedium },
             () => {
-              this.load(frame);
+              this.load();
 
               // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
-              engagementMedium === "POPUP" && this.open(frame);
+              engagementMedium === "POPUP" && this.open();
             }
           );
         }

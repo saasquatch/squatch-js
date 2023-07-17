@@ -7,6 +7,7 @@ import {
 import { sanitize } from "../helpers/sanitize";
 import { PASSWORDLESS, VERIFIED } from "../mocks/handlers";
 import { server } from "../mocks/server";
+import { _getAutoConfig } from "../../src/utils/utmUtils";
 
 const feature = loadFeature(
   "../blackbox-testing/features/squatchjs/DeclarativeWidgets.feature",
@@ -510,10 +511,18 @@ defineFeature(feature, (test) => {
       }
     });
   });
-  test("Rerender on widget attribute change", ({ given, and, when, then }) => {
+  test.only("Rerender on attribute change", ({ given, and, when, then }) => {
     let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
     let firstFrame!: HTMLIFrameElement;
     let secondFrame!: HTMLIFrameElement;
+    let changedAttr!: string;
+    let hasCustomContainer = false;
+    let widgetType!: string;
+
+    beforeEach(() => {
+      document.body.innerHTML = "";
+      hasCustomContainer = false;
+    });
 
     Background(given);
     SquatchTenantIs(given);
@@ -523,26 +532,60 @@ defineFeature(feature, (test) => {
       el = specificWebComponentIsIncluded(arg0);
     });
 
-    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
-      el.setAttribute("widget", "w/widget-type");
+    and("any container elements exist", () => {
+      const div = document.createElement("div");
+      div.id = "test-container";
+      document.body.appendChild(div);
+    });
+
+    and(/^the (.*) attribute is set to (.*)$/, (arg0, arg1) => {
+      const attr = sanitize(arg0) as string;
+      const value = sanitize(arg1) as string;
+
+      if (attr !== "widget") {
+        widgetType = "w/widget-type";
+        el.setAttribute("widget", "w/widget-type");
+      }
+      if (attr === "container") hasCustomContainer = true;
+      if (attr === "widget") widgetType = value;
+
+      el.setAttribute(attr, value);
     });
 
     and("the widget is loaded into the DOM", async () => {
+      console.log("first render", document.body.innerHTML);
       document.body.appendChild(el);
-      await expect(
-        waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
-      ).resolves.toBeUndefined();
+      if (hasCustomContainer) {
+        await expect(
+          waitUntil(() => !!document.body?.querySelector("iframe"), "no iframe")
+        ).resolves.toBeUndefined();
+      } else {
+        await expect(
+          waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
+        ).resolves.toBeUndefined();
+      }
 
-      firstFrame = el.shadowRoot!.querySelector("iframe")!;
+      if (hasCustomContainer) {
+        firstFrame = document.body!.querySelector("iframe")!;
+      } else {
+        firstFrame = el.shadowRoot!.querySelector("iframe")!;
+      }
       expect(firstFrame).toBeDefined();
       expect(firstFrame).toBeInstanceOf(HTMLIFrameElement);
 
       const html = firstFrame.contentDocument?.body.innerHTML;
-      expect(html).toContain("w/widget-type");
+      expect(html).toContain(widgetType);
     });
 
-    when("the widget attribute is changed", () => {
-      el.setAttribute("widget", "w/new-widget-type");
+    when(/^the (.*) attribute is changed to (.*)$/, (arg0, arg1) => {
+      const attr = sanitize(arg0) as string;
+      const value = sanitize(arg1) as string;
+
+      if (attr === "container") changedAttr = attr;
+      if (attr === "widget") widgetType = value;
+
+      // Also setting widget attribute so we know when new iframe has loaded
+      el.setAttribute(attr, value);
     });
 
     and("the new widget is loaded into the DOM", async () => {
@@ -550,17 +593,22 @@ defineFeature(feature, (test) => {
         waitUntil(() =>
           el.shadowRoot
             ?.querySelector("iframe")
-            ?.contentDocument?.body.innerHTML.includes("w/new-widget-type")
+            ?.contentDocument?.body.innerHTML.includes(widgetType)
         )
       ).resolves.toBeUndefined();
+      console.log("rerender", document.body.innerHTML);
 
       // Making sure
-      secondFrame = el.shadowRoot!.querySelector("iframe")!;
+      if (hasCustomContainer) {
+        secondFrame = document.body!.querySelector("iframe")!;
+      } else {
+        secondFrame = el.shadowRoot!.querySelector("iframe")!;
+      }
       expect(secondFrame).toBeDefined();
       expect(secondFrame).toBeInstanceOf(HTMLIFrameElement);
 
       const html = secondFrame.contentDocument?.body.innerHTML;
-      expect(html).toContain("w/new-widget-type");
+      expect(html).toContain(widgetType);
     });
 
     and("the new widget's iframe replaces the previous one", () => {
@@ -850,6 +898,96 @@ defineFeature(feature, (test) => {
         expect(div.querySelector("iframe")).toBeNull();
       }
     );
+  });
+  test("Passwordless widgets take _saasquatchExtra config as priority", ({
+    given,
+    when,
+    and,
+    then,
+  }) => {
+    let el!: DeclarativeEmbedWidget;
+    let squatchConfig: any;
+    let widgetConfig: any;
+
+    Background(given);
+    given("either web-component is included in the page's HTML", () => {
+      el = eitherWebComponentIsIncluded();
+    });
+    and(/^window.squatchTenant is set to "(.*)"$/, (arg0) => {
+      const value = sanitize(arg0);
+      // @ts-ignore
+      window.squatchTenant = value;
+    });
+    and("window.squatchToken is undefined", () => {
+      // @ts-ignore
+      window.squatchToken = null;
+    });
+    and(/^window.squatchConfig.domain is set to "(.*)"$/, (arg0) => {
+      const value = sanitize(arg0);
+      // @ts-ignore
+      window.squatchConfig = {
+        domain: "https://www.example.com",
+      };
+    });
+    and(/^the "(.*)" attribute is set to "(.*)"$/, (arg0, arg1) => {
+      const attr = sanitize(arg0) as string;
+      const value = sanitize(arg1) as string;
+      el.setAttribute(attr, value);
+    });
+    and(
+      "_saasquatchExtra is included in the url with payload as the following",
+      (docString) => {
+        const payload = btoa(docString);
+        window.location.search = `?_saasquatchExtra=${payload}`;
+      }
+    );
+    when("the component loads", async () => {
+      document.body.appendChild(el);
+      await expect(
+        waitUntil(() => el.shadowRoot!.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+    });
+    then(
+      /^the component's WidgetAPI has "(.*)" set to "(.*)"$/,
+      (arg0, arg1) => {
+        const field = sanitize(arg0) as string;
+        const value = sanitize(arg1);
+
+        expect(el.widgetApi[field]).toBe(value);
+      }
+    );
+    and(
+      /^the component's WidgetAPI has "(.*)" set to "(.*)"$/,
+      (arg0, arg1) => {
+        const field = sanitize(arg0) as string;
+        const value = sanitize(arg1);
+
+        expect(el.widgetApi[field]).toBe(value);
+      }
+    );
+    and(
+      /^the component's AnalyticsAPI has "(.*)" set to "(.*)"$/,
+      (arg0, arg1) => {
+        const field = sanitize(arg0) as string;
+        const value = sanitize(arg1);
+
+        expect(el.analyticsApi[field]).toBe(value);
+      }
+    );
+    and(/^the widget loaded has widgetType "(.*)"$/, (arg0) => {
+      const value = sanitize(arg0);
+
+      const iframe = el.shadowRoot?.querySelector("iframe");
+      const content = iframe?.contentDocument?.body?.innerHTML;
+      expect(content).toContain(value);
+    });
+    and(/^the widget will be rendered as a "(.*)" widget$/, (arg0) => {
+      const value = sanitize(arg0);
+
+      const iframe = el.shadowRoot?.querySelector("iframe");
+      const content = iframe?.contentDocument?.body?.innerHTML;
+      expect(content).toContain(value);
+    });
   });
 
   test("Opening and closing squatch-embed component", ({

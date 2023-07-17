@@ -7,7 +7,7 @@ import {
   validateLocale,
   validatePasswordlessConfig,
   validateWidgetConfig,
-} from "../src/utils/validate";
+} from "../../src/utils/validate";
 
 describe("validateConfig handling missing properties", () => {
   it("errors if no object is passed in", () => {

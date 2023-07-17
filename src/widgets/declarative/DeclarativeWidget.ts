@@ -21,7 +21,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   type: "EMBED" | "POPUP";
   widgetInstance: EmbedWidget | PopupWidget;
-  frame: HTMLIFrameElement;
 
   container: string | HTMLElement | undefined | null;
   element: HTMLElement | undefined;
@@ -52,11 +51,11 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     });
   }
 
-  renderPasswordlessVariant() {
+  private async renderPasswordlessVariant() {
     const configs = _getAutoConfig();
     this._setupApis(configs?.squatchConfig);
 
-    return this.widgetApi
+    return await this.widgetApi
       .render({
         engagementMedium: configs?.widgetConfig?.engagementMedium || this.type,
         widgetType: configs?.widgetConfig?.widgetType || this.widgetType,
@@ -65,8 +64,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       .catch(this.setErrorWidget);
   }
 
-  async renderUserUpsertVariant() {
-    if (!this.widgetType) throw new Error("Widget must be specified");
+  private async renderUserUpsertVariant() {
     this._setupApis();
 
     const userObj = decodeUserJwt(this.token!);
@@ -85,13 +83,15 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     return widgetInstance;
   }
 
-  _setWidget = (template: any, config: { type: "upsert" | "passwordless" }) => {
-    if (!this.widgetType) throw new Error("Widget was no specified");
+  private _setWidget = (
+    template: any,
+    config: { type: "upsert" | "passwordless" }
+  ) => {
     const params = {
       api: this.widgetApi,
       content: template,
       context: { type: config.type, engagementMedium: this.type },
-      type: this.widgetType,
+      type: this.widgetType!,
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this.container || this,
@@ -125,8 +125,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     await this.getWidgetInstance();
 
     this.element = this.widgetInstance._findElement();
-    this.frame = this.widgetInstance._createFrame();
-    await this.widgetInstance.load(this.frame);
+    await this.widgetInstance.load();
   }
 
   setErrorWidget = (e: Error) => {
@@ -147,11 +146,11 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   };
 
   open() {
-    this.widgetInstance.open(this.frame);
+    this.widgetInstance.open();
   }
 
   close() {
-    this.widgetInstance.close(this.frame);
+    this.widgetInstance.close();
   }
 
   show = this.open;

@@ -1,5 +1,21 @@
 # Referral SaaSquatch Javascript SDK
 
+- [Referral SaaSquatch Javascript SDK](#referral-saasquatch-javascript-sdk)
+  - [Install the library](#install-the-library)
+  - [Getting Started](#getting-started)
+  - [Data Only Operations](#data-only-operations)
+      - [Create/upsert users without loading a widget.](#createupsert-users-without-loading-a-widget)
+  - [Get Referral Cookie Code](#get-referral-cookie-code)
+  - [Install via NPM and Webpack (advanced)](#install-via-npm-and-webpack-advanced)
+  - [Component API:](#component-api)
+    - [`squatch-embed`](#squatch-embed)
+    - [`squatch-popup`](#squatch-popup)
+  - [Legacy](#legacy)
+    - [Rendering a widget via Widgets API](#rendering-a-widget-via-widgets-api)
+  - [Contributing](#contributing)
+  - [Support](#support)
+
+
 ## Install the library
 
 To integrate any SaaSquatch program to your website or web app, copy/paste this snippet of JavaScript above the `</head>` tag of your page:
@@ -18,85 +34,37 @@ Or load the library synchronously from our CDN:
 
 
 ## Getting Started
-The `init` function lets you configure your global squatch instance.
 
-Note: `engagementMedium` is required in the `squatch.widgets()` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
-
+Include either of the squatchjs generated web-components in your page's HTML to render your desired widget:
 ```html
-<script type="text/javascript">
-  squatch.ready(function() {
-
-    // Always call init
-    squatch.init({
-      tenantAlias: "YOUR_TENANT_ALIAS",     // String (required)
-    });
-  
-    squatch.widgets().upsertUser({
-      user: {                               // Object (required)
-        id: 'USER_ID',                      // String (required)
-        accountId: 'USER_ACCOUNT_ID',       // String (required)
-        email: 'USER_EMAIL',                // String (optional)
-        firstName: 'USER_FIRST_NAME',       // String (optional)
-        lastName: 'USER_LAST_NAME',         // String (optional)
-  
-        ...
-      },
-      engagementMedium: 'EMBED',                    // String (optional: POPUP, EMBED)
-      widgetType: 'p/PROGRAM-ID/w/referrerWidget',  // Update PROGRAM-ID
-      jwt: 'TOKEN'                                  // String (required by default, or disable Security in the portal)
-
-    });
-  });
-</script>
-```
-
-### Declarative method for rendering widgets
-As opposed to the above method which requires some manual javascript, squatchjs includes the custom Web Components: `squatch-embed` and `squatch-popup` that can render embedded and popup widgets respectively.
-
-TODO: `display: inline` until squatchjs loads
-
-```html
-<script type="text/javascript">
-  window.squatchToken = "TOKEN"
-  window.squatchTenant = "TENANT_ALIAS"
-
-  // Optional
-  window.squatchConfig = {
-    ... // Custom configuration settings
-  }
-</script>
-
+<!-- EMBED WIDGET -->
 <squatch-embed widget="WIDGET_TYPE"><!-- Widget is rendered here --></squatch-embed>
+
+<!-- POPUP WIDGET -->
 <squatch-popup widget="WIDGET_TYPE"><!-- Widget is rendered here --></squatch-popup>
 ```
+For rendering widgets and API calls, Squatchjs respects configurations set on the following:
+  - `window.squatchToken`: Signed JWT for calls to the SaaSquatch API -- [How to generate valid JWT Tokens](https://docs.saasquatch.com/topics/json-web-tokens#example-building-the-jwt)
+  - `window.squatchTenant`: SaaSquatch tenant alias
+  - `window.squatchConfig`: Additional configuration overrides (Optional)
+    - `debug`: Turn on console debugging (Default: `false`)
 
-#### `squatch-embed`
-
-- `widget`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
-  - Required
-- `container`: A CSS selector for a container element to use as the parent of the widget's iframe. 
-  - Default: `null`
-  - Note, if no container is specified, the widget iframe will attach to the shadow DOM of `squatch-embed`.
+**Note**: If `window.squatchToken` is undefined, widgets will be rendered as [Instant Access widgets](https://docs.saasquatch.com/topics/widget-types#instant-access-widgets).
 
 
-#### `squatch-popup`
 
-- `widget: string`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
-  - Required
-- `show: boolean`: Whether to show the popup dialog on page load or not.
-  - Default: `false`
+
+
 ## Data Only Operations
-You can create/upsert users without loading a widget.
+
+
+#### Create/upsert users without loading a widget.
 
 ```html
 <script type="text/javascript">
+  // Assuming window.squatchTenant, and window.squatchToken are set
+
   squatch.ready(function() {
-
-    // Always call init
-    squatch.init({
-      tenantAlias: "YOUR_TENANT_ALIAS"      // String (required)
-    });
-
     var user;
 
     squatch.api().upsertUser({
@@ -110,7 +78,6 @@ You can create/upsert users without loading a widget.
       },
       engagementMedium: 'EMBED',                    // String (optional: POPUP, EMBED)
       widgetType: 'p/PROGRAM-ID/w/referrerWidget',  // Update PROGRAM-ID
-      jwt: 'TOKEN'                                  // String (required)
     }).then(function(response) {
       user = response.user;
     }).catch(function(err){
@@ -131,10 +98,6 @@ You can also use the `api()` function to call the WidgetApi methods directly.
 ```html
 <script type="text/javascript">
   squatch.ready(function(){
-
-    // Always call init
-    squatch.init({tenantAlias: 'YOUR_TENANT_ALIAS'});
-
 
     var element = document.getElementById('my_coupon');
 
@@ -171,6 +134,62 @@ squatch.init({
 // Don't need to wait for .ready when importing via NPM/Webpack
 squatch.api().upsertUser({...});
 
+```
+
+## Component API:
+
+### `squatch-embed`
+```html
+<squatch-embed widget="WIDGET_TYPE" [ container="#selector" ]>
+  <!-- Children of squatch-embed act as a loading state -->
+  Loading...
+</squatch-embed>
+```
+
+- `widget`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
+  - Required
+- `container`: A CSS selector for a container element to use as the parent of the widget's iframe. 
+  - Default: `null`
+  - Note, if no container is specified, the widget iframe will attach to the shadow DOM of `squatch-embed`.
+
+
+### `squatch-popup`
+```html
+<squatch-embed widget="WIDGET_TYPE" [ open ]>
+  <!-- Clicking a child of squatch-popup opens the popup -->
+  <button>Click me to open</button> 
+</squatch-embed>
+```
+
+- `widget: string`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
+  - Required
+- `open: boolean`: Whether to the popup is open when loaded into the page
+  - Default: `false`
+
+## Legacy
+
+### Rendering a widget via Widgets API
+Note: `engagementMedium` is required in the `squatch.widgets()` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
+
+```html
+<script type="text/javascript">
+  squatch.ready(function() {
+
+    squatch.widgets().upsertUser({
+      user: {                               // Object (required)
+        id: 'USER_ID',                      // String (required)
+        accountId: 'USER_ACCOUNT_ID',       // String (required)
+        email: 'USER_EMAIL',                // String (optional)
+        firstName: 'USER_FIRST_NAME',       // String (optional)
+        lastName: 'USER_LAST_NAME',         // String (optional)
+  
+        ...
+      },
+      engagementMedium: 'EMBED',                    // String (optional: POPUP, EMBED)
+      widgetType: 'p/PROGRAM-ID/w/referrerWidget',  // Update PROGRAM-ID
+    });
+  });
+</script>
 ```
 
 ## Contributing

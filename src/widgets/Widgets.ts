@@ -95,7 +95,7 @@ export default class Widgets {
       if (err.apiErrorCode) {
         this._renderErrorWidget(err, config.engagementMedium);
       }
-      throw err;
+      throw new Error(err);
     }
   }
 
@@ -132,7 +132,7 @@ export default class Widgets {
       if (err.apiErrorCode) {
         this._renderErrorWidget(err, clean.engagementMedium);
       }
-      throw err;
+      throw new Error(err);
     }
   }
 
@@ -143,16 +143,17 @@ export default class Widgets {
    * @param selector Element class/id selector, or a callback function
    * @returns
    */
-  autofill(selector: string | Function): void {
+  async autofill(selector: string | Function): Promise<void> {
     const input = selector as unknown;
     if (typeof input === "function") {
-      this.api
-        .squatchReferralCookie()
-        .then((...args) => input(...args))
-        .catch((ex) => {
-          _log("Autofill error", ex);
-          throw ex;
-        });
+      try {
+        const response = await this.api.squatchReferralCookie();
+        input(response);
+      } catch (e) {
+        _log("Autofill error", e);
+        throw new Error(e);
+      }
+
       return;
     }
     if (typeof input !== "string")
@@ -168,14 +169,12 @@ export default class Widgets {
       throw new Error("Element id/class or function missing");
     }
 
-    this.api
-      .squatchReferralCookie()
-      .then(({ codes }) => {
-        elem.value = codes[0];
-      })
-      .catch((ex) => {
-        throw ex;
-      });
+    try {
+      const response = await this.api.squatchReferralCookie();
+      elem.value = response.codes[0];
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 
   /**
@@ -192,6 +191,7 @@ export default class Widgets {
     context: WidgetContext
   ) {
     _log("Rendering Widget...");
+    console.log({ response });
     if (!response) throw new Error("Unable to get a response");
 
     let widget;
@@ -268,16 +268,16 @@ export default class Widgets {
 
   private _renderPopupWidget(params: Params) {
     const widget = new PopupWidget(params, params.context.trigger);
-    const frame = widget._createFrame();
-    widget.load(frame);
+    widget.load();
 
     return widget;
   }
 
   private _renderEmbedWidget(params, container) {
     const widget = new EmbedWidget(params);
-    const frame = widget._createFrame();
-    widget.load(frame);
+    widget.load();
+
+    return widget;
   }
 
   /**
@@ -307,12 +307,10 @@ export default class Widgets {
 
     if (em === "EMBED") {
       widget = new EmbedWidget(params);
-      const frame = widget._createFrame();
-      widget.load(frame);
+      widget.load();
     } else if (em === "POPUP") {
       widget = new PopupWidget(params);
-      const frame = widget._createFrame();
-      widget.load(frame);
+      widget.load();
     }
   }
 
@@ -324,27 +322,5 @@ export default class Widgets {
   private static _matchesUrl(rule) {
     // If there were no matches, null is returned.
     return window.location.href.match(new RegExp(rule)) ? true : false;
-  }
-
-  /**
-   * @hidden
-   * @param {Object} target Object containing the target DOM element
-   * @param {Widget} widget A widget (EmbedWidget, PopupWidget)
-   * @param {Object} params An object with valid parameters
-   *                        (e.g) {email:'email', firstName:'firstName'}
-   * @returns {void}
-   */
-  private static _cb(target, widget, params) {
-    let paramsObj;
-
-    // If params is a string, then it should be an email
-    if (typeof params === "string" || params instanceof String) {
-      paramsObj = { email: params };
-    } else {
-      paramsObj = params;
-    }
-
-    // TODO: Reload doesn't exist on all widget types
-    widget.reload(paramsObj);
   }
 }

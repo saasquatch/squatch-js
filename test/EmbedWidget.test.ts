@@ -12,6 +12,6 @@ describe("testing", () => {
       type: "w/widget-type",
     });
     const frame = widget._createFrame();
-    expect(async () => await widget.load(frame)).rejects.toThrowError();
+    expect(async () => await widget.load()).rejects.toThrowError();
   });
 });

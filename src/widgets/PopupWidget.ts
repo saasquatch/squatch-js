@@ -52,7 +52,7 @@ export default class PopupWidget extends Widget {
     // Trigger is optional
     if (triggerElement) {
       triggerElement.onclick = () => {
-        this.open(frame);
+        this.open();
       };
     }
 
@@ -84,7 +84,8 @@ export default class PopupWidget extends Widget {
     return dialog;
   }
 
-  load(frame: HTMLIFrameElement) {
+  load() {
+    const frame = this._createFrame();
     this._initialiseCTA(frame);
 
     const element = this._findElement();
@@ -146,7 +147,7 @@ export default class PopupWidget extends Widget {
     });
   }
 
-  open(frame: HTMLIFrameElement) {
+  open() {
     const element = this._findElement();
     const parent = element.shadowRoot || element;
     const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
@@ -154,6 +155,8 @@ export default class PopupWidget extends Widget {
 
     dialog.showModal();
 
+    const frame = this._findFrame();
+    if (!frame) throw new Error("Could not find iframe");
     const { contentWindow } = frame;
     if (!contentWindow) throw new Error("Squatch.js has an empty iframe");
     const frameDoc = contentWindow.document;

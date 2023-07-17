@@ -17,7 +17,8 @@ export default class EmbedWidget extends Widget {
     super(params);
   }
 
-  async load(frame: HTMLIFrameElement) {
+  async load() {
+    const frame = this._createFrame();
     const element = this._findElement();
 
     if (this.container) {
@@ -77,7 +78,8 @@ export default class EmbedWidget extends Widget {
   }
 
   // Un-hide if element is available and refresh data
-  open(frame: HTMLIFrameElement) {
+  open() {
+    const frame = this._findFrame();
     if (!frame) return _log("no target element to open");
 
     const element = this._findElement();
@@ -93,7 +95,8 @@ export default class EmbedWidget extends Widget {
     _log("loaded");
   }
 
-  close(frame: HTMLIFrameElement) {
+  close() {
+    const frame = this._findFrame();
     if (!frame) return _log("no target element to close");
 
     const element = this._findElement();
