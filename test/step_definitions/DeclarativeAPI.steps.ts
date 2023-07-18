@@ -8,12 +8,9 @@ import Widgets from "../../src/widgets/Widgets";
 import { setPath } from "../helpers/getPath";
 import { sanitize } from "../helpers/sanitize";
 
-const feature = loadFeature(
-  "../blackbox-testing/features/squatchjs/DeclarativeAPI.feature",
-  {
-    tagFilter: "@automated and not @cant-be-tested",
-  }
-);
+const feature = loadFeature("test/specs/DeclarativeAPI.feature", {
+  tagFilter: "@automated and not @cant-be-tested",
+});
 const defaultInit = {
   tenantAlias: "",
   domain: "",

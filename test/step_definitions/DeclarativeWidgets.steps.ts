@@ -9,10 +9,9 @@ import { PASSWORDLESS, VERIFIED } from "../mocks/handlers";
 import { server } from "../mocks/server";
 import { _getAutoConfig } from "../../src/utils/utmUtils";
 
-const feature = loadFeature(
-  "../blackbox-testing/features/squatchjs/DeclarativeWidgets.feature",
-  { tagFilter: "@automated and not @cant-be-tested" }
-);
+const feature = loadFeature("test/specs/DeclarativeWidgets.feature", {
+  tagFilter: "@automated and not @cant-be-tested",
+});
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: "bypass" });

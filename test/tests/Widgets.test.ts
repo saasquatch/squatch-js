@@ -1,6 +1,9 @@
 import WidgetApi from "../../src/api/WidgetApi";
-import { EmbedWidget, WidgetResult } from "../../src/squatch";
 import Widgets from "../../src/widgets/Widgets";
+import PopupWidget from "../../src/widgets/PopupWidget";
+import EmbedWidget from "../../src/widgets/EmbedWidget";
+jest.mock("../../src/widgets/PopupWidget");
+jest.mock("../../src/widgets/EmbedWidget");
 
 test("initialisation", () => {
   const config = {
@@ -251,11 +254,53 @@ describe("methods", () => {
     const defaultContext = {
       type: "upsert" as const,
     };
+    const defaultResponse = {
+      template: "<p>asdf</p>",
+    };
     test("No response", async () => {
       // @ts-ignore
       await expect(
         async () => await widgets["_renderWidget"](null, {}, defaultContext)
       ).rejects.toThrow();
+    });
+    test("basic render, default widget", async () => {
+      widgets["_renderWidget"](defaultResponse, defaultConfig, defaultContext);
+
+      expect(PopupWidget).toHaveBeenCalledTimes(1);
+      // @ts-ignore
+      const instance = PopupWidget.mock.instances[0];
+      const mockLoad = instance.load;
+      expect(mockLoad).toBeCalled();
+    });
+    test.each([
+      { engagementMedium: "EMBED" as const, displayOnLoad: true },
+      { engagementMedium: "EMBED" as const, displayOnLoad: false },
+      { engagementMedium: "POPUP" as const, displayOnLoad: true },
+      { engagementMedium: "POPUP" as const, displayOnLoad: false },
+    ])("basic render, embed widget", (args) => {
+      widgets["_renderWidget"](
+        defaultResponse,
+        { ...args, ...defaultConfig },
+        defaultContext
+      );
+
+      if (args.engagementMedium === "EMBED") {
+        expect(EmbedWidget).toHaveBeenCalledTimes(1);
+        // @ts-ignore
+        const instance = EmbedWidget.mock.instances[0];
+        const mockLoad = instance.load;
+        expect(mockLoad).toBeCalled();
+      } else if (args.engagementMedium === "POPUP") {
+        expect(PopupWidget).toHaveBeenCalledTimes(1);
+        // @ts-ignore
+        const instance = PopupWidget.mock.instances[0];
+        const mockLoad = instance.load;
+        const mockOpen = instance.open;
+        expect(mockLoad).toBeCalled();
+        if (args.displayOnLoad) expect(mockOpen).toBeCalled();
+      } else {
+        fail();
+      }
     });
   });
   test("_renderPopupWidget", () => {});

@@ -24,7 +24,7 @@ exports.default = [
   `--parallel ${CPU_COUNT}`,
 
   // "test/**/*.feature",
-  "../blackbox-testing/features/**/*.feature",
+  "test/specs/**/*.feature",
 
   `--tags "@testsuite:squatch-js and not @skip"`,
 
@@ -38,8 +38,8 @@ exports.default = [
   //   "--require tests/cucumber-setup/loaders.ts",
 
   // Step definitions go last
-  "--require test/step_definitions/**/*.ts",
-  "--require test/step_definitions/**/*.tsx",
+  "--require test/step_definitions/**/steps.ts",
+  // "--require test/step_definitions/**/*.tsx",
 
   // '--format usage',
 ].join(" ");

@@ -1,5 +1,5 @@
-import { EmbedWidget, WidgetApi } from "../src/squatch";
-import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../src/utils/validate";
+import { EmbedWidget, WidgetApi } from "../../src/squatch";
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/utils/validate";
 
 describe("testing", () => {
   test("load function", () => {
