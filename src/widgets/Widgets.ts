@@ -196,11 +196,11 @@ export default class Widgets {
     let widget;
     let displayOnLoad = !!config.displayOnLoad;
     let displayCTA = false;
-    const opts = response.jsOptions || "";
+    const opts = response.jsOptions || {};
 
     const params = {
       content: response.template,
-      type: config.widgetType || opts.widget.defaultWidgetType,
+      type: config.widgetType || opts.widget?.defaultWidgetType,
       api: this.api,
       domain: this.domain,
       npmCdn: this.npmCdn,
@@ -212,7 +212,7 @@ export default class Widgets {
         if (Widgets._matchesUrl(rule.url)) {
           if (
             rule.widgetType !== "CONVERSION_WIDGET" ||
-            (response.user.referredBy && response.user.referredBy.code)
+            (response.user?.referredBy && response.user?.referredBy?.code)
           ) {
             displayOnLoad = rule.displayOnLoad;
             displayCTA = rule.showAsCTA;
@@ -232,7 +232,7 @@ export default class Widgets {
       opts.fuelTankAutofillUrls.forEach(({ url, formSelector }) => {
         if (Widgets._matchesUrl(url)) {
           _log("Fuel Tank URL matches");
-          if (response.user.referredBy && response.user.referredBy.code) {
+          if (response.user?.referredBy && response.user?.referredBy?.code) {
             const formAutofill = document.querySelector(formSelector);
 
             if (formAutofill) {
@@ -251,7 +251,7 @@ export default class Widgets {
     }
 
     if (config.engagementMedium === "EMBED") {
-      this._renderEmbedWidget(params, params.context.container);
+      widget = this._renderEmbedWidget(params, params.context.container);
     } else if (config.engagementMedium === "POPUP") {
       widget = this._renderPopupWidget(params);
       if (displayOnLoad) widget.open();

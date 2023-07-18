@@ -163,25 +163,6 @@ export function autofill(selector: string): void {
 }
 
 /**
- * Overrides the default function that submits the user email. If you have
- * Security enabled, the email needs to be signed before it's submitted.
- *
- * @param {function} fn Callback function for the 'submit_email' event.
- * @returns {void}
- *
- * @example
- * squatch.submitEmail(function(target, widget, email) {
- *   // Sign email and generate jwt token
- *   var jwt = 'token';
- *   widget.reload(email, jwt);
- * });
- */
-export function submitEmail(fn: (target, widget, email) => any): void {
-  // @ts-ignore -- will throw occasionally throw a null pointer exception at runtime
-  widgets().submitEmail(fn);
-}
-
-/**
  * Manually set the _saasquatch cookie as a 1st party cookie if available as a URL parameter on the current page.
  * This runs automatically immediately when squatch-js is loaded, except when window.SaaSquatchDoNotAutoDrop is true.
  * Use this function manually if you have a single page application or custom routing that causes the `_saasquatch` URL parameter to not be set when Squatch.js loads.

@@ -354,6 +354,7 @@ export default abstract class Widget {
 function delay(duration) {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
+      /* istanbul ignore next */
       resolve(() => {});
     }, duration);
   });

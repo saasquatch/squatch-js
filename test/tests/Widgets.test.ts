@@ -50,7 +50,7 @@ describe("methods", () => {
 
       const mockRenderWidget = jest
         .spyOn(Widgets.prototype as any, "_renderWidget")
-        .mockImplementation(() => ({}));
+        .mockImplementation(() => ({ template: "asdf" }));
       const mockUpsert = jest
         .spyOn(widgets.api, "upsertUser")
         .mockImplementation(
@@ -66,7 +66,7 @@ describe("methods", () => {
         container: config.container,
         trigger: config.trigger,
       });
-      expect(result.widget).toStrictEqual({});
+      expect(result.widget).toStrictEqual({ template: "asdf" });
       expect(result.user).toBe(upsertReturn.user);
     });
     test("upsert rejects", async () => {
@@ -263,26 +263,41 @@ describe("methods", () => {
         async () => await widgets["_renderWidget"](null, {}, defaultContext)
       ).rejects.toThrow();
     });
-    test("basic render, default widget", async () => {
-      widgets["_renderWidget"](defaultResponse, defaultConfig, defaultContext);
+    test.each([{ displayOnLoad: true }, { displayOnLoad: false }])(
+      "basic render, default widget",
+      (args) => {
+        const widget = widgets["_renderWidget"](
+          defaultResponse,
+          { ...defaultConfig, ...args },
+          defaultContext
+        );
 
-      expect(PopupWidget).toHaveBeenCalledTimes(1);
-      // @ts-ignore
-      const instance = PopupWidget.mock.instances[0];
-      const mockLoad = instance.load;
-      expect(mockLoad).toBeCalled();
-    });
+        expect(widget).toBeDefined();
+
+        expect(PopupWidget).toHaveBeenCalledTimes(1);
+        // @ts-ignore
+        const instance = PopupWidget.mock.instances[0];
+        const mockLoad = instance.load;
+        expect(mockLoad).toBeCalled();
+
+        const mockOpen = instance.open;
+        if (args.displayOnLoad) expect(mockOpen).toBeCalled();
+        else expect(mockOpen).not.toBeCalled();
+      }
+    );
     test.each([
       { engagementMedium: "EMBED" as const, displayOnLoad: true },
       { engagementMedium: "EMBED" as const, displayOnLoad: false },
       { engagementMedium: "POPUP" as const, displayOnLoad: true },
       { engagementMedium: "POPUP" as const, displayOnLoad: false },
-    ])("basic render, embed widget", (args) => {
-      widgets["_renderWidget"](
+    ])("basic render cases", (args) => {
+      const widget = widgets["_renderWidget"](
         defaultResponse,
-        { ...args, ...defaultConfig },
+        { ...defaultConfig, ...args },
         defaultContext
       );
+
+      expect(widget).toBeDefined();
 
       if (args.engagementMedium === "EMBED") {
         expect(EmbedWidget).toHaveBeenCalledTimes(1);
@@ -298,9 +313,103 @@ describe("methods", () => {
         const mockOpen = instance.open;
         expect(mockLoad).toBeCalled();
         if (args.displayOnLoad) expect(mockOpen).toBeCalled();
+        else expect(mockOpen).not.toBeCalled();
       } else {
         fail();
       }
+    });
+    test.each([
+      {
+        response: {
+          jsOptions: { widget: { defaultWidgetType: "w/default-type" } },
+        },
+        config: { widgetType: undefined },
+      },
+      {
+        response: {
+          user: {
+            referredBy: {
+              code: "ASDF",
+            },
+          },
+          jsOptions: {
+            widgetUrlMappings: [
+              {
+                widgetType: "CONVERSION_WIDGET",
+                displayOnLoad: true,
+                showAsCTA: true,
+              },
+              {
+                widgetType: "w/widget-type",
+                displayOnLoad: true,
+                showAsCTA: true,
+              },
+            ],
+          },
+        },
+        config: {},
+      },
+      {
+        response: {
+          jsOptions: {
+            fuelTankAutofillUrls: [{}],
+          },
+        },
+        config: {},
+      },
+    ])("jsOptions", (args) => {
+      widgets["_renderWidget"](
+        { ...defaultResponse, ...args.response },
+        { ...defaultConfig, ...args.config },
+        defaultContext
+      );
+
+      expect(PopupWidget).toHaveBeenCalledTimes(1);
+      if (args.response.jsOptions?.widget?.defaultWidgetType)
+        // @ts-ignore
+        expect(PopupWidget.mock.calls[0][0]?.type).toBe(
+          args.response.jsOptions.widget.defaultWidgetType
+        );
+
+      // @ts-ignore
+      const instance = PopupWidget.mock.instances[0];
+      const mockLoad = instance.load;
+      expect(mockLoad).toBeCalled();
+    });
+
+    describe("jsOptions", () => {
+      test.each([{ widgetType: undefined }, { widgetType: "w/widget-type" }])(
+        "defaultWidgetType",
+        (args) => {
+          const response = {
+            jsOptions: {
+              widget: { defaultWidgetType: "w/default-widget-type" },
+            },
+          };
+          widgets["_renderWidget"](
+            {
+              ...defaultResponse,
+              ...response,
+            },
+            { ...defaultConfig, widgetType: args.widgetType },
+            defaultContext
+          );
+          expect(PopupWidget).toHaveBeenCalledTimes(1);
+          if (args.widgetType) {
+            // @ts-ignore
+            expect(PopupWidget.mock.calls[0][0].type).toBe(args.widgetType);
+          } else {
+            // @ts-ignore
+            expect(PopupWidget.mock.calls[0][0].type).toBe(
+              response.jsOptions.widget.defaultWidgetType
+            );
+          }
+          // @ts-ignore
+          const instance = PopupWidget.mock.instances[0];
+          const mockLoad = instance.load;
+          expect(mockLoad).toBeCalled();
+        }
+      );
     });
   });
   test("_renderPopupWidget", () => {});
