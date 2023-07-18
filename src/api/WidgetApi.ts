@@ -26,7 +26,6 @@ export default class WidgetApi {
   domain: string;
   npmCdn: string;
 
-  // TODO: Support using new window variables for initialisation
   /**
    * Initialize a new {@link WidgetApi} instance.
    *
