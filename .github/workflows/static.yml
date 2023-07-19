@@ -30,6 +30,8 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      PR_PATH: pull/${{github.event.number}}
 
     steps:
       - name: Checkout
@@ -55,15 +57,17 @@ jobs:
         id: build-docs
         run: npm run build:docs
 
-      - name: Upload artifact
-        id: upload-docs
-        uses: actions/upload-pages-artifact@v2
+      - name: Deploy Master
+        if: github.ref == 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          # Upload entire repository
-          path: "./docs"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      - name: Deploy Preview
+        if: github.ref != 'refs/heads/master'
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          preview: "true"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          destination_dir: ${{ env.PR_PATH }}
