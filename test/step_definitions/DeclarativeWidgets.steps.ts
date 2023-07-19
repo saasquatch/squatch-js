@@ -539,7 +539,6 @@ defineFeature(feature, (test) => {
 
     and("the widget is loaded into the DOM", async () => {
       document.body.appendChild(el);
-      console.log(document.body.innerHTML);
 
       await expect(
         waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
@@ -578,7 +577,6 @@ defineFeature(feature, (test) => {
         )
       ).resolves.toBeUndefined();
       secondFrame = el.shadowRoot!.querySelector("iframe")!;
-      console.log(secondFrame.contentDocument?.body.innerHTML);
       expect(secondFrame).toBeDefined();
       expect(secondFrame).toBeInstanceOf(HTMLIFrameElement);
 

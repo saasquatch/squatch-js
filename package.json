@@ -28,7 +28,7 @@
   "scripts": {
     "build:es": "microbundle --target node --format cjs,es",
     "build:umd": "webpack",
-    "build": "run-s build:es build:umd",
+    "build": "run-s build:es build:umd build:docs",
     "watch": "webpack --watch",
     "declaration": "tsc --emitDeclarationOnly",
     "test:browser": "cucumber-js",

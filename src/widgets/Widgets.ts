@@ -214,7 +214,6 @@ export default class Widgets {
             rule.widgetType !== "CONVERSION_WIDGET" ||
             response.user?.referredBy?.code
           ) {
-            console.log("HERE");
             displayOnLoad = rule.displayOnLoad;
             _log(`Display ${rule.widgetType} on ${rule.url}`);
           } else {
