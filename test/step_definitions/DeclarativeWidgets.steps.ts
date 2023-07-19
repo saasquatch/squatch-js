@@ -7,7 +7,6 @@ import {
 import { sanitize } from "../helpers/sanitize";
 import { PASSWORDLESS, VERIFIED } from "../mocks/handlers";
 import { server } from "../mocks/server";
-import { _getAutoConfig } from "../../src/utils/utmUtils";
 
 const feature = loadFeature("test/specs/DeclarativeWidgets.feature", {
   tagFilter: "@automated and not @cant-be-tested",
@@ -67,7 +66,7 @@ const getTokenValueFromPrompt = (prompt: any) => {
     case "a token without API key":
       return "";
     case "a valid token":
-      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19";
+      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0IiwibG9jYWxlIjoiZW5fVVMifSwiZW52Ijp7InRlbmFudEFsaWFzIjoidGVzdF9hOGI0MWpvdGY4YTF2IiwiZG9tYWluIjoiaHR0cHM6Ly9zdGFnaW5nLnJlZmVycmFsc2Fhc3F1YXRjaC5jb20ifX0";
     default:
       return prompt;
   }
@@ -514,13 +513,10 @@ defineFeature(feature, (test) => {
     let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
     let firstFrame!: HTMLIFrameElement;
     let secondFrame!: HTMLIFrameElement;
-    let changedAttr!: string;
-    let hasCustomContainer = false;
-    let widgetType!: string;
+    let attributeValue!: string | undefined;
 
     beforeEach(() => {
-      document.body.innerHTML = "";
-      hasCustomContainer = false;
+      attributeValue = undefined;
     });
 
     Background(given);
@@ -531,101 +527,68 @@ defineFeature(feature, (test) => {
       el = specificWebComponentIsIncluded(arg0);
     });
 
-    and("any container elements exist", () => {
-      const div = document.createElement("div");
-      div.id = "test-container";
-      document.body.appendChild(div);
-
-      const div2 = document.createElement("div");
-      div2.id = "new-test-container";
-      document.body.appendChild(div2);
-    });
-
     and(/^the (.*) attribute is set to (.*)$/, (arg0, arg1) => {
       const attr = sanitize(arg0) as string;
       const value = sanitize(arg1) as string;
 
-      if (attr !== "widget") {
-        widgetType = "w/widget-type";
-        el.setAttribute("widget", "w/widget-type");
-      }
-      if (attr === "container") hasCustomContainer = true;
-      if (attr === "widget") widgetType = value;
+      if (attr !== "widget") el.setAttribute("widget", "w/widge-type");
 
+      attributeValue = value;
       el.setAttribute(attr, value);
     });
 
     and("the widget is loaded into the DOM", async () => {
       document.body.appendChild(el);
-      if (hasCustomContainer) {
-        await expect(
-          waitUntil(() => !!document.body?.querySelector("iframe"), "no iframe")
-        ).resolves.toBeUndefined();
-      } else {
-        await expect(
-          waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
-        ).resolves.toBeUndefined();
-      }
+      console.log(document.body.innerHTML);
 
-      if (hasCustomContainer) {
-        firstFrame = document.body!.querySelector("iframe")!;
-      } else {
-        firstFrame = el.shadowRoot!.querySelector("iframe")!;
-      }
+      await expect(
+        waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+
+      firstFrame = el.shadowRoot!.querySelector("iframe")!;
       expect(firstFrame).toBeDefined();
       expect(firstFrame).toBeInstanceOf(HTMLIFrameElement);
 
       const html = firstFrame.contentDocument?.body.innerHTML;
-      expect(html).toContain(widgetType);
+      expect(html).toContain(attributeValue);
     });
 
     when(/^the (.*) attribute is changed to (.*)$/, (arg0, arg1) => {
       const attr = sanitize(arg0) as string;
       const value = sanitize(arg1) as string;
 
-      if (attr === "container") changedAttr = attr;
-      if (attr === "widget") widgetType = value;
-
+      // Necessary to make sure iframe has reloaded
+      // if (attr !== "widget") {
+      //   widgetType = "w/new-widget-type";
+      //   el.setAttribute("widget", widgetType);
+      // }
+      attributeValue = value;
       // Also setting widget attribute so we know when new iframe has loaded
       el.setAttribute(attr, value);
     });
 
     and("the new widget is loaded into the DOM", async () => {
-      if (hasCustomContainer) {
-        await expect(
-          waitUntil(() =>
-            document.body
-              ?.querySelector("iframe")
-              ?.contentDocument?.body.innerHTML.includes(widgetType)
-          )
-        ).resolves.toBeUndefined();
-
-        secondFrame = document.body!.querySelector("iframe")!;
-      } else {
-        await expect(
-          waitUntil(() =>
+      await expect(
+        waitUntil(
+          () =>
             el.shadowRoot
               ?.querySelector("iframe")
-              ?.contentDocument?.body.innerHTML.includes(widgetType)
-          )
-        ).resolves.toBeUndefined();
-        secondFrame = el.shadowRoot!.querySelector("iframe")!;
-      }
+              ?.contentDocument?.body.innerHTML.includes(attributeValue!),
+          "no iframe"
+        )
+      ).resolves.toBeUndefined();
+      secondFrame = el.shadowRoot!.querySelector("iframe")!;
+      console.log(secondFrame.contentDocument?.body.innerHTML);
       expect(secondFrame).toBeDefined();
       expect(secondFrame).toBeInstanceOf(HTMLIFrameElement);
 
       const html = secondFrame.contentDocument?.body.innerHTML;
-      expect(html).toContain(widgetType);
+      expect(html).toContain(attributeValue);
     });
 
     and("the new widget's iframe replaces the previous one", () => {
-      if (hasCustomContainer) {
-        const results = document.body.querySelectorAll("iframe");
-        expect(results.length).toBe(1);
-      } else {
-        const results = el.shadowRoot!.querySelectorAll("iframe");
-        expect(results.length).toBe(1);
-      }
+      const results = el.shadowRoot!.querySelectorAll("iframe");
+      expect(results.length).toBe(1);
     });
   });
   test("Opening squatch-popup web component dialog via children", ({

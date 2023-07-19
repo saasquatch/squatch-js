@@ -2,6 +2,7 @@ import WidgetApi from "../../src/api/WidgetApi";
 import Widgets from "../../src/widgets/Widgets";
 import PopupWidget from "../../src/widgets/PopupWidget";
 import EmbedWidget from "../../src/widgets/EmbedWidget";
+import { EngagementMedium } from "../../src/types";
 jest.mock("../../src/widgets/PopupWidget");
 jest.mock("../../src/widgets/EmbedWidget");
 
@@ -11,6 +12,7 @@ test("initialisation", () => {
     domain: "https://staging.referralsaasquatch.com",
     npmCdn: "http://www.example.com",
   };
+
   const widgets = new Widgets(config);
 
   expect(widgets.tenantAlias).toBe(config.tenantAlias);
@@ -21,12 +23,14 @@ test("initialisation", () => {
 });
 describe("methods", () => {
   let widgets!: Widgets;
+  let mockMatchUrl = jest.fn();
   beforeEach(() => {
     const config = {
       tenantAlias: "DEFAULT_TENANTALIAS",
       domain: "DEFAULT_DOMAIN",
       npmCdn: "DEFAULT_NPMCDN",
     };
+    Widgets["_matchesUrl"] = mockMatchUrl;
     widgets = new Widgets(config);
   });
   beforeEach(() => {
@@ -272,7 +276,7 @@ describe("methods", () => {
           defaultContext
         );
 
-        expect(widget).toBeDefined();
+        expect(widget).toBeInstanceOf(PopupWidget);
 
         expect(PopupWidget).toHaveBeenCalledTimes(1);
         // @ts-ignore
@@ -297,15 +301,15 @@ describe("methods", () => {
         defaultContext
       );
 
-      expect(widget).toBeDefined();
-
       if (args.engagementMedium === "EMBED") {
+        expect(widget).toBeInstanceOf(EmbedWidget);
         expect(EmbedWidget).toHaveBeenCalledTimes(1);
         // @ts-ignore
         const instance = EmbedWidget.mock.instances[0];
         const mockLoad = instance.load;
         expect(mockLoad).toBeCalled();
       } else if (args.engagementMedium === "POPUP") {
+        expect(widget).toBeInstanceOf(PopupWidget);
         expect(PopupWidget).toHaveBeenCalledTimes(1);
         // @ts-ignore
         const instance = PopupWidget.mock.instances[0];
@@ -318,64 +322,6 @@ describe("methods", () => {
         fail();
       }
     });
-    test.each([
-      {
-        response: {
-          jsOptions: { widget: { defaultWidgetType: "w/default-type" } },
-        },
-        config: { widgetType: undefined },
-      },
-      {
-        response: {
-          user: {
-            referredBy: {
-              code: "ASDF",
-            },
-          },
-          jsOptions: {
-            widgetUrlMappings: [
-              {
-                widgetType: "CONVERSION_WIDGET",
-                displayOnLoad: true,
-                showAsCTA: true,
-              },
-              {
-                widgetType: "w/widget-type",
-                displayOnLoad: true,
-                showAsCTA: true,
-              },
-            ],
-          },
-        },
-        config: {},
-      },
-      {
-        response: {
-          jsOptions: {
-            fuelTankAutofillUrls: [{}],
-          },
-        },
-        config: {},
-      },
-    ])("jsOptions", (args) => {
-      widgets["_renderWidget"](
-        { ...defaultResponse, ...args.response },
-        { ...defaultConfig, ...args.config },
-        defaultContext
-      );
-
-      expect(PopupWidget).toHaveBeenCalledTimes(1);
-      if (args.response.jsOptions?.widget?.defaultWidgetType)
-        // @ts-ignore
-        expect(PopupWidget.mock.calls[0][0]?.type).toBe(
-          args.response.jsOptions.widget.defaultWidgetType
-        );
-
-      // @ts-ignore
-      const instance = PopupWidget.mock.instances[0];
-      const mockLoad = instance.load;
-      expect(mockLoad).toBeCalled();
-    });
 
     describe("jsOptions", () => {
       test.each([{ widgetType: undefined }, { widgetType: "w/widget-type" }])(
@@ -386,7 +332,7 @@ describe("methods", () => {
               widget: { defaultWidgetType: "w/default-widget-type" },
             },
           };
-          widgets["_renderWidget"](
+          const widget = widgets["_renderWidget"](
             {
               ...defaultResponse,
               ...response,
@@ -394,6 +340,7 @@ describe("methods", () => {
             { ...defaultConfig, widgetType: args.widgetType },
             defaultContext
           );
+          expect(widget).toBeInstanceOf(PopupWidget);
           expect(PopupWidget).toHaveBeenCalledTimes(1);
           if (args.widgetType) {
             // @ts-ignore
@@ -410,10 +357,223 @@ describe("methods", () => {
           expect(mockLoad).toBeCalled();
         }
       );
+      test.each([
+        {
+          _matchesUrl: false,
+          response: {},
+          widgetUrlMappings: [
+            {
+              url: "www.example.com",
+              widgetType: "w/widget-type",
+              displayOnLoad: true,
+            },
+          ],
+          shouldDisplayOnLoad: false,
+          engagementMedium: "POPUP",
+        },
+        {
+          _matchesUrl: true,
+          response: {},
+          widgetUrlMappings: [
+            { url: "www.example.com", widgetType: "CONVERSION_WIDGET" },
+          ],
+          shouldDisplayOnLoad: false,
+          engagementMedium: "POPUP",
+        },
+        {
+          _matchesUrl: true,
+          response: {
+            user: { referredBy: { code: "ASDF" } },
+          },
+          widgetUrlMappings: [
+            {
+              url: "www.example.com",
+              widgetType: "CONVERSION_WIDGET",
+              displayOnLoad: true,
+            },
+          ],
+          shouldDisplayOnLoad: true,
+          engagementMedium: "POPUP",
+        },
+        {
+          _matchesUrl: true,
+          response: {
+            user: { referredBy: { code: "ASDF" } },
+          },
+          widgetUrlMappings: [
+            {
+              url: "www.example.com",
+              widgetType: "CONVERSION_WIDGET",
+              displayOnLoad: true,
+            },
+          ],
+          shouldDisplayOnLoad: true,
+          engagementMedium: undefined,
+        },
+      ])("widgetUrlMappings", (args) => {
+        mockMatchUrl.mockReturnValue(args._matchesUrl);
+
+        const widget = widgets["_renderWidget"](
+          {
+            ...defaultResponse,
+            ...args.response,
+            jsOptions: { widgetUrlMappings: args.widgetUrlMappings },
+          },
+          {
+            ...defaultConfig,
+            engagementMedium: args.engagementMedium as EngagementMedium,
+            displayOnLoad: false,
+          },
+          defaultContext
+        );
+        expect(mockMatchUrl).toHaveBeenCalled();
+        expect(mockMatchUrl).toHaveReturnedWith(args._matchesUrl);
+
+        expect(widget).toBeInstanceOf(PopupWidget);
+        // @ts-ignore
+        expect(PopupWidget).toHaveBeenCalledTimes(1);
+        if (args.shouldDisplayOnLoad) {
+          // @ts-ignore
+          const instance = PopupWidget.mock.instances[0];
+          const mockOpen = instance.open;
+          expect(mockOpen).toHaveBeenCalledTimes(1);
+        }
+      });
+      test.each([
+        {
+          _matchesUrl: false,
+          response: {},
+          fuelTankAutofillUrls: [{ url: "asdf", formSelector: "asdf" }],
+          shouldSucceed: false,
+        },
+        {
+          _matchesUrl: true,
+          response: {},
+          fuelTankAutofillUrls: [{ url: "asdf", formSelector: "asdf" }],
+          shouldSucceed: false,
+        },
+        {
+          _matchesUrl: true,
+          response: { user: { referredBy: { code: "asdf" } } },
+          fuelTankAutofillUrls: [{ url: "asdf", formSelector: "asdfasfdasdf" }],
+          shouldSucceed: false,
+        },
+        {
+          _matchesUrl: true,
+          response: {
+            user: {
+              referredBy: {
+                code: "asdf",
+              },
+            },
+          },
+          fuelTankAutofillUrls: [{ url: "asdf", formSelector: "#id" }],
+          shouldSucceed: true,
+        },
+        {
+          _matchesUrl: true,
+          response: {
+            user: {
+              referredBy: {
+                code: "asdf",
+                referredReward: { fuelTankCode: "ASDF" },
+              },
+            },
+          },
+          fuelTankAutofillUrls: [{ url: "asdf", formSelector: "#id" }],
+          shouldSucceed: true,
+        },
+      ])("fuelTankAutofillUrls", (args) => {
+        let input: HTMLInputElement | undefined;
+
+        if (args.shouldSucceed) {
+          if (args.fuelTankAutofillUrls?.[0].formSelector) {
+            input = document.createElement("input");
+            input.id = args.fuelTankAutofillUrls[0].formSelector.substring(1);
+            document.body.appendChild(input);
+          } else {
+            throw new Error("Invalid case");
+          }
+        }
+
+        mockMatchUrl.mockReturnValue(args._matchesUrl);
+
+        const widget = widgets["_renderWidget"](
+          {
+            ...defaultResponse,
+            ...args.response,
+            jsOptions: { fuelTankAutofillUrls: args.fuelTankAutofillUrls },
+          },
+
+          defaultConfig,
+          defaultContext
+        );
+        expect(mockMatchUrl).toHaveBeenCalled();
+        expect(mockMatchUrl).toHaveReturnedWith(args._matchesUrl);
+        expect(widget).toBeInstanceOf(PopupWidget);
+        // @ts-ignore
+        expect(PopupWidget).toHaveBeenCalledTimes(1);
+
+        if (args.shouldSucceed) {
+          expect(input).toBeInstanceOf(HTMLInputElement);
+          args.fuelTankAutofillUrls.forEach(({ url, formSelector }) => {
+            const elem = document.querySelector(formSelector);
+            expect(elem).not.toBeNull();
+
+            const value =
+              args.response.user?.referredBy.referredReward?.fuelTankCode;
+
+            if (value) expect((elem as HTMLInputElement).value).toBe(value);
+            else expect((elem as HTMLInputElement).value).toBe("");
+          });
+        }
+      });
     });
   });
   test("_renderPopupWidget", () => {});
   test("_renderEmbedWidget", () => {});
-  test("_renderErrorWidget", () => {});
+  describe("_renderErrorWidget", () => {
+    test.each(["POPUP", "EMBED", "INVALID", undefined])(
+      "basic",
+      (engagementMedium) => {
+        widgets["_renderErrorWidget"](
+          { apiErrorCode: "400", rsCode: "400", message: "400" },
+          engagementMedium as EngagementMedium
+        );
+
+        if (engagementMedium === "EMBED") {
+          expect(EmbedWidget).toHaveBeenCalledTimes(1);
+          // @ts-ignore
+          expect(EmbedWidget.mock.calls[0][0].type).toBe("ERROR_WIDGET");
+          // @ts-ignore
+          expect(EmbedWidget.mock.calls[0][0].context?.type).toBe("error");
+          // @ts-ignore
+          expect(EmbedWidget.mock.calls[0][0].content).toBe("error");
+          // @ts-ignore
+          const instance = EmbedWidget.mock.instances[0];
+          const mockLoad = instance.load;
+          expect(mockLoad).toBeCalled();
+        } else if (
+          engagementMedium === "POPUP" ||
+          engagementMedium === undefined
+        ) {
+          expect(PopupWidget).toHaveBeenCalledTimes(1);
+          // @ts-ignore
+          expect(PopupWidget.mock.calls[0][0].type).toBe("ERROR_WIDGET");
+          // @ts-ignore
+          expect(PopupWidget.mock.calls[0][0].context?.type).toBe("error");
+          // @ts-ignore
+          expect(PopupWidget.mock.calls[0][0].content).toBe("error");
+          // @ts-ignore
+          const instance = PopupWidget.mock.instances[0];
+          const mockLoad = instance.load;
+          expect(mockLoad).toBeCalled();
+        } else {
+          expect(EmbedWidget).not.toHaveBeenCalled();
+          expect(PopupWidget).not.toHaveBeenCalled();
+        }
+      }
+    );
+  });
   test("_matchesUrl", () => {});
 });

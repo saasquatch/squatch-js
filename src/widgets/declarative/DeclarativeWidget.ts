@@ -4,7 +4,11 @@ import WidgetApi from "../../api/WidgetApi";
 import { ConfigOptions, DeclarativeConfigOptions } from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
 import { _getAutoConfig } from "../../utils/utmUtils";
-import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../utils/validate";
+import {
+  DEFAULT_DOMAIN,
+  DEFAULT_NPM_CDN,
+  validateLocale,
+} from "../../utils/validate";
 import EmbedWidget from "../EmbedWidget";
 import PopupWidget from "../PopupWidget";
 
@@ -15,6 +19,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   token: string | undefined;
   tenant: string | undefined;
   widgetType: string | undefined;
+  locale: string | undefined;
 
   widgetApi: WidgetApi;
   analyticsApi: AnalyticsApi;
@@ -37,6 +42,8 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     this.token = window.squatchToken;
     this.tenant = window.squatchTenant;
     this.container = this;
+
+    this.locale = validateLocale(navigator.language.replace(/\-/g, "_"));
   }
 
   private _setupApis(config?: ConfigOptions) {
@@ -59,6 +66,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       .render({
         engagementMedium: configs?.widgetConfig?.engagementMedium || this.type,
         widgetType: configs?.widgetConfig?.widgetType || this.widgetType,
+        locale: configs?.widgetConfig?.locale || this.locale,
       })
       .then((res) => this._setWidget(res.template, { type: "passwordless" }))
       .catch(this.setErrorWidget);
@@ -106,6 +114,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   async getWidgetInstance() {
     let widgetInstance: EmbedWidget | PopupWidget;
     this.widgetType = this.getAttribute("widget") || undefined;
+    this.locale = this.getAttribute("locale") || this.locale;
 
     if (!this.widgetType) throw new Error("No widget has been specified");
 

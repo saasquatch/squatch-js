@@ -53,7 +53,7 @@ let _events: EventsApi | null = null;
  * @returns WidgetApi static instance
  */
 export function api(): WidgetApi | null {
-  if (!_api) exports.init({} as ConfigOptions);
+  if (!_api) init({} as ConfigOptions);
   return _api;
 }
 
@@ -65,7 +65,7 @@ export function api(): WidgetApi | null {
  * @returns static instance
  */
 export function widgets(): Widgets | null {
-  if (!_widgets) exports.init({} as ConfigOptions);
+  if (!_widgets) init({} as ConfigOptions);
   return _widgets;
 }
 
@@ -77,7 +77,7 @@ export function widgets(): Widgets | null {
  * @returns EventsApi static instance
  */
 export function events(): EventsApi | null {
-  if (!_events) exports.init({} as ConfigOptions);
+  if (!_events) init({} as ConfigOptions);
   return _events;
 }
 
@@ -143,7 +143,7 @@ export function init(configIn: ConfigOptions): void {
  * @example
  * squatch.ready(function() {
  *   console.log("ready!");
- *   squatch.api().upsertUser();
+ *   squatch.api().upsertUser({ ... });
  * });
  */
 export function ready(fn: () => any): void {

@@ -36,10 +36,13 @@ export const handlers = [
 
       if (tenantAlias === "INVALID_TENANT_ALIAS") return res(ctx.status(400));
 
+      console.log(req.body?.["locale"]);
+
       return res(
         ctx.status(200),
         ctx.json({
-          template: `<span>${VERIFIED}, ${engagementMedium}, ${widgetType}</span>`,
+          // @ts-ignore
+          template: `<span>${VERIFIED}, ${engagementMedium}, ${widgetType}, ${req.body?.["locale"]}</span>`,
         })
       );
     }
@@ -64,7 +67,7 @@ export const handlers = [
               renderWidget: {
                 template: `<p>${hasUser ? VERIFIED : PASSWORDLESS}, ${
                   variables["engagementMedium"]
-                }, ${variables["widgetType"]}</p>`,
+                }, ${variables["widgetType"]}, ${variables["locale"]}</p>`,
               },
             },
           })

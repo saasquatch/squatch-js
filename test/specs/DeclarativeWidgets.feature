@@ -103,11 +103,11 @@ Feature: Declarative widgets using custom Web Components
       | valid       | a valid token | verified     |
 
   @minutia @automated
+  # Testing with ia widgets due to landmine with jwt locale vs locale attribute
   Scenario Outline: Rerender on attribute change
     Given window.squatchTenant is "valid"
-    And window.squatchToken is "a valid token"
+    And window.squatchToken is "null"
     And the <component> web-component is included in the page's HTML
-    And any container elements exist
     And the <attribute> attribute is set to <value>
     And the widget is loaded into the DOM
     When the <attribute> attribute is changed to <newValue>
@@ -115,10 +115,27 @@ Feature: Declarative widgets using custom Web Components
     And the new widget's iframe replaces the previous one
 
     Examples:
-      | component     | attribute | value           | newValue            |
-      | squatch-embed | widget    | w/widget-type   | w/new-widget-type   |
-      | squatch-embed | container | #test-container | #new-test-container |
-      | squatch-popup | widget    | w/widget-type   | w/new-widget-type   |
+      | component     | attribute | value         | newValue          |
+      | squatch-embed | widget    | w/widget-type | w/new-widget-type |
+      | squatch-embed | locale    | en_CA         | en_US             |
+      | squatch-popup | widget    | w/widget-type | w/new-widget-type |
+      | squatch-popup | locale    | en_CA         | en_US             |
+
+  @landmine
+  Scenario Outline: Value of locale in JWT and locale attribute must be equal for verified widgets
+    Given window.squatchTenant is "valid"
+    And window.squatchToken has a user object with locale <locale>
+    And the <component> web-component is included in the page's HTML
+    And the "locale" attribute is set to <attrLocale>
+    When the component loads
+    Then the error widget <mayBe> displayed
+
+    Examples:
+      | component     | locale | attrLocale | mayBe  |
+      | squatch-embed | en_US  | en_US      | is not |
+      | squatch-embed | en_US  | en_CA      | is     |
+      | squatch-popup | en_US  | en_US      | is not |
+      | squatch-popup | en_US  | en_CA      | is     |
 
   @minutia @automated
   Scenario Outline: Opening squatch-popup web component dialog via children
@@ -336,3 +353,11 @@ Feature: Declarative widgets using custom Web Components
     And the component's AnalyticsAPI has "domain" set to "https://staging.referralsaasquatch.com"
     And the widget loaded has widgetType "OVERRIDE_WIDGET_TYPE"
     And the widget will be rendered as a "POPUP" widget
+
+  @minutia
+  Scenario Outline: Locale attribute on declarative widgets
+    Examples:
+      | attribute | userLocale | browserLocale | locale |
+      | fr_FR     | en_CA      | en_US         | fr_FR  |
+      | null      | en_CA      | en_US         | en_CA  |
+      | null      | null       | en_US         | en_US  |

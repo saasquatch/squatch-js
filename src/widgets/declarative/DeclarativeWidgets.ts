@@ -8,21 +8,22 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   }
 
   static get observedAttributes() {
-    return ["widget", "container"];
+    return ["widget", "locale"];
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
     if (oldVal === newVal || !oldVal) return; // nothing to do
 
     switch (attr) {
+      case "locale":
       case "widget":
         this.connectedCallback();
         break;
-      // Specific to embed widgets
-      case "container":
-        if (this.widgetInstance._findElement()) this.close();
-        this.connectedCallback();
-        break;
+      // // Specific to embed widgets
+      // case "container":
+      //   if (this.widgetInstance._findElement()) this.close();
+      //   this.connectedCallback();
+      //   break;
     }
   }
 
@@ -53,7 +54,7 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   static get observedAttributes() {
-    return ["widget", "id", "open"];
+    return ["widget", "id", "open", "locale"];
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
@@ -61,6 +62,7 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
 
     switch (attr) {
       case "open":
+      case "locale":
       case "widget":
         this.connectedCallback();
         break;

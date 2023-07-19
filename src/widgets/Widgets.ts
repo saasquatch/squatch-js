@@ -83,7 +83,7 @@ export default class Widgets {
       return {
         widget: this._renderWidget(response, clean, {
           type: "upsert",
-          user: clean.user || null,
+          user: clean.user,
           engagementMedium: config.engagementMedium,
           container: config.container,
           trigger: config.trigger,
@@ -195,7 +195,6 @@ export default class Widgets {
 
     let widget;
     let displayOnLoad = !!config.displayOnLoad;
-    let displayCTA = false;
     const opts = response.jsOptions || {};
 
     const params = {
@@ -210,12 +209,13 @@ export default class Widgets {
     if (opts.widgetUrlMappings) {
       opts.widgetUrlMappings.forEach((rule) => {
         if (Widgets._matchesUrl(rule.url)) {
+          console.log({ response, rule });
           if (
             rule.widgetType !== "CONVERSION_WIDGET" ||
-            (response.user?.referredBy && response.user?.referredBy?.code)
+            response.user?.referredBy?.code
           ) {
+            console.log("HERE");
             displayOnLoad = rule.displayOnLoad;
-            displayCTA = rule.showAsCTA;
             _log(`Display ${rule.widgetType} on ${rule.url}`);
           } else {
             _log(
@@ -232,12 +232,12 @@ export default class Widgets {
       opts.fuelTankAutofillUrls.forEach(({ url, formSelector }) => {
         if (Widgets._matchesUrl(url)) {
           _log("Fuel Tank URL matches");
-          if (response.user?.referredBy && response.user?.referredBy?.code) {
+          if (response.user?.referredBy?.code) {
             const formAutofill = document.querySelector(formSelector);
 
             if (formAutofill) {
               formAutofill.value =
-                response.user.referredBy.referredReward.fuelTankCode || "";
+                response.user.referredBy.referredReward?.fuelTankCode || "";
             } else {
               _log(
                 new Error(
@@ -273,7 +273,7 @@ export default class Widgets {
   }
 
   private _renderEmbedWidget(params, container) {
-    const widget = new EmbedWidget(params);
+    const widget = new EmbedWidget(params, container);
     widget.load();
 
     return widget;
