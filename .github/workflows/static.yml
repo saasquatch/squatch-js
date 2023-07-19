@@ -16,6 +16,7 @@ permissions:
   # Write permissions are needed to push the built site to the gh-pages branch
   contents: write
   id-token: write
+  pull-requests: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -34,6 +35,17 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v3
+
+      - name: Comment on PR
+        if: github.ref != 'refs/heads/master'
+        id: preview-comment
+        uses: hasura/comment-progress@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          message: "Starting deployment of docs preview ⏳..."
 
       - name: Setup NodeJS
         id: setup-node
@@ -64,3 +76,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           destination_dir: ${{ env.PR_PATH }}
+
+      - name: Update preview comment
+        if: github.ref != 'refs/heads/master'
+        id: update-preview-comment
+        uses: hasura/comment-progress@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          number: ${{ github.event.number }}
+          id: deploy-preview
+          message: "A preview of ${{ github.event.after }} is uploaded and can be seen here:\n\n ✨ https://saasquatch.github.io/squatch-js/${{ env.PR_PATH }} ✨"
