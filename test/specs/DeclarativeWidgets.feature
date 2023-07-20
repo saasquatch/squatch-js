@@ -135,7 +135,7 @@ Feature: Declarative widgets using custom Web Components
     Then the returned widget content has translation locale set to <locale>
 
     Examples:
-      | mayContain       | isOrNot    | locale |
+      | mayContain       | isOrNotSet | locale |
       | does contain     | is set     | fr_FR  |
       | does contain     | is not set | en_CA  |
       | does not contain | is set     | fr_FR  |

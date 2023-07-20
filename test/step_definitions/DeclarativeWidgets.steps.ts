@@ -66,6 +66,7 @@ const getTokenValueFromPrompt = (prompt: any) => {
     case "a token without API key":
       return "";
     case "a valid token":
+      // Locale token
       // return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0IiwibG9jYWxlIjoiZW5fVVMifSwiZW52Ijp7InRlbmFudEFsaWFzIjoidGVzdF9hOGI0MWpvdGY4YTF2IiwiZG9tYWluIjoiaHR0cHM6Ly9zdGFnaW5nLnJlZmVycmFsc2Fhc3F1YXRjaC5jb20ifX0";
       return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19";
     default:
@@ -1080,7 +1081,20 @@ defineFeature(feature, (test) => {
     SquatchTokenIs(and);
     and(
       /^window.squatchToken encodes a user object which (.*) the locale property with value "(.*)"$/,
-      (arg0, arg1) => {}
+      (arg0, arg1) => {
+        const contains = sanitize(arg0);
+        const userLocale = sanitize(arg1);
+
+        if (contains === "does contain" && userLocale === "en_CA") {
+          // JWT here contains locale: "en_CA"
+          window.squatchToken =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0IiwibG9jYWxlIjoiZW5fQ0EifSwiZW52Ijp7InRlbmFudEFsaWFzIjoidGVzdF9hOGI0MWpvdGY4YTF2IiwiZG9tYWluIjoiaHR0cHM6Ly9zdGFnaW5nLnJlZmVycmFsc2Fhc3F1YXRjaC5jb20ifX0";
+        } else if (contains === "does not contain") {
+          // Do nothing
+        } else {
+          fail();
+        }
+      }
     );
 
     and("either web-component is included in the page's HTML", () => {
@@ -1089,14 +1103,39 @@ defineFeature(feature, (test) => {
 
     and(
       /^the "(.*)" attribute with value "(.*)" (.*) on the web-component$/,
-      (arg0, arg1, arg2) => {}
+      (arg0, arg1, arg2) => {
+        const attr = sanitize(arg0);
+        const locale = sanitize(arg1) as string;
+        const isOrNotSet = sanitize(arg2);
+
+        console.log(isOrNotSet);
+        if (isOrNotSet === "is set") {
+          el.setAttribute("locale", locale);
+        } else if (isOrNotSet === "is not set") {
+          el.removeAttribute("locale");
+        } else {
+          fail();
+        }
+      }
     );
 
-    when("the component loads", () => {});
+    when("the component loads", async () => {
+      el.setAttribute("widget", "w/widget-type");
+      document.body.appendChild(el);
+      await expect(
+        waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+    });
 
     then(
       /^the returned widget content has translation locale set to (.*)$/,
-      (arg0) => {}
+      (arg0) => {
+        const locale = sanitize(arg0);
+
+        const frame = el.shadowRoot?.querySelector("iframe");
+        expect(frame).toBeInstanceOf(HTMLIFrameElement);
+        expect(frame!.contentDocument?.body.innerHTML).toContain(locale);
+      }
     );
   });
 });

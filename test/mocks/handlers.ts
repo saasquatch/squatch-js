@@ -40,8 +40,11 @@ export const handlers = [
       return res(
         ctx.status(200),
         ctx.json({
-          // @ts-ignore
-          template: `<span>${VERIFIED}, ${engagementMedium}, ${widgetType}, ${locale}</span>`,
+          // default locale is en_US
+          // Mocking locale logic in the backend
+          template: `<span>${VERIFIED}, ${engagementMedium}, ${widgetType}, ${
+            locale || req.body?.["locale"] || "en_US"
+          }</span>`,
         })
       );
     }
@@ -64,9 +67,14 @@ export const handlers = [
           ctx.json({
             data: {
               renderWidget: {
+                // default locale is en_US
                 template: `<p>${hasUser ? VERIFIED : PASSWORDLESS}, ${
                   variables["engagementMedium"]
-                }, ${variables["widgetType"]}, ${variables["locale"]}</p>`,
+                }, ${variables["widgetType"]}, ${
+                  variables["locale"] ||
+                  variables["user"]?.["locale"] ||
+                  "en_US"
+                }</p>`,
               },
             },
           })
