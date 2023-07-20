@@ -14,17 +14,6 @@ import PopupWidget from "../PopupWidget";
 
 const _log = debug("sqh:DeclarativeWidget");
 
-/**
- * Abstract class for declarative widget web-components
- * @extends HTMLElement
- * @example <caption>Example usage for extending DeclarativeWidget</caption>
- * class TestWidget extends DeclarativeWidget {
- *   this.type = "EMBED" // An embedded widget
- *   async connectedCallback() {
- *     await this.renderWidget()
- *   }
- * }
- */
 export default abstract class DeclarativeWidget extends HTMLElement {
   config: DeclarativeConfigOptions | undefined;
   token: string | undefined;

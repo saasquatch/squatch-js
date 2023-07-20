@@ -4,5 +4,6 @@ node_modules
 temp
 dist
 coverage
+docs
 
 stats.json
