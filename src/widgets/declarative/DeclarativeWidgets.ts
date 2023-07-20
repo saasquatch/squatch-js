@@ -19,11 +19,6 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
       case "widget":
         this.connectedCallback();
         break;
-      // // Specific to embed widgets
-      // case "container":
-      //   if (this.widgetInstance._findElement()) this.close();
-      //   this.connectedCallback();
-      //   break;
     }
   }
 
@@ -54,14 +49,13 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   static get observedAttributes() {
-    return ["widget", "id", "open", "locale"];
+    return ["widget", "locale"];
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
     if (oldVal === newVal || !oldVal) return; // nothing to do
 
     switch (attr) {
-      case "open":
       case "locale":
       case "widget":
         this.connectedCallback();

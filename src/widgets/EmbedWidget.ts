@@ -77,7 +77,9 @@ export default class EmbedWidget extends Widget {
     });
   }
 
-  // Un-hide if element is available and refresh data
+  /**
+   * Un-hide if element is available and refresh data
+   */
   open() {
     const frame = this._findFrame();
     if (!frame) return _log("no target element to open");

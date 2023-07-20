@@ -72,6 +72,7 @@ export default class WidgetApi {
       widgetType,
       engagementMedium = "POPUP",
       jwt,
+      locale,
       user,
     } = clean as WithRequired<WidgetConfig, "user">;
 
@@ -81,7 +82,11 @@ export default class WidgetApi {
       : null;
     const userId = user.id ? encodeURIComponent(user.id) : null;
 
-    const optionalParams = _buildParams({ widgetType, engagementMedium });
+    const optionalParams = _buildParams({
+      widgetType,
+      engagementMedium,
+      locale,
+    });
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
@@ -167,16 +172,20 @@ export default class WidgetApi {
 function _buildParams({
   widgetType,
   engagementMedium,
+  locale,
 }: {
-  widgetType?: WidgetType;
   engagementMedium: EngagementMedium;
+  widgetType?: WidgetType;
+  locale?: string;
 }) {
-  const widgetTypeP = widgetType
-    ? `?widgetType=${encodeURIComponent(widgetType)}`
-    : ``;
-  const engagementMediumP = `${
-    widgetType ? "&" : "?"
-  }engagementMedium=${encodeURIComponent(engagementMedium)}`;
-  const optionalParams = widgetTypeP + engagementMediumP;
-  return optionalParams;
+  const engagementMediumP = `engagementMedium=${encodeURIComponent(
+    engagementMedium
+  )}`;
+  const widgetTypeP =
+    widgetType && `widgetType=${encodeURIComponent(widgetType)}`;
+  const localeP = locale && `locale=${encodeURIComponent(locale)}`;
+
+  const params = [engagementMediumP, widgetTypeP, localeP].filter((x) => !!x);
+  const queryString = `?${params.join("&")}`;
+  return queryString;
 }

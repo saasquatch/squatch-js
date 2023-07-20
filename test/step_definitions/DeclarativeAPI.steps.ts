@@ -344,43 +344,5 @@ defineFeature(feature, (test) => {
   // CA: Ideally this can be tested with jest.spyOn(squatchjs, "init")
   //     however there isn't a good way to mock the init for a single test
 
-  // test("Squatchjs API methods if squatch.init hasn't been called", ({
-  //   given,
-  //   when,
-  //   then,
-  //   and,
-  // }) => {
-  //   Background(given);
-
-  //   given("I have not called squatch.init or a squatchjs API method", () => {
-  //     // @ts-ignore
-  //     expect(global._api).toBeNull();
-  //     // @ts-ignore
-  //     expect(global._widgets).toBeNull();
-  //     // @ts-ignore
-  //     expect(global._events).toBeNull();
-  //   });
-
-  //   when(/^I call (.*)$/, (arg0) => {
-  //     const method = sanitize(arg0);
-
-  //     if (method === "squatch.api") {
-  //       squatchjs.api();
-  //     } else if (method === "squatch.widgets") {
-  //       squatchjs.widgets();
-  //     } else if (method === "squatch.events") {
-  //       squatchjs.events();
-  //     } else {
-  //       fail();
-  //     }
-  //   });
-
-  //   then("squatchjs implicitly calls squatch.init", () => {
-  //     expect(squatchjs.init).toBeCalled();
-  //   });
-
-  //   and("the init method is passed an empty initial config", (arg0, arg1) => {
-  //     expect(squatchjs.init).toBeCalledWith({});
-  //   });
-  // });
+  // test("Squatchjs API methods if squatch.init hasn't been called", () => {})
 });

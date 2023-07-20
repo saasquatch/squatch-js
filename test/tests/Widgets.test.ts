@@ -21,6 +21,15 @@ test("initialisation", () => {
   expect(widgets.api).toBeInstanceOf(WidgetApi);
   expect(widgets.api.tenantAlias).toBe(config.tenantAlias);
 });
+test.each([
+  { r: "example.com", href: "https://www.example.com", valid: true },
+  { r: "example.com.au", href: "https://www.example.com", valid: false },
+  { r: "^www.example.com", href: "https://www.example.com", valid: false },
+])("_matchesUrl static method", ({ r, href, valid }) => {
+  window.location.href = href;
+  const response = Widgets["_matchesUrl"](r);
+  expect(response).toBe(valid);
+});
 describe("methods", () => {
   let widgets!: Widgets;
   let mockMatchUrl = jest.fn();
@@ -33,9 +42,9 @@ describe("methods", () => {
     Widgets["_matchesUrl"] = mockMatchUrl;
     widgets = new Widgets(config);
   });
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  // afterEach(() => {
+  //   jest.clearAllMocks();
+  // });
   describe("upsertUser", () => {
     const config = {
       user: {
@@ -575,5 +584,4 @@ describe("methods", () => {
       }
     );
   });
-  test("_matchesUrl", () => {});
 });

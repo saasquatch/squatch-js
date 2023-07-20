@@ -556,13 +556,7 @@ defineFeature(feature, (test) => {
       const attr = sanitize(arg0) as string;
       const value = sanitize(arg1) as string;
 
-      // Necessary to make sure iframe has reloaded
-      // if (attr !== "widget") {
-      //   widgetType = "w/new-widget-type";
-      //   el.setAttribute("widget", widgetType);
-      // }
       attributeValue = value;
-      // Also setting widget attribute so we know when new iframe has loaded
       el.setAttribute(attr, value);
     });
 

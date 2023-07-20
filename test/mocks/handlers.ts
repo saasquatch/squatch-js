@@ -20,6 +20,7 @@ export const handlers = [
     (req, res, ctx) => {
       const widgetType = req.url.searchParams.get("widgetType");
       const engagementMedium = req.url.searchParams.get("engagementMedium");
+      const locale = req.url.searchParams.get("locale");
 
       const {
         tenantAlias: _tenantAlias,
@@ -36,13 +37,11 @@ export const handlers = [
 
       if (tenantAlias === "INVALID_TENANT_ALIAS") return res(ctx.status(400));
 
-      console.log(req.body?.["locale"]);
-
       return res(
         ctx.status(200),
         ctx.json({
           // @ts-ignore
-          template: `<span>${VERIFIED}, ${engagementMedium}, ${widgetType}, ${req.body?.["locale"]}</span>`,
+          template: `<span>${VERIFIED}, ${engagementMedium}, ${widgetType}, ${locale}</span>`,
         })
       );
     }

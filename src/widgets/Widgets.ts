@@ -209,7 +209,6 @@ export default class Widgets {
     if (opts.widgetUrlMappings) {
       opts.widgetUrlMappings.forEach((rule) => {
         if (Widgets._matchesUrl(rule.url)) {
-          console.log({ response, rule });
           if (
             rule.widgetType !== "CONVERSION_WIDGET" ||
             response.user?.referredBy?.code
@@ -319,6 +318,7 @@ export default class Widgets {
    */
   private static _matchesUrl(rule) {
     // If there were no matches, null is returned.
+    console.log({ href: window.location.href });
     return window.location.href.match(new RegExp(rule)) ? true : false;
   }
 }

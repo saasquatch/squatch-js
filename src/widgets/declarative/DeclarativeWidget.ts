@@ -14,6 +14,17 @@ import PopupWidget from "../PopupWidget";
 
 const _log = debug("sqh:DeclarativeWidget");
 
+/**
+ * Abstract class for declarative widget web-components
+ * @extends HTMLElement
+ * @example <caption>Example usage for extending DeclarativeWidget</caption>
+ * class TestWidget extends DeclarativeWidget {
+ *   this.type = "EMBED" // An embedded widget
+ *   async connectedCallback() {
+ *     await this.renderWidget()
+ *   }
+ * }
+ */
 export default abstract class DeclarativeWidget extends HTMLElement {
   config: DeclarativeConfigOptions | undefined;
   token: string | undefined;
@@ -29,8 +40,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   container: string | HTMLElement | undefined | null;
   element: HTMLElement | undefined;
-
-  _hasChildren: boolean;
 
   constructor() {
     super();
@@ -81,6 +90,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     const widgetInstance = await this.widgetApi
       .upsertUser({
         user: userObj,
+        locale: this.locale,
         engagementMedium: this.type,
         widgetType: this.widgetType,
         jwt: this.token,
@@ -152,14 +162,25 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     }
   };
 
+  /**
+   * Calls `open` method of `widgetInstance`
+   * @throws Throws an Error if called before the widget has loaded
+   */
   open() {
+    if (!this.widgetInstance) throw new Error("Widget has not loaded yet");
     this.widgetInstance.open();
   }
 
+  /**
+   * Calls `close` method of `widgetInstance`
+   * @throws Throws an Error if called before the widget has loaded
+   */
   close() {
+    if (!this.widgetInstance) throw new Error("Widget has not loaded yet");
     this.widgetInstance.close();
   }
 
+  reload = this.renderWidget;
   show = this.open;
   hide = this.close;
 }
