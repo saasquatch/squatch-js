@@ -15,6 +15,13 @@
 <li><a href="../modules.html">@saasquatch/squatch-js</a></li>
 <li><a href="DeclarativePopupWidget.html">DeclarativePopupWidget</a></li></ul>
 <h1>Class DeclarativePopupWidget</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>Base class for <code>squatch-popup</code> web-component</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Example</h4><pre><code class="language-ts"><span class="hl-6">const</span><span class="hl-5"> </span><span class="hl-13">widget</span><span class="hl-5"> = </span><span class="hl-7">document</span><span class="hl-5">.</span><span class="hl-8">querySelector</span><span class="hl-5">(</span><span class="hl-9">&#39;squatch-popup&#39;</span><span class="hl-5">) </span><span class="hl-12">as</span><span class="hl-5"> </span><span class="hl-14">DeclarativePopupWidget</span>
+</code><button>Copy</button></pre>
+</div></section>
 <section class="tsd-panel tsd-hierarchy">
 <h4>Hierarchy</h4>
 <ul class="tsd-hierarchy">
@@ -22,7 +29,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">DeclarativePopupWidget</span></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidgets.ts#L37">src/widgets/declarative/DeclarativeWidgets.ts:37</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidgets.ts#L54">src/widgets/declarative/DeclarativeWidgets.ts:54</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -367,7 +374,7 @@
 <h4 class="tsd-returns-title">Returns <a href="DeclarativePopupWidget.html" class="tsd-signature-type tsd-kind-class">DeclarativePopupWidget</a></h4><aside class="tsd-sources">
 <p>Overrides DeclarativeWidget.constructor</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidgets.ts#L38">src/widgets/declarative/DeclarativeWidgets.ts:38</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidgets.ts#L55">src/widgets/declarative/DeclarativeWidgets.ts:55</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="ATTRIBUTE_NODE" class="tsd-anchor"></a>
@@ -537,10 +544,13 @@
 <li>Defined in node_modules/typescript/lib/lib.dom.d.ts:10009</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="analyticsApi" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>analytics<wbr/>Api</span><a href="#analyticsApi" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">analytics<wbr/>Api</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">default</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">analytics<wbr/>Api</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type ">default</span></div>
+<div class="tsd-comment tsd-typography"><p>Instance of AnalyticsApi</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.analyticsApi</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L25">src/widgets/declarative/DeclarativeWidget.ts:25</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L64">src/widgets/declarative/DeclarativeWidget.ts:64</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="ariaAtomic" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>aria<wbr/>Atomic</span><a href="#ariaAtomic" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">aria<wbr/>Atomic</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
@@ -1004,16 +1014,28 @@
 <li>Defined in node_modules/typescript/lib/lib.dom.d.ts:7577</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="config" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>config</span><a href="#config" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">config</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../types/DeclarativeConfigOptions.html" class="tsd-signature-type tsd-kind-type-alias">DeclarativeConfigOptions</a></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">config</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="../types/DeclarativeConfigOptions.html" class="tsd-signature-type tsd-kind-type-alias">DeclarativeConfigOptions</a></div>
+<div class="tsd-comment tsd-typography"><p>Configuration overrides</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Default</h4><pre><code class="language-ts"><span class="hl-7">window</span><span class="hl-5">.</span><span class="hl-7">squatchConfig</span>
+</code><button>Copy</button></pre>
+</div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.config</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L18">src/widgets/declarative/DeclarativeWidget.ts:18</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L32">src/widgets/declarative/DeclarativeWidget.ts:32</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="container" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>container</span><a href="#container" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">container</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">HTMLElement</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">container</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">HTMLElement</span></div>
+<div class="tsd-comment tsd-typography"><p>Container element to contain the widget iframe</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Default</h4><pre><code class="language-ts"><span class="hl-6">this</span>
+</code><button>Copy</button></pre>
+</div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.container</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L30">src/widgets/declarative/DeclarativeWidget.ts:30</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L80">src/widgets/declarative/DeclarativeWidget.ts:80</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="contentEditable" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>content<wbr/>Editable</span><a href="#contentEditable" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">content<wbr/>Editable</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -1055,7 +1077,7 @@
 <div class="tsd-signature"><span class="tsd-kind-property">element</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type ">HTMLElement</span></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.element</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L31">src/widgets/declarative/DeclarativeWidget.ts:31</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L81">src/widgets/declarative/DeclarativeWidget.ts:81</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="enterKeyHint" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>enter<wbr/>Key<wbr/>Hint</span><a href="#enterKeyHint" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">enter<wbr/>Key<wbr/>Hint</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -1112,7 +1134,7 @@
 </div></li></ul></li></ul></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.hide</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L174">src/widgets/declarative/DeclarativeWidget.ts:174</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L234">src/widgets/declarative/DeclarativeWidget.ts:234</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="id" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -1219,10 +1241,13 @@
 <li>Defined in node_modules/typescript/lib/lib.dom.d.ts:7589</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="locale" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>locale</span><a href="#locale" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">locale</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">locale</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Locale to render the widget in</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.locale</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L22">src/widgets/declarative/DeclarativeWidget.ts:22</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L54">src/widgets/declarative/DeclarativeWidget.ts:54</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="namespaceURI" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagReadonly">Readonly</code> <span>namespaceURI</span><a href="#namespaceURI" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">namespaceURI</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
@@ -3858,10 +3883,13 @@
 <ul class="tsd-signatures">
 <li class="tsd-signature" id="reload.__type-2.__type-3"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4></li></ul></li></ul></div><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Calls <a href="DeclarativeEmbedWidget.html#getWidgetInstance" class="tsd-kind-method">getWidgetInstance</a> to build the Widget instance and loads the widget iframe into the DOM.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<div class="tsd-comment tsd-typography"></div></li></ul></li></ul></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.reload</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L172">src/widgets/declarative/DeclarativeWidget.ts:172</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L232">src/widgets/declarative/DeclarativeWidget.ts:232</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="role" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>role</span><a href="#role" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">role</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
@@ -3932,7 +3960,7 @@
 </div></li></ul></li></ul></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.show</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L173">src/widgets/declarative/DeclarativeWidget.ts:173</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L233">src/widgets/declarative/DeclarativeWidget.ts:233</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="slot" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>slot</span><a href="#slot" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">slot</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -3982,10 +4010,16 @@
 <li>Defined in node_modules/typescript/lib/lib.dom.d.ts:7636</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="tenant" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>tenant</span><a href="#tenant" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">tenant</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">tenant</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Tenant alias of SaaSquatch tenant</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Default</h4><pre><code class="language-ts"><span class="hl-7">window</span><span class="hl-5">.</span><span class="hl-7">squatchTenant</span>
+</code><button>Copy</button></pre>
+</div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.tenant</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L20">src/widgets/declarative/DeclarativeWidget.ts:20</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L44">src/widgets/declarative/DeclarativeWidget.ts:44</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="textContent" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>text<wbr/>Content</span><a href="#textContent" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">text<wbr/>Content</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
@@ -4006,10 +4040,16 @@
 <li>Defined in node_modules/typescript/lib/lib.dom.d.ts:10038</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="token" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>token</span><a href="#token" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">token</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">token</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>Signed JWT containing user information</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<h4>Default</h4><pre><code class="language-ts"><span class="hl-7">window</span><span class="hl-5">.</span><span class="hl-7">squatchToken</span>
+</code><button>Copy</button></pre>
+</div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.token</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L19">src/widgets/declarative/DeclarativeWidget.ts:19</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L38">src/widgets/declarative/DeclarativeWidget.ts:38</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="translate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>translate</span><a href="#translate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">translate</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
@@ -4018,28 +4058,40 @@
 <li>Defined in node_modules/typescript/lib/lib.dom.d.ts:10039</li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="type" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>type</span><a href="#type" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">type</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;POPUP&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;EMBED&quot;</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">type</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;POPUP&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;EMBED&quot;</span></div>
+<div class="tsd-comment tsd-typography"><p>Determines whether to render the widget as an embedding widget or popup widget.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.type</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L27">src/widgets/declarative/DeclarativeWidget.ts:27</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L74">src/widgets/declarative/DeclarativeWidget.ts:74</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="widgetApi" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>widget<wbr/>Api</span><a href="#widgetApi" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">widget<wbr/>Api</span><span class="tsd-signature-symbol">:</span> <a href="WidgetApi.html" class="tsd-signature-type tsd-kind-class">WidgetApi</a></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">widget<wbr/>Api</span><span class="tsd-signature-symbol">:</span> <a href="WidgetApi.html" class="tsd-signature-type tsd-kind-class">WidgetApi</a></div>
+<div class="tsd-comment tsd-typography"><p>Instance of <a href="WidgetApi.html" class="tsd-kind-class">WidgetApi</a></p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.widgetApi</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L24">src/widgets/declarative/DeclarativeWidget.ts:24</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L59">src/widgets/declarative/DeclarativeWidget.ts:59</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="widgetInstance" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>widget<wbr/>Instance</span><a href="#widgetInstance" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">widget<wbr/>Instance</span><span class="tsd-signature-symbol">:</span> <a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">widget<wbr/>Instance</span><span class="tsd-signature-symbol">:</span> <a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a></div>
+<div class="tsd-comment tsd-typography"><p>Instance of <a href="EmbedWidget.html" class="tsd-kind-class">EmbedWidget</a> or <a href="PopupWidget.html" class="tsd-kind-class">PopupWidget</a></p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.widgetInstance</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L28">src/widgets/declarative/DeclarativeWidget.ts:28</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L69">src/widgets/declarative/DeclarativeWidget.ts:69</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited"><a id="widgetType" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>widget<wbr/>Type</span><a href="#widgetType" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
-<div class="tsd-signature"><span class="tsd-kind-property">widget<wbr/>Type</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
+<div class="tsd-signature"><span class="tsd-kind-property">widget<wbr/>Type</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+<div class="tsd-comment tsd-typography"><p>widgetType of widget to load</p>
+</div>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.widgetType</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L21">src/widgets/declarative/DeclarativeWidget.ts:21</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L49">src/widgets/declarative/DeclarativeWidget.ts:49</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
 <section class="tsd-panel tsd-member"><a id="observedAttributes" class="tsd-anchor"></a>
@@ -4049,7 +4101,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidgets.ts#L51">src/widgets/declarative/DeclarativeWidgets.ts:51</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidgets.ts#L71">src/widgets/declarative/DeclarativeWidgets.ts:71</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="addEventListener" class="tsd-anchor"></a>
@@ -4228,7 +4280,7 @@
 <h5><span class="tsd-kind-parameter">newVal</span>: <span class="tsd-signature-type">string</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidgets.ts#L55">src/widgets/declarative/DeclarativeWidgets.ts:55</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidgets.ts#L75">src/widgets/declarative/DeclarativeWidgets.ts:75</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="before" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>before</span><a href="#before" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -4317,7 +4369,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.close</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L167">src/widgets/declarative/DeclarativeWidget.ts:167</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L227">src/widgets/declarative/DeclarativeWidget.ts:227</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="closest" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>closest</span><a href="#closest" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -4426,7 +4478,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidgets.ts#L66">src/widgets/declarative/DeclarativeWidgets.ts:66</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidgets.ts#L86">src/widgets/declarative/DeclarativeWidgets.ts:86</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="contains" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>contains</span><a href="#contains" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -4790,10 +4842,16 @@
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="getWidgetInstance.getWidgetInstance-1"><span class="tsd-kind-call-signature">get<wbr/>Widget<wbr/>Instance</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a><span class="tsd-signature-symbol">&gt;</span><a href="#getWidgetInstance.getWidgetInstance-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Fetches widget content from SaaSquatch and builds a Widget instance to support rendering the widget in the DOM.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a><span class="tsd-signature-symbol">&gt;</span></h4><p>Instance of either <a href="EmbedWidget.html" class="tsd-kind-class">EmbedWidget</a> or <a href="PopupWidget.html" class="tsd-kind-class">PopupWidget</a> depending on <code>this.type</code></p>
+
+<div class="tsd-comment tsd-typography">
+<h4>Throws</h4><p>Throws an Error if <code>widgetType</code> is undefined</p>
+</div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.getWidgetInstance</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L113">src/widgets/declarative/DeclarativeWidget.ts:113</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L166">src/widgets/declarative/DeclarativeWidget.ts:166</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="hasAttribute" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>has<wbr/>Attribute</span><a href="#hasAttribute" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -5086,7 +5144,7 @@
 </div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.open</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L158">src/widgets/declarative/DeclarativeWidget.ts:158</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L218">src/widgets/declarative/DeclarativeWidget.ts:218</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="prepend" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>prepend</span><a href="#prepend" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -5447,10 +5505,13 @@
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="renderWidget.renderWidget-1"><span class="tsd-kind-call-signature">render<wbr/>Widget</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><a href="#renderWidget.renderWidget-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
+<div class="tsd-comment tsd-typography"><p>Calls <a href="DeclarativeEmbedWidget.html#getWidgetInstance" class="tsd-kind-method">getWidgetInstance</a> to build the Widget instance and loads the widget iframe into the DOM.</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type ">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.renderWidget</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L132">src/widgets/declarative/DeclarativeWidget.ts:132</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L188">src/widgets/declarative/DeclarativeWidget.ts:188</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="replaceChild" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>replace<wbr/>Child</span><a href="#replaceChild" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
@@ -5732,15 +5793,19 @@
 <ul class="tsd-signatures tsd-is-inherited">
 <li class="tsd-signature tsd-anchor-link" id="setErrorWidget.setErrorWidget-1"><span class="tsd-kind-call-signature">set<wbr/>Error<wbr/>Widget</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">e</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a><a href="#setErrorWidget.setErrorWidget-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
 <li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Builds a Widget instance for the default error widget.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li>
 <h5><span class="tsd-kind-parameter">e</span>: <span class="tsd-signature-type ">Error</span></h5></li></ul></div>
-<h4 class="tsd-returns-title">Returns <a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a></h4><aside class="tsd-sources">
+<h4 class="tsd-returns-title">Returns <a href="EmbedWidget.html" class="tsd-signature-type tsd-kind-class">EmbedWidget</a><span class="tsd-signature-symbol"> | </span><a href="PopupWidget.html" class="tsd-signature-type tsd-kind-class">PopupWidget</a></h4><p>Instance of either <a href="EmbedWidget.html" class="tsd-kind-class">EmbedWidget</a> or <a href="PopupWidget.html" class="tsd-kind-class">PopupWidget</a> depending on <code>this.type</code></p>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <p>Inherited from DeclarativeWidget.setErrorWidget</p>
 <ul>
-<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/636c229/src/widgets/declarative/DeclarativeWidget.ts#L137">src/widgets/declarative/DeclarativeWidget.ts:137</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/saasquatch/squatch-js/blob/0acc249/src/widgets/declarative/DeclarativeWidget.ts#L197">src/widgets/declarative/DeclarativeWidget.ts:197</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-is-inherited tsd-is-external"><a id="setPointerCapture" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>set<wbr/>Pointer<wbr/>Capture</span><a href="#setPointerCapture" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-is-inherited tsd-is-external">
