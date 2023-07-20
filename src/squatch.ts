@@ -51,6 +51,10 @@ let _events: EventsApi | null = null;
  * Read the {@link WidgetApi} docs.
  *
  * @returns WidgetApi static instance
+ * @example
+ * squatch.api().render({ ... })
+ * squatch.api().upsertUser({ ... })
+ * squatch.api().squatchReferralCookie()
  */
 export function api(): WidgetApi | null {
   if (!_api) init({} as ConfigOptions);
@@ -63,6 +67,10 @@ export function api(): WidgetApi | null {
  * Read the {@link Widgets} docs.
  *
  * @returns static instance
+ * @example
+ * squatch.widgets().render({ widgetType: "w/widget-type" })
+ * squatch.widgets().upsertUser({ user: { ... }, widgetType: "w/widget-type" })
+ * squatch.widgets().autofill(".referral-code")
  */
 export function widgets(): Widgets | null {
   if (!_widgets) init({} as ConfigOptions);
@@ -75,6 +83,9 @@ export function widgets(): Widgets | null {
  * Read the {@link EventsApi} docs.
  *
  * @returns EventsApi static instance
+ *
+ * @example
+ * squatch.events().track({ ... })
  */
 export function events(): EventsApi | null {
   if (!_events) init({} as ConfigOptions);
@@ -83,6 +94,13 @@ export function events(): EventsApi | null {
 
 /**
  * Entry-point for high level API to render a widget using the instance of {@link Widgets} created when you call {@link #init init}.
+ *
+ * Read the {@link Widgets.render} docs.
+ *
+ * @example
+ * squatch.widget().then(res => {
+ *   const widget = res.widget
+ * }).catch(e => console.error("Did not render widget:", e))
  */
 export function widget(
   widgetConfig: WidgetConfig
@@ -92,6 +110,8 @@ export function widget(
 
 /**
  * Extracts widget configuration from `_saasquatchExtra` UTM parameter. Initialises `squatch` and renders the widget as a {@link PopupWidget} via static instanct of {@link Widgets}.
+ *
+ * Called by default on startup via the loader script.
  */
 export function _auto(
   configIn: ConfigOptions

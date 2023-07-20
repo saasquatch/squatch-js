@@ -14,19 +14,69 @@ import PopupWidget from "../PopupWidget";
 
 const _log = debug("sqh:DeclarativeWidget");
 
+/**
+ * Abstract class for building web-components that render SaaSquatch widgets to the DOM.
+ * @abstract
+ * @example
+ * class TestWidgetElement extends DeclarativeWidget {}
+ * const testWidget = new TestWidgetElement()
+ * testWidget.widgetType = 'w/widget-type'
+ * testWidget.type = 'EMBED'
+ * testWidget.renderWidget()
+ */
 export default abstract class DeclarativeWidget extends HTMLElement {
+  /**
+   * Configuration overrides
+   * @default window.squatchConfig
+   */
   config: DeclarativeConfigOptions | undefined;
+
+  /**
+   * Signed JWT containing user information
+   * @default window.squatchToken
+   */
   token: string | undefined;
+
+  /**
+   * Tenant alias of SaaSquatch tenant
+   * @default window.squatchTenant
+   */
   tenant: string | undefined;
+
+  /**
+   * widgetType of widget to load
+   */
   widgetType: string | undefined;
+
+  /**
+   * Locale to render the widget in
+   */
   locale: string | undefined;
 
+  /**
+   * Instance of {@link WidgetApi}
+   */
   widgetApi: WidgetApi;
+
+  /**
+   * Instance of {@link AnalyticsApi}
+   */
   analyticsApi: AnalyticsApi;
 
-  type: "EMBED" | "POPUP";
+  /**
+   * Instance of {@link EmbedWidget} or {@link PopupWidget}
+   */
   widgetInstance: EmbedWidget | PopupWidget;
 
+  /**
+   * Determines whether to render the widget as an embedding widget or popup widget.
+   */
+  type: "EMBED" | "POPUP";
+
+  /**
+   * Container element to contain the widget iframe
+   * @default this
+   */
   container: string | HTMLElement | undefined | null;
   element: HTMLElement | undefined;
 
@@ -40,8 +90,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     this.token = window.squatchToken;
     this.tenant = window.squatchTenant;
     this.container = this;
-
-    this.locale = validateLocale(navigator.language.replace(/\-/g, "_"));
   }
 
   private _setupApis(config?: ConfigOptions) {
@@ -110,6 +158,11 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     }
   };
 
+  /**
+   * Fetches widget content from SaaSquatch and builds a Widget instance to support rendering the widget in the DOM.
+   * @returns Instance of either {@link EmbedWidget} or {@link PopupWidget} depending on `this.type`
+   * @throws Throws an Error if `widgetType` is undefined
+   */
   async getWidgetInstance() {
     let widgetInstance: EmbedWidget | PopupWidget;
     this.widgetType = this.getAttribute("widget") || undefined;
@@ -129,11 +182,18 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     return widgetInstance;
   }
 
+  /**
+   * Calls {@link getWidgetInstance} to build the Widget instance and loads the widget iframe into the DOM.
+   */
   async renderWidget() {
     await this.getWidgetInstance();
     await this.widgetInstance.load();
   }
 
+  /**
+   * Builds a Widget instance for the default error widget.
+   * @returns Instance of either {@link EmbedWidget} or {@link PopupWidget} depending on `this.type`
+   */
   setErrorWidget = (e: Error) => {
     const params = {
       api: this.widgetApi,

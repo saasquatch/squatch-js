@@ -66,7 +66,8 @@ const getTokenValueFromPrompt = (prompt: any) => {
     case "a token without API key":
       return "";
     case "a valid token":
-      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0IiwibG9jYWxlIjoiZW5fVVMifSwiZW52Ijp7InRlbmFudEFsaWFzIjoidGVzdF9hOGI0MWpvdGY4YTF2IiwiZG9tYWluIjoiaHR0cHM6Ly9zdGFnaW5nLnJlZmVycmFsc2Fhc3F1YXRjaC5jb20ifX0";
+      // return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0IiwibG9jYWxlIjoiZW5fVVMifSwiZW52Ijp7InRlbmFudEFsaWFzIjoidGVzdF9hOGI0MWpvdGY4YTF2IiwiZG9tYWluIjoiaHR0cHM6Ly9zdGFnaW5nLnJlZmVycmFsc2Fhc3F1YXRjaC5jb20ifX0";
+      return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19";
     default:
       return prompt;
   }
@@ -140,7 +141,7 @@ defineFeature(feature, (test) => {
 
     then("squatchjs requests the widget with no user information", () => {
       // Indirect check
-      expect(el.widgetInstance.context.type).toBe("passwordless");
+      expect(el["widgetInstance"].context.type).toBe("passwordless");
     });
 
     and("the widget is a passwordless widget", async () => {
@@ -920,7 +921,7 @@ defineFeature(feature, (test) => {
         const field = sanitize(arg0) as string;
         const value = sanitize(arg1);
 
-        expect(el.widgetApi[field]).toBe(value);
+        expect(el["widgetApi"][field]).toBe(value);
       }
     );
     and(
@@ -929,7 +930,7 @@ defineFeature(feature, (test) => {
         const field = sanitize(arg0) as string;
         const value = sanitize(arg1);
 
-        expect(el.widgetApi[field]).toBe(value);
+        expect(el["widgetApi"][field]).toBe(value);
       }
     );
     and(
@@ -938,7 +939,7 @@ defineFeature(feature, (test) => {
         const field = sanitize(arg0) as string;
         const value = sanitize(arg1);
 
-        expect(el.analyticsApi[field]).toBe(value);
+        expect(el["analyticsApi"][field]).toBe(value);
       }
     );
     and(/^the widget loaded has widgetType "(.*)"$/, (arg0) => {
@@ -1070,5 +1071,32 @@ defineFeature(feature, (test) => {
         fail();
       }
     });
+  });
+  test("Locale attribute with user locale", ({ given, when, and, then }) => {
+    let el!: DeclarativeEmbedWidget;
+
+    Background(given);
+    SquatchTenantIs(given);
+    SquatchTokenIs(and);
+    and(
+      /^window.squatchToken encodes a user object which (.*) the locale property with value "(.*)"$/,
+      (arg0, arg1) => {}
+    );
+
+    and("either web-component is included in the page's HTML", () => {
+      el = eitherWebComponentIsIncluded();
+    });
+
+    and(
+      /^the "(.*)" attribute with value "(.*)" (.*) on the web-component$/,
+      (arg0, arg1, arg2) => {}
+    );
+
+    when("the component loads", () => {});
+
+    then(
+      /^the returned widget content has translation locale set to (.*)$/,
+      (arg0) => {}
+    );
   });
 });

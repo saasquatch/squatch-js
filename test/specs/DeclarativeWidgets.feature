@@ -125,6 +125,23 @@ Feature: Declarative widgets using custom Web Components
       | null          | squatch-popup | locale    | en_CA         | en_US             |
 
   @minutia @automated
+  Scenario Outline: Locale attribute with user locale
+    Given window.squatchTenant is set to "tenantalias"
+    And window.squatchToken is "a valid token"
+    And window.squatchToken encodes a user object which <mayContain> the locale property with value "en_CA"
+    And either web-component is included in the page's HTML
+    And the "locale" attribute with value "fr_FR" <isOrNotSet> on the web-component
+    When the component loads
+    Then the returned widget content has translation locale set to <locale>
+
+    Examples:
+      | mayContain       | isOrNot    | locale |
+      | does contain     | is set     | fr_FR  |
+      | does contain     | is not set | en_CA  |
+      | does not contain | is set     | fr_FR  |
+      | does not contain | is not set | en_US  |
+
+  @minutia @automated
   Scenario Outline: Opening squatch-popup web component dialog via children
     Given "squatch-popup" is included in the page's HTML
     And the web-component's innerHTML is <ctaHTML>
@@ -340,3 +357,7 @@ Feature: Declarative widgets using custom Web Components
     And the component's AnalyticsAPI has "domain" set to "https://staging.referralsaasquatch.com"
     And the widget loaded has widgetType "OVERRIDE_WIDGET_TYPE"
     And the widget will be rendered as a "POPUP" widget
+
+
+
+

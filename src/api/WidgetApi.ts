@@ -52,7 +52,7 @@ export default class WidgetApi {
   }
 
   /**
-   * Creates/upserts user.
+   * Creates/upserts user, requests widget template.
    *
    * @param {Object} params Parameters for request
    * @param {Object?} params.user The user details
@@ -96,7 +96,7 @@ export default class WidgetApi {
   }
 
   /**
-   * Description here.
+   * Requests widget template
    *
    * @param {Object} params Parameters for request
    * @param {Object} params.user The user details

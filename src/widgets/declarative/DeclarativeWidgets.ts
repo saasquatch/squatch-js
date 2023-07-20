@@ -1,9 +1,19 @@
 import DeclarativeWidget from "./DeclarativeWidget";
 
+/**
+ * Base class for `squatch-embed` web-component
+ * @extends {DeclarativeWidget}
+ * @class
+ * @example
+ * const widget = document.querySelector('squatch-embed') as DeclarativeEmbedWidget
+ */
 export class DeclarativeEmbedWidget extends DeclarativeWidget {
   constructor() {
     super();
 
+    /**
+     * @static
+     */
     this.type = "EMBED";
   }
 
@@ -34,10 +44,20 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   }
 }
 
+/**
+ * Base class for `squatch-popup` web-component
+ * @extends {DeclarativeWidget}
+ * @class
+ * @example
+ * const widget = document.querySelector('squatch-popup') as DeclarativePopupWidget
+ */
 export class DeclarativePopupWidget extends DeclarativeWidget {
   constructor() {
     super();
 
+    /**
+     * @static
+     */
     this.type = "POPUP";
 
     this.addEventListener("click", (e) => {

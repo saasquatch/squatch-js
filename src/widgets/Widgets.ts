@@ -20,10 +20,9 @@ import Widget, { Params } from "./Widget";
 const _log = debug("squatch-js:widgets");
 
 /**
- *
  * `Widgets` is a factory for creating widgets. It's possible to build your own widgets using the
  * {@link WidgetApi} but most people will prefer to use these easy methods.
- *
+ * @class
  */
 export default class Widgets {
   api: WidgetApi;
