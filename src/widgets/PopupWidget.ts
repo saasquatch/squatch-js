@@ -14,6 +14,11 @@ let popupId = 0;
  *
  * To create a PopupWidget use {@link Widgets}
  *
+ * @example
+ * const widget = new PopupWidget({ ... })
+ * widget.load() // Loads the widget into a dialog element
+ * widget.open() // Opens the dialog element
+ * widget.close() // Hides the dialog element
  */
 export default class PopupWidget extends Widget {
   trigger: string | null;

@@ -5,7 +5,11 @@ import DeclarativeWidget from "./DeclarativeWidget";
  * @extends {DeclarativeWidget}
  * @class
  * @example
+ * window.createCustomElement('squatch-embed', DeclarativeEmbedWidget)
  * const widget = document.querySelector('squatch-embed') as DeclarativeEmbedWidget
+ * widget.open()
+ * widget.close()
+ * widget.reload()
  */
 export class DeclarativeEmbedWidget extends DeclarativeWidget {
   constructor() {
@@ -49,7 +53,11 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
  * @extends {DeclarativeWidget}
  * @class
  * @example
+ * window.createCustomElement('squatch-popup', DeclarativePopupWidget)
  * const widget = document.querySelector('squatch-popup') as DeclarativePopupWidget
+ * widget.open()
+ * widget.close()
+ * widget.reload()
  */
 export class DeclarativePopupWidget extends DeclarativeWidget {
   constructor() {

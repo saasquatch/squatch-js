@@ -11,6 +11,11 @@ const _log = debug("squatch-js:EMBEDwidget");
  *
  * To create an EmbedWidget use {@link Widgets}
  *
+ * @example
+ * const widget = new EmbedWidget({ ... })
+ * widget.load() // Loads widget into the DOM
+ * widget.open() // Makes the iframe container visible
+ * widget.close() // Hides the iframe container
  */
 export default class EmbedWidget extends Widget {
   constructor(params: Params, container?: HTMLElement | string) {

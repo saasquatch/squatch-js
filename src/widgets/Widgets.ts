@@ -25,9 +25,26 @@ const _log = debug("squatch-js:widgets");
  * @class
  */
 export default class Widgets {
+  /**
+   * Instance of {@link WidgetApi}
+   */
   api: WidgetApi;
+
+  /**
+   * Tenant alias of SaaSquatch tenant.
+   */
   tenantAlias: string;
+
+  /**
+   * SaaSquatch domain for API requests.
+   * @default "https://app.referralsaasquatch.com"
+   */
   domain: string;
+
+  /**
+   * Hosted CDN for npm packages
+   * @default "https://fast.ssqt.io/npm"
+   */
   npmCdn: string;
 
   /**
@@ -52,7 +69,6 @@ export default class Widgets {
     this.domain = config.domain;
     this.npmCdn = config.npmCdn;
     this.api = new WidgetApi(config);
-    // listens to a 'submit_email' event in the theme.
   }
 
   /**
