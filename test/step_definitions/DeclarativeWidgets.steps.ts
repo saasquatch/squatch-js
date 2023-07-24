@@ -1104,11 +1104,9 @@ defineFeature(feature, (test) => {
     and(
       /^the "(.*)" attribute with value "(.*)" (.*) on the web-component$/,
       (arg0, arg1, arg2) => {
-        const attr = sanitize(arg0);
         const locale = sanitize(arg1) as string;
         const isOrNotSet = sanitize(arg2);
 
-        console.log(isOrNotSet);
         if (isOrNotSet === "is set") {
           el.setAttribute("locale", locale);
         } else if (isOrNotSet === "is not set") {

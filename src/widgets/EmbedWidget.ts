@@ -64,6 +64,7 @@ export default class EmbedWidget extends Widget {
       frame.height = frameDoc.body.scrollHeight;
 
       // Adjust frame height when size of body changes
+      /* istanbul ignore next: hard to test */
       const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
           const { height } = entry.contentRect;
@@ -72,10 +73,15 @@ export default class EmbedWidget extends Widget {
         }
       });
 
-      ro.observe(await this._findInnerContainer(frame));
+      const container = await this._findInnerContainer(frame);
+      ro.observe(container);
 
       // Regular load - trigger event
-      if (!this.container) {
+      if (
+        !this.container ||
+        (this.container instanceof HTMLElement &&
+          this.container.tagName.startsWith("SQUATCH-"))
+      ) {
         this._loadEvent(_sqh);
         _log("loaded");
       }

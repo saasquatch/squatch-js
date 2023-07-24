@@ -358,6 +358,12 @@ Feature: Declarative widgets using custom Web Components
     And the widget loaded has widgetType "OVERRIDE_WIDGET_TYPE"
     And the widget will be rendered as a "POPUP" widget
 
+  @minutia
+  Scenario: Load event for "squatch-embed" widgets
+    Given "squatch-embed" is included in the page's HTML
+    And the widget loads correctly
+    Then an analytics load event will be logged
+
 
 
 

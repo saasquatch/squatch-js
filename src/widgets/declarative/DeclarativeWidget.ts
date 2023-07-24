@@ -176,8 +176,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       widgetInstance = await this.renderUserUpsertVariant();
     }
 
-    if (!widgetInstance) throw new Error("Could not create widget.");
-
     this.widgetInstance = widgetInstance;
     return widgetInstance;
   }

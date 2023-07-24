@@ -112,6 +112,7 @@ export function widget(
  * Extracts widget configuration from `_saasquatchExtra` UTM parameter. Initialises `squatch` and renders the widget as a {@link PopupWidget} via static instanct of {@link Widgets}.
  *
  * Called by default on startup via the loader script.
+ * @private
  */
 export function _auto(
   configIn: ConfigOptions
@@ -135,7 +136,9 @@ export function _auto(
  * @param config Configuration details
  *
  * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * squatch.init({
+ *   tenantAlias:'test_basbtabstq51v',
+ * });
  */
 export function init(configIn: ConfigOptions): void {
   const raw = configIn as unknown | undefined;
@@ -176,6 +179,10 @@ export function ready(fn: () => any): void {
  *
  * @param {string} selector Element class/id
  * @returns {void}
+ *
+ * @example
+ * squatch.autofill("input.referral-code")
+ * squatch.autofill("input#referral-code")
  */
 export function autofill(selector: string): void {
   // @ts-ignore -- will throw occasionally throw a null pointer exception at runtime

@@ -109,7 +109,7 @@ export default abstract class Widget {
   }
 
   _findFrame() {
-    const element = this._findElement();
+    const element = this.container ? this._findElement() : document.body;
     const parent = element.shadowRoot || element;
     return parent.querySelector(
       "iframe#squatchFrame"
@@ -353,9 +353,6 @@ export default abstract class Widget {
 
 function delay(duration) {
   return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      /* istanbul ignore next */
-      resolve(() => {});
-    }, duration);
+    setTimeout(resolve, duration);
   });
 }

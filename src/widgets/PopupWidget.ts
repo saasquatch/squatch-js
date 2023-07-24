@@ -42,7 +42,7 @@ export default class PopupWidget extends Widget {
     );
   }
 
-  _initialiseCTA(frame: HTMLIFrameElement) {
+  _initialiseCTA() {
     if (!this.trigger) return;
 
     let triggerElement;
@@ -91,9 +91,9 @@ export default class PopupWidget extends Widget {
 
   load() {
     const frame = this._createFrame();
-    this._initialiseCTA(frame);
+    this._initialiseCTA();
 
-    const element = this._findElement();
+    const element = this.container ? this._findElement() : document.body;
 
     const dialogParent = element.shadowRoot || element;
     const dialog = this._createPopupDialog();
@@ -153,7 +153,7 @@ export default class PopupWidget extends Widget {
   }
 
   open() {
-    const element = this._findElement();
+    const element = this.container ? this._findElement() : document.body;
     const parent = element.shadowRoot || element;
     const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
     if (!dialog) throw new Error("Could not determine container div");
@@ -176,7 +176,7 @@ export default class PopupWidget extends Widget {
   }
 
   close() {
-    const element = this._findElement();
+    const element = this.container ? this._findElement() : document.body;
     const parent = element.shadowRoot || element;
     const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
     if (!dialog) throw new Error("Could not determine container div");

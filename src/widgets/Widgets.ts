@@ -140,6 +140,8 @@ export default class Widgets {
         widget: this._renderWidget(response, clean, {
           type: "passwordless",
           engagementMedium: clean.engagementMedium,
+          container: clean.container,
+          trigger: clean.trigger,
         }),
         user: response.user,
       };
@@ -333,7 +335,6 @@ export default class Widgets {
    */
   private static _matchesUrl(rule) {
     // If there were no matches, null is returned.
-    console.log({ href: window.location.href });
     return window.location.href.match(new RegExp(rule)) ? true : false;
   }
 }
