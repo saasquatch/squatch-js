@@ -266,14 +266,9 @@ export default class Widgets {
     }
 
     if (config.engagementMedium === "EMBED") {
-      widget = this._renderEmbedWidget(params, params.context.container);
-    } else if (config.engagementMedium === "POPUP") {
-      widget = this._renderPopupWidget(params);
-      if (displayOnLoad) widget.open();
+      widget = this._renderEmbedWidget(params);
     } else {
-      _log("display popup on load");
-      widget = new PopupWidget(params);
-      widget.load();
+      widget = this._renderPopupWidget(params);
       if (displayOnLoad) widget.open();
     }
 
@@ -287,8 +282,8 @@ export default class Widgets {
     return widget;
   }
 
-  private _renderEmbedWidget(params, container) {
-    const widget = new EmbedWidget(params, container);
+  private _renderEmbedWidget(params) {
+    const widget = new EmbedWidget(params, params.context.container);
     widget.load();
 
     return widget;

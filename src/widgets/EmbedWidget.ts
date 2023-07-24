@@ -20,6 +20,9 @@ const _log = debug("squatch-js:EMBEDwidget");
 export default class EmbedWidget extends Widget {
   constructor(params: Params, container?: HTMLElement | string) {
     super(params);
+
+    // If container was passed in, override container in context
+    if (container) this.container = container;
   }
 
   async load() {

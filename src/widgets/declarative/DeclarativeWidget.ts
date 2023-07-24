@@ -145,14 +145,17 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     const params = {
       api: this.widgetApi,
       content: template,
-      context: { type: config.type, engagementMedium: this.type },
+      context: {
+        type: config.type,
+        container: this.container || this,
+        engagementMedium: this.type,
+      },
       type: this.widgetType!,
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
-      container: this.container || this,
     };
     if (this.type === "EMBED") {
-      return new EmbedWidget(params);
+      return new EmbedWidget(params, params.context.container);
     } else {
       return new PopupWidget(params, this.firstChild ? null : undefined);
     }
@@ -196,14 +199,13 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     const params = {
       api: this.widgetApi,
       content: "error",
-      context: { type: "error" as const },
+      context: { type: "error" as const, container: this.container || this },
       type: "ERROR_WIDGET",
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
-      container: this.container || this,
     };
     if (this.type === "EMBED") {
-      return new EmbedWidget(params);
+      return new EmbedWidget(params, params.context.container);
     } else {
       return new PopupWidget(params, this.firstChild ? null : undefined);
     }

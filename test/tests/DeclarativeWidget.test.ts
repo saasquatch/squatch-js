@@ -24,10 +24,12 @@ describe("DeclarativeWidget", () => {
     { domain: null, windowDomain: "www.example.com" },
     { domain: "www.example.com", windowDomain: "www.example.com" },
   ])("_setupApis", (args) => {
-    if (args.windowDomain)
+    if (args.windowDomain) {
+      // @ts-ignore
       window.squatchConfig = {
         domain: args.windowDomain,
       };
+    }
 
     const widget = new Test();
     if (args.domain)
@@ -48,10 +50,12 @@ describe("DeclarativeWidget", () => {
     test.each([{ domain: null }, { domain: "www.example.com" }])(
       "domain",
       (args) => {
-        if (args.domain)
+        if (args.domain) {
+          // @ts-ignore
           window.squatchConfig = {
             domain: args.domain,
           };
+        }
         // @ts-ignore
         else window.squatchConfig = null;
 
@@ -78,8 +82,8 @@ describe("DeclarativeWidget", () => {
         // @ts-ignore
         const widgetArgs = PopupWidget.mock.calls[0][0];
         if (args.container)
-          expect(widgetArgs["container"]).toBe(args.container);
-        else expect(widgetArgs["container"]).toBe(widget);
+          expect(widgetArgs["context"]["container"]).toBe(args.container);
+        else expect(widgetArgs["context"]["container"]).toBe(widget);
       }
     );
   });
@@ -129,8 +133,8 @@ describe("DeclarativeWidget", () => {
         // @ts-ignore
         const widgetArgs = PopupWidget.mock.calls[0][0];
         if (args.container)
-          expect(widgetArgs["container"]).toBe(args.container);
-        else expect(widgetArgs["container"]).toBe(widget);
+          expect(widgetArgs["context"]["container"]).toBe(args.container);
+        else expect(widgetArgs["context"]["container"]).toBe(widget);
       }
     );
     test("error widget on dom", () => {
