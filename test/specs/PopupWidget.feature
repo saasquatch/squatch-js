@@ -40,7 +40,7 @@ Feature: Pop-Up Widget
       | width     | 100%  |
       | max-width | 500px |
     And the dialog is appended to the page body
-    Then the widget is loaded into an iframe in the inner div element
+    Then the widget is loaded into an iframe in the dialog element
     When '.open()' is called on the returned widget
     Then the dialog element opens
     And the widget is displayed
