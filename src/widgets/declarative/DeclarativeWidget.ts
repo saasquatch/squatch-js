@@ -12,7 +12,7 @@ import {
 import EmbedWidget from "../EmbedWidget";
 import PopupWidget from "../PopupWidget";
 
-const _log = debug("sqh:DeclarativeWidget");
+const _log = debug("squatch-js:DeclarativeWidget");
 
 /**
  * Abstract class for building web-components that render SaaSquatch widgets to the DOM.
@@ -93,7 +93,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   private _setupApis(config?: ConfigOptions) {
-    if (!this.tenant) throw new Error("Requires tenantAlias");
+    if (!this.tenant) throw new Error("tenantAlias not provided");
 
     this.widgetApi = new WidgetApi({
       tenantAlias: config?.tenantAlias || this.tenant,
@@ -105,14 +105,15 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   private async renderPasswordlessVariant() {
-    const configs = _getAutoConfig();
-    this._setupApis(configs?.squatchConfig);
+    this._setupApis();
+
+    _log("Rendering as an Instant Access widget");
 
     return await this.widgetApi
       .render({
-        engagementMedium: configs?.widgetConfig?.engagementMedium || this.type,
-        widgetType: configs?.widgetConfig?.widgetType || this.widgetType,
-        locale: configs?.widgetConfig?.locale || this.locale,
+        engagementMedium: this.type,
+        widgetType: this.widgetType,
+        locale: this.locale,
       })
       .then((res) => this._setWidget(res.template, { type: "passwordless" }))
       .catch(this.setErrorWidget);
@@ -122,7 +123,11 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     this._setupApis();
 
     const userObj = decodeUserJwt(this.token!);
-    if (!userObj) throw new Error("Could not load user information from jwt");
+    if (!userObj) {
+      return this.setErrorWidget(Error("No user object in token."));
+    }
+
+    _log("Rendering as a Verified widget");
 
     const widgetInstance = await this.widgetApi
       .upsertUser({

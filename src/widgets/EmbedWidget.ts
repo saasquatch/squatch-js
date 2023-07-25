@@ -131,7 +131,6 @@ export default class EmbedWidget extends Widget {
       this.container instanceof HTMLElement &&
       this.container.tagName.startsWith("SQUATCH-");
     const isVerified = !!(this.context as UpsertWidgetContext).user;
-    console.log({ isVerified, noContainer, isComponent });
 
     return isVerified && (noContainer || isComponent);
   }

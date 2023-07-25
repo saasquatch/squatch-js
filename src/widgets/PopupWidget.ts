@@ -61,17 +61,6 @@ export default class PopupWidget extends Widget {
         this.open();
       };
     }
-
-    // const element = this._findElement();
-    // If widget is loaded with CTA, look for a 'squatchpop' element to use
-    // that element as a trigger as well.
-    // const triggerWhenCTA = element.querySelector(".squatchpop") as HTMLElement;
-
-    // if (this.trigger === "#cta" && triggerWhenCTA) {
-    //   triggerWhenCTA.onclick = () => {
-    //     this.open(frame);
-    //   };
-    // }
   }
 
   _createPopupDialog(): HTMLDialogElement {
@@ -82,6 +71,7 @@ export default class PopupWidget extends Widget {
       "width: 100%; max-width: 500px; border: none; padding: 0;"
     );
     const onClick = (e) => {
+      e.stopPropagation();
       if (e.target === dialog) dialog.close();
     };
 

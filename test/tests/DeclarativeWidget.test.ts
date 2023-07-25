@@ -90,12 +90,12 @@ describe("DeclarativeWidget", () => {
   describe("renderUserUpsertVariant", () => {
     test("no user information in token", async () => {
       const widget = new Test();
+      const mockSetErrorWidget = jest.spyOn(widget, "setErrorWidget");
       widget.token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnYiOnsidGVuYW50QWxpYXMiOiJ0ZXN0X2E4YjQxam90ZjhhMXYiLCJkb21haW4iOiJodHRwczovL3N0YWdpbmcucmVmZXJyYWxzYWFzcXVhdGNoLmNvbSJ9fQ";
 
-      await expect(
-        async () => await widget["renderUserUpsertVariant"]()
-      ).rejects.toThrowError("Could not load user information");
+      await widget["renderUserUpsertVariant"]();
+      expect(mockSetErrorWidget).toHaveBeenCalled();
     });
   });
 

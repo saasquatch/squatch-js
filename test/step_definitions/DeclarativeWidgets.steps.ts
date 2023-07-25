@@ -868,7 +868,7 @@ defineFeature(feature, (test) => {
       }
     );
   });
-  test("Passwordless widgets take _saasquatchExtra config as priority", ({
+  test("Passwordless declarative widgets do not take _saasquatchExtra parameters", ({
     given,
     when,
     and,
@@ -879,10 +879,7 @@ defineFeature(feature, (test) => {
     let widgetConfig: any;
 
     Background(given);
-    given("either web-component is included in the page's HTML", () => {
-      el = eitherWebComponentIsIncluded();
-    });
-    and(/^window.squatchTenant is set to "(.*)"$/, (arg0) => {
+    given(/^window.squatchTenant is set to "(.*)"$/, (arg0) => {
       const value = sanitize(arg0);
       // @ts-ignore
       window.squatchTenant = value;
@@ -892,11 +889,13 @@ defineFeature(feature, (test) => {
       window.squatchToken = null;
     });
     and(/^window.squatchConfig.domain is set to "(.*)"$/, (arg0) => {
-      const value = sanitize(arg0);
-      // @ts-ignore
+      const value = sanitize(arg0) as string;
       window.squatchConfig = {
-        domain: "https://www.example.com",
+        domain: value,
       };
+    });
+    and(/^"(.*)" is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
     });
     and(/^the "(.*)" attribute is set to "(.*)"$/, (arg0, arg1) => {
       const attr = sanitize(arg0) as string;
@@ -917,7 +916,17 @@ defineFeature(feature, (test) => {
       ).resolves.toBeUndefined();
     });
     then(
-      /^the component's WidgetAPI has "(.*)" set to "(.*)"$/,
+      /^the component's WidgetAPI "(.*)" property is "(.*)"$/,
+      (arg0, arg1) => {
+        const field = sanitize(arg0) as string;
+        const value = sanitize(arg1);
+        console.log({ value, tenantAlias: window.squatchTenant });
+
+        expect(el["widgetApi"][field]).toBe(value);
+      }
+    );
+    and(
+      /^the component's WidgetAPI "(.*)" property is "(.*)"$/,
       (arg0, arg1) => {
         const field = sanitize(arg0) as string;
         const value = sanitize(arg1);
@@ -926,16 +935,7 @@ defineFeature(feature, (test) => {
       }
     );
     and(
-      /^the component's WidgetAPI has "(.*)" set to "(.*)"$/,
-      (arg0, arg1) => {
-        const field = sanitize(arg0) as string;
-        const value = sanitize(arg1);
-
-        expect(el["widgetApi"][field]).toBe(value);
-      }
-    );
-    and(
-      /^the component's AnalyticsAPI has "(.*)" set to "(.*)"$/,
+      /^the component's AnalyticsAPI "(.*)" property is "(.*)"$/,
       (arg0, arg1) => {
         const field = sanitize(arg0) as string;
         const value = sanitize(arg1);

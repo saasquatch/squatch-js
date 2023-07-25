@@ -145,6 +145,8 @@ export function init(configIn: ConfigOptions): void {
   const config = validateConfig(raw);
   if (config.tenantAlias.match("^test") || config.debug) {
     debug.enable("squatch-js*");
+  } else {
+    debug.disable();
   }
   _log("initializing ...");
 

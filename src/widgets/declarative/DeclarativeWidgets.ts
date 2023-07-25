@@ -71,8 +71,7 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     this.addEventListener("click", (e) => {
       e.stopPropagation();
 
-      // SQUATCH-POPUP target means something in the shadowDOM was clicked (i.e. the dialog element)
-      if ((e.target as HTMLElement).tagName !== "SQUATCH-POPUP") this.open();
+      this.open();
     });
   }
 
@@ -92,7 +91,9 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   async connectedCallback() {
+    this.container = this.getAttribute("container") || this;
     await this.renderWidget();
+
     if (this.getAttribute("open") !== null) this.open();
   }
 }

@@ -294,6 +294,7 @@ Feature: Declarative widgets using custom Web Components
       })
       squatch.widgets().upsertUser({
       widgetType: "widget_2",
+      engagementMedium: "EMBED",
       jwt: INSERT_JWT,
       user: INSERT_USER_OBJ,
       }).then(function(response) {
@@ -334,16 +335,16 @@ Feature: Declarative widgets using custom Web Components
 
 
   @landmine @automated
-  Scenario: Passwordless widgets take _saasquatchExtra config as priority
-    Given either web-component is included in the page's HTML
-    And window.squatchTenant is set to "tenantalias"
+  Scenario: Passwordless declarative widgets do not take _saasquatchExtra parameters
+    Given window.squatchTenant is set to "tenantalias"
     And window.squatchToken is undefined
-    And window.squatchConfig.domain is set to "https://www.example.com"
+    And window.squatchConfig.domain is set to "https://staging.referralsaasquatch.com"
+    And "squatch-embed" is included in the page's HTML
     And the "widget" attribute is set to "widgettype"
     And _saasquatchExtra is included in the url with payload as the following
       """
       {
-        "staging.referralsaasquatch.com": {
+        "www.example.com": {
           "OVERRIDE_TENANTALIAS": {
             "widgetType": "OVERRIDE_WIDGET_TYPE",
             "engagementMedium": "POPUP"
@@ -352,11 +353,11 @@ Feature: Declarative widgets using custom Web Components
       }
       """
     When the component loads
-    Then the component's WidgetAPI has "tenantAlias" set to "OVERRIDE_TENANTALIAS"
-    And the component's WidgetAPI has "domain" set to "https://staging.referralsaasquatch.com"
-    And the component's AnalyticsAPI has "domain" set to "https://staging.referralsaasquatch.com"
-    And the widget loaded has widgetType "OVERRIDE_WIDGET_TYPE"
-    And the widget will be rendered as a "POPUP" widget
+    Then the component's WidgetAPI "tenantAlias" property is "tenantalias"
+    And the component's WidgetAPI "domain" property is "https://staging.referralsaasquatch.com"
+    And the component's AnalyticsAPI "domain" property is "https://staging.referralsaasquatch.com"
+    And the widget loaded has widgetType "widgettype"
+    And the widget will be rendered as a "EMBED" widget
 
   @minutia
   Scenario: Load event for "squatch-embed" widgets
