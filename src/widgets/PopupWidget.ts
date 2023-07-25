@@ -4,6 +4,7 @@ import { debug } from "debug";
 import { domready } from "../utils/domready";
 import Widget, { Params } from "./Widget";
 import DeclarativeWidget from "./declarative/DeclarativeWidget";
+import { UpsertWidgetContext } from "../types";
 
 const _log = debug("squatch-js:POPUPwidget");
 
@@ -170,8 +171,11 @@ export default class PopupWidget extends Widget {
     domready(frameDoc, () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
       frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
-      this._loadEvent(_sqh);
-      _log("Popup opened");
+
+      if ((this.context as UpsertWidgetContext).user) {
+        this._loadEvent(_sqh);
+        _log("Popup opened");
+      }
     });
   }
 

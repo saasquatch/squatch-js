@@ -3,6 +3,7 @@
 import { debug } from "debug";
 import Widget, { Params } from "./Widget";
 import { domready } from "../utils/domready";
+import { UpsertWidgetContext } from "../types";
 
 const _log = debug("squatch-js:EMBEDwidget");
 
@@ -21,7 +22,6 @@ export default class EmbedWidget extends Widget {
   constructor(params: Params, container?: HTMLElement | string) {
     super(params);
 
-    // If container was passed in, override container in context
     if (container) this.container = container;
   }
 
@@ -79,12 +79,7 @@ export default class EmbedWidget extends Widget {
       const container = await this._findInnerContainer(frame);
       ro.observe(container);
 
-      // Regular load - trigger event
-      if (
-        !this.container ||
-        (this.container instanceof HTMLElement &&
-          this.container.tagName.startsWith("SQUATCH-"))
-      ) {
+      if (this._shouldFireLoadEvent()) {
         this._loadEvent(_sqh);
         _log("loaded");
       }
@@ -107,8 +102,11 @@ export default class EmbedWidget extends Widget {
     frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
     const _sqh =
       frame?.contentWindow?.squatch || frame?.contentWindow?.widgetIdent;
-    this._loadEvent(_sqh);
-    _log("loaded");
+
+    if ((this.context as UpsertWidgetContext).user) {
+      this._loadEvent(_sqh);
+      _log("loaded");
+    }
   }
 
   close() {
@@ -125,6 +123,17 @@ export default class EmbedWidget extends Widget {
 
   protected _error(rs, mode = "embed", style = "") {
     return super._error(rs, mode, style);
+  }
+
+  private _shouldFireLoadEvent() {
+    const noContainer = !this.container;
+    const isComponent =
+      this.container instanceof HTMLElement &&
+      this.container.tagName.startsWith("SQUATCH-");
+    const isVerified = !!(this.context as UpsertWidgetContext).user;
+    console.log({ isVerified, noContainer, isComponent });
+
+    return isVerified && (noContainer || isComponent);
   }
 
   show = this.open;

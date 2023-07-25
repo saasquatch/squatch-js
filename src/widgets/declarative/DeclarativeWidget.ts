@@ -1,7 +1,7 @@
 import debug from "debug";
 import AnalyticsApi from "../../api/AnalyticsApi";
 import WidgetApi from "../../api/WidgetApi";
-import { ConfigOptions, DeclarativeConfigOptions } from "../../types";
+import { ConfigOptions, DeclarativeConfigOptions, User } from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
 import { _getAutoConfig } from "../../utils/utmUtils";
 import {
@@ -132,7 +132,9 @@ export default abstract class DeclarativeWidget extends HTMLElement {
         widgetType: this.widgetType,
         jwt: this.token,
       })
-      .then((res) => this._setWidget(res.template, { type: "upsert" }))
+      .then((res) =>
+        this._setWidget(res.template, { type: "upsert", user: userObj })
+      )
       .catch(this.setErrorWidget);
 
     return widgetInstance;
@@ -140,13 +142,14 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   private _setWidget = (
     template: any,
-    config: { type: "upsert" | "passwordless" }
+    config: { type: "upsert" | "passwordless"; user?: User }
   ) => {
     const params = {
       api: this.widgetApi,
       content: template,
       context: {
         type: config.type,
+        user: config.user,
         container: this.container || this,
         engagementMedium: this.type,
       },
