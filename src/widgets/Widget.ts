@@ -352,7 +352,7 @@ export default abstract class Widget {
 }
 
 function delay(duration) {
-  return new Promise(function (resolve, reject) {
+  return new Promise((resolve) => {
     setTimeout(resolve, duration);
   });
 }

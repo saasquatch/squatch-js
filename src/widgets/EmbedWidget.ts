@@ -31,9 +31,9 @@ export default class EmbedWidget extends Widget {
 
     if (this.container) {
       if (element.shadowRoot) {
-        if (element.shadowRoot.lastChild?.nodeName === "IFRAME")
+        if (element.shadowRoot.lastChild?.nodeName === "IFRAME") {
           element.shadowRoot.replaceChild(frame, element.shadowRoot.lastChild);
-        else {
+        } else {
           element.shadowRoot.appendChild(frame);
         }
       }

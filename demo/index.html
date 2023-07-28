@@ -4,15 +4,34 @@
     <meta charset="UTF-8" />
     <title>Squatch.JS Playground</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="./dist/squatchjs.min.js"></script>
+    <script>
+      !(function (a, b) {
+        a("squatch", "./dist/squatchjs.min.js", b);
+      })(function (a, b, c) {
+        var d, e, f;
+        (c["_" + a] = {}),
+          (c[a] = {}),
+          (c[a].ready = function (b) {
+            c["_" + a].ready = c["_" + a].ready || [];
+            c["_" + a].ready.push(b);
+          }),
+          (c["__squatchNamespace"] = a),
+          (e = document.createElement("script")),
+          (e.async = 1),
+          (e.src = b),
+          (f = document.getElementsByTagName("script")[0]),
+          f.parentNode.insertBefore(e, f);
+      }, this);
+    </script>
     <script>
       if (
         window.location.pathname.includes("passwordless") &&
         !window.location.search.length <= 1
       ) {
-        window.squatchTenant = "test_a8b41jotf8a1v";
+        window.squatchTenant = "test_axbgtatw1tccp";
         window.squatchConfig = {
           domain: "https://staging.referralsaasquatch.com",
+          debug: true,
         };
         document.addEventListener("DOMContentLoaded", function (event) {
           const element = document.getElementById("unauthed-stuff");
@@ -53,7 +72,7 @@
 
           element.innerHTML = /*html*/ `
           <squatch-popup widget="w/ir-tester" open><button>click me!</button></squatch-popup>
-          <squatch-popup widget="w/mint-tester"><button>click me too!</button></squatch-popup>
+          <squatch-popup widget="w/ir-tester"><button>click me too!</button></squatch-popup>
           <button class="squatchpop">Squatchpop cta</button>
           <button onclick="javascript:document.getElementById('squatch-embed').open()">
             Open embedded widget
@@ -82,9 +101,9 @@
           ></div>
         `;
         });
-        window.squatchTenant = "test_a8b41jotf8a1v";
+        window.squatchTenant = "test_axbgtatw1tccp";
         window.squatchToken =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiaXJ0ZXN0IiwiYWNjb3VudElkIjoiaXJ0ZXN0In0sImVudiI6eyJ0ZW5hbnRBbGlhcyI6InRlc3RfYThiNDFqb3RmOGExdiIsImRvbWFpbiI6Imh0dHBzOi8vc3RhZ2luZy5yZWZlcnJhbHNhYXNxdWF0Y2guY29tIn19.8I5Kktmb6T3jowYwScZouqSliHRVF3YuFa-atphL2DA";
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoidGVzdHVzZXIiLCJhY2NvdW50SWQiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20ifX0.3d3_4i9IeCeFDXMi-oXeSyyH2Yk_9xyVEtVJ0iJc_SA";
         window.squatchConfig = {
           debug: true,
           domain: "https://staging.referralsaasquatch.com",

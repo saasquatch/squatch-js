@@ -38,6 +38,7 @@ Feature: Pop-Up Widget
       | style     | value |
       | padding   | 0     |
       | width     | 100%  |
+      | border    | none  |
       | max-width | 500px |
     And the dialog is appended to the page body
     Then the widget is loaded into an iframe in the dialog element
