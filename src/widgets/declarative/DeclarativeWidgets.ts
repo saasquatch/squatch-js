@@ -98,5 +98,12 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 }
 
-window.customElements.define("squatch-embed", DeclarativeEmbedWidget);
-window.customElements.define("squatch-popup", DeclarativePopupWidget);
+class SquatchEmbed extends DeclarativeEmbedWidget {}
+class SquatchPopup extends DeclarativePopupWidget {}
+class ImpactEmbed extends DeclarativeEmbedWidget {}
+class ImpactPopup extends DeclarativePopupWidget {}
+
+window.customElements.define("squatch-embed", SquatchEmbed);
+window.customElements.define("impact-embed", ImpactEmbed);
+window.customElements.define("squatch-popup", SquatchPopup);
+window.customElements.define("impact-popup", ImpactPopup);

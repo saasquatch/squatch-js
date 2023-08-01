@@ -6,18 +6,23 @@ declare global {
     _squatch?: {
       ready: any[];
     };
+
     squatch: any;
     widgetIdent: any;
 
     squatchTenant: string;
     squatchToken: string;
-
     squatchConfig: Omit<ConfigOptions, "tenantAlias">;
+
+    impactTBDToken: string;
+    impactTBDConfig: Omit<ConfigOptions, "tenantAlias">;
   }
 }
 /** @hidden */
 export default function asyncLoad() {
-  const namespace = window.__squatchjsNamespace || "squatch";
+  const impactNamespace = "impactTBD";
+  const namespace = window[impactNamespace] ? impactNamespace : "squatch";
+  console.log({ namespace });
 
   const loaded = window[namespace] || null;
   const cached = window["_" + namespace] || null;
@@ -25,14 +30,13 @@ export default function asyncLoad() {
   if (loaded && cached) {
     const ready = cached.ready || [];
 
-    ready.forEach((cb) =>
-      setTimeout(() => {
-        cb();
-      }, 0)
-    );
-    setTimeout(() => window[namespace]._auto(), 0);
+    setTimeout(() => (window["impactTBD"] = window.squatch), 0);
+    ready.forEach((cb) => setTimeout(() => cb(), 0));
+    setTimeout(() => {
+      window.squatch._auto();
+    }, 0);
 
-    // @ts-ignore -- intetionally deletes `_squatch` to cleanup initialization
+    // @ts-ignore -- intentionally deletes `_squatch` to cleanup initialization
     window["_" + namespace] = undefined;
     try {
       delete window["_" + namespace];

@@ -7,6 +7,8 @@ import { _getAutoConfig } from "../../utils/utmUtils";
 import {
   DEFAULT_DOMAIN,
   DEFAULT_NPM_CDN,
+  getConfig,
+  getToken,
   validateLocale,
 } from "../../utils/validate";
 import EmbedWidget from "../EmbedWidget";
@@ -86,8 +88,8 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       mode: "open",
     }).innerHTML = `<style>:host { display: contents; }</style><slot></slot>`;
 
-    this.config = window.squatchConfig;
-    this.token = window.squatchToken;
+    this.config = getConfig();
+    this.token = getToken();
     this.tenant = window.squatchTenant;
     this.container = this;
   }

@@ -1,7 +1,7 @@
 // @ts-check
 import { doPost } from "../utils/io";
 import { EngagementMedium } from "../types";
-import { DEFAULT_DOMAIN, isObject } from "../utils/validate";
+import { DEFAULT_DOMAIN, getConfig, isObject } from "../utils/validate";
 
 /**
  *
@@ -22,8 +22,7 @@ export default class AnalyticsApi {
   constructor(config: { domain: string }) {
     const raw = config as unknown | undefined;
     const clean = _validateAnalyticsConfig(raw);
-    this.domain =
-      clean?.["domain"] || window.squatchConfig?.domain || DEFAULT_DOMAIN;
+    this.domain = clean?.["domain"] || getConfig()?.domain || DEFAULT_DOMAIN;
   }
 
   pushAnalyticsLoadEvent(params: SQHDetails) {

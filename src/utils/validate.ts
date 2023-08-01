@@ -12,11 +12,14 @@ export function validateConfig(
 ): Required<ConfigOptions> {
   if (typeof _raw !== "object") throw new Error("config must be an object");
 
+  const tenant = window.squatchTenant;
+  const config = getConfig();
+
   const raw = {
-    tenantAlias: _raw?.["tenantAlias"] || window.squatchTenant,
-    domain: _raw?.["domain"] || window.squatchConfig?.domain,
-    npmCdn: _raw?.["npmCdn"] || window.squatchConfig?.npmCdn,
-    debug: _raw?.["debug"] || window.squatchConfig?.debug,
+    tenantAlias: _raw?.["tenantAlias"] || tenant,
+    domain: _raw?.["domain"] || config?.domain,
+    npmCdn: _raw?.["npmCdn"] || config?.npmCdn,
+    debug: _raw?.["debug"] || config?.debug,
   };
 
   if (typeof raw.tenantAlias !== "string")
@@ -27,6 +30,7 @@ export function validateConfig(
   const debug = (typeof raw.debug === "boolean" && raw.debug) || false;
   const npmCdn =
     (typeof raw.npmCdn === "string" && raw.npmCdn) || DEFAULT_NPM_CDN;
+
   return {
     tenantAlias,
     domain,
@@ -58,4 +62,11 @@ export function validatePasswordlessConfig(
   if (!isObject(raw)) throw new Error("Widget properties must be an object");
 
   return raw as WidgetConfig;
+}
+
+export function getToken() {
+  return window.impactTBDToken || window.squatchToken;
+}
+export function getConfig() {
+  return window.impactTBDConfig || window.squatchConfig;
 }

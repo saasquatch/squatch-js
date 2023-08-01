@@ -1,5 +1,6 @@
 import { debug } from "debug";
 import { JWT } from "../types";
+import { getToken } from "./validate";
 
 const _log = debug("squatch-js:io");
 
@@ -9,7 +10,7 @@ export async function doQuery(
   variables: Record<string, unknown>,
   jwt: string | undefined
 ) {
-  const token = jwt || window.squatchToken;
+  const token = jwt || getToken();
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -36,7 +37,7 @@ export async function doGet<T>(url, jwt = ""): Promise<T> {
     "Content-Type": "application/json",
   };
 
-  const token = jwt || window.squatchToken;
+  const token = jwt || getToken();
   if (token) headers["X-SaaSquatch-User-Token"] = token;
 
   try {
@@ -59,7 +60,7 @@ export async function doPost(url: string, data: any, jwt?: JWT) {
     "Content-Type": "application/json",
   };
 
-  const token = jwt || window.squatchToken;
+  const token = jwt || getToken();
   if (token) headers["X-SaaSquatch-User-Token"] = token;
 
   try {
@@ -85,7 +86,7 @@ export async function doPut(url: string, data: any, jwt?: JWT) {
     "X-SaaSquatch-Referrer": window ? window.location.href : "",
   };
 
-  const token = jwt || window.squatchToken;
+  const token = jwt || getToken();
   if (token) headers["X-SaaSquatch-User-Token"] = token;
 
   try {

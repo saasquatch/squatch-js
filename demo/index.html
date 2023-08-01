@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       !(function (a, b) {
-        a("squatch", "./dist/squatchjs.min.js", b);
+        a("squatch", "http://localhost:3333/squatch.min.js", b);
       })(function (a, b, c) {
         var d, e, f;
         (c["_" + a] = {}),
@@ -15,7 +15,6 @@
             c["_" + a].ready = c["_" + a].ready || [];
             c["_" + a].ready.push(b);
           }),
-          (c["__squatchNamespace"] = a),
           (e = document.createElement("script")),
           (e.async = 1),
           (e.src = b),
