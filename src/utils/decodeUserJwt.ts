@@ -1,7 +1,7 @@
 import { debug } from "debug";
 import { User } from "../types";
 import { b64decode } from "./cookieUtils";
-const _log = debug("squatch-js:decodeJwt");
+const _log = debug("squatch-js:decodeUserJwt");
 
 export function decodeUserJwt(tokenStr: string): User | null {
   try {

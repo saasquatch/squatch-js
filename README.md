@@ -43,7 +43,7 @@ Include either of the squatchjs generated web-components in your page's HTML to 
 <!-- POPUP WIDGET -->
 <squatch-popup widget="WIDGET_TYPE"><!-- Widget is rendered here --></squatch-popup>
 ```
-For rendering widgets and API calls, Squatchjs respects configurations set on the following:
+For rendering widgets and API calls, squatchjs respects configurations set on the following:
   - `window.squatchToken`: Signed JWT for calls to the SaaSquatch API -- [How to generate valid JWT Tokens](https://docs.saasquatch.com/topics/json-web-tokens#example-building-the-jwt)
   - `window.squatchTenant`: SaaSquatch tenant alias
   - `window.squatchConfig`: Additional configuration overrides (Optional)
@@ -140,7 +140,7 @@ squatch.api().upsertUser({...});
 
 ### `squatch-embed`
 ```html
-<squatch-embed widget="WIDGET_TYPE" [ container="#selector" ]>
+<squatch-embed widget="WIDGET_TYPE" [ container="#selector" | locale="en_US" ]>
   <!-- Children of squatch-embed act as a loading state -->
   Loading...
 </squatch-embed>
@@ -148,14 +148,17 @@ squatch.api().upsertUser({...});
 
 - `widget`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
   - Required
+  - Changing this attribute's value causes the widget to reload.
 - `container`: A CSS selector for a container element to use as the parent of the widget's iframe. 
   - Default: `null`
   - Note, if no container is specified, the widget iframe will attach to the shadow DOM of `squatch-embed`.
-
+- `locale`: Locale that determines the widget translation displayed. Should be of the form "xx_XX".
+  - Default: Browser's current locale
+  - Changing this attribute's value causes the widget to reload.
 
 ### `squatch-popup`
 ```html
-<squatch-embed widget="WIDGET_TYPE" [ open ]>
+<squatch-embed widget="WIDGET_TYPE" [ open | container="#selector" | locale="en_US" ]>
   <!-- Clicking a child of squatch-popup opens the popup -->
   <button>Click me to open</button> 
 </squatch-embed>
@@ -165,11 +168,17 @@ squatch.api().upsertUser({...});
   - Required
 - `open: boolean`: Whether to the popup is open when loaded into the page
   - Default: `false`
+- `container`: A CSS selector for a container element to use as the parent of the widget's iframe. 
+  - Default: `null`
+  - Note, if no container is specified, the widget iframe will attach to the shadow DOM of `squatch-embed`.
+- `locale`: Locale that determines the widget translation displayed. Should be of the form "xx_XX".
+  - Default: Browser's current locale
+  - Changing this attribute's value causes the widget to reload.
 
 ## Legacy
 
 ### Rendering a widget via Widgets API
-Note: `engagementMedium` is required in the `squatch.widgets()` functions if you want to load the widget. Otherwise, Squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
+Note: `engagementMedium` is required in the `squatch.widgets()` functions if you want to load the widget. Otherwise, squatch.js will look for your portal settings and render the widget that's mapped to the URL where this snippet is included.
 
 ```html
 <script type="text/javascript">

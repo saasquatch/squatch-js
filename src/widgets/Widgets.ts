@@ -31,12 +31,12 @@ export default class Widgets {
   api: WidgetApi;
 
   /**
-   * Tenant alias of SaaSquatch tenant.
+   * Tenant alias of SaaSquatch tenant
    */
   tenantAlias: string;
 
   /**
-   * SaaSquatch domain for API requests.
+   * SaaSquatch domain for API requests
    * @default "https://app.referralsaasquatch.com"
    */
   domain: string;
@@ -79,13 +79,13 @@ export default class Widgets {
    * @param {Object} config.user The user details
    * @param {string} config.user.id The user id
    * @param {string} config.user.accountId The user account id
-   * @param {WidgetType} config.widgetType The content of the widget.
-   * @param {EngagementMedium} config.engagementMedium How to display the widget.
+   * @param {WidgetType} config.widgetType The content of the widget
+   * @param {EngagementMedium} config.engagementMedium How to display the widget
    * @param {string} config.jwt the JSON Web Token (JWT) that is used to validate the data (can be disabled)
    * @param {HTMLElement | string | undefined} config.container Element to load the widget into
    * @param {string | undefined} config.trigger Trigger element for opening the popup widget
    *
-   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details
    */
   async upsertUser(config: WithRequired<WidgetConfig, "user">) {
     const raw = config as unknown;
@@ -122,12 +122,12 @@ export default class Widgets {
    * @param {Object} config.user The user details
    * @param {string} config.user.id The user id
    * @param {string} config.user.accountId The user account id
-   * @param {WidgetType} config.widgetType The content of the widget.
-   * @param {EngagementMedium} config.engagementMedium How to display the widget.
+   * @param {WidgetType} config.widgetType The content of the widget
+   * @param {EngagementMedium} config.engagementMedium How to display the widget
    * @param {string} config.jwt the JSON Web Token (JWT) that is used
    *                            to validate the data (can be disabled)
    *
-   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details.
+   * @return {Promise<WidgetResult>} json object if true, with a Widget and user details
    */
   async render(config: WidgetConfig): Promise<WidgetResult | undefined> {
     const raw = config as unknown;

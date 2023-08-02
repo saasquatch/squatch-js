@@ -129,7 +129,7 @@ export default class EmbedWidget extends Widget {
     const noContainer = !this.container;
     const isComponent =
       this.container instanceof HTMLElement &&
-      this.container.tagName.startsWith("SQUATCH-");
+      (this.container.tagName.startsWith("SQUATCH-") || this.container.tagName.startsWith("IMPACT-"))
     const isVerified = !!(this.context as UpsertWidgetContext).user;
 
     return isVerified && (noContainer || isComponent);

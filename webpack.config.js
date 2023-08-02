@@ -4,13 +4,13 @@ var webpack = require("webpack");
 module.exports = {
   entry: {
     squatch: ["./src/squatch.ts"],
-    "../demo/dist/squatchjs": ["./src/squatch.ts"],
+    "../demo/dist/squatchjs": ["./src/squatch.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].min.js",
     library: "squatch",
-    libraryTarget: "umd",
+    libraryTarget: "umd"
   },
   module: {
     rules: [
@@ -22,22 +22,22 @@ module.exports = {
             options: {
               presets: [
                 ["@babel/preset-env", { targets: { esmodules: true }}],
-                "@babel/preset-typescript",
+                "@babel/preset-typescript"
               ],
-              plugins: [["@babel/plugin-transform-runtime"]],
+              plugins: [["@babel/plugin-transform-runtime"]]
             },
           },
         ],
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js"]
   },
   stats: {
     // Nice colored output
-    colors: true,
+    colors: true
   },
-  mode: "production",
+  mode: "production"
 };

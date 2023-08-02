@@ -17,7 +17,7 @@ import PopupWidget from "../PopupWidget";
 const _log = debug("squatch-js:DeclarativeWidget");
 
 /**
- * Abstract class for building web-components that render SaaSquatch widgets to the DOM.
+ * Abstract class for building web-components that render SaaSquatch widgets to the DOM
  * @abstract
  * @example
  * class TestWidgetElement extends DeclarativeWidget {}
@@ -71,7 +71,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   widgetInstance: EmbedWidget | PopupWidget;
 
   /**
-   * Determines whether to render the widget as an embedding widget or popup widget.
+   * Determines whether to render the widget as an embedding widget or popup widget
    */
   type: "EMBED" | "POPUP";
 
@@ -172,7 +172,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   };
 
   /**
-   * Fetches widget content from SaaSquatch and builds a Widget instance to support rendering the widget in the DOM.
+   * Fetches widget content from SaaSquatch and builds a Widget instance to support rendering the widget in the DOM
    * @returns Instance of either {@link EmbedWidget} or {@link PopupWidget} depending on `this.type`
    * @throws Throws an Error if `widgetType` is undefined
    */
@@ -194,7 +194,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   /**
-   * Calls {@link getWidgetInstance} to build the Widget instance and loads the widget iframe into the DOM.
+   * Calls {@link getWidgetInstance} to build the Widget instance and loads the widget iframe into the DOM
    */
   async renderWidget() {
     await this.getWidgetInstance();
@@ -202,7 +202,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   /**
-   * Builds a Widget instance for the default error widget.
+   * Builds a Widget instance for the default error widget
    * @returns Instance of either {@link EmbedWidget} or {@link PopupWidget} depending on `this.type`
    */
   setErrorWidget = (e: Error) => {

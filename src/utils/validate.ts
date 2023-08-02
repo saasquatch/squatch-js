@@ -65,8 +65,8 @@ export function validatePasswordlessConfig(
 }
 
 export function getToken() {
-  return window.impactTBDToken || window.squatchToken;
+  return window.impactToken || window.squatchToken;
 }
 export function getConfig() {
-  return window.impactTBDConfig || window.squatchConfig;
+  return window.impactConfig || window.squatchConfig;
 }

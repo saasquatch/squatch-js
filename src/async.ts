@@ -14,15 +14,14 @@ declare global {
     squatchToken: string;
     squatchConfig: Omit<ConfigOptions, "tenantAlias">;
 
-    impactTBDToken: string;
-    impactTBDConfig: Omit<ConfigOptions, "tenantAlias">;
+    impactToken: string;
+    impactConfig: Omit<ConfigOptions, "tenantAlias">;
   }
 }
 /** @hidden */
 export default function asyncLoad() {
   const impactNamespace = "impactTBD";
   const namespace = window[impactNamespace] ? impactNamespace : "squatch";
-  console.log({ namespace });
 
   const loaded = window[namespace] || null;
   const cached = window["_" + namespace] || null;

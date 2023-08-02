@@ -181,7 +181,6 @@ export default abstract class Widget {
     }
   }
 
-  // TODO: CA: Refactor how error templates are shown
   protected _error(rs, mode = "modal", style = "") {
     const errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
