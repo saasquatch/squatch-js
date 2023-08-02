@@ -178,14 +178,10 @@ function _buildParams({
   widgetType?: WidgetType;
   locale?: string;
 }) {
-  const engagementMediumP = `engagementMedium=${encodeURIComponent(
-    engagementMedium
-  )}`;
-  const widgetTypeP =
-    widgetType && `widgetType=${encodeURIComponent(widgetType)}`;
-  const localeP = locale && `locale=${encodeURIComponent(locale)}`;
+  const queryParams = new URLSearchParams();
+  queryParams.append("engagementMedium", engagementMedium);
+  if (widgetType) queryParams.append("widgetType", widgetType);
+  if (locale) queryParams.append("locale", locale);
 
-  const params = [engagementMediumP, widgetTypeP, localeP].filter((x) => !!x);
-  const queryString = `?${params.join("&")}`;
-  return queryString;
+  return `?${queryParams.toString()}`;
 }

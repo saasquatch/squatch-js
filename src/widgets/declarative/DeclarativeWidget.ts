@@ -3,13 +3,11 @@ import AnalyticsApi from "../../api/AnalyticsApi";
 import WidgetApi from "../../api/WidgetApi";
 import { ConfigOptions, DeclarativeConfigOptions, User } from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
-import { _getAutoConfig } from "../../utils/utmUtils";
 import {
   DEFAULT_DOMAIN,
   DEFAULT_NPM_CDN,
   getConfig,
   getToken,
-  validateLocale,
 } from "../../utils/validate";
 import EmbedWidget from "../EmbedWidget";
 import PopupWidget from "../PopupWidget";
@@ -167,7 +165,8 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     if (this.type === "EMBED") {
       return new EmbedWidget(params, params.context.container);
     } else {
-      return new PopupWidget(params, this.firstChild ? null : undefined);
+      const useFirstChildTrigger = this.firstChild ? null : undefined;
+      return new PopupWidget(params, useFirstChildTrigger);
     }
   };
 
@@ -217,7 +216,8 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     if (this.type === "EMBED") {
       return new EmbedWidget(params, params.context.container);
     } else {
-      return new PopupWidget(params, this.firstChild ? null : undefined);
+      const useFirstChildTrigger = this.firstChild ? null : undefined;
+      return new PopupWidget(params, useFirstChildTrigger);
     }
   };
 
