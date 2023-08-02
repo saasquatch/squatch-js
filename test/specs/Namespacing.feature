@@ -47,7 +47,7 @@ Feature: Namespacing
   Scenario: Impact namespacing without custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"><script>
+      <script async src="https://fast.ssqt.io/squatch-js@2">248392960
       """
     And the following code is included in the head tag
       """
@@ -68,29 +68,29 @@ Feature: Namespacing
   Scenario Outline: Declarative widgets work without the need for the custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"><script>
+      <script async src="https://fast.ssqt.io/squatch-js@2">515612320
       """
     And the web-component <componentTag> is in the body
     When squatchjs loads completely
     Then window.squatch is a module
     And window.impactTBD is a module
     And the web-component correctly loads
-    
+
   Scenario: Impact namespacing with custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
       <script async src="https://fast.ssqt.io/squatch-js@2"><script>
       <script>
-        !(function (a, b) {
-          a("impactTBD", b);
-        })(function (a, b) {
-          (b["_" + a] = {}),
-            (b[a] = {}),
-            (b[a].ready = function (c) {
-              b["_" + a].ready = b["_" + a].ready || [];
-              b["_" + a].ready.push(c);
-            });
-        }, this);
+      !(function (a, b) {
+      a("impactTBD", b);
+      })(function (a, b) {
+      (b["_" + a] = {}),
+      (b[a] = {}),
+      (b[a].ready = function (c) {
+      b["_" + a].ready = b["_" + a].ready || [];
+      b["_" + a].ready.push(c);
+      });
+      }, this);
       </script>
       """
     And the following code is included in the head tag
@@ -112,3 +112,21 @@ Feature: Namespacing
     And window._impactTBD is undefined
     And window.impactTBD.api exists
     And the function inside the impactTBD.ready is called
+
+  Scenario: Impact namespaced valid window variables
+    Given squatchjs is loaded onto the page via the html code below
+      """
+      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
+      """
+    And the following code is included in the head or body tag
+      """
+      window.impactToken = "VALID_TOKEN"
+      window.impactConfig = {
+        domain: "impact-example-domain",
+        npmCdn: "impact-example-npm-cdn"
+        debug: true
+      }
+      """
+    When squatchjs loads completely
+    Then squatchjs will use "window.impactToken" instead of "window.squatchToken"
+    Then squatchjs will use "window.impactConfig" instead of "window.squatchConfig"
