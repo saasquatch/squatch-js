@@ -92,6 +92,7 @@ export default class EmbedWidget extends Widget {
   open() {
     const frame = this._findFrame();
     if (!frame) return _log("no target element to open");
+    if (!frame.contentWindow) return _log("Frame needs a content window");
 
     const element = this._findElement();
 
@@ -99,9 +100,8 @@ export default class EmbedWidget extends Widget {
     element.style.height = "auto";
     element.style["overflow-y"] = "auto";
 
-    frame?.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
-    const _sqh =
-      frame?.contentWindow?.squatch || frame?.contentWindow?.widgetIdent;
+    frame.contentWindow.document.dispatchEvent(new CustomEvent("sq:refresh"));
+    const _sqh = frame.contentWindow.squatch || frame.contentWindow.widgetIdent;
 
     if ((this.context as UpsertWidgetContext).user) {
       this._loadEvent(_sqh);
@@ -129,7 +129,8 @@ export default class EmbedWidget extends Widget {
     const noContainer = !this.container;
     const isComponent =
       this.container instanceof HTMLElement &&
-      (this.container.tagName.startsWith("SQUATCH-") || this.container.tagName.startsWith("IMPACT-"))
+      (this.container.tagName.startsWith("SQUATCH-") ||
+        this.container.tagName.startsWith("IMPACT-"));
     const isVerified = !!(this.context as UpsertWidgetContext).user;
 
     return isVerified && (noContainer || isComponent);

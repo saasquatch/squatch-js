@@ -57,7 +57,7 @@ export default abstract class Widget {
     this.npmCdn = params.npmCdn;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
     this.context = params.context;
-    this.container = params.context.container;
+    this.container = params.container || params.context.container;
   }
 
   _findElement(): HTMLElement {
