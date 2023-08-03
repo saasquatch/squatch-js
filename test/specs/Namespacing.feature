@@ -1,7 +1,8 @@
 Feature: Namespacing
 
-  window.squatch is aliased by window.impactTBD, and a custom loader script initialises window.impactTBD.ready
+  window.squatch is aliased by window.impact, and a custom loader script initialises window.impact.ready
 
+  @motivating
   Scenario: Squatchjs loading with the base loader script
     Given the following code is included in the head tag
       """
@@ -39,50 +40,54 @@ Feature: Namespacing
     But the squatch.api function does not exist
     When squatchjs loads completely
     Then the window.squatch is a module
-    And window.impactTBD is an alias of window.squatch
+    And window.impact is an alias of window.squatch
     And window._squatch is undefined
     And window.squatch.api exists
     And the function inside the squatch.ready is called
 
+  @motivating
   Scenario: Impact namespacing without custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2">248392960
+      <script async src="https://fast.ssqt.io/squatch-js@2">248393000
       """
     And the following code is included in the head tag
       """
       <script>
-      impactTBD.ready(function(){
-      const codes = impactTBD.api().squatchReferralCookie()
+      impact.ready(function(){
+      const codes = impact.api().squatchReferralCookie()
       })
       </script>
       """
     When the page loads
     Then there will be an error in the console
-    And the console error states that "impactTBD is undefined"
+    And the console error states that "impact is undefined"
     When squatchjs loads completely
     Then window.squatch is a module
-    And window.impactTBD is a module
-    But the function inside impactTBD.ready is not executed
+    And window.impact is a module
+    But the function inside impact.ready is not executed
 
-  Scenario Outline: Declarative widgets work without the need for the custom loader script
+  @minutia
+  Scenario: Declarative widgets work without the need for the custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2">515612320
+      <script async src="https://fast.ssqt.io/squatch-js@2">515612300
       """
     And the web-component <componentTag> is in the body
     When squatchjs loads completely
     Then window.squatch is a module
-    And window.impactTBD is a module
+    And window.impact is a module
     And the web-component correctly loads
 
+
+  @motivating
   Scenario: Impact namespacing with custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
       <script async src="https://fast.ssqt.io/squatch-js@2"><script>
       <script>
       !(function (a, b) {
-      a("impactTBD", b);
+      a("impact", b);
       })(function (a, b) {
       (b["_" + a] = {}),
       (b[a] = {}),
@@ -96,35 +101,36 @@ Feature: Namespacing
     And the following code is included in the head tag
       """
       <script>
-      impactTBD.ready(function(){
-      const codes = impactTBD.api().squatchReferralCookie()
+      impact.ready(function(){
+      const codes = impact.api().squatchReferralCookie()
       })
       </script>
       """
     And squatchjs hasn't loaded yet
-    Then window.impactTBD is an object that only contains a ready property
-    And window.impactTBD.ready is a function
-    And window._impactTBD.ready is an array of functions
-    But the impactTBD.api function does not exist
+    Then window.impact is an object that only contains a ready property
+    And window.impact.ready is a function
+    And window._impact.ready is an array of functions
+    But the impact.api function does not exist
     When squatchjs loads completely
     Then the window.squatch is a module
-    And window.impactTBD is an alias of window.squatch
-    And window._impactTBD is undefined
-    And window.impactTBD.api exists
-    And the function inside the impactTBD.ready is called
+    And window.impact is an alias of window.squatch
+    And window._impact is undefined
+    And window.impact.api exists
+    And the function inside the impact.ready is called
 
+  @minutia
   Scenario: Impact namespaced valid window variables
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
+      <script async src="https://fast.ssqt.io/squatch-js@2">882017800
       """
     And the following code is included in the head or body tag
       """
       window.impactToken = "VALID_TOKEN"
       window.impactConfig = {
-        domain: "impact-example-domain",
-        npmCdn: "impact-example-npm-cdn"
-        debug: true
+      domain: "impact-example-domain",
+      npmCdn: "impact-example-npm-cdn"
+      debug: true
       }
       """
     When squatchjs loads completely

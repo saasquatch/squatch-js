@@ -118,3 +118,16 @@ Feature: Using squatchjs API calls with declarative widgets
       | squatch.api     |
       | squatch.widgets |
       | squatch.events  |
+
+  @minutia @cant-be-tested
+  Scenario Outline: Squatchjs API methods if impact.init hasn't been called
+    Given I have not called impact.init or a squatchjs API method
+    When I call <method>
+    Then squatchjs implicitly calls impact.init
+    And the init method is passed an empty initial config
+
+    Examples:
+      | method         |
+      | impact.api     |
+      | impact.widgets |
+      | impact.events  |

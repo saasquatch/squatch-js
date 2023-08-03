@@ -309,6 +309,34 @@ Feature: Declarative widgets using custom Web Components
     Then the "widget_1" widget iframe is attached to the "squatch-embed" element's shadow DOM
     And the "widget_2" widget iframe is attached as a child to the element with the "squatchembed" id
 
+  @minutia
+  Scenario: Legacy API and declarative widgets with impact namespacing
+    Given "impact-embed" is included in the page's HTML
+    And the "widget" attribute is set to "widget_1"
+    And another widget is loaded via the following script
+      """
+      impact.ready(function () {
+      impact.init({
+      tenantAlias: TENANT_ALIAS
+      })
+      impact.widgets().upsertUser({
+      widgetType: "widget_2",
+      engagementMedium: "EMBED",
+      jwt: INSERT_JWT,
+      user: INSERT_USER_OBJ,
+      }).then(function(response) {
+      user = response.user;
+      }).catch(function(error){
+      console.log(error);
+      });
+      })
+      """
+    And an element exists in the DOM with the "squatchembed" id
+    When the widgets are loaded
+    Then the "widget_1" widget iframe is attached to the "impact-embed" element's shadow DOM
+    And the "widget_2" widget iframe is attached as a child to the element with the "squatchembed" id
+
+
   @landmine
   Scenario: squatch-popup elements without children override the .squatchpop onclick callback
     Given at least 2 "squatch-popup" elements in the page's HTML
