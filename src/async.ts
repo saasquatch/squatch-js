@@ -20,7 +20,7 @@ declare global {
 }
 /** @hidden */
 export default function asyncLoad() {
-  const impactNamespace = "impactTBD";
+  const impactNamespace = "impact";
   const namespace = window[impactNamespace] ? impactNamespace : "squatch";
 
   const loaded = window[namespace] || null;
@@ -29,7 +29,7 @@ export default function asyncLoad() {
   if (loaded && cached) {
     const ready = cached.ready || [];
 
-    setTimeout(() => (window["impactTBD"] = window.squatch), 0);
+    setTimeout(() => (window["impact"] = window.squatch), 0);
     ready.forEach((cb) => setTimeout(() => cb(), 0));
     setTimeout(() => {
       window.squatch._auto();
