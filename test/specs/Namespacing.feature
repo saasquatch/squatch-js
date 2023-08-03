@@ -128,5 +128,5 @@ Feature: Namespacing
       }
       """
     When squatchjs loads completely
-    Then squatchjs will use "window.impactToken" instead of "window.squatchToken"
+    Then squatchjs uses "window.impactToken" instead of "window.squatchToken"
     Then squatchjs will use "window.impactConfig" instead of "window.squatchConfig"
