@@ -1,7 +1,8 @@
 // @ts-check
-import { doPost } from "../utils/io";
+import { DEFAULT_DOMAIN } from "../globals";
 import { EngagementMedium } from "../types";
-import { DEFAULT_DOMAIN, getConfig, isObject } from "../utils/validate";
+import { doPost } from "../utils/io";
+import { getConfig, isObject } from "../utils/validate";
 
 /**
  *

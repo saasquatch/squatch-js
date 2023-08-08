@@ -2,7 +2,7 @@
  * Tests for branch coverage of DeclarativeWidget.ts not covered by behavioural specs
  */
 
-import { DEFAULT_DOMAIN } from "../../src/utils/validate";
+import { DEFAULT_DOMAIN } from "../../src/globals";
 import DeclarativeWidget from "../../src/widgets/declarative/DeclarativeWidget";
 import PopupWidget from "../../src/widgets/PopupWidget";
 jest.mock("../../src/widgets/PopupWidget");

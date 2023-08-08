@@ -3,14 +3,10 @@ import AnalyticsApi from "../../api/AnalyticsApi";
 import WidgetApi from "../../api/WidgetApi";
 import { ConfigOptions, DeclarativeConfigOptions, User } from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
-import {
-  DEFAULT_DOMAIN,
-  DEFAULT_NPM_CDN,
-  getConfig,
-  getToken,
-} from "../../utils/validate";
+import { getConfig, getToken } from "../../utils/validate";
 import EmbedWidget from "../EmbedWidget";
 import PopupWidget from "../PopupWidget";
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../globals";
 
 const _log = debug("squatch-js:DeclarativeWidget");
 

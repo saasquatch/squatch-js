@@ -1,9 +1,9 @@
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/globals";
 import {
   DeclarativeEmbedWidget,
   EmbedWidget,
   WidgetApi,
 } from "../../src/squatch";
-import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/utils/validate";
 import Widget from "../../src/widgets/Widget";
 import { context } from "msw";
 

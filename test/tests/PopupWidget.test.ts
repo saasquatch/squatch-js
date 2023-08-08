@@ -1,5 +1,5 @@
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/globals";
 import { WidgetApi } from "../../src/squatch";
-import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/utils/validate";
 import PopupWidget from "../../src/widgets/PopupWidget";
 
 beforeEach(() => {

@@ -1,3 +1,4 @@
+import { DEFAULT_NAMESPACE, IMPACT_NAMESPACE } from "./globals";
 import { ConfigOptions } from "./types";
 
 declare global {
@@ -20,8 +21,9 @@ declare global {
 }
 /** @hidden */
 export default function asyncLoad() {
-  const impactNamespace = "impact";
-  const namespace = window[impactNamespace] ? impactNamespace : "squatch";
+  const namespace = window[IMPACT_NAMESPACE]
+    ? IMPACT_NAMESPACE
+    : DEFAULT_NAMESPACE;
 
   const loaded = window[namespace] || null;
   const cached = window["_" + namespace] || null;
@@ -29,7 +31,7 @@ export default function asyncLoad() {
   if (loaded && cached) {
     const ready = cached.ready || [];
 
-    setTimeout(() => (window["impact"] = window.squatch), 0);
+    setTimeout(() => (window[IMPACT_NAMESPACE] = window[DEFAULT_NAMESPACE]), 0);
     ready.forEach((cb) => setTimeout(() => cb(), 0));
     setTimeout(() => {
       window.squatch._auto();

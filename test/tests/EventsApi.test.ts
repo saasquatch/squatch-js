@@ -1,7 +1,7 @@
 import EventsApi from "../../src/api/EventsApi";
+import { DEFAULT_DOMAIN } from "../../src/globals";
 import { JWT } from "../../src/types";
 import * as utils from "../../src/utils/io";
-import { DEFAULT_DOMAIN } from "../../src/utils/validate";
 
 describe("methods", () => {
   describe("track", () => {

@@ -1,7 +1,5 @@
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../globals";
 import { ConfigOptions, WidgetConfig } from "../types";
-
-export const DEFAULT_DOMAIN = "https://app.referralsaasquatch.com";
-export const DEFAULT_NPM_CDN = "https://fast.ssqt.io/npm";
 
 type Required<T> = T extends object
   ? { [P in keyof T]-?: NonNullable<T[P]> }

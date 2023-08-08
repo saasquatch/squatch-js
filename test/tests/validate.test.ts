@@ -1,13 +1,12 @@
 import { validateSchema } from "webpack";
 import {
-  DEFAULT_DOMAIN,
-  DEFAULT_NPM_CDN,
   isObject,
   validateConfig,
   validateLocale,
   validatePasswordlessConfig,
   validateWidgetConfig,
 } from "../../src/utils/validate";
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/globals";
 
 describe("validateConfig handling missing properties", () => {
   it("errors if no object is passed in", () => {

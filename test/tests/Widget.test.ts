@@ -1,6 +1,6 @@
 import WidgetApi from "../../src/api/WidgetApi";
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/globals";
 import { EmbedWidget, EngagementMedium } from "../../src/squatch";
-import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/utils/validate";
 import Widget, { Params } from "../../src/widgets/Widget";
 
 const TENANT_ALIAS = "test_a8b41jotf8a1v";
