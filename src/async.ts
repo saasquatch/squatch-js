@@ -7,6 +7,8 @@ declare global {
     _squatch?: {
       ready: any[];
     };
+    impactOnReady?: () => {};
+    squatchOnReady?: () => {};
 
     squatch: any;
     widgetIdent: any;
@@ -27,12 +29,13 @@ export default function asyncLoad() {
 
   const loaded = window[namespace] || null;
   const cached = window["_" + namespace] || null;
+  const declarativeCache = window.impactOnReady || window.squatchOnReady;
 
-  if (loaded && cached) {
-    const ready = cached.ready || [];
+  setTimeout(() => (window[IMPACT_NAMESPACE] = window[DEFAULT_NAMESPACE]), 0);
+  if (declarativeCache) setTimeout(() => declarativeCache(), 0);
 
-    setTimeout(() => (window[IMPACT_NAMESPACE] = window[DEFAULT_NAMESPACE]), 0);
-    ready.forEach((cb) => setTimeout(() => cb(), 0));
+  if (loaded) {
+    if (cached) (cached.ready || []).forEach((cb) => setTimeout(() => cb(), 0));
     setTimeout(() => {
       window.squatch._auto();
     }, 0);

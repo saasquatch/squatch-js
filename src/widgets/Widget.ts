@@ -79,14 +79,18 @@ export default abstract class Widget {
     } else {
       element =
         document.querySelector("#squatchembed") ||
-        document.querySelector(".squatchembed");
+        document.querySelector(".squatchembed") ||
+        document.querySelector("#impactembed") ||
+        document.querySelector(".impactembed");
+
       _log("loading widget with default selector", element);
     }
 
     if (!(element instanceof HTMLElement))
       throw new Error(
         `element with selector '${
-          this.container || "#squatchembed or .squatchembed"
+          this.container ||
+          "#squatchembed, .squatchembed, #impactembed, or .impactembed"
         }' not found.'`
       );
 

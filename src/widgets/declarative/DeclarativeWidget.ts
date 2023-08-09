@@ -76,6 +76,12 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   container: string | HTMLElement | undefined | null;
   element: HTMLElement | undefined;
 
+  /**
+   * Flag for if the component has been loaded or not
+   * @hidden
+   */
+  loaded: boolean;
+
   constructor() {
     super();
     this.attachShadow({

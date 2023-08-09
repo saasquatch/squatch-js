@@ -19,6 +19,8 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
      * @static
      */
     this.type = "EMBED";
+
+    this.loaded = false;
   }
 
   static get observedAttributes() {
@@ -26,8 +28,7 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
-    // TODO: Replace !oldVal with loaded flag
-    if (oldVal === newVal || !oldVal) return; // nothing to do
+    if (oldVal === newVal || !this.loaded) return; // nothing to do
 
     switch (attr) {
       case "locale":
@@ -46,6 +47,8 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
       this.shadowRoot && Array.from(this.shadowRoot.children)
     )?.find((c) => c.tagName === "SLOT") as Node;
     if (slot) this.shadowRoot?.removeChild(slot);
+
+    this.loaded = true;
   }
 }
 
@@ -69,6 +72,8 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
      */
     this.type = "POPUP";
 
+    this.loaded = false;
+
     this.addEventListener("click", (e) => {
       e.stopPropagation();
 
@@ -81,8 +86,7 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
-    // TODO: Replace !oldVal with loaded flag
-    if (oldVal === newVal || !oldVal) return; // nothing to do
+    if (oldVal === newVal || !this.loaded) return; // nothing to do
 
     switch (attr) {
       case "locale":
@@ -97,6 +101,8 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     await this.renderWidget();
 
     if (this.getAttribute("open") !== null) this.open();
+
+    this.loaded = true;
   }
 }
 

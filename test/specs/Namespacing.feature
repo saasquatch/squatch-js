@@ -38,6 +38,7 @@ Feature: Namespacing
     And window.squatch.ready is a function
     And window._squatch.ready is an array of functions
     But the squatch.api function does not exist
+    And window.impact does not exist
     When squatchjs loads completely
     Then the window.squatch is a module
     And window.impact is an alias of window.squatch
@@ -49,7 +50,7 @@ Feature: Namespacing
   Scenario: Impact namespacing without custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
+      <script async src="https://fast.ssqt.io/squatch-js@2">354000100
       """
     And the following code is included in the head tag
       """
@@ -71,7 +72,7 @@ Feature: Namespacing
   Scenario: Declarative widgets work without the need for the custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
+      <script async src="https://fast.ssqt.io/squatch-js@2">446713000
       """
     And the web-component <componentTag> is in the body
     When squatchjs loads completely
@@ -79,62 +80,86 @@ Feature: Namespacing
     And window.impact is a module
     And the web-component correctly loads
 
-  #TODO Ditch
   @motivating
-  Scenario: Impact namespacing with custom loader script
+  Scenario: Impact namespacing for Legacy API
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
-      <script>
-      !(function (a, b) {
-      a("impact", b);
-      })(function (a, b) {
-      #TODO: if b[a]: return;
-      (b["_" + a] = {}),
-      (b[a] = {}),
-      (b[a].ready = function (c) {
-      b["_" + a].ready = b["_" + a].ready || [];
-      b["_" + a].ready.push(c);
-      });
-      }, this);
-      </script>
+      <script async src="https://fast.ssqt.io/squatch-js@2">451725300
       """
     And the following code is included in the head tag
       """
       <script>
-      impact.ready(function(){
+      window.impactOnReady = function(){
       const codes = impact.api().squatchReferralCookie()
-      })
+      }
       </script>
       """
-    And squatchjs hasn't loaded yet
-    Then window.impact is an object that only contains a ready property
-    And window.impact.ready is a function
-    And window._impact.ready is an array of functions
-    But the impact.api function does not exist
+    And squatchjs hasn't loaded
+    Then window.impact does not exist
+    And the impact.api function does not exist
     When squatchjs loads completely
     Then the window.squatch is a module
+    And window.impactOnReady is run
     And window.impact is an alias of window.squatch
-    And window._impact is undefined
     And window.impact.api exists
-    And the function inside the impact.ready is called
 
-  # TODO: Add impactOnReady/impactOnLoad/impactReady
   @minutia
   Scenario: Impact namespaced valid window variables
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
+      <script async src="https://fast.ssqt.io/squatch-js@2">566341200
       """
     And the following code is included in the head or body tag
       """
       window.impactToken = "VALID_TOKEN"
+      window.squatchToken = "VALID_TOKEN"
       window.impactConfig = {
       domain: "impact-example-domain",
       npmCdn: "impact-example-npm-cdn"
       debug: true
       }
+      window.squatchConfig = {
+      domain: "squatch-example-domain",
+      npmCdn: "squatch-example-npm-cdn"
+      debug: true
+      }
+      window.impactOnReady = () => {
+      console.log("first")
+      }
+      window.squatchOnReady = () => {
+      console.log("second")
+      }
       """
     When squatchjs loads completely
     Then squatchjs uses "window.impactToken" instead of "window.squatchToken"
     Then squatchjs uses "window.impactConfig" instead of "window.squatchConfig"
+    Then squatchjs uses "window.impactOnReady" instead of "window.squatchOnReady"
+
+  @minutia @landmine
+  Scenario: Legacy API without loader script
+    Given squatchjs is loaded onto the page via the html code below
+      """
+      <script async src="https://fast.ssqt.io/squatch-js@2">566341200
+      """
+    And a widget is attempted to be loaded via the following script
+      """
+      impact.ready(function () {
+      impact.init({
+      tenantAlias: TENANT_ALIAS
+      })
+      impact.widgets().upsertUser({
+      widgetType: "widget_2",
+      engagementMedium: "EMBED",
+      jwt: INSERT_JWT,
+      user: INSERT_USER_OBJ,
+      }).then(function(response) {
+      user = response.user;
+      }).catch(function(error){
+      console.log(error);
+      });
+      })
+      """
+    And an element exists in the DOM with the "squatchembed" id
+    When the page loads
+    Then an error is shown in the console stating that "impact.ready" does not exist
+    And the "widget_2" widget iframe is not attached as a child to the element with the "squatchembed" id

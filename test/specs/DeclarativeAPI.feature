@@ -131,3 +131,46 @@ Feature: Using squatchjs API calls with declarative widgets
       | impact.api     |
       | impact.widgets |
       | impact.events  |
+
+  @motivating
+  Scenario: Squatchjs API methods without loader script
+    Given I have removed the loader script
+    And I have included squatchjs via the following script tag
+      """
+      <script async src="https://fast.ssqt.io/squatch-js@2">193823400
+      """
+    And the following script tag is included in the head tag
+      """
+      <script>
+      window.squatchOnReady = function () {
+      squatch.api()
+      squatch.widgets()
+      squatch.events()
+      }
+      </script>
+      """
+    When squatchjs loads
+    Then window.squatch exists
+    And the function stored in window.squatchOnReady is called
+
+  @motivating
+  Scenario: Squatchjs API namespacced methods without loader script
+    Given I have removed the loader script
+    And I have included squatchjs via the following script tag
+      """
+      <script async src="https://fast.ssqt.io/squatch-js@2">193823400
+      """
+    And the following script tag is included in the head tag
+      """
+      <script>
+      window.impactOnReady = function () {
+      impact.api()
+      impact.widgets()
+      impact.events()
+      }
+      </script>
+      """
+    When squatchjs loads
+    Then window.squatch exists
+    And window.impact is an alias for window.squatch
+    And the function stored in window.impactOnReady is called

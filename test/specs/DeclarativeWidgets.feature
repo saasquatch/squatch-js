@@ -117,12 +117,20 @@ Feature: Declarative widgets using custom Web Components
       | token         | component     | attribute | value         | newValue          |
       | a valid token | squatch-embed | widget    | w/widget-type | w/new-widget-type |
       | a valid token | squatch-embed | locale    | en_CA         | en_US             |
+      | a valid token | squatch-embed | widget    | null          | w/new-widget-type |
+      | a valid token | squatch-embed | locale    | null          | en_US             |
       | a valid token | squatch-popup | widget    | w/widget-type | w/new-widget-type |
       | a valid token | squatch-popup | locale    | en_CA         | en_US             |
+      | a valid token | squatch-popup | widget    | null          | w/new-widget-type |
+      | a valid token | squatch-popup | locale    | null          | en_US             |
       | null          | squatch-embed | widget    | w/widget-type | w/new-widget-type |
       | null          | squatch-embed | locale    | en_CA         | en_US             |
+      | null          | squatch-embed | widget    | null          | w/new-widget-type |
+      | null          | squatch-embed | locale    | null          | en_US             |
       | null          | squatch-popup | widget    | w/widget-type | w/new-widget-type |
       | null          | squatch-popup | locale    | en_CA         | en_US             |
+      | null          | squatch-popup | widget    | null          | w/new-widget-type |
+      | null          | squatch-popup | locale    | null          | en_US             |
 
   @minutia @automated
   Scenario Outline: Locale attribute with user locale
@@ -187,6 +195,8 @@ Feature: Declarative widgets using custom Web Components
       | customElement |
       | squatch-embed |
       | squatch-popup |
+      | impact-embed  |
+      | impact-popup  |
 
   @minutia @automated
   Scenario Outline: squatch-popup can be opened via .squatchpop
@@ -198,6 +208,7 @@ Feature: Declarative widgets using custom Web Components
     Examples:
       | className  | mayBe  |
       | squatchpop | is     |
+      | impactpop  | is     |
       | asdfasdf   | is not |
 
   @motivating @automated
@@ -212,6 +223,8 @@ Feature: Declarative widgets using custom Web Components
       | selector   | attribute | value        | loadBehaviour           | mayBe  |
       | null       | class     | squatchembed | loads                   | is not |
       | null       | id        | squatchembed | loads                   | is not |
+      | null       | class     | impactembed  | loads                   | is not |
+      | null       | id        | impactembed  | loads                   | is not |
       | #container | id        | container    | loads                   | is     |
       | .container | class     | container    | loads                   | is     |
       | #container | class     | container    | throws an error on load | is not |
@@ -251,6 +264,8 @@ Feature: Declarative widgets using custom Web Components
       | attribute | value        |
       | id        | squatchembed |
       | class     | squatchembed |
+      | id        | impactembed  |
+      | class     | impactembed  |
 
   @minutia @automated
   Scenario Outline: Opening and closing squatch-popup component
@@ -309,34 +324,12 @@ Feature: Declarative widgets using custom Web Components
     Then the "widget_1" widget iframe is attached to the "squatch-embed" element's shadow DOM
     And the "widget_2" widget iframe is attached as a child to the element with the "squatchembed" id
 
-  @minutia @footgun
-  #TODO Add failing spec
-  Scenario: Legacy API and declarative widgets with impact namespacing
+  @motivating
+  Scenario: Declarative widgets with impact namespacing
     Given "impact-embed" is included in the page's HTML
     And the "widget" attribute is set to "widget_1"
-    And another widget is loaded via the following script
-      """
-      impact.ready(function () {
-      impact.init({
-      tenantAlias: TENANT_ALIAS
-      })
-      impact.widgets().upsertUser({
-      widgetType: "widget_2",
-      engagementMedium: "EMBED",
-      jwt: INSERT_JWT,
-      user: INSERT_USER_OBJ,
-      }).then(function(response) {
-      user = response.user;
-      }).catch(function(error){
-      console.log(error);
-      });
-      })
-      """
-    And an element exists in the DOM with the "squatchembed" id
-    When the widgets are loaded
+    When the component loads
     Then the "widget_1" widget iframe is attached to the "impact-embed" element's shadow DOM
-    And the "widget_2" widget iframe is NOT attached as a child to the element with the "squatchembed" id
-
 
   @landmine
   Scenario: squatch-popup elements without children override the .squatchpop onclick callback
@@ -361,6 +354,8 @@ Feature: Declarative widgets using custom Web Components
       | webComponent  |
       | squatch-embed |
       | squatch-popup |
+      | impact-embed  |
+      | impact-popup  |
 
 
   @landmine @automated

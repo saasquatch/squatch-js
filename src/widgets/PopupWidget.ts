@@ -25,7 +25,6 @@ export default class PopupWidget extends Widget {
   trigger: string | null;
   id: string;
 
-  // TODO: Add impactpop as other default
   constructor(params: Params, trigger: string | null = ".squatchpop") {
     super(params);
 
@@ -49,7 +48,10 @@ export default class PopupWidget extends Widget {
 
     let triggerElement;
     try {
-      triggerElement /* HTMLButton */ = document.querySelector(this.trigger);
+      triggerElement /* HTMLButton */ =
+        document.querySelector(this.trigger) ||
+        document.querySelector(".impactpop");
+
       if (this.trigger && !triggerElement)
         _log("No element found with trigger selector", this.trigger);
     } catch {

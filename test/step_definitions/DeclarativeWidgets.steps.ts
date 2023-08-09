@@ -551,6 +551,8 @@ defineFeature(feature, (test) => {
       expect(firstFrame).toBeInstanceOf(HTMLIFrameElement);
 
       const html = firstFrame.contentDocument?.body.innerHTML;
+      if (attributeValue === null) attributeValue = "null";
+      console.log({ attributeValue });
       expect(html).toContain(attributeValue);
     });
 
