@@ -26,6 +26,7 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
+    // TODO: Replace !oldVal with loaded flag
     if (oldVal === newVal || !oldVal) return; // nothing to do
 
     switch (attr) {
@@ -80,6 +81,7 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
+    // TODO: Replace !oldVal with loaded flag
     if (oldVal === newVal || !oldVal) return; // nothing to do
 
     switch (attr) {
