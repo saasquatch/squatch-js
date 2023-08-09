@@ -49,7 +49,7 @@ Feature: Namespacing
   Scenario: Impact namespacing without custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2">248393000
+      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
       """
     And the following code is included in the head tag
       """
@@ -71,7 +71,7 @@ Feature: Namespacing
   Scenario: Declarative widgets work without the need for the custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2">515612300
+      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
       """
     And the web-component <componentTag> is in the body
     When squatchjs loads completely
@@ -79,16 +79,17 @@ Feature: Namespacing
     And window.impact is a module
     And the web-component correctly loads
 
-
+  #TODO Ditch
   @motivating
   Scenario: Impact namespacing with custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2"><script>
+      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
       <script>
       !(function (a, b) {
       a("impact", b);
       })(function (a, b) {
+      #TODO: if b[a]: return;
       (b["_" + a] = {}),
       (b[a] = {}),
       (b[a].ready = function (c) {
@@ -118,11 +119,12 @@ Feature: Namespacing
     And window.impact.api exists
     And the function inside the impact.ready is called
 
+  # TODO: Add impactOnReady/impactOnLoad/impactReady
   @minutia
   Scenario: Impact namespaced valid window variables
     Given squatchjs is loaded onto the page via the html code below
       """
-      <script async src="https://fast.ssqt.io/squatch-js@2">882017800
+      <script async src="https://fast.ssqt.io/squatch-js@2"></script>
       """
     And the following code is included in the head or body tag
       """
