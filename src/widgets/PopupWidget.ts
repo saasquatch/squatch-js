@@ -25,6 +25,7 @@ export default class PopupWidget extends Widget {
   trigger: string | null;
   id: string;
 
+  // TODO: Add impactpop as other default
   constructor(params: Params, trigger: string | null = ".squatchpop") {
     super(params);
 
