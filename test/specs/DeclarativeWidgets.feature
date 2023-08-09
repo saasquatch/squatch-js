@@ -309,7 +309,8 @@ Feature: Declarative widgets using custom Web Components
     Then the "widget_1" widget iframe is attached to the "squatch-embed" element's shadow DOM
     And the "widget_2" widget iframe is attached as a child to the element with the "squatchembed" id
 
-  @minutia
+  @minutia @footgun
+  #TODO Add failing spec
   Scenario: Legacy API and declarative widgets with impact namespacing
     Given "impact-embed" is included in the page's HTML
     And the "widget" attribute is set to "widget_1"
@@ -334,7 +335,7 @@ Feature: Declarative widgets using custom Web Components
     And an element exists in the DOM with the "squatchembed" id
     When the widgets are loaded
     Then the "widget_1" widget iframe is attached to the "impact-embed" element's shadow DOM
-    And the "widget_2" widget iframe is attached as a child to the element with the "squatchembed" id
+    And the "widget_2" widget iframe is NOT attached as a child to the element with the "squatchembed" id
 
 
   @landmine
