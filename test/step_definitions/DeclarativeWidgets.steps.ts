@@ -552,7 +552,6 @@ defineFeature(feature, (test) => {
 
       const html = firstFrame.contentDocument?.body.innerHTML;
       if (attributeValue === null) attributeValue = "null";
-      console.log({ attributeValue });
       expect(html).toContain(attributeValue);
     });
 

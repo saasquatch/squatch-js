@@ -174,3 +174,9 @@ Feature: Using squatchjs API calls with declarative widgets
     Then window.squatch exists
     And window.impact is an alias for window.squatch
     And the function stored in window.impactOnReady is called
+
+  @minutia
+  Scenario: squatchReferralCookie is aliased by referralCookie under WidgetAPI
+    Given I have loaded squatchjs correctly
+    Then there is a method "referralCookie" on the WidgetAPI class
+    And "referralCookie" is an alias of the "squatchReferralCookie" method
