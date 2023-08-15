@@ -39,7 +39,8 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   }
 
   async connectedCallback() {
-    this.container = this.getAttribute("container") || this;
+    this.loaded = true;
+    this.container = this.getAttribute("container");
 
     await this.renderWidget();
 
@@ -47,8 +48,6 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
       this.shadowRoot && Array.from(this.shadowRoot.children)
     )?.find((c) => c.tagName === "SLOT") as Node;
     if (slot) this.shadowRoot?.removeChild(slot);
-
-    this.loaded = true;
   }
 }
 
@@ -97,12 +96,12 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   }
 
   async connectedCallback() {
-    this.container = this.getAttribute("container") || this;
+    this.loaded = true;
+    this.container = this.getAttribute("container");
+
     await this.renderWidget();
 
     if (this.getAttribute("open") !== null) this.open();
-
-    this.loaded = true;
   }
 }
 

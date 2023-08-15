@@ -69,7 +69,7 @@ Feature: Namespacing
     But the function inside impact.ready is not executed
 
   @minutia
-  Scenario: Declarative widgets work without the need for the custom loader script
+  Scenario Outline: Declarative widgets work without the need for the custom loader script
     Given squatchjs is loaded onto the page via the html code below
       """
       <script async src="https://fast.ssqt.io/squatch-js@2">446713000
@@ -79,6 +79,13 @@ Feature: Namespacing
     Then window.squatch is a module
     And window.impact is a module
     And the web-component correctly loads
+
+    Examples:
+      | componentTag  |
+      | squatch-embed |
+      | squatch-popup |
+      | impact-embed  |
+      | impact-popup  |
 
   @motivating
   Scenario: Impact namespacing for Legacy API
@@ -111,16 +118,16 @@ Feature: Namespacing
       """
     And the following code is included in the head or body tag
       """
-      window.impactToken = "VALID_TOKEN"
-      window.squatchToken = "VALID_TOKEN"
+      window.impactToken = "VALID_IMPACT_TOKEN"
+      window.squatchToken = "VALID_SQUATCH_TOKEN"
       window.impactConfig = {
       domain: "impact-example-domain",
-      npmCdn: "impact-example-npm-cdn"
+      npmCdn: "impact-example-npm-cdn",
       debug: true
       }
       window.squatchConfig = {
       domain: "squatch-example-domain",
-      npmCdn: "squatch-example-npm-cdn"
+      npmCdn: "squatch-example-npm-cdn",
       debug: true
       }
       window.impactOnReady = () => {

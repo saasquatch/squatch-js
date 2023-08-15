@@ -188,7 +188,7 @@ Feature: Declarative widgets using custom Web Components
     Then the shadow DOM's mode is set to "open"
     And the shadom DOM's innerHTML is set to the following
       """
-      <style>:host { display: contents; }</style><slot></slot>
+      <style>:host { display: block; }</style><slot></slot>
       """
     And the widget iframe is slotted into the custom element's shadow DOM
     Examples:
@@ -348,7 +348,7 @@ Feature: Declarative widgets using custom Web Components
     But squatchjs hasn't loaded yet
     Then the element will default to be "display: inline;"
     When squatchjs loads
-    Then the element will be set to "display: contents;"
+    Then the element will be set to "display: block;"
 
     Examples:
       | webComponent  |

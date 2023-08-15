@@ -29,6 +29,13 @@ export default class EmbedWidget extends Widget {
     const frame = this._createFrame();
     const element = this._findElement();
 
+    if (this.context?.container) {
+      // Custom container is used
+      element.style.visibility = "hidden";
+      element.style.height = "0";
+      element.style["overflow-y"] = "hidden";
+    }
+
     if (this.container) {
       if (element.shadowRoot) {
         if (element.shadowRoot.lastChild?.nodeName === "IFRAME") {
@@ -73,6 +80,7 @@ export default class EmbedWidget extends Widget {
           const { height } = entry.contentRect;
           // @ts-ignore -- number will be cast to string by browsers
           frame.height = height;
+          console.log("RESIZE");
         }
       });
 

@@ -166,6 +166,8 @@ export default class WidgetApi {
       encodedCookie: _saasquatch,
     });
   }
+
+  referralCookie = this.squatchReferralCookie;
 }
 
 // builds a param string for widgets

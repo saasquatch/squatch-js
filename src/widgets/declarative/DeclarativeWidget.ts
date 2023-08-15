@@ -86,7 +86,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     super();
     this.attachShadow({
       mode: "open",
-    }).innerHTML = `<style>:host { display: contents; }</style><slot></slot>`;
+    }).innerHTML = `<style>:host { display: block; }</style><slot></slot>`;
 
     this.config = getConfig();
     this.token = getToken();
@@ -157,15 +157,16 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       context: {
         type: config.type,
         user: config.user,
-        container: this.container || this,
+        container: this.container || undefined,
         engagementMedium: this.type,
       },
       type: this.widgetType!,
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
+      container: this,
     };
     if (this.type === "EMBED") {
-      return new EmbedWidget(params, params.context.container);
+      return new EmbedWidget(params);
     } else {
       const useFirstChildTrigger = this.firstChild ? null : undefined;
       return new PopupWidget(params, useFirstChildTrigger);
@@ -210,13 +211,17 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     const params = {
       api: this.widgetApi,
       content: "error",
-      context: { type: "error" as const, container: this.container || this },
+      context: {
+        type: "error" as const,
+        container: this.container || undefined,
+      },
       type: "ERROR_WIDGET",
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
+      container: this,
     };
     if (this.type === "EMBED") {
-      return new EmbedWidget(params, params.context.container);
+      return new EmbedWidget(params);
     } else {
       const useFirstChildTrigger = this.firstChild ? null : undefined;
       return new PopupWidget(params, useFirstChildTrigger);

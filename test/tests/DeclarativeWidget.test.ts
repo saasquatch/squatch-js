@@ -83,7 +83,9 @@ describe("DeclarativeWidget", () => {
         const widgetArgs = PopupWidget.mock.calls[0][0];
         if (args.container)
           expect(widgetArgs["context"]["container"]).toBe(args.container);
-        else expect(widgetArgs["context"]["container"]).toBe(widget);
+        else expect(widgetArgs["context"]["container"]).toBe(undefined);
+
+        expect(widgetArgs["container"]).toBe(widget);
       }
     );
   });
@@ -134,7 +136,9 @@ describe("DeclarativeWidget", () => {
         const widgetArgs = PopupWidget.mock.calls[0][0];
         if (args.container)
           expect(widgetArgs["context"]["container"]).toBe(args.container);
-        else expect(widgetArgs["context"]["container"]).toBe(widget);
+        else expect(widgetArgs["context"]["container"]).toBe(undefined);
+
+        expect(widgetArgs["container"]).toBe(widget);
       }
     );
     test("error widget on dom", () => {
