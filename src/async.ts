@@ -26,26 +26,23 @@ export default function asyncLoad() {
   const namespace = window[IMPACT_NAMESPACE]
     ? IMPACT_NAMESPACE
     : DEFAULT_NAMESPACE;
-
-  const loaded = window[namespace] || null;
-  const cached = window["_" + namespace] || null;
+  const cached = window["_" + namespace]?.ready || [];
   const declarativeCache = window.impactOnReady || window.squatchOnReady;
+  const readyFns = [...cached, declarativeCache].filter((a) => !!a);
 
-  setTimeout(() => (window[IMPACT_NAMESPACE] = window[DEFAULT_NAMESPACE]), 0);
-  if (declarativeCache) setTimeout(() => declarativeCache(), 0);
+  // Run all of this in a setTimeout because we need to wait for the squatch module to finish loading
+  setTimeout(() => {
+    // Set window.impact as an alias for window.squatch.
+    window[IMPACT_NAMESPACE] = window[DEFAULT_NAMESPACE];
 
-  if (loaded) {
-    if (cached) (cached.ready || []).forEach((cb) => setTimeout(() => cb(), 0));
-    setTimeout(() => {
-      window.squatch._auto();
-    }, 0);
+    // Run all the ready functions in a set timeout to they happen after namespace aliasing.
+    readyFns.forEach((cb) => cb());
+
+    // Perform auto popup
+    window[DEFAULT_NAMESPACE]._auto();
 
     // @ts-ignore -- intentionally deletes `_squatch` to cleanup initialization
     window["_" + namespace] = undefined;
-    try {
-      delete window["_" + namespace];
-    } catch (e) {
-      throw e;
-    }
-  }
+    delete window["_" + namespace];
+  }, 0);
 }
