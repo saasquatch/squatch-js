@@ -1137,4 +1137,103 @@ defineFeature(feature, (test) => {
       }
     );
   });
+  test("Embed widgets can be open by default", ({ given, when, and, then }) => {
+    let el: DeclarativeEmbedWidget;
+    let div: HTMLDivElement;
+
+    Background(given);
+
+    given(/^"(.*)" is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
+    });
+
+    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
+      el.setAttribute("widget", "w/widget-type");
+    });
+
+    and(/^the "(.*)" attribute has been set to "(.*)"$/, (arg0, arg1) => {
+      const attr = sanitize(arg0) as string;
+      const value = sanitize(arg1) as string;
+
+      el.setAttribute(attr, value);
+    });
+
+    and(/^the "(.*)" attribute is set$/, (arg0) => {
+      const attr = sanitize(arg0) as string;
+
+      el.setAttribute(attr, "");
+    });
+
+    and(
+      /^an element with attribute "(.*)" with value "(.*)" exists in the DOM$/,
+      (arg0, arg1) => {
+        const attr = sanitize(arg0) as string;
+        const value = sanitize(arg1) as string;
+
+        div = document.createElement("div");
+        div.setAttribute(attr, value);
+
+        document.body.appendChild(div);
+      }
+    );
+
+    when("the component loads", async () => {
+      el.setAttribute("widget", "w/widget-type");
+      document.body.appendChild(el);
+      await expect(
+        waitUntil(() => !!document.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+    });
+
+    then("the widget is contained within the corresponding element", () => {
+      const iframe = div.querySelector("iframe");
+      expect(iframe).not.toBeNull();
+      expect(iframe).toBeInstanceOf(HTMLIFrameElement);
+    });
+
+    and("the widget is visible", () => {
+      expect(div.style['visibility']).not.toBe('hidden');
+    });
+  });
+  test('Declarative widgets fire a "sq:widget-loaded" event', ({
+    given,
+    and,
+    when,
+    then,
+    but,
+  }) => {
+    let el: DeclarativeEmbedWidget | DeclarativePopupWidget;
+    let spy: any
+    const documentCb = jest.fn()
+    document.addEventListener("sq:widget-loaded", documentCb)
+
+    Background(given);
+
+    given(/^(.*) is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
+
+      spy = jest.spyOn(el, "dispatchEvent")
+    });
+
+    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
+      el.setAttribute("widget", "widget-type");
+    });
+
+    when("the widget loads", async () => {
+      el.setAttribute("widget", "w/widget-type");
+      document.body.appendChild(el);
+      await expect(
+        waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+    });
+
+    then(/^a "(.*)" event is fired by the custom element$/, async (arg0) => {
+      expect(spy).toHaveBeenCalledWith(expect.any(Event));
+      expect(spy.mock.calls[0][0].type).toBe("sq:widget-loaded");
+    });
+
+    but("the event does not bubble", () => {
+      expect(documentCb).not.toHaveBeenCalled()
+    });
+  });
 });

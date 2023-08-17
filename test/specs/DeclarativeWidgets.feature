@@ -297,6 +297,30 @@ Feature: Declarative widgets using custom Web Components
       | is visible       | close  | is not visible |
       | is visible       | open   | is visible     |
 
+  @minutia @automated
+  Scenario: Embed widgets can be open by default
+    Given "squatch-embed" is included in the page's HTML
+    And the widget attribute is set to a valid SaaSquatch widget type
+    And the "container" attribute has been set to ".custom"
+    And the "open" attribute is set
+    And an element with attribute "class" with value "custom" exists in the DOM
+    When the component loads
+    Then the widget is contained within the corresponding element
+    And the widget is visible
+
+  @minutia @automated
+  Scenario Outline: Declarative widgets fire a "sq:widget-loaded" event
+    Given <component> is included in the page's HTML
+    And the widget attribute is set to a valid SaaSquatch widget type
+    When the widget loads
+    Then a "sq:widget-loaded" event is fired by the custom element
+    But the event does not bubble
+
+    Examples:
+      | component     |
+      | squatch-embed |
+      | squatch-popup |
+
   @minutia
   Scenario: Legacy API and declarative widgets
     Given "squatch-embed" is included in the page's HTML
