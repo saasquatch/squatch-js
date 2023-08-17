@@ -30,8 +30,12 @@ export default function asyncLoad() {
   const declarativeCache = window.impactOnReady || window.squatchOnReady;
   const readyFns = [...cached, declarativeCache].filter((a) => !!a);
 
+
   // Run all of this in a setTimeout because we need to wait for the squatch module to finish loading
   setTimeout(() => {
+    // Exit early if module wasn't loaded onto window
+    if (!window[DEFAULT_NAMESPACE]) return
+
     // Set window.impact as an alias for window.squatch.
     window[IMPACT_NAMESPACE] = window[DEFAULT_NAMESPACE];
 
