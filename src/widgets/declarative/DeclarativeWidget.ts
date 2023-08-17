@@ -192,6 +192,9 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     }
 
     this.widgetInstance = widgetInstance;
+    if (this.widgetInstance)
+      this.dispatchEvent(new CustomEvent("sq:widget-loaded"));
+
     return widgetInstance;
   }
 
@@ -233,6 +236,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
    * @throws Throws an Error if called before the widget has loaded
    */
   open() {
+    console.log("Opened");
     if (!this.widgetInstance) throw new Error("Widget has not loaded yet");
     this.widgetInstance.open();
   }

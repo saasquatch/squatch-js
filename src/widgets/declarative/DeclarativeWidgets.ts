@@ -48,6 +48,8 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
       this.shadowRoot && Array.from(this.shadowRoot.children)
     )?.find((c) => c.tagName === "SLOT") as Node;
     if (slot) this.shadowRoot?.removeChild(slot);
+
+    if (this.getAttribute("open") !== null) this.open();
   }
 }
 
