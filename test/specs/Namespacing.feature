@@ -170,3 +170,18 @@ Feature: Namespacing
     When the page loads
     Then an error is shown in the console stating that "impact.ready" does not exist
     And the "widget_2" widget iframe is not attached as a child to the element with the "squatchembed" id
+
+  @landmine
+  Scenario: UTT asyncronously overrides the value of squatchToken
+    Given the tenant associated in UTT has tenant alias "tenant_alias_utt"
+    And the UTT loader script is included in the page's html
+    And the following script tag is included in the page's html
+    """
+    <script>
+    window.squatchTenant = "tenant_alias"
+    </script>
+    """
+    When the page loads
+    Then the value of window.squatchTenant is "tenant_alias"
+    When UTT loads
+    Then the value of window.squatchTenant is "tenant_alias_utt"
