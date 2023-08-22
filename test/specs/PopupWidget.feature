@@ -101,6 +101,7 @@ Feature: Pop-Up Widget
   @motivating
   Scenario: A debug warning is shown if an invalid trigger selector is used
     Given the selector <selector> is passed as a trigger in the initObj
+    And the config has "debug" set to "true"
     When the following code is wrapped by 'squatch.ready'
     And is executed
       """
