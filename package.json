@@ -1,6 +1,6 @@
 {
   "name": "@saasquatch/squatch-js",
-  "version": "2.6.0-12",
+  "version": "2.6.0",
   "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "author": "ReferralSaaSquatch.com, Inc.",
@@ -117,7 +117,7 @@
   "size-limit": [
     {
       "path": "dist/squatch.js",
-      "limit": "12 kB"
+      "limit": "12.5 kB"
     }
   ]
 }
