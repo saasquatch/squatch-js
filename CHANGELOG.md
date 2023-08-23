@@ -21,7 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - window.squatchToken: Signed JWT for calls to the SaaSquatch API -- [How to generate valid JWT Tokens](https://docs.saasquatch.com/topics/json-web-tokens#example-building-the-jwt)
     - window.squatchTenant: SaaSquatch tenant alias
     - window.squatchConfig: Additional configuration overrides (Optional)
-    - debug: Turn on console debugging (Default: false)
+      - debug: Turn on console debugging (Default: false)
+    - window.squatchOnReady: Declarative on ready function to be run when the squatch-js module has finished loading
 
   - Note: If window.squatchToken is undefined, widgets will be rendered as [Instant Access widgets.](https://docs.saasquatch.com/topics/widget-types#instant-access-widgets)
 
