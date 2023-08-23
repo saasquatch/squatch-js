@@ -68,7 +68,7 @@ For rendering widgets and API calls, squatchjs respects configurations set on th
 - `window.squatchTenant`: SaaSquatch tenant alias
 - `window.squatchConfig`: Additional configuration overrides (Optional)
   - `debug`: Turn on console debugging (Default: `false`)
-- window.squatchOnReady: Declarative on ready function to be run when the squatch-js module has finished loading
+- `window.squatchOnReady`: Declarative on ready function to be run when the squatch-js module has finished loading
 
   ```html
   <script type="text/javascript">
