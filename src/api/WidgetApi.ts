@@ -7,7 +7,7 @@ import {
   WidgetType,
   WithRequired,
 } from "../types";
-import { doGet, doPost, doPut, doQuery } from "../utils/io";
+import { doGet, doPut, doQuery } from "../utils/io";
 import {
   validateConfig,
   validateLocale,
@@ -42,16 +42,17 @@ export default class WidgetApi {
    * import {WidgetApi} from '@saasquatch/squatch-js';
    * let squatchApi = new WidgetApi({tenantAlias:'test_12b5bo1b25125'});
    */
-  constructor(config: ConfigOptions) {
-    const raw = config as unknown; // Flags that we need to validate anything we use from this type
+  constructor(config?: ConfigOptions) {
+    const raw = config as unknown;
     const clean = validateConfig(raw);
+
     this.tenantAlias = clean.tenantAlias;
     this.domain = clean.domain;
     this.npmCdn = clean.npmCdn;
   }
 
   /**
-   * Creates/upserts user.
+   * Creates/upserts user, requests widget template.
    *
    * @param {Object} params Parameters for request
    * @param {Object?} params.user The user details
@@ -71,24 +72,31 @@ export default class WidgetApi {
       widgetType,
       engagementMedium = "POPUP",
       jwt,
+      locale,
       user,
     } = clean as WithRequired<WidgetConfig, "user">;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const accountId = encodeURIComponent(user.accountId);
-    const userId = encodeURIComponent(user.id);
+    const accountId = user.accountId
+      ? encodeURIComponent(user.accountId)
+      : null;
+    const userId = user.id ? encodeURIComponent(user.id) : null;
 
-    const optionalParams = _buildParams({ widgetType, engagementMedium });
+    const optionalParams = _buildParams({
+      widgetType,
+      engagementMedium,
+      locale,
+    });
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
-    const cookies = Cookies.get("_saasquatch");
+    const cookies = (Cookies || window.Cookies).get("_saasquatch");
     if (cookies) user["cookies"] = cookies;
     return doPut(url, JSON.stringify(user), jwt);
   }
 
   /**
-   * Description here.
+   * Requests widget template
    *
    * @param {Object} params Parameters for request
    * @param {Object} params.user The user details
@@ -106,8 +114,10 @@ export default class WidgetApi {
     const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const accountId = user ? encodeURIComponent(user.accountId) : null;
-    const userId = user ? encodeURIComponent(user.id) : null;
+    const accountId = user?.accountId
+      ? encodeURIComponent(user.accountId)
+      : null;
+    const userId = user?.id ? encodeURIComponent(user.id) : null;
 
     const locale =
       clean.locale ?? validateLocale(navigator.language.replace(/\-/g, "_"));
@@ -127,45 +137,11 @@ export default class WidgetApi {
           },
           jwt
         );
-        resolve(res?.body?.data?.renderWidget);
+        resolve(res?.data?.renderWidget);
       } catch (e) {
         reject(e);
       }
     });
-  }
-
-  /**
-   * An API call to send out referral invites to contacts
-   *
-   * @param {Object} params Parameters for request
-   * @param {Array} params.emailList The list of recipients to send to
-   * @param {string} params.userId The user id
-   * @param {string} params.accountId The user account id
-   * @param {string} params.tenantAlias The tenant alias
-   *
-   * @return {Promise} an object containing total accepted / rejected emails send or error
-   */
-  invite({
-    emailList = [],
-    userId,
-    accountId,
-    tenantAlias,
-  }: {
-    emailList: string[];
-    userId: string;
-    accountId: string;
-    tenantAlias: string;
-  }): Promise<any> {
-    const tenantAliasP = encodeURIComponent(tenantAlias);
-
-    const path = `/api/v1/${tenantAliasP}/mail/referralinvite`;
-    const url = this.domain + path;
-    const request = {
-      sendingAccountId: accountId,
-      sendingUserId: userId,
-      recipients: emailList,
-    };
-    return doPost(url, JSON.stringify(request));
   }
 
   /**
@@ -175,7 +151,7 @@ export default class WidgetApi {
    */
   async squatchReferralCookie(): Promise<ReferralCookie> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const _saasquatch = Cookies.get("_saasquatch") || "";
+    const _saasquatch = (Cookies || window.Cookies).get("_saasquatch") || "";
 
     const cookie = _saasquatch
       ? `?cookies=${encodeURIComponent(_saasquatch)}`
@@ -190,22 +166,24 @@ export default class WidgetApi {
       encodedCookie: _saasquatch,
     });
   }
+
+  referralCookie = this.squatchReferralCookie;
 }
 
 // builds a param string for widgets
 function _buildParams({
   widgetType,
   engagementMedium,
+  locale,
 }: {
-  widgetType?: WidgetType;
   engagementMedium: EngagementMedium;
+  widgetType?: WidgetType;
+  locale?: string;
 }) {
-  const widgetTypeP = widgetType
-    ? `?widgetType=${encodeURIComponent(widgetType)}`
-    : ``;
-  const engagementMediumP = `${
-    widgetType ? "&" : "?"
-  }engagementMedium=${encodeURIComponent(engagementMedium)}`;
-  const optionalParams = widgetTypeP + engagementMediumP;
-  return optionalParams;
+  const queryParams = new URLSearchParams();
+  queryParams.append("engagementMedium", engagementMedium);
+  if (widgetType) queryParams.append("widgetType", widgetType);
+  if (locale) queryParams.append("locale", locale);
+
+  return `?${queryParams.toString()}`;
 }

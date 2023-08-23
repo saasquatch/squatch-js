@@ -16,6 +16,8 @@ export interface ConfigOptions {
   debug?: boolean;
 }
 
+export type DeclarativeConfigOptions = Omit<ConfigOptions, "tenantAlias">;
+
 /**
  * Config options for loading a widget
  *
@@ -83,21 +85,23 @@ export type EngagementMedium =
   /**  Displays the widget embedded in the page. Create an {@link EmbedWidget} */
   | "EMBED";
 
-export type WidgetContext =
-  | {
-      type: "cookie" | "error" | "passwordless";
-      engagementMedium?: EngagementMedium;
-      container?: HTMLElement | string;
-      trigger?: string;
-      displayOnLoad?: boolean;
-    }
-  | {
-      type: "upsert";
-      user?: User | null;
-      engagementMedium?: EngagementMedium;
-      container?: HTMLElement | string;
-      trigger?: string;
-    };
+export type UpsertWidgetContext = {
+  type: "upsert";
+  user?: User | null;
+  engagementMedium?: EngagementMedium;
+  container?: HTMLElement | string;
+  trigger?: string;
+};
+
+export type BaseWidgetContext = {
+  type: "cookie" | "error" | "passwordless";
+  engagementMedium?: EngagementMedium;
+  container?: HTMLElement | string;
+  trigger?: string;
+  displayOnLoad?: boolean;
+};
+
+export type WidgetContext = UpsertWidgetContext | BaseWidgetContext;
 export type WidgetContextType = "upsert" | "cookie" | "error" | "passwordless";
 
 /**

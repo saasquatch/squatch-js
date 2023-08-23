@@ -1,13 +1,12 @@
-import debug from "debug";
+import { debug } from "debug";
 import { ConfigOptions, WidgetConfig } from "../types";
 import { b64decode } from "./cookieUtils";
-import { validatePasswordlessConfig } from "./validate";
 
 /** @hidden */
 const _log = debug("squatch-js");
 
 export function _getAutoConfig(
-  configIn: ConfigOptions
+  configIn?: ConfigOptions
 ): { widgetConfig: WidgetConfig; squatchConfig: ConfigOptions } | undefined {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);

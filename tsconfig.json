@@ -2,13 +2,13 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "dist",
-    "sourceMap": false,
+    "sourceMap": true,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
     "module": "ESNext",
     "target": "ESNext",
-    "lib": ["dom", "es5", "scripthost", "es2015"],
+    "lib": ["dom", "es5", "scripthost", "es2016"],
     "moduleResolution": "node"
   },
   "include": ["src/**/*.ts"],
@@ -16,6 +16,7 @@
   "typedocOptions":{
     "out": "docs",
     "json": "docs/docs.json",
+    "entryPoints": ["src/squatch.ts"],
     "excludePrivate": true,
     "excludeProtected": true
   }

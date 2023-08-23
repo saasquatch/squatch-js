@@ -1,148 +1,106 @@
-import * as superagent from "superagent";
+import { debug } from "debug";
 import { JWT } from "../types";
+import { getToken } from "./validate";
 
-export function doQuery(
+const _log = debug("squatch-js:io");
+
+export async function doQuery(
   url: string,
   query: string,
-  variables,
-  token: string | undefined
+  variables: Record<string, unknown>,
+  jwt: string | undefined
 ) {
+  const token = jwt || getToken();
   const headers = {
     Accept: "application/json",
+    "Content-Type": "application/json",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     "X-SaaSquatch-Referrer": window ? window.location.href : "",
   };
 
-  const request = superagent.post(url).send({ query, variables }).set(headers);
-
-  return thenableSuperagent(request).then(
-    (response) => response,
-    (error) => {
-      let json;
-
-      try {
-        json = JSON.parse(error.response.text);
-      } catch (e) {
-        const out = error || e;
-      }
-      throw json;
-    }
-  );
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify({ query, variables }),
+      headers,
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+  } catch (e) {
+    throw e;
+  }
 }
 
-export function doGet<T>(url, jwt = ""): Promise<T> {
+export async function doGet<T>(url, jwt = ""): Promise<T> {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
   };
 
-  if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
+  const token = jwt || getToken();
+  if (token) headers["X-SaaSquatch-User-Token"] = token;
 
-  const request = superagent.get(url).withCredentials().set(headers);
-  return thenableSuperagent(request).then(
-    (response) => {
-      if (
-        //@ts-ignore -- superagent types might just be outdated?
-        response.headers["content-type"] &&
-        //@ts-ignore -- superagent types might just be outdated?
-        includes(
-          response.headers["content-type"].toLowerCase(),
-          "application/json"
-        )
-      ) {
-        return JSON.parse(response.text);
-      }
-      return response.text;
-    },
-    ({ response }) => {
-      const json = JSON.parse(response.text);
-      throw json;
-    }
-  );
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      credentials: "include",
+      headers,
+    });
+    const reply = await res.text();
+    if (!res.ok) throw new Error(reply);
+
+    return reply ? JSON.parse(reply) : reply;
+  } catch (e) {
+    throw e;
+  }
 }
-/**
- * @hidden
- *
- * @param url The requested url
- * @param data Stringified json object
- *
- * @returns {Promise} superagent promise
- */
-export function doPost(url: string, data: any, jwt?: JWT) {
+export async function doPost(url: string, data: any, jwt?: JWT) {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
   };
-  if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
 
-  const request = superagent.post(url).send(data).set(headers);
+  const token = jwt || getToken();
+  if (token) headers["X-SaaSquatch-User-Token"] = token;
 
-  return thenableSuperagent(request).then(
-    ({ text }) => (text ? JSON.parse(text) : text),
-    (error) => {
-      let json;
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      body: data,
+      headers,
+    });
 
-      try {
-        json = JSON.parse(error.response.text);
-      } catch (e) {
-        const out = error || e;
-        throw out;
-      }
-      throw json;
-    }
-  );
+    const reply = await res.text();
+    if (!res.ok) throw new Error(reply);
+
+    return reply ? JSON.parse(reply) : reply;
+  } catch (e) {
+    throw e;
+  }
 }
 
-export function doPut(url: string, data: any, jwt?: JWT) {
+export async function doPut(url: string, data: any, jwt?: JWT) {
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
     "X-SaaSquatch-Referrer": window ? window.location.href : "",
   };
 
-  if (jwt) headers["X-SaaSquatch-User-Token"] = jwt;
+  const token = jwt || getToken();
+  if (token) headers["X-SaaSquatch-User-Token"] = token;
 
-  const request = superagent.put(url).withCredentials().send(data).set(headers);
-
-  return thenableSuperagent(request).then(
-    ({ text }) => (text ? JSON.parse(text) : text),
-    (error) => {
-      let json;
-
-      try {
-        json = JSON.parse(error.response.text);
-      } catch (e) {
-        const out = error || e;
-        throw out;
-      }
-      throw json;
-    }
-  );
-}
-
-/**
- * Avoids using superagent's built in `then` method because that relies on a global promise object being valid.
- *
- * Instead, thanks to babel the promise used in this function should be our custom sandboxed polyfill
- */
-function thenableSuperagent(request: superagent.Request): Promise<any> {
-  return new Promise((innerResolve, innerReject) => {
-    request.on("error", innerReject);
-    request.end((err, res) => {
-      if (err) innerReject(err);
-      else innerResolve(res);
+  try {
+    const res = await fetch(url, {
+      headers,
+      method: "PUT",
+      credentials: "include",
+      body: data,
     });
-  });
-}
-function includes(string: string, search: string, start?: number) {
-  "use strict";
-  if (typeof start !== "number") {
-    start = 0;
-  }
+    const reply = await res.text();
+    if (!res.ok) throw new Error(reply);
 
-  if (start + search.length > string.length) {
-    return false;
-  } else {
-    return string.indexOf(search, start) !== -1;
+    return reply ? JSON.parse(reply) : reply;
+  } catch (e) {
+    throw e;
   }
 }

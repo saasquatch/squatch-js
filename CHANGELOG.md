@@ -7,6 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added custom web-components `squatch-embed` and `squatch-popup` for easier widget rendering.
+- Support for additional namespacing of squatchjs
+
+## [2.6.0] - 2023-08-23
+
+### Added
+
+- SquatchJS now supports declarative widget initialization
+
+  - For rendering widgets and API calls, squatchjs respects configurations set on the following:
+
+    - `window.squatchToken`: Signed JWT for calls to the SaaSquatch API -- [How to generate valid JWT Tokens](https://docs.saasquatch.com/topics/json-web-tokens#example-building-the-jwt)
+    - `window.squatchTenant`: SaaSquatch tenant alias
+    - `window.squatchConfig`: Additional configuration overrides (Optional)
+      - debug: Turn on console debugging (Default: false)
+    - `window.squatchOnReady`: Declarative on ready function to be run when the squatch-js module has finished loading
+
+  - Note: If window.squatchToken is undefined, widgets will be rendered as [Instant Access widgets.](https://docs.saasquatch.com/topics/widget-types#instant-access-widgets)
+
+- Widget components added:
+
+  - `<squatch-embed></squatch-embed>`
+
+    - widget: Specifies the SaaSquatch widgetType identifier of the desired widget
+      - Required
+      - Changing this attribute's value causes the widget to reload
+    - container: A CSS selector for a container element to use as the parent of the widget's iframe
+      - Default: null
+      - Note, if no container is specified, the widget iframe will attach to the shadow DOM of squatch-embed
+    - locale: Locale that determines the widget translation displayed. Should be of the form "xx_XX"
+    - Default: Browser's current locale
+    - Changing this attribute's value causes the widget to reload
+
+  - `<squatch-popup></squatch-popup>`
+    - widget: string: Specifies the SaaSquatch widgetType identifier of the desired widget
+      - Required
+    - open: boolean: Whether to the popup is open when loaded into the page
+      - Default: false
+    - container: A CSS selector for a container element to use as the parent of the widget's iframe.
+      - Default: null
+      - Note, if no container is specified, the widget iframe will attach to the shadow DOM of squatch-embed.
+    - locale: Locale that determines the widget translation displayed. Should be of the form "xx_XX".
+      - Default: Browser's current locale
+      - Changing this attribute's value causes the widget to reload.
+
+### Removed
+
+- Deprecated api functions have been removed
+  - Removed functions:
+    - `squatch.api().invite()`
+    - `squatch.submitEmail()`
+  - Removed widgets:
+    - `CtaWidget`
+
+### Changed
+
+- Bundle size reduced significantly thanks to the removal of deprecated features and other optimizations
+  - Before: 19.75 kB
+  - After: 12.06 kB
+
 ## [2.5.0] - 2023-05-16
 
 ### Removed
@@ -30,7 +90,7 @@ var initObj = {
 squatch
   .widget(initObj)
   .then(function (response) {
-    const widget = response.widget
+    const widget = response.widget;
   })
   .catch(function (error) {
     console.log(error);
@@ -44,6 +104,7 @@ squatch
 ## [2.4.3] - 2023-04-20
 
 ### Changed
+
 - Updated license copyright to be in line with SaaSquatch open-source policy.
 
 ## [2.4.2] - 2023-04-10
@@ -287,7 +348,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.0...HEAD
+[2.6.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.6.0
 [2.5.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.5.0
 [2.4.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.2...@saasquatch%2Fsquatch-js@2.4.3
 [2.4.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.4.2

@@ -1,82 +1,112 @@
 // @ts-check
 
-import debug from "debug";
-import Widget, { Params } from "./Widget";
+import { debug } from "debug";
 import { domready } from "../utils/domready";
+import Widget, { Params } from "./Widget";
+import DeclarativeWidget from "./declarative/DeclarativeWidget";
+import { UpsertWidgetContext } from "../types";
 
 const _log = debug("squatch-js:POPUPwidget");
 
+let popupId = 0;
 /**
  * The PopupWidget is used to display popups (also known as "Modals").
  * Popups widgets are rendered on top of other elements in a page.
  *
  * To create a PopupWidget use {@link Widgets}
  *
+ * @example
+ * const widget = new PopupWidget({ ... })
+ * widget.load() // Loads the widget into a dialog element
+ * widget.open() // Opens the dialog element
+ * widget.close() // Hides the dialog element
  */
 export default class PopupWidget extends Widget {
-  triggerElement: HTMLElement | null;
-  triggerWhenCTA: HTMLElement | null;
-  popupdiv: HTMLElement;
-  popupcontent: HTMLElement;
+  trigger: string | null;
+  id: string;
 
-  constructor(params: Params, trigger = ".squatchpop") {
+  constructor(params: Params, trigger: string | null = ".squatchpop") {
     super(params);
 
-    try {
-      this.triggerElement /* HTMLButton */ = document.querySelector(trigger);
-      if (trigger && !this.triggerElement)
-        _log("No element found with trigger selector", trigger);
-    } catch {
-      _log("Not a valid selector", trigger);
+    this.trigger = trigger;
+
+    if (this.container) {
+      this.id = "squatchModal";
+    } else {
+      this.id = popupId === 0 ? `squatchModal` : `squatchModal__${popupId}`;
+      popupId = popupId + 1;
     }
-
-    // Trigger is optional
-    if (this.triggerElement) {
-      this.triggerElement.onclick = () => {
-        this.open();
-      };
-    }
-
-    // If widget is loaded with CTA, look for a 'squatchpop' element to use
-    // that element as a trigger as well.
-    this.triggerWhenCTA = document.querySelector(".squatchpop");
-
-    if (trigger === "#cta" && this.triggerWhenCTA) {
-      this.triggerWhenCTA.onclick = () => {
-        this.open();
-      };
-    }
-
-    this.popupdiv = document.createElement("div");
-    this.popupdiv.id = "squatchModal";
-    this.popupdiv.setAttribute(
-      "style",
-      "display: none; position: fixed; z-index: 1; padding-top: 5%; left: 0; top: -2000px; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);"
-    );
 
     document.head.insertAdjacentHTML(
       "beforeend",
-      `<style>#squatchModal::-webkit-scrollbar { display: none; }</style>`
+      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`
     );
-
-    this.popupcontent = document.createElement("div");
-    this.popupcontent.setAttribute(
-      "style",
-      "margin: auto; width: 80%; max-width: 500px; position: relative;"
-    );
-
-    this.popupdiv.onclick = (event) => {
-      this._clickedOutside(event);
-    };
   }
 
-  load() {
-    this.popupdiv.appendChild(this.popupcontent);
-    document.body.appendChild(this.popupdiv);
-    this.popupcontent.appendChild(this.frame);
+  _initialiseCTA() {
+    if (!this.trigger) return;
 
-    //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-    const frameDoc = this.frame.contentWindow.document;
+    let triggerElement;
+    try {
+      triggerElement /* HTMLButton */ =
+        document.querySelector(this.trigger) ||
+        document.querySelector(".impactpop");
+
+      if (this.trigger && !triggerElement)
+        _log("No element found with trigger selector", this.trigger);
+    } catch {
+      _log("Not a valid selector", this.trigger);
+    }
+
+    // Trigger is optional
+    if (triggerElement) {
+      triggerElement.onclick = () => {
+        this.open();
+      };
+    }
+  }
+
+  _createPopupDialog(): HTMLDialogElement {
+    const dialog = document.createElement("dialog");
+    dialog.id = this.id;
+    dialog.setAttribute(
+      "style",
+      "width: 100%; max-width: 500px; border: none; padding: 0;"
+    );
+    const onClick = (e) => {
+      e.stopPropagation();
+      if (e.target === dialog) dialog.close();
+    };
+
+    dialog.addEventListener("click", onClick);
+
+    return dialog;
+  }
+
+  async load() {
+    const frame = this._createFrame();
+    this._initialiseCTA();
+
+    const element = this.container ? this._findElement() : document.body;
+
+    const dialogParent = element.shadowRoot || element;
+    const dialog = this._createPopupDialog();
+    dialog.appendChild(frame);
+
+    if (dialogParent.lastChild?.nodeName === "DIALOG") {
+      // Was reloaded
+      dialogParent.replaceChild(dialog, dialogParent.lastChild);
+    } else {
+      // First time rendering
+      dialogParent.appendChild(dialog);
+    }
+
+    const { contentWindow } = frame;
+    if (!contentWindow) {
+      throw new Error("Frame needs a content window");
+    }
+
+    const frameDoc = contentWindow.document;
     frameDoc.open();
     frameDoc.write(this.content);
     frameDoc.write(
@@ -84,12 +114,10 @@ export default class PopupWidget extends Widget {
     );
     frameDoc.close();
     _log("Popup template loaded into iframe");
-    this._setupResizeHandler();
+    await this._setupResizeHandler(frame);
   }
 
-  protected _setupResizeHandler() {
-    const popupdiv = this.popupdiv;
-    const frame = this.frame;
+  protected async _setupResizeHandler(frame: HTMLIFrameElement) {
     const { contentWindow } = frame;
 
     if (!contentWindow) {
@@ -101,8 +129,6 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, async () => {
       frameDoc.body.style.overflowY = "hidden";
-      popupdiv.style.visibility = "hidden";
-      popupdiv.style.display = "block";
       frame.height = `${frameDoc.body.offsetHeight}px`;
       // Adjust frame height when size of body changes
       const ro = new contentWindow["ResizeObserver"]((entries) => {
@@ -114,23 +140,22 @@ export default class PopupWidget extends Widget {
 
           // Don't let anything else set the height of this element
           entry.target.style = ``;
-
-          if (window.innerHeight > Number(frame.height)) {
-            popupdiv.style.paddingTop = `${
-              (window.innerHeight - Number(frame.height)) / 2
-            }px`;
-          } else {
-            popupdiv.style.paddingTop = "5px";
-          }
         }
       });
-      ro.observe(await this._findInnerContainer());
+      ro.observe(await this._findInnerContainer(frame));
     });
   }
 
   open() {
-    const popupdiv = this.popupdiv;
-    const frame = this.frame;
+    const element = this.container ? this._findElement() : document.body;
+    const parent = element.shadowRoot || element;
+    const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
+    if (!dialog) throw new Error("Could not determine container div");
+
+    dialog.showModal();
+
+    const frame = this._findFrame();
+    if (!frame) throw new Error("Could not find iframe");
     const { contentWindow } = frame;
     if (!contentWindow) throw new Error("Squatch.js has an empty iframe");
     const frameDoc = contentWindow.document;
@@ -138,33 +163,27 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-      const ctaElement = frameDoc.getElementById("cta");
-
-      if (ctaElement) {
-        //@ts-ignore -- will occasionally throw a null pointer exception at runtime
-        ctaElement.parentNode.removeChild(ctaElement);
-      }
-
-      popupdiv.style.visibility = "visible";
-      popupdiv.style.top = "0px";
       frame.contentDocument?.dispatchEvent(new CustomEvent("sq:refresh"));
-      this._loadEvent(_sqh);
-      _log("Popup opened");
+
+      if ((this.context as UpsertWidgetContext).user) {
+        this._loadEvent(_sqh);
+        _log("Popup opened");
+      }
     });
   }
 
   close() {
-    this.popupdiv.style.visibility = "hidden";
-    this.popupdiv.style.top = "-2000px";
+    const element = this.container ? this._findElement() : document.body;
+    const parent = element.shadowRoot || element;
+    const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
+    if (!dialog) throw new Error("Could not determine container div");
+
+    dialog.close();
 
     _log("Popup closed");
   }
 
-  protected _clickedOutside({ target }) {
-    if (target === this.popupdiv) {
-      this.close();
-    }
-  }
+  protected _clickedOutside({ target }) {}
 
   protected _error(rs, mode = "modal", style = "") {
     const _style =
@@ -172,4 +191,7 @@ export default class PopupWidget extends Widget {
 
     return super._error(rs, mode, style || _style);
   }
+
+  show = this.open;
+  hide = this.close;
 }

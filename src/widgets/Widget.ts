@@ -1,10 +1,9 @@
 // @ts-check
-
-import debug from "debug";
+import { debug } from "debug";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
-import { WidgetType, WidgetContext, EngagementMedium } from "../types";
-import { isObject, hasProps } from "../utils/validate";
+import { EngagementMedium, WidgetContext, WidgetType } from "../types";
+import { isObject } from "../utils/validate";
 
 /** @hidden */
 const _log = debug("squatch-js:widget");
@@ -17,7 +16,21 @@ export interface Params {
   api: WidgetApi;
   rsCode?: string;
   context: WidgetContext;
+  container?: string | HTMLElement | null | undefined;
 }
+
+export type ProgramLoadEvent = {
+  programId: string;
+  tenantAlias?: string;
+  accountId?: string;
+  userId?: string;
+  engagementMedium?: EngagementMedium;
+};
+export type GenericLoadEvent = {
+  mode: any;
+  analytics: any;
+};
+
 /*
  * The Widget class is the base class for the different widget types available
  *
@@ -27,13 +40,13 @@ export interface Params {
  *
  */
 export default abstract class Widget {
-  frame: HTMLIFrameElement;
   type: WidgetType;
   content: string;
   analyticsApi: AnalyticsApi;
   widgetApi: WidgetApi;
   context: WidgetContext;
   npmCdn: string;
+  container: string | HTMLElement | undefined | null;
 
   protected constructor(params: Params) {
     _log("widget initializing ...");
@@ -43,37 +56,87 @@ export default abstract class Widget {
     this.widgetApi = params.api;
     this.npmCdn = params.npmCdn;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
-    this.frame = document.createElement("iframe");
-    this.frame["squatchJsApi"] = this;
-    this.frame.width = "100%";
-    this.frame.scrolling = "no";
-    this.frame.setAttribute(
+    this.context = params.context;
+    this.container = params.context?.container || params.container;
+  }
+
+  _findElement(): HTMLElement {
+    let element: Element | null;
+
+    if (typeof this.container === "string") {
+      // selector is a string
+      element = document.querySelector(this.container);
+      _log("loading widget with selector", element);
+      // selector is an HTML element
+    } else if (this.container instanceof HTMLElement) {
+      element = this.container;
+      _log("loading widget with container", element);
+      // garbage container found
+    } else if (this.container) {
+      element = null;
+      _log("container must be an HTMLElement or string", this.container);
+      // find element on page
+    } else {
+      element =
+        document.querySelector("#squatchembed") ||
+        document.querySelector(".squatchembed") ||
+        document.querySelector("#impactembed") ||
+        document.querySelector(".impactembed");
+
+      _log("loading widget with default selector", element);
+    }
+
+    if (!(element instanceof HTMLElement))
+      throw new Error(
+        `element with selector '${
+          this.container ||
+          "#squatchembed, .squatchembed, #impactembed, or .impactembed"
+        }' not found.'`
+      );
+
+    return element;
+  }
+
+  _createFrame() {
+    const frame = document.createElement("iframe");
+    frame["squatchJsApi"] = this;
+    frame.id = "squatchFrame";
+    frame.width = "100%";
+    frame.src = "about:blank";
+    frame.scrolling = "no";
+    frame.setAttribute(
       "style",
       "border: 0; background-color: none; width: 1px; min-width: 100%;"
     );
-    this.context = params.context;
+
+    return frame;
   }
 
-  abstract load();
+  _findFrame() {
+    const element = this.container ? this._findElement() : document.body;
+    const parent = element.shadowRoot || element;
+    return parent.querySelector(
+      "iframe#squatchFrame"
+    ) as HTMLIFrameElement | null;
+  }
 
-  protected _loadEvent(sqh: unknown) {
+  abstract load(): void;
+  protected _loadEvent(sqh: ProgramLoadEvent | GenericLoadEvent) {
     if (!sqh) return; // No non-truthy value
     if (!isObject(sqh)) {
       throw new Error("Widget Load event identity property is not an object");
     }
 
     let params: SQHDetails;
-    if (hasProps<{ programId: string }>(sqh, "programId")) {
+    if ("programId" in sqh) {
       if (
-        !hasProps<{
-          tenantAlias: string;
-          accountId: string;
-          userId: string;
-          engagementMedium: EngagementMedium;
-        }>(sqh, ["tenantAlias", "accountId", "userId", "engagementMedium"])
-      ) {
+        !sqh.tenantAlias ||
+        !sqh.accountId ||
+        !sqh.userId ||
+        !sqh.engagementMedium
+      )
         throw new Error("Widget Load event missing required properties");
-      }
+
       params = {
         tenantAlias: sqh.tenantAlias,
         externalAccountId: sqh.accountId,
@@ -82,7 +145,7 @@ export default abstract class Widget {
         programId: sqh.programId,
       };
     } else {
-      const { analytics, mode } = sqh as any;
+      const { analytics, mode } = sqh;
       params = {
         tenantAlias: analytics.attributes.tenant,
         externalAccountId: analytics.attributes.accountId,
@@ -97,7 +160,7 @@ export default abstract class Widget {
         _log(`${params.engagementMedium} loaded event recorded.`);
       })
       .catch((ex) => {
-        _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
+        _log(`ERROR: pushAnalyticsLoadEvent() ${ex}`);
       });
   }
 
@@ -117,25 +180,7 @@ export default abstract class Widget {
           );
         })
         .catch((ex) => {
-          _log(new Error(`pushAnalyticsLoadEvent() ${ex}`));
-        });
-    }
-  }
-
-  protected _inviteContacts(sqh, emailList) {
-    if (sqh) {
-      this.widgetApi
-        .invite({
-          tenantAlias: sqh.analytics.attributes.tenant,
-          accountId: sqh.analytics.attributes.accountId,
-          userId: sqh.analytics.attributes.userId,
-          emailList,
-        })
-        .then((response) => {
-          _log(`Sent email invites to share ${emailList}. ${response}`);
-        })
-        .catch((ex) => {
-          _log(new Error(`invite() ${ex}`));
+          _log(`ERROR: pushAnalyticsShareClickedEvent() ${ex}`);
         });
     }
   }
@@ -176,8 +221,10 @@ export default abstract class Widget {
     return errorTemplate;
   }
 
-  protected async _findInnerContainer(): Promise<Element> {
-    const { contentWindow } = this.frame;
+  protected async _findInnerContainer(
+    frame: HTMLIFrameElement
+  ): Promise<Element> {
+    const { contentWindow } = frame;
     if (!contentWindow)
       throw new Error("Squatch.js frame inner frame is empty");
     const frameDoc = contentWindow.document;
@@ -207,8 +254,16 @@ export default abstract class Widget {
     return found;
   }
 
+  /**
+   * Reloads the current widget, makes updated request to API and renders result.
+   * Primarily for Classic widgets with registration
+   * @param param0 Form field values
+   * @param jwt JWT for API authentication
+   */
   reload({ email, firstName, lastName }, jwt) {
-    const frameWindow = this.frame.contentWindow;
+    const frame = this._findFrame();
+    if (!frame) throw new Error("Could not find widget iframe");
+    const frameWindow = frame.contentWindow;
 
     const engagementMedium = this.context.engagementMedium || "POPUP";
 
@@ -216,17 +271,16 @@ export default abstract class Widget {
       throw new Error("Frame needs a content window");
     }
 
-    const frameDoc = frameWindow.document;
-
     let response;
 
     if (this.context.type === "upsert") {
+      if (!this.context.user) throw new Error("Can't reload without user ids");
+
       let userObj = {
         email: email || null,
         firstName: firstName || null,
         lastName: lastName || null,
 
-        // FIXME: Double check this
         id: this.context.user!.id,
         accountId: this.context.user!.accountId,
       };
@@ -252,47 +306,56 @@ export default abstract class Widget {
       .then(({ template }) => {
         if (template) {
           this.content = template;
-          const showStatsBtn = frameDoc.createElement("button");
-          const registerForm =
-            frameDoc.getElementsByClassName("squatch-register")[0];
 
-          if (registerForm) {
-            showStatsBtn.className = "btn btn-primary";
-            showStatsBtn.id = "show-stats-btn";
-
-            showStatsBtn.textContent =
-              this.type === "REFERRER_WIDGET" ? "Show Stats" : "Show Reward";
-
-            const widgetStyle =
-              engagementMedium === "POPUP"
-                ? "margin-top: 10px; max-width: 130px; width: 100%;"
-                : "margin-top: 10px;";
-
-            showStatsBtn.setAttribute("style", widgetStyle);
-            showStatsBtn.onclick = () => {
+          // Support for classic widget registration forms
+          this.__deprecated__register(
+            frame,
+            { email, engagementMedium },
+            () => {
               this.load();
 
               // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
               engagementMedium === "POPUP" && this.open();
-            };
-
-            // @ts-ignore -- expect register form to be a stylable element
-            registerForm.style.paddingTop = "30px";
-            registerForm.innerHTML = `<p><strong>${email}</strong><br>Has been successfully registered</p>`;
-            registerForm.appendChild(showStatsBtn);
-          }
+            }
+          );
         }
       })
       .catch(({ message }) => {
         _log(`${message}`);
       });
   }
+
+  private __deprecated__register(frame, params, onClick) {
+    const frameWindow = frame.contentWindow;
+    const frameDoc = frameWindow.document;
+    const showStatsBtn = frameDoc.createElement("button");
+    const registerForm = frameDoc.getElementsByClassName("squatch-register")[0];
+
+    if (registerForm) {
+      showStatsBtn.className = "btn btn-primary";
+      showStatsBtn.id = "show-stats-btn";
+
+      showStatsBtn.textContent =
+        this.type === "REFERRER_WIDGET" ? "Show Stats" : "Show Reward";
+
+      const widgetStyle =
+        params.engagementMedium === "POPUP"
+          ? "margin-top: 10px; max-width: 130px; width: 100%;"
+          : "margin-top: 10px;";
+
+      showStatsBtn.setAttribute("style", widgetStyle);
+      showStatsBtn.onclick = onClick;
+
+      // @ts-ignore -- expect register form to be a stylable element
+      registerForm.style.paddingTop = "30px";
+      registerForm.innerHTML = `<p><strong>${params.email}</strong><br>Has been successfully registered</p>`;
+      registerForm.appendChild(showStatsBtn);
+    }
+  }
 }
 
 function delay(duration) {
-  return new Promise(function (resolve, reject) {
-    setTimeout(function () {
-      resolve();
-    }, duration);
+  return new Promise((resolve) => {
+    setTimeout(resolve, duration);
   });
 }

@@ -7,11 +7,10 @@
  *
  * @module squatch
  */
-import debug from "debug";
+import { debug } from "debug";
 import Widgets from "./widgets/Widgets";
 import EmbedWidget from "./widgets/EmbedWidget";
 import PopupWidget from "./widgets/PopupWidget";
-import CtaWidget from "./widgets/CtaWidget";
 import WidgetApi from "./api/WidgetApi";
 import EventsApi from "./api/EventsApi";
 import asyncLoad from "./async";
@@ -19,6 +18,10 @@ import { ConfigOptions, WidgetConfig, WidgetResult } from "./types";
 import { validateConfig } from "./utils/validate";
 import { _pushCookie } from "./utils/cookieUtils";
 import { _getAutoConfig } from "./utils/utmUtils";
+import {
+  DeclarativeEmbedWidget,
+  DeclarativePopupWidget,
+} from "./widgets/declarative/DeclarativeWidgets";
 export * from "./types";
 export * from "./docs";
 
@@ -27,7 +30,14 @@ export * from "./docs";
 /** @hidden */
 const _log = debug("squatch-js");
 
-export { Widgets, EmbedWidget, PopupWidget, CtaWidget, WidgetApi };
+export {
+  Widgets,
+  EmbedWidget,
+  PopupWidget,
+  DeclarativeEmbedWidget,
+  DeclarativePopupWidget,
+  WidgetApi,
+};
 /** @hidden */
 let _api: WidgetApi | null = null;
 /** @hidden */
@@ -41,8 +51,13 @@ let _events: EventsApi | null = null;
  * Read the {@link WidgetApi} docs.
  *
  * @returns WidgetApi static instance
+ * @example
+ * squatch.api().render({ ... })
+ * squatch.api().upsertUser({ ... })
+ * squatch.api().squatchReferralCookie()
  */
 export function api(): WidgetApi | null {
+  if (!_api) init({} as ConfigOptions);
   return _api;
 }
 
@@ -52,8 +67,13 @@ export function api(): WidgetApi | null {
  * Read the {@link Widgets} docs.
  *
  * @returns static instance
+ * @example
+ * squatch.widgets().render({ widgetType: "w/widget-type" })
+ * squatch.widgets().upsertUser({ user: { ... }, widgetType: "w/widget-type" })
+ * squatch.widgets().autofill(".referral-code")
  */
 export function widgets(): Widgets | null {
+  if (!_widgets) init({} as ConfigOptions);
   return _widgets;
 }
 
@@ -63,13 +83,24 @@ export function widgets(): Widgets | null {
  * Read the {@link EventsApi} docs.
  *
  * @returns EventsApi static instance
+ *
+ * @example
+ * squatch.events().track({ ... })
  */
 export function events(): EventsApi | null {
+  if (!_events) init({} as ConfigOptions);
   return _events;
 }
 
 /**
  * Entry-point for high level API to render a widget using the instance of {@link Widgets} created when you call {@link #init init}.
+ *
+ * Read the {@link Widgets.render} docs.
+ *
+ * @example
+ * squatch.widget().then(res => {
+ *   const widget = res.widget
+ * }).catch(e => console.error("Did not render widget:", e))
  */
 export function widget(
   widgetConfig: WidgetConfig
@@ -79,6 +110,9 @@ export function widget(
 
 /**
  * Extracts widget configuration from `_saasquatchExtra` UTM parameter. Initialises `squatch` and renders the widget as a {@link PopupWidget} via static instanct of {@link Widgets}.
+ *
+ * Called by default on startup via the loader script.
+ * @private
  */
 export function _auto(
   configIn: ConfigOptions
@@ -102,13 +136,17 @@ export function _auto(
  * @param config Configuration details
  *
  * @example
- * squatch.init({tenantAlias:'test_basbtabstq51v'});
+ * squatch.init({
+ *   tenantAlias:'test_basbtabstq51v',
+ * });
  */
 export function init(configIn: ConfigOptions): void {
-  const raw = configIn as unknown;
+  const raw = configIn as unknown | undefined;
   const config = validateConfig(raw);
   if (config.tenantAlias.match("^test") || config.debug) {
     debug.enable("squatch-js*");
+  } else {
+    debug.disable();
   }
   _log("initializing ...");
 
@@ -130,7 +168,7 @@ export function init(configIn: ConfigOptions): void {
  * @example
  * squatch.ready(function() {
  *   console.log("ready!");
- *   squatch.api().upsertUser();
+ *   squatch.api().upsertUser({ ... });
  * });
  */
 export function ready(fn: () => any): void {
@@ -143,29 +181,14 @@ export function ready(fn: () => any): void {
  *
  * @param {string} selector Element class/id
  * @returns {void}
+ *
+ * @example
+ * squatch.autofill("input.referral-code")
+ * squatch.autofill("input#referral-code")
  */
 export function autofill(selector: string): void {
   // @ts-ignore -- will throw occasionally throw a null pointer exception at runtime
   widgets().autofill(selector);
-}
-
-/**
- * Overrides the default function that submits the user email. If you have
- * Security enabled, the email needs to be signed before it's submitted.
- *
- * @param {function} fn Callback function for the 'submit_email' event.
- * @returns {void}
- *
- * @example
- * squatch.submitEmail(function(target, widget, email) {
- *   // Sign email and generate jwt token
- *   var jwt = 'token';
- *   widget.reload(email, jwt);
- * });
- */
-export function submitEmail(fn: (target, widget, email) => any): void {
-  // @ts-ignore -- will throw occasionally throw a null pointer exception at runtime
-  widgets().submitEmail(fn);
 }
 
 /**

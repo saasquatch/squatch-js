@@ -3,123 +3,121 @@
   <head>
     <meta charset="UTF-8" />
     <title>Squatch.JS Playground</title>
-    <script src="./generate.tsx"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
-      var start = Date.now();
       !(function (a, b) {
-        a("squatch", window.sandbox.script, b);
+        a("squatch", "http://localhost:3333/squatch.min.js", b);
       })(function (a, b, c) {
-        // a = context
-        // b = file
-        // c = context
-        // console.log(a,b,c === window);
-
         var d, e, f;
         (c["_" + a] = {}),
           (c[a] = {}),
           (c[a].ready = function (b) {
             c["_" + a].ready = c["_" + a].ready || [];
             c["_" + a].ready.push(b);
-          });
-        (e = document.createElement("script")),
+          }),
+          (e = document.createElement("script")),
           (e.async = 1),
           (e.src = b),
           (f = document.getElementsByTagName("script")[0]),
           f.parentNode.insertBefore(e, f);
       }, this);
     </script>
-    <!-- Latest compiled and minified CSS -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-      crossorigin="anonymous"
-    />
+    <script>
+      if (
+        window.location.pathname.includes("passwordless") &&
+        !window.location.search.length <= 1
+      ) {
+        window.squatchTenant = "test_axbgtatw1tccp";
+        window.squatchConfig = {
+          domain: "https://staging.referralsaasquatch.com",
+          debug: true,
+        };
+        document.addEventListener("DOMContentLoaded", function (event) {
+          const element = document.getElementById("unauthed-stuff");
+          document.getElementById("authed-stuff").innerHTML = "";
+          element.innerHTML = /*html*/ `
+          <button onclick="javascript:document.getElementById('squatch-popup-friend').open()">
+            Open passwordless widget
+          </button>
+          <squatch-popup
+            widget="p/jayden-qa-obj/w/websiteReferralWidget"
+            id="squatch-popup-friend"
+          ></squatch-popup>
+          <squatch-embed locale="fr_FR" widget="p/jayden-qa-obj/w/friendWidget"></squatch-embed>
+          `;
+        });
+      } else if (window.location.pathname.includes("passwordless")) {
+        document.addEventListener("DOMContentLoaded", function (event) {
+          const element = document.getElementById("unauthed-stuff");
+          document.getElementById("authed-stuff").innerHTML = "";
+          element.innerHTML = /*html*/ `
+          <button onclick="javascript:document.getElementById('squatch-popup-friend').open()">
+            Open passwordless widget
+          </button>
+          <squatch-popup
+            widget="p/jayden-qa-obj/w/friendWidget"
+            id="squatch-popup-friend"
+          ></squatch-popup>
+          `;
+        });
+      } else {
+        if (window.location.search) window.location.search = "";
 
-    <!-- Optional theme -->
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-      crossorigin="anonymous"
-    />
+        document.addEventListener("DOMContentLoaded", function (event) {
+          const element = document.getElementById("authed-stuff");
 
-    <link rel="stylesheet" href="styles.css" />
+          document.getElementById("unauthed-stuff").innerHTML = "";
+          document.cookie = "_saasquatch=";
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+          element.innerHTML = /*html*/ `
+          <squatch-popup widget="w/ir-tester" open><button>click me!</button></squatch-popup>
+          <squatch-popup widget="w/ir-tester"><button>click me too!</button></squatch-popup>
+          <button class="squatchpop">Squatchpop cta</button>
+          <button onclick="javascript:document.getElementById('squatch-embed').open()">
+            Open embedded widget
+          </button>
+          <button onclick="javascript:document.getElementById('squatch-embed').close()">
+            Close embedded widget
+          </button>
+
+          <squatch-embed locale="en_CA" widget="w/ir-tester">Loading...</squatch-embed>
+          <squatch-embed
+            widget="w/ir-tester"
+            id="squatch-embed"
+            container="#widget-container"
+          ></squatch-embed>
+
+
+          <div
+            id="widget-container"
+            style="
+              position: absolute;
+              width: 500px;
+              height: 500px;
+              right: 0;
+              top: 0;
+            "
+          ></div>
+        `;
+        });
+        window.squatchTenant = "test_axbgtatw1tccp";
+        window.squatchToken =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoidGVzdHVzZXIiLCJhY2NvdW50SWQiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20ifX0.3d3_4i9IeCeFDXMi-oXeSyyH2Yk_9xyVEtVJ0iJc_SA";
+        window.squatchConfig = {
+          debug: true,
+          domain: "https://staging.referralsaasquatch.com",
+        };
+      }
+    </script>
   </head>
 
   <body>
-    <script>
-      function setStatus(text) {
-        var el = document.getElementById("status");
-        el && (el.innerText = text);
-      }
-      function hideSpineer() {
-        document.getElementById("spinner").className = "hidden";
-      }
-      localStorage.debug = "*";
-      console.log("Loading Squatch.js using sandbox", window.sandbox);
-      setStatus("Loading squatch.js");
+    <!-- Authorized Widgets -->
+    <div id="authed-stuff"></div>
+    <!-- /Authorized Widgets  -->
 
-      squatch.ready(function () {
-        setStatus("Rendering widget");
-        console.log("Squatch.js is ready", squatch);
-
-        squatch.init({
-          domain: window.sandbox.domain,
-          tenantAlias: window.sandbox.tenantAlias,
-          debug: true,
-        });
-
-        squatch
-          .widgets()
-          .upsertUser(window.sandbox.initObj)
-          .then(function (res) {
-            console.log("Upsert done", res);
-            setStatus("Done in " + (Date.now() - start) / 1000 + " seconds");
-            hideSpineer();
-            if (res.widget.open) res.widget.open();
-          })
-          .catch(function (err) {
-            console.log("Upsert error", err);
-            setStatus("Error" + JSON.stringify(err));
-            hideSpineer();
-          });
-      });
-    </script>
-
-    <div style="display: flex">
-      <div
-        style="max-width: 40%; height: 50%; background: #ccc; padding: 20px"
-        class="toolbar"
-      >
-        <div id="app"></div>
-      </div>
-      <div style="width: 60%; padding: 20px">
-        <ul class="list-group" id="statuslist">
-          <li class="list-group-item">
-            <div class="lds-dual-ring" id="spinner"></div>
-            <span id="status">Loading page</span>
-          </li>
-        </ul>
-        <hr />
-
-        <h2>Popup Widget:</h2>
-        <button class="squatchpop">Click to Open</button>
-        <div class="row">
-          <div class="col-md-12">
-            <h2>Embed Widget:</h2>
-            <div id="squatchembed">Loading....</div>
-            <div id="test-selector"></div>
-          </div>
-        </div>
-        <div>
-          <h2>Autofill:</h2>
-          <input type="text" name="Coupon" class="testClass" value="" />
-        </div>
-      </div>
-    </div>
-    <script src="./toolbar.tsx"></script>
+    <!-- Passwordless widget -->
+    <div id="unauthed-stuff"></div>
+    <!-- /Passwordless widget -->
   </body>
 </html>
