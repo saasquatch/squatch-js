@@ -413,6 +413,17 @@ Feature: Declarative widgets using custom Web Components
     And the widget loads correctly
     Then an analytics load event will be logged
 
+  @minutia
+  Scenario: Custom element registration does not occur if already registered
+    Given squatchjs is loaded onto a page twice
+    When the page loads
+    Then the first load registers the following custom elements
+      | squatch-embed |
+      | squatch-popup |
+      | impact-embed  |
+      | impact-popup  |
+    When the second instance of squatchjs is loaded
+    Then it does not register any custom elements
 
 
 

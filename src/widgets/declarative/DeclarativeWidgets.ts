@@ -113,6 +113,6 @@ class ImpactEmbed extends DeclarativeEmbedWidget {}
 class ImpactPopup extends DeclarativePopupWidget {}
 
 if (!window.customElements.get("squatch-embed")) window.customElements.define("squatch-embed", SquatchEmbed);
-if (!window.customElements.get("impact-embed")) window.customElements.define("impact-embed", SquatchEmbed);
-if (!window.customElements.get("squatch-popup")) window.customElements.define("squatch-popup", SquatchEmbed);
-if (!window.customElements.get("impact-popup")) window.customElements.define("impact-popup", SquatchEmbed);
+if (!window.customElements.get("impact-embed")) window.customElements.define("impact-embed", ImpactEmbed);
+if (!window.customElements.get("squatch-popup")) window.customElements.define("squatch-popup", SquatchPopup);
+if (!window.customElements.get("impact-popup")) window.customElements.define("impact-popup", ImpactPopup);
