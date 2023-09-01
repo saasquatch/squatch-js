@@ -80,7 +80,6 @@ export default class EmbedWidget extends Widget {
           const { height } = entry.contentRect;
           // @ts-ignore -- number will be cast to string by browsers
           frame.height = height;
-          console.log("RESIZE");
         }
       });
 

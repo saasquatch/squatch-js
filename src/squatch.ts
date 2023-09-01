@@ -221,7 +221,7 @@ if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
 // Show message if squatchjs has already been loaded on the page
 if (window["squatch"]?.init)
   _log(
-    "Squatchjs is being loaded more than once. This may lead to multiple load events being sent, and inaccurate analytics."
+    "Squatchjs is being loaded more than once. This may lead to multiple load events being sent, duplicated widgets, and inaccurate analytics."
   );
 
 if (typeof document !== "undefined") asyncLoad();

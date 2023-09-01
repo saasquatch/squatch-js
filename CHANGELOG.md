@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Added custom web-components `squatch-embed` and `squatch-popup` for easier widget rendering.
-- Support for additional namespacing of squatchjs
+## [2.6.1] - 2023-09-01
+
+- Fix customElementRegistry error that occurs when multiple instances of squatchjs are loaded on the same page.
 
 ## [2.6.0] - 2023-08-23
 
