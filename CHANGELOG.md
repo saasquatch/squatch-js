@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Added custom web-components `squatch-embed` and `squatch-popup` for easier widget rendering.
-- Support for additional namespacing of squatchjs
+## [2.6.1] - 2023-09-01
+
+- Fix customElementRegistry error that occurs when multiple instances of squatchjs are loaded on the same page.
 
 ## [2.6.0] - 2023-08-23
 
@@ -348,7 +349,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.0...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.1...HEAD
+[2.6.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.6.1
 [2.6.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.6.0
 [2.5.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.5.0
 [2.4.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.2...@saasquatch%2Fsquatch-js@2.4.3
