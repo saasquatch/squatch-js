@@ -47,6 +47,7 @@ export default abstract class Widget {
   context: WidgetContext;
   npmCdn: string;
   container: string | HTMLElement | undefined | null;
+  loadEventListener: EventListener | null = null;
 
   protected constructor(params: Params) {
     _log("widget initializing ...");
@@ -121,6 +122,38 @@ export default abstract class Widget {
   }
 
   abstract load(): void;
+
+  protected _detachLoadEventListener(frameDoc: Document) {
+    if (this.loadEventListener) {
+      frameDoc.removeEventListener(
+        "sq:user-registration",
+        this.loadEventListener
+      );
+
+      this.loadEventListener = null;
+    }
+  }
+
+  protected _attachLoadEventListener(
+    frameDoc: Document,
+    sqh: ProgramLoadEvent | GenericLoadEvent
+  ) {
+    console.log(this.loadEventListener);
+    if (this.loadEventListener === null) {
+      this.loadEventListener = (
+        e: CustomEvent<{ userId: string; accountId: string }>
+      ) => {
+        this._loadEvent({
+          ...sqh,
+          userId: e.detail.userId,
+          accountId: e.detail.accountId,
+        });
+      };
+
+      frameDoc.addEventListener("sq:user-registration", this.loadEventListener);
+    }
+  }
+
   protected _loadEvent(sqh: ProgramLoadEvent | GenericLoadEvent) {
     if (!sqh) return; // No non-truthy value
     if (!isObject(sqh)) {
