@@ -90,7 +90,6 @@ export default class EmbedWidget extends Widget {
         this._loadEvent(_sqh);
         _log("loaded");
       } else {
-        console.log("attaching");
         this._attachLoadEventListener(frameDoc, _sqh);
       }
     });

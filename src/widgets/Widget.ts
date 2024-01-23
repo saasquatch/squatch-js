@@ -138,7 +138,6 @@ export default abstract class Widget {
     frameDoc: Document,
     sqh: ProgramLoadEvent | GenericLoadEvent
   ) {
-    console.log(this.loadEventListener);
     if (this.loadEventListener === null) {
       this.loadEventListener = (
         e: CustomEvent<{ userId: string; accountId: string }>

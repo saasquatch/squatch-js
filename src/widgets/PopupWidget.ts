@@ -169,7 +169,6 @@ export default class PopupWidget extends Widget {
         this._loadEvent(_sqh);
         _log("Popup opened");
       } else {
-        console.log("ATTACHED");
         this._attachLoadEventListener(frameDoc, _sqh);
       }
     });
