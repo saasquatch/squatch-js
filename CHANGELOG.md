@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.2] - 2024-02-06
+
+### Added
+- `sq:user-registration` event listener for Instant Access widgets to fire a Load Analytics API event on successful user registration within the widget.
+
 ## [2.6.1] - 2023-09-01
+
+### Fixed
 
 - Fix customElementRegistry error that occurs when multiple instances of squatchjs are loaded on the same page.
 
