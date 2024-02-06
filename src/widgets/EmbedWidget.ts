@@ -89,7 +89,7 @@ export default class EmbedWidget extends Widget {
       if (this._shouldFireLoadEvent()) {
         this._loadEvent(_sqh);
         _log("loaded");
-      } else {
+      } else if (frameDoc) {
         this._attachLoadEventListener(frameDoc, _sqh);
       }
     });
