@@ -36,6 +36,18 @@ Feature: Instant Access Widget rendering
     When the widget is loaded by squatchJs
     Then there will be no Load Analytics API event
 
+  @minutia
+  Scenario: A Load Analytics API event is fired by an Instant Access widget once a user has been registered within the widget
+    Given a widget is rendered with the code
+      """
+      squatch.widget(initObj)
+      """
+    And there is no user object or jwt in the initObj
+    When the widget is loaded by squatchJs
+    Then an event listener is attached to the widget iframe's document body
+    When a "sq:user-registration" event is fired from the widget
+    Then a Load Analytics API event is fired
+
   @landmine
   Scenario: Rendering a Verified Access widget with `squatch.widget` causes component errors
     Given a widget is rendered with the code

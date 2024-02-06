@@ -89,6 +89,8 @@ export default class EmbedWidget extends Widget {
       if (this._shouldFireLoadEvent()) {
         this._loadEvent(_sqh);
         _log("loaded");
+      } else if (frameDoc) {
+        this._attachLoadEventListener(frameDoc, _sqh);
       }
     });
   }
@@ -113,6 +115,9 @@ export default class EmbedWidget extends Widget {
     if ((this.context as UpsertWidgetContext).user) {
       this._loadEvent(_sqh);
       _log("loaded");
+    } else {
+      if (!frame.contentDocument) return;
+      this._attachLoadEventListener(frame.contentDocument, _sqh);
     }
   }
 
@@ -120,11 +125,15 @@ export default class EmbedWidget extends Widget {
     const frame = this._findFrame();
     if (!frame) return _log("no target element to close");
 
+    if (frame.contentDocument)
+      this._detachLoadEventListener(frame.contentDocument);
+
     const element = this._findElement();
 
     element.style.visibility = "hidden";
     element.style.height = "0";
     element.style["overflow-y"] = "hidden";
+
     _log("Embed widget closed");
   }
 

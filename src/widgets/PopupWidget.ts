@@ -168,11 +168,17 @@ export default class PopupWidget extends Widget {
       if ((this.context as UpsertWidgetContext).user) {
         this._loadEvent(_sqh);
         _log("Popup opened");
+      } else {
+        this._attachLoadEventListener(frameDoc, _sqh);
       }
     });
   }
 
   close() {
+    const frame = this._findFrame();
+    if (frame?.contentDocument)
+      this._detachLoadEventListener(frame.contentDocument);
+
     const element = this.container ? this._findElement() : document.body;
     const parent = element.shadowRoot || element;
     const dialog = parent.querySelector(`#${this.id}`) as HTMLDialogElement;
