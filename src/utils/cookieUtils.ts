@@ -1,7 +1,5 @@
 import { debug } from "debug";
 import Cookies from "js-cookie";
-import utf8 from "utf8";
-import base64 from "base-64";
 
 /** @hidden */
 const _log = debug("squatch-js");
@@ -31,8 +29,14 @@ const deepMerge = <A = Object, B = Object>(
   } as A & B;
 };
 
-export function b64decode(input) {
-  return utf8.decode(base64.decode(input));
+export function b64decode(str) {
+  return decodeURIComponent(
+    Array.prototype.map
+      .call(atob(str), function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
 }
 
 function b64encode(input) {
