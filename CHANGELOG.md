@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.3] - 2024-06-10
+
+### Fixed
+
+- Fixed bug decoding JWT's that was causing user payloads with characters in other languages fail to load widgets
+
 ## [2.6.2] - 2024-02-06
 
 ### Added
+
 - `sq:user-registration` event listener for Instant Access widgets to fire a Load Analytics API event on successful user registration within the widget.
 
 ## [2.6.1] - 2023-09-01
@@ -356,7 +363,9 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.1...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.3...HEAD
+[2.6.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.6.3
+[2.6.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.6.2
 [2.6.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.6.1
 [2.6.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.5.0...@saasquatch%2Fsquatch-js@2.6.0
 [2.5.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.4.1...@saasquatch%2Fsquatch-js@2.5.0

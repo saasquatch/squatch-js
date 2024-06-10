@@ -29,14 +29,15 @@ const deepMerge = <A = Object, B = Object>(
   } as A & B;
 };
 
-export function b64decode(str) {
-  return decodeURIComponent(
-    Array.prototype.map
-      .call(atob(str), function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-      })
-      .join("")
-  );
+// inspired by https://github.com/panva/jose/blob/3c4ad55c92bcd9cbc0512438819717d185c41fb2/src/util/decode_jwt.ts#L22
+export function b64decode(input) {
+  const binary = atob(input.replace(/_/g, "/").replace(/-/g, "+"));
+
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder("utf8").decode(bytes);
 }
 
 function b64encode(input) {
