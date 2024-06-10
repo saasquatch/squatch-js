@@ -64,15 +64,14 @@
         if (window.location.search) window.location.search = "";
 
         document.addEventListener("DOMContentLoaded", function (event) {
-   
           const element = document.getElementById("authed-stuff");
 
           document.getElementById("unauthed-stuff").innerHTML = "";
           document.cookie = "_saasquatch=";
 
           element.innerHTML = /*html*/ `
-          <squatch-popup widget="p/22662/w/referrerWidget" open><button>click me!</button></squatch-popup>
-          <squatch-popup widget="p/22662/w/referrerWidget"><button>click me too!</button></squatch-popup>
+          <squatch-popup widget="w/ir-tester" open><button>click me!</button></squatch-popup>
+          <squatch-popup widget="w/ir-tester"><button>click me too!</button></squatch-popup>
           <button class="squatchpop">Squatchpop cta</button>
           <button onclick="javascript:document.getElementById('squatch-embed').open()">
             Open embedded widget
@@ -81,9 +80,9 @@
             Close embedded widget
           </button>
 
-          <squatch-embed locale="en_CA" widget="p/22662/w/referrerWidget">Loading...</squatch-embed>
+          <squatch-embed locale="en_CA" widget="w/ir-tester">Loading...</squatch-embed>
           <squatch-embed
-            widget="p/22662/w/referrerWidget"
+            widget="w/ir-tester"
             id="squatch-embed"
             container="#widget-container"
           ></squatch-embed>
@@ -101,12 +100,12 @@
           ></div>
         `;
         });
-        window.squatchTenant = "a30m1mqvboski";
+        window.squatchTenant = "test_axbgtatw1tccp";
         window.squatchToken =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IklScjR1Y2dRaTNpUTUwMzIwNTVqTFN5Z0p1Z2NCNjU1MzUifQ.eyJ1c2VyIjp7ImlkIjoidGVzdHVzZXIxMiIsImFjY291bnRJZCI6InRlc3R1c2VyMTIiLCJmaXJzdE5hbWUiOiJGcsOpbmNoIiwibGFzdE5hbWUiOiJVc8OpciIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20ifX0.VAPyYDDHaFY_ilwybCMOw4VETJtloMElewUCKKbduTk";
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoidGVzdHVzZXIiLCJhY2NvdW50SWQiOiJ0ZXN0dXNlciIsImVtYWlsIjoidGVzdHVzZXJAZXhhbXBsZS5jb20ifX0.3d3_4i9IeCeFDXMi-oXeSyyH2Yk_9xyVEtVJ0iJc_SA";
         window.squatchConfig = {
           debug: true,
-          domain: "https://app.referralsaasquatch.com",
+          domain: "https://staging.referralsaasquatch.com",
         };
       }
     </script>
