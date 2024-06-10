@@ -1,7 +1,7 @@
 import { decodeUserJwt } from "../../src/utils/decodeUserJwt";
 
 // text examples from https://github.com/noct/cutf/blob/master/bin/quickbrown.txt
-describe("Test UTF-8 characters in different languages", () => {
+describe("Test decoding UTF-8 characters in different languages", () => {
   beforeAll(async () => {
     window.TextEncoder = require("util").TextEncoder;
     window.TextDecoder = require("util").TextDecoder;

@@ -41,14 +41,13 @@ export function b64decode(input) {
 }
 
 export function b64encode(input) {
-  const encodedInput = new TextEncoder().encode(
-    input.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_")
-  );
+  const encodedInput = new TextEncoder().encode(input);
 
   const binary = Array.from(encodedInput, (byte) =>
     String.fromCodePoint(byte)
   ).join("");
-  return btoa(binary);
+
+  return btoa(binary).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
 // https://stackoverflow.com/a/11319865
