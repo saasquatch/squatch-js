@@ -40,8 +40,15 @@ export function b64decode(input) {
   return new TextDecoder("utf8").decode(bytes);
 }
 
-function b64encode(input) {
-  return btoa(input).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+export function b64encode(input) {
+  const encodedInput = new TextEncoder().encode(
+    input.replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_")
+  );
+
+  const binary = Array.from(encodedInput, (byte) =>
+    String.fromCodePoint(byte)
+  ).join("");
+  return btoa(binary);
 }
 
 // https://stackoverflow.com/a/11319865
