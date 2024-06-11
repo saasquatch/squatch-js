@@ -1,6 +1,6 @@
 {
   "name": "@saasquatch/squatch-js",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "author": "ReferralSaaSquatch.com, Inc.",
@@ -36,6 +36,7 @@
     "test:firefox": "cross-env BROWSER=firefox cucumber-js",
     "test:types": "tsd",
     "test:features": "jest --verbose --coverage",
+    "test:utf8": "jest --verbose -t 'UTF-8 characters in different languages'",
     "test": "run-s test:features test:browser test:webkit test:firefox",
     "build:docs": "typedoc",
     "deploy": "np --no-cleanup",

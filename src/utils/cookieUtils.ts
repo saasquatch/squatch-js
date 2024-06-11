@@ -29,12 +29,26 @@ const deepMerge = <A = Object, B = Object>(
   } as A & B;
 };
 
+// inspired by https://github.com/panva/jose/blob/3c4ad55c92bcd9cbc0512438819717d185c41fb2/src/util/decode_jwt.ts#L22
 export function b64decode(input) {
-  return atob(input.replace(/_/g, "/").replace(/-/g, "+"));
+  const binary = atob(input.replace(/_/g, "/").replace(/-/g, "+"));
+
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return new TextDecoder("utf8").decode(bytes);
 }
 
-function b64encode(input) {
-  return btoa(input).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+// Suggestion from https://developer.mozilla.org/en-US/docs/Glossary/Base64#the_unicode_problem
+export function b64encode(input) {
+  const encodedInput = new TextEncoder().encode(input);
+
+  const binary = Array.from(encodedInput, (byte) =>
+    String.fromCodePoint(byte)
+  ).join("");
+
+  return btoa(binary).replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
 // https://stackoverflow.com/a/11319865
