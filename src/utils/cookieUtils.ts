@@ -40,6 +40,7 @@ export function b64decode(input) {
   return new TextDecoder("utf8").decode(bytes);
 }
 
+// Suggestion from https://developer.mozilla.org/en-US/docs/Glossary/Base64#the_unicode_problem
 export function b64encode(input) {
   const encodedInput = new TextEncoder().encode(input);
 
