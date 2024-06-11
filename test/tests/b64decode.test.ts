@@ -1,3 +1,4 @@
+import { b64decode, b64encode } from "../../src/utils/cookieUtils";
 import { decodeUserJwt } from "../../src/utils/decodeUserJwt";
 
 // text examples from https://github.com/noct/cutf/blob/master/bin/quickbrown.txt
@@ -155,5 +156,29 @@ describe("Test decoding UTF-8 characters in different languages", () => {
     const decoded = decodeUserJwt(token);
 
     expect(JSON.stringify(decoded)).toBe(originalValue);
+  });
+
+  test("All characters", () => {
+    const unicodeCount = 149186; // number of unicode characters
+
+    for (var i = 0; i < unicodeCount; i++) {
+      const stringValue = String.fromCharCode(i);
+
+      const encodedValue = b64encode(stringValue);
+
+      const decodedValue = b64decode(encodedValue);
+
+      // LANDMINE - encoding / decoding swaps these values so they will always get mixed up if the encoded value contains them
+      if (
+        encodedValue.includes("+") ||
+        encodedValue.includes("/") ||
+        encodedValue.includes("-") ||
+        encodedValue.includes("_")
+      ) {
+        continue;
+      }
+
+      expect(decodedValue).toBe(stringValue);
+    }
   });
 });

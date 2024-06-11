@@ -88,4 +88,16 @@ describe("Test encoding UTF-8 characters in different languages", () => {
 
     checkLanguage(originalValue);
   });
+
+  test("All characters", () => {
+    const unicodeCount = 149186; // number of unicode characters
+
+    for (var i = 0; i < unicodeCount; i++) {
+      const stringValue = String.fromCharCode(i);
+
+      const encodedValue = b64encode(stringValue);
+
+      expect(encodedValue.length).toBeGreaterThan(0);
+    }
+  });
 });

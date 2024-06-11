@@ -36,7 +36,7 @@
     "test:firefox": "cross-env BROWSER=firefox cucumber-js",
     "test:types": "tsd",
     "test:features": "jest --verbose --coverage",
-    "test:utf8": "jest --verbose --coverage -t 'UTF-8 characters in different languages'",
+    "test:utf8": "jest --verbose -t 'UTF-8 characters in different languages'",
     "test": "run-s test:features test:browser test:webkit test:firefox",
     "build:docs": "typedoc",
     "deploy": "np --no-cleanup",
