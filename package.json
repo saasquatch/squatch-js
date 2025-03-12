@@ -1,6 +1,7 @@
 {
   "name": "@saasquatch/squatch-js",
-  "version": "2.6.3",
+  "type": "module",
+  "version": "2.7.0-1",
   "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "author": "ReferralSaaSquatch.com, Inc.",
@@ -26,10 +27,9 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build:es": "microbundle --target node --format cjs,es",
-    "build:umd": "webpack",
-    "build": "run-s build:es build:umd build:docs",
-    "watch": "webpack --watch",
+    "build:es": "vite build",
+    "build": "run-s build:es  build:docs",
+    "watch": "vite serve",
     "declaration": "tsc --emitDeclarationOnly",
     "test:browser": "cucumber-js",
     "test:webkit": "cross-env BROWSER=webkit cucumber-js",
@@ -101,15 +101,16 @@
     "tsd": "^0.13.1",
     "typedoc": "^0.24.8",
     "typescript": "^5.1.6",
-    "webpack": "^5.88.0",
     "webpack-bundle-analyzer": "^4.9.0",
-    "webpack-cli": "^5.1.4",
+    "webpack-cli": "^6.0.1",
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "prettier": {},
   "dependencies": {
     "debug": "^3.2.6",
-    "js-cookie": "^3.0.5"
+    "js-cookie": "^3.0.5",
+    "vite": "^6.0.11",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "browserslist": "> 0.25%, not dead",
   "msw": {
