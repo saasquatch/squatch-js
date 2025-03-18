@@ -28,7 +28,7 @@
   "sideEffects": false,
   "scripts": {
     "build:es": "vite build",
-    "build": "run-s build:es  build:docs",
+    "build": "run-s build:es build:docs",
     "watch": "vite serve",
     "declaration": "tsc --emitDeclarationOnly",
     "test:browser": "cucumber-js",
