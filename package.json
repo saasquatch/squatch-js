@@ -109,9 +109,7 @@
   "prettier": {},
   "dependencies": {
     "debug": "^3.2.6",
-    "js-cookie": "^3.0.5",
-    "vite": "^6.0.11",
-    "vite-tsconfig-paths": "^5.1.4"
+    "js-cookie": "^3.0.5"
   },
   "browserslist": "> 0.25%, not dead",
   "msw": {
