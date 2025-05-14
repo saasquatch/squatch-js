@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.7.0] - 2025-05-14
+
+### Changed
+
+- Updated package to use `vite` for the build instead of `webpack`
+  - Fixes issue where `define` in webpack's UMD build could have conflicts within certain environments
+
 ## [2.6.3] - 2024-06-10
 
 ### Fixed
@@ -363,7 +370,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.3...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...HEAD
+[2.7.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.3...@saasquatch%2Fsquatch-js@2.7.0
 [2.6.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.2...@saasquatch%2Fsquatch-js@2.6.3
 [2.6.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.1...@saasquatch%2Fsquatch-js@2.6.2
 [2.6.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.0...@saasquatch%2Fsquatch-js@2.6.1
