@@ -18,12 +18,19 @@ export default defineConfig({
     lib: {
       formats: ["es", "cjs", "umd"],
       entry: resolve(__dirname, "src/squatch.ts"),
-      fileName: (format) =>
-        format === "umd" ? "squatch.js" : `squatch.${format}.js`,
+      fileName: (format) => {
+        if (format === "es") {
+          return "squatch.esm.js";
+        } else if (format === "umd") {
+          return "squatch.js";
+        } else {
+          return `squatch.${format}.js`;
+        }
+      },
       name: "squatch",
     },
     outDir: resolve(__dirname, "dist"),
-    minify: true,
+    minify: false,
     rollupOptions: {
       output: {
         amd: { define: "false" },

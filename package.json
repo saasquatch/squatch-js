@@ -28,7 +28,8 @@
   "sideEffects": false,
   "scripts": {
     "build:es": "vite build",
-    "build": "run-s build:es build:docs",
+    "minify:umd": "terser dist/squatch.js -o dist/squatch.min.js",
+    "build": "run-s build:es minify:umd build:docs",
     "watch": "vite serve",
     "declaration": "tsc --emitDeclarationOnly",
     "test:browser": "cucumber-js",
@@ -95,6 +96,7 @@
     "react-url-query": "^1.5.0",
     "serve": "^11.3.0",
     "size-limit": "^8.2.4",
+    "terser": "^5.39.1",
     "ts-jest": "^29.1.1",
     "ts-loader": "^7.0.4",
     "ts-node": "^8.10.2",
