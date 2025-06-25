@@ -1,12 +1,17 @@
 import debug from "debug";
 import AnalyticsApi from "../../api/AnalyticsApi";
 import WidgetApi from "../../api/WidgetApi";
-import { ConfigOptions, DeclarativeConfigOptions, User } from "../../types";
+import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../globals";
+import {
+  ConfigOptions,
+  DeclarativeConfigOptions,
+  User,
+  WidgetValueConfig,
+} from "../../types";
 import { decodeUserJwt } from "../../utils/decodeUserJwt";
 import { getConfig, getToken } from "../../utils/validate";
 import EmbedWidget from "../EmbedWidget";
 import PopupWidget from "../PopupWidget";
-import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../globals";
 
 const _log = debug("squatch-js:DeclarativeWidget");
 
@@ -117,7 +122,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
         widgetType: this.widgetType,
         locale: this.locale,
       })
-      .then((res) => this._setWidget(res.template, { type: "passwordless" }))
+      .then((res) => this._setWidget(res, { type: "passwordless" }))
       .catch(this.setErrorWidget);
   }
 
@@ -131,34 +136,41 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
     _log("Rendering as a Verified widget");
 
+    await this.widgetApi.upsertUser({
+      user: userObj,
+      locale: this.locale,
+      engagementMedium: this.type,
+      widgetType: this.widgetType,
+      jwt: this.token,
+    });
+
     const widgetInstance = await this.widgetApi
-      .upsertUser({
-        user: userObj,
+      .render({
         locale: this.locale,
         engagementMedium: this.type,
         widgetType: this.widgetType,
-        jwt: this.token,
       })
-      .then((res) =>
-        this._setWidget(res.template, { type: "upsert", user: userObj })
-      )
+      .then((res) => {
+        return this._setWidget(res, { type: "upsert", user: userObj });
+      })
       .catch(this.setErrorWidget);
 
     return widgetInstance;
   }
 
   private _setWidget = (
-    template: any,
+    res: { template: any; widgetConfig: WidgetValueConfig },
     config: { type: "upsert" | "passwordless"; user?: User }
   ) => {
     const params = {
       api: this.widgetApi,
-      content: template,
+      content: res.template,
       context: {
         type: config.type,
         user: config.user,
         container: this.container || undefined,
         engagementMedium: this.type,
+        config: res.widgetConfig,
       },
       type: this.widgetType!,
       domain: this.config?.domain || DEFAULT_DOMAIN,

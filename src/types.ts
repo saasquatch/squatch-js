@@ -40,6 +40,16 @@ export interface WidgetConfig {
 }
 
 /**
+ * widgetConfig from Widget render call
+ *
+ */
+export interface WidgetValueConfig {
+  values: {
+    brandingConfig: any;
+  };
+}
+
+/**
  * @param user The user details
  * @param widgetType The content of the widget.
  * @param engagementMedium  How to display the widget.
@@ -91,6 +101,7 @@ export type UpsertWidgetContext = {
   engagementMedium?: EngagementMedium;
   container?: HTMLElement | string;
   trigger?: string;
+  widgetConfig?: WidgetValueConfig;
 };
 
 export type BaseWidgetContext = {
@@ -99,6 +110,7 @@ export type BaseWidgetContext = {
   container?: HTMLElement | string;
   trigger?: string;
   displayOnLoad?: boolean;
+  widgetConfig?: WidgetValueConfig;
 };
 
 export type WidgetContext = UpsertWidgetContext | BaseWidgetContext;
