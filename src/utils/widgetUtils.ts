@@ -3,13 +3,13 @@ export function formatWidth({
   unit,
 }: {
   value: number;
-  unit: "PX" | "PT";
+  unit: "PX" | "%";
 }) {
   switch (unit) {
     case "PX":
       return `${value}px`;
-    case "PT":
-      return `${value}pt`;
+    case "%":
+      return `${value}%`;
     default:
       return `${value}px`;
   }

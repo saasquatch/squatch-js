@@ -1,11 +1,6 @@
 import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/globals";
-import {
-  DeclarativeEmbedWidget,
-  EmbedWidget,
-  WidgetApi,
-} from "../../src/squatch";
+import { EmbedWidget, WidgetApi } from "../../src/squatch";
 import Widget from "../../src/widgets/Widget";
-import { context } from "msw";
 
 declare global {
   var mockDebug: jest.Mock<any, any>;
@@ -45,6 +40,45 @@ describe("methods", () => {
     jest.useRealTimers();
   });
   describe("load", () => {
+    test("brandingConfig", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const config = widgetConfig();
+      const widget = new EmbedWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                widgetSize: {
+                  embedWidgets: {
+                    minWidth: { value: 100, unit: "%" },
+                    maxWidth: { value: 600, unit: "PX" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      const mockElement = jest
+        .spyOn(widget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+      await widget.load();
+
+      jest.runAllTimers();
+      await Promise.resolve();
+
+      expect(mockElement).toHaveBeenCalled();
+      expect(div.style.minWidth).toBe("100%");
+      expect(div.style.maxWidth).toBe("600px");
+    });
     test.each([
       { hasChild: false, hasContainer: false },
       { hasChild: false, hasContainer: true },

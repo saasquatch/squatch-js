@@ -128,19 +128,49 @@ describe("methods", () => {
       );
     });
   });
-  test("_createPopupDialog", () => {
-    const dialog = widget._createPopupDialog();
-    expect(dialog.id).toBe(widget.id);
-    expect(dialog.style.width).toBe("100%");
-    expect(dialog.style.maxWidth).toBe("500px");
-    expect(dialog.style.border).toBe("none");
-    expect(dialog.style.padding).toBe("0px");
+  describe("_createPopupDialog", () => {
+    test("default", () => {
+      const dialog = widget._createPopupDialog();
+      expect(dialog.id).toBe(widget.id);
+      expect(dialog.style.width).toBe("100%");
+      expect(dialog.style.maxWidth).toBe("500px");
+      expect(dialog.style.border).toBe("none");
+      expect(dialog.style.padding).toBe("0px");
 
-    const mockClose = jest.spyOn(dialog, "close").mockImplementation(() => {});
+      const mockClose = jest
+        .spyOn(dialog, "close")
+        .mockImplementation(() => {});
 
-    expect(mockClose).not.toHaveBeenCalled();
-    dialog.click();
-    expect(mockClose).toHaveBeenCalled();
+      expect(mockClose).not.toHaveBeenCalled();
+      dialog.click();
+      expect(mockClose).toHaveBeenCalled();
+    });
+    test("brandingConfig", () => {
+      const config = widgetConfig();
+      const newWidget = new PopupWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                widgetSize: {
+                  popupWidgets: {
+                    minWidth: { value: 100, unit: "PX" },
+                    maxWidth: { value: 100, unit: "%" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      const dialog = newWidget._createPopupDialog();
+      expect(dialog.style.width).toBe("100%");
+      expect(dialog.style.minWidth).toBe("100px");
+      expect(dialog.style.maxWidth).toBe("100%");
+    });
   });
   describe("load", () => {
     test("success", async () => {
@@ -244,6 +274,10 @@ describe("methods", () => {
       const iframe = div.querySelector("iframe");
       expect(iframe).not.toBeNull();
       expect(iframe?.contentWindow).toBeNull();
+    });
+    test("width branding on dialog", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
     });
   });
 });

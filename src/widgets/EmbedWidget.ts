@@ -1,9 +1,10 @@
 // @ts-check
 
 import { debug } from "debug";
-import Widget, { Params } from "./Widget";
-import { domready } from "../utils/domready";
 import { UpsertWidgetContext } from "../types";
+import { domready } from "../utils/domready";
+import { formatWidth } from "../utils/widgetUtils";
+import Widget, { Params } from "./Widget";
 
 const _log = debug("squatch-js:EMBEDwidget");
 
@@ -35,6 +36,14 @@ export default class EmbedWidget extends Widget {
       element.style.height = "0";
       element.style["overflow-y"] = "hidden";
     }
+
+    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    const sizes = brandingConfig?.widgetSize?.embedWidgets;
+    const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "100%";
+    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "100%";
+
+    element.style.maxWidth = maxWidth;
+    element.style.minWidth = minWidth;
 
     if (this.container) {
       if (element.shadowRoot) {
