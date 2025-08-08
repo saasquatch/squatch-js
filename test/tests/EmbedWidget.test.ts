@@ -54,9 +54,9 @@ describe("methods", () => {
             values: {
               brandingConfig: {
                 widgetSize: {
-                  embedWidgets: {
+                  embeddedWidgets: {
                     minWidth: { value: 100, unit: "%" },
-                    maxWidth: { value: 600, unit: "PX" },
+                    maxWidth: { value: 600, unit: "px" },
                   },
                 },
               },

@@ -12,6 +12,7 @@ import { decodeUserJwt } from "../../utils/decodeUserJwt";
 import { getConfig, getToken } from "../../utils/validate";
 import EmbedWidget from "../EmbedWidget";
 import PopupWidget from "../PopupWidget";
+import type { Params } from "../Widget";
 
 const _log = debug("squatch-js:DeclarativeWidget");
 
@@ -170,13 +171,13 @@ export default abstract class DeclarativeWidget extends HTMLElement {
         user: config.user,
         container: this.container || undefined,
         engagementMedium: this.type,
-        config: res.widgetConfig,
+        widgetConfig: res.widgetConfig,
       },
       type: this.widgetType!,
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this,
-    };
+    } as Params;
     if (this.type === "EMBED") {
       return new EmbedWidget(params);
     } else {

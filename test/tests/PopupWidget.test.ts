@@ -156,7 +156,7 @@ describe("methods", () => {
               brandingConfig: {
                 widgetSize: {
                   popupWidgets: {
-                    minWidth: { value: 100, unit: "PX" },
+                    minWidth: { value: 100, unit: "px" },
                     maxWidth: { value: 100, unit: "%" },
                   },
                 },
