@@ -39,11 +39,11 @@ export default class EmbedWidget extends Widget {
 
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
-    const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "100%";
-    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "auto";
+    const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
+    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
 
-    element.style.maxWidth = maxWidth;
-    element.style.minWidth = minWidth;
+    if (maxWidth) element.style.maxWidth = maxWidth;
+    if (minWidth) element.style.minWidth = minWidth;
 
     if (this.container) {
       if (element.shadowRoot) {
