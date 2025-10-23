@@ -72,7 +72,7 @@ export default class PopupWidget extends Widget {
     const sizes = brandingConfig?.widgetSize?.popupWidgets;
 
     // Styles
-    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "100%";
+    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "auto";
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "500px";
     dialog.id = this.id;
     dialog.setAttribute(
