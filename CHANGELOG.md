@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.0] - 2025-10-22
+
+### Added
+
+- Added support for branding configuration to control widget sizing
+  - Embedded widgets now support configurable `minWidth` and `maxWidth` through `brandingConfig.widgetSize.embeddedWidgets`
+  - Popup widgets now support configurable `minWidth` and `maxWidth` through `brandingConfig.widgetSize.popupWidgets`
+  - Added new `WidgetValueConfig` interface to pass branding configuration to widgets
+  - Added `widgetConfig` parameter to `UpsertWidgetContext` and `BaseWidgetContext` types
+  - Created `formatWidth` utility function to handle width formatting with px and % units
+
+### Changed
+
+- Updated widget rendering flow to include branding configuration from API responses
+- Modified `EmbedWidget` and `PopupWidget` to apply dynamic sizing based on branding configuration
+- Enhanced declarative widgets to support branding configuration through the widget API
+
 ## [2.7.0] - 2025-05-14
 
 ### Changed
@@ -370,7 +387,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.0...HEAD
+[2.8.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.0
 [2.7.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.3...@saasquatch%2Fsquatch-js@2.7.0
 [2.6.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.2...@saasquatch%2Fsquatch-js@2.6.3
 [2.6.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.1...@saasquatch%2Fsquatch-js@2.6.2

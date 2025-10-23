@@ -1,9 +1,10 @@
 // @ts-check
 
 import { debug } from "debug";
-import Widget, { Params } from "./Widget";
-import { domready } from "../utils/domready";
 import { UpsertWidgetContext } from "../types";
+import { domready } from "../utils/domready";
+import { formatWidth } from "../utils/widgetUtils";
+import Widget, { Params } from "./Widget";
 
 const _log = debug("squatch-js:EMBEDwidget");
 
@@ -26,7 +27,12 @@ export default class EmbedWidget extends Widget {
   }
 
   async load() {
-    const frame = this._createFrame();
+    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
+    const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
+    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
+
+    const frame = this._createFrame({ minWidth, maxWidth });
     const element = this._findElement();
 
     if (this.context?.container) {

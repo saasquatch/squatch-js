@@ -102,6 +102,11 @@ export default class Widgets {
           engagementMedium: config.engagementMedium,
           container: config.container,
           trigger: config.trigger,
+          widgetConfig: {
+            values: {
+              brandingConfig: response?.brandingConfig,
+            },
+          },
         }),
         user: response.user,
       };
@@ -142,6 +147,11 @@ export default class Widgets {
           engagementMedium: clean.engagementMedium,
           container: clean.container,
           trigger: clean.trigger,
+          widgetConfig: {
+            values: {
+              brandingConfig: response?.brandingConfig,
+            },
+          },
         }),
         user: response.user,
       };

@@ -1,10 +1,10 @@
 // @ts-check
 
 import { debug } from "debug";
-import { domready } from "../utils/domready";
-import Widget, { Params } from "./Widget";
-import DeclarativeWidget from "./declarative/DeclarativeWidget";
 import { UpsertWidgetContext } from "../types";
+import { domready } from "../utils/domready";
+import { formatWidth } from "../utils/widgetUtils";
+import Widget, { Params } from "./Widget";
 
 const _log = debug("squatch-js:POPUPwidget");
 
@@ -68,10 +68,16 @@ export default class PopupWidget extends Widget {
 
   _createPopupDialog(): HTMLDialogElement {
     const dialog = document.createElement("dialog");
+    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    const sizes = brandingConfig?.widgetSize?.popupWidgets;
+
+    // Still styling the dialog to keep consistent with previous versions
+    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "auto";
+    const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "500px";
     dialog.id = this.id;
     dialog.setAttribute(
       "style",
-      "width: 100%; max-width: 500px; border: none; padding: 0;"
+      `width: 100%; min-width: ${minWidth}; max-width: ${maxWidth}; border: none; padding: 0;`
     );
     const onClick = (e) => {
       e.stopPropagation();

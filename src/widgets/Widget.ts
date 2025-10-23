@@ -30,6 +30,14 @@ export type GenericLoadEvent = {
   mode: any;
   analytics: any;
 };
+export type WidthSetting = {
+  value: number;
+  unit: "px" | "%";
+};
+export type WidgetWidths = {
+  minWidth: WidthSetting;
+  maxWidth: WidthSetting;
+};
 
 /*
  * The Widget class is the base class for the different widget types available
@@ -98,17 +106,25 @@ export default abstract class Widget {
     return element;
   }
 
-  _createFrame() {
+  _createFrame(options?: { minWidth?: string; maxWidth?: string }) {
     const frame = document.createElement("iframe");
     frame["squatchJsApi"] = this;
     frame.id = "squatchFrame";
     frame.width = "100%";
+
     frame.src = "about:blank";
     frame.scrolling = "no";
     frame.setAttribute(
       "style",
       "border: 0; background-color: none; width: 1px; min-width: 100%;"
     );
+
+    if (options?.minWidth) frame.style.minWidth = options.minWidth;
+    if (options?.maxWidth) frame.style.maxWidth = options.maxWidth;
+    if (options?.maxWidth || options?.minWidth) {
+      // Avoid 1px width when custom width is set
+      frame.style.width = "100%";
+    }
 
     return frame;
   }
