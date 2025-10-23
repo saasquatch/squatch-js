@@ -112,15 +112,19 @@ export default abstract class Widget {
     frame.id = "squatchFrame";
     frame.width = "100%";
 
-    if (options?.minWidth) frame.style.minWidth = options.minWidth;
-    if (options?.maxWidth) frame.style.maxWidth = options.maxWidth;
-
     frame.src = "about:blank";
     frame.scrolling = "no";
     frame.setAttribute(
       "style",
       "border: 0; background-color: none; width: 1px; min-width: 100%;"
     );
+
+    if (options?.minWidth) frame.style.minWidth = options.minWidth;
+    if (options?.maxWidth) frame.style.maxWidth = options.maxWidth;
+    if (options?.maxWidth || options?.minWidth) {
+      // Avoid 1px width when custom width is set
+      frame.style.width = "100%";
+    }
 
     return frame;
   }
