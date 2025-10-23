@@ -27,7 +27,12 @@ export default class EmbedWidget extends Widget {
   }
 
   async load() {
-    const frame = this._createFrame();
+    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
+    const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
+    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
+
+    const frame = this._createFrame({ minWidth, maxWidth });
     const element = this._findElement();
 
     if (this.context?.container) {
@@ -36,14 +41,6 @@ export default class EmbedWidget extends Widget {
       element.style.height = "0";
       element.style["overflow-y"] = "hidden";
     }
-
-    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
-    const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
-    const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
-    const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
-
-    if (maxWidth) element.style.maxWidth = maxWidth;
-    if (minWidth) element.style.minWidth = minWidth;
 
     if (this.container) {
       if (element.shadowRoot) {
