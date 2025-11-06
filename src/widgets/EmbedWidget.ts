@@ -66,18 +66,37 @@ export default class EmbedWidget extends Widget {
       throw new Error("Frame needs a content window");
     }
 
+    //       <div><span class="loader"></span>
+    //   <style>
+    //   .loader {
+    // width: 48px;
+    // height: 48px;
+    // border: 5px solid #FFF;
+    // border-bottom-color: #FF3D00;
+    // border-radius: 50%;
+    // display: inline-block;
+    // box-sizing: border-box;
+    // animation: rotation 1s linear infinite;
+    // }
     const frameDoc = contentWindow.document;
     frameDoc.open();
-    frameDoc.write(this.content);
-    frameDoc.write(
-      `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-    );
+
+    frameDoc.write(`
+      <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
+      <style>
+      html, p, h3 { visibility:hidden; }
+      </style>
+      ${this.content}
+      `);
+
     frameDoc.close();
     domready(frameDoc, async () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
 
       // @ts-ignore -- number will be cast to string by browsers
-      frame.height = frameDoc.body.scrollHeight;
+      frame.height =
+        frameDoc.body.scrollHeight >= 150 ? 600 : frameDoc.body.scrollHeight;
+      console.log({ height: frameDoc.body.scrollHeight });
 
       // Adjust frame height when size of body changes
       /* istanbul ignore next: hard to test */
