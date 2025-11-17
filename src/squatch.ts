@@ -103,7 +103,7 @@ export function events(): EventsApi | null {
  * }).catch(e => console.error("Did not render widget:", e))
  */
 export function widget(
-  widgetConfig: WidgetConfig
+  widgetConfig: WidgetConfig,
 ): Promise<WidgetResult | undefined> | undefined {
   return widgets()?.render(widgetConfig);
 }
@@ -114,10 +114,8 @@ export function widget(
  * Called by default on startup via the loader script.
  * @private
  */
-export function _auto(
-  configIn: ConfigOptions
-): Promise<WidgetResult | undefined> | undefined {
-  const configs = _getAutoConfig(configIn);
+export function _auto(): Promise<WidgetResult | undefined> | undefined {
+  const configs = _getAutoConfig();
 
   if (configs) {
     const { squatchConfig, widgetConfig } = configs;
@@ -221,7 +219,7 @@ if (typeof document !== "undefined" && !window.SaaSquatchDoNotAutoDrop) {
 // Show message if squatchjs has already been loaded on the page
 if (window["squatch"]?.init)
   _log(
-    "Squatchjs is being loaded more than once. This may lead to multiple load events being sent, duplicated widgets, and inaccurate analytics."
+    "Squatchjs is being loaded more than once. This may lead to multiple load events being sent, duplicated widgets, and inaccurate analytics.",
   );
 
 if (typeof document !== "undefined") asyncLoad();
