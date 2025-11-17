@@ -106,7 +106,11 @@ export default abstract class Widget {
     return element;
   }
 
-  _createFrame(options?: { minWidth?: string; maxWidth?: string }) {
+  _createFrame(options?: {
+    minWidth?: string;
+    maxWidth?: string;
+    initialHeight?: string;
+  }) {
     const frame = document.createElement("iframe");
     frame["squatchJsApi"] = this;
     frame.id = "squatchFrame";
@@ -124,6 +128,9 @@ export default abstract class Widget {
     if (options?.maxWidth || options?.minWidth) {
       // Avoid 1px width when custom width is set
       frame.style.width = "100%";
+    }
+    if (options?.initialHeight) {
+      frame.height = options.initialHeight;
     }
 
     return frame;

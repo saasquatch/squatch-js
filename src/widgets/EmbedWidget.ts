@@ -28,11 +28,24 @@ export default class EmbedWidget extends Widget {
 
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    // @ts-ignore
+    const initialHeight =
+      this.context.widgetConfig?.values?.brandingConfig?.loadingHeight;
     const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
     const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
 
-    const frame = this._createFrame({ minWidth, maxWidth });
+    console.log({
+      brandingConfig,
+      initialHeight,
+      widgetConfig: this.context.widgetConfig,
+    });
+
+    const frame = this._createFrame({
+      minWidth,
+      maxWidth,
+      initialHeight,
+    });
     const element = this._findElement();
 
     if (this.context?.container) {
@@ -66,27 +79,32 @@ export default class EmbedWidget extends Widget {
       throw new Error("Frame needs a content window");
     }
 
-    //       <div><span class="loader"></span>
-    //   <style>
-    //   .loader {
-    // width: 48px;
-    // height: 48px;
-    // border: 5px solid #FFF;
-    // border-bottom-color: #FF3D00;
-    // border-radius: 50%;
-    // display: inline-block;
-    // box-sizing: border-box;
-    // animation: rotation 1s linear infinite;
-    // }
     const frameDoc = contentWindow.document;
     frameDoc.open();
 
+    console.log({ content: this.content, context: this.context, this: this });
+
+    const domain = this.widgetApi.domain;
+
     frameDoc.write(`
+      ${
+        brandingConfig?.main?.brandFont &&
+        `
+        <link rel="preconnect" href="https://fast${
+          domain === "https://staging.referralsaasquatch.com" && "-staging"
+        }.ssqt.io">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
+          brandingConfig?.main?.brandFont
+        )}">`
+      }
       <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
-      <style>
-      html, p, h3 { visibility:hidden; }
+      <style data-styles>
+        html { visibility:hidden;}
       </style>
       ${this.content}
+
       `);
 
     frameDoc.close();
@@ -94,8 +112,7 @@ export default class EmbedWidget extends Widget {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
 
       // @ts-ignore -- number will be cast to string by browsers
-      frame.height =
-        frameDoc.body.scrollHeight >= 150 ? 600 : frameDoc.body.scrollHeight;
+      frame.height = initialHeight || frameDoc.body.scrollHeight;
       console.log({ height: frameDoc.body.scrollHeight });
 
       // Adjust frame height when size of body changes

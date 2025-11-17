@@ -113,6 +113,8 @@ export default class WidgetApi {
     const clean = validatePasswordlessConfig(raw);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
+    console.log({ params });
+
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = user?.accountId
       ? encodeURIComponent(user.accountId)
