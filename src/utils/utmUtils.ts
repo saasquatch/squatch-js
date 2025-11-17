@@ -70,8 +70,6 @@ export function _getAutoConfig():
     },
     squatchConfig: {
       ...config,
-      domain: config.domain,
-      tenantAlias: config.tenantAlias,
     },
   };
 }
