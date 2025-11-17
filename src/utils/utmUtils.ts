@@ -36,11 +36,25 @@ export function _getAutoConfig():
     return;
   }
 
-  const { widgetConfig } = convertExtraToConfig(
-    config.domain,
-    config.tenantAlias,
-    raw,
-  );
+  // Normalize the domain by removing protocol (e.g., 'https://')
+  function normalizeDomain(domain: string): string {
+    return domain.replace(/^https?:\/\//, "");
+  }
+
+  const normalizedDomain = normalizeDomain(config.domain);
+
+  // _saasquatchExtra is expected to be structured as:
+  // {
+  //   [domain]: {
+  //     [tenantAlias]: {
+  //       autoPopupWidgetType: string,
+  //       ...otherWidgetConfig
+  //     }
+  //   }
+  // }
+  //
+  const widgetConfig = raw?.[normalizedDomain]?.[config.tenantAlias];
+
   if (!widgetConfig) {
     _log("_saasquatchExtra did not have an expected structure");
     return undefined;
@@ -60,17 +74,4 @@ export function _getAutoConfig():
       tenantAlias: config.tenantAlias,
     },
   };
-}
-
-/**
- * Deconstructs _saasquatchExtra into domain, tenantAlias, and widgetConfig
- * @param obj {Record<string, any>} Expected to be of the form `{ [appDomain]: { [tenantAlias]: { autoPopupWidgetType: [widgetType], [rest]?: ... } } }`
- */
-export function convertExtraToConfig(
-  domain: string,
-  tenantAlias: string,
-  obj: Record<string, any>,
-) {
-  const widgetConfig = obj?.[domain]?.[tenantAlias];
-  return { widgetConfig };
 }
