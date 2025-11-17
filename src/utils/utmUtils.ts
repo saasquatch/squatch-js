@@ -55,9 +55,9 @@ export function _getAutoConfig():
       ...rest,
     },
     squatchConfig: {
+      ...config,
       domain: config.domain,
       tenantAlias: config.tenantAlias,
-      ...(config ? { config } : {}),
     },
   };
 }
