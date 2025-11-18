@@ -1,7 +1,7 @@
 import { debug } from "debug";
 import { ConfigOptions, WidgetConfig } from "../types";
 import { b64decode } from "./cookieUtils";
-import { getConfig } from "./validate";
+import { validateConfig } from "./validate";
 
 /** @hidden */
 const _log = debug("squatch-js");
@@ -18,7 +18,9 @@ export function _getAutoConfig():
     return;
   }
 
-  const config = getConfig();
+  const config = validateConfig({
+    tenantAlias: "UNKNOWN",
+  });
 
   if (!config.domain) {
     _log("domain must be provided in config to use _saasquatchExtra");
