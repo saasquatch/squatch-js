@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.1] - 2025-11-17
+
+### Fixed
+
+- Prevent overriding of API domain with auto popups
+
 ## [2.8.0] - 2025-10-22
 
 ### Added
@@ -387,7 +393,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.0...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.1...HEAD
+[2.8.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.1
 [2.8.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.0
 [2.7.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.3...@saasquatch%2Fsquatch-js@2.7.0
 [2.6.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.2...@saasquatch%2Fsquatch-js@2.6.3
