@@ -1,7 +1,7 @@
 import { debug } from "debug";
 import { ConfigOptions, WidgetConfig } from "../types";
 import { b64decode } from "./cookieUtils";
-import { validateConfig } from "./validate";
+import { getConfig } from "./validate";
 
 /** @hidden */
 const _log = debug("squatch-js");
@@ -18,12 +18,10 @@ export function _getAutoConfig():
     return;
   }
 
-  const config = validateConfig();
+  const config = getConfig();
 
-  if (!config.domain || !config.tenantAlias) {
-    _log(
-      "domain and tenantAlias must be provided in config to use _saasquatchExtra",
-    );
+  if (!config.domain) {
+    _log("domain must be provided in config to use _saasquatchExtra");
     return;
   }
 
@@ -53,7 +51,9 @@ export function _getAutoConfig():
   //   }
   // }
   //
-  const widgetConfig = raw?.[normalizedDomain]?.[config.tenantAlias];
+
+  const tenantAlias = Object.keys(raw?.[normalizedDomain] || {})[0];
+  const widgetConfig = raw?.[normalizedDomain]?.[tenantAlias];
 
   if (!widgetConfig) {
     _log("_saasquatchExtra did not have an expected structure");
@@ -70,6 +70,7 @@ export function _getAutoConfig():
     },
     squatchConfig: {
       ...config,
+      tenantAlias,
     },
   };
 }
