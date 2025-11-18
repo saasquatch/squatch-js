@@ -197,19 +197,11 @@ squatch.api().upsertUser({...});
 ### `squatch-popup`
 
 ```html
-<squatch-embed
-  widget="WIDGET_TYPE"
-  [
-  open
-  |
-  container="#selector"
-  |
-  locale="en_US"
-  ]
->
+<squatch-popup
+  widget="WIDGET_TYPE" [ open | container="#selector" | locale="en_US" ]>
   <!-- Clicking a child of squatch-popup opens the popup -->
   <button>Click me to open</button>
-</squatch-embed>
+</squatch-popup>
 ```
 
 - `widget: string`: Specifies the SaaSquatch `widgetType` identifier of the desired widget
