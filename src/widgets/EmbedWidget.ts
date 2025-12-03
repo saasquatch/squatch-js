@@ -97,7 +97,7 @@ export default class EmbedWidget extends Widget {
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
           brandingConfig?.main?.brandFont
-        )}">`
+        )}" as="style">`
       }
       <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
       <style data-styles>
