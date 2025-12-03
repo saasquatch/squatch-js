@@ -5,6 +5,7 @@ import { UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
 import Widget, { Params } from "./Widget";
+import { getSkeleton } from "./SkeletonTemplate";
 
 const _log = debug("squatch-js:EMBEDwidget");
 
@@ -29,8 +30,12 @@ export default class EmbedWidget extends Widget {
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     // @ts-ignore
-    const initialHeight =
-      this.context.widgetConfig?.values?.brandingConfig?.loadingHeight;
+    const initialHeight = brandingConfig?.loadingHeight;
+    const skeletonBackgroundColor =
+      brandingConfig?.color?.loadingSkeleton?.background;
+    const skeletonShimmerColor =
+      brandingConfig?.color?.loadingSkeleton?.animationBackground;
+    const borderColor = brandingConfig?.border?.borderColor;
     const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
     const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
@@ -41,12 +46,32 @@ export default class EmbedWidget extends Widget {
       widgetConfig: this.context.widgetConfig,
     });
 
+    const skeletonHTML = getSkeleton({
+      height: initialHeight,
+      skeletonBackgroundColor,
+      skeletonShimmerColor,
+      borderColor,
+    });
+
+    const skeletonContainer = document.createElement("div");
+    skeletonContainer.innerHTML = skeletonHTML;
+
     const frame = this._createFrame({
       minWidth,
       maxWidth,
       initialHeight,
     });
     const element = this._findElement();
+
+    // Hide frame initially
+    frame.style.display = "none";
+
+    const injectContents = (target: HTMLElement | ShadowRoot) => {
+      // Optional: Clear target to prevent duplicates if load() is called twice
+      // target.innerHTML = "";
+      target.appendChild(skeletonContainer);
+      target.appendChild(frame);
+    };
 
     if (this.context?.container) {
       // Custom container is used
@@ -60,18 +85,17 @@ export default class EmbedWidget extends Widget {
         if (element.shadowRoot.lastChild?.nodeName === "IFRAME") {
           element.shadowRoot.replaceChild(frame, element.shadowRoot.lastChild);
         } else {
-          element.shadowRoot.appendChild(frame);
+          injectContents(element.shadowRoot);
         }
-      }
-      // Widget reloaded - replace existing element
-      else if (element.firstChild) {
-        element.replaceChild(frame, element.firstChild);
-        // Add iframe for the first time
+      } else if (element.firstChild) {
+        // If replacing, wipe and reload
+        element.innerHTML = "";
+        injectContents(element);
       } else {
-        element.appendChild(frame);
+        injectContents(element);
       }
     } else if (!element.firstChild || element.firstChild.nodeName === "#text") {
-      element.appendChild(frame);
+      injectContents(element);
     }
 
     const { contentWindow } = frame;
@@ -109,6 +133,12 @@ export default class EmbedWidget extends Widget {
 
     frameDoc.close();
     domready(frameDoc, async () => {
+      if (skeletonContainer && skeletonContainer.parentNode) {
+        skeletonContainer.parentNode.removeChild(skeletonContainer);
+      }
+
+      frame.style.display = "block";
+
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
 
       // @ts-ignore -- number will be cast to string by browsers
