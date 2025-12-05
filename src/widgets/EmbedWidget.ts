@@ -24,7 +24,9 @@ export default class EmbedWidget extends Widget {
   constructor(params: Params, container?: HTMLElement | string) {
     super(params);
 
-    if (container) this.container = container;
+    if (container) {
+      this.container = container;
+    }
   }
 
   async load() {
@@ -62,6 +64,8 @@ export default class EmbedWidget extends Widget {
       initialHeight,
     });
     const element = this._findElement();
+
+    element.innerHTML = skeletonHTML;
 
     // Hide frame initially
     frame.style.display = "none";

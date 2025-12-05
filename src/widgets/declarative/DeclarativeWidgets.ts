@@ -42,6 +42,21 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     this.loaded = true;
     this.container = this.getAttribute("container");
 
+    // Dynamically assign arbitrary HTML content before rendering the widget
+    const dynamicContent = `
+    <div>
+      <h1>Dynamic Content</h1>
+      <p>This content was dynamically added to the widget before it loaded.</p>
+    </div>
+  `;
+    if (this.container) {
+      const containerElement = document.querySelector(this.container);
+      if (containerElement) {
+        containerElement.innerHTML = dynamicContent;
+      }
+    }
+
+    // Render the widget after setting the dynamic content
     await this.renderWidget();
 
     const slot = (
