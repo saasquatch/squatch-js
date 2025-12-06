@@ -42,32 +42,37 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     this.loaded = true;
     this.container = this.getAttribute("container");
 
-    // Dynamically assign arbitrary HTML content before rendering the widget
-    const dynamicContent = `
+    const skeletonHTML = `
     <div>
       <h1>Dynamic Content</h1>
       <p>This content was dynamically added to the widget before it loaded.</p>
     </div>
   `;
-    if (this.container) {
-      const containerElement = document.querySelector(this.container);
-      if (containerElement) {
-        containerElement.innerHTML = dynamicContent;
-      }
+    const skeletonContainer = document.createElement("div");
+    skeletonContainer.id = "loading-skeleton";
+    skeletonContainer.innerHTML = skeletonHTML;
+
+    // Inject dynamic content before rendering the widget
+
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: "open" });
+    }
+    if (this.shadowRoot) {
+      this.shadowRoot.innerHTML = skeletonHTML;
     }
 
-    // Render the widget after setting the dynamic content
+    // Render the widget
     await this.renderWidget();
 
-    const slot = (
-      this.shadowRoot && Array.from(this.shadowRoot.children)
-    )?.find((c) => c.tagName === "SLOT") as Node;
-    if (slot) this.shadowRoot?.removeChild(slot);
+    // Remove the dynamic content after the widget loads
+    const loadingElement = this.shadowRoot?.getElementById("loading-skeleton");
+    if (loadingElement) {
+      loadingElement.remove();
+    }
 
     if (this.getAttribute("open") !== null) this.open();
   }
 }
-
 /**
  * Base class for `squatch-popup` web-component
  * @extends {DeclarativeWidget}
@@ -116,7 +121,33 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     this.loaded = true;
     this.container = this.getAttribute("container");
 
+    const skeletonHTML = `
+    <div>
+      <h1>Dynamic Content</h1>
+      <p>This content was dynamically added to the widget before it loaded.</p>
+    </div>
+  `;
+    const skeletonContainer = document.createElement("div");
+    skeletonContainer.id = "loading-skeleton";
+    skeletonContainer.innerHTML = skeletonHTML;
+
+    // Inject dynamic content before rendering the widget
+
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: "open" });
+    }
+    if (this.shadowRoot) {
+      this.shadowRoot.innerHTML = skeletonHTML;
+    }
+
+    // Render the widget
     await this.renderWidget();
+
+    // Remove the dynamic content after the widget loads
+    const loadingElement = this.shadowRoot?.getElementById("loading-skeleton");
+    if (loadingElement) {
+      loadingElement.remove();
+    }
 
     if (this.getAttribute("open") !== null) this.open();
   }
