@@ -43,29 +43,23 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     this.container = this.getAttribute("container");
 
     const skeletonHTML = `
-    <div>
-      <h1>Dynamic Content</h1>
-      <p>This content was dynamically added to the widget before it loaded.</p>
-    </div>
-  `;
+      <div>
+        <h1>Do I see this text ????</h1>
+      </div>
+    `;
+
     const skeletonContainer = document.createElement("div");
     skeletonContainer.id = "loading-skeleton";
     skeletonContainer.innerHTML = skeletonHTML;
 
-    // Inject dynamic content before rendering the widget
+    const root = this.shadowRoot || this.attachShadow({ mode: "open" });
 
-    if (!this.shadowRoot) {
-      this.attachShadow({ mode: "open" });
-    }
-    if (this.shadowRoot) {
-      this.shadowRoot.innerHTML = skeletonHTML;
-    }
+    root.innerHTML = "";
+    root.appendChild(skeletonContainer);
 
-    // Render the widget
     await this.renderWidget();
 
-    // Remove the dynamic content after the widget loads
-    const loadingElement = this.shadowRoot?.getElementById("loading-skeleton");
+    const loadingElement = root.getElementById("loading-skeleton");
     if (loadingElement) {
       loadingElement.remove();
     }

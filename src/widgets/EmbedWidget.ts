@@ -29,6 +29,82 @@ export default class EmbedWidget extends Widget {
     }
   }
 
+  //Old code for testing
+  // async load() {
+  //   const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+  //   const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
+  //   const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
+  //   const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
+
+  //   const frame = this._createFrame({ minWidth, maxWidth });
+  //   const element = this._findElement();
+
+  //   if (this.context?.container) {
+  //     // Custom container is used
+  //     element.style.visibility = "hidden";
+  //     element.style.height = "0";
+  //     element.style["overflow-y"] = "hidden";
+  //   }
+
+  // if (this.container) {
+  //   if (element.shadowRoot) {
+  //     if (element.shadowRoot.lastChild?.nodeName === "IFRAME") {
+  //       element.shadowRoot.replaceChild(frame, element.shadowRoot.lastChild);
+  //     } else {
+  //       element.shadowRoot.appendChild(frame);
+  //     }
+  //   }
+  //   // Widget reloaded - replace existing element
+  //   else if (element.firstChild) {
+  //     element.replaceChild(frame, element.firstChild);
+  //     // Add iframe for the first time
+  //   } else {
+  //     element.appendChild(frame);
+  //   }
+  // } else if (!element.firstChild || element.firstChild.nodeName === "#text") {
+  //   element.appendChild(frame);
+  // }
+
+  //   const { contentWindow } = frame;
+  //   if (!contentWindow) {
+  //     throw new Error("Frame needs a content window");
+  //   }
+
+  //   const frameDoc = contentWindow.document;
+  //   frameDoc.open();
+  //   frameDoc.write(this.content);
+  //   frameDoc.write(
+  //     `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
+  //   );
+  //   frameDoc.close();
+  //   domready(frameDoc, async () => {
+  //     const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
+
+  //     // @ts-ignore -- number will be cast to string by browsers
+  //     frame.height = frameDoc.body.scrollHeight;
+
+  //     // Adjust frame height when size of body changes
+  //     /* istanbul ignore next: hard to test */
+  //     const ro = new contentWindow["ResizeObserver"]((entries) => {
+  //       for (const entry of entries) {
+  //         const { height } = entry.contentRect;
+  //         // @ts-ignore -- number will be cast to string by browsers
+  //         frame.height = height;
+  //       }
+  //     });
+
+  //     const container = await this._findInnerContainer(frame);
+  //     ro.observe(container);
+
+  //     if (this._shouldFireLoadEvent()) {
+  //       this._loadEvent(_sqh);
+  //       _log("loaded");
+  //     } else if (frameDoc) {
+  //       this._attachLoadEventListener(frameDoc, _sqh);
+  //     }
+  //   });
+  // }
+
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     // @ts-ignore
@@ -48,15 +124,15 @@ export default class EmbedWidget extends Widget {
       widgetConfig: this.context.widgetConfig,
     });
 
-    const skeletonHTML = getSkeleton({
-      height: initialHeight,
-      skeletonBackgroundColor,
-      skeletonShimmerColor,
-      borderColor,
-    });
+    // const skeletonHTML = getSkeleton({
+    //   height: initialHeight,
+    //   skeletonBackgroundColor,
+    //   skeletonShimmerColor,
+    //   borderColor,
+    // });
 
-    const skeletonContainer = document.createElement("div");
-    skeletonContainer.innerHTML = skeletonHTML;
+    // const skeletonContainer = document.createElement("div");
+    // skeletonContainer.innerHTML = skeletonHTML;
 
     const frame = this._createFrame({
       minWidth,
@@ -65,15 +141,12 @@ export default class EmbedWidget extends Widget {
     });
     const element = this._findElement();
 
-    element.innerHTML = skeletonHTML;
-
-    // Hide frame initially
-    frame.style.display = "none";
+    // element.innerHTML = skeletonHTML;
 
     const injectContents = (target: HTMLElement | ShadowRoot) => {
       // Optional: Clear target to prevent duplicates if load() is called twice
       // target.innerHTML = "";
-      target.appendChild(skeletonContainer);
+      // target.appendChild(skeletonContainer);
       target.appendChild(frame);
     };
 
@@ -89,17 +162,18 @@ export default class EmbedWidget extends Widget {
         if (element.shadowRoot.lastChild?.nodeName === "IFRAME") {
           element.shadowRoot.replaceChild(frame, element.shadowRoot.lastChild);
         } else {
-          injectContents(element.shadowRoot);
+          element.shadowRoot.appendChild(frame);
         }
-      } else if (element.firstChild) {
-        // If replacing, wipe and reload
-        element.innerHTML = "";
-        injectContents(element);
+      }
+      // Widget reloaded - replace existing element
+      else if (element.firstChild) {
+        element.replaceChild(frame, element.firstChild);
+        // Add iframe for the first time
       } else {
-        injectContents(element);
+        element.appendChild(frame);
       }
     } else if (!element.firstChild || element.firstChild.nodeName === "#text") {
-      injectContents(element);
+      element.appendChild(frame);
     }
 
     const { contentWindow } = frame;
@@ -110,14 +184,14 @@ export default class EmbedWidget extends Widget {
     const frameDoc = contentWindow.document;
     frameDoc.open();
 
-    console.log({ content: this.content, context: this.context, this: this });
+    // console.log({ content: this.content, context: this.context, this: this });
 
     const domain = this.widgetApi.domain;
 
     frameDoc.write(`
       ${
-        brandingConfig?.main?.brandFont &&
-        `
+        brandingConfig?.main?.brandFont
+          ? `
         <link rel="preconnect" href="https://fast${
           domain === "https://staging.referralsaasquatch.com" && "-staging"
         }.ssqt.io">
@@ -126,6 +200,7 @@ export default class EmbedWidget extends Widget {
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
           brandingConfig?.main?.brandFont
         )}" as="style">`
+          : ""
       }
       <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
       <style data-styles>
@@ -137,11 +212,9 @@ export default class EmbedWidget extends Widget {
 
     frameDoc.close();
     domready(frameDoc, async () => {
-      if (skeletonContainer && skeletonContainer.parentNode) {
-        skeletonContainer.parentNode.removeChild(skeletonContainer);
-      }
-
-      frame.style.display = "block";
+      // if (skeletonContainer && skeletonContainer.parentNode) {
+      //   skeletonContainer.parentNode.removeChild(skeletonContainer);
+      // }
 
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
 
