@@ -5,7 +5,6 @@ import { UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
 import Widget, { Params } from "./Widget";
-import { getSkeleton } from "./SkeletonTemplate";
 
 const _log = debug("squatch-js:EMBEDwidget");
 
@@ -29,82 +28,6 @@ export default class EmbedWidget extends Widget {
     }
   }
 
-  //Old code for testing
-  // async load() {
-  //   const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
-  //   const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
-  //   const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
-  //   const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
-
-  //   const frame = this._createFrame({ minWidth, maxWidth });
-  //   const element = this._findElement();
-
-  //   if (this.context?.container) {
-  //     // Custom container is used
-  //     element.style.visibility = "hidden";
-  //     element.style.height = "0";
-  //     element.style["overflow-y"] = "hidden";
-  //   }
-
-  // if (this.container) {
-  //   if (element.shadowRoot) {
-  //     if (element.shadowRoot.lastChild?.nodeName === "IFRAME") {
-  //       element.shadowRoot.replaceChild(frame, element.shadowRoot.lastChild);
-  //     } else {
-  //       element.shadowRoot.appendChild(frame);
-  //     }
-  //   }
-  //   // Widget reloaded - replace existing element
-  //   else if (element.firstChild) {
-  //     element.replaceChild(frame, element.firstChild);
-  //     // Add iframe for the first time
-  //   } else {
-  //     element.appendChild(frame);
-  //   }
-  // } else if (!element.firstChild || element.firstChild.nodeName === "#text") {
-  //   element.appendChild(frame);
-  // }
-
-  //   const { contentWindow } = frame;
-  //   if (!contentWindow) {
-  //     throw new Error("Frame needs a content window");
-  //   }
-
-  //   const frameDoc = contentWindow.document;
-  //   frameDoc.open();
-  //   frameDoc.write(this.content);
-  //   frameDoc.write(
-  //     `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-  //   );
-  //   frameDoc.close();
-  //   domready(frameDoc, async () => {
-  //     const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
-
-  //     // @ts-ignore -- number will be cast to string by browsers
-  //     frame.height = frameDoc.body.scrollHeight;
-
-  //     // Adjust frame height when size of body changes
-  //     /* istanbul ignore next: hard to test */
-  //     const ro = new contentWindow["ResizeObserver"]((entries) => {
-  //       for (const entry of entries) {
-  //         const { height } = entry.contentRect;
-  //         // @ts-ignore -- number will be cast to string by browsers
-  //         frame.height = height;
-  //       }
-  //     });
-
-  //     const container = await this._findInnerContainer(frame);
-  //     ro.observe(container);
-
-  //     if (this._shouldFireLoadEvent()) {
-  //       this._loadEvent(_sqh);
-  //       _log("loaded");
-  //     } else if (frameDoc) {
-  //       this._attachLoadEventListener(frameDoc, _sqh);
-  //     }
-  //   });
-  // }
-
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     // @ts-ignore
@@ -118,37 +41,12 @@ export default class EmbedWidget extends Widget {
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
     const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
 
-    console.log({
-      brandingConfig,
-      initialHeight,
-      widgetConfig: this.context.widgetConfig,
-    });
-
-    // const skeletonHTML = getSkeleton({
-    //   height: initialHeight,
-    //   skeletonBackgroundColor,
-    //   skeletonShimmerColor,
-    //   borderColor,
-    // });
-
-    // const skeletonContainer = document.createElement("div");
-    // skeletonContainer.innerHTML = skeletonHTML;
-
     const frame = this._createFrame({
       minWidth,
       maxWidth,
       initialHeight,
     });
     const element = this._findElement();
-
-    // element.innerHTML = skeletonHTML;
-
-    const injectContents = (target: HTMLElement | ShadowRoot) => {
-      // Optional: Clear target to prevent duplicates if load() is called twice
-      // target.innerHTML = "";
-      // target.appendChild(skeletonContainer);
-      target.appendChild(frame);
-    };
 
     if (this.context?.container) {
       // Custom container is used
@@ -184,8 +82,6 @@ export default class EmbedWidget extends Widget {
     const frameDoc = contentWindow.document;
     frameDoc.open();
 
-    // console.log({ content: this.content, context: this.context, this: this });
-
     const domain = this.widgetApi.domain;
 
     frameDoc.write(`
@@ -212,10 +108,6 @@ export default class EmbedWidget extends Widget {
 
     frameDoc.close();
     domready(frameDoc, async () => {
-      // if (skeletonContainer && skeletonContainer.parentNode) {
-      //   skeletonContainer.parentNode.removeChild(skeletonContainer);
-      // }
-
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
 
       // @ts-ignore -- number will be cast to string by browsers
