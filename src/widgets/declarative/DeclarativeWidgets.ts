@@ -1,3 +1,4 @@
+import { getSkeleton } from "../SkeletonTemplate";
 import DeclarativeWidget from "./DeclarativeWidget";
 
 /**
@@ -41,12 +42,7 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   async connectedCallback() {
     this.loaded = true;
     this.container = this.getAttribute("container");
-
-    const skeletonHTML = `
-      <div>
-        <h1>Do I see this text ????</h1>
-      </div>
-    `;
+    const skeletonHTML = getSkeleton({ height: "100%" });
 
     const skeletonContainer = document.createElement("div");
     skeletonContainer.id = "loading-skeleton";
