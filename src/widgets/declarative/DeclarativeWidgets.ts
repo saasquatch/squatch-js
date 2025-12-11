@@ -42,7 +42,10 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   async connectedCallback() {
     this.loaded = true;
     this.container = this.getAttribute("container");
-    const skeletonHTML = getSkeleton({ height: "100%" });
+    const skeletonHTML = getSkeleton({
+      height: "100%",
+      type: "instant-access",
+    });
 
     const skeletonContainer = document.createElement("div");
     skeletonContainer.id = "loading-skeleton";
