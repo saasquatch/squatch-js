@@ -1,4 +1,4 @@
-export type WidgetType = "referrer" | "instant-access";
+export type WidgetType = "instant-access" | "verified-access";
 
 interface SkeletonProps {
   type?: WidgetType;
@@ -12,7 +12,7 @@ interface SkeletonProps {
  * Values are injected directly into the CSS string.
  */
 export const getSkeleton = ({
-  type = "referrer",
+  type = "verified-access",
   height = "500px",
   skeletonBackgroundColor = "#e0e0e0",
   skeletonShimmerColor = "#f5f5f5",
@@ -267,7 +267,7 @@ export const getSkeleton = ({
     </style>
 
     <div class="widget-container">
-      ${type === "referrer" ? referrerHTML : instantAccessHTML}
+      ${type === "verified-access" ? referrerHTML : instantAccessHTML}
     </div>
   `;
 };

@@ -112,6 +112,19 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     });
   }
 
+  protected getWidgetType(
+    widgetType?: string
+  ): "instant-access" | "verified-access" {
+    if (
+      widgetType &&
+      (widgetType.includes("websiteReferralWidget") ||
+        widgetType.includes("friendWidget"))
+    ) {
+      return "instant-access";
+    }
+    return "verified-access";
+  }
+
   private async renderPasswordlessVariant() {
     this._setupApis();
 

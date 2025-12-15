@@ -44,9 +44,12 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
     this.container = this.getAttribute("container");
     this.widgetType = this.getAttribute("widget") || undefined;
     console.log("widget type", this.widgetType);
+
+    const skeletonWidgetType = this.getWidgetType(this.widgetType);
+
     const skeletonHTML = getSkeleton({
       height: "100%",
-      type: "instant-access",
+      type: skeletonWidgetType,
     });
 
     const skeletonContainer = document.createElement("div");
@@ -116,8 +119,13 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     this.loaded = true;
     this.container = this.getAttribute("container");
     this.widgetType = this.getAttribute("widget") || undefined;
-    console.log("widget type", this.widgetType);
-    const skeletonHTML = getSkeleton({ height: "100%" });
+
+    const skeletonWidgetType = this.getWidgetType(this.widgetType);
+
+    const skeletonHTML = getSkeleton({
+      height: "100%",
+      type: skeletonWidgetType,
+    });
 
     const skeletonContainer = document.createElement("div");
     skeletonContainer.id = "loading-skeleton";
