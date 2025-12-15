@@ -42,6 +42,8 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
   async connectedCallback() {
     this.loaded = true;
     this.container = this.getAttribute("container");
+    this.widgetType = this.getAttribute("widget") || undefined;
+    console.log("widget type", this.widgetType);
     const skeletonHTML = getSkeleton({
       height: "100%",
       type: "instant-access",
@@ -113,6 +115,8 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
   async connectedCallback() {
     this.loaded = true;
     this.container = this.getAttribute("container");
+    this.widgetType = this.getAttribute("widget") || undefined;
+    console.log("widget type", this.widgetType);
     const skeletonHTML = getSkeleton({ height: "100%" });
 
     const skeletonContainer = document.createElement("div");

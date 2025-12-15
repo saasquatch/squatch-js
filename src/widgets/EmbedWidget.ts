@@ -32,11 +32,6 @@ export default class EmbedWidget extends Widget {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     // @ts-ignore
     const initialHeight = brandingConfig?.loadingHeight;
-    const skeletonBackgroundColor =
-      brandingConfig?.color?.loadingSkeleton?.background;
-    const skeletonShimmerColor =
-      brandingConfig?.color?.loadingSkeleton?.animationBackground;
-    const borderColor = brandingConfig?.border?.borderColor;
     const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
     const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";

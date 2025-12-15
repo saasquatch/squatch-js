@@ -1,4 +1,3 @@
-// Define the types of widgets available
 export type WidgetType = "referrer" | "instant-access";
 
 interface SkeletonProps {
@@ -18,11 +17,6 @@ export const getSkeleton = ({
   skeletonBackgroundColor = "#e0e0e0",
   skeletonShimmerColor = "#f5f5f5",
 }: SkeletonProps) => {
-  // Normalize height to px if it's a number
-  const heightVal = typeof height === "number" ? `${height}px` : height;
-
-  // --- HTML TEMPLATES ---
-
   const referrerHTML = `
     <div class="hero-section">
         <div class="hero-content">
