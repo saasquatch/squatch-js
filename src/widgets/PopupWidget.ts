@@ -124,7 +124,7 @@ export default class PopupWidget extends Widget {
       body {
         height: 600px; 
         border: 2px solid #ccc;
-        background-color: #f9f9f9;
+        background-color: red;
         margin: 0; 
         padding: 0; 
         box-sizing: border-box; 
