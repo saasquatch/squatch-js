@@ -119,7 +119,6 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     this.loaded = true;
     this.container = this.getAttribute("container");
     this.widgetType = this.getAttribute("widget") || undefined;
-
     const skeletonWidgetType = this.getWidgetType(this.widgetType);
 
     const skeletonHTML = getSkeleton({
@@ -132,9 +131,12 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
     skeletonContainer.innerHTML = skeletonHTML;
 
     const root = this.shadowRoot || this.attachShadow({ mode: "open" });
-
-    root.innerHTML = "";
-    root.appendChild(skeletonContainer);
+    const container = root.getElementById("#squatchModal");
+    console.log("Container is ", container);
+    if (container) {
+      container.innerHTML = "";
+      container.appendChild(skeletonContainer);
+    }
 
     await this.renderWidget();
 
