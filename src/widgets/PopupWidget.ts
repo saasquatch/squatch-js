@@ -5,6 +5,7 @@ import { UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
 import Widget, { Params } from "./Widget";
+import { getSkeleton } from "./SkeletonTemplate";
 
 const _log = debug("squatch-js:POPUPwidget");
 
@@ -118,6 +119,18 @@ export default class PopupWidget extends Widget {
     frameDoc.write(
       `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
     );
+    frameDoc.write(`
+    <style>
+      body {
+        height: 600px; 
+        border: 2px solid #ccc;
+        background-color: #f9f9f9;
+        margin: 0; 
+        padding: 0; 
+        box-sizing: border-box; 
+      }
+    </style>
+  `);
     frameDoc.close();
     _log("Popup template loaded into iframe");
     await this._setupResizeHandler(frame);
