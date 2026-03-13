@@ -39,7 +39,7 @@ export default class PopupWidget extends Widget {
 
     document.head.insertAdjacentHTML(
       "beforeend",
-      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`
+      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`,
     );
   }
 
@@ -76,7 +76,7 @@ export default class PopupWidget extends Widget {
     dialog.id = this.id;
     dialog.setAttribute(
       "style",
-      `width: 100%; min-width: ${minWidth}; max-width: ${maxWidth}; border: none; padding: 0;`
+      `width: 100%; min-width: ${minWidth}; max-width: ${maxWidth}; border: none; padding: 0;`,
     );
     const onClick = (e) => {
       e.stopPropagation();
@@ -89,9 +89,13 @@ export default class PopupWidget extends Widget {
   }
 
   async load() {
+    console.log("TESTING!");
+
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     // @ts-ignore
     const initialHeight = brandingConfig?.loadingHeight;
+
+    console.log({ initialHeight, brandingConfig });
 
     const frame = this._createFrame({ initialHeight });
     this._initialiseCTA();
@@ -130,7 +134,7 @@ export default class PopupWidget extends Widget {
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
-          brandingConfig?.main?.brandFont
+          brandingConfig?.main?.brandFont,
         )}" as="style">`
           : ""
       }
@@ -149,7 +153,10 @@ export default class PopupWidget extends Widget {
     await this._setupResizeHandler(frame, initialHeight);
   }
 
-  protected async _setupResizeHandler(frame: HTMLIFrameElement, initialHeight?: string) {
+  protected async _setupResizeHandler(
+    frame: HTMLIFrameElement,
+    initialHeight?: string,
+  ) {
     const { contentWindow } = frame;
 
     if (!contentWindow) {
