@@ -5,7 +5,6 @@ import { UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
 import Widget, { Params } from "./Widget";
-import { getSkeleton } from "./SkeletonTemplate";
 
 const _log = debug("squatch-js:POPUPwidget");
 
@@ -67,9 +66,8 @@ export default class PopupWidget extends Widget {
     }
   }
 
-  _createPopupDialog(): HTMLDialogElement {
+  _createPopupDialog(brandingConfig?: any): HTMLDialogElement {
     const dialog = document.createElement("dialog");
-    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     const sizes = brandingConfig?.widgetSize?.popupWidgets;
 
     // Still styling the dialog to keep consistent with previous versions
@@ -91,13 +89,17 @@ export default class PopupWidget extends Widget {
   }
 
   async load() {
-    const frame = this._createFrame();
+    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    // @ts-ignore
+    const initialHeight = brandingConfig?.loadingHeight;
+
+    const frame = this._createFrame({ initialHeight });
     this._initialiseCTA();
 
     const element = this.container ? this._findElement() : document.body;
 
     const dialogParent = element.shadowRoot || element;
-    const dialog = this._createPopupDialog();
+    const dialog = this._createPopupDialog(brandingConfig);
     dialog.appendChild(frame);
 
     if (dialogParent.lastChild?.nodeName === "DIALOG") {
@@ -115,28 +117,39 @@ export default class PopupWidget extends Widget {
 
     const frameDoc = contentWindow.document;
     frameDoc.open();
-    frameDoc.write(this.content);
-    frameDoc.write(
-      `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-    );
+
+    const domain = this.widgetApi.domain;
+
     frameDoc.write(`
-    <style>
-      body {
-        height: 600px; 
-        border: 2px solid #ccc;
-        background-color: red;
-        margin: 0; 
-        padding: 0; 
-        box-sizing: border-box; 
+      ${
+        brandingConfig?.main?.brandFont
+          ? `
+        <link rel="preconnect" href="https://fast${
+          domain === "https://staging.referralsaasquatch.com" && "-staging"
+        }.ssqt.io">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
+          brandingConfig?.main?.brandFont
+        )}" as="style">`
+          : ""
       }
-    </style>
-  `);
+      <link rel="dns-prefetch" href="https://res.cloudinary.com">
+      <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+      <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
+      <style data-styles>
+        html { visibility:hidden;}
+      </style>
+      ${this.content}
+
+      `);
+
     frameDoc.close();
     _log("Popup template loaded into iframe");
-    await this._setupResizeHandler(frame);
+    await this._setupResizeHandler(frame, initialHeight);
   }
 
-  protected async _setupResizeHandler(frame: HTMLIFrameElement) {
+  protected async _setupResizeHandler(frame: HTMLIFrameElement, initialHeight?: string) {
     const { contentWindow } = frame;
 
     if (!contentWindow) {
@@ -148,7 +161,8 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, async () => {
       frameDoc.body.style.overflowY = "hidden";
-      frame.height = `${frameDoc.body.offsetHeight}px`;
+      // @ts-ignore -- number will be cast to string by browsers
+      frame.height = initialHeight || frameDoc.body.offsetHeight;
       // Adjust frame height when size of body changes
       const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {

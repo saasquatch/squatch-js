@@ -93,6 +93,8 @@ export default class EmbedWidget extends Widget {
         )}" as="style">`
           : ""
       }
+      <link rel="dns-prefetch" href="https://res.cloudinary.com">
+      <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
       <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
       <style data-styles>
         html { visibility:hidden;}
