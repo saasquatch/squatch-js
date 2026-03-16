@@ -1,6 +1,6 @@
 // @ts-check
 
-import { debug } from "debug";
+import { debug } from "../utils/logger";
 import { UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
@@ -89,13 +89,9 @@ export default class PopupWidget extends Widget {
   }
 
   async load() {
-    console.log("TESTING!");
-
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     // @ts-ignore
     const initialHeight = brandingConfig?.loadingHeight;
-
-    console.log({ initialHeight, brandingConfig });
 
     const frame = this._createFrame({ initialHeight });
     this._initialiseCTA();
@@ -140,7 +136,6 @@ export default class PopupWidget extends Widget {
       }
       <link rel="dns-prefetch" href="https://res.cloudinary.com">
       <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-      <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
       <style data-styles>
         html { visibility:hidden;}
       </style>
@@ -171,15 +166,15 @@ export default class PopupWidget extends Widget {
       // @ts-ignore -- number will be cast to string by browsers
       frame.height = initialHeight || frameDoc.body.offsetHeight;
       // Adjust frame height when size of body changes
-      const ro = new contentWindow["ResizeObserver"]((entries) => {
+      const ro = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const { top, bottom } = entry.contentRect;
 
           const computedHeight = bottom + top;
           frame.height = computedHeight + "";
 
-          // Don't let anything else set the height of this element
-          entry.target.style = ``;
+          // @ts-ignore Don't let anything else set the height of this element
+          entry.target.style = "";
         }
       });
       ro.observe(await this._findInnerContainer(frame));

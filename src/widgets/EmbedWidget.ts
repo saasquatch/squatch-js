@@ -1,6 +1,6 @@
 // @ts-check
 
-import { debug } from "debug";
+import { debug } from "../utils/logger";
 import { UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
@@ -89,13 +89,12 @@ export default class EmbedWidget extends Widget {
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
-          brandingConfig?.main?.brandFont
+          brandingConfig?.main?.brandFont,
         )}" as="style">`
           : ""
       }
       <link rel="dns-prefetch" href="https://res.cloudinary.com">
       <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-      <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>
       <style data-styles>
         html { visibility:hidden;}
       </style>
@@ -109,11 +108,10 @@ export default class EmbedWidget extends Widget {
 
       // @ts-ignore -- number will be cast to string by browsers
       frame.height = initialHeight || frameDoc.body.scrollHeight;
-      console.log({ height: frameDoc.body.scrollHeight });
 
       // Adjust frame height when size of body changes
       /* istanbul ignore next: hard to test */
-      const ro = new contentWindow["ResizeObserver"]((entries) => {
+      const ro = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const { height } = entry.contentRect;
           // @ts-ignore -- number will be cast to string by browsers

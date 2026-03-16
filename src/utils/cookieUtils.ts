@@ -1,4 +1,4 @@
-import { debug } from "debug";
+import { debug } from "./logger";
 import Cookies from "js-cookie";
 
 /** @hidden */

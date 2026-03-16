@@ -1,7 +1,7 @@
 {
   "name": "@saasquatch/squatch-js",
   "type": "module",
-  "version": "2.8.2-36",
+  "version": "2.8.3-0",
   "description": "The official Referral SaaSquatch Javascript Web/Browser SDK https://docs.referralsaasquatch.com/developer/squatchjs/",
   "license": "MIT",
   "author": "ReferralSaaSquatch.com, Inc.",
@@ -111,7 +111,6 @@
   },
   "prettier": {},
   "dependencies": {
-    "debug": "^3.2.6",
     "js-cookie": "^3.0.5"
   },
   "browserslist": "> 0.25%, not dead",

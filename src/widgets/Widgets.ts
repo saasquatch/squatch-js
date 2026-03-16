@@ -1,4 +1,4 @@
-import { debug } from "debug";
+import { debug } from "../utils/logger";
 import WidgetApi from "../api/WidgetApi";
 import {
   ConfigOptions,

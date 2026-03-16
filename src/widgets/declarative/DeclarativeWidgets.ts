@@ -1,4 +1,3 @@
-import { getSkeleton } from "../SkeletonTemplate";
 import DeclarativeWidget from "./DeclarativeWidget";
 
 /**
@@ -23,54 +22,8 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
 
     this.loaded = false;
   }
-
-  static get observedAttributes() {
-    return ["widget", "locale"];
-  }
-
-  attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
-    if (oldVal === newVal || !this.loaded) return; // nothing to do
-
-    switch (attr) {
-      case "locale":
-      case "widget":
-        this.connectedCallback();
-        break;
-    }
-  }
-
-  async connectedCallback() {
-    this.loaded = true;
-    this.container = this.getAttribute("container");
-    this.widgetType = this.getAttribute("widget") || undefined;
-    console.log("widget type", this.widgetType);
-
-    const skeletonWidgetType = this.getWidgetType(this.widgetType);
-
-    const skeletonHTML = getSkeleton({
-      height: "100%",
-      type: skeletonWidgetType,
-    });
-
-    const skeletonContainer = document.createElement("div");
-    skeletonContainer.id = "loading-skeleton";
-    skeletonContainer.innerHTML = skeletonHTML;
-
-    const root = this.shadowRoot || this.attachShadow({ mode: "open" });
-
-    root.innerHTML = "";
-    root.appendChild(skeletonContainer);
-
-    await this.renderWidget();
-
-    const loadingElement = root.getElementById("loading-skeleton");
-    if (loadingElement) {
-      loadingElement.remove();
-    }
-
-    if (this.getAttribute("open") !== null) this.open();
-  }
 }
+
 /**
  * Base class for `squatch-popup` web-component
  * @extends {DeclarativeWidget}
@@ -98,54 +51,6 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
 
       this.open();
     });
-  }
-
-  static get observedAttributes() {
-    return ["widget", "locale"];
-  }
-
-  attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
-    if (oldVal === newVal || !this.loaded) return; // nothing to do
-
-    switch (attr) {
-      case "locale":
-      case "widget":
-        this.connectedCallback();
-        break;
-    }
-  }
-
-  async connectedCallback() {
-    this.loaded = true;
-    this.container = this.getAttribute("container");
-    this.widgetType = this.getAttribute("widget") || undefined;
-    const skeletonWidgetType = this.getWidgetType(this.widgetType);
-
-    const skeletonHTML = getSkeleton({
-      height: "100%",
-      type: skeletonWidgetType,
-    });
-
-    const skeletonContainer = document.createElement("div");
-    skeletonContainer.id = "loading-skeleton";
-    skeletonContainer.innerHTML = skeletonHTML;
-
-    const root = this.shadowRoot || this.attachShadow({ mode: "open" });
-    const container = root.getElementById("#squatchModal");
-    console.log("Container is ", container);
-    if (container) {
-      container.innerHTML = "";
-      container.appendChild(skeletonContainer);
-    }
-
-    await this.renderWidget();
-
-    const loadingElement = root.getElementById("loading-skeleton");
-    if (loadingElement) {
-      loadingElement.remove();
-    }
-
-    if (this.getAttribute("open") !== null) this.open();
   }
 }
 

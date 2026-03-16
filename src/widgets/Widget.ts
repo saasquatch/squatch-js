@@ -1,5 +1,5 @@
 // @ts-check
-import { debug } from "debug";
+import { debug } from "../utils/logger";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
 import { EngagementMedium, WidgetContext, WidgetType } from "../types";

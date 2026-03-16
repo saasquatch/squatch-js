@@ -1,4 +1,4 @@
-import debug from "debug";
+import { debug } from "../../utils/logger";
 import AnalyticsApi from "../../api/AnalyticsApi";
 import WidgetApi from "../../api/WidgetApi";
 import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../globals";
@@ -278,4 +278,60 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   reload = this.renderWidget;
   show = this.open;
   hide = this.close;
+
+  static get observedAttributes() {
+    return ["widget", "locale"];
+  }
+
+  attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
+    if (oldVal === newVal || !this.loaded) return;
+
+    switch (attr) {
+      case "locale":
+      case "widget":
+        this.connectedCallback();
+        break;
+    }
+  }
+
+  async connectedCallback() {
+    this.loaded = true;
+    this.container = this.getAttribute("container");
+    this.widgetType = this.getAttribute("widget") || undefined;
+
+    const skeletonWidgetType = this.getWidgetType(this.widgetType);
+
+    const { getSkeleton } = await import("../SkeletonTemplate");
+    const skeletonHTML = getSkeleton({
+      height: "100%",
+      type: skeletonWidgetType,
+    });
+
+    const skeletonContainer = document.createElement("div");
+    skeletonContainer.id = "loading-skeleton";
+    skeletonContainer.innerHTML = skeletonHTML;
+
+    const root = this.shadowRoot || this.attachShadow({ mode: "open" });
+
+    // For popup widgets, insert skeleton into the dialog container if it exists
+    if (this.type === "POPUP") {
+      const dialogContainer = root.getElementById("#squatchModal");
+      if (dialogContainer) {
+        dialogContainer.innerHTML = "";
+        dialogContainer.appendChild(skeletonContainer);
+      }
+    } else {
+      root.innerHTML = "";
+      root.appendChild(skeletonContainer);
+    }
+
+    await this.renderWidget();
+
+    const loadingElement = root.getElementById("loading-skeleton");
+    if (loadingElement) {
+      loadingElement.remove();
+    }
+
+    if (this.getAttribute("open") !== null) this.open();
+  }
 }

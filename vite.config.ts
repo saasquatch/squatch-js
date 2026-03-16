@@ -30,7 +30,7 @@ export default defineConfig({
       name: "squatch",
     },
     outDir: resolve(__dirname, "dist"),
-    minify: false,
+    minify: "esbuild",
     rollupOptions: {
       output: {
         amd: { define: "false" },

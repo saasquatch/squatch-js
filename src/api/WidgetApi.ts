@@ -113,8 +113,6 @@ export default class WidgetApi {
     const clean = validatePasswordlessConfig(raw);
     const { widgetType, engagementMedium = "POPUP", jwt, user } = clean;
 
-    console.log({ params });
-
     const tenantAlias = encodeURIComponent(this.tenantAlias);
     const accountId = user?.accountId
       ? encodeURIComponent(user.accountId)
@@ -137,7 +135,7 @@ export default class WidgetApi {
             widgetType,
             locale,
           },
-          jwt
+          jwt,
         );
         resolve(res?.data?.renderWidget);
       } catch (e) {

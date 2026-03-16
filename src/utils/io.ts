@@ -1,8 +1,5 @@
-import { debug } from "debug";
 import { JWT } from "../types";
 import { getToken } from "./validate";
-
-const _log = debug("squatch-js:io");
 
 export async function doQuery(
   url: string,
