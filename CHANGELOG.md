@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.2] - 2026-03-16
+
+### Fixed
+
+- Fixed bug where brandingConfig was not being applied to auto-popup widgets
+
 ## [2.8.1] - 2025-11-17
 
 ### Fixed
@@ -60,9 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - SquatchJS now supports declarative widget initialization
-
   - For rendering widgets and API calls, squatchjs respects configurations set on the following:
-
     - `window.squatchToken`: Signed JWT for calls to the SaaSquatch API -- [How to generate valid JWT Tokens](https://docs.saasquatch.com/topics/json-web-tokens#example-building-the-jwt)
     - `window.squatchTenant`: SaaSquatch tenant alias
     - `window.squatchConfig`: Additional configuration overrides (Optional)
@@ -72,9 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Note: If window.squatchToken is undefined, widgets will be rendered as [Instant Access widgets.](https://docs.saasquatch.com/topics/widget-types#instant-access-widgets)
 
 - Widget components added:
-
   - `<squatch-embed></squatch-embed>`
-
     - widget: Specifies the SaaSquatch widgetType identifier of the desired widget
       - Required
       - Changing this attribute's value causes the widget to reload
@@ -180,7 +182,6 @@ squatch
 ### Changed
 
 - EmbedWidget now supports a `container` as either a selector or an HTMLElement as a parameter
-
   - Widget contents will be loaded in a hidden widget and can be opened and closed with `widget.open()` and `widget.close()`
 
 - Example:
@@ -212,7 +213,6 @@ squatch
 ```
 
 - PopupWidget now supports a `trigger` as a selector
-
   - provides the ability to use a class other than `.squatchpop` for opening the widget
 
 - `sq:refresh` event is sent when `.open()` is called on EmbedWidget and PopupWidget
@@ -393,7 +393,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.1...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...HEAD
+[2.8.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.2
 [2.8.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.1
 [2.8.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.0
 [2.7.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.3...@saasquatch%2Fsquatch-js@2.7.0

@@ -147,11 +147,7 @@ export default class Widgets {
           engagementMedium: clean.engagementMedium,
           container: clean.container,
           trigger: clean.trigger,
-          widgetConfig: {
-            values: {
-              brandingConfig: response?.brandingConfig,
-            },
-          },
+          widgetConfig: response?.widgetConfig,
         }),
         user: response.user,
       };
