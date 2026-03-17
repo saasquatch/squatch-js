@@ -6,11 +6,14 @@ declare global {
   var mockDebug: jest.Mock<any, any>;
 }
 
-jest.mock("debug", () => {
+jest.mock("../../src/utils/logger", () => {
   // @ts-ignore
   global.mockDebug = jest.fn();
-  // @ts-ignore
-  return { ...jest.requireActual("debug"), debug: () => global.mockDebug };
+  return {
+    debug: () => global.mockDebug,
+    enableDebug: jest.fn(),
+    disableDebug: jest.fn(),
+  };
 });
 
 describe("methods", () => {
@@ -116,7 +119,7 @@ describe("methods", () => {
       if (args.hasChild) expect(div?.firstChild).toBe(iframe);
       else
         expect(iframe?.contentDocument?.body.innerHTML).toContain(
-          `resize-observer-polyfill@1.5.x`
+          `res.cloudinary.com`
         );
       expect(iframe?.contentDocument?.body.innerHTML).toContain(widget.content);
 
@@ -160,7 +163,7 @@ describe("methods", () => {
       expect(div?.lastChild).toBe(iframe);
 
       expect(iframe?.contentDocument?.body.innerHTML).toContain(
-        `resize-observer-polyfill@1.5.x`
+        `res.cloudinary.com`
       );
       expect(iframe?.contentDocument?.body.innerHTML).toContain(widget.content);
 
@@ -196,7 +199,7 @@ describe("methods", () => {
       expect(div.lastChild).toBe(iframe);
 
       expect(iframe?.contentDocument?.body.innerHTML).toContain(
-        `resize-observer-polyfill@1.5.x`
+        `res.cloudinary.com`
       );
       expect(iframe?.contentDocument?.body.innerHTML).toContain(widget.content);
 
@@ -236,7 +239,7 @@ describe("methods", () => {
         expect(div?.shadowRoot?.lastChild).toBe(iframe);
 
         expect(iframe?.contentDocument?.body.innerHTML).toContain(
-          `resize-observer-polyfill@1.5.x`
+          `res.cloudinary.com`
         );
         expect(iframe?.contentDocument?.body.innerHTML).toContain(
           widget.content
@@ -255,6 +258,124 @@ describe("methods", () => {
       widget.container = args.container;
       const result = widget["_shouldFireLoadEvent"]();
       expect(result).toBe(args.result);
+    });
+    test("initialHeight from brandingConfig", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const config = widgetConfig();
+      const widgetWithHeight = new EmbedWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                loadingHeight: "400",
+              },
+            },
+          },
+        },
+      });
+
+      const mockElement = jest
+        .spyOn(widgetWithHeight, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widgetWithHeight.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      expect(iframe).toBeInstanceOf(HTMLIFrameElement);
+      expect(iframe.height).toBe("400");
+    });
+    test("cloudinary preconnect links are always present", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const mockElement = jest
+        .spyOn(widget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('dns-prefetch');
+      expect(html).toContain('https://res.cloudinary.com');
+    });
+    test("brand font preconnect links when brandFont is configured", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const config = widgetConfig();
+      const widgetWithFont = new EmbedWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                main: { brandFont: "Roboto" },
+              },
+            },
+          },
+        },
+      });
+
+      const mockElement = jest
+        .spyOn(widgetWithFont, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widgetWithFont.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('fonts.gstatic.com');
+      expect(html).toContain('fonts.googleapis.com');
+      expect(html).toContain('family=Roboto');
+    });
+    test("no brand font preconnect links when brandFont is not configured", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const mockElement = jest
+        .spyOn(widget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).not.toContain('fonts.gstatic.com');
+    });
+    test("html visibility hidden style is present", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const mockElement = jest
+        .spyOn(widget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('visibility:hidden');
     });
   });
   describe("open", () => {

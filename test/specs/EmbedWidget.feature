@@ -215,3 +215,42 @@ Feature: Embedded Widget
       """
     Then the 'open' method is not needed to be called to show the widget when its loaded
     And the widget is displayed into the element with 'id="test123"' as soon as its loaded
+
+  @minutia
+  Scenario: Initial height is set on the iframe from brandingConfig loadingHeight
+    Given a widget with brandingConfig that includes a loadingHeight of "400"
+    When the embedded widget is loaded
+    Then the iframe height attribute is set to "400" before content renders
+
+  @minutia
+  Scenario: Initial height falls back to body scroll height when loadingHeight is not set
+    Given a widget with brandingConfig that does not include a loadingHeight
+    When the embedded widget is loaded
+    Then the iframe height attribute is set to the body scroll height
+
+  @motivating
+  Scenario: Preconnect links are injected for Cloudinary
+    Given an embedded widget is loaded
+    When the iframe content is rendered
+    Then the iframe document contains a dns-prefetch link for "https://res.cloudinary.com"
+    And the iframe document contains a preconnect link for "https://res.cloudinary.com" with crossorigin
+
+  @motivating
+  Scenario: Preconnect links for brand font are injected when brandFont is configured
+    Given a widget with brandingConfig that includes a brandFont of "Roboto"
+    When the embedded widget is loaded
+    Then the iframe document contains a preconnect link for fonts.gstatic.com
+    And the iframe document contains a preconnect link for fonts.googleapis.com
+    And the iframe document contains a preload link for the Google Fonts CSS for "Roboto"
+
+  @minutia
+  Scenario: Preconnect links for brand font are not injected when brandFont is not configured
+    Given a widget with brandingConfig that does not include a brandFont
+    When the embedded widget is loaded
+    Then the iframe document does not contain a preconnect link for fonts.gstatic.com
+
+  @minutia
+  Scenario: HTML is hidden until ready via visibility style
+    Given an embedded widget is loaded
+    When the iframe content is rendered
+    Then the iframe document contains a style tag with "html { visibility:hidden;}"

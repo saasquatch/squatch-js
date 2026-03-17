@@ -11,11 +11,14 @@ declare global {
   var mockDebug: jest.Mock<any, any>;
 }
 
-jest.mock("debug", () => {
+jest.mock("../../src/utils/logger", () => {
   // @ts-ignore
   global.mockDebug = jest.fn();
-  // @ts-ignore
-  return { ...jest.requireActual("debug"), debug: () => global.mockDebug };
+  return {
+    debug: () => global.mockDebug,
+    enableDebug: jest.fn(),
+    disableDebug: jest.fn(),
+  };
 });
 
 test("constructor", () => {
@@ -278,6 +281,149 @@ describe("methods", () => {
     test("width branding on dialog", async () => {
       const div = document.createElement("div");
       div.id = "test";
+    });
+    test("initialHeight from brandingConfig", async () => {
+      const config = widgetConfig();
+      const widgetWithHeight = new PopupWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                loadingHeight: "350",
+              },
+            },
+          },
+        },
+      });
+
+      const mockCTA = jest
+        .spyOn(widgetWithHeight, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await widgetWithHeight.load();
+
+      const dialog = document.body.querySelector("dialog");
+      const iframe = dialog?.querySelector("iframe");
+      expect(iframe).not.toBeNull();
+      expect(iframe!.height).toBe("350");
+    });
+    test("cloudinary preconnect links are always present", async () => {
+      const mockCTA = jest
+        .spyOn(widget, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await widget.load();
+
+      const dialog = document.body.querySelector("dialog");
+      const iframe = dialog?.querySelector("iframe");
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('dns-prefetch');
+      expect(html).toContain('https://res.cloudinary.com');
+    });
+    test("brand font preconnect links when brandFont is configured", async () => {
+      const config = widgetConfig();
+      const widgetWithFont = new PopupWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                main: { brandFont: "Open Sans" },
+              },
+            },
+          },
+        },
+      });
+
+      const mockCTA = jest
+        .spyOn(widgetWithFont, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await widgetWithFont.load();
+
+      const dialog = document.body.querySelector("dialog");
+      const iframe = dialog?.querySelector("iframe");
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('fonts.gstatic.com');
+      expect(html).toContain('fonts.googleapis.com');
+      expect(html).toContain('family=Open%20Sans');
+    });
+    test("no brand font preconnect links when brandFont is not configured", async () => {
+      const mockCTA = jest
+        .spyOn(widget, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await widget.load();
+
+      const dialog = document.body.querySelector("dialog");
+      const iframe = dialog?.querySelector("iframe");
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).not.toContain('fonts.gstatic.com');
+    });
+    test("html visibility hidden style is present", async () => {
+      const mockCTA = jest
+        .spyOn(widget, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await widget.load();
+
+      const dialog = document.body.querySelector("dialog");
+      const iframe = dialog?.querySelector("iframe");
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('visibility:hidden');
+    });
+    test("dialog receives brandingConfig width sizing", async () => {
+      const config = widgetConfig();
+      const widgetWithSizes = new PopupWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                widgetSize: {
+                  popupWidgets: {
+                    minWidth: { value: 200, unit: "px" },
+                    maxWidth: { value: 700, unit: "px" },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      const mockCTA = jest
+        .spyOn(widgetWithSizes, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await widgetWithSizes.load();
+
+      const dialog = document.body.querySelector("dialog");
+      expect(dialog).not.toBeNull();
+      expect(dialog!.style.minWidth).toBe("200px");
+      expect(dialog!.style.maxWidth).toBe("700px");
     });
   });
 });
