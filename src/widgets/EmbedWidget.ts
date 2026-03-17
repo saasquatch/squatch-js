@@ -78,14 +78,14 @@ export default class EmbedWidget extends Widget {
     frameDoc.open();
 
     const domain = this.widgetApi.domain;
+    const fastDomainSuffix =
+      domain === "https://staging.referralsaasquatch.com" ? "-staging" : "";
 
     frameDoc.write(`
       ${
         brandingConfig?.main?.brandFont
           ? `
-        <link rel="preconnect" href="https://fast${
-          domain === "https://staging.referralsaasquatch.com" && "-staging"
-        }.ssqt.io">
+        <link rel="preconnect" href="https://fast${fastDomainSuffix}.ssqt.io">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
