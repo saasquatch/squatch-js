@@ -90,8 +90,8 @@ export default class PopupWidget extends Widget {
 
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
-    // @ts-ignore
-    const initialHeight = brandingConfig?.loadingHeight;
+    const initialHeight = brandingConfig?.loadingHeight || 400;
+    const hasMintComponents = this.content?.includes("mint-components");
 
     const frame = this._createFrame({ initialHeight });
     this._initialiseCTA();
@@ -136,9 +136,14 @@ export default class PopupWidget extends Widget {
       }
       <link rel="dns-prefetch" href="https://res.cloudinary.com">
       <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+      ${
+        hasMintComponents
+          ? `
       <style data-styles>
-        html { visibility:hidden;}
-      </style>
+        html { visibility: hidden; }
+      </style>`
+          : ""
+      }
       ${this.content}
 
       `);

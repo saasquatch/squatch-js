@@ -30,8 +30,9 @@ export default class EmbedWidget extends Widget {
 
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
-    // @ts-ignore
-    const initialHeight = brandingConfig?.loadingHeight;
+    const hasMintComponents = this.content?.includes("mint-components");
+
+    const initialHeight = brandingConfig?.loadingHeight || 400;
     const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
     const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
@@ -95,9 +96,13 @@ export default class EmbedWidget extends Widget {
       }
       <link rel="dns-prefetch" href="https://res.cloudinary.com">
       <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-      <style data-styles>
-        html { visibility:hidden;}
-      </style>
+      ${
+        hasMintComponents
+          ? `<style data-styles>
+        html { visibility: hidden; }
+      </style>`
+          : ""
+      }
       ${this.content}
 
       `);

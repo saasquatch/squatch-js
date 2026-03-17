@@ -45,7 +45,10 @@ export interface WidgetConfig {
  */
 export interface WidgetValueConfig {
   values: {
-    brandingConfig: any;
+    brandingConfig?: any;
+    meta?: {
+      dependencies?: Array<{ package: string; version: string }>;
+    };
   };
 }
 

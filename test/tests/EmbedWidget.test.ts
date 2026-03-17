@@ -364,7 +364,30 @@ describe("methods", () => {
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
       expect(html).not.toContain('fonts.gstatic.com');
     });
-    test("html visibility hidden style is present", async () => {
+    test("html visibility hidden style is present when mint-components dependency exists", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const config = widgetConfig();
+      const mintWidget = new EmbedWidget({
+        ...config,
+        content: "<sqm-brand><script src='mint-components'></script></sqm-brand>",
+      });
+
+      const mockElement = jest
+        .spyOn(mintWidget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await mintWidget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('visibility:hidden');
+    });
+    test("html visibility hidden style is not present without mint-components", async () => {
       const div = document.createElement("div");
       div.id = "test";
       document.body.appendChild(div);
@@ -379,7 +402,7 @@ describe("methods", () => {
 
       const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
-      expect(html).toContain('visibility:hidden');
+      expect(html).not.toContain('visibility:hidden');
     });
   });
   describe("open", () => {

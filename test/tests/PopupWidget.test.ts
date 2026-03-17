@@ -378,7 +378,28 @@ describe("methods", () => {
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
       expect(html).not.toContain('fonts.gstatic.com');
     });
-    test("html visibility hidden style is present", async () => {
+    test("html visibility hidden style is present when mint-components dependency exists", async () => {
+      const config = widgetConfig();
+      const mintWidget = new PopupWidget({
+        ...config,
+        content: "<sqm-brand><script src='mint-components'></script></sqm-brand>",
+      });
+
+      const mockCTA = jest
+        .spyOn(mintWidget, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await mintWidget.load();
+
+      const dialog = document.body.querySelector("dialog");
+      const iframe = dialog?.querySelector("iframe");
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('visibility: hidden');
+    });
+    test("html visibility hidden style is not present without mint-components", async () => {
       const mockCTA = jest
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
@@ -391,7 +412,7 @@ describe("methods", () => {
       const dialog = document.body.querySelector("dialog");
       const iframe = dialog?.querySelector("iframe");
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
-      expect(html).toContain('visibility:hidden');
+      expect(html).not.toContain('visibility: hidden');
     });
     test("dialog receives brandingConfig width sizing", async () => {
       const config = widgetConfig();
