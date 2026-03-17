@@ -88,6 +88,7 @@ describe("methods", () => {
   });
   afterEach(() => {
     jest.useRealTimers();
+    jest.restoreAllMocks();
   });
   describe("_initialiseCTA", () => {
     test("success", () => {
@@ -169,7 +170,9 @@ describe("methods", () => {
         },
       });
 
-      const dialog = newWidget._createPopupDialog();
+      const dialog = newWidget._createPopupDialog(
+        newWidget.context.widgetConfig?.values?.brandingConfig
+      );
       expect(dialog.style.width).toBe("100%");
       expect(dialog.style.minWidth).toBe("100px");
       expect(dialog.style.maxWidth).toBe("100%");

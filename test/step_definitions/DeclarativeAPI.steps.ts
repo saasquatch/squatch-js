@@ -1,4 +1,4 @@
-import debug from "debug";
+import { debug, disableDebug } from "../../src/utils/logger";
 import { defineFeature, loadFeature } from "jest-cucumber";
 import AnalyticsApi from "../../src/api/AnalyticsApi";
 import EventsApi from "../../src/api/EventsApi";
@@ -29,7 +29,7 @@ defineFeature(feature, (test) => {
   beforeEach(() => {
     // Reset global squatchjs objects
 
-    debug.disable();
+    disableDebug();
     // @ts-ignore
     global._api = null;
     // @ts-ignore

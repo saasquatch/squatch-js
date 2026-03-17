@@ -60,7 +60,7 @@ describe("DeclarativeWidget", () => {
         else window.squatchConfig = null;
 
         const widget = new Test();
-        const result = widget["_setWidget"]("asdf", { type: "passwordless" });
+        const result = widget["_setWidget"]({ template: "asdf", widgetConfig: undefined as any }, { type: "passwordless" });
 
         expect(PopupWidget).toHaveBeenCalled();
         expect(result).toBeInstanceOf(PopupWidget);
@@ -75,7 +75,7 @@ describe("DeclarativeWidget", () => {
       (args) => {
         const widget = new Test();
         widget.container = args.container;
-        const result = widget["_setWidget"]("asdf", { type: "passwordless" });
+        const result = widget["_setWidget"]({ template: "asdf", widgetConfig: undefined as any }, { type: "passwordless" });
 
         expect(PopupWidget).toHaveBeenCalled();
         expect(result).toBeInstanceOf(PopupWidget);

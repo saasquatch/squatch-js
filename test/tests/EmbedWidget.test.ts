@@ -41,6 +41,7 @@ describe("methods", () => {
   });
   afterEach(() => {
     jest.useRealTimers();
+    jest.restoreAllMocks();
   });
   describe("load", () => {
     test("brandingConfig", async () => {
@@ -79,8 +80,11 @@ describe("methods", () => {
       await Promise.resolve();
 
       expect(mockElement).toHaveBeenCalled();
-      expect(div.style.minWidth).toBe("100%");
-      expect(div.style.maxWidth).toBe("600px");
+
+      const frame = div.querySelector("iframe#squatchFrame") as HTMLIFrameElement;
+      expect(frame).not.toBeNull();
+      expect(frame.style.minWidth).toBe("100%");
+      expect(frame.style.maxWidth).toBe("600px");
     });
     test.each([
       { hasChild: false, hasContainer: false },

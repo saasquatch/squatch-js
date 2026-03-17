@@ -42,9 +42,9 @@ describe("methods", () => {
     Widgets["_matchesUrl"] = mockMatchUrl;
     widgets = new Widgets(config);
   });
-  // afterEach(() => {
-  //   jest.clearAllMocks();
-  // });
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   describe("upsertUser", () => {
     const config = {
       user: {
@@ -78,6 +78,11 @@ describe("methods", () => {
         engagementMedium: config.engagementMedium,
         container: config.container,
         trigger: config.trigger,
+        widgetConfig: {
+          values: {
+            brandingConfig: undefined,
+          },
+        },
       });
       expect(result.widget).toStrictEqual({ template: "asdf" });
       expect(result.user).toBe(upsertReturn.user);

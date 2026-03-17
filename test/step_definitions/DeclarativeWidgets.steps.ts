@@ -1236,4 +1236,147 @@ defineFeature(feature, (test) => {
       expect(documentCb).not.toHaveBeenCalled()
     });
   });
+
+  test("A loading skeleton is displayed while the widget loads", ({
+    given,
+    and,
+    when,
+    then,
+  }) => {
+    let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
+    let renderPromiseResolve!: () => void;
+    let renderPromise!: Promise<void>;
+
+    Background(given);
+    SquatchTenantIs(given);
+    SquatchTokenIs(and);
+
+    and(/^the (.*) web-component is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
+    });
+
+    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
+      el.setAttribute("widget", "w/widget-type");
+    });
+
+    when("the component starts loading", () => {
+      // Start loading but don't await -- we want to inspect the skeleton mid-load
+      renderPromise = new Promise((resolve) => {
+        renderPromiseResolve = resolve;
+      });
+      const originalRenderWidget = el.renderWidget.bind(el);
+      jest.spyOn(el, "renderWidget").mockImplementation(async () => {
+        // Wait briefly to allow skeleton to be injected, then proceed
+        await originalRenderWidget();
+        renderPromiseResolve();
+      });
+
+      document.body.appendChild(el);
+    });
+
+    then("a loading skeleton is injected into the shadow DOM", async () => {
+      // The skeleton should exist before the widget finishes loading
+      await expect(
+        waitUntil(
+          () => !!el.shadowRoot?.getElementById("loading-skeleton"),
+          "no skeleton"
+        )
+      ).resolves.toBeUndefined();
+    });
+
+    and(
+      /^the skeleton has an element with id "(.*)"$/,
+      (arg0) => {
+        const skeleton = el.shadowRoot?.getElementById(arg0);
+        expect(skeleton).not.toBeNull();
+      }
+    );
+
+    when("the widget finishes loading", async () => {
+      await renderPromise;
+    });
+
+    then("the loading skeleton is removed from the shadow DOM", () => {
+      const skeleton = el.shadowRoot?.getElementById("loading-skeleton");
+      expect(skeleton).toBeNull();
+    });
+  });
+
+  test("Loading skeleton type is determined by the widget type", ({
+    given,
+    and,
+    when,
+    then,
+  }) => {
+    let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
+
+    Background(given);
+    SquatchTenantIs(given);
+    SquatchTokenIs(and);
+
+    and(/^(.*) is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
+    });
+
+    and(/^the widget attribute is set to (.*)$/, (arg0) => {
+      const widgetType = sanitize(arg0) as string;
+      if (widgetType) el.setAttribute("widget", widgetType);
+    });
+
+    when("the component loads", async () => {
+      document.body.appendChild(el);
+      await expect(
+        waitUntil(() => !!el.shadowRoot?.querySelector("iframe"), "no iframe")
+      ).resolves.toBeUndefined();
+    });
+
+    then(/^the skeleton type used is (.*)$/, (arg0) => {
+      const expectedType = sanitize(arg0) as string;
+      const widgetType = el.getAttribute("widget") || undefined;
+      const result = el["getWidgetType"](widgetType);
+      expect(result).toBe(expectedType);
+    });
+  });
+
+  test("Loading skeleton is removed after widget renders even if rendering fails", ({
+    given,
+    and,
+    when,
+    then,
+  }) => {
+    let el!: DeclarativeEmbedWidget | DeclarativePopupWidget;
+
+    Background(given);
+
+    given(/^window.squatchTenant is "(.*)"$/, (arg0) => {
+      if (arg0 === "invalid") window.squatchTenant = "INVALID_TENANT_ALIAS";
+      // @ts-ignore
+      else window.squatchTenant = sanitize(arg0);
+    });
+    SquatchTokenIs(and);
+
+    and(/^the (.*) web-component is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0);
+    });
+
+    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
+      el.setAttribute("widget", "w/widget-type");
+    });
+
+    when("the component loads", async () => {
+      document.body.appendChild(el);
+      // For invalid tenant, wait for the error widget to render
+      await expect(
+        waitUntil(
+          () => !!el.shadowRoot?.querySelector("iframe"),
+          "no iframe"
+        )
+      ).resolves.toBeUndefined();
+    });
+
+    then("the loading skeleton is removed from the shadow DOM", () => {
+      const skeleton = el.shadowRoot?.getElementById("loading-skeleton");
+      expect(skeleton).toBeNull();
+    });
+  });
 });

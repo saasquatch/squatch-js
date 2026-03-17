@@ -27,11 +27,20 @@ export function disableDebug(): void {
 /**
  * Create a namespaced logger function.
  * Returns a function that logs to console when the namespace is enabled.
+ * The returned function also has an `enabled` property for checking status.
  */
-export function debug(namespace: string): (...args: any[]) => void {
-  return (...args: any[]) => {
+export function debug(
+  namespace: string
+): ((...args: any[]) => void) & { enabled: boolean } {
+  const logFn = (...args: any[]) => {
     if (enabledPattern && enabledPattern.test(namespace)) {
       console.log(`[${namespace}]`, ...args);
     }
   };
+  Object.defineProperty(logFn, "enabled", {
+    get() {
+      return !!(enabledPattern && enabledPattern.test(namespace));
+    },
+  });
+  return logFn as ((...args: any[]) => void) & { enabled: boolean };
 }

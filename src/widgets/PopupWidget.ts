@@ -98,7 +98,7 @@ export default class PopupWidget extends Widget {
 
     const element = this.container ? this._findElement() : document.body;
 
-    const dialogParent = element.shadowRoot || element;
+    const dialogParent = element?.shadowRoot || element;
     const dialog = this._createPopupDialog(brandingConfig);
     dialog.appendChild(frame);
 
