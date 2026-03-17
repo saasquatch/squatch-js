@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.3] - 2026-03-19
+
+### Added
+
+- Preconnect and dns-prefetch resource hints for Cloudinary and Google Fonts to improve widget load performance
+- Initial height support from `brandingConfig.loadingHeight` for both embed and popup widgets
+- Loading skeleton displayed in declarative widgets while widget content loads
+
+### Changed
+
+- Replaced `debug` npm package with lightweight custom logger (~4-5KB bundle savings)
+- Switched from `resize-observer-polyfill` to native `ResizeObserver`
+- Enabled esbuild minification in Vite build config
+
+### Fixed
+
+- Fixed `brandingConfig` being undefined for passwordless widgets in `Widgets.render()`
+- Fixed popup widget `_createPopupDialog` to accept brandingConfig as parameter
+
 ## [2.8.2] - 2026-03-16
 
 ### Fixed
@@ -393,9 +412,10 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...HEAD
-[2.8.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.2
-[2.8.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.1
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.3...HEAD
+[2.8.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.3
+[2.8.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.1...@saasquatch%2Fsquatch-js@2.8.2
+[2.8.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.0...@saasquatch%2Fsquatch-js@2.8.1
 [2.8.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.7.0...@saasquatch%2Fsquatch-js@2.8.0
 [2.7.0]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.3...@saasquatch%2Fsquatch-js@2.7.0
 [2.6.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.6.2...@saasquatch%2Fsquatch-js@2.6.3
