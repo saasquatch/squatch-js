@@ -168,4 +168,148 @@ describe("DeclarativeWidget", () => {
 
     expect(() => widget.close()).toThrow();
   });
+
+  describe("getWidgetType", () => {
+    test.each([
+      { widgetType: "w/websiteReferralWidget", expected: "instant-access" },
+      { widgetType: "w/friendWidget", expected: "instant-access" },
+      { widgetType: "w/referral-widget", expected: "verified-access" },
+      { widgetType: "w/some-other-widget", expected: "verified-access" },
+      { widgetType: undefined, expected: "verified-access" },
+    ])("returns correct skeleton type for $widgetType", (args) => {
+      const widget = new Test();
+      const result = widget["getWidgetType"](args.widgetType);
+      expect(result).toBe(args.expected);
+    });
+  });
+
+  describe("connectedCallback", () => {
+    test("sets loaded to true", async () => {
+      const widget = new Test();
+      widget.type = "EMBED";
+
+      const mockRenderWidget = jest
+        .spyOn(widget, "renderWidget")
+        .mockImplementation(async () => {});
+
+      await widget.connectedCallback();
+      expect(widget.loaded).toBe(true);
+    });
+
+    test("creates and removes loading skeleton for embed", async () => {
+      const widget = new Test();
+      widget.type = "EMBED";
+      widget.setAttribute("widget", "w/test-widget");
+
+      let skeletonExisted = false;
+      const mockRenderWidget = jest
+        .spyOn(widget, "renderWidget")
+        .mockImplementation(async () => {
+          // During render, skeleton should exist
+          const root = widget.shadowRoot;
+          const skeleton = root?.getElementById("loading-skeleton");
+          skeletonExisted = skeleton !== null;
+        });
+
+      await widget.connectedCallback();
+
+      expect(skeletonExisted).toBe(true);
+
+      // After render, skeleton should be removed
+      const root = widget.shadowRoot;
+      const skeleton = root?.getElementById("loading-skeleton");
+      expect(skeleton).toBeNull();
+    });
+
+    test("calls open when open attribute is set", async () => {
+      const widget = new Test();
+      widget.type = "EMBED";
+      widget.setAttribute("widget", "w/test-widget");
+      widget.setAttribute("open", "");
+
+      const mockRenderWidget = jest
+        .spyOn(widget, "renderWidget")
+        .mockImplementation(async () => {});
+
+      const mockOpen = jest
+        .spyOn(widget, "open")
+        .mockImplementation(() => {});
+
+      await widget.connectedCallback();
+      expect(mockOpen).toHaveBeenCalled();
+    });
+
+    test("does not call open when open attribute is not set", async () => {
+      const widget = new Test();
+      widget.type = "EMBED";
+      widget.setAttribute("widget", "w/test-widget");
+
+      const mockRenderWidget = jest
+        .spyOn(widget, "renderWidget")
+        .mockImplementation(async () => {});
+
+      const mockOpen = jest
+        .spyOn(widget, "open")
+        .mockImplementation(() => {});
+
+      await widget.connectedCallback();
+      expect(mockOpen).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("attributeChangedCallback", () => {
+    test("does nothing when values are the same", () => {
+      const widget = new Test();
+      widget.loaded = true;
+
+      const mockConnected = jest
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("widget", "old", "old");
+      expect(mockConnected).not.toHaveBeenCalled();
+    });
+
+    test("does nothing when not loaded", () => {
+      const widget = new Test();
+      widget.loaded = false;
+
+      const mockConnected = jest
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("widget", "old", "new");
+      expect(mockConnected).not.toHaveBeenCalled();
+    });
+
+    test("calls connectedCallback when widget attribute changes", () => {
+      const widget = new Test();
+      widget.loaded = true;
+
+      const mockConnected = jest
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("widget", "old", "new");
+      expect(mockConnected).toHaveBeenCalled();
+    });
+
+    test("calls connectedCallback when locale attribute changes", () => {
+      const widget = new Test();
+      widget.loaded = true;
+
+      const mockConnected = jest
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("locale", "en_CA", "en_US");
+      expect(mockConnected).toHaveBeenCalled();
+    });
+  });
+
+  describe("observedAttributes", () => {
+    test("includes widget and locale", () => {
+      expect(Test.observedAttributes).toEqual(["widget", "locale"]);
+    });
+  });
 });
