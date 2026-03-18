@@ -90,7 +90,7 @@ export default class PopupWidget extends Widget {
 
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
-    const initialHeight = brandingConfig?.loadingHeight || 400;
+    const initialHeight = brandingConfig?.loadingHeight || 500;
     const hasMintComponents = this.content?.includes("mint-components");
 
     const frame = this._createFrame({ initialHeight });
@@ -155,7 +155,7 @@ export default class PopupWidget extends Widget {
 
   protected async _setupResizeHandler(
     frame: HTMLIFrameElement,
-    initialHeight?: string,
+    initialHeight?: number,
   ) {
     const { contentWindow } = frame;
 

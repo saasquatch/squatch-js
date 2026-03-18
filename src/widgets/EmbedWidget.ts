@@ -32,7 +32,7 @@ export default class EmbedWidget extends Widget {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     const hasMintComponents = this.content?.includes("mint-components");
 
-    const initialHeight = brandingConfig?.loadingHeight || 400;
+    const initialHeight = brandingConfig?.loadingHeight || 500;
     const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
     const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
