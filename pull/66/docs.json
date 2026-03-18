@@ -58,7 +58,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidgets.ts",
 							"line": 15,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidgets.ts#L15"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidgets.ts#L15"
 						}
 					],
 					"signatures": [
@@ -73,7 +73,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidgets.ts",
 									"line": 15,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidgets.ts#L15"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidgets.ts#L15"
 								}
 							],
 							"type": {
@@ -763,7 +763,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 66,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L66"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L66"
 						}
 					],
 					"type": {
@@ -2890,7 +2890,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 34,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L34"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L34"
 						}
 					],
 					"type": {
@@ -2944,7 +2944,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 82,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L82"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L82"
 						}
 					],
 					"type": {
@@ -3128,7 +3128,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 83,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L83"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L83"
 						}
 					],
 					"type": {
@@ -3328,7 +3328,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 280,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L280"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L280"
 						}
 					],
 					"type": {
@@ -3344,7 +3344,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 273,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 								}
 							],
 							"signatures": [
@@ -3390,7 +3390,7 @@
 											"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 											"line": 273,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 										}
 									],
 									"type": {
@@ -3823,7 +3823,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 56,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L56"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L56"
 						}
 					],
 					"type": {
@@ -16467,7 +16467,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 278,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L278"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L278"
 						}
 					],
 					"type": {
@@ -16483,7 +16483,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 230,
 									"character": 8,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 								}
 							],
 							"signatures": [
@@ -16517,7 +16517,7 @@
 											"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 											"line": 230,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 										}
 									],
 									"type": {
@@ -16773,7 +16773,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 279,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L279"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L279"
 						}
 					],
 					"type": {
@@ -16789,7 +16789,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 264,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 								}
 							],
 							"signatures": [
@@ -16835,7 +16835,7 @@
 											"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 											"line": 264,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 										}
 									],
 									"type": {
@@ -17055,7 +17055,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 46,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L46"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L46"
 						}
 					],
 					"type": {
@@ -17182,7 +17182,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 40,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L40"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L40"
 						}
 					],
 					"type": {
@@ -17248,7 +17248,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 76,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L76"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L76"
 						}
 					],
 					"type": {
@@ -17296,7 +17296,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 61,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L61"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L61"
 						}
 					],
 					"type": {
@@ -17348,7 +17348,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 71,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L71"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L71"
 						}
 					],
 					"type": {
@@ -17393,7 +17393,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 51,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L51"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L51"
 						}
 					],
 					"type": {
@@ -17428,7 +17428,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 282,
 							"character": 13,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L282"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L282"
 						}
 					],
 					"getSignature": {
@@ -17442,7 +17442,7 @@
 								"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 								"line": 282,
 								"character": 2,
-								"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L282"
+								"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L282"
 							}
 						],
 						"type": {
@@ -18325,7 +18325,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 286,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L286"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L286"
 						}
 					],
 					"signatures": [
@@ -18340,7 +18340,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 286,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L286"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L286"
 								}
 							],
 							"parameters": [
@@ -18753,7 +18753,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 273,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 						}
 					],
 					"signatures": [
@@ -18799,7 +18799,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 273,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 								}
 							],
 							"type": {
@@ -19360,7 +19360,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 297,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L297"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L297"
 						}
 					],
 					"signatures": [
@@ -19375,7 +19375,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 297,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L297"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L297"
 								}
 							],
 							"type": {
@@ -21275,7 +21275,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 207,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L207"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L207"
 						}
 					],
 					"signatures": [
@@ -21352,7 +21352,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 207,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L207"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L207"
 								}
 							],
 							"type": {
@@ -22717,7 +22717,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 264,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 						}
 					],
 					"signatures": [
@@ -22763,7 +22763,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 264,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 								}
 							],
 							"type": {
@@ -24657,7 +24657,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 230,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 						}
 					],
 					"signatures": [
@@ -24691,7 +24691,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 230,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 								}
 							],
 							"type": {
@@ -26029,7 +26029,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 239,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L239"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L239"
 						}
 					],
 					"signatures": [
@@ -26089,7 +26089,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 239,
 									"character": 19,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L239"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L239"
 								}
 							],
 							"parameters": [
@@ -26726,7 +26726,7 @@
 					"fileName": "src/widgets/declarative/DeclarativeWidgets.ts",
 					"line": 14,
 					"character": 13,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidgets.ts#L14"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidgets.ts#L14"
 				}
 			],
 			"extendedTypes": [
@@ -26786,7 +26786,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidgets.ts",
 							"line": 39,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidgets.ts#L39"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidgets.ts#L39"
 						}
 					],
 					"signatures": [
@@ -26801,7 +26801,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidgets.ts",
 									"line": 39,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidgets.ts#L39"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidgets.ts#L39"
 								}
 							],
 							"type": {
@@ -27491,7 +27491,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 66,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L66"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L66"
 						}
 					],
 					"type": {
@@ -29618,7 +29618,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 34,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L34"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L34"
 						}
 					],
 					"type": {
@@ -29672,7 +29672,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 82,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L82"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L82"
 						}
 					],
 					"type": {
@@ -29856,7 +29856,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 83,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L83"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L83"
 						}
 					],
 					"type": {
@@ -30056,7 +30056,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 280,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L280"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L280"
 						}
 					],
 					"type": {
@@ -30072,7 +30072,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 273,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 								}
 							],
 							"signatures": [
@@ -30118,7 +30118,7 @@
 											"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 											"line": 273,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 										}
 									],
 									"type": {
@@ -30551,7 +30551,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 56,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L56"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L56"
 						}
 					],
 					"type": {
@@ -43195,7 +43195,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 278,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L278"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L278"
 						}
 					],
 					"type": {
@@ -43211,7 +43211,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 230,
 									"character": 8,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 								}
 							],
 							"signatures": [
@@ -43245,7 +43245,7 @@
 											"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 											"line": 230,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 										}
 									],
 									"type": {
@@ -43501,7 +43501,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 279,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L279"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L279"
 						}
 					],
 					"type": {
@@ -43517,7 +43517,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 264,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 								}
 							],
 							"signatures": [
@@ -43563,7 +43563,7 @@
 											"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 											"line": 264,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 										}
 									],
 									"type": {
@@ -43783,7 +43783,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 46,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L46"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L46"
 						}
 					],
 					"type": {
@@ -43910,7 +43910,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 40,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L40"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L40"
 						}
 					],
 					"type": {
@@ -43976,7 +43976,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 76,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L76"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L76"
 						}
 					],
 					"type": {
@@ -44024,7 +44024,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 61,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L61"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L61"
 						}
 					],
 					"type": {
@@ -44076,7 +44076,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 71,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L71"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L71"
 						}
 					],
 					"type": {
@@ -44121,7 +44121,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 51,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L51"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L51"
 						}
 					],
 					"type": {
@@ -44156,7 +44156,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 282,
 							"character": 13,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L282"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L282"
 						}
 					],
 					"getSignature": {
@@ -44170,7 +44170,7 @@
 								"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 								"line": 282,
 								"character": 2,
-								"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L282"
+								"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L282"
 							}
 						],
 						"type": {
@@ -45053,7 +45053,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 286,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L286"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L286"
 						}
 					],
 					"signatures": [
@@ -45068,7 +45068,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 286,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L286"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L286"
 								}
 							],
 							"parameters": [
@@ -45481,7 +45481,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 273,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 						}
 					],
 					"signatures": [
@@ -45527,7 +45527,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 273,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L273"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L273"
 								}
 							],
 							"type": {
@@ -46088,7 +46088,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 297,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L297"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L297"
 						}
 					],
 					"signatures": [
@@ -46103,7 +46103,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 297,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L297"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L297"
 								}
 							],
 							"type": {
@@ -48003,7 +48003,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 207,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L207"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L207"
 						}
 					],
 					"signatures": [
@@ -48080,7 +48080,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 207,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L207"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L207"
 								}
 							],
 							"type": {
@@ -49445,7 +49445,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 264,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 						}
 					],
 					"signatures": [
@@ -49491,7 +49491,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 264,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L264"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L264"
 								}
 							],
 							"type": {
@@ -51385,7 +51385,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 230,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 						}
 					],
 					"signatures": [
@@ -51419,7 +51419,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 230,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L230"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L230"
 								}
 							],
 							"type": {
@@ -52757,7 +52757,7 @@
 							"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 							"line": 239,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L239"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L239"
 						}
 					],
 					"signatures": [
@@ -52817,7 +52817,7 @@
 									"fileName": "src/widgets/declarative/DeclarativeWidget.ts",
 									"line": 239,
 									"character": 19,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidget.ts#L239"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidget.ts#L239"
 								}
 							],
 							"parameters": [
@@ -53454,7 +53454,7 @@
 					"fileName": "src/widgets/declarative/DeclarativeWidgets.ts",
 					"line": 38,
 					"character": 13,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/declarative/DeclarativeWidgets.ts#L38"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/declarative/DeclarativeWidgets.ts#L38"
 				}
 			],
 			"extendedTypes": [
@@ -53512,7 +53512,7 @@
 							"fileName": "src/widgets/EmbedWidget.ts",
 							"line": 23,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L23"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L23"
 						}
 					],
 					"signatures": [
@@ -53527,7 +53527,7 @@
 									"fileName": "src/widgets/EmbedWidget.ts",
 									"line": 23,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L23"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L23"
 								}
 							],
 							"parameters": [
@@ -53605,7 +53605,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 53,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L53"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L53"
 						}
 					],
 					"type": {
@@ -53634,7 +53634,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 57,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L57"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L57"
 						}
 					],
 					"type": {
@@ -53680,7 +53680,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 52,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L52"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L52"
 						}
 					],
 					"type": {
@@ -53704,7 +53704,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 55,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L55"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L55"
 						}
 					],
 					"type": {
@@ -53730,7 +53730,7 @@
 							"fileName": "src/widgets/EmbedWidget.ts",
 							"line": 197,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L197"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L197"
 						}
 					],
 					"type": {
@@ -53746,7 +53746,7 @@
 									"fileName": "src/widgets/EmbedWidget.ts",
 									"line": 165,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L165"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L165"
 								}
 							],
 							"signatures": [
@@ -53761,7 +53761,7 @@
 											"fileName": "src/widgets/EmbedWidget.ts",
 											"line": 165,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L165"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L165"
 										}
 									],
 									"type": {
@@ -53785,7 +53785,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 58,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L58"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L58"
 						}
 					],
 					"type": {
@@ -53824,7 +53824,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 56,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L56"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L56"
 						}
 					],
 					"type": {
@@ -53848,7 +53848,7 @@
 							"fileName": "src/widgets/EmbedWidget.ts",
 							"line": 196,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L196"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L196"
 						}
 					],
 					"type": {
@@ -53864,7 +53864,7 @@
 									"fileName": "src/widgets/EmbedWidget.ts",
 									"line": 142,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L142"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L142"
 								}
 							],
 							"signatures": [
@@ -53887,7 +53887,7 @@
 											"fileName": "src/widgets/EmbedWidget.ts",
 											"line": 142,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L142"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L142"
 										}
 									],
 									"type": {
@@ -53911,7 +53911,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 51,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L51"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L51"
 						}
 					],
 					"type": {
@@ -53935,7 +53935,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 54,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L54"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L54"
 						}
 					],
 					"type": {
@@ -53961,7 +53961,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 109,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L109"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L109"
 						}
 					],
 					"signatures": [
@@ -53976,7 +53976,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 109,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L109"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L109"
 								}
 							],
 							"parameters": [
@@ -54010,12 +54010,21 @@
 															"fileName": "src/widgets/Widget.ts",
 															"line": 112,
 															"character": 4,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L112"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L112"
 														}
 													],
 													"type": {
-														"type": "intrinsic",
-														"name": "string"
+														"type": "union",
+														"types": [
+															{
+																"type": "intrinsic",
+																"name": "string"
+															},
+															{
+																"type": "intrinsic",
+																"name": "number"
+															}
+														]
 													}
 												},
 												{
@@ -54031,7 +54040,7 @@
 															"fileName": "src/widgets/Widget.ts",
 															"line": 111,
 															"character": 4,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L111"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L111"
 														}
 													],
 													"type": {
@@ -54052,7 +54061,7 @@
 															"fileName": "src/widgets/Widget.ts",
 															"line": 110,
 															"character": 4,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L110"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L110"
 														}
 													],
 													"type": {
@@ -54076,7 +54085,7 @@
 													"fileName": "src/widgets/Widget.ts",
 													"line": 109,
 													"character": 25,
-													"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L109"
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L109"
 												}
 											]
 										}
@@ -54116,7 +54125,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 72,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L72"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L72"
 						}
 					],
 					"signatures": [
@@ -54131,7 +54140,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 72,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L72"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L72"
 								}
 							],
 							"type": {
@@ -54167,7 +54176,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 139,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L139"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L139"
 						}
 					],
 					"signatures": [
@@ -54182,7 +54191,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 139,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L139"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L139"
 								}
 							],
 							"type": {
@@ -54227,7 +54236,7 @@
 							"fileName": "src/widgets/EmbedWidget.ts",
 							"line": 165,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L165"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L165"
 						}
 					],
 					"signatures": [
@@ -54242,7 +54251,7 @@
 									"fileName": "src/widgets/EmbedWidget.ts",
 									"line": 165,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L165"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L165"
 								}
 							],
 							"type": {
@@ -54263,7 +54272,7 @@
 							"fileName": "src/widgets/EmbedWidget.ts",
 							"line": 31,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L31"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L31"
 						}
 					],
 					"signatures": [
@@ -54278,7 +54287,7 @@
 									"fileName": "src/widgets/EmbedWidget.ts",
 									"line": 31,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L31"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L31"
 								}
 							],
 							"type": {
@@ -54320,7 +54329,7 @@
 							"fileName": "src/widgets/EmbedWidget.ts",
 							"line": 142,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L142"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L142"
 						}
 					],
 					"signatures": [
@@ -54343,7 +54352,7 @@
 									"fileName": "src/widgets/EmbedWidget.ts",
 									"line": 142,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L142"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L142"
 								}
 							],
 							"type": {
@@ -54364,7 +54373,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 318,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L318"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L318"
 						}
 					],
 					"signatures": [
@@ -54387,7 +54396,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 318,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L318"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L318"
 								}
 							],
 							"parameters": [
@@ -54488,7 +54497,7 @@
 					"fileName": "src/widgets/EmbedWidget.ts",
 					"line": 22,
 					"character": 21,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/EmbedWidget.ts#L22"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/EmbedWidget.ts#L22"
 				}
 			],
 			"extendedTypes": [
@@ -54546,7 +54555,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 28,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L28"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L28"
 						}
 					],
 					"signatures": [
@@ -54561,7 +54570,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 28,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L28"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L28"
 								}
 							],
 							"parameters": [
@@ -54633,7 +54642,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 53,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L53"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L53"
 						}
 					],
 					"type": {
@@ -54662,7 +54671,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 57,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L57"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L57"
 						}
 					],
 					"type": {
@@ -54708,7 +54717,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 52,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L52"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L52"
 						}
 					],
 					"type": {
@@ -54732,7 +54741,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 55,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L55"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L55"
 						}
 					],
 					"type": {
@@ -54758,7 +54767,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 242,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L242"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L242"
 						}
 					],
 					"type": {
@@ -54774,7 +54783,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 217,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L217"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L217"
 								}
 							],
 							"signatures": [
@@ -54789,7 +54798,7 @@
 											"fileName": "src/widgets/PopupWidget.ts",
 											"line": 217,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L217"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L217"
 										}
 									],
 									"type": {
@@ -54813,7 +54822,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 26,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L26"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L26"
 						}
 					],
 					"type": {
@@ -54832,7 +54841,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 58,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L58"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L58"
 						}
 					],
 					"type": {
@@ -54871,7 +54880,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 56,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L56"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L56"
 						}
 					],
 					"type": {
@@ -54895,7 +54904,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 241,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L241"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L241"
 						}
 					],
 					"type": {
@@ -54911,7 +54920,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 189,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L189"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L189"
 								}
 							],
 							"signatures": [
@@ -54926,7 +54935,7 @@
 											"fileName": "src/widgets/PopupWidget.ts",
 											"line": 189,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L189"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L189"
 										}
 									],
 									"type": {
@@ -54950,7 +54959,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 25,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L25"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L25"
 						}
 					],
 					"type": {
@@ -54978,7 +54987,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 51,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L51"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L51"
 						}
 					],
 					"type": {
@@ -55002,7 +55011,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 54,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L54"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L54"
 						}
 					],
 					"type": {
@@ -55028,7 +55037,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 109,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L109"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L109"
 						}
 					],
 					"signatures": [
@@ -55043,7 +55052,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 109,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L109"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L109"
 								}
 							],
 							"parameters": [
@@ -55077,12 +55086,21 @@
 															"fileName": "src/widgets/Widget.ts",
 															"line": 112,
 															"character": 4,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L112"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L112"
 														}
 													],
 													"type": {
-														"type": "intrinsic",
-														"name": "string"
+														"type": "union",
+														"types": [
+															{
+																"type": "intrinsic",
+																"name": "string"
+															},
+															{
+																"type": "intrinsic",
+																"name": "number"
+															}
+														]
 													}
 												},
 												{
@@ -55098,7 +55116,7 @@
 															"fileName": "src/widgets/Widget.ts",
 															"line": 111,
 															"character": 4,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L111"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L111"
 														}
 													],
 													"type": {
@@ -55119,7 +55137,7 @@
 															"fileName": "src/widgets/Widget.ts",
 															"line": 110,
 															"character": 4,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L110"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L110"
 														}
 													],
 													"type": {
@@ -55143,7 +55161,7 @@
 													"fileName": "src/widgets/Widget.ts",
 													"line": 109,
 													"character": 25,
-													"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L109"
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L109"
 												}
 											]
 										}
@@ -55183,7 +55201,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 69,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L69"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L69"
 						}
 					],
 					"signatures": [
@@ -55198,7 +55216,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 69,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L69"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L69"
 								}
 							],
 							"parameters": [
@@ -55211,8 +55229,10 @@
 										"isOptional": true
 									},
 									"type": {
-										"type": "intrinsic",
-										"name": "any"
+										"type": "reference",
+										"target": 2217,
+										"name": "BrandingConfiguration",
+										"package": "@saasquatch/squatch-js"
 									}
 								}
 							],
@@ -55239,7 +55259,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 72,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L72"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L72"
 						}
 					],
 					"signatures": [
@@ -55254,7 +55274,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 72,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L72"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L72"
 								}
 							],
 							"type": {
@@ -55290,7 +55310,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 139,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L139"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L139"
 						}
 					],
 					"signatures": [
@@ -55305,7 +55325,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 139,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L139"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L139"
 								}
 							],
 							"type": {
@@ -55350,7 +55370,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 46,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L46"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L46"
 						}
 					],
 					"signatures": [
@@ -55365,7 +55385,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 46,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L46"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L46"
 								}
 							],
 							"type": {
@@ -55386,7 +55406,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 217,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L217"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L217"
 						}
 					],
 					"signatures": [
@@ -55401,7 +55421,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 217,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L217"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L217"
 								}
 							],
 							"type": {
@@ -55422,7 +55442,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 91,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L91"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L91"
 						}
 					],
 					"signatures": [
@@ -55437,7 +55457,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 91,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L91"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L91"
 								}
 							],
 							"type": {
@@ -55479,7 +55499,7 @@
 							"fileName": "src/widgets/PopupWidget.ts",
 							"line": 189,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L189"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L189"
 						}
 					],
 					"signatures": [
@@ -55494,7 +55514,7 @@
 									"fileName": "src/widgets/PopupWidget.ts",
 									"line": 189,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L189"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L189"
 								}
 							],
 							"type": {
@@ -55515,7 +55535,7 @@
 							"fileName": "src/widgets/Widget.ts",
 							"line": 318,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L318"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L318"
 						}
 					],
 					"signatures": [
@@ -55538,7 +55558,7 @@
 									"fileName": "src/widgets/Widget.ts",
 									"line": 318,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widget.ts#L318"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widget.ts#L318"
 								}
 							],
 							"parameters": [
@@ -55643,7 +55663,7 @@
 					"fileName": "src/widgets/PopupWidget.ts",
 					"line": 24,
 					"character": 21,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/PopupWidget.ts#L24"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/PopupWidget.ts#L24"
 				}
 			],
 			"extendedTypes": [
@@ -55684,7 +55704,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 45,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L45"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L45"
 						}
 					],
 					"signatures": [
@@ -55759,7 +55779,7 @@
 									"fileName": "src/api/WidgetApi.ts",
 									"line": 45,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L45"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L45"
 								}
 							],
 							"parameters": [
@@ -55807,7 +55827,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 26,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L26"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L26"
 						}
 					],
 					"type": {
@@ -55826,7 +55846,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 27,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L27"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L27"
 						}
 					],
 					"type": {
@@ -55845,7 +55865,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 170,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L170"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L170"
 						}
 					],
 					"type": {
@@ -55861,7 +55881,7 @@
 									"fileName": "src/api/WidgetApi.ts",
 									"line": 152,
 									"character": 8,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L152"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L152"
 								}
 							],
 							"signatures": [
@@ -55895,7 +55915,7 @@
 											"fileName": "src/api/WidgetApi.ts",
 											"line": 152,
 											"character": 2,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L152"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L152"
 										}
 									],
 									"type": {
@@ -55932,7 +55952,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 25,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L25"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L25"
 						}
 					],
 					"type": {
@@ -55951,7 +55971,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 111,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L111"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L111"
 						}
 					],
 					"signatures": [
@@ -55985,7 +56005,7 @@
 									"fileName": "src/api/WidgetApi.ts",
 									"line": 111,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L111"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L111"
 								}
 							],
 							"parameters": [
@@ -56040,7 +56060,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 152,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L152"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L152"
 						}
 					],
 					"signatures": [
@@ -56074,7 +56094,7 @@
 									"fileName": "src/api/WidgetApi.ts",
 									"line": 152,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L152"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L152"
 								}
 							],
 							"type": {
@@ -56108,7 +56128,7 @@
 							"fileName": "src/api/WidgetApi.ts",
 							"line": 68,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L68"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L68"
 						}
 					],
 					"signatures": [
@@ -56142,7 +56162,7 @@
 									"fileName": "src/api/WidgetApi.ts",
 									"line": 68,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L68"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L68"
 								}
 							],
 							"parameters": [
@@ -56229,7 +56249,7 @@
 					"fileName": "src/api/WidgetApi.ts",
 					"line": 24,
 					"character": 21,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/api/WidgetApi.ts#L24"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/api/WidgetApi.ts#L24"
 				}
 			]
 		},
@@ -56274,7 +56294,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 66,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L66"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L66"
 						}
 					],
 					"signatures": [
@@ -56349,7 +56369,7 @@
 									"fileName": "src/widgets/Widgets.ts",
 									"line": 66,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L66"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L66"
 								}
 							],
 							"parameters": [
@@ -56402,7 +56422,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 31,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L31"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L31"
 						}
 					],
 					"type": {
@@ -56442,7 +56462,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 42,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L42"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L42"
 						}
 					],
 					"type": {
@@ -56480,7 +56500,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 48,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L48"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L48"
 						}
 					],
 					"type": {
@@ -56507,7 +56527,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 36,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L36"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L36"
 						}
 					],
 					"type": {
@@ -56526,7 +56546,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 169,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L169"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L169"
 						}
 					],
 					"signatures": [
@@ -56566,7 +56586,7 @@
 									"fileName": "src/widgets/Widgets.ts",
 									"line": 169,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L169"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L169"
 								}
 							],
 							"parameters": [
@@ -56633,7 +56653,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 137,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L137"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L137"
 						}
 					],
 					"signatures": [
@@ -56678,7 +56698,7 @@
 									"fileName": "src/widgets/Widgets.ts",
 									"line": 137,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L137"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L137"
 								}
 							],
 							"parameters": [
@@ -56744,7 +56764,7 @@
 							"fileName": "src/widgets/Widgets.ts",
 							"line": 90,
 							"character": 8,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L90"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L90"
 						}
 					],
 					"signatures": [
@@ -56789,7 +56809,7 @@
 									"fileName": "src/widgets/Widgets.ts",
 									"line": 90,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L90"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L90"
 								}
 							],
 							"parameters": [
@@ -56854,7 +56874,7 @@
 															"fileName": "src/widgets/Widgets.ts",
 															"line": 111,
 															"character": 8,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L111"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L111"
 														}
 													],
 													"type": {
@@ -56874,7 +56894,7 @@
 															"fileName": "src/widgets/Widgets.ts",
 															"line": 99,
 															"character": 8,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L99"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L99"
 														}
 													],
 													"type": {
@@ -56898,7 +56918,7 @@
 													"fileName": "src/widgets/Widgets.ts",
 													"line": 98,
 													"character": 13,
-													"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L98"
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L98"
 												}
 											]
 										}
@@ -56941,7 +56961,2689 @@
 					"fileName": "src/widgets/Widgets.ts",
 					"line": 27,
 					"character": 21,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/widgets/Widgets.ts#L27"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/widgets/Widgets.ts#L27"
+				}
+			]
+		},
+		{
+			"id": 2217,
+			"name": "BrandingConfiguration",
+			"variant": "declaration",
+			"kind": 256,
+			"flags": {},
+			"children": [
+				{
+					"id": 2309,
+					"name": "border",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "Defines border styles."
+							}
+						]
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 240,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L240"
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 2310,
+							"name": "__type",
+							"variant": "declaration",
+							"kind": 65536,
+							"flags": {},
+							"children": [
+								{
+									"id": 2313,
+									"name": "borderColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 243,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L243"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 2311,
+									"name": "borderRadius",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 241,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L241"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								},
+								{
+									"id": 2312,
+									"name": "borderThickness",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 242,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L242"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"children": [
+										2313,
+										2311,
+										2312
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "src/types.ts",
+									"line": 240,
+									"character": 11,
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L240"
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 2223,
+					"name": "color",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 149,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L149"
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 2224,
+							"name": "__type",
+							"variant": "declaration",
+							"kind": 65536,
+							"flags": {},
+							"children": [
+								{
+									"id": 2234,
+									"name": "accentColorShades",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 159,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L159"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2235,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2239,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 163,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L163"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2238,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 162,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L162"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2236,
+													"name": "icon",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 160,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L160"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2237,
+													"name": "text",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 161,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L161"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2239,
+														2238,
+														2236,
+														2237
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 159,
+													"character": 24,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L159"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2229,
+									"name": "backgroundColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 154,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L154"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 2252,
+									"name": "critical",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 177,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L177"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2253,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2257,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 181,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L181"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2256,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 180,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L180"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2255,
+													"name": "iconAndBadge",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 179,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L179"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2254,
+													"name": "text",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 178,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L178"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2257,
+														2256,
+														2255,
+														2254
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 177,
+													"character": 15,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L177"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2258,
+									"name": "informative",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 183,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L183"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2259,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2263,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 187,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L187"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2262,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 186,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L186"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2261,
+													"name": "iconAndBadge",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 185,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L185"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2260,
+													"name": "text",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 184,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L184"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2263,
+														2262,
+														2261,
+														2260
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 183,
+													"character": 18,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L183"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2225,
+									"name": "loadingSkeleton",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 150,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L150"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2226,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2228,
+													"name": "animationBackground",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 152,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L152"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2227,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 151,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L151"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2228,
+														2227
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 150,
+													"character": 22,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L150"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2264,
+									"name": "neutral",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 189,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L189"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2265,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2269,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 193,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L193"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2268,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 192,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L192"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2267,
+													"name": "iconAndBadge",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 191,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L191"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2266,
+													"name": "text",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 190,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L190"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2269,
+														2268,
+														2267,
+														2266
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 189,
+													"character": 14,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L189"
+												}
+											],
+											"indexSignature": {
+												"id": 2270,
+												"name": "__index",
+												"variant": "signature",
+												"kind": 8192,
+												"flags": {},
+												"sources": [
+													{
+														"fileName": "src/types.ts",
+														"line": 194,
+														"character": 6,
+														"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L194"
+													}
+												],
+												"parameters": [
+													{
+														"id": 2271,
+														"name": "k",
+														"variant": "param",
+														"kind": 32768,
+														"flags": {},
+														"type": {
+															"type": "intrinsic",
+															"name": "string"
+														}
+													}
+												],
+												"type": {
+													"type": "intrinsic",
+													"name": "unknown"
+												}
+											}
+										}
+									}
+								},
+								{
+									"id": 2240,
+									"name": "success",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 165,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L165"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2241,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2245,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 169,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L169"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2244,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 168,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L168"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2243,
+													"name": "iconAndBadge",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 167,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L167"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2242,
+													"name": "text",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 166,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L166"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2245,
+														2244,
+														2243,
+														2242
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 165,
+													"character": 14,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L165"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2230,
+									"name": "textColorShades",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 155,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L155"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2231,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2232,
+													"name": "mainText",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 156,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L156"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2233,
+													"name": "subduedText",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 157,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L157"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2232,
+														2233
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 155,
+													"character": 22,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L155"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2246,
+									"name": "warning",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 171,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L171"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2247,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2251,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 175,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L175"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2250,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 174,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L174"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2249,
+													"name": "iconAndBadge",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 173,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L173"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2248,
+													"name": "text",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 172,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L172"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2251,
+														2250,
+														2249,
+														2248
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 171,
+													"character": 14,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L171"
+												}
+											]
+										}
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"children": [
+										2234,
+										2229,
+										2252,
+										2258,
+										2225,
+										2264,
+										2240,
+										2230,
+										2246
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "src/types.ts",
+									"line": 149,
+									"character": 10,
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L149"
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 2298,
+					"name": "formFields",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "Defines form field colors."
+							}
+						]
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 226,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L226"
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 2299,
+							"name": "__type",
+							"variant": "declaration",
+							"kind": 65536,
+							"flags": {},
+							"children": [
+								{
+									"id": 2305,
+									"name": "borderRadius",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 232,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L232"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								},
+								{
+									"id": 2306,
+									"name": "disabledBackgroundColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 233,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L233"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 2300,
+									"name": "formFieldColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 227,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L227"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2301,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2302,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 228,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L228"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2304,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 230,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L230"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2303,
+													"name": "inputText",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 229,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L229"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2302,
+														2304,
+														2303
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 227,
+													"character": 21,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L227"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2308,
+									"name": "hoverStateColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 235,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L235"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 2307,
+									"name": "selectedStateColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 234,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L234"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"children": [
+										2305,
+										2306,
+										2300,
+										2308,
+										2307
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "src/types.ts",
+									"line": 226,
+									"character": 15,
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L226"
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 2222,
+					"name": "loadingHeight",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 148,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L148"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				},
+				{
+					"id": 2218,
+					"name": "main",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "Defines all branding related styles."
+							}
+						]
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 144,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L144"
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 2219,
+							"name": "__type",
+							"variant": "declaration",
+							"kind": 65536,
+							"flags": {},
+							"children": [
+								{
+									"id": 2220,
+									"name": "brandColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 145,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L145"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								},
+								{
+									"id": 2221,
+									"name": "brandFont",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 146,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L146"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"children": [
+										2220,
+										2221
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "src/types.ts",
+									"line": 144,
+									"character": 9,
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L144"
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 2272,
+					"name": "primaryButton",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 197,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L197"
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 2273,
+							"name": "__type",
+							"variant": "declaration",
+							"kind": 65536,
+							"flags": {},
+							"children": [
+								{
+									"id": 2284,
+									"name": "borderRadius",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 208,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L208"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								},
+								{
+									"id": 2274,
+									"name": "buttonColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 198,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L198"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2275,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2276,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 199,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L199"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2278,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 201,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L201"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2277,
+													"name": "label",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 200,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L200"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2276,
+														2278,
+														2277
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 198,
+													"character": 18,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L198"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2279,
+									"name": "buttonHoverColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 203,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L203"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2280,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2281,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 204,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L204"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2283,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 206,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L206"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2282,
+													"name": "label",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 205,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L205"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2281,
+														2283,
+														2282
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 203,
+													"character": 23,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L203"
+												}
+											]
+										}
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"children": [
+										2284,
+										2274,
+										2279
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "src/types.ts",
+									"line": 197,
+									"character": 18,
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L197"
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 2285,
+					"name": "secondaryButton",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 210,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L210"
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 2286,
+							"name": "__type",
+							"variant": "declaration",
+							"kind": 65536,
+							"flags": {},
+							"children": [
+								{
+									"id": 2297,
+									"name": "borderRadius",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 221,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L221"
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								},
+								{
+									"id": 2287,
+									"name": "buttonColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 211,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L211"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2288,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2289,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 212,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L212"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2291,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 214,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L214"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2290,
+													"name": "label",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 213,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L213"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2289,
+														2291,
+														2290
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 211,
+													"character": 18,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L211"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2292,
+									"name": "buttonHoverColor",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 216,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L216"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2293,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2294,
+													"name": "background",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 217,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L217"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2296,
+													"name": "border",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 219,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L219"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												},
+												{
+													"id": 2295,
+													"name": "label",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 218,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L218"
+														}
+													],
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2294,
+														2296,
+														2295
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 216,
+													"character": 23,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L216"
+												}
+											]
+										}
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"children": [
+										2297,
+										2287,
+										2292
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "src/types.ts",
+									"line": 210,
+									"character": 20,
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L210"
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 2314,
+					"name": "widgetSize",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isOptional": true
+					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "Defines widget dimensions."
+							}
+						]
+					},
+					"sources": [
+						{
+							"fileName": "src/types.ts",
+							"line": 248,
+							"character": 2,
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L248"
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 2315,
+							"name": "__type",
+							"variant": "declaration",
+							"kind": 65536,
+							"flags": {},
+							"children": [
+								{
+									"id": 2316,
+									"name": "embeddedWidgets",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 249,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L249"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2317,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2322,
+													"name": "maxWidth",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 254,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L254"
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 2323,
+															"name": "__type",
+															"variant": "declaration",
+															"kind": 65536,
+															"flags": {},
+															"children": [
+																{
+																	"id": 2325,
+																	"name": "unit",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 256,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L256"
+																		}
+																	],
+																	"type": {
+																		"type": "union",
+																		"types": [
+																			{
+																				"type": "literal",
+																				"value": "px"
+																			},
+																			{
+																				"type": "literal",
+																				"value": "%"
+																			}
+																		]
+																	}
+																},
+																{
+																	"id": 2324,
+																	"name": "value",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 255,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L255"
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"children": [
+																		2325,
+																		2324
+																	]
+																}
+															],
+															"sources": [
+																{
+																	"fileName": "src/types.ts",
+																	"line": 254,
+																	"character": 17,
+																	"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L254"
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 2318,
+													"name": "minWidth",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 250,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L250"
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 2319,
+															"name": "__type",
+															"variant": "declaration",
+															"kind": 65536,
+															"flags": {},
+															"children": [
+																{
+																	"id": 2321,
+																	"name": "unit",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 252,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L252"
+																		}
+																	],
+																	"type": {
+																		"type": "union",
+																		"types": [
+																			{
+																				"type": "literal",
+																				"value": "px"
+																			},
+																			{
+																				"type": "literal",
+																				"value": "%"
+																			}
+																		]
+																	}
+																},
+																{
+																	"id": 2320,
+																	"name": "value",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 251,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L251"
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"children": [
+																		2321,
+																		2320
+																	]
+																}
+															],
+															"sources": [
+																{
+																	"fileName": "src/types.ts",
+																	"line": 250,
+																	"character": 17,
+																	"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L250"
+																}
+															]
+														}
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2322,
+														2318
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 249,
+													"character": 22,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L249"
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 2326,
+									"name": "popupWidgets",
+									"variant": "declaration",
+									"kind": 1024,
+									"flags": {
+										"isOptional": true
+									},
+									"sources": [
+										{
+											"fileName": "src/types.ts",
+											"line": 259,
+											"character": 4,
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L259"
+										}
+									],
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 2327,
+											"name": "__type",
+											"variant": "declaration",
+											"kind": 65536,
+											"flags": {},
+											"children": [
+												{
+													"id": 2332,
+													"name": "maxWidth",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 264,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L264"
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 2333,
+															"name": "__type",
+															"variant": "declaration",
+															"kind": 65536,
+															"flags": {},
+															"children": [
+																{
+																	"id": 2335,
+																	"name": "unit",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 266,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L266"
+																		}
+																	],
+																	"type": {
+																		"type": "union",
+																		"types": [
+																			{
+																				"type": "literal",
+																				"value": "px"
+																			},
+																			{
+																				"type": "literal",
+																				"value": "%"
+																			}
+																		]
+																	}
+																},
+																{
+																	"id": 2334,
+																	"name": "value",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 265,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L265"
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"children": [
+																		2335,
+																		2334
+																	]
+																}
+															],
+															"sources": [
+																{
+																	"fileName": "src/types.ts",
+																	"line": 264,
+																	"character": 17,
+																	"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L264"
+																}
+															]
+														}
+													}
+												},
+												{
+													"id": 2328,
+													"name": "minWidth",
+													"variant": "declaration",
+													"kind": 1024,
+													"flags": {
+														"isOptional": true
+													},
+													"sources": [
+														{
+															"fileName": "src/types.ts",
+															"line": 260,
+															"character": 6,
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L260"
+														}
+													],
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 2329,
+															"name": "__type",
+															"variant": "declaration",
+															"kind": 65536,
+															"flags": {},
+															"children": [
+																{
+																	"id": 2331,
+																	"name": "unit",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 262,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L262"
+																		}
+																	],
+																	"type": {
+																		"type": "union",
+																		"types": [
+																			{
+																				"type": "literal",
+																				"value": "px"
+																			},
+																			{
+																				"type": "literal",
+																				"value": "%"
+																			}
+																		]
+																	}
+																},
+																{
+																	"id": 2330,
+																	"name": "value",
+																	"variant": "declaration",
+																	"kind": 1024,
+																	"flags": {},
+																	"sources": [
+																		{
+																			"fileName": "src/types.ts",
+																			"line": 261,
+																			"character": 8,
+																			"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L261"
+																		}
+																	],
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "number"
+																	}
+																}
+															],
+															"groups": [
+																{
+																	"title": "Properties",
+																	"children": [
+																		2331,
+																		2330
+																	]
+																}
+															],
+															"sources": [
+																{
+																	"fileName": "src/types.ts",
+																	"line": 260,
+																	"character": 17,
+																	"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L260"
+																}
+															]
+														}
+													}
+												}
+											],
+											"groups": [
+												{
+													"title": "Properties",
+													"children": [
+														2332,
+														2328
+													]
+												}
+											],
+											"sources": [
+												{
+													"fileName": "src/types.ts",
+													"line": 259,
+													"character": 19,
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L259"
+												}
+											]
+										}
+									}
+								}
+							],
+							"groups": [
+								{
+									"title": "Properties",
+									"children": [
+										2316,
+										2326
+									]
+								}
+							],
+							"sources": [
+								{
+									"fileName": "src/types.ts",
+									"line": 248,
+									"character": 15,
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L248"
+								}
+							]
+						}
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"children": [
+						2309,
+						2223,
+						2298,
+						2222,
+						2218,
+						2272,
+						2285,
+						2314
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/types.ts",
+					"line": 140,
+					"character": 17,
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L140"
 				}
 			]
 		},
@@ -57017,7 +59719,7 @@
 							"fileName": "src/types.ts",
 							"line": 16,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L16"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L16"
 						}
 					],
 					"type": {
@@ -57038,7 +59740,7 @@
 							"fileName": "src/types.ts",
 							"line": 14,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L14"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L14"
 						}
 					],
 					"type": {
@@ -57059,7 +59761,7 @@
 							"fileName": "src/types.ts",
 							"line": 15,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L15"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L15"
 						}
 					],
 					"type": {
@@ -57078,7 +59780,7 @@
 							"fileName": "src/types.ts",
 							"line": 13,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L13"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L13"
 						}
 					],
 					"type": {
@@ -57103,7 +59805,7 @@
 					"fileName": "src/types.ts",
 					"line": 12,
 					"character": 17,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L12"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L12"
 				}
 			]
 		},
@@ -57172,7 +59874,7 @@
 							"fileName": "src/types.ts",
 							"line": 64,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L64"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L64"
 						}
 					],
 					"type": {
@@ -57195,7 +59897,7 @@
 							"fileName": "src/types.ts",
 							"line": 65,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L65"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L65"
 						}
 					],
 					"type": {
@@ -57216,7 +59918,7 @@
 							"fileName": "src/types.ts",
 							"line": 62,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L62"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L62"
 						}
 					],
 					"type": {
@@ -57239,7 +59941,7 @@
 							"fileName": "src/types.ts",
 							"line": 63,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L63"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L63"
 						}
 					],
 					"type": {
@@ -57264,7 +59966,7 @@
 					"fileName": "src/types.ts",
 					"line": 61,
 					"character": 17,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L61"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L61"
 				}
 			]
 		},
@@ -57358,7 +60060,7 @@
 							"fileName": "src/types.ts",
 							"line": 35,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L35"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L35"
 						}
 					],
 					"type": {
@@ -57393,7 +60095,7 @@
 							"fileName": "src/types.ts",
 							"line": 39,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L39"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L39"
 						}
 					],
 					"type": {
@@ -57414,7 +60116,7 @@
 							"fileName": "src/types.ts",
 							"line": 34,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L34"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L34"
 						}
 					],
 					"type": {
@@ -57437,7 +60139,7 @@
 							"fileName": "src/types.ts",
 							"line": 37,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L37"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L37"
 						}
 					],
 					"type": {
@@ -57458,7 +60160,7 @@
 							"fileName": "src/types.ts",
 							"line": 38,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L38"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L38"
 						}
 					],
 					"type": {
@@ -57479,7 +60181,7 @@
 							"fileName": "src/types.ts",
 							"line": 36,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L36"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L36"
 						}
 					],
 					"type": {
@@ -57500,7 +60202,7 @@
 							"fileName": "src/types.ts",
 							"line": 32,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L32"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L32"
 						}
 					],
 					"type": {
@@ -57523,7 +60225,7 @@
 							"fileName": "src/types.ts",
 							"line": 33,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L33"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L33"
 						}
 					],
 					"type": {
@@ -57552,7 +60254,7 @@
 					"fileName": "src/types.ts",
 					"line": 31,
 					"character": 17,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L31"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L31"
 				}
 			]
 		},
@@ -57630,7 +60332,7 @@
 							"fileName": "src/types.ts",
 							"line": 77,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L77"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L77"
 						}
 					],
 					"type": {
@@ -57651,7 +60353,7 @@
 							"fileName": "src/types.ts",
 							"line": 76,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L76"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L76"
 						}
 					],
 					"type": {
@@ -57679,7 +60381,7 @@
 					"fileName": "src/types.ts",
 					"line": 75,
 					"character": 17,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L75"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L75"
 				}
 			]
 		},
@@ -57709,7 +60411,7 @@
 							"fileName": "src/types.ts",
 							"line": 47,
 							"character": 2,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L47"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L47"
 						}
 					],
 					"type": {
@@ -57734,12 +60436,14 @@
 											"fileName": "src/types.ts",
 											"line": 48,
 											"character": 4,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L48"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L48"
 										}
 									],
 									"type": {
-										"type": "intrinsic",
-										"name": "any"
+										"type": "reference",
+										"target": 2217,
+										"name": "BrandingConfiguration",
+										"package": "@saasquatch/squatch-js"
 									}
 								},
 								{
@@ -57755,7 +60459,7 @@
 											"fileName": "src/types.ts",
 											"line": 49,
 											"character": 4,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L49"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L49"
 										}
 									],
 									"type": {
@@ -57780,7 +60484,7 @@
 															"fileName": "src/types.ts",
 															"line": 50,
 															"character": 6,
-															"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L50"
+															"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L50"
 														}
 													],
 													"type": {
@@ -57805,7 +60509,7 @@
 																				"fileName": "src/types.ts",
 																				"line": 50,
 																				"character": 29,
-																				"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L50"
+																				"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L50"
 																			}
 																		],
 																		"type": {
@@ -57824,7 +60528,7 @@
 																				"fileName": "src/types.ts",
 																				"line": 50,
 																				"character": 46,
-																				"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L50"
+																				"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L50"
 																			}
 																		],
 																		"type": {
@@ -57847,7 +60551,7 @@
 																		"fileName": "src/types.ts",
 																		"line": 50,
 																		"character": 27,
-																		"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L50"
+																		"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L50"
 																	}
 																]
 															}
@@ -57868,7 +60572,7 @@
 													"fileName": "src/types.ts",
 													"line": 49,
 													"character": 11,
-													"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L49"
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L49"
 												}
 											]
 										}
@@ -57889,7 +60593,7 @@
 									"fileName": "src/types.ts",
 									"line": 47,
 									"character": 10,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L47"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L47"
 								}
 							]
 						}
@@ -57909,7 +60613,7 @@
 					"fileName": "src/types.ts",
 					"line": 46,
 					"character": 17,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L46"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L46"
 				}
 			]
 		},
@@ -57924,7 +60628,7 @@
 					"fileName": "src/types.ts",
 					"line": 110,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L110"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L110"
 				}
 			],
 			"type": {
@@ -57949,7 +60653,7 @@
 									"fileName": "src/types.ts",
 									"line": 113,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L113"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L113"
 								}
 							],
 							"type": {
@@ -57984,7 +60688,7 @@
 									"fileName": "src/types.ts",
 									"line": 115,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L115"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L115"
 								}
 							],
 							"type": {
@@ -58005,7 +60709,7 @@
 									"fileName": "src/types.ts",
 									"line": 112,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L112"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L112"
 								}
 							],
 							"type": {
@@ -58028,7 +60732,7 @@
 									"fileName": "src/types.ts",
 									"line": 114,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L114"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L114"
 								}
 							],
 							"type": {
@@ -58047,7 +60751,7 @@
 									"fileName": "src/types.ts",
 									"line": 111,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L111"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L111"
 								}
 							],
 							"type": {
@@ -58081,7 +60785,7 @@
 									"fileName": "src/types.ts",
 									"line": 116,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L116"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L116"
 								}
 							],
 							"type": {
@@ -58110,7 +60814,7 @@
 							"fileName": "src/types.ts",
 							"line": 110,
 							"character": 32,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L110"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L110"
 						}
 					]
 				}
@@ -58127,7 +60831,7 @@
 					"fileName": "src/types.ts",
 					"line": 86,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L86"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L86"
 				}
 			],
 			"type": {
@@ -58143,7 +60847,7 @@
 							"fileName": "src/types.ts",
 							"line": 86,
 							"character": 25,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L86"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L86"
 						}
 					],
 					"indexSignature": {
@@ -58157,7 +60861,7 @@
 								"fileName": "src/types.ts",
 								"line": 87,
 								"character": 2,
-								"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L87"
+								"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L87"
 							}
 						],
 						"parameters": [
@@ -58192,7 +60896,7 @@
 					"fileName": "src/types.ts",
 					"line": 19,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L19"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L19"
 				}
 			],
 			"type": {
@@ -58247,7 +60951,7 @@
 					"fileName": "src/types.ts",
 					"line": 95,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L95"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L95"
 				}
 			],
 			"type": {
@@ -58275,7 +60979,7 @@
 					"fileName": "src/types.ts",
 					"line": 133,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L133"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L133"
 				}
 			],
 			"type": {
@@ -58294,7 +60998,7 @@
 					"fileName": "src/types.ts",
 					"line": 135,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L135"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L135"
 				}
 			],
 			"type": {
@@ -58317,7 +61021,7 @@
 									"fileName": "src/types.ts",
 									"line": 136,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L136"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L136"
 								}
 							],
 							"type": {
@@ -58339,7 +61043,7 @@
 									"fileName": "src/types.ts",
 									"line": 137,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L137"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L137"
 								}
 							],
 							"type": {
@@ -58362,7 +61066,7 @@
 							"fileName": "src/types.ts",
 							"line": 135,
 							"character": 29,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L135"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L135"
 						}
 					]
 				}
@@ -58379,7 +61083,7 @@
 					"fileName": "src/types.ts",
 					"line": 132,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L132"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L132"
 				}
 			],
 			"type": {
@@ -58398,7 +61102,7 @@
 					"fileName": "src/types.ts",
 					"line": 101,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L101"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L101"
 				}
 			],
 			"type": {
@@ -58423,7 +61127,7 @@
 									"fileName": "src/types.ts",
 									"line": 105,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L105"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L105"
 								}
 							],
 							"type": {
@@ -58458,7 +61162,7 @@
 									"fileName": "src/types.ts",
 									"line": 104,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L104"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L104"
 								}
 							],
 							"type": {
@@ -58481,7 +61185,7 @@
 									"fileName": "src/types.ts",
 									"line": 106,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L106"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L106"
 								}
 							],
 							"type": {
@@ -58500,7 +61204,7 @@
 									"fileName": "src/types.ts",
 									"line": 102,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L102"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L102"
 								}
 							],
 							"type": {
@@ -58521,7 +61225,7 @@
 									"fileName": "src/types.ts",
 									"line": 103,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L103"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L103"
 								}
 							],
 							"type": {
@@ -58553,7 +61257,7 @@
 									"fileName": "src/types.ts",
 									"line": 107,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L107"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L107"
 								}
 							],
 							"type": {
@@ -58582,7 +61286,7 @@
 							"fileName": "src/types.ts",
 							"line": 101,
 							"character": 34,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L101"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L101"
 						}
 					]
 				}
@@ -58599,7 +61303,7 @@
 					"fileName": "src/types.ts",
 					"line": 80,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L80"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L80"
 				}
 			],
 			"type": {
@@ -58622,7 +61326,7 @@
 									"fileName": "src/types.ts",
 									"line": 82,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L82"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L82"
 								}
 							],
 							"type": {
@@ -58641,7 +61345,7 @@
 									"fileName": "src/types.ts",
 									"line": 81,
 									"character": 2,
-									"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L81"
+									"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L81"
 								}
 							],
 							"type": {
@@ -58664,7 +61368,7 @@
 							"fileName": "src/types.ts",
 							"line": 80,
 							"character": 19,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L80"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L80"
 						}
 					],
 					"indexSignature": {
@@ -58678,7 +61382,7 @@
 								"fileName": "src/types.ts",
 								"line": 83,
 								"character": 2,
-								"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L83"
+								"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L83"
 							}
 						],
 						"parameters": [
@@ -58713,7 +61417,7 @@
 					"fileName": "src/types.ts",
 					"line": 119,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L119"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L119"
 				}
 			],
 			"type": {
@@ -58745,7 +61449,7 @@
 					"fileName": "src/types.ts",
 					"line": 120,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L120"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L120"
 				}
 			],
 			"type": {
@@ -58789,7 +61493,7 @@
 					"fileName": "src/types.ts",
 					"line": 125,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L125"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L125"
 				}
 			],
 			"type": {
@@ -58821,7 +61525,7 @@
 					"fileName": "src/types.ts",
 					"line": 3,
 					"character": 12,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/types.ts#L3"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/types.ts#L3"
 				}
 			],
 			"typeParameters": [
@@ -58899,7 +61603,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 59,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L59"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L59"
 				}
 			],
 			"signatures": [
@@ -58974,7 +61678,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 59,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L59"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L59"
 						}
 					],
 					"type": {
@@ -59007,7 +61711,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 187,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L187"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L187"
 				}
 			],
 			"signatures": [
@@ -59056,7 +61760,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 187,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L187"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L187"
 						}
 					],
 					"parameters": [
@@ -59098,7 +61802,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 90,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L90"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L90"
 				}
 			],
 			"signatures": [
@@ -59179,7 +61883,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 90,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L90"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L90"
 						}
 					],
 					"type": {
@@ -59205,7 +61909,7 @@
 			]
 		},
 		{
-			"id": 2217,
+			"id": 2336,
 			"name": "help",
 			"variant": "declaration",
 			"kind": 64,
@@ -59215,12 +61919,12 @@
 					"fileName": "src/docs.ts",
 					"line": 2,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/docs.ts#L2"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/docs.ts#L2"
 				}
 			],
 			"signatures": [
 				{
-					"id": 2218,
+					"id": 2337,
 					"name": "help",
 					"variant": "signature",
 					"kind": 4096,
@@ -59230,7 +61934,7 @@
 							"fileName": "src/docs.ts",
 							"line": 2,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/docs.ts#L2"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/docs.ts#L2"
 						}
 					],
 					"type": {
@@ -59251,7 +61955,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 141,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L141"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L141"
 				}
 			],
 			"signatures": [
@@ -59349,7 +62053,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 141,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L141"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L141"
 						}
 					],
 					"parameters": [
@@ -59385,7 +62089,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 205,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L205"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L205"
 				}
 			],
 			"signatures": [
@@ -59439,7 +62143,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 205,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L205"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L205"
 						}
 					],
 					"type": {
@@ -59460,7 +62164,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 172,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L172"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L172"
 				}
 			],
 			"signatures": [
@@ -59494,7 +62198,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 172,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L172"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L172"
 						}
 					],
 					"parameters": [
@@ -59525,7 +62229,7 @@
 											"fileName": "src/squatch.ts",
 											"line": 172,
 											"character": 26,
-											"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L172"
+											"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L172"
 										}
 									],
 									"signatures": [
@@ -59540,7 +62244,7 @@
 													"fileName": "src/squatch.ts",
 													"line": 172,
 													"character": 26,
-													"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L172"
+													"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L172"
 												}
 											],
 											"type": {
@@ -59571,7 +62275,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 105,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L105"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L105"
 				}
 			],
 			"signatures": [
@@ -59637,7 +62341,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 105,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L105"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L105"
 						}
 					],
 					"parameters": [
@@ -59704,7 +62408,7 @@
 					"fileName": "src/squatch.ts",
 					"line": 75,
 					"character": 16,
-					"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L75"
+					"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L75"
 				}
 			],
 			"signatures": [
@@ -59779,7 +62483,7 @@
 							"fileName": "src/squatch.ts",
 							"line": 75,
 							"character": 0,
-							"url": "https://github.com/saasquatch/squatch-js/blob/f087fa1/src/squatch.ts#L75"
+							"url": "https://github.com/saasquatch/squatch-js/blob/249b5ce/src/squatch.ts#L75"
 						}
 					],
 					"type": {
@@ -59817,6 +62521,7 @@
 		{
 			"title": "Interfaces",
 			"children": [
+				2217,
 				2148,
 				2173,
 				2154,
@@ -59848,7 +62553,7 @@
 				1,
 				20,
 				5,
-				2217,
+				2336,
 				12,
 				23,
 				15,
@@ -68706,10 +71411,482 @@
 			"qualifiedName": "__type.encodedCookie"
 		},
 		"2217": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration"
+		},
+		"2218": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.main"
+		},
+		"2219": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2220": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.brandColor"
+		},
+		"2221": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.brandFont"
+		},
+		"2222": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.loadingHeight"
+		},
+		"2223": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.color"
+		},
+		"2224": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2225": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.loadingSkeleton"
+		},
+		"2226": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2227": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2228": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.animationBackground"
+		},
+		"2229": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.backgroundColor"
+		},
+		"2230": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.textColorShades"
+		},
+		"2231": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2232": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.mainText"
+		},
+		"2233": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.subduedText"
+		},
+		"2234": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.accentColorShades"
+		},
+		"2235": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2236": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.icon"
+		},
+		"2237": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.text"
+		},
+		"2238": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2239": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2240": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.success"
+		},
+		"2241": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2242": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.text"
+		},
+		"2243": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.iconAndBadge"
+		},
+		"2244": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2245": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2246": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.warning"
+		},
+		"2247": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2248": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.text"
+		},
+		"2249": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.iconAndBadge"
+		},
+		"2250": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2251": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2252": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.critical"
+		},
+		"2253": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2254": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.text"
+		},
+		"2255": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.iconAndBadge"
+		},
+		"2256": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2257": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2258": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.informative"
+		},
+		"2259": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2260": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.text"
+		},
+		"2261": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.iconAndBadge"
+		},
+		"2262": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2263": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2264": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.neutral"
+		},
+		"2265": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2266": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.text"
+		},
+		"2267": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.iconAndBadge"
+		},
+		"2268": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2269": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2270": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.__index"
+		},
+		"2272": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.primaryButton"
+		},
+		"2273": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2274": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.buttonColor"
+		},
+		"2275": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2276": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2277": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.label"
+		},
+		"2278": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2279": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.buttonHoverColor"
+		},
+		"2280": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2281": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2282": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.label"
+		},
+		"2283": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2284": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.borderRadius"
+		},
+		"2285": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.secondaryButton"
+		},
+		"2286": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2287": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.buttonColor"
+		},
+		"2288": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2289": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2290": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.label"
+		},
+		"2291": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2292": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.buttonHoverColor"
+		},
+		"2293": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2294": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2295": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.label"
+		},
+		"2296": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2297": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.borderRadius"
+		},
+		"2298": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.formFields"
+		},
+		"2299": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2300": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.formFieldColor"
+		},
+		"2301": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2302": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.background"
+		},
+		"2303": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.inputText"
+		},
+		"2304": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.border"
+		},
+		"2305": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.borderRadius"
+		},
+		"2306": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.disabledBackgroundColor"
+		},
+		"2307": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.selectedStateColor"
+		},
+		"2308": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.hoverStateColor"
+		},
+		"2309": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.border"
+		},
+		"2310": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2311": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.borderRadius"
+		},
+		"2312": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.borderThickness"
+		},
+		"2313": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.borderColor"
+		},
+		"2314": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "BrandingConfiguration.widgetSize"
+		},
+		"2315": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2316": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.embeddedWidgets"
+		},
+		"2317": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2318": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.minWidth"
+		},
+		"2319": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2320": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.value"
+		},
+		"2321": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.unit"
+		},
+		"2322": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.maxWidth"
+		},
+		"2323": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2324": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.value"
+		},
+		"2325": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.unit"
+		},
+		"2326": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.popupWidgets"
+		},
+		"2327": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2328": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.minWidth"
+		},
+		"2329": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2330": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.value"
+		},
+		"2331": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.unit"
+		},
+		"2332": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.maxWidth"
+		},
+		"2333": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type"
+		},
+		"2334": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.value"
+		},
+		"2335": {
+			"sourceFileName": "src/types.ts",
+			"qualifiedName": "__type.unit"
+		},
+		"2336": {
 			"sourceFileName": "src/docs.ts",
 			"qualifiedName": "help"
 		},
-		"2218": {
+		"2337": {
 			"sourceFileName": "src/docs.ts",
 			"qualifiedName": "help"
 		}
