@@ -100,7 +100,7 @@ export default abstract class Widget {
         `element with selector '${
           this.container ||
           "#squatchembed, .squatchembed, #impactembed, or .impactembed"
-        }' not found.'`
+        }' not found.'`,
       );
 
     return element;
@@ -109,7 +109,7 @@ export default abstract class Widget {
   _createFrame(options?: {
     minWidth?: string;
     maxWidth?: string;
-    initialHeight?: string;
+    initialHeight?: string | number;
   }) {
     const frame = document.createElement("iframe");
     frame["squatchJsApi"] = this;
@@ -120,7 +120,7 @@ export default abstract class Widget {
     frame.scrolling = "no";
     frame.setAttribute(
       "style",
-      "border: 0; background-color: none; width: 1px; min-width: 100%;"
+      "border: 0; background-color: none; width: 1px; min-width: 100%;",
     );
 
     if (options?.minWidth) frame.style.minWidth = options.minWidth;
@@ -130,7 +130,7 @@ export default abstract class Widget {
       frame.style.width = "100%";
     }
     if (options?.initialHeight) {
-      frame.height = options.initialHeight;
+      frame.height = String(options.initialHeight);
     }
 
     return frame;
@@ -140,7 +140,7 @@ export default abstract class Widget {
     const element = this.container ? this._findElement() : document.body;
     const parent = element.shadowRoot || element;
     return parent.querySelector(
-      "iframe#squatchFrame"
+      "iframe#squatchFrame",
     ) as HTMLIFrameElement | null;
   }
 
@@ -150,7 +150,7 @@ export default abstract class Widget {
     if (this.loadEventListener) {
       frameDoc.removeEventListener(
         "sq:user-registration",
-        this.loadEventListener
+        this.loadEventListener,
       );
 
       this.loadEventListener = null;
@@ -159,11 +159,11 @@ export default abstract class Widget {
 
   protected _attachLoadEventListener(
     frameDoc: Document,
-    sqh: ProgramLoadEvent | GenericLoadEvent
+    sqh: ProgramLoadEvent | GenericLoadEvent,
   ) {
     if (this.loadEventListener === null) {
       this.loadEventListener = (
-        e: CustomEvent<{ userId: string; accountId: string }>
+        e: CustomEvent<{ userId: string; accountId: string }>,
       ) => {
         this._loadEvent({
           ...sqh,
@@ -231,7 +231,7 @@ export default abstract class Widget {
         })
         .then((response) => {
           _log(
-            `${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`
+            `${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`,
           );
         })
         .catch((ex) => {
@@ -277,7 +277,7 @@ export default abstract class Widget {
   }
 
   protected async _findInnerContainer(
-    frame: HTMLIFrameElement
+    frame: HTMLIFrameElement,
   ): Promise<Element> {
     const { contentWindow } = frame;
     if (!contentWindow)
@@ -292,8 +292,8 @@ export default abstract class Widget {
         containers.length > 0
           ? containers[0]
           : legacyContainers.length > 0
-          ? legacyContainers[0]
-          : null;
+            ? legacyContainers[0]
+            : null;
       return fallback;
     }
 
@@ -371,7 +371,7 @@ export default abstract class Widget {
 
               // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
               engagementMedium === "POPUP" && this.open();
-            }
+            },
           );
         }
       })

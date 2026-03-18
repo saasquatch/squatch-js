@@ -1,7 +1,7 @@
 // @ts-check
 
 import { debug } from "../utils/logger";
-import { UpsertWidgetContext } from "../types";
+import { BrandingConfiguration, UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
 import Widget, { Params } from "./Widget";
@@ -66,7 +66,7 @@ export default class PopupWidget extends Widget {
     }
   }
 
-  _createPopupDialog(brandingConfig?: any): HTMLDialogElement {
+  _createPopupDialog(brandingConfig?: BrandingConfiguration): HTMLDialogElement {
     const dialog = document.createElement("dialog");
     const sizes = brandingConfig?.widgetSize?.popupWidgets;
 

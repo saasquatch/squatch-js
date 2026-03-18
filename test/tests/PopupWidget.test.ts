@@ -294,7 +294,7 @@ describe("methods", () => {
           widgetConfig: {
             values: {
               brandingConfig: {
-                loadingHeight: "350",
+                loadingHeight: 350,
               },
             },
           },
