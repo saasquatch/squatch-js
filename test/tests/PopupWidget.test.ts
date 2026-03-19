@@ -378,7 +378,7 @@ describe("methods", () => {
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
       expect(html).not.toContain('fonts.gstatic.com');
     });
-    test("html visibility hidden style is present when mint-components dependency exists", async () => {
+    test("skeleton preload is present when mint-components dependency exists", async () => {
       const config = widgetConfig();
       const mintWidget = new PopupWidget({
         ...config,
@@ -397,9 +397,9 @@ describe("methods", () => {
       const dialog = document.body.querySelector("dialog");
       const iframe = dialog?.querySelector("iframe");
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
-      expect(html).toContain('visibility: hidden');
+      expect(html).toContain('sq-preload');
     });
-    test("html visibility hidden style is not present without mint-components", async () => {
+    test("skeleton preload is not present without mint-components", async () => {
       const mockCTA = jest
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
@@ -412,7 +412,7 @@ describe("methods", () => {
       const dialog = document.body.querySelector("dialog");
       const iframe = dialog?.querySelector("iframe");
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
-      expect(html).not.toContain('visibility: hidden');
+      expect(html).not.toContain('sq-preload');
     });
     test("dialog receives brandingConfig width sizing", async () => {
       const config = widgetConfig();

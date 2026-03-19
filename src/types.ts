@@ -147,10 +147,6 @@ export interface BrandingConfiguration {
   };
   loadingHeight?: number;
   color?: {
-    loadingSkeleton?: {
-      background?: string;
-      animationBackground?: string;
-    };
     backgroundColor?: string;
     textColorShades?: {
       mainText: string;

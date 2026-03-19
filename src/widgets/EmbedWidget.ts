@@ -96,13 +96,15 @@ export default class EmbedWidget extends Widget {
       }
       <link rel="dns-prefetch" href="https://res.cloudinary.com">
       <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-      ${
-        hasMintComponents
-          ? `<style data-styles>
+            ${
+              hasMintComponents
+                ? `
+      <style data-styles>
         html { visibility: hidden; }
       </style>`
-          : ""
-      }
+                : ""
+            }
+      ${this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
       ${this.content}
 
       `);

@@ -364,7 +364,7 @@ describe("methods", () => {
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
       expect(html).not.toContain('fonts.gstatic.com');
     });
-    test("html visibility hidden style is present when mint-components dependency exists", async () => {
+    test("skeleton preload is present when mint-components dependency exists", async () => {
       const div = document.createElement("div");
       div.id = "test";
       document.body.appendChild(div);
@@ -385,9 +385,9 @@ describe("methods", () => {
 
       const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
-      expect(html).toContain('visibility:hidden');
+      expect(html).toContain('sq-preload');
     });
-    test("html visibility hidden style is not present without mint-components", async () => {
+    test("skeleton preload is not present without mint-components", async () => {
       const div = document.createElement("div");
       div.id = "test";
       document.body.appendChild(div);
@@ -402,7 +402,7 @@ describe("methods", () => {
 
       const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
       const html = iframe?.contentDocument?.documentElement.innerHTML || "";
-      expect(html).not.toContain('visibility:hidden');
+      expect(html).not.toContain('sq-preload');
     });
   });
   describe("open", () => {

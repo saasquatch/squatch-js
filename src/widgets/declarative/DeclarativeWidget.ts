@@ -113,7 +113,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   }
 
   protected getWidgetType(
-    widgetType?: string
+    widgetType?: string,
   ): "instant-access" | "verified-access" {
     if (
       widgetType &&
@@ -174,7 +174,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   private _setWidget = (
     res: { template: any; widgetConfig: WidgetValueConfig },
-    config: { type: "upsert" | "passwordless"; user?: User }
+    config: { type: "upsert" | "passwordless"; user?: User },
   ) => {
     const params = {
       api: this.widgetApi,

@@ -2,7 +2,15 @@
 import { debug } from "../utils/logger";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
-import { EngagementMedium, WidgetContext, WidgetType } from "../types";
+import {
+  EngagementMedium,
+  WidgetContext,
+  WidgetType,
+} from "../types";
+import {
+  getSkeleton,
+  WidgetType as SkeletonWidgetType,
+} from "./SkeletonTemplate";
 import { isObject } from "../utils/validate";
 
 /** @hidden */
@@ -307,6 +315,72 @@ export default abstract class Widget {
       return frameDoc.body;
     }
     return found;
+  }
+
+  /**
+   * Returns HTML for an in-iframe skeleton preload overlay that is removed
+   * once all Stencil component chunks have loaded and been hydrated.
+   *
+   * Uses a MutationObserver to detect when components receive the `hydrated`
+   * class, debouncing removal so the skeleton stays visible until all chunks
+   * have finished loading. Includes a timeout fallback.
+   *
+   * Only generates content for mint-components widgets; returns empty string otherwise.
+   */
+  protected _getSkeletonPreloadHTML(
+    hasMintComponents: boolean,
+    backgroundColor?: string,
+  ): string {
+    if (!hasMintComponents) return "";
+
+    const skeletonType: SkeletonWidgetType =
+      this.context.type === "passwordless"
+        ? "instant-access"
+        : "verified-access";
+
+    const skeletonHTML = getSkeleton({
+      type: skeletonType,
+      height: "100%",
+    });
+
+    return `
+      <div id="sq-preload" style="visibility: visible; position: absolute; top: 0; left: 0; width: 100%; z-index: 9999; background: ${backgroundColor || "white"};">
+        ${skeletonHTML}
+      </div>
+      <script>
+        (function() {
+          var fallback = null;
+          function removeSkeleton() {
+            var s = document.getElementById('sq-preload');
+            if (s) s.remove();
+            clearTimeout(fallback);
+          }
+          function init() {
+            var els = document.querySelectorAll('*');
+            var tags = {};
+            for (var i = 0; i < els.length; i++) {
+              var tag = els[i].tagName.toLowerCase();
+              if (tag.indexOf('-') > -1) tags[tag] = true;
+            }
+            var promises = Object.keys(tags).map(function(t) {
+              return customElements.whenDefined(t);
+            });
+            if (promises.length === 0) { removeSkeleton(); return; }
+            Promise.all(promises).then(function() {
+              requestAnimationFrame(function() {
+                requestAnimationFrame(removeSkeleton);
+              });
+            });
+          }
+          fallback = setTimeout(removeSkeleton, 10000);
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+          } else {
+            init();
+          }
+        })();
+      <\/script>
+    `;
   }
 
   /**

@@ -3,8 +3,6 @@ export type WidgetType = "instant-access" | "verified-access";
 interface SkeletonProps {
   type?: WidgetType;
   height?: string | number;
-  skeletonBackgroundColor?: string;
-  skeletonShimmerColor?: string;
 }
 
 /**
@@ -14,9 +12,9 @@ interface SkeletonProps {
 export const getSkeleton = ({
   type = "verified-access",
   height = "500px",
-  skeletonBackgroundColor = "#e0e0e0",
-  skeletonShimmerColor = "#f5f5f5",
 }: SkeletonProps) => {
+  const skeletonBackgroundColor = "#e0e0e0";
+  const skeletonShimmerColor = "#f5f5f5";
   const referrerHTML = `
     <div class="hero-section">
         <div class="hero-content">

@@ -66,7 +66,9 @@ export default class PopupWidget extends Widget {
     }
   }
 
-  _createPopupDialog(brandingConfig?: BrandingConfiguration): HTMLDialogElement {
+  _createPopupDialog(
+    brandingConfig?: BrandingConfiguration,
+  ): HTMLDialogElement {
     const dialog = document.createElement("dialog");
     const sizes = brandingConfig?.widgetSize?.popupWidgets;
 
@@ -136,14 +138,15 @@ export default class PopupWidget extends Widget {
       }
       <link rel="dns-prefetch" href="https://res.cloudinary.com">
       <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-      ${
-        hasMintComponents
-          ? `
+            ${
+              hasMintComponents
+                ? `
       <style data-styles>
         html { visibility: hidden; }
       </style>`
-          : ""
-      }
+                : ""
+            }
+      ${this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
       ${this.content}
 
       `);
