@@ -2,11 +2,7 @@
 import { debug } from "../utils/logger";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
-import {
-  EngagementMedium,
-  WidgetContext,
-  WidgetType,
-} from "../types";
+import { EngagementMedium, WidgetContext, WidgetType } from "../types";
 import {
   getSkeleton,
   WidgetType as SkeletonWidgetType,
@@ -347,39 +343,7 @@ export default abstract class Widget {
       <div id="sq-preload" style="visibility: visible; position: absolute; top: 0; left: 0; width: 100%; z-index: 9999; background: ${backgroundColor || "white"};">
         ${skeletonHTML}
       </div>
-      <script>
-        (function() {
-          var fallback = null;
-          function removeSkeleton() {
-            var s = document.getElementById('sq-preload');
-            if (s) s.remove();
-            clearTimeout(fallback);
-          }
-          function init() {
-            var els = document.querySelectorAll('*');
-            var tags = {};
-            for (var i = 0; i < els.length; i++) {
-              var tag = els[i].tagName.toLowerCase();
-              if (tag.indexOf('-') > -1) tags[tag] = true;
-            }
-            var promises = Object.keys(tags).map(function(t) {
-              return customElements.whenDefined(t);
-            });
-            if (promises.length === 0) { removeSkeleton(); return; }
-            Promise.all(promises).then(function() {
-              requestAnimationFrame(function() {
-                requestAnimationFrame(removeSkeleton);
-              });
-            });
-          }
-          fallback = setTimeout(removeSkeleton, 10000);
-          if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-          } else {
-            init();
-          }
-        })();
-      <\/script>
+      <script>(${_skeletonLoader.toString()})()<\/script>
     `;
   }
 
@@ -487,4 +451,40 @@ function delay(duration) {
   return new Promise((resolve) => {
     setTimeout(resolve, duration);
   });
+}
+
+/**
+ * Removes the skeleton overlay once all custom elements are defined.
+ */
+function _skeletonLoader() {
+  var fallback = setTimeout(remove, 10000);
+
+  function remove() {
+    var el = document.getElementById("sq-preload");
+    if (el) el.remove();
+    clearTimeout(fallback);
+  }
+
+  function init() {
+    var tags: Set<string> = new Set();
+    document.querySelectorAll("*").forEach(function (el) {
+      if (el.tagName.includes("-")) tags.add(el.tagName.toLowerCase());
+    });
+    if (!tags.size) return remove();
+    Promise.all(
+      Array.from(tags).map(function (t) {
+        return customElements.whenDefined(t);
+      }),
+    ).then(function () {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(remove);
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 }
