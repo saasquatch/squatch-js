@@ -95,7 +95,8 @@ export default class PopupWidget extends Widget {
     const initialHeight = brandingConfig?.loadingHeight || 500;
     const hasMintComponents = this.content?.includes("mint-components");
 
-    const frame = this._createFrame({ initialHeight });
+    const frame = this._createFrame();
+    frame.style.height = initialHeight + "px";
     this._initialiseCTA();
 
     const element = this.container ? this._findElement() : document.body;
@@ -148,18 +149,15 @@ export default class PopupWidget extends Widget {
             }
       ${this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
       ${this.content}
-
+      <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"><\/script>
       `);
 
     frameDoc.close();
     _log("Popup template loaded into iframe");
-    await this._setupResizeHandler(frame, initialHeight);
+    await this._setupResizeHandler(frame);
   }
 
-  protected async _setupResizeHandler(
-    frame: HTMLIFrameElement,
-    initialHeight?: number,
-  ) {
+  protected async _setupResizeHandler(frame: HTMLIFrameElement) {
     const { contentWindow } = frame;
 
     if (!contentWindow) {
@@ -171,15 +169,23 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, async () => {
       frameDoc.body.style.overflowY = "hidden";
-      // @ts-ignore -- number will be cast to string by browsers
-      frame.height = initialHeight || frameDoc.body.offsetHeight;
-      // Adjust frame height when size of body changes
-      const ro = new ResizeObserver((entries) => {
+      let initialLoad = true;
+
+      const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
           const { top, bottom } = entry.contentRect;
+          const height = bottom + top;
+          if (height <= 0) continue;
 
-          const computedHeight = bottom + top;
-          frame.height = computedHeight + "";
+          if (initialLoad) {
+            // Clear loading height constraint and measure true content height
+            initialLoad = false;
+            frame.style.height = "0";
+            frame.height = frameDoc.body.scrollHeight + "";
+            frame.style.height = "";
+          } else {
+            frame.height = height + "";
+          }
 
           // @ts-ignore Don't let anything else set the height of this element
           entry.target.style = "";

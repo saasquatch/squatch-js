@@ -106,7 +106,7 @@ export default class EmbedWidget extends Widget {
             }
       ${this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
       ${this.content}
-
+      <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"><\/script>
       `);
 
     frameDoc.close();
@@ -118,7 +118,7 @@ export default class EmbedWidget extends Widget {
 
       // Adjust frame height when size of body changes
       /* istanbul ignore next: hard to test */
-      const ro = new ResizeObserver((entries) => {
+      const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
           const { height } = entry.contentRect;
           // @ts-ignore -- number will be cast to string by browsers

@@ -124,7 +124,7 @@ export default abstract class Widget {
     frame.scrolling = "no";
     frame.setAttribute(
       "style",
-      "border: 0; background-color: none; width: 1px; min-width: 100%;",
+      "border: 0; background-color: none; width: 1px; min-width: 100%; display: block;",
     );
 
     if (options?.minWidth) frame.style.minWidth = options.minWidth;
@@ -485,6 +485,7 @@ function _skeletonLoader() {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
-    init();
+    // Defer to ensure frameDoc.write() has finished and all content is in the DOM
+    setTimeout(init, 0);
   }
 }
