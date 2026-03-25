@@ -1,11 +1,32 @@
 import { JWT } from "../types";
 import { getToken } from "./validate";
 
+/**
+ * Parses an error response body and returns a throwable error object.
+ * If the response is valid JSON with apiErrorCode, returns the parsed object.
+ * Otherwise, returns an object with the raw message.
+ */
+function parseErrorResponse(responseText: string): {
+  apiErrorCode?: string;
+  rsCode?: string;
+  message: string;
+} {
+  try {
+    const parsed = JSON.parse(responseText);
+    if (parsed && typeof parsed === "object") {
+      return parsed;
+    }
+  } catch {
+    // Not valid JSON, fall through
+  }
+  return { message: responseText };
+}
+
 export async function doQuery(
   url: string,
   query: string,
   variables: Record<string, unknown>,
-  jwt: string | undefined
+  jwt: string | undefined,
 ) {
   const token = jwt || getToken();
   const headers = {
@@ -21,7 +42,7 @@ export async function doQuery(
       body: JSON.stringify({ query, variables }),
       headers,
     });
-    if (!res.ok) throw new Error(await res.text());
+    if (!res.ok) throw parseErrorResponse(await res.text());
     return await res.json();
   } catch (e) {
     throw e;
@@ -44,7 +65,7 @@ export async function doGet<T>(url, jwt = ""): Promise<T> {
       headers,
     });
     const reply = await res.text();
-    if (!res.ok) throw new Error(reply);
+    if (!res.ok) throw parseErrorResponse(reply);
 
     return reply ? JSON.parse(reply) : reply;
   } catch (e) {
@@ -68,7 +89,7 @@ export async function doPost(url: string, data: any, jwt?: JWT) {
     });
 
     const reply = await res.text();
-    if (!res.ok) throw new Error(reply);
+    if (!res.ok) throw parseErrorResponse(reply);
 
     return reply ? JSON.parse(reply) : reply;
   } catch (e) {
@@ -94,7 +115,7 @@ export async function doPut(url: string, data: any, jwt?: JWT) {
       body: data,
     });
     const reply = await res.text();
-    if (!res.ok) throw new Error(reply);
+    if (!res.ok) throw parseErrorResponse(reply);
 
     return reply ? JSON.parse(reply) : reply;
   } catch (e) {
