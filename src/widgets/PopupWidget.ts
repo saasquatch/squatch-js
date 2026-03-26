@@ -149,7 +149,6 @@ export default class PopupWidget extends Widget {
             }
       ${this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
       ${this.content}
-      <script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"><\/script>
       `);
 
     frameDoc.close();
