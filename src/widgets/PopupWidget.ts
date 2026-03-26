@@ -147,7 +147,7 @@ export default class PopupWidget extends Widget {
       </style>`
                 : ""
             }
-      ${this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
+      ${await this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
       ${this.content}
       `);
 
