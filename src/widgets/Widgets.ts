@@ -111,19 +111,8 @@ export default class Widgets {
         user: response.user,
       };
     } catch (err) {
-      console.log("[DEBUG] Widgets.upsertUser catch - err:", err);
-      console.log("[DEBUG] Widgets.upsertUser catch - typeof err:", typeof err);
-      console.log(
-        "[DEBUG] Widgets.upsertUser catch - err.apiErrorCode:",
-        err.apiErrorCode,
-      );
-      console.log(
-        "[DEBUG] Widgets.upsertUser catch - err keys:",
-        Object.keys(err || {}),
-      );
       _log(err);
       if (err.apiErrorCode) {
-        console.log("[DEBUG] Widgets.upsertUser - calling _renderErrorWidget");
         this._renderErrorWidget(err, config.engagementMedium);
       }
       throw new Error(err);

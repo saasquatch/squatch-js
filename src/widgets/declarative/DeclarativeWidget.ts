@@ -217,11 +217,11 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     this.widgetType = this.getAttribute("widget") || undefined;
     this.locale = this.getAttribute("locale") || this.locale;
     const widgetType = this.getWidgetType(this.widgetType);
-    console.log("[DEBUG] getWidgetInstance - token:", this.token);
+
     if (!this.widgetType) throw new Error("No widget has been specified");
 
     if (!this.token && widgetType === "verified-access") {
-      console.log(
+      _log(
         "[DEBUG] getWidgetInstance - No token found for verified-access widget, rendering error widget",
       );
       return this.setErrorWidget({
@@ -289,12 +289,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       errorMessage,
     };
 
-    console.log("[DEBUG] setErrorWidget - error details:", {
-      errorMessage,
-      apiErrorCode,
-      rsCode,
-      statusCode,
-    });
     if (this.type === "EMBED") {
       return new EmbedWidget(params);
     } else {

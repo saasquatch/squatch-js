@@ -1,5 +1,8 @@
 import { JWT } from "../types";
+import { debug } from "./logger";
 import { getToken } from "./validate";
+
+const _log = debug("squatch-js:io");
 
 /**
  * Parses an error response body and returns a throwable error object.
@@ -11,20 +14,12 @@ function parseErrorResponse(responseText: string): {
   rsCode?: string;
   message: string;
 } {
-  console.log("[DEBUG] parseErrorResponse - raw responseText:", responseText);
   try {
     const parsed = JSON.parse(responseText);
-    console.log("[DEBUG] parseErrorResponse - parsed JSON:", parsed);
     if (parsed && typeof parsed === "object") {
-      console.log(
-        "[DEBUG] parseErrorResponse - returning parsed object with apiErrorCode:",
-        parsed.apiErrorCode,
-      );
       return parsed;
     }
-  } catch (e) {
-    console.log("[DEBUG] parseErrorResponse - JSON parse failed:", e);
-  }
+  } catch (e) {}
   return { message: responseText };
 }
 
@@ -64,9 +59,8 @@ export async function doGet<T>(url, jwt = ""): Promise<T> {
   const token = jwt || getToken();
   if (token) {
     headers["X-SaaSquatch-User-Token"] = token;
-    console.log("[DEBUG] doGet - Adding token to headers:", token);
   } else {
-    console.log(
+    _log(
       "[DEBUG] doGet - No token found, proceeding without authentication header.",
     );
   }
@@ -93,10 +87,9 @@ export async function doPost(url: string, data: any, jwt?: JWT) {
 
   const token = jwt || getToken();
   if (token) {
-    console.log("[DEBUG] doPost - Adding token to headers:", token);
     headers["X-SaaSquatch-User-Token"] = token;
   } else {
-    console.log(
+    _log(
       "[DEBUG] doPost - No token found, proceeding without authentication header.",
     );
   }
