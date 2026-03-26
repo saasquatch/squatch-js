@@ -68,7 +68,6 @@
     "@types/express": "^4.17.6",
     "@types/inquirer": "^9.0.3",
     "@types/jest": "^29.5.2",
-    "@types/js-cookie": "^2.2.6",
     "@types/jsdom-global": "^3.0.2",
     "@types/react": "^16.9.35",
     "@ungap/url-search-params": "^0.2.0",
@@ -109,9 +108,7 @@
     "vite-tsconfig-paths": "^5.1.4"
   },
   "prettier": {},
-  "dependencies": {
-    "js-cookie": "^3.0.5"
-  },
+  "dependencies": {},
   "browserslist": "> 0.25%, not dead",
   "msw": {
     "workerDirectory": "demo/dist"

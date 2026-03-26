@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import { getCookie } from "../utils/cookieUtils";
 import {
   ConfigOptions,
   EngagementMedium,
@@ -90,7 +90,7 @@ export default class WidgetApi {
 
     const path = `/api/v1/${tenantAlias}/widget/account/${accountId}/user/${userId}/upsert${optionalParams}`;
     const url = this.domain + path;
-    const cookies = (Cookies || window.Cookies).get("_saasquatch");
+    const cookies = getCookie("_saasquatch");
     if (cookies) user["cookies"] = cookies;
     return doPut(url, JSON.stringify(user), jwt);
   }
@@ -151,7 +151,7 @@ export default class WidgetApi {
    */
   async squatchReferralCookie(): Promise<ReferralCookie> {
     const tenantAlias = encodeURIComponent(this.tenantAlias);
-    const _saasquatch = (Cookies || window.Cookies).get("_saasquatch") || "";
+    const _saasquatch = getCookie("_saasquatch") || "";
 
     const cookie = _saasquatch
       ? `?cookies=${encodeURIComponent(_saasquatch)}`
