@@ -27,7 +27,7 @@ const validSqh = {
   },
 };
 
-test("Error widget", () => {
+test("Error widget", async () => {
   const widget = new TestWidget({
     api: new WidgetApi({ tenantAlias: TENANT_ALIAS }),
     content: "error",
@@ -37,7 +37,9 @@ test("Error widget", () => {
     type: WIDGET_TYPE,
   });
 
-  expect(widget.content).toContain(
+  expect(widget.content).toBe("error");
+  const html = await widget["_getContent"]();
+  expect(html).toContain(
     "Our referral program is temporarily unavailable."
   );
 });
@@ -231,16 +233,24 @@ describe("Widget methods", () => {
     });
   });
 
-  describe("_error", () => {
-    test("Fill in of params", () => {
-      const rs = "400";
-      const mode = "modal";
-      const style = "color: black;";
-
-      const errorHtml = widget["_error"](rs, mode, style);
-      expect(errorHtml).toContain(rs);
-      expect(errorHtml).toContain(mode);
-      expect(errorHtml).toContain(style);
+  describe("_getContent", () => {
+    test("returns content for normal widget", async () => {
+      const html = await widget["_getContent"]();
+      expect(html).toContain("DEFAULT_WIDGET_CONTENT");
+    });
+    test("returns error template for error widget", async () => {
+      const errorWidget = new TestWidget({
+        api: new WidgetApi({ tenantAlias: TENANT_ALIAS }),
+        content: "error",
+        context: { type: "upsert" },
+        domain: DEFAULT_DOMAIN,
+        npmCdn: DEFAULT_NPM_CDN,
+        type: WIDGET_TYPE,
+        rsCode: "400",
+      });
+      const html = await errorWidget["_getContent"]();
+      expect(html).toContain("400");
+      expect(html).toContain("modal");
     });
   });
 

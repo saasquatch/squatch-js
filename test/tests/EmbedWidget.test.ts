@@ -276,7 +276,7 @@ describe("methods", () => {
           widgetConfig: {
             values: {
               brandingConfig: {
-                loadingHeight: "400",
+                loadingHeight: 400,
               },
             },
           },
@@ -539,13 +539,31 @@ describe("methods", () => {
       expect(mockElement).not.toHaveBeenCalled();
     });
   });
-  test("error", () => {
-    const mockError = jest.spyOn(Widget.prototype as any, "_error");
+  test("_getErrorMode returns embed", () => {
+    expect(widget["_getErrorMode"]()).toBe("embed");
+  });
+  test("error content is written standalone", async () => {
+    const div = document.createElement("div");
+    div.id = "test";
+    document.body.appendChild(div);
 
-    widget["_error"]("201");
-    expect(mockError).toHaveBeenCalledWith("201", "embed", "");
+    const config = widgetConfig();
+    const errorWidget = new EmbedWidget({
+      ...config,
+      content: "error",
+    });
 
-    widget["_error"]("201", "asdf", "asdf");
-    expect(mockError).toHaveBeenCalledWith("201", "asdf", "asdf");
+    const mockElement = jest
+      .spyOn(errorWidget, "_findElement")
+      .mockImplementation(() => {
+        return document.querySelector("#test") as HTMLElement;
+      });
+
+    await errorWidget.load();
+
+    const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+    const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+    expect(html).toContain("Our referral program is temporarily unavailable.");
+    expect(html).not.toContain("dns-prefetch");
   });
 });

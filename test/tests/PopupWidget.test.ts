@@ -281,6 +281,34 @@ describe("methods", () => {
       expect(iframe).not.toBeNull();
       expect(iframe?.contentWindow).toBeNull();
     });
+    test("error content is written standalone", async () => {
+      const config = widgetConfig();
+      const errorWidget = new PopupWidget({
+        ...config,
+        content: "error",
+      });
+
+      const mockCTA = jest
+        .spyOn(errorWidget, "_initialiseCTA")
+        .mockImplementation(() => {});
+      const mockSetupResize = jest
+        .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
+        .mockImplementation(() => {});
+
+      await errorWidget.load();
+
+      const dialog = document.body.querySelector("dialog");
+      const iframe = dialog?.querySelector("iframe");
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain("Our referral program is temporarily unavailable.");
+      expect(html).not.toContain("dns-prefetch");
+
+      // @ts-ignore
+      expect(global.mockDebug).toHaveBeenCalledWith(
+        "Popup error template loaded into iframe"
+      );
+      expect(mockSetupResize).not.toHaveBeenCalled();
+    });
     test("width branding on dialog", async () => {
       const div = document.createElement("div");
       div.id = "test";
@@ -313,7 +341,7 @@ describe("methods", () => {
       const dialog = document.body.querySelector("dialog");
       const iframe = dialog?.querySelector("iframe");
       expect(iframe).not.toBeNull();
-      expect(iframe!.height).toBe("350");
+      expect(iframe!.style.height).toBe("350px");
     });
     test("cloudinary preconnect links are always present", async () => {
       const mockCTA = jest
