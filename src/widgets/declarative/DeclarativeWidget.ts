@@ -355,7 +355,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
     // For popup widgets, insert skeleton into the dialog container if it exists
     if (this.type === "POPUP") {
-      const dialogContainer = root.getElementById("#squatchModal");
+      const dialogContainer = root.getElementById("squatchModal");
       if (dialogContainer) {
         dialogContainer.innerHTML = "";
         dialogContainer.appendChild(skeletonContainer);

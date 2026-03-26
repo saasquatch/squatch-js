@@ -148,7 +148,7 @@ export default class PopupWidget extends Widget {
                 : ""
             }
       ${await this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
-      ${this.content}
+      ${await this._getContent()}
       `);
 
     frameDoc.close();
@@ -237,13 +237,8 @@ export default class PopupWidget extends Widget {
     _log("Popup closed");
   }
 
-  protected _clickedOutside({ target }) {}
-
-  protected _error(rs, mode = "modal", style = "") {
-    const _style =
-      "body { margin: 0; } .modal { box-shadow: none; border: 0; }";
-
-    return super._error(rs, mode, style || _style);
+  protected _getErrorStyle(): string {
+    return "body { margin: 0; } .modal { box-shadow: none; border: 0; }";
   }
 
   show = this.open;

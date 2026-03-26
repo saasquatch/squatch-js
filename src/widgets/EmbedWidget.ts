@@ -105,7 +105,7 @@ export default class EmbedWidget extends Widget {
                 : ""
             }
       ${await this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
-      ${this.content}
+      ${await this._getContent()}
       `);
 
     frameDoc.close();
@@ -179,8 +179,8 @@ export default class EmbedWidget extends Widget {
     _log("Embed widget closed");
   }
 
-  protected _error(rs, mode = "embed", style = "") {
-    return super._error(rs, mode, style);
+  protected _getErrorMode(): string {
+    return "embed";
   }
 
   private _shouldFireLoadEvent() {
