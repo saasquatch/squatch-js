@@ -121,6 +121,13 @@ export default class PopupWidget extends Widget {
     const frameDoc = contentWindow.document;
     frameDoc.open();
 
+    if (this.content === "error") {
+      frameDoc.write(await this._getContent());
+      frameDoc.close();
+      _log("Popup error template loaded into iframe");
+      return;
+    }
+
     const domain = this.widgetApi.domain;
 
     frameDoc.write(`

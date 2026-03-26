@@ -78,6 +78,12 @@ export default class EmbedWidget extends Widget {
     const frameDoc = contentWindow.document;
     frameDoc.open();
 
+    if (this.content === "error") {
+      frameDoc.write(await this._getContent());
+      frameDoc.close();
+      return;
+    }
+
     const domain = this.widgetApi.domain;
     const fastDomainSuffix =
       domain === "https://staging.referralsaasquatch.com" ? "-staging" : "";
