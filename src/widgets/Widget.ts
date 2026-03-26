@@ -19,6 +19,9 @@ export interface Params {
   content: string;
   api: WidgetApi;
   rsCode?: string;
+  apiErrorCode?: string;
+  statusCode?: number;
+  errorMessage?: string;
   context: WidgetContext;
   container?: string | HTMLElement | null | undefined;
 }
@@ -64,7 +67,14 @@ export default abstract class Widget {
   protected constructor(params: Params) {
     _log("widget initializing ...");
     this.content =
-      params.content === "error" ? this._error(params.rsCode) : params.content;
+      params.content === "error"
+        ? this._error({
+            rsCode: params.rsCode,
+            apiErrorCode: params.apiErrorCode,
+            statusCode: params.statusCode,
+            message: params.errorMessage,
+          })
+        : params.content;
     this.type = params.type;
     this.widgetApi = params.api;
     this.npmCdn = params.npmCdn;
@@ -244,7 +254,18 @@ export default abstract class Widget {
     }
   }
 
-  protected _error(rs, mode = "modal", style = "") {
+  protected _error(
+    errorInfo?: {
+      rsCode?: string;
+      apiErrorCode?: string;
+      statusCode?: number;
+      message?: string;
+    },
+    mode = "modal",
+    style = "",
+  ) {
+    const { rsCode, apiErrorCode, statusCode, message } = errorInfo || {};
+
     const errorTemplate = `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
@@ -253,6 +274,31 @@ export default abstract class Widget {
       <link rel="stylesheet" media="all" href="https://fast.ssqt.io/assets/css/widget/errorpage.css">
       <style>
         ${style}
+        .error-details {
+          margin-top: 16px;
+          padding: 12px;
+          background: #f8f8f8;
+          border-radius: 4px;
+          text-align: left;
+          font-size: 13px;
+          color: #666;
+        }
+        .error-details dt {
+          font-weight: 600;
+          color: #333;
+          margin-top: 8px;
+        }
+        .error-details dt:first-child {
+          margin-top: 0;
+        }
+        .error-details dd {
+          margin: 4px 0 0 0;
+          word-break: break-word;
+          font-family: monospace;
+        }
+        .error-details dd.message {
+          font-family: inherit;
+        }
       </style>
     </head>
     <body>
@@ -263,15 +309,23 @@ export default abstract class Widget {
           <p class="errortitle">Error</p>
         </div>
         <div class="errorbody">
-          <div class="sadface"><img src="https://fast.ssqt.io/assets/images/face.png"></div>
-          <h4>Our referral program is temporarily unavailable.</h4><br>
+          <div class="sadface"><img src="https://res.cloudinary.com/saasquatch-staging/image/upload/v1774538373/whoops-error-image_km94z1.svg"></div>
+          <h4>Our referral program is temporarily unavailable.</h4>
           <p>Please reload the page or check back later.</p>
-          <p>If the persists please contact our support team.</p>
-          <br>
-          <br>
-          <div class="right-align errtxt">
-            Error Code: ${rs}
-          </div>
+          <p>If the problem persists please contact our support team.</p>
+
+          ${
+            statusCode || apiErrorCode || rsCode || message
+              ? `
+          <dl class="error-details">
+            ${statusCode ? `<dt>Status Code</dt><dd>${statusCode}</dd>` : ""}
+            ${apiErrorCode ? `<dt>API Error Code</dt><dd>${apiErrorCode}</dd>` : ""}
+            ${rsCode ? `<dt>RS Code</dt><dd>${rsCode}</dd>` : ""}
+            ${message ? `<dt>Message</dt><dd class="message">${message}</dd>` : ""}
+          </dl>
+          `
+              : ""
+          }
         </div>
       </div>
     </body>

@@ -150,13 +150,21 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
     _log("Rendering as a Verified widget");
 
-    await this.widgetApi.upsertUser({
-      user: userObj,
-      locale: this.locale,
-      engagementMedium: this.type,
-      widgetType: this.widgetType,
-      jwt: this.token,
-    });
+    try {
+      await this.widgetApi.upsertUser({
+        user: userObj,
+        locale: this.locale,
+        engagementMedium: this.type,
+        widgetType: this.widgetType,
+        jwt: this.token,
+      });
+    } catch (e) {
+      return this.setErrorWidget(
+        e as
+          | Error
+          | { apiErrorCode?: string; rsCode?: string; message?: string },
+      );
+    }
 
     const widgetInstance = await this.widgetApi
       .render({
@@ -208,16 +216,28 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     let widgetInstance: EmbedWidget | PopupWidget;
     this.widgetType = this.getAttribute("widget") || undefined;
     this.locale = this.getAttribute("locale") || this.locale;
-
+    const widgetType = this.getWidgetType(this.widgetType);
+    console.log("[DEBUG] getWidgetInstance - token:", this.token);
     if (!this.widgetType) throw new Error("No widget has been specified");
 
-    if (!this.token) {
+    if (!this.token && widgetType === "verified-access") {
+      console.log(
+        "[DEBUG] getWidgetInstance - No token found for verified-access widget, rendering error widget",
+      );
+      return this.setErrorWidget({
+        message: "Authentication token is required for this widget type.",
+        statusCode: 401,
+      });
+    }
+
+    if (widgetType === "instant-access") {
       widgetInstance = await this.renderPasswordlessVariant();
     } else {
       widgetInstance = await this.renderUserUpsertVariant();
     }
 
     this.widgetInstance = widgetInstance;
+
     if (this.widgetInstance)
       this.dispatchEvent(new CustomEvent("sq:widget-loaded"));
 
@@ -236,7 +256,22 @@ export default abstract class DeclarativeWidget extends HTMLElement {
    * Builds a Widget instance for the default error widget
    * @returns Instance of either {@link EmbedWidget} or {@link PopupWidget} depending on `this.type`
    */
-  setErrorWidget = (e: Error) => {
+  setErrorWidget = (
+    e:
+      | Error
+      | {
+          apiErrorCode?: string;
+          rsCode?: string;
+          statusCode?: number;
+          message?: string;
+        },
+  ) => {
+    // Extract error details from either Error object or API error response
+    const errorMessage = e instanceof Error ? e.message : e?.message;
+    const apiErrorCode = e instanceof Error ? undefined : e?.apiErrorCode;
+    const rsCode = e instanceof Error ? undefined : e?.rsCode;
+    const statusCode = e instanceof Error ? undefined : e?.statusCode;
+
     const params = {
       api: this.widgetApi,
       content: "error",
@@ -248,7 +283,18 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this,
+      apiErrorCode,
+      rsCode,
+      statusCode,
+      errorMessage,
     };
+
+    console.log("[DEBUG] setErrorWidget - error details:", {
+      errorMessage,
+      apiErrorCode,
+      rsCode,
+      statusCode,
+    });
     if (this.type === "EMBED") {
       return new EmbedWidget(params);
     } else {

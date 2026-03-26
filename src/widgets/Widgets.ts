@@ -111,8 +111,19 @@ export default class Widgets {
         user: response.user,
       };
     } catch (err) {
+      console.log("[DEBUG] Widgets.upsertUser catch - err:", err);
+      console.log("[DEBUG] Widgets.upsertUser catch - typeof err:", typeof err);
+      console.log(
+        "[DEBUG] Widgets.upsertUser catch - err.apiErrorCode:",
+        err.apiErrorCode,
+      );
+      console.log(
+        "[DEBUG] Widgets.upsertUser catch - err keys:",
+        Object.keys(err || {}),
+      );
       _log(err);
       if (err.apiErrorCode) {
+        console.log("[DEBUG] Widgets.upsertUser - calling _renderErrorWidget");
         this._renderErrorWidget(err, config.engagementMedium);
       }
       throw new Error(err);
@@ -211,7 +222,7 @@ export default class Widgets {
   private _renderWidget(
     response: any,
     config: WidgetConfig,
-    context: WidgetContext
+    context: WidgetContext,
   ) {
     _log("Rendering Widget...");
     if (!response) throw new Error("Unable to get a response");
@@ -240,7 +251,7 @@ export default class Widgets {
             _log(`Display ${rule.widgetType} on ${rule.url}`);
           } else {
             _log(
-              `Don't display ${rule.widgetType} when no referral on widget rule match ${rule.url}`
+              `Don't display ${rule.widgetType} when no referral on widget rule match ${rule.url}`,
             );
           }
         }
@@ -262,8 +273,8 @@ export default class Widgets {
             } else {
               _log(
                 new Error(
-                  `Element with id/class ${formSelector} was not found.`
-                )
+                  `Element with id/class ${formSelector} was not found.`,
+                ),
               );
             }
           }
@@ -302,15 +313,23 @@ export default class Widgets {
    * @returns {void}
    */
   private _renderErrorWidget(
-    props: { apiErrorCode: string; rsCode: string; message: string },
-    em: EngagementMedium = "POPUP"
+    props: {
+      apiErrorCode: string;
+      rsCode: string;
+      statusCode?: number;
+      message: string;
+    },
+    em: EngagementMedium = "POPUP",
   ) {
-    const { apiErrorCode, rsCode, message } = props;
+    const { apiErrorCode, rsCode, statusCode, message } = props;
     _log(new Error(`${apiErrorCode} (${rsCode}) ${message}`));
 
     const params: Params = {
       content: "error",
       rsCode,
+      apiErrorCode,
+      statusCode,
+      errorMessage: message,
       api: this.api,
       domain: this.domain,
       npmCdn: this.npmCdn,

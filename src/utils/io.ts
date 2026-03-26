@@ -11,13 +11,19 @@ function parseErrorResponse(responseText: string): {
   rsCode?: string;
   message: string;
 } {
+  console.log("[DEBUG] parseErrorResponse - raw responseText:", responseText);
   try {
     const parsed = JSON.parse(responseText);
+    console.log("[DEBUG] parseErrorResponse - parsed JSON:", parsed);
     if (parsed && typeof parsed === "object") {
+      console.log(
+        "[DEBUG] parseErrorResponse - returning parsed object with apiErrorCode:",
+        parsed.apiErrorCode,
+      );
       return parsed;
     }
-  } catch {
-    // Not valid JSON, fall through
+  } catch (e) {
+    console.log("[DEBUG] parseErrorResponse - JSON parse failed:", e);
   }
   return { message: responseText };
 }
@@ -56,7 +62,14 @@ export async function doGet<T>(url, jwt = ""): Promise<T> {
   };
 
   const token = jwt || getToken();
-  if (token) headers["X-SaaSquatch-User-Token"] = token;
+  if (token) {
+    headers["X-SaaSquatch-User-Token"] = token;
+    console.log("[DEBUG] doGet - Adding token to headers:", token);
+  } else {
+    console.log(
+      "[DEBUG] doGet - No token found, proceeding without authentication header.",
+    );
+  }
 
   try {
     const res = await fetch(url, {
@@ -79,7 +92,14 @@ export async function doPost(url: string, data: any, jwt?: JWT) {
   };
 
   const token = jwt || getToken();
-  if (token) headers["X-SaaSquatch-User-Token"] = token;
+  if (token) {
+    console.log("[DEBUG] doPost - Adding token to headers:", token);
+    headers["X-SaaSquatch-User-Token"] = token;
+  } else {
+    console.log(
+      "[DEBUG] doPost - No token found, proceeding without authentication header.",
+    );
+  }
 
   try {
     const res = await fetch(url, {
