@@ -271,8 +271,9 @@ export default abstract class Widget {
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
     <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
     <head>
-      <link rel="stylesheet" media="all" href="https://fast.ssqt.io/assets/css/widget/errorpage.css">
+      <link rel="stylesheet" media="all" href="https://fast.ssqt.io/assets/css/widget/errorpage.css" onload="document.documentElement.style.visibility='visible'">
       <style>
+        html { visibility: hidden; }
         ${style}
         .error-details {
           margin-top: 16px;
