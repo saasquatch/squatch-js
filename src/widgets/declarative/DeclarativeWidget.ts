@@ -364,11 +364,15 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       root.appendChild(skeletonContainer);
     }
 
-    await this.renderWidget();
-
-    const loadingElement = root.getElementById("loading-skeleton");
-    if (loadingElement) {
-      loadingElement.remove();
+    try {
+      await this.renderWidget();
+    } catch (error) {
+      _log("Failed to render widget", error);
+    } finally {
+      const loadingElement = root.getElementById("loading-skeleton");
+      if (loadingElement) {
+        loadingElement.remove();
+      }
     }
 
     if (this.getAttribute("open") !== null) this.open();
