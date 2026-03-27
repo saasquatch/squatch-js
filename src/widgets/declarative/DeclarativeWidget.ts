@@ -222,9 +222,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
     if (!this.token && widgetType === "verified-access") {
       _log(
-        "[DEBUG] getWidgetInstance - No token found for verified-access widget, rendering error widget",
-      );
-      console.log(
         "[SquatchJS] Authentication token is required for this widget type.",
       );
     }
