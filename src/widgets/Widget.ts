@@ -93,10 +93,14 @@ export default abstract class Widget {
   protected async _getContent(): Promise<string> {
     if (this.content === "error" && this.errorInfo) {
       const { getErrorTemplate } = await import("./ErrorTemplate");
+
       return getErrorTemplate({
-        ...this.errorInfo,
+        rsCode: this.errorInfo.rsCode,
+        apiErrorCode: this.errorInfo.apiErrorCode,
+        statusCode: this.errorInfo.statusCode,
         mode: this._getErrorMode(),
         style: this._getErrorStyle(),
+        message: this.errorInfo.message,
       });
     }
     return this.content;

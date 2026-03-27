@@ -17,6 +17,28 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
     style = "",
   } = options;
 
+  // Build error details items
+  const detailItems: string[] = [];
+
+  if (statusCode !== undefined) {
+    detailItems.push(`<dt>Status Code</dt><dd>${statusCode}</dd>`);
+  }
+  if (apiErrorCode) {
+    detailItems.push(`<dt>API Error Code</dt><dd>${apiErrorCode}</dd>`);
+  }
+  if (rsCode) {
+    detailItems.push(`<dt>RS Code</dt><dd>${rsCode}</dd>`);
+  }
+  if (message) {
+    detailItems.push(`<dt>Message</dt><dd>${message}</dd>`);
+  }
+
+  // Build the error details section
+  const errorDetailsHtml =
+    detailItems.length > 0
+      ? `<dl class="error-details">${detailItems.join("\n            ")}</dl>`
+      : "";
+
   return `<!DOCTYPE html>
     <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
     <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
@@ -80,6 +102,8 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
         .errorbody {
           padding: 15px;
           position: relative;
+          overflow: visible;
+          height: auto;
         }
         p {
           text-align: center;
@@ -94,7 +118,7 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
           margin-right: auto;
         }
         .modal-disable-overlay {
-          display: block;
+          display: none;
           position: absolute;
           top: 50px;
           width: 100%;
@@ -131,8 +155,11 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
           text-align: left;
           font-size: 13px;
           color: #666;
+          display: block;
+          overflow: visible;
         }
         .error-details dt {
+          display: block;
           font-weight: 600;
           color: #333;
           margin-top: 8px;
@@ -141,12 +168,9 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
           margin-top: 0;
         }
         .error-details dd {
+          display: block;
           margin: 4px 0 0 0;
           word-break: break-word;
-          font-family: monospace;
-        }
-        .error-details dd.message {
-          font-family: inherit;
         }
       </style>
     </head>
@@ -163,18 +187,7 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
           <p>Please reload the page or check back later.</p>
           <p>If the problem persists please contact our support team.</p>
 
-          ${
-            statusCode || apiErrorCode || rsCode || message
-              ? `
-          <dl class="error-details">
-            ${statusCode ? `<dt>Status Code</dt><dd>${statusCode}</dd>` : ""}
-            ${apiErrorCode ? `<dt>API Error Code</dt><dd>${apiErrorCode}</dd>` : ""}
-            ${rsCode ? `<dt>RS Code</dt><dd>${rsCode}</dd>` : ""}
-            ${message ? `<dt>Message</dt><dd class="message">${message}</dd>` : ""}
-          </dl>
-          `
-              : ""
-          }
+          ${errorDetailsHtml}
         </div>
       </div>
     </body>
