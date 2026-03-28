@@ -474,7 +474,7 @@ function _skeletonLoader() {
   }
 
   function init() {
-    var tags: Set<string> = new Set();
+    var tags = new Set();
     document.querySelectorAll("*").forEach(function (el) {
       if (el.tagName.includes("-")) tags.add(el.tagName.toLowerCase());
     });

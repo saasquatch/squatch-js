@@ -9,10 +9,7 @@ interface SkeletonProps {
  * Returns the complete HTML string (including <style>) for the skeleton.
  * Values are injected directly into the CSS string.
  */
-export const getSkeleton = ({
-  type = "verified-access",
-  height = "500px",
-}: SkeletonProps) => {
+export const getSkeleton = ({ type = "verified-access" }: SkeletonProps) => {
   const skeletonBackgroundColor = "#e0e0e0";
   const skeletonShimmerColor = "#f5f5f5";
   const referrerHTML = `

@@ -17,20 +17,24 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
     style = "",
   } = options;
 
+  // Escape values using the browser's built-in HTML encoding
+  const tmp = document.createElement("span");
+  const esc = (s: string) => ((tmp.textContent = s), tmp.innerHTML);
+
   // Build error details items
   const detailItems: string[] = [];
 
   if (statusCode !== undefined) {
-    detailItems.push(`<dt>Status Code</dt><dd>${statusCode}</dd>`);
+    detailItems.push(`<dt>Status Code</dt><dd>${esc(String(statusCode))}</dd>`);
   }
   if (apiErrorCode) {
-    detailItems.push(`<dt>API Error Code</dt><dd>${apiErrorCode}</dd>`);
+    detailItems.push(`<dt>API Error Code</dt><dd>${esc(apiErrorCode)}</dd>`);
   }
   if (rsCode) {
-    detailItems.push(`<dt>RS Code</dt><dd>${rsCode}</dd>`);
+    detailItems.push(`<dt>RS Code</dt><dd>${esc(rsCode)}</dd>`);
   }
   if (message) {
-    detailItems.push(`<dt>Message</dt><dd>${message}</dd>`);
+    detailItems.push(`<dt>Message</dt><dd>${esc(message)}</dd>`);
   }
 
   // Build the error details section
