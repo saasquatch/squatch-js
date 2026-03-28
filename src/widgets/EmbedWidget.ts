@@ -81,6 +81,10 @@ export default class EmbedWidget extends Widget {
     if (this.content === "error") {
       frameDoc.write(await this._getContent());
       frameDoc.close();
+      domready(frameDoc, () => {
+        // @ts-ignore -- number will be cast to string by browsers
+        frame.height = frameDoc.body.scrollHeight;
+      });
       return;
     }
 
