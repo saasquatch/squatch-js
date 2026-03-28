@@ -224,6 +224,9 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       _log(
         "[SquatchJS] Authentication token is required for this widget type.",
       );
+      console.log(
+        "[SquatchJS] Authentication token is required for this widget type.",
+      );
     }
 
     if (!this.token) {

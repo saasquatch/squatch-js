@@ -73,6 +73,7 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
         }
         .embed {
           width: 100%;
+          max-width: 500px;
           margin-left: auto;
           margin-right: auto;
         }

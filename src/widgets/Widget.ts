@@ -481,6 +481,7 @@ function _skeletonLoader() {
     if (!tags.size) return remove();
     Promise.all(
       Array.from(tags).map(function (t) {
+        // @ts-ignore
         return customElements.whenDefined(t);
       }),
     ).then(function () {
