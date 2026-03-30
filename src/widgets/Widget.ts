@@ -344,7 +344,6 @@ export default abstract class Widget {
 
     const skeletonHTML = getSkeleton({
       type: skeletonType,
-      height: "100%",
     });
 
     return `

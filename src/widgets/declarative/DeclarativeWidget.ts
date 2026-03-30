@@ -342,7 +342,6 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
     const { getSkeleton } = await import("../SkeletonTemplate");
     const skeletonHTML = getSkeleton({
-      height: "100%",
       type: skeletonWidgetType,
     });
 
