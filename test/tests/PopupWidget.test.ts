@@ -1,3 +1,4 @@
+import { type Mock } from "vitest";
 import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/globals";
 import { WidgetApi } from "../../src/squatch";
 import PopupWidget from "../../src/widgets/PopupWidget";
@@ -8,16 +9,16 @@ beforeEach(() => {
 });
 
 declare global {
-  var mockDebug: jest.Mock<any, any>;
+  var mockDebug: Mock;
 }
 
-jest.mock("../../src/utils/logger", () => {
+vi.mock("../../src/utils/logger", () => {
   // @ts-ignore
-  global.mockDebug = jest.fn();
+  global.mockDebug = vi.fn();
   return {
     debug: () => global.mockDebug,
-    enableDebug: jest.fn(),
-    disableDebug: jest.fn(),
+    enableDebug: vi.fn(),
+    disableDebug: vi.fn(),
   };
 });
 
@@ -78,7 +79,7 @@ describe("methods", () => {
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     document.body.innerHTML = "";
     // @ts-ignore
     window.squatchTenant = null;
@@ -87,8 +88,8 @@ describe("methods", () => {
     widget = new PopupWidget(config);
   });
   afterEach(() => {
-    jest.useRealTimers();
-    jest.restoreAllMocks();
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
   describe("_initialiseCTA", () => {
     test("success", () => {
@@ -96,7 +97,7 @@ describe("methods", () => {
       button.className = "trigger";
       document.body.appendChild(button);
 
-      const mockOpen = jest.spyOn(widget, "open").mockImplementation(() => {});
+      const mockOpen = vi.spyOn(widget, "open").mockImplementation(() => {});
 
       widget.trigger = ".trigger";
       widget._initialiseCTA();
@@ -108,7 +109,7 @@ describe("methods", () => {
       expect(mockOpen).toHaveBeenCalled();
     });
     test("failure", () => {
-      const mockQuerySelector = jest.spyOn(document, "querySelector");
+      const mockQuerySelector = vi.spyOn(document, "querySelector");
       widget.trigger = null;
       widget._initialiseCTA();
       expect(mockQuerySelector).not.toHaveBeenCalled();
@@ -138,10 +139,10 @@ describe("methods", () => {
       expect(dialog.id).toBe(widget.id);
       expect(dialog.style.width).toBe("100%");
       expect(dialog.style.maxWidth).toBe("500px");
-      expect(dialog.style.border).toBe("none");
+      expect(dialog.style.getPropertyValue("border")).toContain("none");
       expect(dialog.style.padding).toBe("0px");
 
-      const mockClose = jest
+      const mockClose = vi
         .spyOn(dialog, "close")
         .mockImplementation(() => {});
 
@@ -180,11 +181,11 @@ describe("methods", () => {
   });
   describe("load", () => {
     test("success", async () => {
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
-      const createDialogSpy = jest.spyOn(widget, "_createPopupDialog");
-      const mockSetupResize = jest
+      const createDialogSpy = vi.spyOn(widget, "_createPopupDialog");
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -222,14 +223,14 @@ describe("methods", () => {
       }
       document.body.appendChild(div);
 
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockFindElement = jest
+      const mockFindElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => document.querySelector("div#test")!);
-      const createDialogSpy = jest.spyOn(widget, "_createPopupDialog");
-      const mockSetupResize = jest
+      const createDialogSpy = vi.spyOn(widget, "_createPopupDialog");
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -262,10 +263,10 @@ describe("methods", () => {
       const div = document.createElement("div");
       div.id = "test";
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => div);
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
 
@@ -288,10 +289,10 @@ describe("methods", () => {
         content: "error",
       });
 
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(errorWidget, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -329,10 +330,10 @@ describe("methods", () => {
         },
       });
 
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widgetWithHeight, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -344,10 +345,10 @@ describe("methods", () => {
       expect(iframe!.style.height).toBe("350px");
     });
     test("cloudinary preconnect links are always present", async () => {
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -375,10 +376,10 @@ describe("methods", () => {
         },
       });
 
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widgetWithFont, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -392,10 +393,10 @@ describe("methods", () => {
       expect(html).toContain('family=Open%20Sans');
     });
     test("no brand font preconnect links when brandFont is not configured", async () => {
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -413,10 +414,10 @@ describe("methods", () => {
         content: "<sqm-brand><script src='mint-components'></script></sqm-brand>",
       });
 
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(mintWidget, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -428,10 +429,10 @@ describe("methods", () => {
       expect(html).toContain('sq-preload');
     });
     test("skeleton preload is not present without mint-components", async () => {
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widget, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 
@@ -463,10 +464,10 @@ describe("methods", () => {
         },
       });
 
-      const mockCTA = jest
+      const mockCTA = vi
         .spyOn(widgetWithSizes, "_initialiseCTA")
         .mockImplementation(() => {});
-      const mockSetupResize = jest
+      const mockSetupResize = vi
         .spyOn(PopupWidget.prototype as any, "_setupResizeHandler")
         .mockImplementation(() => {});
 

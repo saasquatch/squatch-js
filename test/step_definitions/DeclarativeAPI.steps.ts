@@ -45,7 +45,7 @@ defineFeature(feature, (test) => {
     window.squatchConfig = {};
   });
   afterAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   test("AnalyticsApi defaults to window configuration", ({
@@ -341,7 +341,7 @@ defineFeature(feature, (test) => {
     );
   });
 
-  // CA: Ideally this can be tested with jest.spyOn(squatchjs, "init")
+  // CA: Ideally this can be tested with vi.spyOn(squatchjs, "init")
   //     however there isn't a good way to mock the init for a single test
 
   // test("Squatchjs API methods if squatch.init hasn't been called", () => {})

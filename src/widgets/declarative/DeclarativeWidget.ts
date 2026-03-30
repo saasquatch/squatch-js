@@ -148,6 +148,11 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       return this.setErrorWidget(Error("No user object in token."));
     }
 
+    // Use the user's locale from the JWT if no locale attribute was set
+    if (!this.locale && userObj.locale) {
+      this.locale = userObj.locale;
+    }
+
     _log("Rendering as a Verified widget");
 
     try {
@@ -357,6 +362,8 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       if (dialogContainer) {
         dialogContainer.innerHTML = "";
         dialogContainer.appendChild(skeletonContainer);
+      } else {
+        root.appendChild(skeletonContainer);
       }
     } else {
       root.innerHTML = "";

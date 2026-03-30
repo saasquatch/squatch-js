@@ -5,9 +5,10 @@
 import { DEFAULT_DOMAIN } from "../../src/globals";
 import DeclarativeWidget from "../../src/widgets/declarative/DeclarativeWidget";
 import PopupWidget from "../../src/widgets/PopupWidget";
-jest.mock("../../src/widgets/PopupWidget");
+vi.mock("../../src/widgets/PopupWidget");
 
 class Test extends DeclarativeWidget {}
+customElements.define("test-declarative-widget", Test);
 describe("DeclarativeWidget", () => {
   beforeEach(() => {
     // @ts-ignore
@@ -92,7 +93,7 @@ describe("DeclarativeWidget", () => {
   describe("renderUserUpsertVariant", () => {
     test("no user information in token", async () => {
       const widget = new Test();
-      const mockSetErrorWidget = jest.spyOn(widget, "setErrorWidget");
+      const mockSetErrorWidget = vi.spyOn(widget, "setErrorWidget");
       widget.token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnYiOnsidGVuYW50QWxpYXMiOiJ0ZXN0X2E4YjQxam90ZjhhMXYiLCJkb21haW4iOiJodHRwczovL3N0YWdpbmcucmVmZXJyYWxzYWFzcXVhdGNoLmNvbSJ9fQ";
 
@@ -174,7 +175,7 @@ describe("DeclarativeWidget", () => {
       const widget = new Test();
       widget.type = "EMBED";
 
-      const mockRenderWidget = jest
+      const mockRenderWidget = vi
         .spyOn(widget, "renderWidget")
         .mockImplementation(async () => {});
 
@@ -188,11 +189,11 @@ describe("DeclarativeWidget", () => {
       widget.setAttribute("widget", "w/test-widget");
       widget.setAttribute("open", "");
 
-      const mockRenderWidget = jest
+      const mockRenderWidget = vi
         .spyOn(widget, "renderWidget")
         .mockImplementation(async () => {});
 
-      const mockOpen = jest
+      const mockOpen = vi
         .spyOn(widget, "open")
         .mockImplementation(() => {});
 
@@ -205,11 +206,11 @@ describe("DeclarativeWidget", () => {
       widget.type = "EMBED";
       widget.setAttribute("widget", "w/test-widget");
 
-      const mockRenderWidget = jest
+      const mockRenderWidget = vi
         .spyOn(widget, "renderWidget")
         .mockImplementation(async () => {});
 
-      const mockOpen = jest
+      const mockOpen = vi
         .spyOn(widget, "open")
         .mockImplementation(() => {});
 
@@ -223,7 +224,7 @@ describe("DeclarativeWidget", () => {
       const widget = new Test();
       widget.loaded = true;
 
-      const mockConnected = jest
+      const mockConnected = vi
         .spyOn(widget, "connectedCallback")
         .mockImplementation(async () => {});
 
@@ -235,7 +236,7 @@ describe("DeclarativeWidget", () => {
       const widget = new Test();
       widget.loaded = false;
 
-      const mockConnected = jest
+      const mockConnected = vi
         .spyOn(widget, "connectedCallback")
         .mockImplementation(async () => {});
 
@@ -247,7 +248,7 @@ describe("DeclarativeWidget", () => {
       const widget = new Test();
       widget.loaded = true;
 
-      const mockConnected = jest
+      const mockConnected = vi
         .spyOn(widget, "connectedCallback")
         .mockImplementation(async () => {});
 
@@ -259,7 +260,7 @@ describe("DeclarativeWidget", () => {
       const widget = new Test();
       widget.loaded = true;
 
-      const mockConnected = jest
+      const mockConnected = vi
         .spyOn(widget, "connectedCallback")
         .mockImplementation(async () => {});
 

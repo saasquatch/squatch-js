@@ -41,7 +41,7 @@ describe("methods", () => {
       },
     ])("passing cases", async (args) => {
       const postReturn = { success: "yes" };
-      const mockPost = jest
+      const mockPost = vi
         .spyOn(utils, "doPost")
         .mockImplementation(async () => postReturn);
 
@@ -105,7 +105,7 @@ describe("methods", () => {
         options: { jwt: "SOME_JWT" },
       },
     ])("failing cases", async (args) => {
-      const mockPost = jest
+      const mockPost = vi
         .spyOn(utils, "doPost")
         .mockImplementation(async () => new Promise((res) => res({})));
 
