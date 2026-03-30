@@ -123,7 +123,7 @@ export default class EmbedWidget extends Widget {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
 
       // @ts-ignore -- number will be cast to string by browsers
-      frame.height = initialHeight || frameDoc.body.scrollHeight;
+      frame.height = initialHeight;
 
       // Adjust frame height when size of body changes
       /* istanbul ignore next: hard to test */

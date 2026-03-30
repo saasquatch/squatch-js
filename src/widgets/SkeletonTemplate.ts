@@ -2,7 +2,6 @@ export type WidgetType = "instant-access" | "verified-access";
 
 interface SkeletonProps {
   type?: WidgetType;
-  height?: string | number;
 }
 
 /**
