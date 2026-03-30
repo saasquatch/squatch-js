@@ -346,11 +346,18 @@ export default abstract class Widget {
       type: skeletonType,
     });
 
+    // Extract custom element tags from HTML string instead of scanning the DOM
+    const tagSet = new Set<string>();
+    const tagRegex = /<([a-z][\w]*-[\w-]*)/gi;
+    let m;
+    while ((m = tagRegex.exec(this.content))) tagSet.add(m[1].toLowerCase());
+    const tags = JSON.stringify([...tagSet]);
+
     return `
       <div id="sq-preload" style="visibility: visible; position: absolute; top: 0; left: 0; width: 100%; z-index: 9999; background: ${(backgroundColor || "white").replace(/[^a-zA-Z0-9#(),.\s%-]/g, "")};">
         ${skeletonHTML}
       </div>
-      <script>(${_skeletonLoader.toString()})()<\/script>
+      <script>(${_skeletonLoader.toString()})(${tags})<\/script>
     `;
   }
 
@@ -463,7 +470,7 @@ function delay(duration) {
 /**
  * Removes the skeleton overlay once all custom elements are defined.
  */
-function _skeletonLoader() {
+function _skeletonLoader(tags: string[]) {
   var fallback = setTimeout(remove, 10000);
 
   function remove() {
@@ -473,14 +480,9 @@ function _skeletonLoader() {
   }
 
   function init() {
-    var tags = new Set();
-    document.querySelectorAll("*").forEach(function (el) {
-      if (el.tagName.includes("-")) tags.add(el.tagName.toLowerCase());
-    });
-    if (!tags.size) return remove();
+    if (!tags || !tags.length) return remove();
     Promise.all(
-      Array.from(tags).map(function (t) {
-        // @ts-ignore
+      tags.map(function (t) {
         return customElements.whenDefined(t);
       }),
     ).then(function () {

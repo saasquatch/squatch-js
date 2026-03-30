@@ -267,9 +267,9 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   ) => {
     // Extract error details from either Error object or API error response
     const errorMessage = e instanceof Error ? e.message : e?.message;
-    const apiErrorCode = e instanceof Error ? undefined : e?.apiErrorCode;
-    const rsCode = e instanceof Error ? undefined : e?.rsCode;
-    const statusCode = e instanceof Error ? undefined : e?.statusCode;
+    const apiErrorCode = (e as any)?.apiErrorCode;
+    const rsCode = (e as any)?.rsCode;
+    const statusCode = (e as any)?.statusCode;
 
     const params = {
       api: this.widgetApi,

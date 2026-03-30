@@ -5,22 +5,33 @@ import { getToken } from "./validate";
 const _log = debug("squatch-js:io");
 
 /**
- * Parses an error response body and returns a throwable error object.
- * If the response is valid JSON with apiErrorCode, returns the parsed object.
- * Otherwise, returns an object with the raw message.
+ * Parses an error response body and returns a throwable Error with API details.
  */
-function parseErrorResponse(responseText: string): {
+function parseErrorResponse(responseText: string): Error & {
   apiErrorCode?: string;
   rsCode?: string;
-  message: string;
+  statusCode?: number;
 } {
+  let apiErrorCode: string | undefined;
+  let rsCode: string | undefined;
+  let statusCode: number | undefined;
+  let message = responseText;
+
   try {
     const parsed = JSON.parse(responseText);
     if (parsed && typeof parsed === "object") {
-      return parsed;
+      apiErrorCode = parsed.apiErrorCode;
+      rsCode = parsed.rsCode;
+      statusCode = parsed.statusCode;
+      message = parsed.message || responseText;
     }
   } catch (e) {}
-  return { message: responseText };
+
+  const err = new Error(message);
+  if (apiErrorCode) (err as any).apiErrorCode = apiErrorCode;
+  if (rsCode) (err as any).rsCode = rsCode;
+  if (statusCode !== undefined) (err as any).statusCode = statusCode;
+  return err;
 }
 
 export async function doQuery(
