@@ -347,7 +347,7 @@ export default abstract class Widget {
     });
 
     return `
-      <div id="sq-preload" style="visibility: visible; position: absolute; top: 0; left: 0; width: 100%; z-index: 9999; background: ${backgroundColor || "white"};">
+      <div id="sq-preload" style="visibility: visible; position: absolute; top: 0; left: 0; width: 100%; z-index: 9999; background: ${(backgroundColor || "white").replace(/[^a-zA-Z0-9#(),.\s%-]/g, "")};">
         ${skeletonHTML}
       </div>
       <script>(${_skeletonLoader.toString()})()<\/script>
