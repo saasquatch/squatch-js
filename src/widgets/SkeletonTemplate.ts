@@ -120,21 +120,14 @@ export const getSkeleton = ({ type = "verified-access" }: SkeletonProps) => {
         overflow: hidden; 
       }
 
-      @keyframes shimmer {
-        0% { background-position: -100% 0; }
-        100% { background-position: 100% 0; }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
       }
 
       .skeleton {
         background: ${skeletonBackgroundColor};
-        background: linear-gradient(
-          90deg,
-          ${skeletonBackgroundColor} 25%,
-          ${skeletonShimmerColor} 50%,
-          ${skeletonBackgroundColor} 75%
-        );
-        background-size: 200% 100%;
-        animation: shimmer 1.5s infinite linear;
+        animation: pulse 1.8s ease-in-out infinite;
         border-radius: 6px;
         margin-bottom: 12px;
       }

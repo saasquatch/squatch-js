@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perf Frame</title>
+    <style>
+      body { margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+      squatch-embed, impact-embed { display: block; width: 100%; }
+      #status { position: fixed; top: 0; left: 0; right: 0; background: rgba(0,0,0,0.7); color: #0f0; font-size: 11px; padding: 4px 8px; z-index: 99999; font-family: monospace; white-space: pre; }
+    </style>
+    <script>
+      // ── Instrumentation globals (runs before loader) ─────────────────
+      window.__perfT0 = performance.now();
+      window.__perfMetrics = null;
+      window.__perfMarks = {};
+
+      window.__perfMark = function (name) {
+        window.__perfMarks[name] = performance.now();
+        window.__perfUpdateStatus();
+      };
+
+      window.__perfElapsed = function (name) {
+        var v = window.__perfMarks[name];
+        return v ? (v - window.__perfT0).toFixed(1) + "ms" : "…";
+      };
+
+      window.__perfUpdateStatus = function () {
+        var el = document.getElementById("status");
+        if (!el) return;
+        el.textContent =
+          "SDK load: " + window.__perfElapsed("sdk-script-loaded") +
+          "  ready: " + window.__perfElapsed("sdk-ready") +
+          "  frame: " + window.__perfElapsed("frame-created") +
+          "  paint: " + window.__perfElapsed("meaningful-paint") +
+          "  stable: " + window.__perfElapsed("stable") +
+          "  unstyled: " + window.__perfElapsed(window.__perfMarks["skeleton-start"] ? "skeleton-start" : "unstyled-end");
+      };
+
+      window.__perfReport = function () {
+        var t0 = window.__perfT0;
+        var marks = window.__perfMarks;
+        function delta(name) {
+          var v = marks[name];
+          return (v && v > t0) ? v - t0 : 0;
+        }
+        var sdkUrl = new URLSearchParams(window.location.search).get("sdk") || "";
+        var bundleSize = 0;
+        try {
+          var entries = performance.getEntriesByType("resource");
+          for (var i = 0; i < entries.length; i++) {
+            if (entries[i].name && entries[i].name.indexOf("squatch-js") > -1) {
+              bundleSize = entries[i].transferSize || entries[i].encodedBodySize || 0;
+              break;
+            }
+          }
+        } catch (e) {}
+
+        var out = {
+          sdkUrl: sdkUrl,
+          sdkScriptLoad: delta("sdk-script-loaded"),
+          sdkReady: delta("sdk-ready"),
+          frameCreated: delta("frame-created"),
+          meaningfulPaint: delta("meaningful-paint"),
+          stable: delta("stable"),
+          timeUnstyled: marks["skeleton-start"]
+            ? delta("skeleton-start")
+            : delta("unstyled-end"),
+          bundleSizeBytes: bundleSize,
+          raw: marks
+        };
+        window.__perfMetrics = out;
+        try {
+          window.parent.postMessage({ type: "perf-metrics", metrics: out }, "*");
+        } catch (e) {}
+        console.log("[perf-frame] metrics:", JSON.stringify(out, null, 2));
+      };
+    </script>
+    <script>
+      // ── SDK Loader (exact production pattern, dynamic URL) ──────────
+      var __sdkUrl = new URLSearchParams(window.location.search).get("sdk");
+      if (__sdkUrl) {
+        !(function (a, b) {
+          a("squatch", __sdkUrl, b);
+        })(function (a, b, c) {
+          var d, e, f;
+          ((c["_" + a] = {}),
+            (c[a] = {}),
+            (c[a].ready = function (b) {
+              c["_" + a].ready = c["_" + a].ready || [];
+              c["_" + a].ready.push(b);
+            }),
+            (e = document.createElement("script")),
+            (e.async = 1),
+            (e.src = b),
+            (e.onload = function () {
+              window.__perfMark("sdk-script-loaded");
+            }),
+            (e.onerror = function () {
+              window.__perfMark("sdk-script-error");
+              window.__perfReport();
+            }),
+            (f = document.getElementsByTagName("script")[0]),
+            f.parentNode.insertBefore(e, f));
+        }, this);
+
+        window.__perfMark("sdk-load-start");
+
+        window.squatch.ready(function () {
+          window.__perfMark("sdk-ready");
+        });
+      }
+    </script>
+    <script>
+      // ── Widget configuration ────────────────────────────────────────
+      // Read config from URL params (set by perf-compare.html), with defaults
+      var __params = new URLSearchParams(window.location.search);
+      var __jwt = __params.get("jwt") || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IklSTVhzWXk2WVlxcTQ2OTQzN21HOEVSUXQ4UW9LRkJhRzEifQ.eyJ1c2VyIjp7ImlkIjoiMGM2YmUwZTcxMGViMDk1OTU2ODMxYTkyOTUxODVlMmU5N2VmMTQzMDhjN2UzNjFmYjBlYzY0NTE0NjUwY2NhOCIsImFjY291bnRJZCI6IjBjNmJlMGU3MTBlYjA5NTk1NjgzMWE5Mjk1MTg1ZTJlOTdlZjE0MzA4YzdlMzYxZmIwZWM2NDUxNDY1MGNjYTgiLCJlbWFpbCI6ImRlcmVrLnNpZW1lbnMrbm93OTJAaW1wYWN0LmNvbSJ9fQ.KOORz1aOIVRPR6PdF3Ss0D1AW19EYTX97WnA6fOVXaI";
+      var __domain = __params.get("domain") || window.location.origin;
+      var __tenant = __params.get("tenant") || "ac52kfybp1tkr";
+      var __widget = __params.get("widget") || "p/47253/w/referrerWidget";
+      var __cfg = { domain: __domain };
+
+      window.squatchTenant = __tenant;
+      // v2 globals
+      window.squatchToken = __jwt;
+      window.squatchConfig = __cfg;
+      // @next globals (takes precedence when both are set)
+      window.impactToken = __jwt;
+      window.impactConfig = __cfg;
+    </script>
+    <script>
+      // ── Dynamic widget element ──────────────────────────────────────
+      // v2 only registers <squatch-embed>, @next registers both
+      // <squatch-embed> and <impact-embed>. Use <squatch-embed> for v2,
+      // <impact-embed> for @next.
+      (function () {
+        var sdk = new URLSearchParams(window.location.search).get("sdk") || "";
+        var isV2 = sdk.indexOf("@2") > -1;
+        var tag = isV2 ? "squatch-embed" : "impact-embed";
+        var el = document.createElement(tag);
+        el.setAttribute("widget", __widget);
+        document.addEventListener("DOMContentLoaded", function () {
+          document.body.appendChild(el);
+          // connectedCallback clears shadow root innerHTML (removing :host style)
+          // then asynchronously appends the skeleton. Watch for the skeleton and
+          // re-inject the :host style so it fills full width.
+          var injectStyle = setInterval(function () {
+            var sr = el.shadowRoot;
+            if (!sr) return;
+            // Wait until the skeleton is actually in the shadow root
+            var skel = sr.getElementById("loading-skeleton");
+            if (!skel) return;
+            if (!sr.querySelector("#perf-host-fix")) {
+              var s = document.createElement("style");
+              s.id = "perf-host-fix";
+              s.textContent = ":host { display: block; width: 100%; }";
+              sr.prepend(s);
+            }
+            clearInterval(injectStyle);
+          }, 5);
+          setTimeout(function () { clearInterval(injectStyle); }, 5000);
+        });
+      })();
+    </script>
+    <script>
+      // ── DOM observers for widget lifecycle metrics ───────────────────
+      (function () {
+        var stableTimer = null;
+        var STABLE_DELAY = 500;
+
+        function resetStableTimer() {
+          if (stableTimer) clearTimeout(stableTimer);
+          stableTimer = setTimeout(function () {
+            window.__perfMark("stable");
+            window.__perfReport();
+          }, STABLE_DELAY);
+        }
+
+        // Fallback: report after 15s even if nothing happens
+        setTimeout(function () {
+          if (!window.__perfMarks["stable"]) {
+            window.__perfMark("stable");
+          }
+          window.__perfReport();
+        }, 15000);
+
+        var frameDetected = false;
+
+        function observeWidgetIframe(iframe) {
+          // Watch height/style attribute changes for stable timer
+          var resizeObs = new MutationObserver(function (mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+              var attr = mutations[i].attributeName;
+              if (attr === "height" || attr === "style") {
+                resetStableTimer();
+              }
+            }
+          });
+          resizeObs.observe(iframe, { attributes: true, attributeFilter: ["height", "style"] });
+          resetStableTimer();
+
+          // Helper: check if any real CSS rules have been applied in the iframe document
+          function hasStylesApplied(doc) {
+            try {
+              var sheets = doc.styleSheets;
+              if (!sheets || sheets.length === 0) return false;
+              for (var i = 0; i < sheets.length; i++) {
+                try {
+                  if (sheets[i].cssRules && sheets[i].cssRules.length > 0) return true;
+                } catch (e) { return true; }
+              }
+              return false;
+            } catch (e) { return false; }
+          }
+
+          // Detect "time unstyled" (FOUC): time between first visible content and styles applied.
+          // V2 doesn't use visibility:hidden, so content shows before CSS loads = FOUC.
+          // @next uses html{visibility:hidden} for mint-components, hiding until styled = no FOUC.
+          (function detectFOUC() {
+
+            // Helper: check if content is hidden (skeleton/visibility:hidden)
+            function isContentHidden(doc) {
+              try {
+                var vis = doc.documentElement ? getComputedStyle(doc.documentElement).visibility : "visible";
+                return vis === "hidden";
+              } catch (e) { return false; }
+            }
+
+            // Helper: check if a skeleton overlay is present
+            function hasSkeleton(doc) {
+              try { return !!doc.getElementById("sq-preload"); } catch (e) { return false; }
+            }
+
+            // Immediately mark unstyled-start as frame-created time
+            // (content is visible from the moment frame is created for V2)
+            // We'll adjust this if we discover content was actually hidden.
+            var started = false;
+            var adjustedStart = false;
+
+            var pollCount = 0;
+            function poll() {
+              if (window.__perfMarks["unstyled-end"]) return;
+              try {
+                var doc = iframe.contentDocument || (iframe.contentWindow && iframe.contentWindow.document);
+                if (!doc || !doc.body || doc.body.children.length === 0) { retryPoll(); return; }
+
+                var hidden = isContentHidden(doc);
+                var skeleton = hasSkeleton(doc);
+                var styled = hasStylesApplied(doc);
+
+                if (!started) {
+                  if (hidden || skeleton) {
+                    // Content is hidden or has skeleton — this is @next behavior
+                    // No visible FOUC is happening; wait for styles
+                    if (styled) {
+                      // Styles loaded while hidden — no FOUC at all
+                      window.__perfMark("unstyled-start");
+                      window.__perfMark("unstyled-end");
+                      return;
+                    }
+                    retryPoll();
+                    return;
+                  }
+
+                  // Content is visible and not behind a skeleton
+                  if (styled) {
+                    // Styles already applied — no FOUC
+                    window.__perfMark("unstyled-start");
+                    window.__perfMark("unstyled-end");
+                    return;
+                  }
+
+                  // FOUC: visible + no styles + no skeleton
+                  // Backdate unstyled-start to frame-created time (that's when
+                  // content first became visible)
+                  started = true;
+                  if (window.__perfMarks["frame-created"]) {
+                    window.__perfMarks["unstyled-start"] = window.__perfMarks["frame-created"];
+                  } else {
+                    window.__perfMark("unstyled-start");
+                  }
+                  retryPoll();
+                } else {
+                  // Waiting for styles to end the FOUC period
+                  if (styled) {
+                    window.__perfMark("unstyled-end");
+                    return;
+                  }
+                  retryPoll();
+                }
+              } catch (e) {
+                retryPoll();
+              }
+            }
+            function retryPoll() {
+              pollCount++;
+              if (pollCount < 400) setTimeout(poll, 25);
+            }
+            setTimeout(poll, 10);
+          })();
+
+          // Watch for skeleton removal or visibility change (meaningful paint)
+          var skeletonRetries = 0;
+          function watchSkeleton() {
+            if (window.__perfMarks["meaningful-paint"]) return;
+            try {
+              var doc = iframe.contentDocument || (iframe.contentWindow && iframe.contentWindow.document);
+              if (!doc) { retrySkeleton(); return; }
+
+              var skel = doc.getElementById("sq-preload");
+              if (!skel) {
+                var html = doc.documentElement;
+                if (html && doc.body && doc.body.children.length > 0) {
+                  var vis = getComputedStyle(html).visibility;
+                  // For V2: wait until the iframe document is fully loaded
+                  // (readyState "complete" = all subresources including CSS
+                  // <link> tags have finished loading) so the content is
+                  // actually styled, not just raw HTML with partial styles.
+                  var ready = doc.readyState === "complete";
+                  if (vis === "visible" && ready && hasStylesApplied(doc)) {
+                    window.__perfMark("meaningful-paint");
+                    return;
+                  }
+                }
+                retrySkeleton();
+                return;
+              }
+
+              // Skeleton found — poll for its removal
+              var pollId = setInterval(function () {
+                if (!doc.getElementById("sq-preload")) {
+                  window.__perfMark("meaningful-paint");
+                  clearInterval(pollId);
+                }
+              }, 100);
+              setTimeout(function () { clearInterval(pollId); }, 10000);
+            } catch (e) {
+              retrySkeleton();
+            }
+          }
+          function retrySkeleton() {
+            skeletonRetries++;
+            if (skeletonRetries < 50) setTimeout(watchSkeleton, 200);
+          }
+          setTimeout(watchSkeleton, 100);
+        }
+
+        // Poll shadow roots of declarative widgets for iframe creation
+        var checkShadow = setInterval(function () {
+          if (frameDetected) { clearInterval(checkShadow); return; }
+          var embeds = document.querySelectorAll("impact-embed, squatch-embed");
+          for (var k = 0; k < embeds.length; k++) {
+            var sr = embeds[k].shadowRoot;
+            if (sr) {
+              // Detect outer skeleton (#loading-skeleton in shadow root)
+              // This is inserted by connectedCallback BEFORE the iframe exists
+              if (!window.__perfMarks["skeleton-start"] && sr.getElementById("loading-skeleton")) {
+                window.__perfMark("skeleton-start");
+              }
+              var iframe = sr.querySelector("iframe");
+              if (iframe) {
+                frameDetected = true;
+                clearInterval(checkShadow);
+                window.__perfMark("frame-created");
+                observeWidgetIframe(iframe);
+                return;
+              }
+            }
+          }
+        }, 50);
+        setTimeout(function () { clearInterval(checkShadow); }, 15000);
+
+        // Also watch body for directly-appended iframes (non-declarative path)
+        document.addEventListener("DOMContentLoaded", function () {
+          var bodyObs = new MutationObserver(function (mutations) {
+            if (frameDetected) return;
+            for (var i = 0; i < mutations.length; i++) {
+              var added = mutations[i].addedNodes;
+              for (var j = 0; j < added.length; j++) {
+                var node = added[j];
+                if (node.nodeName === "IFRAME" || (node.querySelector && node.querySelector("iframe"))) {
+                  frameDetected = true;
+                  window.__perfMark("frame-created");
+                  var iframe = node.nodeName === "IFRAME" ? node : node.querySelector("iframe");
+                  if (iframe) observeWidgetIframe(iframe);
+                  return;
+                }
+              }
+            }
+          });
+          bodyObs.observe(document.body, { childList: true, subtree: true });
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="status"></div>
+  </body>
+</html>
