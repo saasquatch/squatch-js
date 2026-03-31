@@ -390,8 +390,8 @@
           <div class="metric-card"><div class="label">Frame Created</div><div class="value pending" data-metric="frameCreated">—</div></div>
           <div class="metric-card"><div class="label">Meaningful Paint</div><div class="value pending" data-metric="meaningfulPaint">—</div></div>
           <div class="metric-card"><div class="label">Time Unstyled</div><div class="value pending" data-metric="timeUnstyled">—</div></div>
-          <div class="metric-card"><div class="label">Time to Stable</div><div class="value pending" data-metric="stable">—</div></div>
-          <div class="metric-card"><div class="label">Total Load</div><div class="value pending" data-metric="totalLoad">—</div></div>
+          <div class="metric-card"><div class="label">Network Request Time</div><div class="value pending" data-metric="networkTime">—</div></div>
+          <div class="metric-card"><div class="label">Total Load Time</div><div class="value pending" data-metric="totalLoad">—</div></div>
         </div>
       </div>
 
@@ -434,8 +434,8 @@
           <div class="metric-card"><div class="label">Frame Created</div><div class="value pending" data-metric="frameCreated">—</div></div>
           <div class="metric-card"><div class="label">Meaningful Paint</div><div class="value pending" data-metric="meaningfulPaint">—</div></div>
           <div class="metric-card"><div class="label">Time Unstyled</div><div class="value pending" data-metric="timeUnstyled">—</div></div>
-          <div class="metric-card"><div class="label">Time to Stable</div><div class="value pending" data-metric="stable">—</div></div>
-          <div class="metric-card"><div class="label">Total Load</div><div class="value pending" data-metric="totalLoad">—</div></div>
+          <div class="metric-card"><div class="label">Network Request Time</div><div class="value pending" data-metric="networkTime">—</div></div>
+          <div class="metric-card"><div class="label">Total Load Time</div><div class="value pending" data-metric="totalLoad">—</div></div>
         </div>
       </div>
     </div>
@@ -535,8 +535,8 @@
           { key: "frameCreated", label: "Frame Created", unit: "ms", format: formatMs, lowerBetter: true },
           { key: "meaningfulPaint", label: "Meaningful Paint", unit: "ms", format: formatMs, lowerBetter: true },
           { key: "timeUnstyled", label: "Time Unstyled", unit: "ms", format: formatMs, lowerBetter: true },
-          { key: "stable", label: "Time to Stable", unit: "ms", format: formatMs, lowerBetter: true },
-          { key: "totalLoad", label: "Total Load", unit: "ms", format: formatMs, lowerBetter: true }
+          { key: "networkTime", label: "Network Request Time", unit: "ms", format: formatMs, lowerBetter: true },
+          { key: "totalLoad", label: "Total Load Time", unit: "ms", format: formatMs, lowerBetter: true }
         ];
 
         function formatMs(v) { return v > 0 ? v.toFixed(0) + " ms" : "—"; }
@@ -635,6 +635,7 @@
         function enrichMetrics(m) {
           if (!m) return null;
           m.totalLoad = m.stable || 0;
+          m.networkTime = m.networkTime || 0;
           m.bundleSize = m.bundleSizeBytes || 0;
           return m;
         }

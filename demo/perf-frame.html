@@ -56,6 +56,17 @@
           }
         } catch (e) {}
 
+        var networkTime = 0;
+        try {
+          var resEntries = performance.getEntriesByType("resource");
+          for (var j = 0; j < resEntries.length; j++) {
+            var e = resEntries[j];
+            if (e.responseEnd > 0 && e.startTime >= 0) {
+              networkTime += e.responseEnd - e.startTime;
+            }
+          }
+        } catch (e) {}
+
         var out = {
           sdkUrl: sdkUrl,
           sdkScriptLoad: delta("sdk-script-loaded"),
@@ -67,6 +78,7 @@
             ? delta("skeleton-start")
             : delta("unstyled-end"),
           bundleSizeBytes: bundleSize,
+          networkTime: networkTime,
           raw: marks
         };
         window.__perfMetrics = out;

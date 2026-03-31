@@ -40,6 +40,7 @@ interface PerfMetrics {
   stable: number;
   timeUnstyled: number;
   bundleSizeBytes: number;
+  networkTime: number;
   totalLoad: number;
 }
 
@@ -58,8 +59,8 @@ const METRICS: MetricDef[] = [
   { key: "frameCreated", label: "Frame Created", unit: "ms", format: (v) => v > 0 ? v.toFixed(0) : "—", lowerBetter: true },
   { key: "meaningfulPaint", label: "Meaningful Paint", unit: "ms", format: (v) => v > 0 ? v.toFixed(0) : "—", lowerBetter: true },
   { key: "timeUnstyled", label: "Time Unstyled", unit: "ms", format: (v) => v > 0 ? v.toFixed(0) : "—", lowerBetter: true },
-  { key: "stable", label: "Time to Stable", unit: "ms", format: (v) => v > 0 ? v.toFixed(0) : "—", lowerBetter: true },
-  { key: "totalLoad", label: "Total Load", unit: "ms", format: (v) => v > 0 ? v.toFixed(0) : "—", lowerBetter: true },
+  { key: "networkTime", label: "Network Request Time", unit: "ms", format: (v) => v > 0 ? v.toFixed(0) : "—", lowerBetter: true },
+  { key: "totalLoad", label: "Total Load Time", unit: "ms", format: (v) => v > 0 ? v.toFixed(0) : "—", lowerBetter: true },
 ];
 
 // ── CLI args ───────────────────────────────────────────────
@@ -159,6 +160,7 @@ async function collectMetrics(
             stable: m.stable,
             timeUnstyled: m.timeUnstyled || 0,
             bundleSizeBytes: m.bundleSizeBytes || 0,
+            networkTime: m.networkTime || 0,
             totalLoad: m.stable,
           });
         } else if (attempts >= maxAttempts) {
@@ -174,6 +176,7 @@ async function collectMetrics(
               stable: m.stable || 0,
               timeUnstyled: m.timeUnstyled || 0,
               bundleSizeBytes: m.bundleSizeBytes || 0,
+              networkTime: m.networkTime || 0,
               totalLoad: m.stable || 0,
             });
           } else {
