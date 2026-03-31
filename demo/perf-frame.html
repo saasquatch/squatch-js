@@ -188,17 +188,21 @@
         var frameDetected = false;
 
         function observeWidgetIframe(iframe) {
+          // Track whether the iframe has been resized at least once
+          var hasResized = false;
+
           // Watch height/style attribute changes for stable timer
           var resizeObs = new MutationObserver(function (mutations) {
             for (var i = 0; i < mutations.length; i++) {
               var attr = mutations[i].attributeName;
               if (attr === "height" || attr === "style") {
+                hasResized = true;
                 resetStableTimer();
               }
             }
           });
           resizeObs.observe(iframe, { attributes: true, attributeFilter: ["height", "style"] });
-          resetStableTimer();
+          // Don't start stable timer here — wait for first actual mutation
 
           // Helper: check if any real CSS rules have been applied in the iframe document
           function hasStylesApplied(doc) {
@@ -313,12 +317,13 @@
                 var html = doc.documentElement;
                 if (html && doc.body && doc.body.children.length > 0) {
                   var vis = getComputedStyle(html).visibility;
-                  // For V2: wait until the iframe document is fully loaded
-                  // (readyState "complete" = all subresources including CSS
-                  // <link> tags have finished loading) so the content is
-                  // actually styled, not just raw HTML with partial styles.
+                  // Wait until styled and either the iframe has been resized
+                  // (V2 starts at default small height) OR the iframe already
+                  // has a reasonable height (>300px — @next sets a near-final
+                  // default height so waiting for resize is unnecessary).
                   var ready = doc.readyState === "complete";
-                  if (vis === "visible" && ready && hasStylesApplied(doc)) {
+                  var tallEnough = iframe.offsetHeight > 300 || parseInt(iframe.style.height, 10) > 300;
+                  if (vis === "visible" && ready && hasStylesApplied(doc) && (hasResized || tallEnough)) {
                     window.__perfMark("meaningful-paint");
                     return;
                   }

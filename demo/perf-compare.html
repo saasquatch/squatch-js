@@ -580,7 +580,19 @@
               resolved = true;
               window.removeEventListener("message", onMessage);
               clearInterval(pollId);
-              resolve(metrics);
+              // Wait for late resize events to settle — V2 often has
+              // multiple resize rounds after the first stable report.
+              // After waiting, read the final metrics from the iframe.
+              setTimeout(function () {
+                try {
+                  var latest = iframe.contentWindow && iframe.contentWindow.__perfMetrics;
+                  if (latest && latest.sdkUrl === sdkUrl && latest.stable > 0) {
+                    resolve(latest);
+                    return;
+                  }
+                } catch (e) {}
+                resolve(metrics);
+              }, 1500);
             }
 
             // Method 1: Listen for postMessage from child

@@ -47,6 +47,7 @@
     "demo:deploy": "run-s parcel:build parcel:deploy",
     "perf": "npx tsx demo/perf-benchmark.ts",
     "perf:ui": "npx tsx demo/perf-server.ts",
+    "perf:deploy": "cp demo/perf-compare.html demo/perf-deploy/index.html && cp demo/perf-frame.html demo/perf-deploy/perf-frame.html && cd demo/perf-deploy && vercel --prod",
     "static": "serve -l 3333 -s dist",
     "parcel": "cd demo && parcel index.html",
     "parcel:build": "cd demo && parcel build index.html",
