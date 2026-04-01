@@ -1,4 +1,4 @@
-import { debug } from "debug";
+import { debug } from "./logger";
 import { ConfigOptions, WidgetConfig } from "../types";
 import { b64decode } from "./cookieUtils";
 import { validateConfig } from "./validate";

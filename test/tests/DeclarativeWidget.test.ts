@@ -5,9 +5,10 @@
 import { DEFAULT_DOMAIN } from "../../src/globals";
 import DeclarativeWidget from "../../src/widgets/declarative/DeclarativeWidget";
 import PopupWidget from "../../src/widgets/PopupWidget";
-jest.mock("../../src/widgets/PopupWidget");
+vi.mock("../../src/widgets/PopupWidget");
 
 class Test extends DeclarativeWidget {}
+customElements.define("test-declarative-widget", Test);
 describe("DeclarativeWidget", () => {
   beforeEach(() => {
     // @ts-ignore
@@ -60,7 +61,7 @@ describe("DeclarativeWidget", () => {
         else window.squatchConfig = null;
 
         const widget = new Test();
-        const result = widget["_setWidget"]("asdf", { type: "passwordless" });
+        const result = widget["_setWidget"]({ template: "asdf", widgetConfig: undefined as any }, { type: "passwordless" });
 
         expect(PopupWidget).toHaveBeenCalled();
         expect(result).toBeInstanceOf(PopupWidget);
@@ -75,7 +76,7 @@ describe("DeclarativeWidget", () => {
       (args) => {
         const widget = new Test();
         widget.container = args.container;
-        const result = widget["_setWidget"]("asdf", { type: "passwordless" });
+        const result = widget["_setWidget"]({ template: "asdf", widgetConfig: undefined as any }, { type: "passwordless" });
 
         expect(PopupWidget).toHaveBeenCalled();
         expect(result).toBeInstanceOf(PopupWidget);
@@ -92,7 +93,7 @@ describe("DeclarativeWidget", () => {
   describe("renderUserUpsertVariant", () => {
     test("no user information in token", async () => {
       const widget = new Test();
-      const mockSetErrorWidget = jest.spyOn(widget, "setErrorWidget");
+      const mockSetErrorWidget = vi.spyOn(widget, "setErrorWidget");
       widget.token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnYiOnsidGVuYW50QWxpYXMiOiJ0ZXN0X2E4YjQxam90ZjhhMXYiLCJkb21haW4iOiJodHRwczovL3N0YWdpbmcucmVmZXJyYWxzYWFzcXVhdGNoLmNvbSJ9fQ";
 
@@ -167,5 +168,110 @@ describe("DeclarativeWidget", () => {
     widget.widgetInstance = null;
 
     expect(() => widget.close()).toThrow();
+  });
+
+  describe("connectedCallback", () => {
+    test("sets loaded to true", async () => {
+      const widget = new Test();
+      widget.type = "EMBED";
+
+      const mockRenderWidget = vi
+        .spyOn(widget, "renderWidget")
+        .mockImplementation(async () => {});
+
+      await widget.connectedCallback();
+      expect(widget.loaded).toBe(true);
+    });
+
+    test("calls open when open attribute is set", async () => {
+      const widget = new Test();
+      widget.type = "EMBED";
+      widget.setAttribute("widget", "w/test-widget");
+      widget.setAttribute("open", "");
+
+      const mockRenderWidget = vi
+        .spyOn(widget, "renderWidget")
+        .mockImplementation(async () => {});
+
+      const mockOpen = vi
+        .spyOn(widget, "open")
+        .mockImplementation(() => {});
+
+      await widget.connectedCallback();
+      expect(mockOpen).toHaveBeenCalled();
+    });
+
+    test("does not call open when open attribute is not set", async () => {
+      const widget = new Test();
+      widget.type = "EMBED";
+      widget.setAttribute("widget", "w/test-widget");
+
+      const mockRenderWidget = vi
+        .spyOn(widget, "renderWidget")
+        .mockImplementation(async () => {});
+
+      const mockOpen = vi
+        .spyOn(widget, "open")
+        .mockImplementation(() => {});
+
+      await widget.connectedCallback();
+      expect(mockOpen).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("attributeChangedCallback", () => {
+    test("does nothing when values are the same", () => {
+      const widget = new Test();
+      widget.loaded = true;
+
+      const mockConnected = vi
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("widget", "old", "old");
+      expect(mockConnected).not.toHaveBeenCalled();
+    });
+
+    test("does nothing when not loaded", () => {
+      const widget = new Test();
+      widget.loaded = false;
+
+      const mockConnected = vi
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("widget", "old", "new");
+      expect(mockConnected).not.toHaveBeenCalled();
+    });
+
+    test("calls connectedCallback when widget attribute changes", () => {
+      const widget = new Test();
+      widget.loaded = true;
+
+      const mockConnected = vi
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("widget", "old", "new");
+      expect(mockConnected).toHaveBeenCalled();
+    });
+
+    test("calls connectedCallback when locale attribute changes", () => {
+      const widget = new Test();
+      widget.loaded = true;
+
+      const mockConnected = vi
+        .spyOn(widget, "connectedCallback")
+        .mockImplementation(async () => {});
+
+      widget.attributeChangedCallback("locale", "en_CA", "en_US");
+      expect(mockConnected).toHaveBeenCalled();
+    });
+  });
+
+  describe("observedAttributes", () => {
+    test("includes widget and locale", () => {
+      expect(Test.observedAttributes).toEqual(["widget", "locale"]);
+    });
   });
 });

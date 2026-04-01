@@ -7,7 +7,7 @@
  *
  * @module squatch
  */
-import { debug } from "debug";
+import { debug, enableDebug, disableDebug } from "./utils/logger";
 import Widgets from "./widgets/Widgets";
 import EmbedWidget from "./widgets/EmbedWidget";
 import PopupWidget from "./widgets/PopupWidget";
@@ -142,9 +142,9 @@ export function init(configIn: ConfigOptions): void {
   const raw = configIn as unknown | undefined;
   const config = validateConfig(raw);
   if (config.tenantAlias.match("^test") || config.debug) {
-    debug.enable("squatch-js*");
+    enableDebug("squatch-js*");
   } else {
-    debug.disable();
+    disableDebug();
   }
   _log("initializing ...");
 

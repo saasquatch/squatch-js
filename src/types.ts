@@ -45,7 +45,10 @@ export interface WidgetConfig {
  */
 export interface WidgetValueConfig {
   values: {
-    brandingConfig: any;
+    brandingConfig?: BrandingConfiguration;
+    meta?: {
+      dependencies?: Array<{ package: string; version: string }>;
+    };
   };
 }
 
@@ -133,3 +136,131 @@ export type ReferralCookie = {
   codes: string[];
   encodedCookie: string;
 };
+
+export interface BrandingConfiguration {
+  /**
+   * Defines all branding related styles.
+   */
+  main?: {
+    brandColor?: string;
+    brandFont?: string;
+  };
+  loadingHeight?: number;
+  color?: {
+    backgroundColor?: string;
+    textColorShades?: {
+      mainText: string;
+      subduedText: string;
+    };
+    accentColorShades?: {
+      icon?: string;
+      text?: string;
+      border?: string;
+      background?: string;
+    };
+    success?: {
+      text?: string;
+      iconAndBadge?: string;
+      border?: string;
+      background?: string;
+    };
+    warning?: {
+      text?: string;
+      iconAndBadge?: string;
+      border?: string;
+      background?: string;
+    };
+    critical?: {
+      text?: string;
+      iconAndBadge?: string;
+      border?: string;
+      background?: string;
+    };
+    informative?: {
+      text?: string;
+      iconAndBadge?: string;
+      border?: string;
+      background?: string;
+    };
+    neutral?: {
+      text?: string;
+      iconAndBadge?: string;
+      border?: string;
+      background?: string;
+      [k: string]: unknown;
+    };
+  };
+  primaryButton?: {
+    buttonColor?: {
+      background?: string;
+      label?: string;
+      border?: string;
+    };
+    buttonHoverColor?: {
+      background?: string;
+      label?: string;
+      border?: string;
+    };
+    borderRadius?: number;
+  };
+  secondaryButton?: {
+    buttonColor?: {
+      background?: string;
+      label?: string;
+      border?: string;
+    };
+    buttonHoverColor?: {
+      background?: string;
+      label?: string;
+      border?: string;
+    };
+    borderRadius?: number;
+  };
+  /**
+   * Defines form field colors.
+   */
+  formFields?: {
+    formFieldColor?: {
+      background?: string;
+      inputText?: string;
+      border?: string;
+    };
+    borderRadius?: number;
+    disabledBackgroundColor?: string;
+    selectedStateColor?: string;
+    hoverStateColor?: string;
+  };
+  /**
+   * Defines border styles.
+   */
+  border?: {
+    borderRadius?: number;
+    borderThickness?: number;
+    borderColor?: string;
+  };
+  /**
+   * Defines widget dimensions.
+   */
+  widgetSize?: {
+    embeddedWidgets?: {
+      minWidth?: {
+        value: number;
+        unit: "px" | "%";
+      };
+      maxWidth?: {
+        value: number;
+        unit: "px" | "%";
+      };
+    };
+    popupWidgets?: {
+      minWidth?: {
+        value: number;
+        unit: "px" | "%";
+      };
+      maxWidth?: {
+        value: number;
+        unit: "px" | "%";
+      };
+    };
+  };
+}

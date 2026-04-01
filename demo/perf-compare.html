@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>squatch-js Performance Comparison</title>
+    <style>
+      :root {
+        --bg: #0f1117;
+        --surface: #1a1d27;
+        --border: #2a2d3a;
+        --text: #e1e4ed;
+        --text-dim: #8b8fa3;
+        --green: #22c55e;
+        --red: #ef4444;
+        --blue: #3b82f6;
+        --orange: #f59e0b;
+        --mono: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      /* ── Header ─────────────────────────────────────── */
+      header {
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      header h1 {
+        font-size: 18px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      header h1 span { color: var(--text-dim); font-weight: 400; }
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-left: auto;
+      }
+      .controls label {
+        font-size: 13px;
+        color: var(--text-dim);
+      }
+      .controls input[type="number"] {
+        width: 50px;
+        padding: 5px 8px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        font-size: 13px;
+        font-family: var(--mono);
+        text-align: center;
+      }
+      button {
+        padding: 7px 16px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        font-size: 13px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      button:hover { background: var(--border); }
+      button.primary {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+        font-weight: 500;
+      }
+      button.primary:hover { background: #2563eb; }
+      button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      #run-status {
+        font-size: 13px;
+        color: var(--text-dim);
+        font-family: var(--mono);
+      }
+
+      /* ── Panels ─────────────────────────────────────── */
+      .panels {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--border);
+      }
+      .panel {
+        background: var(--bg);
+        display: flex;
+        flex-direction: column;
+      }
+      .panel-header {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .panel-header .tag {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+      .panel-header .tag.v2 { background: #422006; color: var(--orange); }
+      .panel-header .tag.next { background: #052e16; color: var(--green); }
+      .panel-header .version-url {
+        font-size: 11px;
+        color: var(--text-dim);
+        font-family: var(--mono);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .iframe-container {
+        height: 400px;
+        overflow: auto;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+      }
+      .iframe-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .iframe-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--text-dim);
+        font-size: 14px;
+      }
+
+      /* ── Metrics ────────────────────────────────────── */
+      .metrics-grid {
+        padding: 12px 16px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+      .metric-card {
+        background: var(--surface);
+        border-radius: 8px;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+      }
+      .metric-card .label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-dim);
+        margin-bottom: 4px;
+      }
+      .metric-card .value {
+        font-size: 18px;
+        font-weight: 600;
+        font-family: var(--mono);
+        color: var(--text);
+      }
+      .metric-card .value.pending { color: var(--text-dim); }
+      .metric-card .unit {
+        font-size: 11px;
+        color: var(--text-dim);
+        margin-left: 2px;
+      }
+
+      /* ── Comparison Table ───────────────────────────── */
+      .comparison-section {
+        padding: 20px 24px;
+        border-top: 1px solid var(--border);
+      }
+      .comparison-section h2 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th, td {
+        padding: 8px 12px;
+        text-align: right;
+        border-bottom: 1px solid var(--border);
+      }
+      th {
+        font-weight: 500;
+        color: var(--text-dim);
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      th:first-child, td:first-child { text-align: left; }
+      td { font-family: var(--mono); font-size: 13px; }
+      td.faster { color: var(--green); }
+      td.slower { color: var(--red); }
+      td.neutral { color: var(--text-dim); }
+      td.metric-name {
+        font-family: system-ui, sans-serif;
+        font-weight: 500;
+        color: var(--text);
+      }
+      tr.avg-row { background: var(--surface); }
+      tr.avg-row td { font-weight: 600; }
+
+      /* ── Multi-run history ──────────────────────────── */
+      .history-section {
+        padding: 20px 24px;
+        border-top: 1px solid var(--border);
+      }
+      .history-section h2 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      .history-table-wrap {
+        overflow-x: auto;
+      }
+      .history-table-wrap table td,
+      .history-table-wrap table th {
+        white-space: nowrap;
+        font-size: 12px;
+      }
+      .hidden { display: none; }
+
+      /* ── Editable version URL ────────────────────────── */
+      .version-url-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+      }
+      .version-url-wrap .url-prefix {
+        font-size: 11px;
+        color: var(--text-dim);
+        font-family: var(--mono);
+        white-space: nowrap;
+      }
+      .version-url-wrap input.version-input {
+        font-size: 11px;
+        font-family: var(--mono);
+        color: var(--text);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        padding: 2px 6px;
+        outline: none;
+        cursor: text;
+        min-width: 40px;
+        width: 80px;
+      }
+      .version-url-wrap input.version-input:hover {
+        border-color: var(--border);
+      }
+      .version-url-wrap input.version-input:focus {
+        border-color: var(--blue);
+        background: var(--surface);
+      }
+      .version-url-wrap .btn-save-version {
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 4px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text-dim);
+        cursor: pointer;
+        display: none;
+        white-space: nowrap;
+      }
+      .version-url-wrap .btn-save-version.visible {
+        display: inline-block;
+      }
+      .version-url-wrap .btn-save-version:hover {
+        background: var(--border);
+        color: var(--text);
+      }
+
+      /* ── Config controls ───────────────────────────── */
+      .config-section {
+        padding: 0 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .config-section details {
+        padding: 8px 0;
+      }
+      .config-section summary {
+        font-size: 11px;
+        color: var(--text-dim);
+        cursor: pointer;
+        user-select: none;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      .config-section summary:hover { color: var(--text); }
+      .config-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 12px;
+        padding: 8px 0 4px;
+      }
+      .config-fields label {
+        font-size: 11px;
+        color: var(--text-dim);
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .config-fields input {
+        padding: 5px 8px;
+        border-radius: 5px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        font-size: 12px;
+        font-family: var(--mono);
+        width: 100%;
+      }
+      .config-fields input:focus {
+        outline: none;
+        border-color: var(--blue);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>squatch-js <span>Performance Comparison</span></h1>
+      <div class="controls">
+        <label for="iterations">Iterations:</label>
+        <input type="number" id="iterations" value="5" min="1" max="20" />
+        <button class="primary" id="btn-run-n" title="Run multiple iterations">Run Benchmark</button>
+        <button id="btn-run-once" title="Single run">Run Once</button>
+        <span id="run-status"></span>
+      </div>
+    </header>
+
+    <div class="panels">
+      <!-- v2 Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="tag v2">v2 (current)</span>
+          <div class="version-url-wrap">
+            <span class="url-prefix">https://fast.ssqt.io/squatch-js</span>
+            <input class="version-input" id="version-v2" value="@2" />
+            <button class="btn-save-version" id="save-version-v2">Save</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <details>
+            <summary>Configuration</summary>
+            <div class="config-fields">
+              <label>Widget
+                <input type="text" id="cfg-v2-widget" value="p/47253/w/referrerWidget" />
+              </label>
+              <label>Tenant Alias
+                <input type="text" id="cfg-v2-tenant" value="ac52kfybp1tkr" />
+              </label>
+              <label>JWT
+                <input type="text" id="cfg-v2-jwt" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IklSTVhzWXk2WVlxcTQ2OTQzN21HOEVSUXQ4UW9LRkJhRzEifQ.eyJ1c2VyIjp7ImlkIjoiMGM2YmUwZTcxMGViMDk1OTU2ODMxYTkyOTUxODVlMmU5N2VmMTQzMDhjN2UzNjFmYjBlYzY0NTE0NjUwY2NhOCIsImFjY291bnRJZCI6IjBjNmJlMGU3MTBlYjA5NTk1NjgzMWE5Mjk1MTg1ZTJlOTdlZjE0MzA4YzdlMzYxZmIwZWM2NDUxNDY1MGNjYTgiLCJlbWFpbCI6ImRlcmVrLnNpZW1lbnMrbm93OTJAaW1wYWN0LmNvbSJ9fQ.KOORz1aOIVRPR6PdF3Ss0D1AW19EYTX97WnA6fOVXaI" />
+              </label>
+              <label>Domain
+                <input type="text" id="cfg-v2-domain" value="" placeholder="(auto: local proxy)" />
+              </label>
+            </div>
+          </details>
+        </div>
+        <div class="iframe-container" id="frame-v2-container">
+          <div class="iframe-placeholder">Click "Run" to start</div>
+        </div>
+        <div class="metrics-grid" id="metrics-v2">
+          <div class="metric-card"><div class="label">Bundle Size</div><div class="value pending" data-metric="bundleSize">—</div></div>
+          <div class="metric-card"><div class="label">SDK Script Load</div><div class="value pending" data-metric="sdkScriptLoad">—</div></div>
+          <div class="metric-card"><div class="label">SDK Ready</div><div class="value pending" data-metric="sdkReady">—</div></div>
+          <div class="metric-card"><div class="label">Frame Created</div><div class="value pending" data-metric="frameCreated">—</div></div>
+          <div class="metric-card"><div class="label">Meaningful Paint</div><div class="value pending" data-metric="meaningfulPaint">—</div></div>
+          <div class="metric-card"><div class="label">Time Unstyled</div><div class="value pending" data-metric="timeUnstyled">—</div></div>
+          <div class="metric-card"><div class="label">Network Request Time</div><div class="value pending" data-metric="networkTime">—</div></div>
+          <div class="metric-card"><div class="label">Total Load Time</div><div class="value pending" data-metric="totalLoad">—</div></div>
+        </div>
+      </div>
+
+      <!-- Next Panel -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="tag next">next</span>
+          <div class="version-url-wrap">
+            <span class="url-prefix">https://fast.ssqt.io/squatch-js</span>
+            <input class="version-input" id="version-next" value="@next" />
+            <button class="btn-save-version" id="save-version-next">Save</button>
+          </div>
+        </div>
+        <div class="config-section">
+          <details>
+            <summary>Configuration</summary>
+            <div class="config-fields">
+              <label>Widget
+                <input type="text" id="cfg-next-widget" value="p/47253/w/referrerWidget" />
+              </label>
+              <label>Tenant Alias
+                <input type="text" id="cfg-next-tenant" value="ac52kfybp1tkr" />
+              </label>
+              <label>JWT
+                <input type="text" id="cfg-next-jwt" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IklSTVhzWXk2WVlxcTQ2OTQzN21HOEVSUXQ4UW9LRkJhRzEifQ.eyJ1c2VyIjp7ImlkIjoiMGM2YmUwZTcxMGViMDk1OTU2ODMxYTkyOTUxODVlMmU5N2VmMTQzMDhjN2UzNjFmYjBlYzY0NTE0NjUwY2NhOCIsImFjY291bnRJZCI6IjBjNmJlMGU3MTBlYjA5NTk1NjgzMWE5Mjk1MTg1ZTJlOTdlZjE0MzA4YzdlMzYxZmIwZWM2NDUxNDY1MGNjYTgiLCJlbWFpbCI6ImRlcmVrLnNpZW1lbnMrbm93OTJAaW1wYWN0LmNvbSJ9fQ.KOORz1aOIVRPR6PdF3Ss0D1AW19EYTX97WnA6fOVXaI" />
+              </label>
+              <label>Domain
+                <input type="text" id="cfg-next-domain" value="" placeholder="(auto: local proxy)" />
+              </label>
+            </div>
+          </details>
+        </div>
+        <div class="iframe-container" id="frame-next-container">
+          <div class="iframe-placeholder">Click "Run" to start</div>
+        </div>
+        <div class="metrics-grid" id="metrics-next">
+          <div class="metric-card"><div class="label">Bundle Size</div><div class="value pending" data-metric="bundleSize">—</div></div>
+          <div class="metric-card"><div class="label">SDK Script Load</div><div class="value pending" data-metric="sdkScriptLoad">—</div></div>
+          <div class="metric-card"><div class="label">SDK Ready</div><div class="value pending" data-metric="sdkReady">—</div></div>
+          <div class="metric-card"><div class="label">Frame Created</div><div class="value pending" data-metric="frameCreated">—</div></div>
+          <div class="metric-card"><div class="label">Meaningful Paint</div><div class="value pending" data-metric="meaningfulPaint">—</div></div>
+          <div class="metric-card"><div class="label">Time Unstyled</div><div class="value pending" data-metric="timeUnstyled">—</div></div>
+          <div class="metric-card"><div class="label">Network Request Time</div><div class="value pending" data-metric="networkTime">—</div></div>
+          <div class="metric-card"><div class="label">Total Load Time</div><div class="value pending" data-metric="totalLoad">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Summary -->
+    <div class="comparison-section">
+      <h2>Comparison Summary</h2>
+      <table id="comparison-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>v2 (current)</th>
+            <th>next</th>
+            <th>Delta</th>
+            <th>Change</th>
+          </tr>
+        </thead>
+        <tbody id="comparison-body">
+          <tr><td colspan="5" class="neutral" style="text-align:center;">Run a benchmark to see results</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Multi-run History -->
+    <div class="history-section hidden" id="history-section">
+      <h2>Run History</h2>
+      <div class="history-table-wrap">
+        <table id="history-table">
+          <thead id="history-head"></thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var V2_URL = "https://fast.ssqt.io/squatch-js@2";
+        var NEXT_URL = "https://fast.ssqt.io/squatch-js@next";
+        var BASE_SDK_URL = "https://fast.ssqt.io/squatch-js";
+
+        function getV2Url() { return BASE_SDK_URL + document.getElementById("version-v2").value.trim(); }
+        function getNextUrl() { return BASE_SDK_URL + document.getElementById("version-next").value.trim(); }
+
+        var btnRunN = document.getElementById("btn-run-n");
+        var btnRunOnce = document.getElementById("btn-run-once");
+        var iterInput = document.getElementById("iterations");
+        var runStatus = document.getElementById("run-status");
+
+        var allRuns = []; // Array of { v2: metrics, next: metrics }
+        var running = false;
+
+        // ── Config fields that sync to/from URL params ──
+        var CONFIG_FIELDS = [
+          "cfg-v2-widget", "cfg-v2-tenant", "cfg-v2-jwt", "cfg-v2-domain",
+          "cfg-next-widget", "cfg-next-tenant", "cfg-next-jwt", "cfg-next-domain",
+          "version-v2", "version-next"
+        ];
+
+        // Populate inputs from URL query params on load
+        (function loadFromUrl() {
+          var params = new URLSearchParams(window.location.search);
+          CONFIG_FIELDS.forEach(function (id) {
+            var val = params.get(id);
+            if (val !== null) {
+              document.getElementById(id).value = val;
+            }
+          });
+        })();
+
+        // Sync all config inputs to URL params (replaceState, no reload)
+        function syncConfigToUrl() {
+          var params = new URLSearchParams();
+          CONFIG_FIELDS.forEach(function (id) {
+            var val = document.getElementById(id).value.trim();
+            var def = document.getElementById(id).defaultValue;
+            if (val && val !== def) {
+              params.set(id, val);
+            }
+          });
+          var qs = params.toString();
+          var newUrl = window.location.pathname + (qs ? "?" + qs : "");
+          history.replaceState(null, "", newUrl);
+        }
+
+        // Listen for changes on all config inputs
+        CONFIG_FIELDS.forEach(function (id) {
+          document.getElementById(id).addEventListener("input", syncConfigToUrl);
+        });
+
+        // ── Metric definitions ──────────────────────────
+        var METRICS = [
+          { key: "bundleSize", label: "Bundle Size", unit: "KB", format: formatKB, lowerBetter: true },
+          { key: "sdkScriptLoad", label: "SDK Script Load", unit: "ms", format: formatMs, lowerBetter: true },
+          { key: "sdkReady", label: "SDK Ready", unit: "ms", format: formatMs, lowerBetter: true },
+          { key: "frameCreated", label: "Frame Created", unit: "ms", format: formatMs, lowerBetter: true },
+          { key: "meaningfulPaint", label: "Meaningful Paint", unit: "ms", format: formatMs, lowerBetter: true },
+          { key: "timeUnstyled", label: "Time Unstyled", unit: "ms", format: formatMs, lowerBetter: true },
+          { key: "networkTime", label: "Network Request Time", unit: "ms", format: formatMs, lowerBetter: true },
+          { key: "totalLoad", label: "Total Load Time", unit: "ms", format: formatMs, lowerBetter: true }
+        ];
+
+        function formatMs(v) { return v > 0 ? v.toFixed(0) + " ms" : "—"; }
+        function formatKB(v) { return v > 0 ? (v / 1024).toFixed(1) + " KB" : "—"; }
+        function formatInt(v) { return v >= 0 ? String(Math.round(v)) : "—"; }
+
+        // ── Read config from inputs for a given panel prefix ────
+        function getConfig(prefix) {
+          return {
+            widget: document.getElementById("cfg-" + prefix + "-widget").value.trim(),
+            tenant: document.getElementById("cfg-" + prefix + "-tenant").value.trim(),
+            jwt: document.getElementById("cfg-" + prefix + "-jwt").value.trim(),
+            domain: document.getElementById("cfg-" + prefix + "-domain").value.trim()
+          };
+        }
+
+        // ── Load a single frame and wait for metrics ────
+        function loadFrame(containerId, sdkUrl, cfgPrefix) {
+          return new Promise(function (resolve) {
+            var container = document.getElementById(containerId);
+            var cfg = getConfig(cfgPrefix);
+            var cb = Date.now() + Math.random().toString(36).slice(2, 6);
+            // Use "perf-frame" without .html to avoid serve's cleanUrls 301
+            // redirect which strips query parameters
+            var src = "perf-frame?sdk=" + encodeURIComponent(sdkUrl) + "&cb=" + cb
+              + "&widget=" + encodeURIComponent(cfg.widget)
+              + "&tenant=" + encodeURIComponent(cfg.tenant)
+              + "&jwt=" + encodeURIComponent(cfg.jwt)
+              + (cfg.domain ? "&domain=" + encodeURIComponent(cfg.domain) : "");
+
+            container.innerHTML = "";
+            var iframe = document.createElement("iframe");
+            iframe.src = src;
+            iframe.style.cssText = "width:100%;height:100%;border:none;";
+            container.appendChild(iframe);
+
+            var resolved = false;
+
+            function done(metrics) {
+              if (resolved) return;
+              resolved = true;
+              window.removeEventListener("message", onMessage);
+              clearInterval(pollId);
+              // Wait for late resize events to settle — V2 often has
+              // multiple resize rounds after the first stable report.
+              // After waiting, read the final metrics from the iframe.
+              setTimeout(function () {
+                try {
+                  var latest = iframe.contentWindow && iframe.contentWindow.__perfMetrics;
+                  if (latest && latest.sdkUrl === sdkUrl && latest.stable > 0) {
+                    resolve(latest);
+                    return;
+                  }
+                } catch (e) {}
+                resolve(metrics);
+              }, 1500);
+            }
+
+            // Method 1: Listen for postMessage from child
+            function onMessage(e) {
+              if (resolved) return;
+              if (!e.data || e.data.type !== "perf-metrics") return;
+              if (e.data.metrics && e.data.metrics.sdkUrl === sdkUrl) {
+                done(e.data.metrics);
+              }
+            }
+            window.addEventListener("message", onMessage);
+
+            // Method 2: Poll the iframe's window.__perfMetrics directly
+            // (fallback in case postMessage is blocked by browser policy)
+            var pollId = setInterval(function () {
+              if (resolved) { clearInterval(pollId); return; }
+              try {
+                var m = iframe.contentWindow && iframe.contentWindow.__perfMetrics;
+                if (m && m.stable > 0 && m.sdkUrl === sdkUrl) {
+                  done(m);
+                }
+              } catch (e) { /* cross-origin — ignore */ }
+            }, 500);
+
+            // Timeout: resolve with partial data after 20s
+            setTimeout(function () {
+              if (!resolved) {
+                // Last-ditch attempt to read metrics directly
+                try {
+                  var m = iframe.contentWindow && iframe.contentWindow.__perfMetrics;
+                  if (m && m.sdkUrl === sdkUrl) { done(m); return; }
+                } catch (e) {}
+                done(null);
+              }
+            }, 20000);
+          });
+        }
+
+        // ── Derive totalLoad from stable time ───────────
+        function enrichMetrics(m) {
+          if (!m) return null;
+          m.totalLoad = m.stable || 0;
+          m.networkTime = m.networkTime || 0;
+          m.bundleSize = m.bundleSizeBytes || 0;
+          return m;
+        }
+
+        // ── Update metric cards in a panel ──────────────
+        function updatePanel(panelId, m) {
+          var grid = document.getElementById(panelId);
+          if (!grid || !m) return;
+          METRICS.forEach(function (def) {
+            var el = grid.querySelector('[data-metric="' + def.key + '"]');
+            if (el) {
+              el.textContent = def.format(m[def.key] || 0);
+              el.classList.remove("pending");
+            }
+          });
+        }
+
+        // ── Update comparison table ─────────────────────
+        function updateComparison(v2, next) {
+          var body = document.getElementById("comparison-body");
+          body.innerHTML = "";
+          METRICS.forEach(function (def) {
+            var v2Val = v2 ? (v2[def.key] || 0) : 0;
+            var nextVal = next ? (next[def.key] || 0) : 0;
+            var delta = nextVal - v2Val;
+            var pct = v2Val > 0 ? ((delta / v2Val) * 100) : 0;
+
+            var isBetter = def.lowerBetter ? delta < 0 : delta > 0;
+            var isWorse = def.lowerBetter ? delta > 0 : delta < 0;
+            var deltaClass = Math.abs(delta) < 1 ? "neutral" : (isBetter ? "faster" : "slower");
+
+            var tr = document.createElement("tr");
+            tr.innerHTML =
+              '<td class="metric-name">' + def.label + "</td>" +
+              "<td>" + def.format(v2Val) + "</td>" +
+              "<td>" + def.format(nextVal) + "</td>" +
+              '<td class="' + deltaClass + '">' + (delta >= 0 ? "+" : "") + def.format(Math.abs(delta)).replace(" ms", "").replace(" KB", "") + " " + def.unit + "</td>" +
+              '<td class="' + deltaClass + '">' + (Math.abs(pct) < 0.5 ? "—" : ((pct >= 0 ? "+" : "") + pct.toFixed(1) + "%")) + "</td>";
+            body.appendChild(tr);
+          });
+        }
+
+        // ── Update comparison with averaged data ────────
+        function updateComparisonAveraged() {
+          if (allRuns.length === 0) return;
+
+          var v2Avg = averageMetrics(allRuns.map(function (r) { return r.v2; }));
+          var nextAvg = averageMetrics(allRuns.map(function (r) { return r.next; }));
+
+          updatePanel("metrics-v2", v2Avg);
+          updatePanel("metrics-next", nextAvg);
+          updateComparison(v2Avg, nextAvg);
+        }
+
+        function averageMetrics(arr) {
+          var valid = arr.filter(Boolean);
+          if (valid.length === 0) return null;
+          var result = {};
+          METRICS.forEach(function (def) {
+            var sum = 0;
+            var count = 0;
+            valid.forEach(function (m) {
+              if (m[def.key] != null && m[def.key] > 0) {
+                sum += m[def.key];
+                count++;
+              }
+            });
+            result[def.key] = count > 0 ? sum / count : 0;
+          });
+          return result;
+        }
+
+        // ── Update run history table ────────────────────
+        function updateHistory() {
+          var section = document.getElementById("history-section");
+          var head = document.getElementById("history-head");
+          var body = document.getElementById("history-body");
+
+          if (allRuns.length < 2) {
+            section.classList.add("hidden");
+            return;
+          }
+          section.classList.remove("hidden");
+
+          // Header row
+          head.innerHTML =
+            "<tr><th>Run</th>" +
+            METRICS.map(function (d) {
+              return "<th>v2 " + d.label + "</th><th>next " + d.label + "</th>";
+            }).join("") +
+            "</tr>";
+
+          // Data rows
+          body.innerHTML = "";
+          allRuns.forEach(function (run, i) {
+            var tr = document.createElement("tr");
+            var cells = "<td>#" + (i + 1) + "</td>";
+            METRICS.forEach(function (def) {
+              var v2Val = run.v2 ? (run.v2[def.key] || 0) : 0;
+              var nextVal = run.next ? (run.next[def.key] || 0) : 0;
+              cells += "<td>" + def.format(v2Val) + "</td>";
+              cells += "<td>" + def.format(nextVal) + "</td>";
+            });
+            tr.innerHTML = cells;
+            body.appendChild(tr);
+          });
+
+          // Average row
+          var v2Avg = averageMetrics(allRuns.map(function (r) { return r.v2; }));
+          var nextAvg = averageMetrics(allRuns.map(function (r) { return r.next; }));
+          var avgRow = document.createElement("tr");
+          avgRow.className = "avg-row";
+          var avgCells = "<td>AVG</td>";
+          METRICS.forEach(function (def) {
+            avgCells += "<td>" + def.format(v2Avg ? v2Avg[def.key] : 0) + "</td>";
+            avgCells += "<td>" + def.format(nextAvg ? nextAvg[def.key] : 0) + "</td>";
+          });
+          avgRow.innerHTML = avgCells;
+          body.appendChild(avgRow);
+        }
+
+        // ── Reset panels to pending state ───────────────
+        function resetPanels() {
+          ["metrics-v2", "metrics-next"].forEach(function (id) {
+            var grid = document.getElementById(id);
+            grid.querySelectorAll(".value").forEach(function (el) {
+              el.textContent = "…";
+              el.classList.add("pending");
+            });
+          });
+        }
+
+        // ── Single run ──────────────────────────────────
+        async function runOnce() {
+          resetPanels();
+          setRunning(true);
+          runStatus.textContent = "Loading both versions…";
+
+          // Load both in parallel
+          var results = await Promise.all([
+            loadFrame("frame-v2-container", getV2Url(), "v2"),
+            loadFrame("frame-next-container", getNextUrl(), "next")
+          ]);
+
+          var v2 = enrichMetrics(results[0]);
+          var next = enrichMetrics(results[1]);
+
+          updatePanel("metrics-v2", v2);
+          updatePanel("metrics-next", next);
+          updateComparison(v2, next);
+
+          allRuns.push({ v2: v2, next: next });
+          updateHistory();
+
+          runStatus.textContent = "Done";
+          setRunning(false);
+          return { v2: v2, next: next };
+        }
+
+        // ── Multi-run ───────────────────────────────────
+        async function runMultiple(n) {
+          allRuns = [];
+          document.getElementById("history-section").classList.add("hidden");
+          setRunning(true);
+
+          for (var i = 0; i < n; i++) {
+            runStatus.textContent = "Run " + (i + 1) + " of " + n + "…";
+            resetPanels();
+
+            var results = await Promise.all([
+              loadFrame("frame-v2-container", getV2Url(), "v2"),
+              loadFrame("frame-next-container", getNextUrl(), "next")
+            ]);
+
+            var v2 = enrichMetrics(results[0]);
+            var next = enrichMetrics(results[1]);
+
+            allRuns.push({ v2: v2, next: next });
+            updatePanel("metrics-v2", v2);
+            updatePanel("metrics-next", next);
+            updateHistory();
+            updateComparisonAveraged();
+
+            // Brief pause between runs to let things settle
+            if (i < n - 1) {
+              await new Promise(function (r) { setTimeout(r, 500); });
+            }
+          }
+
+          updateComparisonAveraged();
+          runStatus.textContent = "Done — " + n + " runs averaged";
+          setRunning(false);
+        }
+
+        function setRunning(v) {
+          running = v;
+          btnRunN.disabled = v;
+          btnRunOnce.disabled = v;
+        }
+
+        // ── Version input save buttons ───────────────────────
+        ["v2", "next"].forEach(function (key) {
+          var input = document.getElementById("version-" + key);
+          var btn = document.getElementById("save-version-" + key);
+          var saved = input.value;
+          input.addEventListener("input", function () {
+            btn.classList.toggle("visible", input.value.trim() !== saved);
+            syncConfigToUrl();
+          });
+          btn.addEventListener("click", function () {
+            saved = input.value.trim();
+            btn.classList.remove("visible");
+            syncConfigToUrl();
+          });
+        });
+
+        // ── Event bindings ──────────────────────────────
+        btnRunOnce.addEventListener("click", function () {
+          if (!running) runOnce();
+        });
+        btnRunN.addEventListener("click", function () {
+          if (!running) {
+            var n = parseInt(iterInput.value, 10);
+            if (isNaN(n) || n < 1) n = 5;
+            if (n > 20) n = 20;
+            runMultiple(n);
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

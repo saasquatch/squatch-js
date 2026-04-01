@@ -3,8 +3,8 @@ import Widgets from "../../src/widgets/Widgets";
 import PopupWidget from "../../src/widgets/PopupWidget";
 import EmbedWidget from "../../src/widgets/EmbedWidget";
 import { EngagementMedium } from "../../src/types";
-jest.mock("../../src/widgets/PopupWidget");
-jest.mock("../../src/widgets/EmbedWidget");
+vi.mock("../../src/widgets/PopupWidget");
+vi.mock("../../src/widgets/EmbedWidget");
 
 test("initialisation", () => {
   const config = {
@@ -32,7 +32,7 @@ test.each([
 });
 describe("methods", () => {
   let widgets!: Widgets;
-  let mockMatchUrl = jest.fn();
+  let mockMatchUrl = vi.fn();
   beforeEach(() => {
     const config = {
       tenantAlias: "DEFAULT_TENANTALIAS",
@@ -42,9 +42,9 @@ describe("methods", () => {
     Widgets["_matchesUrl"] = mockMatchUrl;
     widgets = new Widgets(config);
   });
-  // afterEach(() => {
-  //   jest.clearAllMocks();
-  // });
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
   describe("upsertUser", () => {
     const config = {
       user: {
@@ -56,15 +56,15 @@ describe("methods", () => {
       trigger: "#squatchpop",
     };
     beforeEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     test("resolves", async () => {
       const upsertReturn = { template: "asdf", user: config.user };
 
-      const mockRenderWidget = jest
+      const mockRenderWidget = vi
         .spyOn(Widgets.prototype as any, "_renderWidget")
         .mockImplementation(() => ({ template: "asdf" }));
-      const mockUpsert = jest
+      const mockUpsert = vi
         .spyOn(widgets.api, "upsertUser")
         .mockImplementation(
           async () => new Promise((res) => res(upsertReturn))
@@ -78,15 +78,20 @@ describe("methods", () => {
         engagementMedium: config.engagementMedium,
         container: config.container,
         trigger: config.trigger,
+        widgetConfig: {
+          values: {
+            brandingConfig: undefined,
+          },
+        },
       });
       expect(result.widget).toStrictEqual({ template: "asdf" });
       expect(result.user).toBe(upsertReturn.user);
     });
     test("upsert rejects", async () => {
-      const mockRenderErrorWidget = jest
+      const mockRenderErrorWidget = vi
         .spyOn(Widgets.prototype as any, "_renderErrorWidget")
         .mockImplementation(() => ({}));
-      const mockUpsert = jest
+      const mockUpsert = vi
         .spyOn(widgets.api, "upsertUser")
         .mockImplementation(
           async () => new Promise((res, rej) => rej({ apiErrorCode: "400" }))
@@ -114,12 +119,12 @@ describe("methods", () => {
         },
       };
       const mockResponse = { template: "asdf", user: config.user };
-      const mockRender = jest
+      const mockRender = vi
         .spyOn(widgets.api, "render")
         .mockImplementation(
           async () => new Promise((res) => res(mockResponse))
         );
-      const mockRenderWidget = jest
+      const mockRenderWidget = vi
         .spyOn(Widgets.prototype as any, "_renderWidget")
         .mockImplementation(() => ({ content: "asdf" }));
 
@@ -138,12 +143,12 @@ describe("methods", () => {
         engagementMedium: "POPUP" as const,
       };
       const mockResponse = { template: "asdf", user: null };
-      const mockRender = jest
+      const mockRender = vi
         .spyOn(widgets.api, "render")
         .mockImplementation(
           async () => new Promise((res) => res(mockResponse))
         );
-      const mockRenderWidget = jest
+      const mockRenderWidget = vi
         .spyOn(Widgets.prototype as any, "_renderWidget")
         .mockImplementation(() => ({ content: "asdf" }));
 
@@ -161,10 +166,10 @@ describe("methods", () => {
       const config = {
         engagementMedium: "POPUP" as const,
       };
-      const mockRenderErrorWidget = jest
+      const mockRenderErrorWidget = vi
         .spyOn(Widgets.prototype as any, "_renderErrorWidget")
         .mockImplementation(() => ({}));
-      const mockRender = jest
+      const mockRender = vi
         .spyOn(widgets.api, "render")
         .mockImplementation(
           async () => new Promise((res, rej) => rej({ apiErrorCode: "400" }))
@@ -191,24 +196,24 @@ describe("methods", () => {
           codes: ["asdf"],
           encodedCookie: "asdf",
         };
-        const mockAutofill = jest
+        const mockAutofill = vi
           .spyOn(widgets.api, "squatchReferralCookie")
           .mockImplementation(
             async () => new Promise((res) => res(mockReturn))
           );
 
-        const cb = jest.fn((params) => console.log(params));
+        const cb = vi.fn((params) => console.log(params));
         await widgets.autofill(cb);
         expect(mockAutofill).toBeCalled();
         expect(cb.mock.calls).toHaveLength(1);
       });
       test("reject", async () => {
-        const mockAutofill = jest
+        const mockAutofill = vi
           .spyOn(widgets.api, "squatchReferralCookie")
           .mockImplementation(
             async () => new Promise((res, rej) => rej("Error"))
           );
-        const cb = jest.fn((params) => console.log(params));
+        const cb = vi.fn((params) => console.log(params));
         await expect(async () => await widgets.autofill(cb)).rejects.toThrow();
         expect(mockAutofill).toBeCalled();
         expect(cb.mock.calls).toHaveLength(0);
@@ -225,7 +230,7 @@ describe("methods", () => {
           codes: ["asdf", "not-asdf"],
           encodedCookie: "asdf",
         };
-        const mockCookie = jest
+        const mockCookie = vi
           .spyOn(widgets.api, "squatchReferralCookie")
           .mockImplementation(
             async () => new Promise((res) => res(mockResponse))
@@ -241,7 +246,7 @@ describe("methods", () => {
         expect(input.value).toBe("asdf");
       });
       test("Elements exist, rejects", async () => {
-        const mockCookie = jest
+        const mockCookie = vi
           .spyOn(widgets.api, "squatchReferralCookie")
           .mockImplementation(
             async () => new Promise((res, rej) => rej("Error"))

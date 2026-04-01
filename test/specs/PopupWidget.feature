@@ -122,4 +122,43 @@ Feature: Pop-Up Widget
       | true              | No element found with trigger selector true |
       | () => ".selector" | Not a valid selector () => ".selector"      |
 
+  @minutia
+  Scenario: Initial height is set on the popup iframe from brandingConfig loadingHeight
+    Given a widget with brandingConfig that includes a loadingHeight of "350"
+    When the popup widget is loaded
+    Then the iframe height attribute is set to "350" before content renders
 
+  @minutia
+  Scenario: Initial height falls back to body offset height when loadingHeight is not set
+    Given a widget with brandingConfig that does not include a loadingHeight
+    When the popup widget is loaded
+    Then the iframe height attribute is set to the body offset height
+
+  @motivating
+  Scenario: Popup widget dialog uses brandingConfig for width sizing
+    Given a widget with brandingConfig that includes popup widget sizes
+      | minWidth | 200px |
+      | maxWidth | 700px |
+    When the popup widget is loaded
+    Then the dialog element has min-width "200px" and max-width "700px"
+
+  @motivating
+  Scenario: Preconnect links are injected for Cloudinary in popup widgets
+    Given a popup widget is loaded
+    When the iframe content is rendered
+    Then the iframe document contains a dns-prefetch link for "https://res.cloudinary.com"
+    And the iframe document contains a preconnect link for "https://res.cloudinary.com" with crossorigin
+
+  @motivating
+  Scenario: Popup preconnect links for brand font are injected when brandFont is configured
+    Given a widget with brandingConfig that includes a brandFont of "Open Sans"
+    When the popup widget is loaded
+    Then the iframe document contains a preconnect link for fonts.gstatic.com
+    And the iframe document contains a preconnect link for fonts.googleapis.com
+    And the iframe document contains a preload link for the Google Fonts CSS for "Open Sans"
+
+  @minutia
+  Scenario: HTML is hidden until ready via visibility style in popup widgets
+    Given a popup widget is loaded
+    When the iframe content is rendered
+    Then the iframe document contains a style tag with "html { visibility:hidden;}"

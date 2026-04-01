@@ -4,6 +4,23 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
+  test: {
+    environment: "happy-dom",
+    globals: true,
+    include: [
+      "**/*.steps.[tj]s",
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)",
+    ],
+    mockReset: true,
+    restoreMocks: false,
+    coverage: {
+      exclude: ["node_modules", "test"],
+    },
+    alias: {
+      "^uuid$": "uuid",
+    },
+  },
   plugins: [
     tsconfigPaths(),
     dts({
@@ -30,7 +47,7 @@ export default defineConfig({
       name: "squatch",
     },
     outDir: resolve(__dirname, "dist"),
-    minify: false,
+    minify: "esbuild",
     rollupOptions: {
       output: {
         amd: { define: "false" },

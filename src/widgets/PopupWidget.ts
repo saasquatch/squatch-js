@@ -1,7 +1,7 @@
 // @ts-check
 
-import { debug } from "debug";
-import { UpsertWidgetContext } from "../types";
+import { debug } from "../utils/logger";
+import { BrandingConfiguration, UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
 import Widget, { Params } from "./Widget";
@@ -39,7 +39,7 @@ export default class PopupWidget extends Widget {
 
     document.head.insertAdjacentHTML(
       "beforeend",
-      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`
+      `<style>#${this.id}::-webkit-scrollbar { display: none; }</style>`,
     );
   }
 
@@ -66,9 +66,10 @@ export default class PopupWidget extends Widget {
     }
   }
 
-  _createPopupDialog(): HTMLDialogElement {
+  _createPopupDialog(
+    brandingConfig?: BrandingConfiguration,
+  ): HTMLDialogElement {
     const dialog = document.createElement("dialog");
-    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
     const sizes = brandingConfig?.widgetSize?.popupWidgets;
 
     // Still styling the dialog to keep consistent with previous versions
@@ -77,7 +78,7 @@ export default class PopupWidget extends Widget {
     dialog.id = this.id;
     dialog.setAttribute(
       "style",
-      `width: 100%; min-width: ${minWidth}; max-width: ${maxWidth}; border: none; padding: 0;`
+      `width: 100%; min-width: ${minWidth}; max-width: ${maxWidth}; border: none; padding: 0;`,
     );
     const onClick = (e) => {
       e.stopPropagation();
@@ -90,13 +91,18 @@ export default class PopupWidget extends Widget {
   }
 
   async load() {
+    const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    const initialHeight = brandingConfig?.loadingHeight || 500;
+    const hasMintComponents = this.content?.includes("mint-components");
+
     const frame = this._createFrame();
+    frame.style.height = initialHeight + "px";
     this._initialiseCTA();
 
     const element = this.container ? this._findElement() : document.body;
 
-    const dialogParent = element.shadowRoot || element;
-    const dialog = this._createPopupDialog();
+    const dialogParent = element?.shadowRoot || element;
+    const dialog = this._createPopupDialog(brandingConfig);
     dialog.appendChild(frame);
 
     if (dialogParent.lastChild?.nodeName === "DIALOG") {
@@ -114,10 +120,48 @@ export default class PopupWidget extends Widget {
 
     const frameDoc = contentWindow.document;
     frameDoc.open();
-    frameDoc.write(this.content);
-    frameDoc.write(
-      `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-    );
+
+    if (this.content === "error") {
+      frameDoc.write(await this._getContent());
+      frameDoc.close();
+      domready(frameDoc, () => {
+        // @ts-ignore -- number will be cast to string by browsers
+        frame.height = frameDoc.body.scrollHeight;
+      });
+      _log("Popup error template loaded into iframe");
+      return;
+    }
+
+    const domain = this.widgetApi.domain;
+
+    frameDoc.write(`
+      ${
+        brandingConfig?.main?.brandFont
+          ? `
+        <link rel="preconnect" href="https://fast${
+          domain === "https://staging.referralsaasquatch.com" ? "-staging" : ""
+        }.ssqt.io">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
+          brandingConfig?.main?.brandFont,
+        )}" as="style">`
+          : ""
+      }
+      <link rel="dns-prefetch" href="https://res.cloudinary.com">
+      <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+            ${
+              hasMintComponents
+                ? `
+      <style data-styles>
+        html { visibility: hidden; }
+      </style>`
+                : ""
+            }
+      ${await this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
+      ${await this._getContent()}
+      `);
+
     frameDoc.close();
     _log("Popup template loaded into iframe");
     await this._setupResizeHandler(frame);
@@ -135,17 +179,26 @@ export default class PopupWidget extends Widget {
     // Adjust frame height when size of body changes
     domready(frameDoc, async () => {
       frameDoc.body.style.overflowY = "hidden";
-      frame.height = `${frameDoc.body.offsetHeight}px`;
-      // Adjust frame height when size of body changes
+      let initialLoad = true;
+
       const ro = new contentWindow["ResizeObserver"]((entries) => {
         for (const entry of entries) {
           const { top, bottom } = entry.contentRect;
+          const height = bottom + top;
+          if (height <= 0) continue;
 
-          const computedHeight = bottom + top;
-          frame.height = computedHeight + "";
+          if (initialLoad) {
+            // Clear loading height constraint and measure true content height
+            initialLoad = false;
+            frame.style.height = "0";
+            frame.height = frameDoc.body.scrollHeight + "";
+            frame.style.height = "";
+          } else {
+            frame.height = height + "";
+          }
 
-          // Don't let anything else set the height of this element
-          entry.target.style = ``;
+          // @ts-ignore Don't let anything else set the height of this element
+          entry.target.style = "";
         }
       });
       ro.observe(await this._findInnerContainer(frame));
@@ -195,13 +248,8 @@ export default class PopupWidget extends Widget {
     _log("Popup closed");
   }
 
-  protected _clickedOutside({ target }) {}
-
-  protected _error(rs, mode = "modal", style = "") {
-    const _style =
-      "body { margin: 0; } .modal { box-shadow: none; border: 0; }";
-
-    return super._error(rs, mode, style || _style);
+  protected _getErrorStyle(): string {
+    return "body { margin: 0; } .modal { box-shadow: none; border: 0; }";
   }
 
   show = this.open;

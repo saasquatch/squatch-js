@@ -29,6 +29,10 @@ export default class AnalyticsApi {
   pushAnalyticsLoadEvent(params: SQHDetails) {
     if (!params.externalUserId || !params.externalAccountId) return;
 
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const shareMediumFromUrl = urlParams?.get("rsShareMedium");
+
     const tenantAlias = encodeURIComponent(params.tenantAlias);
     const accountId = encodeURIComponent(params.externalAccountId);
     const userId = encodeURIComponent(params.externalUserId);
@@ -36,8 +40,11 @@ export default class AnalyticsApi {
     const programId = params.programId
       ? `&programId=${encodeURIComponent(params.programId)}`
       : ``;
+    const shareMedium = shareMediumFromUrl
+      ? `&shareMedium=${encodeURIComponent(shareMediumFromUrl)}`
+      : ``;
 
-    const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}${programId}`;
+    const path = `/a/${tenantAlias}/widgets/analytics/loaded?externalAccountId=${accountId}&externalUserId=${userId}&engagementMedium=${engagementMedium}${shareMedium}${programId}`;
     const url = this.domain + path;
 
     return doPost(url, JSON.stringify({}));

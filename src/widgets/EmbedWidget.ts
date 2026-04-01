@@ -1,6 +1,6 @@
 // @ts-check
 
-import { debug } from "debug";
+import { debug } from "../utils/logger";
 import { UpsertWidgetContext } from "../types";
 import { domready } from "../utils/domready";
 import { formatWidth } from "../utils/widgetUtils";
@@ -23,16 +23,25 @@ export default class EmbedWidget extends Widget {
   constructor(params: Params, container?: HTMLElement | string) {
     super(params);
 
-    if (container) this.container = container;
+    if (container) {
+      this.container = container;
+    }
   }
 
   async load() {
     const brandingConfig = this.context.widgetConfig?.values?.brandingConfig;
+    const hasMintComponents = this.content?.includes("mint-components");
+
+    const initialHeight = brandingConfig?.loadingHeight || 500;
     const sizes = brandingConfig?.widgetSize?.embeddedWidgets;
     const maxWidth = sizes?.maxWidth ? formatWidth(sizes.maxWidth) : "";
     const minWidth = sizes?.minWidth ? formatWidth(sizes.minWidth) : "";
 
-    const frame = this._createFrame({ minWidth, maxWidth });
+    const frame = this._createFrame({
+      minWidth,
+      maxWidth,
+      initialHeight,
+    });
     const element = this._findElement();
 
     if (this.context?.container) {
@@ -68,16 +77,53 @@ export default class EmbedWidget extends Widget {
 
     const frameDoc = contentWindow.document;
     frameDoc.open();
-    frameDoc.write(this.content);
-    frameDoc.write(
-      `<script src="${this.npmCdn}/resize-observer-polyfill@1.5.x"></script>`
-    );
+
+    if (this.content === "error") {
+      frameDoc.write(await this._getContent());
+      frameDoc.close();
+      domready(frameDoc, () => {
+        // @ts-ignore -- number will be cast to string by browsers
+        frame.height = frameDoc.body.scrollHeight;
+      });
+      return;
+    }
+
+    const domain = this.widgetApi.domain;
+    const fastDomainSuffix =
+      domain === "https://staging.referralsaasquatch.com" ? "-staging" : "";
+
+    frameDoc.write(`
+      ${
+        brandingConfig?.main?.brandFont
+          ? `
+        <link rel="preconnect" href="https://fast${fastDomainSuffix}.ssqt.io">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
+          brandingConfig?.main?.brandFont,
+        )}" as="style">`
+          : ""
+      }
+      <link rel="dns-prefetch" href="https://res.cloudinary.com">
+      <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+            ${
+              hasMintComponents
+                ? `
+      <style data-styles>
+        html { visibility: hidden; }
+      </style>`
+                : ""
+            }
+      ${await this._getSkeletonPreloadHTML(hasMintComponents, brandingConfig?.color?.backgroundColor)}
+      ${await this._getContent()}
+      `);
+
     frameDoc.close();
     domready(frameDoc, async () => {
       const _sqh = contentWindow.squatch || contentWindow.widgetIdent;
 
       // @ts-ignore -- number will be cast to string by browsers
-      frame.height = frameDoc.body.scrollHeight;
+      frame.height = initialHeight;
 
       // Adjust frame height when size of body changes
       /* istanbul ignore next: hard to test */
@@ -143,8 +189,8 @@ export default class EmbedWidget extends Widget {
     _log("Embed widget closed");
   }
 
-  protected _error(rs, mode = "embed", style = "") {
-    return super._error(rs, mode, style);
+  protected _getErrorMode(): string {
+    return "embed";
   }
 
   private _shouldFireLoadEvent() {

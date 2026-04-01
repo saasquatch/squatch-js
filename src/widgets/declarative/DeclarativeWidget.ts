@@ -1,4 +1,4 @@
-import debug from "debug";
+import { debug } from "../../utils/logger";
 import AnalyticsApi from "../../api/AnalyticsApi";
 import WidgetApi from "../../api/WidgetApi";
 import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../globals";
@@ -112,6 +112,15 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     });
   }
 
+  protected getWidgetType(
+    widgetType?: string,
+  ): "instant-access" | "verified-access" {
+    if (widgetType && widgetType.includes("friendWidget")) {
+      return "instant-access";
+    }
+    return "verified-access";
+  }
+
   private async renderPasswordlessVariant() {
     this._setupApis();
 
@@ -135,15 +144,28 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       return this.setErrorWidget(Error("No user object in token."));
     }
 
+    // Use the user's locale from the JWT if no locale attribute was set
+    if (!this.locale && userObj.locale) {
+      this.locale = userObj.locale;
+    }
+
     _log("Rendering as a Verified widget");
 
-    await this.widgetApi.upsertUser({
-      user: userObj,
-      locale: this.locale,
-      engagementMedium: this.type,
-      widgetType: this.widgetType,
-      jwt: this.token,
-    });
+    try {
+      await this.widgetApi.upsertUser({
+        user: userObj,
+        locale: this.locale,
+        engagementMedium: this.type,
+        widgetType: this.widgetType,
+        jwt: this.token,
+      });
+    } catch (e) {
+      return this.setErrorWidget(
+        e as
+          | Error
+          | { apiErrorCode?: string; rsCode?: string; message?: string },
+      );
+    }
 
     const widgetInstance = await this.widgetApi
       .render({
@@ -161,7 +183,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
   private _setWidget = (
     res: { template: any; widgetConfig: WidgetValueConfig },
-    config: { type: "upsert" | "passwordless"; user?: User }
+    config: { type: "upsert" | "passwordless"; user?: User },
   ) => {
     const params = {
       api: this.widgetApi,
@@ -195,8 +217,15 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     let widgetInstance: EmbedWidget | PopupWidget;
     this.widgetType = this.getAttribute("widget") || undefined;
     this.locale = this.getAttribute("locale") || this.locale;
+    const widgetType = this.getWidgetType(this.widgetType);
 
     if (!this.widgetType) throw new Error("No widget has been specified");
+
+    if (!this.token && widgetType === "verified-access") {
+      _log(
+        "[SquatchJS] Authentication token is required for this widget type.",
+      );
+    }
 
     if (!this.token) {
       widgetInstance = await this.renderPasswordlessVariant();
@@ -205,6 +234,7 @@ export default abstract class DeclarativeWidget extends HTMLElement {
     }
 
     this.widgetInstance = widgetInstance;
+
     if (this.widgetInstance)
       this.dispatchEvent(new CustomEvent("sq:widget-loaded"));
 
@@ -223,7 +253,22 @@ export default abstract class DeclarativeWidget extends HTMLElement {
    * Builds a Widget instance for the default error widget
    * @returns Instance of either {@link EmbedWidget} or {@link PopupWidget} depending on `this.type`
    */
-  setErrorWidget = (e: Error) => {
+  setErrorWidget = (
+    e:
+      | Error
+      | {
+          apiErrorCode?: string;
+          rsCode?: string;
+          statusCode?: number;
+          message?: string;
+        },
+  ) => {
+    // Extract error details from either Error object or API error response
+    const errorMessage = e instanceof Error ? e.message : e?.message;
+    const apiErrorCode = (e as any)?.apiErrorCode;
+    const rsCode = (e as any)?.rsCode;
+    const statusCode = (e as any)?.statusCode;
+
     const params = {
       api: this.widgetApi,
       content: "error",
@@ -235,7 +280,12 @@ export default abstract class DeclarativeWidget extends HTMLElement {
       domain: this.config?.domain || DEFAULT_DOMAIN,
       npmCdn: DEFAULT_NPM_CDN,
       container: this,
+      apiErrorCode,
+      rsCode,
+      statusCode,
+      errorMessage,
     };
+
     if (this.type === "EMBED") {
       return new EmbedWidget(params);
     } else {
@@ -265,4 +315,65 @@ export default abstract class DeclarativeWidget extends HTMLElement {
   reload = this.renderWidget;
   show = this.open;
   hide = this.close;
+
+  static get observedAttributes() {
+    return ["widget", "locale"];
+  }
+
+  attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
+    if (oldVal === newVal || !this.loaded) return;
+
+    switch (attr) {
+      case "locale":
+      case "widget":
+        this.connectedCallback();
+        break;
+    }
+  }
+
+  async connectedCallback() {
+    this.loaded = true;
+    this.container = this.getAttribute("container");
+    this.widgetType = this.getAttribute("widget") || undefined;
+
+    const skeletonWidgetType = this.getWidgetType(this.widgetType);
+
+    const { getSkeleton } = await import("../SkeletonTemplate");
+    const skeletonHTML = getSkeleton({
+      type: skeletonWidgetType,
+    });
+
+    const skeletonContainer = document.createElement("div");
+    skeletonContainer.id = "loading-skeleton";
+    skeletonContainer.innerHTML = skeletonHTML;
+
+    const root = this.shadowRoot || this.attachShadow({ mode: "open" });
+
+    // For popup widgets, insert skeleton into the dialog container if it exists
+    if (this.type === "POPUP") {
+      const dialogContainer = root.getElementById("squatchModal");
+      if (dialogContainer) {
+        dialogContainer.innerHTML = "";
+        dialogContainer.appendChild(skeletonContainer);
+      } else {
+        root.appendChild(skeletonContainer);
+      }
+    } else {
+      root.innerHTML = "";
+      root.appendChild(skeletonContainer);
+    }
+
+    try {
+      await this.renderWidget();
+    } catch (error) {
+      _log("Failed to render widget", error);
+    } finally {
+      const loadingElement = root.getElementById("loading-skeleton");
+      if (loadingElement) {
+        loadingElement.remove();
+      }
+    }
+
+    if (this.getAttribute("open") !== null) this.open();
+  }
 }

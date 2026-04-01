@@ -22,35 +22,6 @@ export class DeclarativeEmbedWidget extends DeclarativeWidget {
 
     this.loaded = false;
   }
-
-  static get observedAttributes() {
-    return ["widget", "locale"];
-  }
-
-  attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
-    if (oldVal === newVal || !this.loaded) return; // nothing to do
-
-    switch (attr) {
-      case "locale":
-      case "widget":
-        this.connectedCallback();
-        break;
-    }
-  }
-
-  async connectedCallback() {
-    this.loaded = true;
-    this.container = this.getAttribute("container");
-
-    await this.renderWidget();
-
-    const slot = (
-      this.shadowRoot && Array.from(this.shadowRoot.children)
-    )?.find((c) => c.tagName === "SLOT") as Node;
-    if (slot) this.shadowRoot?.removeChild(slot);
-
-    if (this.getAttribute("open") !== null) this.open();
-  }
 }
 
 /**
@@ -80,30 +51,6 @@ export class DeclarativePopupWidget extends DeclarativeWidget {
 
       this.open();
     });
-  }
-
-  static get observedAttributes() {
-    return ["widget", "locale"];
-  }
-
-  attributeChangedCallback(attr: string, oldVal: string, newVal: string) {
-    if (oldVal === newVal || !this.loaded) return; // nothing to do
-
-    switch (attr) {
-      case "locale":
-      case "widget":
-        this.connectedCallback();
-        break;
-    }
-  }
-
-  async connectedCallback() {
-    this.loaded = true;
-    this.container = this.getAttribute("container");
-
-    await this.renderWidget();
-
-    if (this.getAttribute("open") !== null) this.open();
   }
 }
 

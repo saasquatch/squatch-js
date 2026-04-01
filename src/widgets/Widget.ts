@@ -1,5 +1,5 @@
 // @ts-check
-import { debug } from "debug";
+import { debug } from "../utils/logger";
 import AnalyticsApi, { SQHDetails } from "../api/AnalyticsApi";
 import WidgetApi from "../api/WidgetApi";
 import { EngagementMedium, WidgetContext, WidgetType } from "../types";
@@ -15,6 +15,9 @@ export interface Params {
   content: string;
   api: WidgetApi;
   rsCode?: string;
+  apiErrorCode?: string;
+  statusCode?: number;
+  errorMessage?: string;
   context: WidgetContext;
   container?: string | HTMLElement | null | undefined;
 }
@@ -56,17 +59,61 @@ export default abstract class Widget {
   npmCdn: string;
   container: string | HTMLElement | undefined | null;
   loadEventListener: EventListener | null = null;
+  protected errorInfo?: {
+    rsCode?: string;
+    apiErrorCode?: string;
+    statusCode?: number;
+    message?: string;
+  };
 
   protected constructor(params: Params) {
     _log("widget initializing ...");
-    this.content =
-      params.content === "error" ? this._error(params.rsCode) : params.content;
+    if (params.content === "error") {
+      this.content = "error";
+      this.errorInfo = {
+        rsCode: params.rsCode,
+        apiErrorCode: params.apiErrorCode,
+        statusCode: params.statusCode,
+        message: params.errorMessage,
+      };
+    } else {
+      this.content = params.content;
+    }
     this.type = params.type;
     this.widgetApi = params.api;
     this.npmCdn = params.npmCdn;
     this.analyticsApi = new AnalyticsApi({ domain: params.domain });
     this.context = params.context;
     this.container = params.context?.container || params.container;
+  }
+
+  /**
+   * Returns the widget content, dynamically loading the error template if needed.
+   */
+  protected async _getContent(): Promise<string> {
+    if (this.content === "error" && this.errorInfo) {
+      const { getErrorTemplate } = await import("./ErrorTemplate");
+
+      return getErrorTemplate({
+        rsCode: this.errorInfo.rsCode,
+        apiErrorCode: this.errorInfo.apiErrorCode,
+        statusCode: this.errorInfo.statusCode,
+        mode: this._getErrorMode(),
+        style: this._getErrorStyle(),
+        message: this.errorInfo.message,
+      });
+    }
+    return this.content;
+  }
+
+  /** Override in subclasses to customize error template mode */
+  protected _getErrorMode(): string {
+    return "modal";
+  }
+
+  /** Override in subclasses to customize error template styles */
+  protected _getErrorStyle(): string {
+    return "";
   }
 
   _findElement(): HTMLElement {
@@ -100,13 +147,17 @@ export default abstract class Widget {
         `element with selector '${
           this.container ||
           "#squatchembed, .squatchembed, #impactembed, or .impactembed"
-        }' not found.'`
+        }' not found.'`,
       );
 
     return element;
   }
 
-  _createFrame(options?: { minWidth?: string; maxWidth?: string }) {
+  _createFrame(options?: {
+    minWidth?: string;
+    maxWidth?: string;
+    initialHeight?: string | number;
+  }) {
     const frame = document.createElement("iframe");
     frame["squatchJsApi"] = this;
     frame.id = "squatchFrame";
@@ -116,7 +167,7 @@ export default abstract class Widget {
     frame.scrolling = "no";
     frame.setAttribute(
       "style",
-      "border: 0; background-color: none; width: 1px; min-width: 100%;"
+      "border: 0; background-color: none; width: 1px; min-width: 100%; display: block;",
     );
 
     if (options?.minWidth) frame.style.minWidth = options.minWidth;
@@ -124,6 +175,9 @@ export default abstract class Widget {
     if (options?.maxWidth || options?.minWidth) {
       // Avoid 1px width when custom width is set
       frame.style.width = "100%";
+    }
+    if (options?.initialHeight) {
+      frame.height = String(options.initialHeight);
     }
 
     return frame;
@@ -133,7 +187,7 @@ export default abstract class Widget {
     const element = this.container ? this._findElement() : document.body;
     const parent = element.shadowRoot || element;
     return parent.querySelector(
-      "iframe#squatchFrame"
+      "iframe#squatchFrame",
     ) as HTMLIFrameElement | null;
   }
 
@@ -143,7 +197,7 @@ export default abstract class Widget {
     if (this.loadEventListener) {
       frameDoc.removeEventListener(
         "sq:user-registration",
-        this.loadEventListener
+        this.loadEventListener,
       );
 
       this.loadEventListener = null;
@@ -152,11 +206,11 @@ export default abstract class Widget {
 
   protected _attachLoadEventListener(
     frameDoc: Document,
-    sqh: ProgramLoadEvent | GenericLoadEvent
+    sqh: ProgramLoadEvent | GenericLoadEvent,
   ) {
     if (this.loadEventListener === null) {
       this.loadEventListener = (
-        e: CustomEvent<{ userId: string; accountId: string }>
+        e: CustomEvent<{ userId: string; accountId: string }>,
       ) => {
         this._loadEvent({
           ...sqh,
@@ -224,7 +278,7 @@ export default abstract class Widget {
         })
         .then((response) => {
           _log(
-            `${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`
+            `${sqh.mode.widgetMode} share ${medium} event recorded. ${response}`,
           );
         })
         .catch((ex) => {
@@ -233,44 +287,8 @@ export default abstract class Widget {
     }
   }
 
-  protected _error(rs, mode = "modal", style = "") {
-    const errorTemplate = `<!DOCTYPE html>
-    <!--[if IE 7]><html class="ie7 oldie" lang="en"><![endif]-->
-    <!--[if IE 8]><html class="ie8 oldie" lang="en"><![endif]-->
-    <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
-    <head>
-      <link rel="stylesheet" media="all" href="https://fast.ssqt.io/assets/css/widget/errorpage.css">
-      <style>
-        ${style}
-      </style>
-    </head>
-    <body>
-
-      <div class="squatch-container ${mode}" style="width:100%">
-        <div class="errorheader">
-          <button type="button" class="close" onclick="window.frameElement.squatchJsApi.close();">&times;</button>
-          <p class="errortitle">Error</p>
-        </div>
-        <div class="errorbody">
-          <div class="sadface"><img src="https://fast.ssqt.io/assets/images/face.png"></div>
-          <h4>Our referral program is temporarily unavailable.</h4><br>
-          <p>Please reload the page or check back later.</p>
-          <p>If the persists please contact our support team.</p>
-          <br>
-          <br>
-          <div class="right-align errtxt">
-            Error Code: ${rs}
-          </div>
-        </div>
-      </div>
-    </body>
-    </html>`;
-
-    return errorTemplate;
-  }
-
   protected async _findInnerContainer(
-    frame: HTMLIFrameElement
+    frame: HTMLIFrameElement,
   ): Promise<Element> {
     const { contentWindow } = frame;
     if (!contentWindow)
@@ -285,8 +303,8 @@ export default abstract class Widget {
         containers.length > 0
           ? containers[0]
           : legacyContainers.length > 0
-          ? legacyContainers[0]
-          : null;
+            ? legacyContainers[0]
+            : null;
       return fallback;
     }
 
@@ -300,6 +318,47 @@ export default abstract class Widget {
       return frameDoc.body;
     }
     return found;
+  }
+
+  /**
+   * Returns HTML for an in-iframe skeleton preload overlay that is removed
+   * once all custom elements in the widget are defined.
+   *
+   * Uses `customElements.whenDefined()` to wait for all custom element tags,
+   * then removes the skeleton after two animation frames. Includes a 10s
+   * timeout fallback.
+   *
+   * Only generates content for mint-components widgets; returns empty string otherwise.
+   */
+  protected async _getSkeletonPreloadHTML(
+    hasMintComponents: boolean,
+    backgroundColor?: string,
+  ): Promise<string> {
+    if (!hasMintComponents) return "";
+
+    const { getSkeleton } = await import("./SkeletonTemplate");
+    const skeletonType =
+      this.context.type === "passwordless"
+        ? "instant-access"
+        : "verified-access";
+
+    const skeletonHTML = getSkeleton({
+      type: skeletonType,
+    });
+
+    // Extract custom element tags from HTML string instead of scanning the DOM
+    const tagSet = new Set<string>();
+    const tagRegex = /<([a-z][\w]*-[\w-]*)/gi;
+    let m;
+    while ((m = tagRegex.exec(this.content))) tagSet.add(m[1].toLowerCase());
+    const tags = JSON.stringify([...tagSet]);
+
+    return `
+      <div id="sq-preload" style="visibility: visible; position: absolute; top: 0; left: 0; width: 100%; z-index: 9999; background: ${(backgroundColor || "white").replace(/[^a-zA-Z0-9#(),.\s%-]/g, "")};">
+        ${skeletonHTML}
+      </div>
+      <script>(${_skeletonLoader.toString()})(${tags})<\/script>
+    `;
   }
 
   /**
@@ -364,7 +423,7 @@ export default abstract class Widget {
 
               // @ts-ignore -- open exists in the PopupWidget, so this call will always exist when it's called.
               engagementMedium === "POPUP" && this.open();
-            }
+            },
           );
         }
       })
@@ -406,4 +465,37 @@ function delay(duration) {
   return new Promise((resolve) => {
     setTimeout(resolve, duration);
   });
+}
+
+/**
+ * Removes the skeleton overlay once all custom elements are defined.
+ */
+function _skeletonLoader(tags: string[]) {
+  var fallback = setTimeout(remove, 10000);
+
+  function remove() {
+    var el = document.getElementById("sq-preload");
+    if (el) el.remove();
+    clearTimeout(fallback);
+  }
+
+  function init() {
+    if (!tags || !tags.length) return remove();
+    Promise.all(
+      tags.map(function (t) {
+        return customElements.whenDefined(t);
+      }),
+    ).then(function () {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(remove);
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    // Defer to ensure frameDoc.write() has finished and all content is in the DOM
+    setTimeout(init, 0);
+  }
 }

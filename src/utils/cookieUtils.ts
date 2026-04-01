@@ -1,8 +1,42 @@
-import { debug } from "debug";
-import Cookies from "js-cookie";
+import { debug } from "./logger";
 
 /** @hidden */
 const _log = debug("squatch-js");
+
+export function getCookie(name: string): string | undefined {
+  const match = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+        "=([^;]*)",
+    ),
+  );
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
+function setCookie(
+  name: string,
+  value: string,
+  options: {
+    expires?: number;
+    secure?: boolean;
+    sameSite?: string;
+    domain?: string;
+    path?: string;
+  },
+) {
+  let cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`;
+  if (options.expires) {
+    const date = new Date();
+    date.setTime(date.getTime() + options.expires * 864e5);
+    cookieString += `; expires=${date.toUTCString()}`;
+  }
+  if (options.path) cookieString += `; path=${options.path}`;
+  if (options.domain) cookieString += `; domain=${options.domain}`;
+  if (options.sameSite) cookieString += `; SameSite=${options.sameSite}`;
+  if (options.secure) cookieString += `; Secure`;
+  document.cookie = cookieString;
+}
 
 const isObject = (item: any) =>
   typeof item === "object" && !Array.isArray(item);
@@ -92,7 +126,7 @@ export function _pushCookie() {
     }
 
     try {
-      existingCookie = JSON.parse(b64decode(Cookies.get("_saasquatch")));
+      existingCookie = JSON.parse(b64decode(getCookie("_saasquatch")));
       _log("existing cookie", existingCookie);
     } catch (error) {
       _log("Unable to retrieve cookie", error);
@@ -110,7 +144,7 @@ export function _pushCookie() {
         reEncodedCookie = b64encode(JSON.stringify(paramsJSON));
         _log("cookie to store:", paramsJSON);
       }
-      Cookies.set("_saasquatch", reEncodedCookie, {
+      setCookie("_saasquatch", reEncodedCookie, {
         expires: 365,
         secure: false,
         sameSite: "Lax",

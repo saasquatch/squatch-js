@@ -11,6 +11,5 @@ require("@babel/register")({
         corejs: 2,
       },
     ],
-    "@babel/plugin-proposal-class-properties",
   ],
 });

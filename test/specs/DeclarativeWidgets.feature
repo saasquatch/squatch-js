@@ -425,5 +425,50 @@ Feature: Declarative widgets using custom Web Components
     When the second instance of squatchjs is loaded
     Then it does not register any custom elements
 
+  @motivating @automated
+  Scenario Outline: A loading skeleton is displayed while the widget loads
+    Given window.squatchTenant is "valid"
+    And window.squatchToken is "a valid token"
+    And the <component> web-component is included in the page's HTML
+    And the widget attribute is set to a valid SaaSquatch widget type
+    When the component starts loading
+    Then a loading skeleton is injected into the shadow DOM
+    And the skeleton has an element with id "loading-skeleton"
+    When the widget finishes loading
+    Then the loading skeleton is removed from the shadow DOM
 
+    Examples:
+      | component     |
+      | squatch-embed |
+      | squatch-popup |
 
+  @minutia @automated
+  Scenario Outline: Loading skeleton type is determined by the widget type
+    Given window.squatchTenant is "valid"
+    And window.squatchToken is "a valid token"
+    And <component> is included in the page's HTML
+    And the widget attribute is set to <widgetType>
+    When the component loads
+    Then the skeleton type used is <skeletonType>
+
+    Examples:
+      | component     | widgetType                    | skeletonType    |
+      | squatch-embed | w/websiteReferralWidget       | instant-access  |
+      | squatch-embed | w/friendWidget                | instant-access  |
+      | squatch-embed | w/referral-widget             | verified-access |
+      | squatch-popup | w/websiteReferralWidget       | instant-access  |
+      | squatch-popup | w/some-other-widget           | verified-access |
+
+  @minutia @automated
+  Scenario Outline: Loading skeleton is removed after widget renders even if rendering fails
+    Given window.squatchTenant is "invalid"
+    And window.squatchToken is "a valid token"
+    And the <component> web-component is included in the page's HTML
+    And the widget attribute is set to a valid SaaSquatch widget type
+    When the component loads
+    Then the loading skeleton is removed from the shadow DOM
+
+    Examples:
+      | component     |
+      | squatch-embed |
+      | squatch-popup |

@@ -27,7 +27,7 @@ const validSqh = {
   },
 };
 
-test("Error widget", () => {
+test("Error widget", async () => {
   const widget = new TestWidget({
     api: new WidgetApi({ tenantAlias: TENANT_ALIAS }),
     content: "error",
@@ -37,7 +37,9 @@ test("Error widget", () => {
     type: WIDGET_TYPE,
   });
 
-  expect(widget.content).toContain(
+  expect(widget.content).toBe("error");
+  const html = await widget["_getContent"]();
+  expect(html).toContain(
     "Our referral program is temporarily unavailable."
   );
 });
@@ -133,28 +135,28 @@ describe("Widget methods", () => {
 
   describe("_loadEvent", () => {
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     test("No load config", () => {
-      let mock = jest.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
+      let mock = vi.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
       // @ts-ignore
       expect(widget["_loadEvent"]()).toBeUndefined();
       expect(mock).not.toBeCalled();
     });
     test("Invalid load config type", () => {
-      let mock = jest.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
+      let mock = vi.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
       // @ts-ignore
       expect(() => widget["_loadEvent"]("asdf")).toThrow();
       expect(mock).not.toBeCalled();
     });
     test("Invalid load config", () => {
-      let mock = jest.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
+      let mock = vi.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
       // @ts-ignore
       expect(() => widget["_loadEvent"]({})).toThrow();
       expect(mock).not.toBeCalled();
     });
     test("Invalid program load config", () => {
-      let mock = jest.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
+      let mock = vi.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
       // @ts-ignore
       expect(() => widget["_loadEvent"]({ programId: "string" })).toThrow();
       expect(mock).not.toBeCalled();
@@ -167,13 +169,13 @@ describe("Widget methods", () => {
         engagementMedium: "engagementMedium",
         programId: "programId",
       };
-      let mock = jest.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
+      let mock = vi.spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent");
       // @ts-ignore
       widget["_loadEvent"](obj);
       expect(mock).toBeCalledTimes(1);
     });
     test("Valid analytics load config", async () => {
-      let mock = jest
+      let mock = vi
         .spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent")
         .mockImplementation(
           async () => await new Promise((res) => res("response"))
@@ -183,21 +185,21 @@ describe("Widget methods", () => {
       expect(mock).toBeCalledTimes(1);
     });
     test("Valid analytics load config request failure", async () => {
-      let mock = jest
+      let mock = vi
         .spyOn(widget.analyticsApi, "pushAnalyticsLoadEvent")
         .mockImplementation(() => new Promise((res, rej) => rej("error")));
 
-      expect(widget["_loadEvent"](validSqh)).resolves;
+      widget["_loadEvent"](validSqh);
       expect(mock).toBeCalledTimes(1);
     });
   });
 
   describe("_shareEvent", () => {
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     test("Invalid param", () => {
-      let mock = jest.spyOn(
+      let mock = vi.spyOn(
         widget.analyticsApi,
         "pushAnalyticsShareClickedEvent"
       );
@@ -206,7 +208,7 @@ describe("Widget methods", () => {
       expect(mock).toBeCalledTimes(0);
     });
     test("Invalid config", () => {
-      let mock = jest.spyOn(
+      let mock = vi.spyOn(
         widget.analyticsApi,
         "pushAnalyticsShareClickedEvent"
       );
@@ -214,7 +216,7 @@ describe("Widget methods", () => {
       expect(mock).toBeCalledTimes(0);
     });
     test("Valid config, resolved request", async () => {
-      let mock = jest
+      let mock = vi
         .spyOn(widget.analyticsApi, "pushAnalyticsShareClickedEvent")
         .mockImplementation(() => new Promise((res) => res("Success")));
 
@@ -222,25 +224,33 @@ describe("Widget methods", () => {
       expect(mock).toBeCalledTimes(1);
     });
     test("Valid config, rejected request", async () => {
-      let mock = jest
+      let mock = vi
         .spyOn(widget.analyticsApi, "pushAnalyticsShareClickedEvent")
         .mockImplementation(() => new Promise((res, rej) => rej("Error")));
 
-      expect(widget["_shareEvent"](validSqh, "medium")).resolves;
+      widget["_shareEvent"](validSqh, "medium");
       expect(mock).toBeCalledTimes(1);
     });
   });
 
-  describe("_error", () => {
-    test("Fill in of params", () => {
-      const rs = "400";
-      const mode = "modal";
-      const style = "color: black;";
-
-      const errorHtml = widget["_error"](rs, mode, style);
-      expect(errorHtml).toContain(rs);
-      expect(errorHtml).toContain(mode);
-      expect(errorHtml).toContain(style);
+  describe("_getContent", () => {
+    test("returns content for normal widget", async () => {
+      const html = await widget["_getContent"]();
+      expect(html).toContain("DEFAULT_WIDGET_CONTENT");
+    });
+    test("returns error template for error widget", async () => {
+      const errorWidget = new TestWidget({
+        api: new WidgetApi({ tenantAlias: TENANT_ALIAS }),
+        content: "error",
+        context: { type: "upsert" },
+        domain: DEFAULT_DOMAIN,
+        npmCdn: DEFAULT_NPM_CDN,
+        type: WIDGET_TYPE,
+        rsCode: "400",
+      });
+      const html = await errorWidget["_getContent"]();
+      expect(html).toContain("400");
+      expect(html).toContain("modal");
     });
   });
 
@@ -300,7 +310,7 @@ describe("Widget methods", () => {
       document.body.innerHTML = "";
     });
     afterEach(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
     test("no iframe", () => {
       const div = document.createElement("div");
@@ -319,7 +329,7 @@ describe("Widget methods", () => {
       ).toThrow();
     });
     test("invalid iframe", () => {
-      const mock = jest
+      const mock = vi
         .spyOn(widget, "_findFrame")
         .mockImplementation(() => document.createElement("iframe"));
 
@@ -351,7 +361,7 @@ describe("Widget methods", () => {
       { email: "john@example.com", firstName: "asdf", lastName: "asdf" },
       { email: undefined, firstName: undefined, lastName: undefined },
     ])("with iframe, user context, upsert resolves", async (param) => {
-      const upsertMock = jest
+      const upsertMock = vi
         .spyOn(widget.widgetApi, "upsertUser")
         .mockImplementation(
           () => new Promise((res) => res({ template: "asdf" }))
@@ -379,7 +389,7 @@ describe("Widget methods", () => {
       expect(widget.content).toBe("asdf");
     });
     test("with iframe, render resolves", async () => {
-      const upsertMock = jest
+      const upsertMock = vi
         .spyOn(widget.widgetApi, "render")
         .mockImplementation(
           () => new Promise((res) => res({ template: "asdf" }))
@@ -411,14 +421,14 @@ describe("Widget methods", () => {
     ])(
       "with iframe, render resolves, legacy register occurs",
       async (param) => {
-        const upsertMock = jest
+        const upsertMock = vi
           .spyOn(widget.widgetApi, "render")
           .mockImplementation(
             () => new Promise((res) => res({ template: "asdf" }))
           );
 
-        const loadMock = jest.spyOn(widget, "load");
-        const openMock = jest.spyOn(widget, "open");
+        const loadMock = vi.spyOn(widget, "load");
+        const openMock = vi.spyOn(widget, "open");
 
         const div = document.createElement("div");
         div.setAttribute("class", "squatchembed");
@@ -479,7 +489,7 @@ describe("Widget methods", () => {
       }
     );
     test("with iframe, request rejects", async () => {
-      const upsertMock = jest
+      const upsertMock = vi
         .spyOn(widget.widgetApi, "render")
         .mockImplementation(() => new Promise((res, rej) => rej("ERROR")));
 

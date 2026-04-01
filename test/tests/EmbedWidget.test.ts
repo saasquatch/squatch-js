@@ -1,16 +1,20 @@
+import { type Mock } from "vitest";
 import { DEFAULT_DOMAIN, DEFAULT_NPM_CDN } from "../../src/globals";
 import { EmbedWidget, WidgetApi } from "../../src/squatch";
 import Widget from "../../src/widgets/Widget";
 
 declare global {
-  var mockDebug: jest.Mock<any, any>;
+  var mockDebug: Mock;
 }
 
-jest.mock("debug", () => {
+vi.mock("../../src/utils/logger", () => {
   // @ts-ignore
-  global.mockDebug = jest.fn();
-  // @ts-ignore
-  return { ...jest.requireActual("debug"), debug: () => global.mockDebug };
+  global.mockDebug = vi.fn();
+  return {
+    debug: () => global.mockDebug,
+    enableDebug: vi.fn(),
+    disableDebug: vi.fn(),
+  };
 });
 
 describe("methods", () => {
@@ -28,7 +32,7 @@ describe("methods", () => {
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     document.body.innerHTML = "";
     // @ts-ignore
     window.squatchTenant = null;
@@ -37,7 +41,8 @@ describe("methods", () => {
     widget = new EmbedWidget(config);
   });
   afterEach(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
   describe("load", () => {
     test("brandingConfig", async () => {
@@ -65,19 +70,22 @@ describe("methods", () => {
         },
       });
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => {
           return document.querySelector("#test") as HTMLElement;
         });
       await widget.load();
 
-      jest.runAllTimers();
+      vi.runAllTimers();
       await Promise.resolve();
 
       expect(mockElement).toHaveBeenCalled();
-      expect(div.style.minWidth).toBe("100%");
-      expect(div.style.maxWidth).toBe("600px");
+
+      const frame = div.querySelector("iframe#squatchFrame") as HTMLIFrameElement;
+      expect(frame).not.toBeNull();
+      expect(frame.style.minWidth).toBe("100%");
+      expect(frame.style.maxWidth).toBe("600px");
     });
     test.each([
       { hasChild: false, hasContainer: false },
@@ -90,13 +98,13 @@ describe("methods", () => {
       if (args.hasChild) div.appendChild(document.createElement("span"));
       document.body.appendChild(div);
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => {
           return document.querySelector("#test") as HTMLElement;
         });
 
-      const mockLoadEvent = jest.spyOn(Widget.prototype as any, "_loadEvent");
+      const mockLoadEvent = vi.spyOn(Widget.prototype as any, "_loadEvent");
 
       widget.container = args.hasContainer ? ".container" : null;
       if (!args.hasContainer && args.hasChild) {
@@ -106,7 +114,7 @@ describe("methods", () => {
         await widget.load();
       }
 
-      jest.runAllTimers(); // domready settimeout
+      vi.runAllTimers(); // domready settimeout
       await Promise.resolve();
 
       expect(mockElement).toHaveBeenCalled();
@@ -116,14 +124,14 @@ describe("methods", () => {
       if (args.hasChild) expect(div?.firstChild).toBe(iframe);
       else
         expect(iframe?.contentDocument?.body.innerHTML).toContain(
-          `resize-observer-polyfill@1.5.x`
+          `res.cloudinary.com`
         );
       expect(iframe?.contentDocument?.body.innerHTML).toContain(widget.content);
 
       expect(mockLoadEvent).toHaveBeenCalledTimes(args.hasContainer ? 0 : 1);
     });
     test("no contentWindow", async () => {
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => document.createElement("div"));
 
@@ -139,18 +147,18 @@ describe("methods", () => {
       div.innerText = "TEXT";
       document.body.appendChild(div);
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => {
           return document.querySelector("#test") as HTMLElement;
         });
 
-      const mockLoadEvent = jest.spyOn(Widget.prototype as any, "_loadEvent");
+      const mockLoadEvent = vi.spyOn(Widget.prototype as any, "_loadEvent");
 
       widget.container = null;
       await widget.load();
 
-      jest.runAllTimers(); // domready settimeout
+      vi.runAllTimers(); // domready settimeout
       await Promise.resolve();
 
       expect(mockElement).toHaveBeenCalled();
@@ -160,7 +168,7 @@ describe("methods", () => {
       expect(div?.lastChild).toBe(iframe);
 
       expect(iframe?.contentDocument?.body.innerHTML).toContain(
-        `resize-observer-polyfill@1.5.x`
+        `res.cloudinary.com`
       );
       expect(iframe?.contentDocument?.body.innerHTML).toContain(widget.content);
 
@@ -174,17 +182,17 @@ describe("methods", () => {
       const config = widgetConfig();
       const widget = new EmbedWidget(config, "#test");
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => {
           return document.querySelector("#test") as HTMLElement;
         });
 
-      const mockLoadEvent = jest.spyOn(Widget.prototype as any, "_loadEvent");
+      const mockLoadEvent = vi.spyOn(Widget.prototype as any, "_loadEvent");
 
       await widget.load();
 
-      jest.runAllTimers(); // domready settimeout
+      vi.runAllTimers(); // domready settimeout
       await Promise.resolve();
 
       expect(mockElement).toHaveBeenCalled();
@@ -196,7 +204,7 @@ describe("methods", () => {
       expect(div.lastChild).toBe(iframe);
 
       expect(iframe?.contentDocument?.body.innerHTML).toContain(
-        `resize-observer-polyfill@1.5.x`
+        `res.cloudinary.com`
       );
       expect(iframe?.contentDocument?.body.innerHTML).toContain(widget.content);
 
@@ -213,18 +221,18 @@ describe("methods", () => {
         }
         document.body.appendChild(div);
 
-        const mockElement = jest
+        const mockElement = vi
           .spyOn(widget, "_findElement")
           .mockImplementation(() => {
             return document.querySelector("#test") as HTMLElement;
           });
 
-        const mockLoadEvent = jest.spyOn(Widget.prototype as any, "_loadEvent");
+        const mockLoadEvent = vi.spyOn(Widget.prototype as any, "_loadEvent");
 
         widget.container = "#test"; // Arbitrary due to mocked findElement
         await widget.load();
 
-        jest.runAllTimers(); // domready settimeout
+        vi.runAllTimers(); // domready settimeout
         await Promise.resolve();
 
         expect(mockElement).toHaveBeenCalled();
@@ -236,7 +244,7 @@ describe("methods", () => {
         expect(div?.shadowRoot?.lastChild).toBe(iframe);
 
         expect(iframe?.contentDocument?.body.innerHTML).toContain(
-          `resize-observer-polyfill@1.5.x`
+          `res.cloudinary.com`
         );
         expect(iframe?.contentDocument?.body.innerHTML).toContain(
           widget.content
@@ -256,6 +264,147 @@ describe("methods", () => {
       const result = widget["_shouldFireLoadEvent"]();
       expect(result).toBe(args.result);
     });
+    test("initialHeight from brandingConfig", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const config = widgetConfig();
+      const widgetWithHeight = new EmbedWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                loadingHeight: 400,
+              },
+            },
+          },
+        },
+      });
+
+      const mockElement = vi
+        .spyOn(widgetWithHeight, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widgetWithHeight.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      expect(iframe).toBeInstanceOf(HTMLIFrameElement);
+      expect(iframe.height).toBe("400");
+    });
+    test("cloudinary preconnect links are always present", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const mockElement = vi
+        .spyOn(widget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('dns-prefetch');
+      expect(html).toContain('https://res.cloudinary.com');
+    });
+    test("brand font preconnect links when brandFont is configured", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const config = widgetConfig();
+      const widgetWithFont = new EmbedWidget({
+        ...config,
+        context: {
+          ...config.context,
+          widgetConfig: {
+            values: {
+              brandingConfig: {
+                main: { brandFont: "Roboto" },
+              },
+            },
+          },
+        },
+      });
+
+      const mockElement = vi
+        .spyOn(widgetWithFont, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widgetWithFont.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('fonts.gstatic.com');
+      expect(html).toContain('fonts.googleapis.com');
+      expect(html).toContain('family=Roboto');
+    });
+    test("no brand font preconnect links when brandFont is not configured", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const mockElement = vi
+        .spyOn(widget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).not.toContain('fonts.gstatic.com');
+    });
+    test("skeleton preload is present when mint-components dependency exists", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const config = widgetConfig();
+      const mintWidget = new EmbedWidget({
+        ...config,
+        content: "<sqm-brand><script src='mint-components'></script></sqm-brand>",
+      });
+
+      const mockElement = vi
+        .spyOn(mintWidget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await mintWidget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).toContain('sq-preload');
+    });
+    test("skeleton preload is not present without mint-components", async () => {
+      const div = document.createElement("div");
+      div.id = "test";
+      document.body.appendChild(div);
+
+      const mockElement = vi
+        .spyOn(widget, "_findElement")
+        .mockImplementation(() => {
+          return document.querySelector("#test") as HTMLElement;
+        });
+
+      await widget.load();
+
+      const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+      const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+      expect(html).not.toContain('sq-preload');
+    });
   });
   describe("open", () => {
     test.each([
@@ -274,19 +423,21 @@ describe("methods", () => {
 
       iframe.contentDocument?.open();
       iframe.contentDocument?.write(
-        `<html><head><script>window.widgetIdent = "widgetIdent";</script></head><body></body></html>`
+        `<html><head></head><body></body></html>`
       );
       iframe.contentDocument?.close();
+      // Set widgetIdent directly since happy-dom doesn't execute inline scripts via document.write
+      (iframe.contentWindow as any).widgetIdent = "widgetIdent";
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => document.body.querySelector("#test")!);
 
-      const mockFindFrame = jest
+      const mockFindFrame = vi
         .spyOn(widget, "_findFrame")
         .mockImplementation(() => document.body.querySelector("iframe")!);
 
-      const mockLoadEvent = jest
+      const mockLoadEvent = vi
         .spyOn(Widget.prototype as any, "_loadEvent")
         .mockImplementation(() => {});
 
@@ -306,11 +457,11 @@ describe("methods", () => {
       } else expect(mockLoadEvent).toHaveBeenCalledTimes(0);
     });
     test("no frame", () => {
-      const mockFindFrame = jest
+      const mockFindFrame = vi
         .spyOn(widget, "_findFrame")
         .mockImplementation(() => null);
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => document.body.querySelector("#test")!);
 
@@ -324,11 +475,11 @@ describe("methods", () => {
       expect(mockFindFrame).toHaveBeenCalled();
     });
     test("broken frame", () => {
-      const mockFindFrame = jest
+      const mockFindFrame = vi
         .spyOn(widget, "_findFrame")
         .mockImplementation(() => document.createElement("iframe"));
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => document.body.querySelector("#test")!);
 
@@ -352,11 +503,11 @@ describe("methods", () => {
       div.id = "test";
       document.body.appendChild(div);
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => document.querySelector("#test")!);
 
-      const mockFindFrame = jest
+      const mockFindFrame = vi
         .spyOn(widget, "_findFrame")
         .mockImplementation(() => document.querySelector("iframe"));
 
@@ -373,11 +524,11 @@ describe("methods", () => {
       expect(global.mockDebug).toHaveBeenCalledWith("Embed widget closed");
     });
     test("no frame", () => {
-      const mockFindFrame = jest
+      const mockFindFrame = vi
         .spyOn(widget, "_findFrame")
         .mockImplementation(() => null);
 
-      const mockElement = jest
+      const mockElement = vi
         .spyOn(widget, "_findElement")
         .mockImplementation(() => document.body.querySelector("#test")!);
 
@@ -391,13 +542,31 @@ describe("methods", () => {
       expect(mockElement).not.toHaveBeenCalled();
     });
   });
-  test("error", () => {
-    const mockError = jest.spyOn(Widget.prototype as any, "_error");
+  test("_getErrorMode returns embed", () => {
+    expect(widget["_getErrorMode"]()).toBe("embed");
+  });
+  test("error content is written standalone", async () => {
+    const div = document.createElement("div");
+    div.id = "test";
+    document.body.appendChild(div);
 
-    widget["_error"]("201");
-    expect(mockError).toHaveBeenCalledWith("201", "embed", "");
+    const config = widgetConfig();
+    const errorWidget = new EmbedWidget({
+      ...config,
+      content: "error",
+    });
 
-    widget["_error"]("201", "asdf", "asdf");
-    expect(mockError).toHaveBeenCalledWith("201", "asdf", "asdf");
+    const mockElement = vi
+      .spyOn(errorWidget, "_findElement")
+      .mockImplementation(() => {
+        return document.querySelector("#test") as HTMLElement;
+      });
+
+    await errorWidget.load();
+
+    const iframe = document?.querySelector("iframe") as HTMLIFrameElement;
+    const html = iframe?.contentDocument?.documentElement.innerHTML || "";
+    expect(html).toContain("Our referral program is temporarily unavailable.");
+    expect(html).not.toContain("dns-prefetch");
   });
 });
