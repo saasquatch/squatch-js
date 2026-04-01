@@ -141,7 +141,7 @@ export default class PopupWidget extends Widget {
         <link rel="preconnect" href="https://fast${
           domain === "https://staging.referralsaasquatch.com" ? "-staging" : ""
         }.ssqt.io">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
           brandingConfig?.main?.brandFont,
