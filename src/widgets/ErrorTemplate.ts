@@ -138,7 +138,7 @@ export function getErrorTemplate(options: ErrorTemplateOptions = {}): string {
     </head>
     <body>
 
-      <div class="squatch-container ${mode}" style="width:100%">
+      <div class="squatch-container ${mode}" style="width:100%;background:#FFF;">
         <div class="errorbody">
           <div class="sadface"><img src="https://fast-staging.ssqt.io/assets/images/whoops-error-image.png"></div>
           <h4>Our referral program is temporarily unavailable.</h4>
