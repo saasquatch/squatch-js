@@ -98,7 +98,7 @@ export default class EmbedWidget extends Widget {
           ? `
         <link rel="preconnect" href="https://fast${fastDomainSuffix}.ssqt.io">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
         <link rel="preload" href="https://fonts.googleapis.com/css2?family=${encodeURIComponent(
           brandingConfig?.main?.brandFont,
         )}" as="style">`
