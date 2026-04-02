@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.4] - 2026-04-01
+
+### Fixed
+
+- Loading skeleton was showing inside \<impact-popup> container on initial loads
+
 ## [2.8.3] - 2026-04-01
 
 ### Added
@@ -412,7 +418,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.3...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.4...HEAD
+[2.8.4]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.4
 [2.8.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.3
 [2.8.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.1...@saasquatch%2Fsquatch-js@2.8.2
 [2.8.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.0...@saasquatch%2Fsquatch-js@2.8.1

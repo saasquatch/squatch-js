@@ -349,14 +349,13 @@ export default abstract class DeclarativeWidget extends HTMLElement {
 
     const root = this.shadowRoot || this.attachShadow({ mode: "open" });
 
-    // For popup widgets, insert skeleton into the dialog container if it exists
+    // For popup widgets, only show skeleton inside an existing dialog (re-render case).
+    // On first render, skip skeleton since the popup isn't visible yet.
     if (this.type === "POPUP") {
       const dialogContainer = root.getElementById("squatchModal");
       if (dialogContainer) {
         dialogContainer.innerHTML = "";
         dialogContainer.appendChild(skeletonContainer);
-      } else {
-        root.appendChild(skeletonContainer);
       }
     } else {
       root.innerHTML = "";

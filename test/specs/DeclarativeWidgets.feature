@@ -440,7 +440,17 @@ Feature: Declarative widgets using custom Web Components
     Examples:
       | component     |
       | squatch-embed |
-      | squatch-popup |
+
+  @motivating @automated
+  Scenario: No loading skeleton is displayed for popup widgets before the popup is opened
+    Given window.squatchTenant is "valid"
+    And window.squatchToken is "a valid token"
+    And the squatch-popup web-component is included in the page's HTML
+    And the widget attribute is set to a valid SaaSquatch widget type
+    When the component starts loading
+    Then no loading skeleton is injected into the shadow DOM
+    When the widget finishes loading
+    Then no loading skeleton is present in the shadow DOM
 
   @minutia @automated
   Scenario Outline: Loading skeleton type is determined by the widget type

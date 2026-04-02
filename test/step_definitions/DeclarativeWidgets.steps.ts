@@ -1341,6 +1341,63 @@ defineFeature(feature, (test) => {
     });
   });
 
+  test("No loading skeleton is displayed for popup widgets before the popup is opened", ({
+    given,
+    and,
+    when,
+    then,
+  }) => {
+    let el!: DeclarativePopupWidget;
+    let renderPromiseResolve!: () => void;
+    let renderPromise!: Promise<void>;
+
+    Background(given);
+    SquatchTenantIs(given);
+    SquatchTokenIs(and);
+
+    and(/^the (.*) web-component is included in the page's HTML$/, (arg0) => {
+      el = specificWebComponentIsIncluded(arg0) as DeclarativePopupWidget;
+    });
+
+    and("the widget attribute is set to a valid SaaSquatch widget type", () => {
+      el.setAttribute("widget", "w/widget-type");
+    });
+
+    when("the component starts loading", () => {
+      renderPromise = new Promise((resolve) => {
+        renderPromiseResolve = resolve;
+      });
+      const originalRenderWidget = el.renderWidget.bind(el);
+      let proceedResolve: () => void;
+      const proceedPromise = new Promise<void>((r) => {
+        proceedResolve = r;
+      });
+      vi.spyOn(el, "renderWidget").mockImplementation(async () => {
+        await proceedPromise;
+        await originalRenderWidget();
+        renderPromiseResolve();
+      });
+      document.body.appendChild(el);
+      setTimeout(() => proceedResolve!(), 200);
+    });
+
+    then("no loading skeleton is injected into the shadow DOM", async () => {
+      // Give it time to potentially inject a skeleton, then confirm none exists
+      await new Promise((r) => setTimeout(r, 100));
+      const skeleton = el.shadowRoot?.getElementById("loading-skeleton");
+      expect(skeleton).toBeNull();
+    });
+
+    when("the widget finishes loading", async () => {
+      await renderPromise;
+    });
+
+    then("no loading skeleton is present in the shadow DOM", () => {
+      const skeleton = el.shadowRoot?.getElementById("loading-skeleton");
+      expect(skeleton).toBeNull();
+    });
+  });
+
   test("Loading skeleton type is determined by the widget type", ({
     given,
     and,
