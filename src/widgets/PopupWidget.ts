@@ -79,6 +79,7 @@ export default class PopupWidget extends Widget {
     dialog.setAttribute(
       "style",
       `width: 100%; min-width: ${minWidth}; max-width: ${maxWidth}; border: none; padding: 0;`,
+      `width: 100%; min-width: ${minWidth}; max-width: ${maxWidth}; border: none; padding: 0; margin: auto;`,
     );
     const onClick = (e) => {
       e.stopPropagation();

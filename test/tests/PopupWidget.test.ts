@@ -141,6 +141,7 @@ describe("methods", () => {
       expect(dialog.style.maxWidth).toBe("500px");
       expect(dialog.style.getPropertyValue("border")).toContain("none");
       expect(dialog.style.padding).toBe("0px");
+      expect(dialog.style.margin).toBe("auto");
 
       const mockClose = vi
         .spyOn(dialog, "close")
