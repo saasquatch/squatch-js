@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.8.5] - 2026-09-02
+
+### Fixed
+
+- Dialog margin no longer overwritten by global styles
+
 ## [2.8.4] - 2026-04-01
 
 ### Fixed
@@ -418,7 +424,8 @@ No release notes.
 
 No release notes.
 
-[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.4...HEAD
+[unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.5...HEAD
+[2.8.5]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.5
 [2.8.4]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.4
 [2.8.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.3
 [2.8.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.1...@saasquatch%2Fsquatch-js@2.8.2
