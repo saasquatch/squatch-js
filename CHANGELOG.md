@@ -425,8 +425,8 @@ No release notes.
 No release notes.
 
 [unreleased]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.5...HEAD
-[2.8.5]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.5
-[2.8.4]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.4
+[2.8.5]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.4...@saasquatch%2Fsquatch-js@2.8.5
+[2.8.4]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.3...@saasquatch%2Fsquatch-js@2.8.4
 [2.8.3]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.2...@saasquatch%2Fsquatch-js@2.8.3
 [2.8.2]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.1...@saasquatch%2Fsquatch-js@2.8.2
 [2.8.1]: https://github.com/saasquatch/squatch-js/compare/@saasquatch%2Fsquatch-js@2.8.0...@saasquatch%2Fsquatch-js@2.8.1
