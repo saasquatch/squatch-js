@@ -37,15 +37,6 @@ Test the following:
 - [ ] Code follows the Style Guide
 ```
 
-## Releasing
-
-Releases are published to npm from CI, never from a laptop. squatch.js runs on customer sites, so every version needs provenance and a 2FA approval.
-
-1. Run `npm run deploy -- <patch|minor|major>` (for a pre-release, `npm run deploy -- prerelease --preid=next`). This builds, bumps the version, commits, tags `v<version>` and pushes. It does **not** publish, and no npm login is needed.
-2. On GitHub, create a release from the new tag. Mark it as a pre-release to publish under the `next` dist-tag; otherwise it goes to `latest`.
-3. The [Publish to npm](.github/workflows/publish.yml) workflow builds the tag and stages it on npm with provenance.
-4. A maintainer reviews the staged version (`npm stage list @saasquatch/squatch-js`, `npm stage download <stage-id>`) and approves it with 2FA, either on npmjs.com under **Staged Packages** or with `npm stage approve <stage-id>`.
-
 ## Reporting Issues
 Detailed bug reports are greatly appreciated.
 
