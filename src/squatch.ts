@@ -109,17 +109,15 @@ export function widget(
 }
 
 /**
- * Extracts widget configuration from `_saasquatchExtra` UTM parameter. Initialises `squatch` and renders the widget as a {@link PopupWidget} via static instanct of {@link Widgets}.
+ * Renders the auto-popup widget from the `_saasquatchExtra` UTM parameter as a {@link PopupWidget}, using the page's own tenant configuration.
  *
  * Called by default on startup via the loader script.
  * @private
  */
 export function _auto(): Promise<WidgetResult | undefined> | undefined {
-  const configs = _getAutoConfig();
+  const widgetConfig = _getAutoConfig(_api);
 
-  if (configs) {
-    const { squatchConfig, widgetConfig } = configs;
-    init(squatchConfig);
+  if (widgetConfig) {
     return widgets()?.render(widgetConfig);
   }
 }

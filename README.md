@@ -65,7 +65,7 @@ Include either of the squatchjs generated web-components in your page's HTML to 
 For rendering widgets and API calls, squatchjs respects configurations set on the following:
 
 - `window.squatchToken`: Signed JWT for calls to the SaaSquatch API -- [How to generate valid JWT Tokens](https://docs.saasquatch.com/topics/json-web-tokens#example-building-the-jwt)
-- `window.squatchTenant`: SaaSquatch tenant alias
+- `window.squatchTenant`: SaaSquatch tenant alias. Required for auto-popup widgets: a `_saasquatchExtra` link only opens the auto-popup widget for this tenant, or for the tenant passed to `squatch.init()`.
 - `window.squatchConfig`: Additional configuration overrides (Optional)
   - `debug`: Turn on console debugging (Default: `false`)
 - `window.squatchOnReady`: Declarative on ready function to be run when the squatch-js module has finished loading

@@ -1,16 +1,24 @@
 import { debug } from "./logger";
-import { ConfigOptions, WidgetConfig } from "../types";
+import { WidgetConfig } from "../types";
 import { b64decode } from "./cookieUtils";
 import { validateConfig } from "./validate";
 
 /** @hidden */
 const _log = debug("squatch-js");
 
-export function _getAutoConfig():
-  | { widgetConfig: WidgetConfig; squatchConfig: ConfigOptions }
-  | undefined {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
+/**
+ * Reads the auto-popup widget from the `_saasquatchExtra` URL parameter.
+ *
+ * The URL only selects a widget type for the tenant the page itself declares
+ * (via `window.squatchTenant` or a prior `init()`), so a crafted link can't
+ * choose which tenant renders on this site or inject any other widget config.
+ *
+ * @param declared The page's initialised config, if `init()` has already run
+ */
+export function _getAutoConfig(
+  declared?: { tenantAlias?: string; domain?: string } | null,
+): WidgetConfig | undefined {
+  const urlParams = new URLSearchParams(window.location.search);
   const refParam = urlParams.get("_saasquatchExtra") || "";
 
   if (!refParam) {
@@ -18,17 +26,17 @@ export function _getAutoConfig():
     return;
   }
 
-  const config = validateConfig({
-    tenantAlias: "UNKNOWN",
-  });
-
-  if (!config.domain) {
-    _log("domain must be provided in config to use _saasquatchExtra");
+  const tenantAlias = declared?.tenantAlias || window.squatchTenant;
+  if (typeof tenantAlias !== "string" || !tenantAlias) {
+    console.warn(
+      "squatch-js: _saasquatchExtra ignored. Set window.squatchTenant to enable auto-popup widgets.",
+    );
     return;
   }
 
-  let raw: any;
+  const domain = declared?.domain || validateConfig({ tenantAlias }).domain;
 
+  let raw: any;
   try {
     raw = JSON.parse(b64decode(refParam));
   } catch (e) {
@@ -36,43 +44,16 @@ export function _getAutoConfig():
     return;
   }
 
-  // Normalize the domain by removing protocol (e.g., 'https://')
-  function normalizeDomain(domain: string): string {
-    return domain.replace(/^https?:\/\//, "");
+  // Expected shape: { [domain]: { [tenantAlias]: { autoPopupWidgetType } } }
+  const normalizedDomain = domain.replace(/^https?:\/\//, "");
+  const widgetType = raw?.[normalizedDomain]?.[tenantAlias]?.autoPopupWidgetType;
+
+  if (typeof widgetType !== "string" || !widgetType) {
+    console.warn(
+      `squatch-js: _saasquatchExtra ignored. It has no auto-popup widget for tenant "${tenantAlias}".`,
+    );
+    return;
   }
 
-  const normalizedDomain = normalizeDomain(config.domain);
-
-  // _saasquatchExtra is expected to be structured as:
-  // {
-  //   [domain]: {
-  //     [tenantAlias]: {
-  //       autoPopupWidgetType: string,
-  //       ...otherWidgetConfig
-  //     }
-  //   }
-  // }
-  //
-
-  const tenantAlias = Object.keys(raw?.[normalizedDomain] || {})[0];
-  const widgetConfig = raw?.[normalizedDomain]?.[tenantAlias];
-
-  if (!widgetConfig) {
-    _log("_saasquatchExtra did not have an expected structure");
-    return undefined;
-  }
-
-  const { autoPopupWidgetType, ...rest } = widgetConfig;
-
-  return {
-    widgetConfig: {
-      widgetType: autoPopupWidgetType,
-      displayOnLoad: true,
-      ...rest,
-    },
-    squatchConfig: {
-      ...config,
-      tenantAlias,
-    },
-  };
+  return { widgetType, engagementMedium: "POPUP", displayOnLoad: true };
 }
