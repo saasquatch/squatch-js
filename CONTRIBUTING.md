@@ -37,6 +37,20 @@ Test the following:
 - [ ] Code follows the Style Guide
 ```
 
+## Releasing
+
+Releases go through [Changesets](https://github.com/changesets/changesets) and the [Release workflow](.github/workflows/release.yml). They publish from CI with npm trusted publishing (OIDC) and provenance, never from a laptop.
+
+1. **Add a changeset to your PR.** Run `npm run changeset`, pick the bump type, and write the note customers will read in the changelog. Commit the generated `.changeset/*.md` file with your code. Changes that don't need a release (docs, tests, CI) don't need one.
+2. **Merging to `master` updates the "Version Packages" PR.** It bumps `package.json`, writes `CHANGELOG.md` and deletes the consumed changesets. Keep merging feature PRs; it updates itself.
+3. **Merging the Version Packages PR publishes.** The workflow publishes the new version to npm under `latest`, pushes the `v<version>` tag and creates the GitHub release.
+
+Pick the bump with the CDN in mind. Customers load `https://fast.ssqt.io/squatch-js@2`, so a `major` bump ships to nobody until they change their script tag.
+
+### Pre-releases
+
+Run the Release workflow manually (**Actions → Release → Run workflow**) and pick a branch with pending changesets. It publishes `<next version>-next-<datetime>` under the `next` dist-tag, which you can load from `https://fast.ssqt.io/squatch-js@next`. Nothing is committed or tagged.
+
 ## Reporting Issues
 Detailed bug reports are greatly appreciated.
 

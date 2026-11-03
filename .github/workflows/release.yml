@@ -1,0 +1,82 @@
+name: Release
+
+# push to master: opens/updates the "Version Packages" PR from pending changesets, or,
+#   once that PR is merged, publishes the new version to npm and creates the GitHub release.
+# workflow_dispatch: publishes a snapshot pre-release of the selected branch under the `next` dist-tag.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  release:
+    name: Version PR or publish
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: npm
+    concurrency:
+      group: release
+      cancel-in-progress: false
+    permissions:
+      contents: write # push the version branch and the release tag
+      pull-requests: write # open the Version Packages PR
+      id-token: write # npm trusted publishing (OIDC) and provenance
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+
+      - run: npm ci --ignore-scripts
+
+      # Build first: changesets/action writes the repo-write token to ~/.netrc, and `npm run release` doesn't build.
+      - run: npm run build
+
+      - uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
+        with:
+          version: npm run version-packages
+          publish: npm run release
+          title: Version Packages
+          commit: Version Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  prerelease:
+    name: Snapshot pre-release (next)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: npm-prerelease
+    concurrency:
+      group: prerelease-${{ github.ref }}
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write # npm trusted publishing (OIDC) and provenance
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+
+      - run: npm ci --ignore-scripts
+
+      # Versions as <next-version>-next-<datetime> from this branch's pending changesets.
+      - run: npx changeset version --snapshot next
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - run: npm run build
+
+      - run: npx changeset publish --tag next --no-git-tag
