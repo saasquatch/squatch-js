@@ -36,17 +36,16 @@ jobs:
 
       - run: npm ci --ignore-scripts
 
-      # Build first: changesets/action writes the repo-write token to ~/.netrc, and `npm run release` doesn't build.
+      # `npm run release` doesn't build.
       - run: npm run build
 
-      - uses: changesets/action@a45c4d594aa4e2c509dc14a9f2b3b67ba3780d0d # v1.9.0
+      # v2 is required for Changesets CLI 3: it reads published tags from CHANGESETS_OUTPUT, not stdout.
+      - uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          version: npm run version-packages
-          publish: npm run release
-          title: Version Packages
-          commit: Version Packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          version-script: npm run version-packages
+          publish-script: npm run release
+          pr-title: Version Packages
+          commit-message: Version Packages
 
   prerelease:
     name: Snapshot pre-release (next)
