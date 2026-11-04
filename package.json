@@ -26,6 +26,10 @@
     "directory": "test/tsd"
   },
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
     "build:es": "vite build",
     "minify:umd": "terser dist/squatch.js -o dist/squatch.min.js",
@@ -40,9 +44,11 @@
     "test:utf8": "vitest run -t 'UTF-8 characters in different languages'",
     "test": "run-s test:features test:browser test:webkit test:firefox",
     "build:docs": "typedoc",
-    "deploy": "np --no-cleanup",
+    "changeset": "changeset",
+    "version-packages": "changeset version && npm install --package-lock-only --ignore-scripts",
+    "release": "changeset publish",
+    "prepublishOnly": "if [ \"$CI\" != \"true\" ]; then echo 'Error: publish @saasquatch/squatch-js through the Release GitHub Actions workflow, not from a laptop.' >&2 && exit 1; fi",
     "deploy:docs": "surge ./ -d squathjsv2.surge.sh",
-    "preversion": "run-s build",
     "demo": "msw init demo/dist/ --save && run-p static parcel",
     "demo:deploy": "run-s parcel:build parcel:deploy",
     "perf": "npx tsx demo/perf-benchmark.ts",
@@ -60,6 +66,8 @@
     "@babel/preset-typescript": "^7.13.0",
     "@babel/register": "^7.13.16",
     "@babel/runtime-corejs2": "^7.14.0",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
     "@open-wc/testing-helpers": "^2.3.0",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@testing-library/dom": "^9.3.1",
@@ -83,7 +91,6 @@
     "jest-cucumber": "^3.0.1",
     "microbundle": "^0.13.0",
     "msw": "^0.36.8",
-    "np": "^6.2.3",
     "npm-run-all": "^4.1.5",
     "parcel": "^1.12.3",
     "parcel-bundler": "^1.12.4",
